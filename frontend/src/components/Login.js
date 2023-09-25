@@ -11,7 +11,7 @@ function Login()
     };
 
     return(
-      <div id="loginDiv">
+      <div id="loginDiv" class="temporary">
         <form onSubmit={doLogin}>
         <span id="inner-title">PLEASE LOG IN</span><br />
         <input type="text" id="loginName" placeholder="Username" /><br />
