@@ -49,6 +49,14 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
+const signup = require('./routes/userStudentSignUp');
+app.use('/api/userStudentSignUp', signup);
+
+const login = require('./routes/userStudentLogin');
+app.use('/api/userStudentLogin', login);
+
+const userStudentsDelete = require('./routes/userStudentsDelete');
+app.use('/api/userStudents', userStudentsDelete);
 
 
 /*

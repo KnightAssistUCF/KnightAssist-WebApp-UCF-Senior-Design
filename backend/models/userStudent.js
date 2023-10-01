@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const userStudentSchema = mongoose.Schema({
+const userStudentSchema = new mongoose.Schema({
     firstName: {
         type: String,
         required: true
@@ -10,7 +10,6 @@ const userStudentSchema = mongoose.Schema({
         required: true
     },
     email: {
-        // I wonder, can we enforce that it is a knights email? maybe we can do that on front end
         type: String,
         required: true
     },
@@ -20,16 +19,15 @@ const userStudentSchema = mongoose.Schema({
     },
     profilePicture: {
         type: String,
-        // this is a default profile picture from gravatar
         default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
     },
     __v: {
-        type: Number,
+        type: String,
         required: true,
         default: 0,
         select: false
     }
     
-}, {collection: 'userStudent'}, {timestamps: true});
+}, {collection: 'userStudent', timestamps: true});
 
 module.exports = mongoose.model('userStudent', userStudentSchema);
