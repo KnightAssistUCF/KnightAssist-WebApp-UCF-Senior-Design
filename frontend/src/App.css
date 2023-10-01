@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+.loginBox{
+  margin-top: 100px;
+  margin-left: 200px;
+  margin-right: 200px;
+}
+
+.usernameBox{
+  margin-top: 20px;
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.passwordBox{
+  margin-left: 50px;
+  margin-right: 50px;
+}
+
+.center{
+  text-align: center;
+}
+
+
+
+.submitButton{
+  margin-top: 30px;
+  width: 200px;
+}
+
+.card-body{
+  background-color: lightblue;
+}
