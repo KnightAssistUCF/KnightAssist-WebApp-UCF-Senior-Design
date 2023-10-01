@@ -13,7 +13,7 @@ const eventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userStudent'
     }]
-});
+}, {collection: 'event'}, {timestamps: true});
 
 const organizationSchema = new Schema({
     name: {
@@ -64,6 +64,6 @@ const organizationSchema = new Schema({
         type: Boolean,
         default: false
     }
-});
+}, {collection: 'organization'}, {timestamps: true});
 
-module.exports = mongoose.model('Organization', organizationSchema);
+module.exports = mongoose.model('organization', organizationSchema);
