@@ -56,7 +56,7 @@ const login = require('./routes/userStudentLogin');
 app.use('/api/userStudentLogin', login);
 
 const userStudentsDelete = require('./routes/userStudentsDelete');
-app.use('/api/userStudents', userStudentsDelete);
+app.use('/api/userStudentDelete', userStudentsDelete);
 
 
 /*
