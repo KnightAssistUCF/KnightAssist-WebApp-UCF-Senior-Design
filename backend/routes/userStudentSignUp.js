@@ -7,31 +7,27 @@ const userStudent = require('../models/userStudent');
 /* email verfication and the jwt tokenization can be gathered here, but later */
 
 router.post('/', async (req, res) => {
-    try {
-        // check if the user already exists
-        const user = await userStudent.find({ email: req.body.email , firstName: req.body.firstName, lastName: req.body.lastName});
-        if (user != null) {
-            res.status(400).send("User already exists");
+    await userStudent.findOne({ email: req.body.email }).then((user) => {
+        if (user) {
+            res.status(409).send('User already exists');
         } else {
-            if (typeof req.body.password !== 'string') {
-                req.body.password = String(req.body.password);
-            }
-            // Hash the password 
-            const hashedPassword = await bcrypt.hash(req.body.password, 10);
-            const newUser = new userStudent({
+            var hashedPassword = bcrypt.hashSync(req.body.password, 10);
+            var newUser = new userStudent({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: hashedPassword,
-                profilePicture: req.body.profilePicture
+                profilePicture: req.body.profilePicture 
             });
-            const savedUser = await newUser.save();
-            res.status(200).send("User created successfully -> " + savedUser);
+            newUser.save().then((user) => {
+                res.status(200).send("User created - please confirm new user's email address");
+            }).catch((err) => {
+                res.status(503).send("Failed to create user: " + err);
+            });
         }
-    } catch (err) {
-        res.status(500).send("Internal server error here: " + err);
-    }
+    }).catch((err) => {
+        res.status(404).send("Could not search for user: " + err);
+    });
 });
 
-// export the router
 module.exports = router;
