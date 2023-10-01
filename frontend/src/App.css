@@ -37,6 +37,7 @@
   }
 }
 
+<<<<<<< HEAD
 .loginBox{
   margin-top: 100px;
   margin-left: 200px;
@@ -68,3 +69,8 @@
 .card-body{
   background-color: lightblue;
 }
+=======
+.App {
+  background-color: yellow;
+}
+>>>>>>> c9bc315a1fec206b33c5f11e9a8c16b8f723ad1c
