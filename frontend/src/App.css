@@ -38,9 +38,8 @@
 }
 
 .loginBox{
-  margin-top: 100px;
-  margin-left: 200px;
-  margin-right: 200px;
+  width: 500px;
+  margin-top: 175px;
 }
 
 .usernameBox{
@@ -58,13 +57,46 @@
   text-align: center;
 }
 
-
-
 .submitButton{
-  margin-top: 30px;
-  width: 200px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 175px;
 }
 
 .card-body{
   background-color: lightblue;
+}
+
+.title{
+  margin-right: 20px;
+}
+
+.row{
+  margin-top: 10px !important;
+  margin-left: 285px !important;
+}
+
+.forgotPWD{
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 12px;
+  width: 118px !important;
+}
+
+.register{
+  background: none;
+  border: none;
+  font-weight: bold;
+  font-size: 12px;
+  width: 68px !important;
+}
+
+.logo{
+  width: 100px;
+  height: 100px;
+}
+
+.titleLogo{
+  margin-top: -180px;
 }

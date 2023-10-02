@@ -1,9 +1,13 @@
 import React from 'react';
+import Logo from './Logo';
 
 function PageTitle()
 {
    return(
-     <h1 id="title" className='center'>Knight Assist</h1>
+      <div className='titleLogo'>
+        <h1 id="title" className='title center'>Knight Assist</h1>
+        <Logo/>
+      </div>
    );
 };
 

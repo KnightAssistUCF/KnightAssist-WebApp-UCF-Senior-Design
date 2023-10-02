@@ -26,12 +26,28 @@ function LoginBox(){
         )
     }
 
+    function ForgotPassowrd(){
+        return (
+            <button className="forgotPWD">forgot password</button>
+        )
+    }
+
+    function Register(){
+        return (
+            <button className="register">register</button>
+        )
+    }
+
     return (
         <div className="loginBox card">
             <div class="card-body">
                 <Username/>
                 <Password/>
                 <Submit/>
+                <div className="row center">
+                    <ForgotPassowrd/>
+                    <Register/>
+                </div>
             </div>
         </div>
     )
