@@ -38,20 +38,17 @@
 }
 
 .loginBox{
-  width: 500px;
-  margin-left: 100px;
-  margin-top: 175px;
+  margin-top: 50px;
 }
 
 .usernameBox{
-  margin-top: 20px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .passwordBox{
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .center{
@@ -59,28 +56,20 @@
 }
 
 .submitButton{
-  margin-top: 20px;
+  margin-top: 10px;
   margin-bottom: 10px;
-  width: 175px;
 }
 
 .card-body{
-  background-color: lightblue;
+  background-color: #CCAFD8;
 }
 
 .titleLogo{
-  justify-content: center;
-  display: flex;
-
+  margin-top: 75px;
 }
 
 .title{
   margin-right: 20px;
-}
-
-.row{
-  margin-top: 10px !important;
-  margin-left: 285px !important;
 }
 
 .forgotPWD{
@@ -108,10 +97,17 @@
   background-color: blue;
   float: left;
   height: 100vh;
-  width: 50vh;
-  flex: 1;
+  width: 50%;
 } 
 
 .contentHalf{
   float: right;
+  width: 50%;
+  height: 100vh;
+  background-color: #3F659E;
+}
+
+.login{
+  height: 100%;
+  width: 100%;
 }

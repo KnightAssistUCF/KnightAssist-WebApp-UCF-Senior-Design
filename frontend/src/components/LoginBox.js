@@ -39,15 +39,13 @@ function LoginBox(){
     }
 
     return (
-        <div className="loginBox card">
-            <div class="card-body">
-                <Username/>
-                <Password/>
-                <Submit/>
-                <div className="row center">
-                    <ForgotPassowrd/>
-                    <Register/>
-                </div>
+        <div className="loginBox">
+            <Username/>
+            <Password/>
+            <Submit/>
+            <div className="center">
+                <ForgotPassowrd/>
+                <Register/>
             </div>
         </div>
     )

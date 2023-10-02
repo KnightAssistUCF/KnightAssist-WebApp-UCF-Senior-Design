@@ -5,8 +5,8 @@ function PageTitle()
 {
    return(
       <div className='titleLogo'>
-        <h1 id="title" className='title center'>Knight Assist</h1>
         <Logo/>
+        <h1 id="title" className='title center'>Knight Assist</h1>
       </div>
    );
 };

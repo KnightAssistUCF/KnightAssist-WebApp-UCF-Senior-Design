@@ -15,13 +15,15 @@ function Login()
 
     function BackgroundHalf(){
       return(
-        <div class="backgroundHalf"></div>
+        <div></div>
       )
     }
 
     return(
-      <div>
-        <BackgroundHalf/>
+      <div className="thing">
+        <div className="backgroundHalf">
+          <BackgroundHalf/>
+        </div>
         <div className="contentHalf">
           <PageTitle/>
           <LoginBox/>
