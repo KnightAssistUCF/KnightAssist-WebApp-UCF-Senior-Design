@@ -2,10 +2,10 @@ import React from "react";
 
 function LoginBox(){
 
-    function Username(){
+    function Email(){
         return (
             <div class="input-group mb-3">
-                <input type="text" className="usernameBox form-control" placeholder="Username"></input>
+                <input type="text" className="emailBox form-control" placeholder="Email"></input>
             </div>
         )
     }
@@ -13,15 +13,15 @@ function LoginBox(){
     function Password(){
         return (
             <div class="input-group mb-3">
-                <input type="text" className="passwordBox form-control" placeholder="Password"></input>
+                <input type="password" className="passwordBox form-control" placeholder="Password"></input>
             </div>
         )
     }
 
-    function Submit(){
+    function Login(){
         return (
             <div className="center">
-                <button type="button" className="submitButton btn btn-info">Submit</button>
+                <button type="button" className="loginButton btn btn-info">Login</button>
             </div>
         )
     }
@@ -40,10 +40,10 @@ function LoginBox(){
 
     return (
         <div className="loginBox">
-            <Username/>
+            <Email/>
             <Password/>
-            <Submit/>
-            <div className="center">
+            <Login/>
+            <div className="textUnderSubmit center">
                 <ForgotPassowrd/>
                 <Register/>
             </div>

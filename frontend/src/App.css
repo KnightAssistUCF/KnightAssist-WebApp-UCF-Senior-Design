@@ -41,7 +41,7 @@
   margin-top: 50px;
 }
 
-.usernameBox{
+.emailBox{
   margin-left: 25%;
   margin-right: 25%;
 }
@@ -55,9 +55,10 @@
   text-align: center;
 }
 
-.submitButton{
-  margin-top: 10px;
-  margin-bottom: 10px;
+.loginButton{
+  width: 15%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .card-body{
@@ -105,7 +106,7 @@
   float: right;
   width: 50%;
   height: 100vh;
-  background-color: #3F659E;
+  background-color: #a6579a;
 }
 
 .login{
