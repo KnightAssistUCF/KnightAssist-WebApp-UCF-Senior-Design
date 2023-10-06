@@ -31,7 +31,10 @@ function LoginComponents(){
 
             // The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
-                //Switch url to the page respective to the user
+                setIsInvalid("")
+                // Switch url to the page respective to the user
+                // Probably will need an api call to determine
+                // if volunteer or org
             }else{
                 setIsInvalid("is-invalid");
             }
@@ -40,6 +43,15 @@ function LoginComponents(){
             console.log(e.toString());
             return;
         }
+    }
+
+    function sendToForgotPassword(){
+        // Send router to forgot password page
+    }
+    
+    function onRegister(){
+        // Perhaps modal appears asking if you want to 
+        // register as a volunteer or org
     }
 
     function Email(){
