@@ -19,7 +19,7 @@ function Login()
         <div className="contentHalf">
           <PageTitle/>
           <LoginBox/>
-        </div>
+        </div> 
       </div>
     );
 };

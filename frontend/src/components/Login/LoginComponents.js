@@ -7,7 +7,6 @@ function LoginComponents(){
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
 
-
     async function doLogin(){
         const json = {
                         email: email,
@@ -31,7 +30,7 @@ function LoginComponents(){
 
             // The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
-                setIsInvalid("")
+                setIsInvalid("");
                 // Switch url to the page respective to the user
                 // Probably will need an api call to determine
                 // if volunteer or org
@@ -52,6 +51,12 @@ function LoginComponents(){
     function onRegister(){
         // Perhaps modal appears asking if you want to 
         // register as a volunteer or org
+    }
+
+    function Copyright(){
+        return (
+            <h5 className="center copyright">Copyright © 2023 by KnightAssist Senior Design Group.</h5>
+        )
     }
 
     function Email(){
@@ -99,6 +104,7 @@ function LoginComponents(){
                 <ForgotPassowrd/>
                 <Register/>
             </div>
+            <Copyright/>
         </div>
     )
 }
