@@ -114,6 +114,11 @@
   width: 100%;
 }
 
+.orgPortal{
+  height: 100%;
+  width: 100%;
+}
+
 .copyright{
   position: fixed; 
   bottom: 30px; 
