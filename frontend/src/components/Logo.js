@@ -2,10 +2,10 @@ import React from 'react';
 
 const logo = require("../KAlogo.png");
 
-function Logo()
+function Logo(props)
 {
    return(
-     <img className="logo" src={logo}/>
+     <img className={props.theStyle} src={logo}/>
    );
 };
 

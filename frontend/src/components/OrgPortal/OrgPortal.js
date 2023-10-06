@@ -1,11 +1,12 @@
 import React from 'react';
 import PageTitle from '../PageTitle';
+import Header from './Header';
 
 function OrgPortal()
 {
     return(
-      <div>
-        <h1>Commit Test</h1>
+      <div className='org'>
+        <Header/>
       </div>
     );
 };

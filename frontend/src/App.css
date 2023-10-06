@@ -125,3 +125,28 @@
   width: 50%;
   color: black;
 }
+
+.top{
+  position: fixed; 
+  top: 0px; 
+  width:  100%;
+  background-color: #a6579a;
+}
+
+.logoHeader{
+  width: 50px;
+  height: 50px;
+}
+
+.titleHeader{
+  font-size: 18px;
+}
+
+.headerTitleLogo{
+  margin-left: 10px;
+  margin-bottom: -5px;
+}
+
+.org{
+  background-color: white;
+}
