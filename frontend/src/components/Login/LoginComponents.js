@@ -1,18 +1,51 @@
 import React, { useState } from "react";
+import { buildPath } from "../../path";
 
 function LoginComponents(){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isInvalid, setIsInvalid] = useState("");
 
-    function test(){
-        console.log(email, password);
+
+    async function doLogin(){
+        const json = {
+                        email: email,
+                        password: password
+                     };
+
+        console.log(json);
+
+        const url = buildPath("api/userStudentLogin");
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            let res = await response.text();
+
+            console.log(res);
+
+            // The credentials matched an existing account
+            if(res.includes("User logged in successfully ->")){
+                //Switch url to the page respective to the user
+            }else{
+                setIsInvalid("is-invalid");
+            }
+            
+        } catch (e) {
+            console.log(e.toString());
+            return;
+        }
     }
 
     function Email(){
         return (
             <div className="input-group mb-3">
-                <input type="text" className="emailBox form-control" placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
+                <input type="text" className={"passwordBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
             </div>
         )
     }
@@ -20,7 +53,7 @@ function LoginComponents(){
     function Password(){
         return (
             <div className="input-group mb-3">
-                <input type="password" className="passwordBox form-control" placeholder="Password" onChange={(d) => setPassword(d.target.value)} value={password}></input>
+                <input type="password" className={"passwordBox form-control " + isInvalid} placeholder="Password" onChange={(d) => setPassword(d.target.value)} value={password}></input>
             </div>
         )
     }
@@ -28,7 +61,7 @@ function LoginComponents(){
     function Login(){
         return (
             <div className="center">
-                <button type="button" className="loginButton btn btn-info" onClick={() => test()}>Login</button>
+                <button type="button" className="loginButton btn btn-info" onClick={() => doLogin()}>Login</button>
             </div>
         )
     }
