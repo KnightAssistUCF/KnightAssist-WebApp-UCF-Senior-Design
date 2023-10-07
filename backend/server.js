@@ -62,6 +62,15 @@ app.use('/api/Login', login);
 const userStudentsDelete = require('./routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
+const organizationDelete = require('./routes/organizationDelete');
+app.use('/api/organizationDelete', organizationDelete);
+
+const searchUser = require('./routes/searchUser');
+app.use('/api/searchUser', searchUser);
+
+const searchOrganization = require('./routes/searchOrganization');
+app.use('/api/searchOrganization', searchOrganization);
+
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
