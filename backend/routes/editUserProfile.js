@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const bcryptjs = require('bcryptjs');
 
 const userStudent = require('../models/userStudent');
 
@@ -11,10 +12,11 @@ router.post('/', async (req, res) => {
 
     await userStudent.findOne({ email: req.body.email }).then((user) => {
         if (user) {
+            var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.firstName = req.body.firstName;
             user.lastName = req.body.lastName;
             user.email = req.body.email;
-            user.password = req.body.password;
+            user.password = newHashedPassword;
             user.profilePicture = req.body.profilePicture;
             /* For now this is based on what the schema has */
             user.save();
