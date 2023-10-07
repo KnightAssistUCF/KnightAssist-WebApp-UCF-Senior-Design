@@ -3,12 +3,12 @@ const router = express.Router();
 
 const userStudent = require('../models/userStudent');
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
     const searchEmail = req.body.email;
 
     await userStudent.findOne({ email: searchEmail }).then((user) => {
         if (user) {
-            res.status(200).send("User found -> " + user);
+            res.status(200).json(user);
         } else {
             res.status(404).send("User not found");
         }

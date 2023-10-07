@@ -3,12 +3,12 @@ const router = express.Router();
 
 const organization = require('../models/organization');
 
-router.post('/', async (req, res) => {
+router.get('/', async (req, res) => {
     const searchEmail = req.body.email;
 
     await organization.findOne({ email: searchEmail }).then((organization) => {
         if (organization) {
-            res.status(200).send("Organization found -> " + organization);
+            res.status(200).json(organization);
         } else {
             res.status(404).send("Organization not found");
         }

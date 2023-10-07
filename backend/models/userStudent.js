@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const userStudentSchema = new mongoose.Schema({
+    /* To be added maybe: graduation date, major, etc. */
     firstName: {
         type: String,
         required: true
