@@ -71,6 +71,9 @@ app.use('/api/searchUser', searchUser);
 const searchOrganization = require('./routes/searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
+const editUserProfile = require('./routes/editUserProfile');
+app.use('/api/editUserProfile', editUserProfile);
+
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
