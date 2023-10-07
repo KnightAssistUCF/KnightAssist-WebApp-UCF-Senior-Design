@@ -3,17 +3,25 @@ const router = express.Router();
 
 const organization = require('../models/organization');
 
-router.post('/', async (req, res) => {
-    const searchEmail = req.body.email;
+// first we lookup the organization by their email
+router.get('/', async (req, res) => {
+    await organization.findOne({ email: req.body.email }).then((organization) => {
+        if (organization) { res.status(200).send(organization); }
+        else throw new Error()
+    }).catch((err) => { res.status(400).send("Organization not found") });
+});
 
-    await organization.findOne({ email: searchEmail }).then((organization) => {
+// then we delete the organization by their email
+router.delete('/', async (req, res) => {
+    await organization.findOne({ email: req.body.email }).then(async (organization) => {
         if (organization) {
-            res.status(200).send("Organization found -> " + organization);
-        } else {
-            res.status(404).send("Organization not found in database");
+            await organization.deleteOne({ email: req.body.email }).then((organization) => {
+                res.status(200).send("Organization deleted successfully" + organization);
+            }).catch((err) => { res.status(400).send("Internal server error: " + err); })
         }
+        else throw new Error()
     }).catch((err) => {
-        res.status(503).send("Internal server error: " + err);
+        res.status(400).send("Organization not found");
     });
 });
 

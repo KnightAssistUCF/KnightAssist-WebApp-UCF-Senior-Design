@@ -21,6 +21,11 @@ const organizationSchema = new Schema({
         required: true,
         unique: true
     },
+    password: {
+        type: String, 
+        required: true,
+        unique: true // can be removed later if needed
+    },
     email: {
         type: String,
         required: true,
