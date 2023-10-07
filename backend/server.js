@@ -52,8 +52,8 @@ app.use((req, res, next) =>
 const signup = require('./routes/userStudentSignUp');
 app.use('/api/userStudentSignUp', signup);
 
-const login = require('./routes/userStudentLogin');
-app.use('/api/userStudentLogin', login);
+const login = require('./routes/Login');
+app.use('/api/Login', login);
 
 const userStudentsDelete = require('./routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
