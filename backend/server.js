@@ -49,31 +49,45 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
+const user_signup = require('./routes/userStudentSignUp');
+app.use('/api/userStudentSignUp', user_signup);
 
-const login = require('./routes/userStudentLogin');
-app.use('/api/userStudentLogin', login);
+const organization_signup = require('./routes/organizationSignUp');
+app.use('/api/organizationSignUp', organization_signup);
+
+// login supports both organization and user lookup
+const login = require('./routes/Login'); 
+app.use('/api/Login', login);
 
 const userStudentsDelete = require('./routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const signup = require('./routes/userStudentSignUp');
-app.use('/api/userStudentSignUp', signup);
+const organizationDelete = require('./routes/organizationDelete');
+app.use('/api/organizationDelete', organizationDelete);
+
+const searchUser = require('./routes/searchUser');
+app.use('/api/searchUser', searchUser);
+
+const searchOrganization = require('./routes/searchOrganization');
+app.use('/api/searchOrganization', searchOrganization);
+
+const editUserProfile = require('./routes/editUserProfile');
+app.use('/api/editUserProfile', editUserProfile);
+
 
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-
-if (process.env.NODE_ENV === 'production') 
-{
-  // Set static folder
-  app.use(express.static('frontend/build'));
-
-  app.get('*', (req, res) => 
- {
-    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'));
-  });
+if (process.env.STATUS === 'production') {
+    // [NOTE]: Please change this as is needed later
+    // Serve any static files
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    // Handle React routing, return all requests to React app
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    });
 }
 
 
