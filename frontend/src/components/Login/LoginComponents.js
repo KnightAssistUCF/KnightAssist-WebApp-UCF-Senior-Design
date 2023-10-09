@@ -15,7 +15,7 @@ function LoginComponents(){
 
         console.log(json);
 
-        const url = buildPath("api/userStudentLogin");
+        const url = buildPath("api/Login");
 
         try {
             const response = await fetch(url, {
