@@ -49,14 +49,30 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const signup = require('./routes/userStudentSignUp');
-app.use('/api/userStudentSignUp', signup);
+const user_signup = require('./routes/userStudentSignUp');
+app.use('/api/userStudentSignUp', user_signup);
 
-const login = require('./routes/userStudentLogin');
-app.use('/api/userStudentLogin', login);
+const organization_signup = require('./routes/organizationSignUp');
+app.use('/api/organizationSignUp', organization_signup);
+
+// login supports both organization and user lookup
+const login = require('./routes/Login'); 
+app.use('/api/Login', login);
 
 const userStudentsDelete = require('./routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
+
+const organizationDelete = require('./routes/organizationDelete');
+app.use('/api/organizationDelete', organizationDelete);
+
+const searchUser = require('./routes/searchUser');
+app.use('/api/searchUser', searchUser);
+
+const searchOrganization = require('./routes/searchOrganization');
+app.use('/api/searchOrganization', searchOrganization);
+
+const editUserProfile = require('./routes/editUserProfile');
+app.use('/api/editUserProfile', editUserProfile);
 
 
 /*
@@ -64,12 +80,13 @@ app.use('/api/userStudentDelete', userStudentsDelete);
           can be omitted for now
 */
 if (process.env.STATUS === 'production') {
+    // [NOTE]: Please change this as is needed later
     // Serve any static files
-    // app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(path.join(__dirname, '../frontend/build')));
     // Handle React routing, return all requests to React app
-    // app.get('*', function(req, res) {
-    //     res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
-    // });
+    app.get('*', function(req, res) {
+        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+    });
 }
 
 app.listen(port, () => {
