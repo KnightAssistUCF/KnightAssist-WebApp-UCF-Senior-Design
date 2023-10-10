@@ -1,14 +1,11 @@
 import React from 'react';
-
-import PageTitle from '../components/PageTitle';
-import Login from '../components/Login';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Login from '../components/Login/Login';
 
 const LoginPage = () =>
 {
-
     return(
-      <div>
-        <PageTitle />
+      <div className="login">
         <Login />
       </div>
     );

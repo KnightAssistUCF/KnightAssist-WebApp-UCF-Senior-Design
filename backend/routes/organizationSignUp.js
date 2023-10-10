@@ -16,8 +16,8 @@ router.post('/', async (req, res) => {
             var newOrganization = new organizationSchema({
                 // Note: some components here can be omitted for the signUP phase
                 name: req.body.name,
-                email: req.body.email,
                 password: hashedPassword,
+                email: req.body.email,
                 description: req.body.description,
                 logoUrl: req.body.logoUrl,
                 category: req.body.category,
