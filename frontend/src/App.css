@@ -2,10 +2,13 @@
   text-align: center;
 }
 
+html, body {height: 100%}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
+
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
@@ -56,7 +59,7 @@
 }
 
 .loginButton{
-  width: 15%;
+  width: 100px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
@@ -66,19 +69,20 @@
 }
 
 .titleLogo{
-  margin-top: 100px;
-  margin-bottom: 75px;
+  margin-top: 70px;
+  margin-bottom: 95px;
 }
 
 .title{
   margin-right: 20px;
+  font-size: 50px;
 }
 
 .forgotPWD{
   background: none;
   border: none;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
   width: 118px !important;
 }
 
@@ -86,7 +90,7 @@
   background: none;
   border: none;
   font-weight: bold;
-  font-size: 12px;
+  font-size: 13px;
   width: 68px !important;
 }
 
@@ -95,11 +99,11 @@
   height: 100px;
 }
 
-.backgroundHalf{
+.slideshow{
   background-color: blue;
   float: left;
-  height: 100vh;
   width: 50%;
+  height: 100vh;
 } 
 
 .contentHalf{
@@ -120,9 +124,9 @@
 }
 
 .copyright{
-  position: fixed; 
-  bottom: 30px; 
-  width: 50%;
+  margin-top: 175px;
+  font-size: 15px;
+  width: 50% a;
   color: black;
 }
 
@@ -149,4 +153,8 @@
 
 .org{
   background-color: white;
+}
+.loginPhoto{
+	height: 100vh;
+	width: 95vh;
 }

@@ -15,7 +15,7 @@ function LoginComponents(){
 
         console.log(json);
 
-        const url = buildPath("api/userStudentLogin");
+        const url = buildPath("api/Login");
 
         try {
             const response = await fetch(url, {
@@ -31,9 +31,6 @@ function LoginComponents(){
             // The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
                 setIsInvalid("");
-                // Switch url to the page respective to the user
-                // Probably will need an api call to determine
-                // if volunteer or org
             }else{
                 setIsInvalid("is-invalid");
             }
@@ -83,7 +80,7 @@ function LoginComponents(){
         )
     }
 
-    function ForgotPassowrd(){
+    function ForgotPassword(){
         return (
             <button className="forgotPWD">forgot password</button>
         )
@@ -96,12 +93,12 @@ function LoginComponents(){
     }
 
     return (
-        <div className="loginBox">
+        <div className="foo loginBox">
             {Email()}
             {Password()}
             <Login/>
             <div className="textUnderSubmit center">
-                <ForgotPassowrd/>
+                <ForgotPassword/>
                 <Register/>
             </div>
             <Copyright/>
