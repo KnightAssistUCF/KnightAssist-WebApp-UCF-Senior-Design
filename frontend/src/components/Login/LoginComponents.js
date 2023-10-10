@@ -80,7 +80,7 @@ function LoginComponents(){
         )
     }
 
-    function ForgotPassowrd(){
+    function ForgotPassword(){
         return (
             <button className="forgotPWD">forgot password</button>
         )
@@ -98,7 +98,7 @@ function LoginComponents(){
             {Password()}
             <Login/>
             <div className="textUnderSubmit center">
-                <ForgotPassowrd/>
+                <ForgotPassword/>
                 <Register/>
             </div>
             <Copyright/>
