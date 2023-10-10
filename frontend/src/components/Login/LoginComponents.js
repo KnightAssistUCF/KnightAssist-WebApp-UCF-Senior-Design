@@ -31,9 +31,6 @@ function LoginComponents(){
             // The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
                 setIsInvalid("");
-                // Switch url to the page respective to the user
-                // Probably will need an api call to determine
-                // if volunteer or org
             }else{
                 setIsInvalid("is-invalid");
             }
@@ -96,7 +93,7 @@ function LoginComponents(){
     }
 
     return (
-        <div className="loginBox">
+        <div className="foo loginBox">
             {Email()}
             {Password()}
             <Login/>
