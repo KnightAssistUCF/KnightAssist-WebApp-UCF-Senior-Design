@@ -151,7 +151,8 @@ html, body {height: 100%}
 }
 
 .headerTitleLogo{
-  margin-left: 10px;
+  margin-left: 50px;
+  margin-right: 50px;
   margin-bottom: -5px;
 }
 
@@ -178,9 +179,18 @@ html, body {height: 100%}
 }
 
 .headerLink{
+  float: right;
   margin-left: 20px;
   margin-right: 20px;
-  font-size: 30px;
+  font-size: 25px;
   color: white;
   font-family: "League Spartan";
+}
+
+.centerHeader{
+  margin-left: 25%;
+}
+
+.spartan{
+  font-family: "League Spratan";
 }
