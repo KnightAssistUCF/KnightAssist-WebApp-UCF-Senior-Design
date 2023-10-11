@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import "@fontsource/league-spartan";
 import {
   HashRouter as Router,
   Route,
@@ -17,6 +18,9 @@ function App()
         <Router>
           <Routes>
             <Route path="/" element={<LoginPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
           </Routes>
        </Router>
       </header>
