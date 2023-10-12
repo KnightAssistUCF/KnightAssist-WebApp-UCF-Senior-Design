@@ -1,23 +1,21 @@
 import React from 'react';
 import './App.css';
-import {
-  HashRouter as Router,
-  Route,
-  Routes,
-} from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LoginPage from './pages/LoginPage';
+import StudentHomePage from './pages/StudentHomePage';
 
 function App() 
 {
   return (
     <div className="App">
       <header className="App-header">
-        <Router>
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginPage/>}></Route>
+            <Route path="/" index element={<LoginPage />} />
+            <Route path="/studenthomepage" index element={<StudentHomePage />} />
           </Routes>
-       </Router>
+       </BrowserRouter>
       </header>
     </div>
   );
