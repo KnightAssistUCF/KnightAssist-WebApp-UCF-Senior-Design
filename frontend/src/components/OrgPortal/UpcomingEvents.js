@@ -1,9 +1,28 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 const logo = require("../Login/loginPic.png");
 
 
 function UpcomingEvents()
 {
+
+    const [eventCards, setEventCards] = useState();
+
+    const events = [<Event/>, <Event/>, <Event/>]
+
+    function makeEvent(){
+        
+    }
+
+    function getUpcomingEvents(){
+        //STEPS
+        // 1. API Call to get upcoming event information
+        // 2. For everything that it returns, make an array of Event components
+        // 3. setEventCards(events)
+        
+        let res = <div class="cards d-flex flex-row cardWhite card-body">{events}</div>
+        setEventCards(res);
+    }
+
     function EventHeader(){
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
@@ -34,16 +53,16 @@ function UpcomingEvents()
 
     function Events(){
         return (
-            <div class="eventsCard card">
-                <div class="cards d-flex flex-row cardWhite card-body">
-                    <Event/>
-                    <Event/>
-                    <Event/>
-                    <Event/>
-                </div>
+            <div class="eventsCard card">       
+                {eventCards}
             </div>
         )
     }
+
+    useEffect(()=>{
+        console.log("Im called")
+        getUpcomingEvents();
+    },[])
 
     return(
      <div>

@@ -4,7 +4,7 @@ function Welcome()
 {
     return(
      <div className='welcome spartan'>
-        <h1>Welcome KnightHacks...</h1>
+        <h1>Welcome, KnightHacks</h1>
      </div>
     );
 };
