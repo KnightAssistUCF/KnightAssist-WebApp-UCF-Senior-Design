@@ -6,7 +6,10 @@ a{
   text-decoration: none !important;
 }
 
-html, body {height: 100%}
+html, body {
+  height: 100%; 
+  margin:0;
+}
 
 .App-logo {
   height: 40vmin;
@@ -123,8 +126,10 @@ html, body {height: 100%}
 }
 
 .orgPortal{
-  height: 100%;
+  height: 100vh;
   width: 100%;
+  background-color: white;
+  color: black;
 }
 
 .copyright{
@@ -156,10 +161,7 @@ html, body {height: 100%}
   margin-left: 50px;
   margin-right: 50px;
   margin-bottom: 20px;
-}
-
-.org{
-  background-color: white;
+  color: white;
 }
 
 .loginPhoto{
@@ -220,4 +222,55 @@ html, body {height: 100%}
 
 .logoutIcon{
   color: white;
+}
+
+.upcomingEvents{
+  width: 100%;
+  height: 25%;
+  text-align: left;
+  font-size: 30px;
+  margin-bottom: 30px;
+}
+
+.welcome{
+  text-align: left;
+  font-size: 20px;
+  margin-bottom: 50px;
+}
+
+.move{
+  margin-left: 13%;
+}
+
+.eventsCard{
+  margin-right: 10%;
+}
+
+.event{
+  min-width: 25% !important;
+  float: left;
+  margin-right: 25px;
+}
+
+.innerEvent{
+  background-color: white;
+  height: 200px;
+}
+
+.eventPhoto{
+  height: 60%;
+  width: 100%;
+}
+
+.cardWhite{
+  background-color: white;
+  width: 100%;
+}
+
+.card-body{
+  width: 100%;
+}
+
+.cards{
+  overflow: scroll;
 }

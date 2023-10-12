@@ -1,12 +1,17 @@
 import React from 'react';
-import PageTitle from '../PageTitle';
 import Header from './Header';
+import UpcomingEvents from './UpcomingEvents';
+import Welcome from './Welcome';
 
 function OrgPortal()
 {
     return(
-      <div className='org'>
+      <div>
         <Header/>
+        <div className='move'>
+          <Welcome/>
+          <UpcomingEvents/>
+        </div>
       </div>
     );
 };
