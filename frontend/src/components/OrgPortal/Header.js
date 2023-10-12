@@ -5,11 +5,11 @@ function Header()
 {
     return(
      <div>
-        <div className='top'>
-            <nav className="centerHeader navbar navbar-expand-lg navbar-light">
+        <div className="orgNav">
+            <nav className="navbar navbar-expand-lg navbar-light">
+                <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 <a className="headerLink" href="">profile</a>
                 <a className="headerLink" href="">home</a>
-                <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 <a className="headerLink" href="">about us</a>
                 <a className="headerLink" href="">contact</a>
             </nav>

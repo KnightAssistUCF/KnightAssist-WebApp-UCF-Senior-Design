@@ -114,7 +114,7 @@ html, body {height: 100%}
   float: right;
   width: 50%;
   height: 100vh;
-  background-color: #a6579a;
+  background-color: #473F6C;
 }
 
 .login{
@@ -134,11 +134,12 @@ html, body {height: 100%}
   color: black;
 }
 
-.top{
+.orgNav{
   position: fixed; 
   top: 0px; 
-  width:  100%;
-  background-color: #a6579a;
+  width: 10%;
+  height: 100vh;
+  background-color: #473F6C;
 }
 
 .logoHeader{
@@ -148,12 +149,13 @@ html, body {height: 100%}
 
 .titleHeader{
   font-size: 18px;
+  margin-left: 15px;
 }
 
 .headerTitleLogo{
   margin-left: 50px;
   margin-right: 50px;
-  margin-bottom: -5px;
+  margin-bottom: 20px;
 }
 
 .org{
@@ -180,17 +182,21 @@ html, body {height: 100%}
 
 .headerLink{
   float: right;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   font-size: 25px;
   color: white;
   font-family: "League Spartan";
 }
 
-.centerHeader{
-  margin-left: 25%;
-}
-
 .spartan{
   font-family: "League Spratan";
+}
+
+.navbar,
+.navbar-collapse {
+  flex-direction: column;
+}
+.navbar-expand-lg .navbar-nav {
+  flex-direction: column;
 }
