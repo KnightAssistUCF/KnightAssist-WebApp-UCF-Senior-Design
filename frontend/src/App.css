@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  /* text-align: center; */
 }
 
 html, body {height: 100%}
@@ -17,12 +17,12 @@ html, body {height: 100%}
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
-  display: flex;
+  /* display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: center; */
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -55,7 +55,7 @@ html, body {height: 100%}
 }
 
 .center{
-  text-align: center;
+  /* text-align: center; */
 }
 
 .loginButton{
@@ -74,8 +74,8 @@ html, body {height: 100%}
 }
 
 .title{
-  margin-right: 20px;
-  font-size: 50px;
+  /* margin-right: 20px;
+  font-size: 50px; */
 }
 
 .forgotPWD{
@@ -128,4 +128,12 @@ html, body {height: 100%}
 .loginPhoto{
 	height: 100vh;
 	width: 95vh;
+}
+
+.orgNav{
+  position: fixed; 
+  top: 0px; 
+  width: 10%;
+  height: 100vh;
+  background-color: #5f5395;
 }
