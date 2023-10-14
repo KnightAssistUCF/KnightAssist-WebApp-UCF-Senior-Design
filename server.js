@@ -49,29 +49,29 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const user_signup = require('./routes/userStudentSignUp');
+const user_signup = require('./backend/routes/userStudentSignUp');
 app.use('/api/userStudentSignUp', user_signup);
 
-const organization_signup = require('./routes/organizationSignUp');
+const organization_signup = require('./backend/routes/organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
 
 // login supports both organization and user lookup
-const login = require('./routes/Login'); 
+const login = require('./backend/routes/Login'); 
 app.use('/api/Login', login);
 
-const userStudentsDelete = require('./routes/userStudentsDelete');
+const userStudentsDelete = require('./backend/routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const organizationDelete = require('./routes/organizationDelete');
+const organizationDelete = require('./backend/routes/organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
-const searchUser = require('./routes/searchUser');
+const searchUser = require('./backend/routes/searchUser');
 app.use('/api/searchUser', searchUser);
 
-const searchOrganization = require('./routes/searchOrganization');
+const searchOrganization = require('./backend/routes/searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
-const editUserProfile = require('./routes/editUserProfile');
+const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
 /*
