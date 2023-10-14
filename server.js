@@ -49,36 +49,36 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const user_signup = require('./userStudentSignUp');
+const user_signup = require('./backend/routes/userStudentSignUp');
 app.use('/api/userStudentSignUp', user_signup);
 
-const organization_signup = require('./organizationSignUp');
+const organization_signup = require('./backend/routes/organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
 
 // login supports both organization and user lookup
 const login = require('./Login'); 
 app.use('/api/Login', login);
 
-const userStudentsDelete = require('./userStudentsDelete');
+const userStudentsDelete = require('./backend/routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const organizationDelete = require('./organizationDelete');
+const organizationDelete = require('./backend/routes/organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
-const searchUser = require('./searchUser');
+const searchUser = require('./backend/routes/searchUser');
 app.use('/api/searchUser', searchUser);
 
-const searchOrganization = require('./searchOrganization');
+const searchOrganization = require('./backend/routes/searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
-const editUserProfile = require('./editUserProfile');
+const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-if (process.env.NODE_ENV === 'production') {
+if (process.env.STATUS === 'production') {
     // [NOTE]: Please change this as is needed later
     // Serve any static files
     app.use(express.static(path.join(__dirname, '../frontend/build')));
