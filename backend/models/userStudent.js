@@ -79,10 +79,6 @@ const studentSemesterSchema = new mongoose.Schema({
     }],
     startDate: Date,
     endDate: Date,
-    semesterVolunteerHourGoal: {
-        type: Number,
-        default: 0
-    },
     __v: {
         type: String,
         required: true,
