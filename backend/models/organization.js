@@ -9,15 +9,32 @@ const eventSchema = new Schema({
     description: String,
     location: String,
     date: Date,
-    organizer: {
+    sponsoringOrganization: {
         type: Schema.Types.ObjectId,
         ref: 'organization'
     },
     attendees: [{
         type: Schema.Types.ObjectId,
         ref: 'userStudent'
-    }]
+    }],
+    registeredVolunteers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent'
+    }],
+    startTime: Date,
+    endTime: Date,
+    eventLinks: {
+        facebook: String,
+        twitter: String,
+        instagram: String,
+        website: String
+    }, 
+    eventTags: [String],
+    semester: String
 }, {collection: 'event', timestamps: true});
+
+const organizationSemesterSchema = new Schema({
+}, {collection: 'organizationSemester', timestamps: true});
 
 const organizationSchema = new Schema({
     organizationID: {
@@ -98,3 +115,5 @@ const organizationSchema = new Schema({
 }, {collection: 'organization', timestamps: true});
 
 module.exports = mongoose.model('organization', organizationSchema);
+module.exports = mongoose.model('event', eventSchema);
+module.exports = mongoose.model('organizationSemester', organizationSemesterSchema);
