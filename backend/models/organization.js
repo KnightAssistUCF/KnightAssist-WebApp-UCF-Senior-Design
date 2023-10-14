@@ -133,6 +133,10 @@ const organizationSchema = new Schema({
     }],
     // added a component for the organization's location which can be either a string address, or  google maps link
     location: String,
+    organizationSemesters: [{
+        type: Schema.Types.ObjectId,
+        ref: 'organizationSemester'
+    }],
     __v: {
         type: String,
         required: true,
