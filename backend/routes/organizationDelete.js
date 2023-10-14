@@ -5,7 +5,7 @@ const organization = require('../models/organization');
 
 // first we lookup the organization by their email
 router.get('/', async (req, res) => {
-    await organization.findOne({ email: req.body.email }).then((organization) => {
+    await organization.findOne({ email: req.query.email }).then((organization) => {
         if (organization) { res.status(200).send(organization); }
         else throw new Error()
     }).catch((err) => { res.status(400).send("Organization not found") });

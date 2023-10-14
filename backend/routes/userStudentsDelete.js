@@ -10,7 +10,7 @@ const userStudent = require('../models/userStudent');
 
 // lookUp user by email
 router.get('/', async (req, res) => {
-    await userStudent.findOne({ email: req.body.email }).then((user) => {
+    await userStudent.findOne({ email: req.query.email }).then((user) => {
         if (user) { res.status(200).send(user); }
         else throw new Error()
     }).catch((err) => { res.status(400).send("User not found") });
