@@ -20,6 +20,11 @@ const eventSchema = new Schema({
 }, {collection: 'event', timestamps: true});
 
 const organizationSchema = new Schema({
+    organizationID: {
+        type: String, // keeping it as a string for now for ease of use
+        required: true,
+        unique: true
+    },
     name: {
         type: String,
         required: true,
@@ -41,7 +46,6 @@ const organizationSchema = new Schema({
     },
     logoUrl: String,
     category: [String], // what type of organization is this? (e.g. academic, social, etc.)
-    events: [eventSchema],
     followers: [{
         type: Schema.Types.ObjectId, // people that follow this organization
         ref: 'userStudent'
@@ -77,6 +81,19 @@ const organizationSchema = new Schema({
     eventHappeningNow: {
         type: Boolean,
         default: false
+    },
+    backgroundURL: String,
+    eventsArray: [{
+        type: Schema.Types.ObjectId,
+        ref: 'event'
+    }],
+    // added a component for the organization's location which can be either a string address, or  google maps link
+    location: String,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
     }
 }, {collection: 'organization', timestamps: true});
 
