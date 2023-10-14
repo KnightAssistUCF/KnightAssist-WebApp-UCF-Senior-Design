@@ -4,7 +4,7 @@ const router = express.Router();
 const organization = require('../models/organization');
 
 router.get('/', async (req, res) => {
-    const searchEmail = req.body.email;
+    const searchEmail = req.query.email;
 
     await organization.findOne({ email: searchEmail }).then((organization) => {
         if (organization) {
