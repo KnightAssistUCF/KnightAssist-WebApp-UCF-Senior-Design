@@ -8,21 +8,15 @@ function UpcomingEvents()
 
     const [eventCards, setEventCards] = useState();
 
-    const events = []
+    let events = []
 
     function makeEvent(){
         
     }
 
     async function getUpcomingEvents(){
-        //STEPS
-        // 1. API Call to get upcoming event information
-        // 2. For everything that it returns, make an array of Event components
-        // 3. setEventCards(events)
-
         const email = "fooEvents@example.com"
         
-
         const url = buildPath(`api/searchOrganization?email=${email}`);
 
         const response = await fetch(url, {
@@ -31,6 +25,8 @@ function UpcomingEvents()
         });
     
         let res = JSON.parse(await response.text());
+
+        events = [];
 
         for(let event of res.events)
             events.push(<Event name={event.name} date={event.date}/>)
@@ -59,7 +55,7 @@ function UpcomingEvents()
     function Event(props){
         return (
             <div className="event card">
-                <div className="innerEvent eventHeight">
+                <div className="spartan innerEvent eventHeight">
                     {EventPhoto(logo)}
                     {EventDescription(props.name, props.date)}
                 </div>

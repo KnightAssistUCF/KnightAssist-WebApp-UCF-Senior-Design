@@ -274,3 +274,10 @@ html, body {
 .cards{
   overflow: scroll;
 }
+
+.orgSearch{
+  width: 50% !important;
+  margin-left: 25% !important;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
