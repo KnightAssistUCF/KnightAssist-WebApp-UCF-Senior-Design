@@ -137,6 +137,37 @@ const organizationSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'organizationSemester'
     }],
+    // create a somponent to store the working hours of the organization per day per week
+    workingHoursPerWeek: {
+        sunday: {
+            start: String,
+            end: String
+        },
+        monday: {
+            start: String,
+            end: String
+        },
+        tuesday: {
+            start: String,
+            end: String
+        },
+        wednesday: {
+            start: String,
+            end: String
+        },
+        thursday: {
+            start: String,
+            end: String
+        },
+        friday: {
+            start: String,
+            end: String
+        },
+        saturday: {
+            start: String,
+            end: String
+        }
+    },
     __v: {
         type: String,
         required: true,
