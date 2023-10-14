@@ -10,9 +10,6 @@ const app = express();
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-var distDir = __dirname + "/dist/";
-app.use(express.static(distDir));
-
 app.set('port', (process.env.PORT || 5000));
 app.use(cors());
 app.use(bodyParser.json());
@@ -52,36 +49,36 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const user_signup = require('./backend/routes/userStudentSignUp.js');
+const user_signup = require('./userStudentSignUp');
 app.use('/api/userStudentSignUp', user_signup);
 
-const organization_signup = require('./backend/routes/organizationSignUp.js');
+const organization_signup = require('./organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
 
 // login supports both organization and user lookup
-const login = require('./backend/routes/Login'); 
+const login = require('./Login'); 
 app.use('/api/Login', login);
 
-const userStudentsDelete = require('./backend/routes/userStudentsDelete.js');
+const userStudentsDelete = require('./userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const organizationDelete = require('./backend/routes/organizationDelete.js');
+const organizationDelete = require('./organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
-const searchUser = require('./backend/routes/searchUser.js');
+const searchUser = require('./searchUser');
 app.use('/api/searchUser', searchUser);
 
-const searchOrganization = require('./backend/routes/searchOrganization.js');
+const searchOrganization = require('./searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
-const editUserProfile = require('./backend/routes/editUserProfile.js');
+const editUserProfile = require('./editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-if (process.env.STATUS === 'production') {
+if (process.env.NODE_ENV === 'production') {
     // [NOTE]: Please change this as is needed later
     // Serve any static files
     app.use(express.static(path.join(__dirname, '../frontend/build')));
