@@ -30,10 +30,37 @@ const eventSchema = new Schema({
         website: String
     }, 
     eventTags: [String],
-    semester: String
+    semester: String,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
+    }
 }, {collection: 'event', timestamps: true});
 
 const organizationSemesterSchema = new Schema({
+    semester: {
+        type: String,
+        required: true
+    },
+    organization: {
+        type: Schema.Types.ObjectId,
+        ref: 'organization'
+    },
+    events: [{
+        type: Schema.Types.ObjectId,
+        ref: 'event'
+    }],
+    startDate: Date,
+    endDate: Date,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
+    }
+
 }, {collection: 'organizationSemester', timestamps: true});
 
 const organizationSchema = new Schema({
