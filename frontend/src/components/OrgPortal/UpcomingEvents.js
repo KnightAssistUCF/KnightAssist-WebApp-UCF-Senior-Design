@@ -20,23 +20,23 @@ function UpcomingEvents()
         // 2. For everything that it returns, make an array of Event components
         // 3. setEventCards(events)
 
-        const json = {
-            email: "fooEvents@example.com"
-         };
+        const email = "fooEvents@example.com"
+        
 
-        const url = buildPath(`api/searchOrganization?email=${json.email}`);
+        const url = buildPath(`api/searchOrganization?email=${email}`);
 
         const response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         });
     
-        let resp = await response.text();
+        let res = JSON.parse(await response.text());
 
-        console.log(resp);
-
-        let res = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
-        setEventCards(res);
+        for(let event of res.events)
+            events.push(<Event name={event.name} date={event.date}/>)
+            
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
+        setEventCards(content);
     }
 
     function EventHeader(){
@@ -47,21 +47,21 @@ function UpcomingEvents()
         return <img className="eventPhoto" src={imgSrc} />
     }
 
-    function EventDescription(){
+    function EventDescription(name, date){
         return (
             <div>
-                <div className='eventName'>Event</div>
-                <div className='eventDate'>July 8th</div>
+                <div className='eventName'>{name}</div>
+                <div className='eventDate'>{new Date(date).toISOString().split("T")[0]}</div>
             </div>
         )
     }
 
-    function Event(){
+    function Event(props){
         return (
             <div className="event card">
                 <div className="innerEvent eventHeight">
                     {EventPhoto(logo)}
-                    <EventDescription/>
+                    {EventDescription(props.name, props.date)}
                 </div>
             </div>
         )
