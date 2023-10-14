@@ -96,7 +96,7 @@ function LoginComponents(){
     }
 
     return (
-        <div className="foo loginBox">
+        <div className="loginBox">
             {Email()}
             {Password()}
             <Login/>

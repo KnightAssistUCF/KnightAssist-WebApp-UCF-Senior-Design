@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import { buildPath } from '../../path';
 const logo = require("../Login/loginPic.png");
 
 
@@ -7,19 +8,34 @@ function UpcomingEvents()
 
     const [eventCards, setEventCards] = useState();
 
-    const events = [<Event/>, <Event/>, <Event/>]
+    const events = []
 
     function makeEvent(){
         
     }
 
-    function getUpcomingEvents(){
+    async function getUpcomingEvents(){
         //STEPS
         // 1. API Call to get upcoming event information
         // 2. For everything that it returns, make an array of Event components
         // 3. setEventCards(events)
-        
-        let res = <div class="cards d-flex flex-row cardWhite card-body">{events}</div>
+
+        const json = {
+            email: "fooEvents@example.com"
+         };
+
+        const url = buildPath(`api/searchOrganization?email=${json.email}`);
+
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let resp = await response.text();
+
+        console.log(resp);
+
+        let res = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(res);
     }
 
@@ -42,8 +58,8 @@ function UpcomingEvents()
 
     function Event(){
         return (
-            <div class="event card">
-                <div class="innerEvent eventHeight">
+            <div className="event card">
+                <div className="innerEvent eventHeight">
                     {EventPhoto(logo)}
                     <EventDescription/>
                 </div>
@@ -53,14 +69,13 @@ function UpcomingEvents()
 
     function Events(){
         return (
-            <div class="eventsCard card">       
+            <div className="eventsCard card">       
                 {eventCards}
             </div>
         )
     }
 
     useEffect(()=>{
-        console.log("Im called")
         getUpcomingEvents();
     },[])
 
