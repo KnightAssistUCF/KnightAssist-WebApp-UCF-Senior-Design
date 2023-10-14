@@ -9,6 +9,10 @@ const eventSchema = new Schema({
     description: String,
     location: String,
     date: Date,
+    organizer: {
+        type: Schema.Types.ObjectId,
+        ref: 'organization'
+    },
     attendees: [{
         type: Schema.Types.ObjectId,
         ref: 'userStudent'
