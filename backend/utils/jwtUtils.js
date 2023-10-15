@@ -4,7 +4,7 @@ let jwtSecret = process.env.JWT_SECRET_KEY;
 let tokenHeaderKey = process.env.TOKEN_HEADER_KEY;
 
 const generateToken = (payload, jwtSecret) => {
-    jwt.sign(payload, jwtSecret, { expiresIn: '1200s' }); 
+    return jwt.sign(payload, jwtSecret, { expiresIn: '1800s' }); 
 }
 
 const validateToken = (req, res, tokenHeaderKey) => {
