@@ -8,7 +8,7 @@ function LoginComponents(){
     const [isInvalid, setIsInvalid] = useState("");
 
     function buildPath(route) {
-		if (process.env.STATUS === 'production') {
+		if (process.env.NODE_ENV === 'production') {
 			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
             
 		}
