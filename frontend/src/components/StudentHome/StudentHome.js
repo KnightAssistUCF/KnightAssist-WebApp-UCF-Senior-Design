@@ -11,8 +11,7 @@ function StudentHome()
 {
    return(
       <div className='homePage'>
-        <div class="temp-navbar"></div>
-        <div class="title">Welcome, First Last</div>
+        <div class="StudentHomePage-title">Welcome, First Last</div>
         <div class="progress-bar" style={{ width: 460, height: 150 }}><CircularProgressbar value={86} text={`13/15`} /></div>
         <div class="titlesub">Upcoming Volunteer Shifts</div>
         <div class="my-table">
@@ -34,7 +33,7 @@ function StudentHome()
                   <td>2.5 hours</td>
                   <td>12:30pm</td>
                   <td>3:00pm</td>
-                  <td className="centered-column">
+                  <td className="text-center">
                     <Button className="btn-danger" >Cancel RSVP</Button>
                   </td>
                 </tr>

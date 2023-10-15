@@ -5,12 +5,12 @@ const dbURL = process.env.atlasDB_LINK;
 
 
 const express = require('express');
-const path = require('path');
 const app = express();
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', port);
 app.use(cors());
 app.use(bodyParser.json());
 app.disable('x-powered-by');
@@ -49,45 +49,45 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const user_signup = require('./routes/userStudentSignUp');
+const user_signup = require('./backend/routes/userStudentSignUp');
 app.use('/api/userStudentSignUp', user_signup);
 
-const organization_signup = require('./routes/organizationSignUp');
+const organization_signup = require('./backend/routes/organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
 
 // login supports both organization and user lookup
-const login = require('./routes/Login'); 
+const login = require('./backend/routes/Login'); 
 app.use('/api/Login', login);
 
-const userStudentsDelete = require('./routes/userStudentsDelete');
+const userStudentsDelete = require('./backend/routes/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const organizationDelete = require('./routes/organizationDelete');
+const organizationDelete = require('./backend/routes/organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
-const searchUser = require('./routes/searchUser');
+const searchUser = require('./backend/routes/searchUser');
 app.use('/api/searchUser', searchUser);
 
-const searchOrganization = require('./routes/searchOrganization');
+const searchOrganization = require('./backend/routes/searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
-const editUserProfile = require('./routes/editUserProfile');
+const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
+
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-if (process.env.STATUS === 'production') {
+if (process.env.NODE_ENV === 'production') {
     // [NOTE]: Please change this as is needed later
     // Serve any static files
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(path.join(__dirname, 'frontend/build')));
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
     });
 }
-
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
