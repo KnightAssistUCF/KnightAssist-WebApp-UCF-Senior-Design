@@ -9,10 +9,19 @@ const generateToken = (payload, jwtSecret) => {
 
 const validateToken = (req, res, tokenHeaderKey) => {
 
-    const token = req.header(tokenHeaderKey);
-    const verified = jwt.verify(token, jwtSecret); 
+    try {
 
-    if (!verified){ 
+        const token = req.header(tokenHeaderKey);
+        const verified = jwt.verify(token, jwtSecret); 
+
+        if (!verified){ 
+            return res.status(401).send(error); 
+
+        }
+    }
+
+    catch (error) {
+        
         return res.status(401).send(error); 
     }
 } 

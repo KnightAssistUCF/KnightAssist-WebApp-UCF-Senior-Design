@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs'); // I will use this to hash the password
+const { generateToken } = require('../utils/jwtUtils');
 
 const userStudent = require('../models/userStudent');
 

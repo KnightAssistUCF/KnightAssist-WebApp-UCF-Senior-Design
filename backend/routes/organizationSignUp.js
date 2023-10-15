@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const { generateToken } = require('../utils/jwtUtils');
 
 const organizationSchema = require('../models/organization');
 
