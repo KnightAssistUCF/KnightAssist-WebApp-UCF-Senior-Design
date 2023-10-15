@@ -79,7 +79,7 @@ app.use('/api/editUserProfile', editUserProfile);
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-if (process.env.NODE_ENV === 'production') {
+if (process.env.STATUS === 'production') {
     // [NOTE]: Please change this as is needed later
     // Serve any static files
     app.use(express.static(path.join(__dirname, 'frontend/build')));
