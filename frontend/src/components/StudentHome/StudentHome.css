@@ -11,6 +11,22 @@
     text-align: left;
     min-height: 10vh;
 }
+.StudentHomePage-card {
+    width: calc(33% - 20px); /* Adjust the width as per your layout */
+    background: #ededed; /* Background color of the rectangular box */
+    display: inline-block; /* Display as an inline block */
+    text-align: center; /* Center the content horizontally */
+    color: black; /* Text color */
+    margin-left: 20px; /* Add some left margin to separate it from the progress bar */
+    padding: 20px;
+    border-radius: 20px;
+    
+}
+.content-container {
+    display: flex; /* Use flexbox layout */
+    justify-content: space-around; /* Space between the progress bar and the card */
+    align-items: flex; /* Align items at the top */
+  }
 .titlesub {
     color: rgb(0, 0, 0);
     /* padding: 50px 200px; */
@@ -30,7 +46,9 @@
 } */
 
 .my-table {
-    width: 95%;
+    width: 97%;
+    margin: 0 auto;
+    border-radius: 10px;
 }
 
 .my-table th {
@@ -52,6 +70,7 @@
 } */
 .homePage{
     text-align: left;
+    margin: 20px 40px;
 }
 
 .StudentHomePage .centered-column {
@@ -71,3 +90,40 @@
     color: white;
     text-align: left;
   }
+
+  .StudentHomePage-card .volunteer-goal {
+    align-items: center; 
+  }
+  
+.StudentHomePage-card .volunteer-goal label {
+    margin-right: 10px; /* Add some spacing between label and input */
+  }
+  
+  /* Style the input box */
+  .StudentHomePage-card .volunteer-goal input {
+    padding: 5px;
+    width: 63px; 
+    height: 45px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    font-size: 25px;
+    /* You can add more styles as needed */
+  }
+
+  .upcoming-shift {
+    padding-top: 10px;
+    font-size: 30px;
+  }
+
+
+
+/* Responsive styles for smaller screens */
+@media (max-width: 768px) {
+    .StudentHomePage-card {
+        width: 100%; /* Full width on smaller screens */
+        margin-left: 0; /* No margin on smaller screens */
+    }
+    .content-container {
+        flex-direction: column; /* Stack content on smaller screens */
+    }
+}

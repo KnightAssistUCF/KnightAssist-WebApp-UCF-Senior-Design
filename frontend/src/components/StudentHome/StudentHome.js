@@ -9,10 +9,34 @@ import './StudentHome.css';
 
 function StudentHome()
 {
+  const defaultVol = 15.0;
+  const [volunteerGoal, setVolunteerGoal] = useState(defaultVol);
+  const handleVolunteerGoalChange = (e) => {
+    setVolunteerGoal(e.target.value);
+  };
    return(
       <div className='homePage'>
         <div class="StudentHomePage-title">Welcome, First Last</div>
-        <div class="progress-bar" style={{ width: 460, height: 150 }}><CircularProgressbar value={86} text={`13/15`} /></div>
+        <div class="content-container">
+          <div class="progress-bar" style={{ width: 460, height: 150 }}><CircularProgressbar value={(13.0/volunteerGoal)*100} text={'13/'+volunteerGoal} /></div>
+          <div class="StudentHomePage-card">
+            <p><strong>Fall 2023</strong></p>
+
+            <div class="volunteer-goal">
+              <label for="volunteerGoal">Volunteer Hour Goal:</label>
+              <input
+                type="number"
+                id="volunteerGoal"
+                value={volunteerGoal}
+                onChange={handleVolunteerGoalChange}
+              />
+            </div>
+
+            <p class="upcoming-shift">Upcoming Shift: <strong>Arboretum</strong></p>
+            <p class="upcoming-shift-time">October 20th, 12:30pm-3pm</p>
+            
+          </div>
+        </div>
         <div class="titlesub">Upcoming Volunteer Shifts</div>
         <div class="my-table">
           <table className="table table-hover text-nowrap">
