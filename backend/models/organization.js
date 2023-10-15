@@ -9,13 +9,66 @@ const eventSchema = new Schema({
     description: String,
     location: String,
     date: Date,
+    sponsoringOrganization: {
+        type: Schema.Types.ObjectId,
+        ref: 'organization'
+    },
     attendees: [{
         type: Schema.Types.ObjectId,
         ref: 'userStudent'
-    }]
+    }],
+    registeredVolunteers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent'
+    }],
+    startTime: Date,
+    endTime: Date,
+    eventLinks: {
+        facebook: String,
+        twitter: String,
+        instagram: String,
+        website: String
+    }, 
+    eventTags: [String],
+    semester: String,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
+    }
 }, {collection: 'event', timestamps: true});
 
+const organizationSemesterSchema = new Schema({
+    semester: {
+        type: String,
+        required: true
+    },
+    organization: {
+        type: Schema.Types.ObjectId,
+        ref: 'organization'
+    },
+    events: [{
+        type: Schema.Types.ObjectId,
+        ref: 'event'
+    }],
+    startDate: Date,
+    endDate: Date,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
+    }
+
+}, {collection: 'organizationSemester', timestamps: true});
+
 const organizationSchema = new Schema({
+    organizationID: {
+        type: String, // keeping it as a string for now for ease of use
+        required: true,
+        unique: true
+    },
     name: {
         type: String,
         required: true,
@@ -37,7 +90,6 @@ const organizationSchema = new Schema({
     },
     logoUrl: String,
     category: [String], // what type of organization is this? (e.g. academic, social, etc.)
-    events: [eventSchema],
     followers: [{
         type: Schema.Types.ObjectId, // people that follow this organization
         ref: 'userStudent'
@@ -73,7 +125,57 @@ const organizationSchema = new Schema({
     eventHappeningNow: {
         type: Boolean,
         default: false
+    },
+    backgroundURL: String,
+    eventsArray: [{
+        type: Schema.Types.ObjectId,
+        ref: 'event'
+    }],
+    // added a component for the organization's location which can be either a string address, or  google maps link
+    location: String,
+    organizationSemesters: [{
+        type: Schema.Types.ObjectId,
+        ref: 'organizationSemester'
+    }],
+    // create a somponent to store the working hours of the organization per day per week
+    workingHoursPerWeek: {
+        sunday: {
+            start: String,
+            end: String
+        },
+        monday: {
+            start: String,
+            end: String
+        },
+        tuesday: {
+            start: String,
+            end: String
+        },
+        wednesday: {
+            start: String,
+            end: String
+        },
+        thursday: {
+            start: String,
+            end: String
+        },
+        friday: {
+            start: String,
+            end: String
+        },
+        saturday: {
+            start: String,
+            end: String
+        }
+    },
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
     }
 }, {collection: 'organization', timestamps: true});
 
 module.exports = mongoose.model('organization', organizationSchema);
+module.exports = mongoose.model('event', eventSchema);
+module.exports = mongoose.model('organizationSemester', organizationSemesterSchema);
