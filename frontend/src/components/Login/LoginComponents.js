@@ -7,6 +7,16 @@ function LoginComponents(){
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
 
+    function buildPath(route) {
+		if (process.env.NODE_ENV === 'production') {
+			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
+            
+		}
+		else {        
+			return 'http://localhost:8000/' + route;
+		}
+	}
+
     async function doLogin(){
         const json = {
                         email: email,
@@ -15,7 +25,7 @@ function LoginComponents(){
 
         console.log(json);
 
-        const url = buildPath("api/Login");
+        //const url = buildPath("api/Login");
 
         try {
             window.location.href="/#/orgportal"

@@ -5,12 +5,12 @@ const dbURL = process.env.atlasDB_LINK;
 
 
 const express = require('express');
-const path = require('path');
 const app = express();
+const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', port);
 app.use(cors());
 app.use(bodyParser.json());
 app.disable('x-powered-by');
@@ -74,20 +74,20 @@ app.use('/api/searchOrganization', searchOrganization);
 const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
 */
-if (process.env.STATUS === 'production') {
+if (process.env.NODE_ENV === 'production') {
     // [NOTE]: Please change this as is needed later
     // Serve any static files
-    app.use(express.static(path.join(__dirname, '../frontend/build')));
+    app.use(express.static(path.join(__dirname, 'frontend/build')));
     // Handle React routing, return all requests to React app
     app.get('*', function(req, res) {
-        res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+        res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
     });
 }
-
 
 app.listen(port, () => {
     console.log(`Server is running on port: ${port}`);
