@@ -25,7 +25,7 @@ function LoginComponents(){
 
         console.log(json);
 
-        //const url = buildPath("api/Login");
+        const url = buildPath("api/Login");
 
         try {
             window.location.href="/#/orgportal"
@@ -43,7 +43,6 @@ function LoginComponents(){
             /// The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
                 setIsInvalid("");
-                window.location.href="/#/orgportal"
             }else{
                 setIsInvalid("is-invalid");
             }
