@@ -4,6 +4,7 @@ import PageTitle from '../PageTitle';
 import LoginPic from './loginPic';
 import LoginPic2 from './loginPic2';
 import Carousel from 'react-bootstrap/Carousel';
+import './Login.css';
 
 function Login()
 {

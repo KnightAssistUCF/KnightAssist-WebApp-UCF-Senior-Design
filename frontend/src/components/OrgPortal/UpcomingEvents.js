@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 import { buildPath } from '../../path';
+import './OrgPortal.css';
+
 const logo = require("../Login/loginPic.png");
 
 

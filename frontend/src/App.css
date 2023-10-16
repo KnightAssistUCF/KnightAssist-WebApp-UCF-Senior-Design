@@ -47,32 +47,8 @@ html, body {
   }
 }
 
-.loginBox{
-  margin-top: 50px;
-}
-
-.emailBox{
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.passwordBox{
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
 .center{
   text-align: center;
-}
-
-.loginButton{
-  width: 100px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.card-body{
-  background-color: #CCAFD8;
 }
 
 .titleLogo{
@@ -80,44 +56,9 @@ html, body {
   margin-bottom: 95px;
 }
 
-.title{
-  margin-right: 20px;
-  font-size: 50px;
-}
-
-.forgotPWD{
-  background: none;
-  border: none;
-  font-weight: bold;
-  font-size: 13px;
-  width: 118px !important;
-}
-
-.register{
-  background: none;
-  border: none;
-  font-weight: bold;
-  font-size: 13px;
-  width: 68px !important;
-}
-
 .logo{
   width: 100px;
   height: 100px;
-}
-
-.slideshow{
-  background-color: blue;
-  float: left;
-  width: 50%;
-  height: 100vh;
-} 
-
-.contentHalf{
-  float: right;
-  width: 50%;
-  height: 100vh;
-  background-color: #5f5395;
 }
 
 .login{
@@ -132,152 +73,10 @@ html, body {
   color: black;
 }
 
-.copyright{
-  margin-top: 175px;
-  font-size: 15px;
-  width: 50% a;
-  color: black;
-}
-
-.orgNav{
-  position: fixed; 
-  top: 0px; 
-  width: 10%;
-  height: 100vh;
-  background-color: #5f5395;
-}
-
-.logoHeader{
-  width: 50px;
-  height: 50px;
-}
-
-.titleHeader{
-  font-size: 18px;
-  margin-left: 15px;
-}
-
-.headerTitleLogo{
-  margin-left: 50px;
-  margin-right: 50px;
-  margin-bottom: 20px;
-  color: white;
-}
-
-.loginPhoto{
-	height: 100vh;
-	width: 95vh;
-}
-
-.searchOrgButton{
-  width: 200px !important;
-  margin-right: 20px;
-}
-
-.searchOrgInput{
-  width: 200px a !important;
-}
-
 .tabs{
   margin-left: 50px;
 }
 
-.headerLink{
-  float: right;
-  margin-top: 15px;
-  margin-bottom: 15px;
-  font-size: 25px;
-  color: white;
-  font-family: "League Spartan";
-}
-
 .spartan{
-  font-family: "League Spratan";
-}
-
-.bottom{
-  margin-top: 300px;
-}
-
-.navbar,
-.navbar-collapse {
-  flex-direction: column;
-}
-.navbar-expand-lg .navbar-nav {
-  flex-direction: column;
-}
-
-.luWrapper{
-  background: none;
-  border: none;
-}
-
-.logoutIcon:hover{
-  color: red;
-}
-
-.logoutIcon:active{
-  color: white;
-}
-
-.logoutIcon{
-  color: white;
-}
-
-.upcomingEvents{
-  width: 100%;
-  height: 25%;
-  text-align: left;
-  font-size: 30px;
-  margin-bottom: 30px;
-}
-
-.welcome{
-  text-align: left;
-  font-size: 20px;
-  margin-bottom: 50px;
-}
-
-.move{
-  margin-left: 13%;
-}
-
-.eventsCard{
-  margin-right: 10%;
-}
-
-.event{
-  min-width: 25% !important;
-  float: left;
-  margin-right: 25px;
-}
-
-.innerEvent{
-  background-color: white;
-  height: 200px;
-}
-
-.eventPhoto{
-  height: 60%;
-  width: 100%;
-}
-
-.cardWhite{
-  background-color: white;
-  width: 100%;
-}
-
-.card-body{
-  width: 100%;
-}
-
-.cards{
-  overflow: scroll;
-}
-
-.orgSearch{
-  width: 50% !important;
-  margin-left: 25% !important;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  font-family: "League Spartan";
 }

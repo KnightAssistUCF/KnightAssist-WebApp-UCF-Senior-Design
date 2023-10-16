@@ -1,6 +1,8 @@
 import React from 'react';
 import PageTitle from './PageTitle';
 import {LuLogOut} from 'react-icons/lu';
+import './Header.css';
+
 function Header()
 {
     return(

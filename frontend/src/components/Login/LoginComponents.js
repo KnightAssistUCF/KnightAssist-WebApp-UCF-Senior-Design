@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { buildPath } from "../../path";
+import './Login.css';
 
 function LoginComponents(){
 
@@ -28,7 +29,7 @@ function LoginComponents(){
         const url = buildPath("api/Login");
 
         try {
-            window.location.href="/#/orgportal"
+           window.location.href="/#/orgportal"
 
             const response = await fetch(url, {
                 method: "POST",
@@ -71,7 +72,7 @@ function LoginComponents(){
     function Email(){
         return (
             <div className="input-group mb-3">
-                <input type="text" className={"passwordBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
+                <input type="text" className={"emailBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
             </div>
         )
     }
@@ -109,7 +110,7 @@ function LoginComponents(){
             {Email()}
             {Password()}
             <Login/>
-            <div className="textUnderSubmit center">
+            <div className="center">
                 <ForgotPassword/>
                 <Register/>
             </div>
