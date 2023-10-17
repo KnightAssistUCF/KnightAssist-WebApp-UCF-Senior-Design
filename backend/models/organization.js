@@ -41,8 +41,8 @@ const eventSchema = new Schema({
 
 const organizationSemesterSchema = new Schema({
     semester: {
-        type: String,
-        required: true
+        type: String
+        // required: true
     },
     organization: {
         type: Schema.Types.ObjectId,
