@@ -14,10 +14,12 @@ router.post('/', async (req, res) => {
         if (user) {
             var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.firstName = req.body.firstName;
+            user.studentID = req.body.studentID;
             user.lastName = req.body.lastName;
             user.email = req.body.email;
             user.password = newHashedPassword;
             user.profilePicture = req.body.profilePicture;
+            user.totalVolunteerHours = req.body.totalVolunteerHours;
             /* For now this is based on what the schema has */
             user.save();
             res.status(200).send("User updated successfully");
