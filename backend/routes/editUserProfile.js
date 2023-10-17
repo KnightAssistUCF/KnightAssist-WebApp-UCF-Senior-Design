@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
+const { authenticateToken } = require('../utils/jwtUtils');
 
 const userStudent = require('../models/userStudent');
 
@@ -8,7 +9,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("In the editProfile Route API");
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authenticateToken, async (req, res) => {
 
     await userStudent.findOne({ email: req.body.email }).then((user) => {
         if (user) {
