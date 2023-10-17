@@ -1,5 +1,10 @@
 import {useState, useEffect} from 'react';
 import { buildPath } from '../../path';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Typography from '@mui/material/Typography';
+import { CardActionArea } from '@mui/material';
 import './OrgPortal.css';
 
 const logo = require("../Login/loginPic.png");
@@ -41,26 +46,26 @@ function UpcomingEvents()
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function EventPhoto(imgSrc){
-        return <img className="eventPhoto" src={imgSrc} />
-    }
-
-    function EventDescription(name, date){
-        return (
-            <div>
-                <div className='eventName'>{name}</div>
-                <div className='eventDate'>{new Date(date).toISOString().split("T")[0]}</div>
-            </div>
-        )
-    }
-
     function Event(props){
         return (
-            <div className="event card">
-                <div className="spartan innerEvent eventHeight">
-                    {EventPhoto(logo)}
-                    {EventDescription(props.name, props.date)}
-                </div>
+            <div className="event spartan">
+                <CardActionArea className='test'>
+                    <Card className="eventHeight" onClick={() => console.log(props.name)}>
+                        <CardMedia
+                            component="img"
+                            height="150"
+                            image={logo}
+                        />
+                        <CardContent>
+                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
+                                {props.name}
+                            </Typography>
+                            <Typography className="eventDate" variant="body2" color="text.secondary">
+                                {new Date(props.date).toISOString().split("T")[0]}
+                            </Typography>
+                        </CardContent>
+                    </Card>
+                </CardActionArea>
             </div>
         )
     }

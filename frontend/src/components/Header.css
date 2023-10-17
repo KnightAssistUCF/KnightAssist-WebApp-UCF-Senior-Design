@@ -1,13 +1,16 @@
 .orgNav{
     position: fixed; 
+    z-index: 1;
     top: 0px; 
-    width: 10%;
+    width: 150px;
     height: 100vh;
     background-color: #5f5395;
 }
 
 .navbar,
 .navbar-collapse {
+  width: 100%;
+  height: 100%;
   flex-direction: column;
 }
 .navbar-expand-lg .navbar-nav {

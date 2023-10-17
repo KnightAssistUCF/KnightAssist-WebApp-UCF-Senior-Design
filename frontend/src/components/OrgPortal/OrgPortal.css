@@ -30,20 +30,15 @@
     margin-bottom: 30px;
 }
 
-.eventPhoto{
-    height: 60%;
-    width: 100%;
-}
-  
 .event{
-    min-width: 25% !important;
-    float: left;
+    min-width: 25%;
+    max-width: 25%;
     margin-right: 25px;
 }
 
-.innerEvent{
-    background-color: white;
-    height: 200px;
+.MuiCard-root{
+    flex-direction: column;
+    height: 100%;
 }
 
 .eventsCard{
@@ -59,4 +54,19 @@
 .spartan{
     font-family: "League Spartan";
 }
-  
+
+.eventHeight{
+    min-height: 275px;
+    max-height: 275px;
+}
+
+.eventName{
+    font-size: 75% !important;
+}
+
+.eventDate{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0px;
+}
