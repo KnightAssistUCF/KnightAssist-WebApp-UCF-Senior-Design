@@ -8,10 +8,10 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Logo from '../Logo';
-import DatePicker from "react-datepicker";
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
@@ -66,6 +66,16 @@ function AddEventModal(props)
         )
     }
 
+    function DateSelector(props){
+        return(
+            <Grid item xs={props.xs} sm={props.sm}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DatePicker label={props.label} />
+                </LocalizationProvider>                                      
+            </Grid>    
+        )
+    }
+
     function TimeSelector(props){
         return (
             <Grid item xs={props.xs} sm={props.sm}>
@@ -79,10 +89,10 @@ function AddEventModal(props)
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
-                <Card className='addEventCard'>
+                <Card className='addEventCard spartan'>
                     <CardContent>
                         <button className='closeAddEvent'>
-                            <CloseIcon className='closeHeight' onClick={() => console.log("test")}/>
+                            <CloseIcon className='closeHeight' onClick={() => handleClose()}/>
                         </button>
                         <Container component="main" maxWidth="xs">
                             <Box className="boxStyle">
@@ -90,38 +100,42 @@ function AddEventModal(props)
                             <Typography component="h1" variant="h5">
                                 Add Event
                             </Typography>
+
                             <Box component="form" noValidate sx={{ mt: 3 }}>
-                                <Grid container spacing={2} marginBottom={"50px"}>
-                                    <GridTextField xm={12} sm={12} name="Event Name" label="Event Name" required={true}/>
+                                <div className='addEventHeader'>Event Info</div>
+                                <Grid container spacing={2} marginBottom={"40px"}>
+                                    <GridTextField xm={12} sm={12} name="Name" label="Name" required={true}/>
                                     <GridTextField xm={12} sm={12} name="Description" label="Description" require={false}/>                                 
                                     <GridTextField xm={12} sm={12} name="Location" label="Location" required={false}/>
                                     
-                                    <Grid item xs={12} sm={6}>
-                                        DatePicker will go here
-                                    </Grid>
+                                    <DateSelector xm={12} sm={6} label="Date"/>
+
                                     <GridTextField xm={12} sm={6} name="Semester" label="Semester" required={false}/>
 
                                     <TimeSelector xm={12} sm={6} label="Start Time"/>  
                                     <TimeSelector xm={12} sm={6} label="End Time"/>  
                                 </Grid>
 
-                                <Grid  container spacing={2} marginBottom={"20px"}>
+                                <div className='addEventHeader'>Social Media</div>
+                                <Grid container spacing={2} marginBottom={"30px"}>
                                     <GridTextField xm={12} sm={6} name="Facebook" label={<FacebookIcon/>} required={false}/>
                                     <GridTextField xm={12} sm={6} name="Twitter" label={<TwitterIcon/>} required={false}/>
                                     <GridTextField xm={12} sm={6} name="Instagram" label={<InstagramIcon/>} required={false}/>
                                     <GridTextField xm={12} sm={6} name="Youtube" label={<YouTubeIcon/>} required={false}/>
 
                                     <GridTextField xm={12} sm={12} name="Website" label="Website" required={false}/>
+                                </Grid>
 
+                                <Grid container spacing={2} marginBottom={"30px"}>
                                     <GridTextField xm={12} sm={12} name="Tags" label="Tags" required={false}/>
                                 </Grid>
 
                                 <Button
-                                fullWidth
-                                variant="contained"
-                                sx={{ mt: 3, mb: 2 }}
-                                >
-                                Add
+                                    fullWidth
+                                    variant="contained"
+                                    sx={{ mt: 3, mb: 2 }}
+                                    >
+                                    Add
                                 </Button>
                             </Box>
                             </Box>

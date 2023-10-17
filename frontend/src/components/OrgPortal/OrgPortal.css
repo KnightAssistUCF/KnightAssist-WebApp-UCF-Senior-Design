@@ -102,3 +102,7 @@
     color: red;
 }
 
+.addEventHeader{
+    float: left;  
+    margin-bottom: -8px; 
+}
