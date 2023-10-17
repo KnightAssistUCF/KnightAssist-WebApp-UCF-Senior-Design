@@ -74,6 +74,9 @@ app.use('/api/searchOrganization', searchOrganization);
 const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
+const loadAllOrganizations = require('./backend/routes/loadAllOrganizations');
+app.use('/api/loadAllOrganizations', loadAllOrganizations);
+
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
