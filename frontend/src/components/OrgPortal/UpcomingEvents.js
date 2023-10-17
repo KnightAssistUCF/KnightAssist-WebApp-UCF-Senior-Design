@@ -17,9 +17,6 @@ function UpcomingEvents()
 
     let events = []
 
-    function makeEvent(){
-        
-    }
 
     async function getUpcomingEvents(){
         const email = "fooEvents@example.com"

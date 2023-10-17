@@ -70,3 +70,12 @@
     left: 0;
     bottom: 0px;
 }
+
+.addEventBtn{
+    margin-bottom: 30px;
+}
+
+.addEventCard{
+    height: 75vh;
+    width: 75vh;
+}
