@@ -66,8 +66,8 @@ const userStudentSchema = new mongoose.Schema({
 
 const studentSemesterSchema = new mongoose.Schema({
     semester: {
-        type: String,
-        required: true
+        type: String
+        // required: true
     },
     student: {
         type: mongoose.Schema.Types.ObjectId,
