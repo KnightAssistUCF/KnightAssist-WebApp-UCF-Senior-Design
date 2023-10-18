@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const UserStudent = require('./userStudent.js').schema;
+// const Organization = require('./organization.js').schema;
 
 const eventSchema = new Schema({
     name: {
@@ -11,15 +13,15 @@ const eventSchema = new Schema({
     date: Date,
     sponsoringOrganization: {
         type: Schema.Types.ObjectId,
-        ref: 'organization'
+        ref: 'organization',
     },
     attendees: [{
         type: Schema.Types.ObjectId,
-        ref: 'userStudent'
+        ref: 'userStudent',
     }],
     registeredVolunteers: [{
         type: Schema.Types.ObjectId,
-        ref: 'userStudent'
+        ref: 'userStudent',
     }],
     startTime: Date,
     endTime: Date,
@@ -31,6 +33,10 @@ const eventSchema = new Schema({
     },
     eventTags: [String],
     semester: String,
+    maxAttendees: {
+        type: Number,
+        required: true
+    },
     __v: {
         type: String,
         required: true,
