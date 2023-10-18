@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const UserStudent = require('./userStudent.js').schema;
+// const Event = require('./events.js').schema;
+// const OrganizationSemester = require('./organizationSemester.js').schema;
 
 const organizationSchema = new Schema({
     organizationID: {
@@ -44,7 +47,6 @@ const organizationSchema = new Schema({
             default: Date.now
         }
     }],
-    events: [eventSchema],
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
         email: String,
@@ -66,15 +68,14 @@ const organizationSchema = new Schema({
         default: false
     },
     backgroundURL: String,
-    /*eventsArray: [{
-        type: Schema.Types.ObjectId,
-        ref: 'event'
+    eventsArray: [{
+        type: String
     }],
     // added a component for the organization's location which can be either a string address, or  google maps link
     location: String,
-    /*organizationSemesters: [{
+    organizationSemesters: [{
         type: Schema.Types.ObjectId,
-        ref: 'organizationSemester'
+        ref: 'organizationSemester',
     }],
     // create a somponent to store the working hours of the organization per day per week
     workingHoursPerWeek: {

@@ -78,6 +78,9 @@ const loadAllOrganizations = require('./backend/routes/loadAllOrganizations');
 app.use('/api/loadAllOrganizations', loadAllOrganizations);
 
 
+const addEvent = require('./backend/routes/addEvent');
+app.use('/api/addEvent', addEvent);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

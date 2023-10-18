@@ -75,7 +75,7 @@ function AddEventModal(props)
         return(
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label={props.label} defaultValue={dayjs(new Date().getDate())}/>
+                    <DatePicker label={props.label} defaultValue={dayjs('2023-12-31')}/>
                 </LocalizationProvider>                                      
             </Grid>    
         )
@@ -122,7 +122,7 @@ function AddEventModal(props)
                                     <TimeSelector xm={12} sm={6} label="Start Time"/>  
                                     <TimeSelector xm={12} sm={6} label="End Time"/>  
 
-                                    <GridTextField sx={{textAlign:"center !important" }} xm={12} sm={5} name="Max Volunteers" label="Max Volunteers" required={false} multiline={true} type={"number"} onChange={(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, '')}}/>
+                                    <GridTextField sx={{marginLeft: 15}} xm={12} sm={5} name="Max Volunteers" label="Max Volunteers" required={false} multiline={true} type={"number"} onChange={(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, '')}}/>
                                 </Grid>
 
                                 <div className='addEventHeader'>Social Media</div>
@@ -142,7 +142,7 @@ function AddEventModal(props)
                                 <Button
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2 }}
+                                    sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395" }}
                                     >
                                     Add
                                 </Button>

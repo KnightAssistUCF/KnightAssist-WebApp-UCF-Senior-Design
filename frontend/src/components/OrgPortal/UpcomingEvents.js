@@ -19,7 +19,7 @@ function UpcomingEvents()
 
 
     async function getUpcomingEvents(){
-        const organizationID = "111";
+        const organizationID = "33";
         
         const url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
 
@@ -34,7 +34,7 @@ function UpcomingEvents()
 
         events = [];
 
-        for(let event of res.events)
+        for(let event of res.eventsArray)
             events.push(<Event name={event.name} date={event.date}/>)
             
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
