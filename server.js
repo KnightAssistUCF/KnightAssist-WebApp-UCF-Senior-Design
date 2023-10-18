@@ -83,6 +83,9 @@ app.use('/api/addEvent', addEvent);
 const searchEvent = require('./backend/routes/searchEvent');
 app.use('/api/searchEvent', searchEvent);
 
+const deleteAllEvents = require('./backend/routes/deleteAllEvents');
+app.use('/api/deleteAllEvents', deleteAllEvents);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
