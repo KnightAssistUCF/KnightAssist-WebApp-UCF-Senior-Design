@@ -1,5 +1,12 @@
 const { Int32 } = require('mongodb');
 const mongoose = require('mongoose');
+// const organization = require('./organization');
+// const Schema = mongoose.Schema;
+// const UserStudent = require('./userStudent.js').schema;
+// const Event = require('./events.js').schema;
+// const OrganizationSemester = require('./organizationSemester.js').schema;
+// const StudentSemester = require('./studentSemester.js').schema;
+// const Organization = require('./organization.js').schema;
 
 const userStudentSchema = new mongoose.Schema({
     /* To be added maybe: graduation date, major, etc. */
@@ -53,7 +60,7 @@ const userStudentSchema = new mongoose.Schema({
     },
     userStudentSemesters: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'studentSemester'
+        ref: 'studentSemester',
     }],
     __v: {
         type: String,
