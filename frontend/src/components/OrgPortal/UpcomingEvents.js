@@ -19,11 +19,11 @@ function UpcomingEvents()
 
 
     async function getUpcomingEvents(){
-        const organizationID = "33";
+        const organizationID = "12345";
         
-        const url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
+        let url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
 
-        const response = await fetch(url, {
+        let response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         });
@@ -32,9 +32,20 @@ function UpcomingEvents()
 
         console.log(res);
 
+        url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
+
+        response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+
+        res = JSON.parse(await response.text());
+
+        console.log(res);    
+
         events = [];
 
-        for(let event of res.eventsArray)
+        for(let event of res)
             events.push(<Event name={event.name} date={event.date}/>)
             
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>

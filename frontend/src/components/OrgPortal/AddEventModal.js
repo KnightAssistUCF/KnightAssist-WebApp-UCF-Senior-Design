@@ -75,7 +75,7 @@ function AddEventModal(props)
         return(
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label={props.label} defaultValue={dayjs('2023-12-31')}/>
+                    <DatePicker label={props.label} />
                 </LocalizationProvider>                                      
             </Grid>    
         )
@@ -85,9 +85,9 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T12:30')} />
+                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T15:30')} />
                 </LocalizationProvider>                                      
-            </Grid>                                       
+            </Grid>      
         )
     }
 
