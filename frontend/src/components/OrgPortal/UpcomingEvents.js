@@ -19,9 +19,9 @@ function UpcomingEvents()
 
 
     async function getUpcomingEvents(){
-        const email = "fooEvents@example.com"
+        const organizationID = "111";
         
-        const url = buildPath(`api/searchOrganization?email=${email}`);
+        const url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
 
         const response = await fetch(url, {
             method: "GET",
@@ -29,6 +29,8 @@ function UpcomingEvents()
         });
     
         let res = JSON.parse(await response.text());
+
+        console.log(res);
 
         events = [];
 

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const eventSchema = require("./events.js").schema;
 
 const organizationSchema = new Schema({
     organizationID: {
@@ -44,6 +45,7 @@ const organizationSchema = new Schema({
             default: Date.now
         }
     }],
+    events: [eventSchema],
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
         email: String,
