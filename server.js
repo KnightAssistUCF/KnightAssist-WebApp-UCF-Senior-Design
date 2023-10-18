@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 const port = process.env.PORT || 5000;
-const dbURL = process.env.atlasDB_LINK;
+const dbURL = process.env.atlasDB_LINK || process.env.atlasDB_LINK_BackUP;
 
 
 const express = require('express');
@@ -73,6 +73,9 @@ app.use('/api/searchOrganization', searchOrganization);
 
 const editUserProfile = require('./backend/routes/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
+
+const loadAllOrganizations = require('./backend/routes/loadAllOrganizations');
+app.use('/api/loadAllOrganizations', loadAllOrganizations);
 
 
 /*
