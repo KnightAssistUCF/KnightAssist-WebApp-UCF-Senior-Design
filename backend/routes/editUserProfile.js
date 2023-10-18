@@ -11,6 +11,7 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
 
     await userStudent.findOne({ email: req.body.email }).then((user) => {
+        console.log(user);
         if (user) {
             var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.firstName = req.body.firstName;

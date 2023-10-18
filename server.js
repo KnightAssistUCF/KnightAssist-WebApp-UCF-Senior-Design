@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const port = process.env.PORT || 5000;
 const dbURL = process.env.atlasDB_LINK;
+console.log(dbURL);
 
 
 const express = require('express');

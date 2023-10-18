@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const eventSchema = new Schema({
+/*const eventSchema = new Schema({
     name: {
         type: String,
         required: true
@@ -37,8 +37,9 @@ const eventSchema = new Schema({
         default: 0,
         select: false
     }
-}, {collection: 'event', timestamps: true});
+}, {collection: 'event', timestamps: true});*/
 
+/*
 const organizationSemesterSchema = new Schema({
     semester: {
         type: String
@@ -61,7 +62,7 @@ const organizationSemesterSchema = new Schema({
         select: false
     }
 
-}, {collection: 'organizationSemester', timestamps: true});
+}, {collection: 'organizationSemester', timestamps: true});*/
 
 const organizationSchema = new Schema({
     organizationID: {
@@ -127,16 +128,16 @@ const organizationSchema = new Schema({
         default: false
     },
     backgroundURL: String,
-    eventsArray: [{
+    /*eventsArray: [{
         type: Schema.Types.ObjectId,
         ref: 'event'
-    }],
+    }],*/
     // added a component for the organization's location which can be either a string address, or  google maps link
     location: String,
-    organizationSemesters: [{
+    /*organizationSemesters: [{
         type: Schema.Types.ObjectId,
         ref: 'organizationSemester'
-    }],
+    }],*/
     // create a somponent to store the working hours of the organization per day per week
     workingHoursPerWeek: {
         sunday: {
@@ -172,10 +173,10 @@ const organizationSchema = new Schema({
         type: String,
         required: true,
         default: 0,
-        select: false
+        select: true
     }
-}, {collection: 'organization', timestamps: true});
+}, {collection: 'organization', timestamps: true, select: true});
 
 module.exports = mongoose.model('organization', organizationSchema);
-module.exports = mongoose.model('event', eventSchema);
-module.exports = mongoose.model('organizationSemester', organizationSemesterSchema);
+//module.exports = mongoose.model('event', eventSchema);
+//module.exports = mongoose.model('organizationSemester', organizationSemesterSchema);
