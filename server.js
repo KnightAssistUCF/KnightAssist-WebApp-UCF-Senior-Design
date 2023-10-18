@@ -89,6 +89,9 @@ app.use('/api/deleteAllEvents', deleteAllEvents);
 const deleteSingleEvent = require('./backend/routes/deleteSingleEvent');
 app.use('/api/deleteSingleEvent', deleteSingleEvent);
 
+const editEvent = require('./backend/routes/editEvent');
+app.use('/api/editEvent', editEvent);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

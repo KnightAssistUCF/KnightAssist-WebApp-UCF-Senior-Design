@@ -108,6 +108,20 @@ const organizationSchema = new Schema({
             end: String
         }
     },
+    recoveryTokenForORG: {
+        type: String,
+        default: null
+    },
+    confirmTokenForORG: { // where the generated JWT token will be stored
+        type: String,
+        required: true,
+        default: ''
+    },
+    validForORG: {
+        type: Boolean,
+        required: true,
+        default: false
+    }, 
     __v: {
         type: String,
         required: true,

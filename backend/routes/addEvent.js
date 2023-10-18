@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
                 user.eventsArray.push(newEvent.eventID)
                 console.log(user.eventsArray)
                 user.save();
-                res.status(200).send("User updated successfully");
+                res.status(200).send("Event updated successfully");
                 console.log(user);
             }).catch((err) => {
                 res.status(400).send("Internal server error: " + err);
