@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const eventSchema = require("./events.js").schema;
 
 const organizationSchema = new Schema({
     organizationID: {
@@ -31,11 +30,11 @@ const organizationSchema = new Schema({
     category: [String], // what type of organization is this? (e.g. academic, social, etc.)
     followers: [{
         type: Schema.Types.ObjectId, // people that follow this organization
-        ref: 'userStudent'
+        ref: 'userStudent',
     }],
     favorites: [{
         type: Schema.Types.ObjectId, // people that liked and favorited this organization
-        ref: 'userStudent'
+        ref: 'userStudent',
     }],
     updates: [{
         title: String,
@@ -70,13 +69,13 @@ const organizationSchema = new Schema({
     /*eventsArray: [{
         type: Schema.Types.ObjectId,
         ref: 'event'
-    }],*/
+    }],
     // added a component for the organization's location which can be either a string address, or  google maps link
     location: String,
     /*organizationSemesters: [{
         type: Schema.Types.ObjectId,
         ref: 'organizationSemester'
-    }],*/
+    }],
     // create a somponent to store the working hours of the organization per day per week
     workingHoursPerWeek: {
         sunday: {

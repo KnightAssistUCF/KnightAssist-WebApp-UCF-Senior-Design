@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+// const UserStudent = require('./userStudent.js').schema;
+// const Organization = require('./organization.js').schema;
+// const Event = require('./events.js').schema;
 
 const studentSemesterSchema = new mongoose.Schema({
     semester: {
@@ -8,11 +11,11 @@ const studentSemesterSchema = new mongoose.Schema({
     },
     student: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'userStudent'
+        ref: 'userStudent',
     },
     events: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'event'
+        ref: 'event',
     }],
     startDate: Date,
     endDate: Date,
