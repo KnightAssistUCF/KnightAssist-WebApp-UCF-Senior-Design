@@ -6,8 +6,8 @@ const organization = require('../models/organization');
 
 // check that the event exists under the correct organzation
 router.get('/', async (req, res) => {
-    const searchID = req.body.organizationID;
-    const eventID = req.body.eventID;
+    const searchID = req.query.organizationID;
+    const eventID = req.query.eventID;
 
     await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then((events) => {
         if (events) {
