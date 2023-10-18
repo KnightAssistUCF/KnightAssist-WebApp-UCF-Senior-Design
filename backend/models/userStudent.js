@@ -51,10 +51,10 @@ const userStudentSchema = new mongoose.Schema({
         // required: true,
         default: 0
     },
-    // userStudentSemesters: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'studentSemester'
-    // }],
+    userStudentSemesters: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'studentSemester'
+    }],
     __v: {
         type: String,
         required: true,
@@ -64,29 +64,6 @@ const userStudentSchema = new mongoose.Schema({
     
 }, {collection: 'userStudent', timestamps: true});
 
-// const studentSemesterSchema = new mongoose.Schema({
-//     semester: {
-//         type: String
-//         // required: true
-//     },
-//     student: {
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'userStudent'
-//     },
-//     events: [{
-//         type: mongoose.Schema.Types.ObjectId,
-//         ref: 'event'
-//     }],
-//     startDate: Date,
-//     endDate: Date,
-//     __v: {
-//         type: String,
-//         required: true,
-//         default: 0,
-//         select: false
-//     }
 
-// }, {collection: 'studentSemester', timestamps: true});
 
 module.exports = mongoose.model('userStudent', userStudentSchema);
-// module.exports = mongoose.model('studentSemester', studentSemesterSchema);
