@@ -172,9 +172,9 @@ const organizationSchema = new Schema({
         type: String,
         required: true,
         default: 0,
-        select: false
+        select: true
     }
-}, {collection: 'organization', timestamps: true});
+}, {collection: 'organization', timestamps: true, select: true});
 
 module.exports = mongoose.model('organization', organizationSchema);
 module.exports = mongoose.model('event', eventSchema);

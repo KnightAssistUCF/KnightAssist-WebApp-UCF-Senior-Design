@@ -19,7 +19,7 @@ router.post('/', async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword,
                 profilePicture: req.body.profilePicture,
-                totalVolunteerHours: req.body.totalVolunteerHours,
+                totalVolunteerHours: req.body.totalVolunteerHours
                 // we can add more here as we wish for the sign up 
             });
             newUser.save().then((user) => {
