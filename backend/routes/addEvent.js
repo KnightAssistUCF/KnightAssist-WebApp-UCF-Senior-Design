@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
             date: req.body.date,
             sponsoringOrganization: req.body.sponsoringOrganization,
             startTime: req.body.startTime,
-            endTIme: req.body.endTIme,
+            endTIme: req.body.endTime,
             eventLinks: req.body.eventLinks,
             eventTags: req.body.eventTags,
             semester: req.body.semester,
