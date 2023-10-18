@@ -13,13 +13,12 @@ router.post('/', async (req, res) => {
             location: req.body.location,
             date: req.body.date,
             sponsoringOrganization: req.body.sponsoringOrganization,
-            attendees: req.body.attendees,
             startTime: req.body.startTime,
             endTIme: req.body.endTIme,
             eventLinks: req.body.eventLinks,
             eventTags: req.body.eventTags,
             semester: req.body.semester,
-            maxAttendees: req.body.attendees
+            maxAttendees: req.body.maxAttendees
         });
         
         await newEvent.save().then(async (user) => {
@@ -33,7 +32,6 @@ router.post('/', async (req, res) => {
             }).catch((err) => {
                 res.status(400).send("Internal server error: " + err);
             });
-            res.status(200).send("User created - please confirm new user's email address");
         }).catch((err) => {
             res.status(503).send("Failed to create user: " + err);
         });
