@@ -1,11 +1,22 @@
 import React, { useState } from "react";
 import { buildPath } from "../../path";
+import './Login.css';
 
 function LoginComponents(){
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
+
+    function buildPath(route) {
+		if (process.env.NODE_ENV === 'production') {
+			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
+            
+		}
+		else {        
+			return 'http://localhost:8000/' + route;
+		}
+	}
 
     async function doLogin(){
         const json = {
@@ -18,6 +29,8 @@ function LoginComponents(){
         const url = buildPath("api/Login");
 
         try {
+           window.location.href="/#/orgportal"
+
             const response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(json),
@@ -28,7 +41,7 @@ function LoginComponents(){
 
             console.log(res);
 
-            // The credentials matched an existing account
+            /// The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
                 setIsInvalid("");
             }else{
@@ -59,7 +72,7 @@ function LoginComponents(){
     function Email(){
         return (
             <div className="input-group mb-3">
-                <input type="text" className={"passwordBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
+                <input type="text" className={"emailBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
             </div>
         )
     }
@@ -93,11 +106,11 @@ function LoginComponents(){
     }
 
     return (
-        <div className="foo loginBox">
+        <div className="loginBox">
             {Email()}
             {Password()}
             <Login/>
-            <div className="textUnderSubmit center">
+            <div className="center">
                 <ForgotPassword/>
                 <Register/>
             </div>
