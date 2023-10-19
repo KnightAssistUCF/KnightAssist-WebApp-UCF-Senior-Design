@@ -1,12 +1,13 @@
 import React from 'react';
 import Logo from './Logo';
+import './Header.css';
 
-function PageTitle()
+function PageTitle(props)
 {
    return(
-      <div className='titleLogo'>
-        <Logo/>
-        <h1 id="title" className='title center'>Knight Assist</h1>
+      <div className={props.mainStyle}>
+        <Logo theStyle={props.logoStyle}/>
+        <h1 id="title" className={props.titleStyle + ' title center'}>Knight Assist</h1>
       </div>
    );
 };

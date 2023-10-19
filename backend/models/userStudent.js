@@ -62,6 +62,20 @@ const userStudentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'studentSemester',
     }],
+    recoveryToken: {
+        type: String,
+        default: null
+    },
+    confirmToken: { // where the generated JWT token will be stored
+        type: String,
+        required: true,
+        default: ''
+    },
+    valid: {
+        type: Boolean,
+        required: true,
+        default: false
+    }, 
     __v: {
         type: String,
         required: true,

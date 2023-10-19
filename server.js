@@ -77,6 +77,20 @@ app.use('/api/editUserProfile', editUserProfile);
 const loadAllOrganizations = require('./backend/routes/loadAllOrganizations');
 app.use('/api/loadAllOrganizations', loadAllOrganizations);
 
+const addEvent = require('./backend/routes/addEvent');
+app.use('/api/addEvent', addEvent);
+
+const searchEvent = require('./backend/routes/searchEvent');
+app.use('/api/searchEvent', searchEvent);
+
+const deleteAllEvents = require('./backend/routes/deleteAllEvents');
+app.use('/api/deleteAllEvents', deleteAllEvents);
+
+const deleteSingleEvent = require('./backend/routes/deleteSingleEvent');
+app.use('/api/deleteSingleEvent', deleteSingleEvent);
+
+const editEvent = require('./backend/routes/editEvent');
+app.use('/api/editEvent', editEvent);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
