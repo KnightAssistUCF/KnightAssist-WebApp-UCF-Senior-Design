@@ -17,6 +17,9 @@ function PastEvents()
 
     let events = []
 
+    function eventIsPast(date){
+        return new Date().toISOString() > new Date(date).toISOString();
+    }
 
     async function getPastEvents(){
         const organizationID = "12345";
@@ -46,8 +49,9 @@ function PastEvents()
         events = [];
 
         for(let event of res)
-            events.push(<Event name={event.name} date={event.date}/>)
-            
+            if(eventIsPast(event.date))
+                events.push(<Event name={event.name} date={event.date}/>)      
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
     }

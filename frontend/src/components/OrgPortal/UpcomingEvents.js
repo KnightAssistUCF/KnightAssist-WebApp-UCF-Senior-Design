@@ -15,8 +15,11 @@ function UpcomingEvents()
 
     const [eventCards, setEventCards] = useState();
 
-    let events = []
+    let events = [];
 
+    function eventIsUpcoming(date){
+        return new Date().toISOString() < new Date(date).toISOString();
+    }
 
     async function getUpcomingEvents(){
         const organizationID = "12345";
@@ -45,9 +48,11 @@ function UpcomingEvents()
 
         events = [];
 
-        for(let event of res)
-            events.push(<Event name={event.name} date={event.date}/>)
-            
+        for(let event of res){
+            if(eventIsUpcoming(event.date))
+                events.push(<Event name={event.name} date={event.date}/>)
+        }       
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
     }
