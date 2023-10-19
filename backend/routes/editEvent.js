@@ -4,7 +4,7 @@ const router = express.Router();
 const event = require('../models/events');
 const organization = require('../models/organization');
 
-app.post('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const searchID = req.body.organizationID;
     const eventID = req.body.eventID;
 
