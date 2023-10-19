@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then(async (events) => {
         console.log(events);
         if (events) {
-            events.name = req.body.name;
+            //events.name = req.body.name;
             events.eventID = req.body.eventID;
             events.description = req.body.description;
             events.location = req.body.location;

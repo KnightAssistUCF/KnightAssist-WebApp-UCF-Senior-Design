@@ -10,7 +10,7 @@ import './OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents()
+function PastEvents()
 {
 
     const [eventCards, setEventCards] = useState();
@@ -18,7 +18,7 @@ function UpcomingEvents()
     let events = []
 
 
-    async function getUpcomingEvents(){
+    async function getPastEvents(){
         const organizationID = "12345";
         
         let url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
@@ -53,7 +53,7 @@ function UpcomingEvents()
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
+        return <h1 className='upcomingEvents spartan'>Your Past Events</h1>
     }
 
     function Event(props){
@@ -89,11 +89,11 @@ function UpcomingEvents()
     }
 
     useEffect(()=>{
-        getUpcomingEvents();
+        getPastEvents();
     },[])
 
     return(
-     <div className='upcomingEventsSpace'>
+     <div>
         <EventHeader/>
         <div>
             <Events/>
@@ -102,4 +102,4 @@ function UpcomingEvents()
     );
 };
 
-export default UpcomingEvents;
+export default PastEvents;

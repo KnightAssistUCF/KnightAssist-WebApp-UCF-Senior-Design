@@ -28,6 +28,9 @@ function AddEventModal(props)
     const [startDate, setStartDate] = useState(new Date());
     const [maxVolunteers, setMaxVolunteers] = useState(0);
 
+    const [currentTag, setCurrentTag] = useState("");
+    const [tags, setTags] = useState([]);
+
     
     /*
     name: String
@@ -66,6 +69,7 @@ function AddEventModal(props)
                     multiline={props.multiline}
                     minRows={props.minRows}
                     onChange={event}
+                    value={props.value}
                 />
             </Grid>
         )
@@ -91,6 +95,22 @@ function AddEventModal(props)
         )
     }
 
+    function Tag(props){
+        return (
+            <Grid item>
+                <Card className='tag'>
+                    {props.tag}
+                </Card>
+            </Grid>
+        )
+    }
+
+    function createTag(){
+        const taggy = tags;
+        setTags([...taggy, <Tag tag={currentTag}/>]);
+        setCurrentTag("");
+    }
+
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
@@ -106,7 +126,6 @@ function AddEventModal(props)
                             <Typography component="h1" variant="h5">
                                 Add Event
                             </Typography>
-    
 
                             <Box component="form" noValidate sx={{ mt: 3 }}>
                                 <div className='addEventHeader'>Event Info</div>
@@ -135,17 +154,23 @@ function AddEventModal(props)
                                     <GridTextField xm={12} sm={12} name="Website" label="Website" required={false}/>
                                 </Grid>
 
-                                <Grid container spacing={2} marginBottom={"30px"}>
-                                    <GridTextField xm={12} sm={12} name="Tags" label="Tags" required={false}/>
+                                <div className='addEventHeader'>Tags</div>
+                                <Grid container spacing={2} marginTop={"50px"} marginBottom={"10px"}>
+                                    <GridTextField xm={12} sm={6} name="Tag" label="Tag" value={currentTag} required={false} onChange={(e) => setCurrentTag(e.target.value)}/>
+                                    <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
+                                    {tags}
                                 </Grid>
 
                                 <Button
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395" }}
+                                    sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395", "&:hover": {
+                                        backgroundColor: "#7566b4"
+                                      }}}
                                     >
                                     Add
                                 </Button>
+
                             </Box>
                             </Box>
                         </Container>
