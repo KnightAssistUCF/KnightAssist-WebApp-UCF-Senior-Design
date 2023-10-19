@@ -53,7 +53,7 @@
 }
 
 .bottom{
-    margin-top: 300px;
+    margin-top: 275px;
 }
 
 .logoutIcon:hover{
@@ -66,4 +66,10 @@
   
 .logoutIcon{
     color: white;
+}
+
+.ucfLogo{
+    margin-top: 60px;
+    width: 70px;
+    height: 70px;
 }

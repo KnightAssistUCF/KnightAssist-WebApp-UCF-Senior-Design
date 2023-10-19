@@ -1,6 +1,7 @@
 import React from 'react';
 import PageTitle from './PageTitle';
 import {LuLogOut} from 'react-icons/lu';
+import UCFLogo from './UCFLogo';
 import './Header.css';
 
 function Header()
@@ -18,6 +19,7 @@ function Header()
                         <LuLogOut className='logoutIcon' onClick={() => (console.log("log out"))}/>
                     </button>
                 </div>
+                <UCFLogo/>
             </nav>
         </div>
      </div>
