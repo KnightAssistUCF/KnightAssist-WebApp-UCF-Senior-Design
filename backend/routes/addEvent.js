@@ -26,9 +26,9 @@ router.post('/', async (req, res) => {
                 console.log(user.eventsArray)
                 user.eventsArray.push(newEvent.eventID)
                 console.log(user.eventsArray)
-                user.save();
+                // user.save(); leads to server crash
                 res.status(200).send("Event updated successfully");
-                console.log(user);
+                // console.log(user); this seems to cause a server crash as well 
             }).catch((err) => {
                 res.status(400).send("Internal server error: " + err);
             });
