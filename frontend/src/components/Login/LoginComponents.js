@@ -4,6 +4,8 @@ import './Login.css';
 
 function LoginComponents(){
 
+    console.log("Test");
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");

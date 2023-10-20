@@ -19,24 +19,58 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgPortal.css';
-import { useState } from 'react';
+import { buildPath } from '../../path';
+import { useEffect, useState } from 'react';
 
 function AddEventModal(props)
 {
-    const handleClose = () => props.setOpen(false);
+    console.log("hello");
+    const handleClose = () => {setTags([]); props.setOpen(false);}
 
-    const [startDate, setStartDate] = useState(new Date());
-    const [maxVolunteers, setMaxVolunteers] = useState(0);
-
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [location, setLocation] = useState("")
+    const [date, setDate] = useState(new Date());
+    const [picLink, setPicLink] = useState("");
+    const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
+    const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
+    const [fbLink, setFBLink] = useState("");
+    const [twitterLink, setTwitterLink] = useState("");
+    const [igLink, setIGLink] = useState("");
+    const [ytLink, setYTLink] = useState("");
+    const [webLink, setWebLink] = useState("");
+    const semester = "Fall 2023" //This will be implemented some other way later
+    const [maxVolunteers, setMaxVolunteers] = useState();
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
 
-    
+    const tagNames = [];
+
     /*
-    name: String
+    eventID: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
     description: String,
     location: String,
     date: Date,
+    sponsoringOrganization: {
+        type: String,
+        required: true
+    },
+    attendees: [{
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent',
+    }],
+    registeredVolunteers: [{
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent',
+    }],
     startTime: Date,
     endTime: Date,
     eventLinks: {
@@ -44,22 +78,61 @@ function AddEventModal(props)
         twitter: String,
         instagram: String,
         website: String
-    }, 
+    },
     eventTags: [String],
     semester: String,
-    __v: {
-        type: String,
-        required: true,
-        default: 0,
-        select: false
-    }
+    maxAttendees: {
+        type: Number,
+    },
     */
+    
+    async function submitEvent(){
+        const json = {
+            eventID: "1234" + name,
+            name: name,
+            description: description,
+            location: location,
+            date: date,
+            sponsoringOrganization: "12345",
+            attendees: [],
+            registeredVolunteers: [],
+            startTime: startTime,
+            endTime: endTime,
+            eventLinks: {
+                facebook: fbLink,
+                twitter: twitterLink,
+                instagram: igLink,
+                // Youtube will go here when added
+                website: webLink,
+            },
+            eventTags: tagNames,
+            semester: semester,
+            maxAttendees: maxVolunteers
+        };
+
+        console.log(json);
+
+        const url = buildPath("api/addEvent");
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = await response.text();
+
+            handleClose();
+            console.log(res);
+        }catch{
+            console.log("An error has occurred");
+        }
+    }
 
     function GridTextField(props){
-        const event = (props.onChange != undefined) ? props.onChange : () => console.log('test');
-
         return (
-            <Grid item sx={props.sx} xs={props.xs} sm={props.sm}>
+            <Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
                 <TextField
                     name={props.name}
                     fullWidth
@@ -68,7 +141,7 @@ function AddEventModal(props)
                     autoFocus
                     multiline={props.multiline}
                     minRows={props.minRows}
-                    onChange={event}
+                    onChange={props.onChange}
                     value={props.value}
                 />
             </Grid>
@@ -106,6 +179,7 @@ function AddEventModal(props)
     }
 
     function createTag(){
+        tagNames.push(currentTag);
         const taggy = tags;
         setTags([...taggy, <Tag tag={currentTag}/>]);
         setCurrentTag("");
@@ -115,7 +189,6 @@ function AddEventModal(props)
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
                 <Card className='addEventCard spartan'>
-                    
                     <CardContent>
                         <button className='closeAddEvent'>
                             <CloseIcon className='closeHeight' onClick={() => handleClose()}/>
@@ -130,33 +203,33 @@ function AddEventModal(props)
                             <Box component="form" noValidate sx={{ mt: 3 }}>
                                 <div className='addEventHeader'>Event Info</div>
                                 <Grid container spacing={2} marginBottom={"40px"}>
-                                    <GridTextField xm={12} sm={12} name="Name" label="Name" required={true} multiline={false}/>
-                                    <GridTextField xm={12} sm={12} name="Description" label="Description" require={false} multiline={true} minRows={4}/>                                 
-                                    <GridTextField xm={12} sm={12} name="Location" label="Location" required={false} multiline={true}/>
+                                    {GridTextField({xm:12, sm:12, name:"Name", label:"Name", required:true, multiline:false, value:name, onChange:(e) => setName(e.target.value)})}
+                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:false, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
+                                    {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:false, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
 
-                                    <DateSelector xm={12} sm={6} label="Date"/>
+                                    {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e.target.value)})}
 
-                                    <GridTextField xm={12} sm={6} name="Picture Link" label="Picture Link" required={false} multiline={false}/>
+                                    {GridTextField({xm:12, sm:6, name:"Picture Link", label:"Picture Link", required:false, multiline:false, value:picLink, onChange:(e) => setPicLink(e.target.value)})}
 
-                                    <TimeSelector xm={12} sm={6} label="Start Time"/>  
-                                    <TimeSelector xm={12} sm={6} label="End Time"/>  
+                                    {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e.target.valaue)})}  
+                                    {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e.target.valaue)})}  
 
-                                    <GridTextField sx={{marginLeft: 15}} xm={12} sm={5} name="Max Volunteers" label="Max Volunteers" required={false} multiline={true} type={"number"} onChange={(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, '')}}/>
+                                    {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:false, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
                                 </Grid>
 
                                 <div className='addEventHeader'>Social Media</div>
                                 <Grid container spacing={2} marginBottom={"30px"}>
-                                    <GridTextField xm={12} sm={6} name="Facebook" label={<FacebookIcon/>} required={false} multiline={false}/>
-                                    <GridTextField xm={12} sm={6} name="Twitter" label={<TwitterIcon/>} required={false} multiline={false}/>
-                                    <GridTextField xm={12} sm={6} name="Instagram" label={<InstagramIcon/>} required={false} multiline={false}/>
-                                    <GridTextField xm={12} sm={6} name="Youtube" label={<YouTubeIcon/>} required={false} multiline={false}/>
+                                    {GridTextField({xm:12, sm:6, name:"Facebook", label:<FacebookIcon/>, required:false, multiline:false, value:fbLink, onChange:(e) => setFBLink(e.target.value)})}
+                                    {GridTextField({xm:12, sm:6, name:"Twitter", label:<TwitterIcon/>, required:false, multiline:false, value:twitterLink, onChange:(e) => setTwitterLink(e.target.value)})}
+                                    {GridTextField({xm:12, sm:6, name:"Instagram", label:<InstagramIcon/>, required:false, multiline:false, value:igLink, onChange:(e) => setIGLink(e.target.value)})}
+                                    {GridTextField({xm:12, sm:6, name:"Youtube", label:<YouTubeIcon/>, required:false, multiline:false, value:ytLink, onChange:(e) => setYTLink(e.target.value)})}
 
-                                    <GridTextField xm={12} sm={12} name="Website" label="Website" required={false}/>
+                                    {GridTextField({xm:12, sm:12, name:"Website", label:"Website", required:false, value:webLink, onChange:(e) => setWebLink(e.target.value)})}
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>
                                 <Grid container spacing={2} marginTop={"50px"} marginBottom={"10px"}>
-                                    <GridTextField xm={12} sm={6} name="Tag" label="Tag" value={currentTag} required={false} onChange={(e) => setCurrentTag(e.target.value)}/>
+                                    {GridTextField({xm:12, sm:6, name:"Tag", label:"Tag", value:currentTag, required:false, onChange:(e) => setCurrentTag(e.target.value)})}
                                     <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
                                     {tags}
                                 </Grid>
@@ -167,6 +240,7 @@ function AddEventModal(props)
                                     sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395", "&:hover": {
                                         backgroundColor: "#7566b4"
                                       }}}
+                                    onClick={() => submitEvent()}
                                     >
                                     Add
                                 </Button>
