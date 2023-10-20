@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs'); // I will use this to hash the password
 const { generateToken } = require('../utils/jwtUtils');
 
 const userStudent = require('../models/userStudent');
+const jwtSecret = process.env.JWT_SECRET_KEY;
 
 /* email verfication and the jwt tokenization can be gathered here, but later */
 
@@ -20,7 +21,9 @@ router.post('/', async (req, res) => {
                 email: req.body.email,
                 password: hashedPassword,
                 profilePicture: req.body.profilePicture,
-                totalVolunteerHours: req.body.totalVolunteerHours
+                totalVolunteerHours: req.body.totalVolunteerHours,
+                confirmToken: generateToken({ email: req.body.email}, jwtSecret),
+                valid: false
                 // we can add more here as we wish for the sign up 
             });
             newUser.save().then((user) => {

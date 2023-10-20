@@ -31,7 +31,8 @@ router.post('/', async (req, res) => {
                 contact: req.body.contact,
                 isActive: req.body.isActive,
                 eventHappeningNow: req.body.eventHappeningNow,
-                backgroundURL: req.body.backgroundURL
+                backgroundURL: req.body.backgroundURL,
+                confirmTokenForORG: generateToken({ email: req.body.email}, process.env.JWT_SECRET_KEY)
                 // rest of the components can be added later here if needed
             });
             newOrganization.save().then((organization) => {
