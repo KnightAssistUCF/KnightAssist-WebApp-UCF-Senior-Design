@@ -10,12 +10,17 @@ import './OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function PastEvents()
+function PastEvents(props)
 {
 
     const [eventCards, setEventCards] = useState();
 
-    let events = []
+    function openEventModal(id){
+        props.setEventID(id);
+        props.setOpenEvent(true);
+    }
+
+    let events = [];
 
     function eventIsPast(date){
         return new Date().toISOString() > new Date(date).toISOString();
@@ -50,7 +55,7 @@ function PastEvents()
 
         for(let event of res)
             if(eventIsPast(event.date))
-                events.push(<Event name={event.name} date={event.date}/>)      
+                events.push(<Event name={event.name} date={event.date} id={props.eventID}/>)      
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
@@ -64,7 +69,7 @@ function PastEvents()
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => console.log(props.name)}>
+                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"

@@ -15,6 +15,11 @@ function UpcomingEvents(props)
 
     const [eventCards, setEventCards] = useState();
 
+    function openEventModal(id){
+        props.setEventID(id);
+        props.setOpenEvent(true);
+    }
+
     function eventIsUpcoming(date){
         return new Date().toISOString() < new Date(date).toISOString();
     }
@@ -48,7 +53,7 @@ function UpcomingEvents(props)
 
         for(let event of res){
             if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date}/>)
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
         }       
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
@@ -63,7 +68,7 @@ function UpcomingEvents(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => console.log(props.name)}>
+                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"

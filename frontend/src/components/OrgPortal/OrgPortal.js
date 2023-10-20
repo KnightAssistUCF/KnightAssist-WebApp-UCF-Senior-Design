@@ -5,12 +5,15 @@ import PastEvents from './PastEvents';
 import Welcome from './Welcome';
 import SearchOrg from './SearchOrg';
 import AddEventModal from './AddEventModal';
+import EventModal from './EventModal';
 import './OrgPortal.css';
 
 function OrgPortal()
 {
 
     const [openModal, setOpenModal] = useState(false);
+    const [openEvent, setOpenEvent] = useState(false);
+    const [eventID, setEventID] = useState("");
     const [resetUpcoming, setResetUpcoming] = useState(0);
     
     return(
@@ -21,8 +24,9 @@ function OrgPortal()
           <SearchOrg/>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
           <AddEventModal setReset={setResetUpcoming} open={openModal} setOpen={setOpenModal}/>
-          <UpcomingEvents reset={resetUpcoming}/>
-          <PastEvents/>
+          <EventModal eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+          <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/>
+          <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent}/>
         </div>
       </div>
     );
