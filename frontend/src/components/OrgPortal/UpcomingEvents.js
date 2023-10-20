@@ -10,12 +10,10 @@ import './OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents()
+function UpcomingEvents(props)
 {
 
     const [eventCards, setEventCards] = useState();
-
-    let events = [];
 
     function eventIsUpcoming(date){
         return new Date().toISOString() < new Date(date).toISOString();
@@ -46,7 +44,7 @@ function UpcomingEvents()
 
         console.log(res);    
 
-        events = [];
+        const events = [];
 
         for(let event of res){
             if(eventIsUpcoming(event.date))
@@ -96,6 +94,11 @@ function UpcomingEvents()
     useEffect(()=>{
         getUpcomingEvents();
     },[])
+
+    useEffect(()=>{
+        console.log("its working!")
+        getUpcomingEvents();
+    },[props.reset])
 
     return(
      <div className='upcomingEventsSpace'>

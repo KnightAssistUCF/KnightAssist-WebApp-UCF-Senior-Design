@@ -20,7 +20,9 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgPortal.css';
 import { buildPath } from '../../path';
-import { useEffect, useState } from 'react';
+import { useNavigate, useState } from 'react';
+import UpcomingEvents from './UpcomingEvents';
+import PastEvents from './PastEvents';
 
 function AddEventModal(props)
 {
@@ -122,9 +124,9 @@ function AddEventModal(props)
             });
 
             let res = await response.text();
-
-            handleClose();
             console.log(res);
+            props.setReset(1);
+            handleClose();
         }catch{
             console.log("An error has occurred");
         }
@@ -152,7 +154,7 @@ function AddEventModal(props)
         return(
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label={props.label} />
+                    <DatePicker label={props.label} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>    
         )
@@ -162,7 +164,7 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T15:30')} />
+                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T15:30')} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
@@ -207,12 +209,12 @@ function AddEventModal(props)
                                     {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:false, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
                                     {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:false, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
 
-                                    {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e.target.value)})}
+                                    {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
 
                                     {GridTextField({xm:12, sm:6, name:"Picture Link", label:"Picture Link", required:false, multiline:false, value:picLink, onChange:(e) => setPicLink(e.target.value)})}
 
-                                    {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e.target.valaue)})}  
-                                    {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e.target.valaue)})}  
+                                    {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e)})}  
+                                    {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e)})}  
 
                                     {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:false, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
                                 </Grid>

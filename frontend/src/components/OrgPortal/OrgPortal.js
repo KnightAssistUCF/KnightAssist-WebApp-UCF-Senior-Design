@@ -11,7 +11,7 @@ function OrgPortal()
 {
 
     const [openModal, setOpenModal] = useState(false);
-
+    const [resetUpcoming, setResetUpcoming] = useState(0);
     
     return(
       <div>
@@ -20,8 +20,8 @@ function OrgPortal()
           <Welcome/>
           <SearchOrg/>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
-          <AddEventModal open={openModal} setOpen={setOpenModal}/>
-          <UpcomingEvents/>
+          <AddEventModal setReset={setResetUpcoming} open={openModal} setOpen={setOpenModal}/>
+          <UpcomingEvents reset={resetUpcoming}/>
           <PastEvents/>
         </div>
       </div>
