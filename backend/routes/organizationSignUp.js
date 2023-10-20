@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
+const { generateToken } = require('../utils/jwtUtils');
 
 const organizationSchema = require('../models/organization');
 
@@ -15,6 +16,7 @@ router.post('/', async (req, res) => {
             var hashedPassword = bcrypt.hashSync(req.body.password, 10);
             var newOrganization = new organizationSchema({
                 // Note: some components here can be omitted for the signUP phase
+                organizationID: req.body.organizationID, // this should be stored after its generated at the front end level
                 name: req.body.name,
                 password: hashedPassword,
                 email: req.body.email,
@@ -28,7 +30,10 @@ router.post('/', async (req, res) => {
                 calendarLink: req.body.calendarLink,
                 contact: req.body.contact,
                 isActive: req.body.isActive,
-                eventHappeningNow: req.body.eventHappeningNow
+                eventHappeningNow: req.body.eventHappeningNow,
+                backgroundURL: req.body.backgroundURL,
+                confirmTokenForORG: generateToken({ email: req.body.email}, process.env.JWT_SECRET_KEY)
+                // rest of the components can be added later here if needed
             });
             newOrganization.save().then((organization) => {
                 res.status(200).send("Organization created - please confirm new organization's email address");

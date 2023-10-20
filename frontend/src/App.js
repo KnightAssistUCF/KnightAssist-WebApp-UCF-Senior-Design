@@ -1,8 +1,13 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+} from "react-router-dom";
 
 import LoginPage from './pages/LoginPage';
+import OrgPortalPage from './pages/OrgPortalPage';
 import StudentHomePage from './pages/StudentHomePage';
 
 function App() 
@@ -13,6 +18,7 @@ function App()
         <BrowserRouter>
           <Routes>
             <Route path="/" index element={<LoginPage />} />
+            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
             <Route path="/studenthomepage" index element={<StudentHomePage />} />
           </Routes>
        </BrowserRouter>

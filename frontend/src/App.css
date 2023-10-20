@@ -2,7 +2,14 @@
   text-align: center;
 }
 
-html, body {height: 100%}
+a{
+  text-decoration: none !important;
+}
+
+html, body {
+  height: 100%; 
+  margin:0;
+}
 
 .App-logo {
   height: 40vmin;
@@ -41,32 +48,8 @@ html, body {height: 100%}
   }
 }
 
-.loginBox{
-  margin-top: 50px;
-}
-
-.emailBox{
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
-.passwordBox{
-  margin-left: 25%;
-  margin-right: 25%;
-}
-
 .center{
   text-align: center;
-}
-
-.loginButton{
-  width: 100px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.card-body{
-  background-color: #CCAFD8;
 }
 
 .titleLogo{
@@ -74,44 +57,9 @@ html, body {height: 100%}
   margin-bottom: 95px;
 }
 
-.title{
-  margin-right: 20px;
-  font-size: 50px;
-}
-
-.forgotPWD{
-  background: none;
-  border: none;
-  font-weight: bold;
-  font-size: 13px;
-  width: 118px !important;
-}
-
-.register{
-  background: none;
-  border: none;
-  font-weight: bold;
-  font-size: 13px;
-  width: 68px !important;
-}
-
 .logo{
   width: 100px;
   height: 100px;
-}
-
-.slideshow{
-  background-color: blue;
-  float: left;
-  width: 50%;
-  height: 100vh;
-} 
-
-.contentHalf{
-  float: right;
-  width: 50%;
-  height: 100vh;
-  background-color: #a6579a;
 }
 
 .login{
@@ -119,14 +67,17 @@ html, body {height: 100%}
   width: 100%;
 }
 
-.copyright{
-  margin-top: 175px;
-  font-size: 15px;
-  width: 50% a;
+.orgPortal{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
   color: black;
 }
 
-.loginPhoto{
-	height: 100vh;
-	width: 95vh;
+.tabs{
+  margin-left: 50px;
+}
+
+.spartan{
+  font-family: "League Spartan";
 }

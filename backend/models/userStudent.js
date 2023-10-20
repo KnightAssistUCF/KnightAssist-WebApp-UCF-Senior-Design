@@ -1,5 +1,12 @@
 const { Int32 } = require('mongodb');
 const mongoose = require('mongoose');
+// const organization = require('./organization');
+// const Schema = mongoose.Schema;
+// const UserStudent = require('./userStudent.js').schema;
+// const Event = require('./events.js').schema;
+// const OrganizationSemester = require('./organizationSemester.js').schema;
+// const StudentSemester = require('./studentSemester.js').schema;
+// const Organization = require('./organization.js').schema;
 
 const userStudentSchema = new mongoose.Schema({
     /* To be added maybe: graduation date, major, etc. */
@@ -53,8 +60,22 @@ const userStudentSchema = new mongoose.Schema({
     },
     userStudentSemesters: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'studentSemester'
+        ref: 'studentSemester',
     }],
+    recoveryToken: {
+        type: String,
+        default: null
+    },
+    confirmToken: { // where the generated JWT token will be stored
+        type: String,
+        required: true,
+        default: ''
+    },
+    valid: {
+        type: Boolean,
+        required: true,
+        default: false
+    }, 
     __v: {
         type: String,
         required: true,
@@ -64,29 +85,6 @@ const userStudentSchema = new mongoose.Schema({
     
 }, {collection: 'userStudent', timestamps: true});
 
-const studentSemesterSchema = new mongoose.Schema({
-    semester: {
-        type: String,
-        required: true
-    },
-    student: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'userStudent'
-    },
-    events: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'event'
-    }],
-    startDate: Date,
-    endDate: Date,
-    __v: {
-        type: String,
-        required: true,
-        default: 0,
-        select: false
-    }
 
-}, {collection: 'studentSemester', timestamps: true});
 
 module.exports = mongoose.model('userStudent', userStudentSchema);
-module.exports = mongoose.model('studentSemester', studentSemesterSchema);
