@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
                 password: hashedPassword,
                 profilePicture: req.body.profilePicture,
                 totalVolunteerHours: req.body.totalVolunteerHours,
-                confirmToken: generateToken({ email: req.body.email}, jwtSecret),
+                confirmToken: generateToken({ email: req.body.email }, jwtSecret),
                 valid: false
                 // we can add more here as we wish for the sign up 
             });

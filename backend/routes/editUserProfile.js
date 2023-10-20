@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken } = require('../utils/jwtUtils');
+const { authenticateToken_User } = require('../utils/jwtUtils');
 
 const userStudent = require('../models/userStudent');
 
@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("In the editProfile Route API");
 });
 
-router.post('/', authenticateToken, async (req, res) => {
+router.post('/', authenticateToken_User, async (req, res) => {
 
     await userStudent.findOne({ email: req.body.email }).then((user) => {
         console.log(user); // debugging
@@ -22,6 +22,7 @@ router.post('/', authenticateToken, async (req, res) => {
             user.password = newHashedPassword;
             user.profilePicture = req.body.profilePicture;
             user.totalVolunteerHours = req.body.totalVolunteerHours;
+            user.confirmToken = req.body.confirmToken;
             /* For now this is based on what the schema has */
             user.save();
             res.status(200).send("User updated successfully");
