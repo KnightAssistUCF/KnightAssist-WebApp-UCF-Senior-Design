@@ -45,29 +45,27 @@ function UpcomingEvents()
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function Event(props){
+    function Event(props) {
+        const date = new Date(props.date);
+      
         return (
-            <div className="event spartan">
-                <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => console.log(props.name)}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={logo}
-                        />
-                        <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
-                            </Typography>
-                            <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </CardActionArea>
-            </div>
-        )
-    }
+          <div className="event spartan">
+            <CardActionArea className="test">
+              <Card className="eventHeight" onClick={() => console.log(props.name)}>
+                <CardMedia component="img" height="150" image={logo} />
+                <CardContent>
+                  <Typography className="eventName" gutterBottom variant="h6" component="div">
+                    {props.name}
+                  </Typography>
+                  <Typography className="eventDate" variant="body2" color="text.secondary">
+                    {date.toString() !== 'Invalid Date' ? date.toISOString().split('T')[0] : 'Invalid Date'}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </CardActionArea>
+          </div>
+        );
+      }
 
     function Events(){
         return (

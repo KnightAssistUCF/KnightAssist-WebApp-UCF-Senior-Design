@@ -1,69 +1,138 @@
-.orgNav{
-    position: fixed; 
-    z-index: 1;
-    top: 0px; 
-    width: 150px;
-    height: 100vh;
-    background-color: #5f5395;
+ul.nav_list {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 220px;
+    background: #3C355A;
+    padding: 6px 14px;
 }
 
-.navbar,
-.navbar-collapse {
-  width: 100%;
-  height: 100%;
-  flex-direction: column;
-}
-.navbar-expand-lg .navbar-nav {
-  flex-direction: column;
-}
-
-.luWrapper{
-  background: none;
-  border: none;
-}
-
-.headerTitleLogo{
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-bottom: 20px;
-    color: white;
-}
-
-.logoHeader{
-    width: 50px;
+.sidebar .logo_content .logo {
+    color: #fff;
+    display: flex;
     height: 50px;
-}
-  
-.titleHeader{
-    font-size: 18px;
-    margin-left: 15px;
+    width: 100%;
+    align-items: center;
 }
 
-.headerLink{
-    float: right;
-    margin-top: 15px;
-    margin-bottom: 15px;
+/* .logo_content .logo <-- style logo */
+
+.logo_content .logo .logo_name {
     font-size: 25px;
-    color: white;
-    font-family: "League Spartan";
+    font-weight: 400;
 }
 
-.title{
-    margin-right: 20px;
+.menuIcon {
+    position: absolute;
+    color: #fff;
+    left: 90%;
+    top: 17px;
+    font-size: 20px;
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    transform: translateX(-80%);
 }
 
-.bottom{
-    margin-top: 300px;
+.sidebar ul{
+    margin-top: 30px;
 }
 
-.logoutIcon:hover{
-    color: red;
+.sidebar ul li {
+    position: relative;
+    height: 75px;
+    width: 100%;
+    /* margin: 0 5px; */
+    list-style: none;
+    line-height: 60px;
 }
-  
-.logoutIcon:active{
-    color: white;
+
+.sidebar ul li a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    border-radius: 8px;
+    padding: 5px;
 }
-  
-.logoutIcon{
-    color: white;
+
+.sidebar ul li a:hover{
+    color: #11101d;
+    background: #ffffff;
+    padding: 4px 7px;
+}
+.sidebar ul li a .links_name {
+    font-size: 20px; 
+  }
+
+
+ul.nav_list li a .homeIcon,
+ul.nav_list li a .searchIcon,
+ul.nav_list li a .historyIcon,
+ul.nav_list li a .settingsIcon {
+    margin-right: 25px;
+    /* border-radius: 12px;
+    height: 60px; */
+    /* line-height: 30px; */
+    font-size: 25px;
+    text-align: center;
+}
+
+.sidebar .profile_content {
+    position: absolute;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.sidebar .profile_content .profile {
+    position: relative;
+    padding: 10px 6px;
+    height: 60px;
+    background: #312c4b;
+}
+
+.sidebar .profile_content .profile .profile_details {
+    display: flex;
+    align-items: center;
+}
+
+.profile .profile_details img {
+    height: 45px;
+    width: 45px;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.profile .profile_details .name_job {
+    margin-left: 10px;
+}
+
+.profile .profile_details .name {
+    font-size: 15px;
+    font-weight: 400;
+}
+.profile .profile_details .job {
+    font-size: 13px;
+}
+
+.logoutIcon {
+    position: absolute;
+    left: 88%;
+    bottom: 5px;
+    transform: translateX(-50%);
+    min-width: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    border-radius: 12px;
 }
