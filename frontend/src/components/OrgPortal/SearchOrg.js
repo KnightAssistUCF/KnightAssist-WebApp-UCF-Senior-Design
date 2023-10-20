@@ -3,11 +3,13 @@ import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import './OrgPortal.css';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { buildPath } from '../../path';
 
 function SearchOrg() {
     const orgs = []
+
+    const [orgName, setOrgName] = useState("");
 
     function openOrgPage(email){
         console.log(email);
@@ -40,7 +42,7 @@ function SearchOrg() {
           <Autocomplete 
             freeSolo
             disableClearable
-            onChange={(e, value) => openOrgPage(value.id)}
+            onChange={(e, value) => console.log(value.id)}
             options={orgs}
             renderInput={(params) => (
               <TextField
