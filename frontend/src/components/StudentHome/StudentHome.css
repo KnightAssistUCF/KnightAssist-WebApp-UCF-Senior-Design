@@ -53,11 +53,19 @@
 
 .my-table th {
     font-weight: 600;
+    font-size: 25px;
     text-align: center;
 }
 .my-table tr {
     text-align: center;
 }
+.my-table td {
+    text-align: center;
+    font-size: 25px;
+}
+.my-table .cancelButton {
+    font-size: 14px;
+  }
 
 /* .temp-navbar {
     margin-left: -20%;

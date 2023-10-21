@@ -1,14 +1,19 @@
 import React, { useState, useCallback } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Button} from 'react-bootstrap';
+import { Form} from 'react-bootstrap';
 import Logo from '../Logo';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import './StudentHome.css';
+import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/material';
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
 
 
 function StudentHome()
 {
+  const [open, setModalOpen] = useState(false);
+
   const defaultVol = 15.0;
   const [volunteerGoal, setVolunteerGoal] = useState(defaultVol);
   const handleVolunteerGoalChange = (e) => {
@@ -38,7 +43,7 @@ function StudentHome()
           </div>
         </div>
         <div class="titlesub">Upcoming Volunteer Shifts</div>
-        <div class="my-table">
+        <div class="my-table table-responsive">
           <table className="table table-hover text-nowrap">
           <thead className="thead-dark" class="table-dark">
             <tr>
@@ -58,7 +63,7 @@ function StudentHome()
                   <td>12:30pm</td>
                   <td>3:00pm</td>
                   <td className="text-center">
-                    <Button className="btn-danger" >Cancel RSVP</Button>
+                    <Button className="cancelButton" variant="outlined" color="error" onClick={() => setModalOpen(true)}>Cancel RSVP</Button>
                   </td>
                 </tr>
                 <tr>
@@ -68,7 +73,7 @@ function StudentHome()
                   <td>12:30pm</td>
                   <td>3:00pm</td>
                   <td className="text-center">
-                    <Button className="btn-danger" >Cancel RSVP</Button>
+                    <Button className="cancelButton" variant="outlined" color="error" onClick={() => setModalOpen(true)} >Cancel RSVP</Button>
                   </td>
                 </tr>
                 <tr>
@@ -78,14 +83,23 @@ function StudentHome()
                   <td>12:30pm</td>
                   <td>3:00pm</td>
                   <td>
-                    <Button className="btn-danger" >Cancel RSVP</Button>
+                    <Button className="cancelButton" variant="outlined" color="error" onClick={() => setModalOpen(true)}>Cancel RSVP</Button>
                   </td>
                 </tr>
-              
-            
           </tbody>
         </table>
       </div>
+
+        <Dialog open={open} onClose={() => setModalOpen(false)}>
+          <DialogTitle>Are you sure you want to cancel your RSVP?</DialogTitle>
+          <DialogActions>
+            <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+            <Button onClick={() => setModalOpen(false)}>Yes</Button>
+          </DialogActions>
+        </Dialog>
+
+
+
       </div>
    );
 };
