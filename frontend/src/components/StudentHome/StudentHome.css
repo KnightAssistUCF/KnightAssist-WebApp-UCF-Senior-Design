@@ -123,6 +123,12 @@
     font-size: 30px;
   }
 
+  .calendar {
+    width: 80%;
+    margin: 0 auto;
+    border-radius: 10px;
+  }
+
 
 
 /* Responsive styles for smaller screens */
