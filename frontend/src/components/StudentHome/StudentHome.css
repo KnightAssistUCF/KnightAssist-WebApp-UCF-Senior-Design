@@ -6,36 +6,62 @@
 }
 .StudentHomePage-title {
     color: rgb(0, 0, 0);
-    padding-top: 10px;
-    font-size: 50px;
+    font-size: 30px;
+    /* min-height: 10vh; */
+    padding: 10px 120px;
     text-align: left;
-    min-height: 10vh;
+}
+.StudentHomePage-subtitle {
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+  text-align: left;
+  padding: 0 125px;
 }
 .StudentHomePage-card {
-    width: calc(33% - 20px); /* Adjust the width as per your layout */
-    background: #ededed; /* Background color of the rectangular box */
-    display: inline-block; /* Display as an inline block */
-    text-align: center; /* Center the content horizontally */
-    color: black; /* Text color */
-    margin-left: 20px; /* Add some left margin to separate it from the progress bar */
-    padding: 20px;
-    border-radius: 20px;
-    
+    width: calc(33% - 20px);
+    background: #ffffff; /* Background color of the rectangular box */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
+    padding: 5px;
+    border-radius: 8px;
+    box-shadow:
+      0 4px 4px -2px rgba(0, 0, 0, 0.1),
+      0 -4px 4px -2px rgba(0, 0, 0, 0.1),
+      4px 0 4px -2px rgba(0, 0, 0, 0.1),
+      -4px 0 4px -2px rgba(0, 0, 0, 0.1);
+
+}
+.upcoming-shift-time {
+  font-size: 15px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  margin-top: -15px;
+  padding-bottom: 10px;
+}
+.volunteer-goal {
+  font-size: 17px;
 }
 .content-container {
     display: flex; /* Use flexbox layout */
-    justify-content: space-around; /* Space between the progress bar and the card */
-    align-items: flex; /* Align items at the top */
+    align-items: flex-start; /* Align items at the top */
+    justify-content: space-evenly;
+    padding: 20px 20px;
+    margin-right: 10%;
+    /* margin-right: 30px; */
   }
 .titlesub {
     color: rgb(0, 0, 0);
-    /* padding: 50px 200px; */
-    padding-top: 30px;
-    font-size: 40px;
+    padding: 20px 120px;
+    font-size: 25px;
     font-weight: normal;
+    text-align: left;
 }
 .progress-bar {
-    margin: 60px 20px;
+    margin: 5px;
 }
 .progress-bar path {
     stroke: red;
@@ -45,15 +71,25 @@
     width: 10%; 
 } */
 
+.table-group {
+  transform: translateY(-110%);
+} 
+
 .my-table {
-    width: 97%;
+  transform: scale(0.80) translateY(-10%);
+    width: 85%;
     margin: 0 auto;
     border-radius: 10px;
+    box-shadow:
+    0 4px 4px -2px rgba(0, 0, 0, 0.1),
+    -4px 0 4px -2px rgba(0, 0, 0, 0.1),
+    4px 0 4px -2px rgba(0, 0, 0, 0.01);
 }
+
 
 .my-table th {
     font-weight: 600;
-    font-size: 25px;
+    font-size: 20px;
     text-align: center;
 }
 .my-table tr {
@@ -61,10 +97,10 @@
 }
 .my-table td {
     text-align: center;
-    font-size: 25px;
+    font-size: 18px;
 }
 .my-table .cancelButton {
-    font-size: 14px;
+    font-size: 12px;
   }
 
 /* .temp-navbar {
@@ -77,8 +113,9 @@
     z-index: 9999;
 } */
 .homePage{
+  min-height: 100vh;
     text-align: left;
-    margin: 20px 40px;
+    /* margin: 20px 40px; */
 }
 
 .StudentHomePage .centered-column {
@@ -110,25 +147,39 @@
   /* Style the input box */
   .StudentHomePage-card .volunteer-goal input {
     padding: 5px;
-    width: 63px; 
-    height: 45px;
+    width: 45px; 
+    height: 30px;
     border: 2px solid #ccc;
     border-radius: 5px;
-    font-size: 25px;
-    /* You can add more styles as needed */
+    font-size: 18px;
   }
 
   .upcoming-shift {
-    padding-top: 10px;
-    font-size: 30px;
+    /* padding-top: 5px; */
+    font-size: 20px;
   }
+
 
   .calendar {
-    width: 80%;
-    margin: 0 auto;
-    border-radius: 10px;
-  }
+    transform: scale(0.55) translateY(-42%);
+    /* margin-right: 20px; */
 
+    flex: 0;
+    display: flex;
+    align-items: flex-start;
+    box-shadow:
+      0 -4px 4px -2px rgba(0, 0, 0, 0.1),
+      4px 0 4px -2px rgba(0, 0, 0, 0.1),
+      -4px 0 4px -2px rgba(0, 0, 0, 0.1);
+
+  }
+  /* .appointment {
+    transform: translateY(42%);
+  } */
+
+
+
+  
 
 
 /* Responsive styles for smaller screens */
@@ -140,4 +191,10 @@
     .content-container {
         flex-direction: column; /* Stack content on smaller screens */
     }
+}
+
+@media (max-width: 768px) {
+  .table-group {
+    transform: translateY(0); /* Adjust the value as needed */
+  }
 }
