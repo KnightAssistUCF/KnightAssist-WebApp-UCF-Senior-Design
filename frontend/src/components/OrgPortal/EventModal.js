@@ -23,10 +23,19 @@ import { buildPath } from '../../path';
 import { useNavigate, useState } from 'react';
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 function EventModal(props)
 {
-    const handleClose = () => {props.setOpen(false);}
+    const handleCloseModal = () => {props.setOpen(false);}
+    const handleCloseAlert = () => {setOpenAlert(false);}
+
+    const [openAlert, setOpenAlert] = useState(false);
 
     const tagNames = [];
 
@@ -78,18 +87,42 @@ function EventModal(props)
         )
     }
 
+    //This is the dialog for when editing moda;
+    {
+        /*
+        <Dialog
+		open={openAlert}
+		onClose={handleCloseAlert}
+		aria-labelledby="alert-dialog-title"
+		aria-describedby="alert-dialog-description"
+		>
+			<DialogTitle id="alert-dialog-title">
+			{"Delete Event?"}
+			</DialogTitle>
+			<DialogContent>
+			<DialogContentText id="alert-dialog-description">
+			Doing so will remove this event from all volunteer's past and future history. 
+			</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+			<Button onClick={handleCloseAlert}>Undo</Button>
+			<Button sx={{color:"red"}} onClick={handleCloseAlert} autoFocus>Delete</Button>
+			</DialogActions>
+		</Dialog>*/
+    }
+
     return(
-        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
+        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleCloseModal}>
             <div className='center'>
                 <Card className='addEventCard spartan'>
                     <CardContent>
                         <button className='closeAddEvent'>
-                            <CloseIcon className='closeHeight' onClick={() => handleClose()}/>
+                            <CloseIcon className='closeHeight' onClick={() => handleCloseModal()}/>
                         </button>
-                        
                     </CardContent>   
                 </Card>
             </div>
+	
         </Modal>
     );
 };

@@ -36,11 +36,6 @@ function AddEventModal(props)
     const [picLink, setPicLink] = useState("");
     const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
     const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
-    const [fbLink, setFBLink] = useState("");
-    const [twitterLink, setTwitterLink] = useState("");
-    const [igLink, setIGLink] = useState("");
-    const [ytLink, setYTLink] = useState("");
-    const [webLink, setWebLink] = useState("");
     const semester = "Fall 2023" //This will be implemented some other way later
     const [maxVolunteers, setMaxVolunteers] = useState();
     const [currentTag, setCurrentTag] = useState("");
@@ -100,13 +95,6 @@ function AddEventModal(props)
             registeredVolunteers: [],
             startTime: startTime,
             endTime: endTime,
-            eventLinks: {
-                facebook: fbLink,
-                twitter: twitterLink,
-                instagram: igLink,
-                // Youtube will go here when added
-                website: webLink,
-            },
             eventTags: tagNames,
             semester: semester,
             maxAttendees: maxVolunteers
@@ -217,16 +205,6 @@ function AddEventModal(props)
                                     {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e)})}  
 
                                     {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:false, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
-                                </Grid>
-
-                                <div className='addEventHeader'>Social Media</div>
-                                <Grid container spacing={2} marginBottom={"30px"}>
-                                    {GridTextField({xm:12, sm:6, name:"Facebook", label:<FacebookIcon/>, required:false, multiline:false, value:fbLink, onChange:(e) => setFBLink(e.target.value)})}
-                                    {GridTextField({xm:12, sm:6, name:"Twitter", label:<TwitterIcon/>, required:false, multiline:false, value:twitterLink, onChange:(e) => setTwitterLink(e.target.value)})}
-                                    {GridTextField({xm:12, sm:6, name:"Instagram", label:<InstagramIcon/>, required:false, multiline:false, value:igLink, onChange:(e) => setIGLink(e.target.value)})}
-                                    {GridTextField({xm:12, sm:6, name:"Youtube", label:<YouTubeIcon/>, required:false, multiline:false, value:ytLink, onChange:(e) => setYTLink(e.target.value)})}
-
-                                    {GridTextField({xm:12, sm:12, name:"Website", label:"Website", required:false, value:webLink, onChange:(e) => setWebLink(e.target.value)})}
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>

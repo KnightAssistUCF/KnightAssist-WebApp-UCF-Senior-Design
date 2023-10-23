@@ -11,6 +11,7 @@
     "mdb-ui-kit": "^6.4.2",
     "mongodb": "^6.1.0",
     "mongoose": "^7.6.3",
+    "react": "^18.2.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^5.2.0"
   },

@@ -13,7 +13,8 @@ function Header()
                 <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 <a className="headerLink" href="">profile</a>
                 <a className="headerLink" href="">calendar</a>
-                <a className="headerLink" href="">about us</a>
+                <a className="headerLink" href="">feedback</a>
+                <a className="headerLink" href="">settings</a>
                 <div className="bottom">
                     <button className='luWrapper'>
                         <LuLogOut className='logoutIcon' onClick={() => (console.log("log out"))}/>
