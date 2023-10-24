@@ -1,6 +1,6 @@
 import React from 'react';
 import PageTitle from './PageTitle';
-import {BiMenu, BiHome, BiSearchAlt, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
 import './Header.css';
 
 function Header()
@@ -26,7 +26,7 @@ function Header()
                 </li>
                 <li>
                     <a href="#">
-                    <BiSearchAlt className='searchIcon'></BiSearchAlt>
+                    <BiSearch className='searchIcon'></BiSearch>
                     <span class="links_name">Org Portal</span>
                     </a>
                     {/* <span class="tooltip">Home</span> */}
