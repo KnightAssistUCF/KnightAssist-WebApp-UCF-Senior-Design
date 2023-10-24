@@ -95,6 +95,9 @@ app.use('/api/editEvent', editEvent);
 const editOrganizationProfile = require('./backend/routes/editOrganizationProfile');
 app.use('/api/editOrganizationProfile', editOrganizationProfile);
 
+const loadAllStudentsInOrganization = require('./backend/routes/allStudentsInOrganization');
+app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
