@@ -98,6 +98,9 @@ app.use('/api/editOrganizationProfile', editOrganizationProfile);
 const loadAllStudentsInOrganization = require('./backend/routes/allStudentsInOrganization');
 app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
 
+const searchOneEvent = require('./backend/routes/searchOneEvent');
+app.use('/api/searchOneEvent', searchOneEvent);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

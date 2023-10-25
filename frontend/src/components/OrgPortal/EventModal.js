@@ -20,7 +20,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgPortal.css';
 import { buildPath } from '../../path';
-import { useNavigate, useState } from 'react';
+import { useEffect, useState } from 'react';
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
 import Dialog from '@mui/material/Dialog';
@@ -29,6 +29,9 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import CancelIcon from '@mui/icons-material/Cancel';
+import CardMedia from '@mui/material/CardMedia';
+
+const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
@@ -36,8 +39,43 @@ function EventModal(props)
     const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
-
     const tagNames = [];
+
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [date, setDate] = useState("");
+    const [location, setLocation] = useState("");
+    const [startTime, setStartTime] = useState("");
+    const [endTime, setEndTime] = useState("");
+    const [maxVolunteers, setMaxVolunteers] = useState(0);
+    const [tags, setTags] = useState([]);
+ 
+
+    async function setInfo(){
+        const eventID = "12345";
+        
+        let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        let event = res[0];
+
+        console.log(event);
+        
+        setName(event.name);
+        setDescription(event.description);
+        setDate(event.date);
+        setLocation(event.location);
+        setStartTime(event.startTime);
+        setEndTime(event.endTime);
+        setMaxVolunteers(event.maxAttendees);
+        setTags(event.tagNames);
+    }
 
     function GridTextField(props){
         return (
@@ -87,6 +125,22 @@ function EventModal(props)
         )
     }
 
+    function EventName(){
+        return (
+            <div className='bigName'>
+                {name}
+            </div>
+        )
+    }
+
+    function Description(props){
+        return (
+            <div className='description'>
+                {description}
+            </div>
+        )
+    }
+
     //This is the dialog for when editing moda;
     {
         /*
@@ -110,15 +164,26 @@ function EventModal(props)
 			</DialogActions>
 		</Dialog>*/
     }
+    
+    useEffect(()=>{
+        setInfo();
+    },[props.eventID])
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleCloseModal}>
             <div className='center'>
-                <Card className='addEventCard spartan'>
+                <Card className='eventModalCard spartan'>
                     <CardContent>
                         <button className='closeAddEvent'>
-                            <CloseIcon className='closeHeight' onClick={() => handleCloseModal()}/>
+                            <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
+                        <img className='boxImg' src={eventPic}></img>
+                        <Container component="main" maxWidth="md">
+                            <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
+                                <EventName/>
+                                <Description/>
+                            </Box>
+                        </Container>
                     </CardContent>   
                 </Card>
             </div>

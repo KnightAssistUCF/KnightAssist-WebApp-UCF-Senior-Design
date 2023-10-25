@@ -26,7 +26,6 @@ import PastEvents from './PastEvents';
 
 function AddEventModal(props)
 {
-    console.log("hello");
     const handleClose = () => {setTags([]); props.setOpen(false);}
 
     const [name, setName] = useState("");
@@ -178,10 +177,10 @@ function AddEventModal(props)
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
-                <Card className='addEventCard spartan'>
+                <Card className='addEventModalCard spartan'>
                     <CardContent>
                         <button className='closeAddEvent'>
-                            <CloseIcon className='closeHeight' onClick={() => handleClose()}/>
+                            <CloseIcon onClick={() => handleClose()}/>
                         </button>
                         <Container component="main" maxWidth="xs">
                             <Box className="boxStyle">

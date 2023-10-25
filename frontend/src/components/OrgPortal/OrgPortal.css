@@ -89,10 +89,15 @@
     background-color: #5f5395;
 }
 
-
-.addEventCard{
+.addEventModalCard{
     height: 75vh;
     width: 75vh;
+    overflow-y: scroll !important;
+}
+
+.eventModalCard{
+    height: 90vh;
+    width: 100vh;
     overflow-y: scroll !important;
 }
 
@@ -103,7 +108,7 @@
 }
 
 .closeAddEvent{
-    margin-left: 93%;
+    margin-left: 95%;
     background: none;
     border: none;
 }
@@ -131,4 +136,19 @@
 .upcomingEventsSpace{
     margin-top: 5%;
     margin-bottom: 8%;
+}
+
+.boxImg{
+    width: 90%;
+    height: 200px !important;
+}
+
+.bigName{
+    font-size: 40px;
+    left: 50%;
+    margin-bottom: 20px;
+}
+
+.description{
+    font-size: 20px;
 }
