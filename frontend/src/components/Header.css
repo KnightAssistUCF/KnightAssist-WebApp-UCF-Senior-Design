@@ -9,10 +9,11 @@ ul.nav_list {
     top: 0;
     left: 0;
     height: 100%;
-    width: 220px;
+    width: 190px;
     background: #3C355A;
     padding: 6px 14px;
     z-index: 999;
+    transition: all 0.5s ease;
 }
 
 .sidebar .logo_content .logo {
@@ -33,19 +34,23 @@ ul.nav_list {
 .menuIcon {
     position: absolute;
     color: #fff;
-    left: 90%;
+    left: 65%;
     top: 17px;
     font-size: 20px;
-    height: 30px;
+    height: 28px;
     width: 30px;
     text-align: center;
-    line-height: 30px;
+    line-height: 28px;
     transform: translateX(-80%);
+    display: none;
 }
 
 .sidebar ul{
     margin-top: 30px;
 }
+
+
+
 
 .sidebar ul li {
     position: relative;
@@ -79,8 +84,10 @@ ul.nav_list {
   }
 
 
+
 ul.nav_list li a .homeIcon,
 ul.nav_list li a .searchIcon,
+ul.nav_list li a .notificationIcon,
 ul.nav_list li a .historyIcon,
 ul.nav_list li a .settingsIcon {
     margin-right: 25px;
@@ -102,8 +109,9 @@ ul.nav_list li a .settingsIcon {
 .sidebar .profile_content .profile {
     position: relative;
     padding: 10px 6px;
-    height: 60px;
-    background: #312c4b;
+    height: 65px;
+    border-top: 2px solid #312c4b;
+    /* background: #312c4b; */
 }
 
 .sidebar .profile_content .profile .profile_details {
@@ -132,11 +140,102 @@ ul.nav_list li a .settingsIcon {
 
 .logoutIcon {
     position: absolute;
-    left: 88%;
-    bottom: 5px;
+    left: 80%;
+    bottom: 12px;
     transform: translateX(-50%);
     min-width: 50px;
-    line-height: 50px;
+    line-height: 10px;
     font-size: 30px;
     border-radius: 12px;
 }
+
+.profile_content .profile .smallLogOut {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .custom-tooltip {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 70px;
+    }
+    .menuIcon {
+        display: block;
+        
+    }
+    .profile_content .profile .bigLogOut {
+        display: none;
+    }
+
+    .profile_content .profile .smallLogOut {
+        display: block;
+        left: 9px;
+        bottom: 5px;
+        /* right: 5px; */
+        /* position: absolute;
+        left: 80%;
+        bottom: 12px;
+        transform: translateX(-50%);
+        min-width: 50px;
+        line-height: 10px;
+        font-size: 30px;
+        border-radius: 12px; */
+
+    }
+    .profile_content .profile .smallLogOut .sLogOutIcon {
+        margin: 0 auto;
+        font-size: 23px;
+    }
+
+    .sidebar .logo_content .logo {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    ul.nav_list li a .homeIcon,
+    ul.nav_list li a .searchIcon,
+    ul.nav_list li a .notificationIcon,
+    ul.nav_list li a .historyIcon,
+    ul.nav_list li a .settingsIcon {
+        margin-right: 0;
+    }
+    .profile_content .profile .MuiButton-label {
+        display: none;
+      }
+    .sidebar ul li a {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 6px 6px 6px 6px;
+        padding: 10px 10px;
+    }
+    .sidebar ul li a .links_name {
+        display: none;
+    }
+    .sidebar ul li a:hover{
+        border-left: none;
+    }
+
+    
+}
+
+
+/* Play around with values
+
+page content {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 240px);
+    left: 240px;
+
+}
+
+
+
+
+*/
