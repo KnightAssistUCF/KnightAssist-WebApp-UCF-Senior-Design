@@ -6,7 +6,7 @@ const event = require('../models/events');
 router.get('/', async (req, res) => {
     const searchID = req.query.eventID;
 
-    await event.find({ eventID: searchID}).then((event) => {
+    await event.find({ eventID: searchID }).then((event) => {
         if (event) {
             res.status(200).json(event);
         } else {
