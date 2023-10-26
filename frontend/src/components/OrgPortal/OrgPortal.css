@@ -158,3 +158,13 @@
 .lessSpace{
     margin-bottom: -2px;
 }
+
+.editEventBtn{
+    background: none;
+    border: none;
+}
+
+.deleteEventBtn{
+    background: none;
+    border: none;
+}

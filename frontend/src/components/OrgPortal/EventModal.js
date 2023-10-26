@@ -23,6 +23,11 @@ import StopIcon from '@mui/icons-material/Stop';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { GenIcon } from 'react-icons';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const eventPic = require("../Login/loginPic.png");
 
@@ -45,9 +50,7 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
  
 
-    async function setInfo(){
-        const eventID = "12345";
-        
+    async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
 
         let response = await fetch(url, {
@@ -172,28 +175,34 @@ function EventModal(props)
         )
     }
 
-    //This is the dialog for when editing moda;
-    {
-        /*
-        <Dialog
-		open={openAlert}
-		onClose={handleCloseAlert}
-		aria-labelledby="alert-dialog-title"
-		aria-describedby="alert-dialog-description"
-		>
-			<DialogTitle id="alert-dialog-title">
-			{"Delete Event?"}
-			</DialogTitle>
-			<DialogContent>
-			<DialogContentText id="alert-dialog-description">
-			Doing so will remove this event from all volunteer's past and future history. 
-			</DialogContentText>
-			</DialogContent>
-			<DialogActions>
-			<Button onClick={handleCloseAlert}>Undo</Button>
-			<Button sx={{color:"red"}} onClick={handleCloseAlert} autoFocus>Delete</Button>
-			</DialogActions>
-		</Dialog>*/
+    function edit(){
+
+    }
+
+    async function deleteEvent(){
+        const organizationID = "12345";
+
+        const json = {
+            eventID: props.eventID,
+            organizationID: organizationID
+        };
+
+        console.log(json);
+
+        let url = buildPath(`api/deleteSingleEvent`);
+
+        let response = await fetch(url, {
+            method: "DELETE",
+            body: JSON.stringify(json),
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = await response.text();
+
+        console.log(res);
+
+        props.setReset(props.reset * -1);
+        handleCloseModal();
     }
     
     useEffect(()=>{
@@ -237,12 +246,32 @@ function EventModal(props)
       
                                 <Grid container marginLeft={"30%"} marginTop={"150px"}>
                                     <Grid item xs={3}>
-                                        Edit: <EditIcon/>
+                                        Edit: <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
                                     </Grid>
                                     <Grid item xs={0}>
-                                        Delete: <DeleteForeverIcon/>
+                                        Delete: <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
                                     </Grid>
-                                </Grid>    
+                                </Grid>   
+
+                                        <Dialog
+                                            open={openAlert}
+                                            onClose={handleCloseAlert}
+                                            aria-labelledby="alert-dialog-title"
+                                            aria-describedby="alert-dialog-description"
+                                            >
+                                                <DialogTitle id="alert-dialog-title">
+                                                {"Delete Event?"}
+                                                </DialogTitle>
+                                                <DialogContent>
+                                                <DialogContentText id="alert-dialog-description">
+                                                Doing so will remove this event from all volunteer's past and future history. 
+                                                </DialogContentText>
+                                                </DialogContent>
+                                                <DialogActions>
+                                                <Button onClick={handleCloseAlert}>Undo</Button>
+                                                <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
+                                                </DialogActions>
+                                        </Dialog> 
                             </Box>
                         </Container>
                     </CardContent>   
