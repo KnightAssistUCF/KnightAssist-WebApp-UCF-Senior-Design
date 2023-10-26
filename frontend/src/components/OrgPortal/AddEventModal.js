@@ -81,6 +81,19 @@ function AddEventModal(props)
         type: Number,
     },
     */
+
+    function resetValues(){
+        setName("");
+        setDescription("");
+        setLocation("");
+        setDate(new Date());
+        setPicLink("");
+        setStartTime(dayjs('2022-04-17T15:30'));
+        setEndTime(dayjs('2022-04-17T15:30'));
+        setMaxVolunteers(0);
+        setCurrentTag("");
+        setTags([]);
+    }
     
     async function submitEvent(){
         const json = {
@@ -112,7 +125,8 @@ function AddEventModal(props)
 
             let res = await response.text();
             console.log(res);
-            props.setReset(1);
+            props.setReset(props.reset * -1);
+            resetValues();
             handleClose();
         }catch{
             console.log("An error has occurred");
