@@ -26,7 +26,7 @@ import PastEvents from './PastEvents';
 
 function AddEventModal(props)
 {
-    const handleClose = () => {setTags([]); props.setOpen(false);}
+    const handleClose = () => {props.setOpen(false);}
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -39,8 +39,7 @@ function AddEventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState();
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
-
-    const tagNames = [];
+    const [tagNames, setTagNames] = useState([]);
 
     /*
     eventID: {
@@ -93,9 +92,11 @@ function AddEventModal(props)
         setMaxVolunteers(0);
         setCurrentTag("");
         setTags([]);
+        setTagNames([]);
     }
     
     async function submitEvent(){
+        console.log(tagNames)
         const json = {
             eventID: "1234" + name,
             name: name,
@@ -182,9 +183,10 @@ function AddEventModal(props)
     }
 
     function createTag(){
-        tagNames.push(currentTag);
         const taggy = tags;
         setTags([...taggy, <Tag tag={currentTag}/>]);
+        const taggyNames = tagNames;
+        setTagNames([...taggyNames, currentTag]);
         setCurrentTag("");
     }
 

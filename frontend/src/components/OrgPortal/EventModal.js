@@ -7,35 +7,28 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Logo from '../Logo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgPortal.css';
 import { buildPath } from '../../path';
 import { useEffect, useState } from 'react';
-import UpcomingEvents from './UpcomingEvents';
-import PastEvents from './PastEvents';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import CancelIcon from '@mui/icons-material/Cancel';
-import CardMedia from '@mui/material/CardMedia';
+import EventIcon from '@mui/icons-material/Event';
+import PlaceIcon from '@mui/icons-material/Place';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { GenIcon } from 'react-icons';
 
 const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {props.setOpen(false);}
+    const handleCloseModal = () => {setTags([]); props.setOpen(false);}
     const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
@@ -47,6 +40,7 @@ function EventModal(props)
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
+    const [curVolunteers, setVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
  
@@ -73,8 +67,9 @@ function EventModal(props)
         setLocation(event.location);
         setStartTime(event.startTime);
         setEndTime(event.endTime);
+        setVolunteers(event.registeredVolunteers.length)
         setMaxVolunteers(event.maxAttendees);
-        setTags(event.tagNames);
+        setTags(event.eventTags);
     }
 
     function GridTextField(props){
@@ -115,6 +110,47 @@ function EventModal(props)
         )
     }
 
+    function EventName(){
+        return (
+            <div className='bigName'>
+                {name}
+            </div>
+        )
+    }
+
+    function Description(){
+        return (
+            <div className='description'>
+                {description}
+            </div>
+        )
+    }
+
+    function GridIcon(props){
+        return (
+            <Grid item xs={1}>
+                {props.icon}                                 
+            </Grid>    
+        )
+    }
+
+    function GridInfo(props){
+        return (
+            <Grid item xs={0}>
+                {props.info}                             
+            </Grid>   
+        ) 
+    }
+
+    function Volunteers(){
+        return (
+            <div>
+                <p className='lessSpace'>Registered Volunteers:</p>
+                <p>{curVolunteers}/{maxVolunteers}</p>
+            </div>
+        )
+    }
+
     function Tag(props){
         return (
             <Grid item>
@@ -125,19 +161,14 @@ function EventModal(props)
         )
     }
 
-    function EventName(){
+    function Tags(){
         return (
-            <div className='bigName'>
-                {name}
-            </div>
-        )
-    }
-
-    function Description(props){
-        return (
-            <div className='description'>
-                {description}
-            </div>
+                <div>
+                    <p>Tags:</p>
+                    <Grid marginLeft={"100px"}>
+                        {tags.map(t => <Tag tag={t}/>)}
+                    </Grid>
+                </div>
         )
     }
 
@@ -181,7 +212,37 @@ function EventModal(props)
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>
+
                                 <Description/>
+
+                                <Grid container marginLeft={"30%"} marginTop={"40px"}>
+                                    <GridIcon icon={<EventIcon/>}/>
+                                    <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+
+                                    <GridIcon icon={<PlaceIcon/>}/>
+                                    <GridInfo info={location}/>
+                                </Grid>                            
+
+                                <Grid container marginLeft={"30%"} marginTop={"30px"} marginBottom={"40px"}>
+                                    <GridIcon icon={<PlayArrowIcon/>}/>
+                                    <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+
+                                    <GridIcon icon={<StopIcon/>}/>
+                                    <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                </Grid>
+
+                                <Volunteers/>
+
+                                <Tags/>
+      
+                                <Grid container marginLeft={"30%"} marginTop={"150px"}>
+                                    <Grid item xs={3}>
+                                        Edit: <EditIcon/>
+                                    </Grid>
+                                    <Grid item xs={0}>
+                                        Delete: <DeleteForeverIcon/>
+                                    </Grid>
+                                </Grid>    
                             </Box>
                         </Container>
                     </CardContent>   
