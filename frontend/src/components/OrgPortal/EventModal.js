@@ -28,7 +28,7 @@ const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {setTags([]); props.setOpen(false);}
+    const handleCloseModal = () => {props.setOpen(false);}
     const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
@@ -165,7 +165,7 @@ function EventModal(props)
         return (
                 <div>
                     <p>Tags:</p>
-                    <Grid marginLeft={"100px"}>
+                    <Grid marginLeft={"200px"} marginRight={"100px"}>
                         {tags.map(t => <Tag tag={t}/>)}
                     </Grid>
                 </div>
