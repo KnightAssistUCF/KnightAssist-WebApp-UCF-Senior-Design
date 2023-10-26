@@ -80,8 +80,8 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/addEvent');
 app.use('/api/addEvent', addEvent);
 
-const searchEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
-app.use('/api/searchEvent', searchEventsOfAnOrg);
+const searchAllEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
+app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
 const deleteAllEvents = require('./backend/routes/deleteAllEvents');
 app.use('/api/deleteAllEvents', deleteAllEvents);
