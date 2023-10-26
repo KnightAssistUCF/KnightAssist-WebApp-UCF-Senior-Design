@@ -80,8 +80,8 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/addEvent');
 app.use('/api/addEvent', addEvent);
 
-const searchEvent = require('./backend/routes/searchEvent');
-app.use('/api/searchEvent', searchEvent);
+const searchEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
+app.use('/api/searchEvent', searchEventsOfAnOrg);
 
 const deleteAllEvents = require('./backend/routes/deleteAllEvents');
 app.use('/api/deleteAllEvents', deleteAllEvents);
@@ -92,6 +92,14 @@ app.use('/api/deleteSingleEvent', deleteSingleEvent);
 const editEvent = require('./backend/routes/editEvent');
 app.use('/api/editEvent', editEvent);
 
+const editOrganizationProfile = require('./backend/routes/editOrganizationProfile');
+app.use('/api/editOrganizationProfile', editOrganizationProfile);
+
+const loadAllStudentsInOrganization = require('./backend/routes/allStudentsInOrganization');
+app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
+
+const searchOneEvent = require('./backend/routes/searchOneEvent');
+app.use('/api/searchOneEvent', searchOneEvent);
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

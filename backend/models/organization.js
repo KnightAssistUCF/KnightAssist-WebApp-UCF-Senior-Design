@@ -39,7 +39,7 @@ const organizationSchema = new Schema({
         type: Schema.Types.ObjectId, // people that liked and favorited this organization
         ref: 'userStudent',
     }],
-    updates: [{
+    updates: [{ // this work as announcements for the organization
         title: String,
         content: String,
         date: {
