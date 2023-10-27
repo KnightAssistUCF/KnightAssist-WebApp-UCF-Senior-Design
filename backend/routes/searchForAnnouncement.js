@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const organization = require("../models/organization");
+const orgDB = require("../models/organization");
 
 router.get('/', async (req, res) => {
     const titleToLookFor = req.query.titleToLookFor;
     const organizationID = req.query.organizationID;
 
     try {
-        const organization = await Organization.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ organizationID: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
         const indexOfAnnouncement = organization.updates.findIndex(update => update.title === titleToLookFor);

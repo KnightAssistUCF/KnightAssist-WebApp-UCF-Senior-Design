@@ -1,14 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const organization = require("../models/organization");
+const orgDB = require("../models/organization");
 
 router.delete('/', async (req, res) => {
     const titleToLookFor = req.body.titleToLookFor;
     const organizationID = req.body.organizationID;
     try {
 
-        const organization = await Organization.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ organizationID: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
         const updateIndex = organization.updates.findIndex(update => update.title === titleToLookFor);
