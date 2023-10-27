@@ -3,10 +3,13 @@
 }
  
 .orgSearch{
-    width: 50% !important;
-    margin-left: 25% !important;
-    margin-top: 5%;
+    width: 500px !important;
     margin-bottom: 5%;
+}
+
+.moveSearch{
+    margin-top: 10px;
+    margin-left: 500px;
 }
 
 .cards{
@@ -50,6 +53,7 @@
     margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
+    float: left;
 }
 
 .spartan{
@@ -73,7 +77,8 @@
 }
 
 .addEventBtn{
-    margin-bottom: 30px;
+    margin-right: 500px;
+    margin-top: 50px;
     background-color: #5f5395;
     border: none;
 }
@@ -168,4 +173,7 @@
 .deleteEventBtn{
     background: none;
     border: none;
+}
+
+.orgPortalTop{
 }

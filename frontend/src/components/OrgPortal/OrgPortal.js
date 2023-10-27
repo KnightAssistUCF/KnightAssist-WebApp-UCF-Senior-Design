@@ -22,8 +22,12 @@ function OrgPortal()
       <div>
         <Header/>
         <div className='move'>
-          <Welcome/>
-          <SearchOrg/>
+          <div className="orgPortalTop">
+            <Welcome/>
+            <div className='moveSearch'>
+              <SearchOrg/>
+            </div>
+          </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
           <AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
           <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
