@@ -107,6 +107,9 @@ app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnn
 const searchForAnnouncement = require('./backend/routes/searchForAnnouncement');
 app.use('/api/searchForAnnouncement', searchForAnnouncement);
 
+const deleteAllOrganizationAnnouncements = require('./backend/routes/deleteAllOrganizationAnnouncements');
+app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnouncements);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
