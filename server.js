@@ -101,7 +101,7 @@ app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
 const searchOneEvent = require('./backend/routes/searchOneEvent');
 app.use('/api/searchOneEvent', searchOneEvent);
 
-const deleteSingleOrganizationAnnouncement = require('./backend/routes/deleteSingleOrganizationAnnouncement');
+const deleteSingleOrganizationAnnouncement = require('./backend/routes/deleteSingleOrgAnnouncement');
 app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnnouncement);
 
 const searchForAnnouncement = require('./backend/routes/searchForAnnouncement');
@@ -109,6 +109,9 @@ app.use('/api/searchForAnnouncement', searchForAnnouncement);
 
 const deleteAllOrganizationAnnouncements = require('./backend/routes/deleteAllOrganizationAnnouncements');
 app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnouncements);
+
+const editOrganizationAnnouncement = require('./backend/routes/editAnAnnouncement');
+app.use('/api/editOrganizationAnnouncement', editOrganizationAnnouncement);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
