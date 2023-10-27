@@ -16,6 +16,7 @@ function OrgPortal()
     const [editMode, setEditMode] = useState(0);
     const [eventID, setEventID] = useState("");
     const [resetUpcoming, setResetUpcoming] = useState(1);
+    const [resetPast, setResetPast] = useState(1);
     
     return(
       <div>
@@ -24,10 +25,10 @@ function OrgPortal()
           <Welcome/>
           <SearchOrg/>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
-          <AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
-          <EventModal setReset={setResetUpcoming} reset={resetUpcoming} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
+          <AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
+          <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
           <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/>
-          <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent}/>
+          <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetPast}/>
         </div>
       </div>
     );

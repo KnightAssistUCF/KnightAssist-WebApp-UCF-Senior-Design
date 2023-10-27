@@ -42,7 +42,10 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
  
-
+    function eventIsUpcoming(date){
+        return new Date().toISOString() < new Date(date).toISOString();
+    }
+    
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
 
@@ -158,7 +161,11 @@ function EventModal(props)
 
         console.log(res);
 
-        props.setReset(props.reset * -1);
+        if(eventIsUpcoming(date))
+            props.setReset(props.reset * -1);
+        else
+            props.setResetPast(props.resetPast * -1);  
+    
         handleCloseAlert();
         handleCloseModal();
     }

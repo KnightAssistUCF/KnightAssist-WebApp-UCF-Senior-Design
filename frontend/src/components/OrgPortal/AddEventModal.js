@@ -78,6 +78,10 @@ function AddEventModal(props)
     },
     */
 
+    function eventIsUpcoming(date){
+        return new Date().toISOString() < new Date(date).toISOString();
+    }
+
     function resetValues(){
         setModalType("Add");
         setButtonText("Add");
@@ -89,7 +93,7 @@ function AddEventModal(props)
         setPicLink("");
         setStartTime(dayjs('2022-04-17T15:30'));
         setEndTime(dayjs('2022-04-17T15:30'));
-        setMaxVolunteers(0);
+        setMaxVolunteers();
         setCurrentTag("");
         setTags([]);
         setTagNames([]);
@@ -127,7 +131,12 @@ function AddEventModal(props)
 
             let res = await response.text();
             console.log(res);
-            props.setReset(props.reset * -1);
+
+            if(eventIsUpcoming(date))
+                props.setReset(props.reset * -1);
+            else
+                props.setResetPast(props.resetPast * -1);
+
             handleClose();
         }catch{
             console.log("An error has occurred");
@@ -166,7 +175,12 @@ function AddEventModal(props)
             console.log(res);
             
             props.setEditMode(0);
-            props.setReset(props.reset * -1);
+
+            if(eventIsUpcoming(date))
+                props.setReset(props.reset * -1);
+            else
+                props.setResetPast(props.resetPast * -1);            
+            
             props.openEvent(true);
 
             resetValues();

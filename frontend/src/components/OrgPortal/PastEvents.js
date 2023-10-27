@@ -16,6 +16,7 @@ function PastEvents(props)
     const [eventCards, setEventCards] = useState();
 
     function openEventModal(id){
+        console.log("ID:", id);
         props.setEventID(id);
         props.setOpenEvent(true);
     }
@@ -55,7 +56,9 @@ function PastEvents(props)
 
         for(let event of res)
             if(eventIsPast(event.date))
-                events.push(<Event name={event.name} date={event.date} id={props.eventID}/>)      
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)   
+                
+        console.log(events);
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
@@ -100,6 +103,10 @@ function PastEvents(props)
     useEffect(()=>{
         getPastEvents();
     },[])
+
+    useEffect(()=>{
+        getPastEvents();
+    },[props.reset])
 
     return(
      <div>
