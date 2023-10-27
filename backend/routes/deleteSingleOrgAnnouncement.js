@@ -4,7 +4,7 @@ const router = express.Router();
 const organization = require("../models/organization");
 
 router.delete('/', async (req, res) => {
-    const titleToLookFor = req.body.updateTitle;
+    const titleToLookFor = req.body.titleToLookFor;
     const organizationID = req.body.organizationID;
     try {
 
@@ -21,7 +21,7 @@ router.delete('/', async (req, res) => {
         res.send('announcement/update deleted successfully');
     } catch (error) {
         console.error(error);
-        res.status(500).send('An error occurred');
+        res.status(500).send('An error occurred could not delete the announcement/update');
     }
 });
 

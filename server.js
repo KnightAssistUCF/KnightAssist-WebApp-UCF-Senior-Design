@@ -103,6 +103,10 @@ app.use('/api/searchOneEvent', searchOneEvent);
 
 const deleteSingleOrganizationAnnouncement = require('./backend/routes/deleteSingleOrganizationAnnouncement');
 app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnnouncement);
+
+const searchForAnnouncement = require('./backend/routes/searchForAnnouncement');
+app.use('/api/searchForAnnouncement', searchForAnnouncement);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
