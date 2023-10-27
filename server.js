@@ -113,6 +113,9 @@ app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnounce
 const editOrganizationAnnouncement = require('./backend/routes/editAnAnnouncement');
 app.use('/api/editOrganizationAnnouncement', editOrganizationAnnouncement);
 
+const createOrganizationAnnouncement = require('./backend/routes/createAnnouncement');
+app.use('/api/createOrganizationAnnouncement', createOrganizationAnnouncement);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
