@@ -20,7 +20,7 @@ import { useEffect, useState } from 'react';
 
 function AddEventModal(props)
 {
-    const handleClose = () => {props.setOpen(false);}
+    const handleClose = () => {resetValues(); props.setEditMode(0); props.setOpen(false);}
 
     const [modalType, setModalType] = useState("Add");
     const [buttonText, setButtonText] = useState("Add");
@@ -96,7 +96,8 @@ function AddEventModal(props)
     }
     
     async function submitEvent(){
-        console.log(tagNames)
+        console.log(tagNames);
+
         const json = {
             eventID: "1234" + name,
             name: name,
@@ -127,7 +128,6 @@ function AddEventModal(props)
             let res = await response.text();
             console.log(res);
             props.setReset(props.reset * -1);
-            resetValues();
             handleClose();
         }catch{
             console.log("An error has occurred");
@@ -167,6 +167,7 @@ function AddEventModal(props)
             
             props.setEditMode(0);
             props.setReset(props.reset * -1);
+            props.openEvent(true);
 
             resetValues();
             handleClose();
@@ -258,17 +259,24 @@ function AddEventModal(props)
             
             setName(event.name);
             setDescription(event.description);
-            setDate(event.date);
+            setDate(new Date(event.date));
             setLocation(event.location);
-            setStartTime(event.startTime);
-            setEndTime(event.endTime);
+            setStartTime(dayjs(event.startTime));
+            setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
 
-            const taggy = [];
-            for(let tagName of event.eventTags)
-                taggy.push(<Tag tag={tagName}/>)
+            console.log(date, startTime, endTime);
 
+            const taggy = [];
+            const taggyNames = [];
+
+            for(let tagName of event.eventTags){
+                taggy.push(<Tag tag={tagName}/>)
+                taggyNames.push(tagName);
+            }
+            
             setTags(taggy);
+            setTagNames(taggyNames);
         }
 
         if(props.editMode == 1)
