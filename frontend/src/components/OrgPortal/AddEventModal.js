@@ -13,20 +13,17 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import YouTubeIcon from '@mui/icons-material/YouTube';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgPortal.css';
 import { buildPath } from '../../path';
-import { useNavigate, useState } from 'react';
-import UpcomingEvents from './UpcomingEvents';
-import PastEvents from './PastEvents';
+import { useEffect, useState } from 'react';
 
 function AddEventModal(props)
 {
     const handleClose = () => {props.setOpen(false);}
+
+    const [modalType, setModalType] = useState("Add");
+    const [buttonText, setButtonText] = useState("Add");
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -82,6 +79,9 @@ function AddEventModal(props)
     */
 
     function resetValues(){
+        setModalType("Add");
+        setButtonText("Add");
+
         setName("");
         setDescription("");
         setLocation("");
@@ -132,6 +132,54 @@ function AddEventModal(props)
         }catch{
             console.log("An error has occurred");
         }
+    }
+
+    async function editEvent(){
+        const json = {
+            eventID: props.eventID,
+            name: name,
+            description: description,
+            location: location,
+            date: date,
+            organizationID: "12345",
+            attendees: [],
+            registeredVolunteers: [],
+            startTime: startTime,
+            endTime: endTime,
+            eventTags: tagNames,
+            semester: semester,
+            maxAttendees: maxVolunteers
+        };
+
+        console.log(json);
+
+        const url = buildPath("api/editEvent");
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = await response.text();
+            console.log(res);
+            
+            props.setEditMode(0);
+            props.setReset(props.reset * -1);
+
+            resetValues();
+            handleClose();
+        }catch (err){
+            console.log("An error has occurred: ", err);
+        }
+    }
+
+    function buttonEvent(){
+        if(modalType == "Add")
+            submitEvent();
+        else
+            editEvent();
     }
 
     function GridTextField(props){
@@ -190,6 +238,43 @@ function AddEventModal(props)
         setCurrentTag("");
     }
 
+    useEffect(()=>{
+        const addFields = async () => {
+            let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
+
+            let response = await fetch(url, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            let res = JSON.parse(await response.text());
+
+            let event = res[0];
+
+            console.log(event);
+
+            setModalType("Edit");
+            setButtonText("Save Changes");
+            
+            setName(event.name);
+            setDescription(event.description);
+            setDate(event.date);
+            setLocation(event.location);
+            setStartTime(event.startTime);
+            setEndTime(event.endTime);
+            setMaxVolunteers(event.maxAttendees);
+
+            const taggy = [];
+            for(let tagName of event.eventTags)
+                taggy.push(<Tag tag={tagName}/>)
+
+            setTags(taggy);
+        }
+
+        if(props.editMode == 1)
+            addFields();
+    },[props.editMode])
+
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
@@ -202,7 +287,7 @@ function AddEventModal(props)
                             <Box className="boxStyle">
                             <Logo theStyle="logoHeader"/>
                             <Typography component="h1" variant="h5">
-                                Add Event
+                                {modalType} Event
                             </Typography>
 
                             <Box component="form" noValidate sx={{ mt: 3 }}>
@@ -235,9 +320,9 @@ function AddEventModal(props)
                                     sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395", "&:hover": {
                                         backgroundColor: "#7566b4"
                                       }}}
-                                    onClick={() => submitEvent()}
+                                    onClick={() => buttonEvent()}
                                     >
-                                    Add
+                                    {buttonText}
                                 </Button>
 
                             </Box>

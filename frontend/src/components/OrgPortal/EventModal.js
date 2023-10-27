@@ -22,7 +22,6 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import { GenIcon } from 'react-icons';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -73,44 +72,6 @@ function EventModal(props)
         setVolunteers(event.registeredVolunteers.length)
         setMaxVolunteers(event.maxAttendees);
         setTags(event.eventTags);
-    }
-
-    function GridTextField(props){
-        return (
-            <Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
-                <TextField
-                    name={props.name}
-                    fullWidth
-                    required={props.required}
-                    label={props.label}
-                    autoFocus
-                    multiline={props.multiline}
-                    minRows={props.minRows}
-                    onChange={props.onChange}
-                    value={props.value}
-                />
-            </Grid>
-        )
-    }
-
-    function DateSelector(props){
-        return(
-            <Grid item xs={props.xs} sm={props.sm}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DatePicker label={props.label} onChange={props.onChange}/>
-                </LocalizationProvider>                                      
-            </Grid>    
-        )
-    }
-
-    function TimeSelector(props){
-        return (
-            <Grid item xs={props.xs} sm={props.sm}>
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T15:30')} onChange={props.onChange}/>
-                </LocalizationProvider>                                      
-            </Grid>      
-        )
     }
 
     function EventName(){
@@ -176,7 +137,9 @@ function EventModal(props)
     }
 
     function edit(){
-
+        handleCloseModal();
+        props.setEditMode(1);
+        props.setOpenAdd(true);
     }
 
     async function deleteEvent(){
@@ -202,8 +165,16 @@ function EventModal(props)
         console.log(res);
 
         props.setReset(props.reset * -1);
+        handleCloseAlert();
         handleCloseModal();
     }
+
+    // For when edit finishes, so the most recently
+    // open event's changes are reflected
+    useEffect(()=>{
+        if(props.eventID != undefined)
+            setInfo();
+    }, [props.editMode])
     
     useEffect(()=>{
         setInfo();
