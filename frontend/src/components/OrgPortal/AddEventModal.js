@@ -137,6 +137,8 @@ function AddEventModal(props)
             else
                 props.setResetPast(props.resetPast * -1);
 
+            props.setResetSearch(props.resetSearch * -1);
+
             handleClose();
         }catch{
             console.log("An error has occurred");

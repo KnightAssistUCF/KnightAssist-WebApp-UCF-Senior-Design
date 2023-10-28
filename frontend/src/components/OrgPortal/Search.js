@@ -41,6 +41,9 @@ function Search(props) {
         // upon initialization
         if(flag == 1)
           setOptions(tmp);
+        else
+          if(props.searchType != "organizations")
+            setOptions(tmp);
     }
 
     async function getAllOrganization(){
@@ -83,7 +86,8 @@ function Search(props) {
     },[props.searchType]);
 
     useEffect(()=>{
-        getAllEvents(0);
+      getAllEvents(0);
+      console.log(events);
     },[props.resetEventSearch])
 
     return (
