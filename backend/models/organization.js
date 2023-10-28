@@ -117,7 +117,12 @@ const organizationSchema = new Schema({
         required: true,
         default: ''
     },
-    validForORG: {
+    EmailTokenForORG: { // store the email token
+        type: String,
+        // required: true,
+        default: ''
+    },
+    EmailValidated: { // if the organization validated their email
         type: Boolean,
         required: true,
         default: false

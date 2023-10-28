@@ -71,7 +71,12 @@ const userStudentSchema = new mongoose.Schema({
         required: true,
         default: ''
     },
-    valid: {
+    EmailToken: { // store the email token
+        type: String,
+        // required: true,
+        default: ''
+    },
+    EmailValidated: { // if the user validated their email
         type: Boolean,
         required: true,
         default: false
