@@ -88,7 +88,7 @@ const userStudentSchema = new mongoose.Schema({
         select: false
     }
     
-}, {collection: 'userStudent', timestamps: true});
+}, {collection: 'userStudent', timestamps: true, versionKey: false});
 
 
 

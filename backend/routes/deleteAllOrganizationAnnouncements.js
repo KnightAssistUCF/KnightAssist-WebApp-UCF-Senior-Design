@@ -4,23 +4,22 @@ const router = express.Router();
 const orgDB = require("../models/organization");
 
 router.delete('/', async (req, res) => {
-    const organizationID = req.body.organizationID;
+    const searchID = req.body.organizationID;
     try {
-        const organization = await orgDB.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ organizationID: searchID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
-        // [Archive] these do not work
-        // organization.updates = [];
-        // await organization.save();
+        organization.updates = [];
+        const result = await organization.save();
 
-        const currentVersion = organization.__v; 
-        await orgDB.findOneAndUpdate(
-            { _id: organization._id, __v: currentVersion }, 
-            { $set: { updates: [] } }, 
-            { new: true } 
-        );
+        if (organization.updates.length === 0) {
+            res.send('All announcements/updates deleted successfully');
+        } else {
+            res.status(500).send('Internal Server Error - Error deleting all announcements/updates');
+            // print the updates length
+            console.log(organization.updates.length);
+        }
 
-        res.send('All announcements/updates deleted successfully');
     } catch (err) {
         res.status(500).send('Internal Server Error - Error deleting all events for organization' + err);
     }

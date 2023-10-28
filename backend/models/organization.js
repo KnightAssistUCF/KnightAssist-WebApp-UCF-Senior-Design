@@ -133,6 +133,6 @@ const organizationSchema = new Schema({
         default: 0,
         select: true
     }
-}, {collection: 'organization', timestamps: true, select: true});
+}, {collection: 'organization', timestamps: true, select: true, versionKey: false});
 
 module.exports = mongoose.model('organization', organizationSchema);
