@@ -114,7 +114,7 @@ const organizationSchema = new Schema({
     },
     confirmTokenForORG: { // where the generated JWT token will be stored
         type: String,
-        required: true,
+        // required: true,
         default: ''
     },
     EmailTokenForORG: { // store the email token
@@ -124,7 +124,7 @@ const organizationSchema = new Schema({
     },
     EmailValidated: { // if the organization validated their email
         type: Boolean,
-        required: true,
+        // required: true,
         default: false
     }, 
     __v: {
