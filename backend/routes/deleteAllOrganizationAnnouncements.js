@@ -9,9 +9,16 @@ router.delete('/', async (req, res) => {
         const organization = await orgDB.findOne({ organizationID: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
-        organization.updates = [];
+        // [Archive] these do not work
+        // organization.updates = [];
+        // await organization.save();
 
-        await organization.save();
+        const currentVersion = organization.__v; 
+        await orgDB.findOneAndUpdate(
+            { _id: organization._id, __v: currentVersion }, 
+            { $set: { updates: [] } }, 
+            { new: true } 
+        );
 
         res.send('All announcements/updates deleted successfully');
     } catch (err) {
