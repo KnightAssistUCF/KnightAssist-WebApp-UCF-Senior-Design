@@ -67,19 +67,19 @@ ul.nav_list {
     display: flex;
     align-items: center;
     text-decoration: none;
-    transition: all 0.1s ease;
+    transition: all 0.2s ease;
     border-radius: 0 6px 6px 0;
     padding: 2px 6px;
 }
 
 .sidebar ul li a:hover{
     color: #ffffff;
-    background: #00522B;
+    background: #005a44;
     /* padding: 3px 6px; */
     border-left: 1px solid rgb(228, 228, 228);
 }
 .sidebar ul li a .links_name {
-    font-size: 15px; 
+    font-size: 19px; 
     font-weight: 375;
 
   }
@@ -112,7 +112,7 @@ ul.nav_list li a .settingsIcon {
     position: relative;
     padding: 10px 6px;
     height: 65px;
-    border-top: 2px solid #312c4b;
+    border-top: 2px solid #005a44;
     /* background: #312c4b; */
 }
 
@@ -223,24 +223,29 @@ ul.nav_list li a .settingsIcon {
     display: flex;
 }
 .sidebar.active ul li a {
+    justify-content: center;
     display: flex;
-    align-items: center;
     text-decoration: none;
-    transition: all 0.1s ease;
-    padding: 2px 6px;
+    transition: all 0.2s ease;
+    padding: 3px 8px;
+}
+.sidebar.active ul li a:hover {
+    transition: all 0.25s ease;
+    padding: 2px 5px;
 }
 .sidebar.active ul.nav_list li a .homeIcon,
 .sidebar.active ul.nav_list li a .searchIcon,
 .sidebar.active ul.nav_list li a .notificationIcon,
 .sidebar.active ul.nav_list li a .historyIcon,
 .sidebar.active ul.nav_list li a .settingsIcon {
-    margin-right: 25px;
+    display: none;
+    /* margin-right: 25px; */
     /* border-radius: 12px;
     height: 60px; */
     /* line-height: 30px; */
-    font-size: 40px;
+    /* font-size: 40px;
     text-align: center;
-    transition: all 0.4s ease;
+    transition: all 0.4s ease; */
 }
 .sidebar.active .menuIcon {
     transition: all 0.4s ease;
