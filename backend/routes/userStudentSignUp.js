@@ -66,7 +66,7 @@ router.post('/', async (req, res) => {
                     action: {
                         instructions: 'To get started with KnightAssist, please click here:',
                         button: {
-                            color: '#22BC66',
+                            color: '#22BC66', //[makes the button green, can change later]
                             text: 'Confirm your account',
                             link: 'https://nodejs.org/en/' // change this later with the correct redirect link
                         }
