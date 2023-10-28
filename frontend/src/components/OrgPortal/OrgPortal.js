@@ -3,9 +3,10 @@ import Header from '../Header';
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
 import Welcome from './Welcome';
-import SearchOrg from './SearchOrg';
+import Search from './Search';
 import AddEventModal from './AddEventModal';
 import EventModal from './EventModal';
+import SearchSwitch from './SearchSwitch';
 import './OrgPortal.css';
 
 function OrgPortal()
@@ -17,6 +18,8 @@ function OrgPortal()
     const [eventID, setEventID] = useState("");
     const [resetUpcoming, setResetUpcoming] = useState(1);
     const [resetPast, setResetPast] = useState(1);
+    const [resetSearch, setResetSearch] = useState(1);
+    const [searchType, setSearchType] = useState();
     
     return(
       <div>
@@ -24,13 +27,14 @@ function OrgPortal()
         <div className='move'>
           <div className="orgPortalTop">
             <Welcome/>
+            <SearchSwitch setSearchType={setSearchType}/>
             <div className='moveSearch'>
-              <SearchOrg/>
+              <Search searchType={searchType} resetEventSearch={resetSearch}/>
             </div>
           </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
-          <AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
-          <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
+          <AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch}  open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
+          <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
           <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/>
           <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetPast}/>
         </div>

@@ -45,7 +45,7 @@ function EventModal(props)
     function eventIsUpcoming(date){
         return new Date().toISOString() < new Date(date).toISOString();
     }
-    
+
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
 
@@ -165,6 +165,8 @@ function EventModal(props)
             props.setReset(props.reset * -1);
         else
             props.setResetPast(props.resetPast * -1);  
+
+        props.setResetSearch(props.resetSearch * -1);
     
         handleCloseAlert();
         handleCloseModal();
@@ -178,6 +180,7 @@ function EventModal(props)
     }, [props.editMode])
     
     useEffect(()=>{
+        console.log("event id called here")
         setInfo();
     },[props.eventID])
 
