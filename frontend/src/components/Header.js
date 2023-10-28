@@ -7,9 +7,21 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
+import { useNavigate } from 'react-router-dom'; 
 
 function Header()
 {
+    let user = JSON.parse(localStorage.getItem('user-info'));
+    const navigate = useNavigate();
+    console.warn(user);
+
+    function logOut() {
+        // handle logOut logic
+        // bring user to landing page
+        localStorage.clear();
+        navigate('/'); 
+        
+    }
 
     // customizing tooltip appearance
     const LightTooltip = styled(({ className, ...props }) => (
@@ -40,8 +52,6 @@ function Header()
         },
       }));
 
-      let menuButton = document.querySelector(".menuIcon");
-      let sideBarAction = document.querySelector(".sidebar");
       const [isSidebarActive, setSidebarActive] = useState(false);
       const handleToggleSidebar = () => {
         setSidebarActive(!isSidebarActive);
@@ -105,22 +115,16 @@ function Header()
             <div className="profile_content">
                 <div className="profile">
                     <LightTooltip title={!isSidebarActive ? "Log Out" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
-                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />}>
+                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />} onClick={logOut}>
                                 Sign Out
                             </LogOutButton>
-                            <SmallLogOutButton className="smallLogOut" style={{borderRadius: 5}} ><BiLogOut className="smallLogOutIcon" />
+                            <SmallLogOutButton className="smallLogOut" style={{borderRadius: 5}} onClick={logOut}>
+                                <BiLogOut className="smallLogOutIcon" />
                             </SmallLogOutButton>
-                        </a>
                     </LightTooltip>
                 </div>
             </div>
         </div>
- 
-
-
-
-
      </div>
     );
 };
