@@ -1,0 +1,1 @@
+// [Later this will be used to abstract some email functionalities, no need for now]

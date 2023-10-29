@@ -80,8 +80,8 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/addEvent');
 app.use('/api/addEvent', addEvent);
 
-const searchEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
-app.use('/api/searchEvent', searchEventsOfAnOrg);
+const searchAllEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
+app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
 const deleteAllEvents = require('./backend/routes/deleteAllEvents');
 app.use('/api/deleteAllEvents', deleteAllEvents);
@@ -100,6 +100,22 @@ app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
 
 const searchOneEvent = require('./backend/routes/searchOneEvent');
 app.use('/api/searchOneEvent', searchOneEvent);
+
+const deleteSingleOrganizationAnnouncement = require('./backend/routes/deleteSingleOrgAnnouncement');
+app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnnouncement);
+
+const searchForAnnouncement = require('./backend/routes/searchForAnnouncement');
+app.use('/api/searchForAnnouncement', searchForAnnouncement);
+
+const deleteAllOrganizationAnnouncements = require('./backend/routes/deleteAllOrganizationAnnouncements');
+app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnouncements);
+
+const editOrganizationAnnouncement = require('./backend/routes/editAnAnnouncement');
+app.use('/api/editOrganizationAnnouncement', editOrganizationAnnouncement);
+
+const createOrganizationAnnouncement = require('./backend/routes/createAnnouncement');
+app.use('/api/createOrganizationAnnouncement', createOrganizationAnnouncement);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
