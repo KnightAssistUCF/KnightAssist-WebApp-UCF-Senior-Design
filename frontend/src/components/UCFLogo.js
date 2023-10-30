@@ -1,5 +1,5 @@
 import React from 'react';
-import './Header';
+import './OrgPortal/Header';
 
 const logo = require("./ucfLogo.jpg");
 

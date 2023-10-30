@@ -7,7 +7,7 @@ import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/mat
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import StudentHeader from '../StudentHeader';
+import StudentHeader from './StudentHeader';
 
 
 

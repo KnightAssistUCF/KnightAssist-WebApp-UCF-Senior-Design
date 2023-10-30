@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import PageTitle from './PageTitle';
+import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiBell, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
-import './StudentHeader.css';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -65,8 +64,7 @@ function Header()
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className="logo_content">
                 <div className="logo">
-                    {/* logo image here */}
-                    <div className="logo_name">KnightAssist</div>
+                    <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <BiMenu onClick={handleToggleSidebar} className='menuIcon'></BiMenu>
             </div>
