@@ -88,14 +88,6 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Notifications" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
-                            <BiBell className='notificationIcon'></BiBell>
-                            <span class="links_name">Alerts</span>
-                        </a>
-                    </LightTooltip>
-                </li>
-                <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
                         <a href="#">
                             <BiHistory className='historyIcon'></BiHistory>

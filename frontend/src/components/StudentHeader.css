@@ -87,7 +87,6 @@ ul.nav_list {
 
 ul.nav_list li a .homeIcon,
 ul.nav_list li a .searchIcon,
-ul.nav_list li a .notificationIcon,
 ul.nav_list li a .historyIcon,
 ul.nav_list li a .settingsIcon {
     margin-right: 25px;
@@ -187,7 +186,6 @@ ul.nav_list li a .settingsIcon {
 
     ul.nav_list li a .homeIcon,
     ul.nav_list li a .searchIcon,
-    ul.nav_list li a .notificationIcon,
     ul.nav_list li a .historyIcon,
     ul.nav_list li a .settingsIcon {
         margin-right: 0;
@@ -235,7 +233,6 @@ ul.nav_list li a .settingsIcon {
 }
 .sidebar.active ul.nav_list li a .homeIcon,
 .sidebar.active ul.nav_list li a .searchIcon,
-.sidebar.active ul.nav_list li a .notificationIcon,
 .sidebar.active ul.nav_list li a .historyIcon,
 .sidebar.active ul.nav_list li a .settingsIcon {
     display: none;
