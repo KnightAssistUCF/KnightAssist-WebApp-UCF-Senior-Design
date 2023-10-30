@@ -49,8 +49,8 @@
     display: flex; /* Use flexbox layout */
     align-items: flex-start; /* Align items at the top */
     justify-content: space-evenly;
-    padding: 20px 20px;
-    margin-right: 10%;
+    /* padding: 20px 20px;
+    margin-right: 10%; */
     /* margin-right: 30px; */
   }
 .titlesub {
@@ -59,6 +59,11 @@
     font-size: 25px;
     font-weight: normal;
     text-align: left;
+}
+
+.notifications {
+  color: black;
+  text-align: left;
 }
 .progress-bar {
     margin: 5px;
@@ -71,12 +76,10 @@
     width: 10%; 
 } */
 
-.table-group {
-  transform: translateY(-110%);
-} 
+
 
 .my-table {
-  transform: scale(0.80) translateY(-10%);
+  transform: scale(0.80);
     width: 85%;
     margin: 0 auto;
     border-radius: 10px;
@@ -160,19 +163,7 @@
   }
 
 
-  .calendar {
-    transform: scale(0.55) translateY(-42%);
-    /* margin-right: 20px; */
-
-    flex: 0;
-    display: flex;
-    align-items: flex-start;
-    box-shadow:
-      0 -4px 4px -2px rgba(0, 0, 0, 0.1),
-      4px 0 4px -2px rgba(0, 0, 0, 0.1),
-      -4px 0 4px -2px rgba(0, 0, 0, 0.1);
-
-  }
+ 
   /* .appointment {
     transform: translateY(42%);
   } */
@@ -194,7 +185,5 @@
 }
 
 @media (max-width: 768px) {
-  .table-group {
-    transform: translateY(0); /* Adjust the value as needed */
-  }
+
 }

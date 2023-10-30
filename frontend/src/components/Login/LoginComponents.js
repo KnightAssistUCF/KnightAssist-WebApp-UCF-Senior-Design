@@ -29,7 +29,6 @@ function LoginComponents(){
         const url = buildPath("api/Login");
 
         try {
-           window.location.href="/#/orgportal"
 
             const response = await fetch(url, {
                 method: "POST",
@@ -43,6 +42,7 @@ function LoginComponents(){
 
             /// The credentials matched an existing account
             if(res.includes("User logged in successfully ->")){
+                window.location.href="/#/orgportal"
                 setIsInvalid("");
             }else{
                 setIsInvalid("is-invalid");
