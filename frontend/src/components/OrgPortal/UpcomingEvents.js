@@ -64,7 +64,9 @@ function UpcomingEvents(props)
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function Event(props){
+    function Event(props) {
+        const date = new Date(props.date);
+      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>

@@ -9,6 +9,7 @@ import {
 
 import LoginPage from './pages/LoginPage';
 import OrgPortalPage from './pages/OrgPortalPage';
+import StudentHomePage from './pages/StudentHomePage';
 
 function App() 
 {
@@ -21,6 +22,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>
           </Routes>
        </Router>
       </header>

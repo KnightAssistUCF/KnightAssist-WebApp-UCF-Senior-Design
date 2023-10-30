@@ -1,0 +1,281 @@
+ul.nav_list {
+    list-style: none; 
+    padding: 0; 
+    margin: 0; 
+  }
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 190px;
+    background: #00664D;
+    padding: 6px 14px;
+    z-index: 999;
+    transition: all 0.5s ease;
+}
+
+.sidebar .logo_content .logo {
+    color: #fff;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+}
+
+/* .logo_content .logo <-- style logo */
+
+.logo_content .logo .logo_name {
+    font-size: 25px;
+    font-weight: 400;
+}
+
+.menuIcon {
+    position: absolute;
+    color: #fff;
+    left: 65%;
+    top: 17px;
+    font-size: 20px;
+    height: 28px;
+    width: 30px;
+    text-align: center;
+    line-height: 28px;
+    transform: translateX(-80%);
+    display: none;
+    transition: all 0.4s ease;
+}
+
+.sidebar ul{
+    margin-top: 30px;
+}
+
+
+
+
+.sidebar ul li {
+    position: relative;
+    height: 50px;
+    width: 100%;
+    /* margin: 0 5px; */
+    list-style: none;
+    line-height: 40px;
+}
+
+.sidebar ul li a {
+    color: #fff;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    border-radius: 0 6px 6px 0;
+    padding: 2px 6px;
+}
+
+.sidebar ul li a:hover{
+    color: #ffffff;
+    background: #004e3a;
+    /* padding: 3px 6px; */
+    border-left: 1px solid rgb(228, 228, 228);
+}
+.sidebar ul li a .links_name {
+    font-size: 19px; 
+    font-weight: 375;
+  }
+
+
+
+ul.nav_list li a .homeIcon,
+ul.nav_list li a .searchIcon,
+ul.nav_list li a .historyIcon,
+ul.nav_list li a .settingsIcon {
+    margin-right: 25px;
+    /* border-radius: 12px;
+    height: 60px; */
+    /* line-height: 30px; */
+    font-size: 23px;
+    text-align: center;
+    transition: all 0.4s ease;
+}
+
+.sidebar .profile_content {
+    position: absolute;
+    color: #fff;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.sidebar .profile_content .profile {
+    position: relative;
+    padding: 10px 6px;
+    height: 65px;
+    border-top: 2px solid #005a44;
+    /* background: #312c4b; */
+}
+
+.sidebar .profile_content .profile .profile_details {
+    display: flex;
+    align-items: center;
+}
+
+
+.logoutIcon {
+    position: absolute;
+    left: 80%;
+    bottom: 12px;
+    transform: translateX(-50%);
+    min-width: 50px;
+    line-height: 10px;
+    font-size: 30px;
+    border-radius: 12px;
+}
+
+.profile_content .profile .bigLogOut {
+    font-size: 15px;
+}
+
+.profile_content .profile .smallLogOut {
+    display: none;
+}
+
+@media (min-width: 769px) {
+    .custom-tooltip {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transition: all 0.2s ease;
+        width: 70px;
+    }
+    .menuIcon {
+        display: block;
+        cursor: pointer;
+        
+    }
+    .profile_content .profile .bigLogOut {
+        display: none;
+    }
+
+    .profile_content .profile .smallLogOut {
+        display: block;
+        left: 9px;
+        bottom: 5px;
+        /* right: 5px; */
+        /* position: absolute;
+        left: 80%;
+        bottom: 12px;
+        transform: translateX(-50%);
+        min-width: 50px;
+        line-height: 10px;
+        font-size: 30px;
+        border-radius: 12px; */
+
+    }
+    .profile_content .profile .smallLogOut .smallLogOutIcon {
+        margin: 0 auto;
+        font-size: 23px;
+    }
+
+    .sidebar .logo_content .logo {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    ul.nav_list li a .homeIcon,
+    ul.nav_list li a .searchIcon,
+    ul.nav_list li a .historyIcon,
+    ul.nav_list li a .settingsIcon {
+        margin-right: 0;
+    }
+    .profile_content .profile .MuiButton-label {
+        display: none;
+      }
+    .sidebar ul li a {
+        transition: all 0.4s ease;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 6px 6px 6px 6px;
+        padding: 10px 10px;
+    }
+    .sidebar ul li a .links_name {
+        display: none;
+        transition: all 0.3s ease;
+    }
+    .sidebar ul li a:hover{
+        border-left: none;
+    }
+    /* toggling menu Icon will trigger fullscreen navbar */
+
+.sidebar.active {
+    transition: all 0.4s ease;
+    width: 100%;
+}
+.sidebar.active ul li a .links_name {
+    transition: all 0.4s ease;
+    font-size: 30px;
+    display: flex;
+}
+.sidebar.active ul li a {
+    justify-content: center;
+    display: flex;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding: 3px 8px;
+}
+.sidebar.active ul li a:hover {
+    transition: all 0.25s ease;
+    padding: 2px 5px;
+}
+.sidebar.active ul.nav_list li a .homeIcon,
+.sidebar.active ul.nav_list li a .searchIcon,
+.sidebar.active ul.nav_list li a .historyIcon,
+.sidebar.active ul.nav_list li a .settingsIcon {
+    display: none;
+    /* margin-right: 25px; */
+    /* border-radius: 12px;
+    height: 60px; */
+    /* line-height: 30px; */
+    /* font-size: 40px;
+    text-align: center;
+    transition: all 0.4s ease; */
+}
+.sidebar.active .menuIcon {
+    transition: all 0.1s ease;
+    left: 90%;
+}
+.sidebar.active .profile_content .profile .smallLogOut {
+    transition: all 0.4s ease;
+    display: none;
+}
+.sidebar.active .profile_content .profile .bigLogOut {
+    transition: all 0.4s ease;
+    display: inline-block;
+}
+.sidebar.active .custom-tooltip {
+    display: none;
+}
+
+
+    
+}
+
+
+/* Play around with values
+
+page content {
+    position: absolute;
+    height: 100%;
+    width: calc(100% - 240px);
+    left: 240px;
+
+}
+
+
+
+
+*/

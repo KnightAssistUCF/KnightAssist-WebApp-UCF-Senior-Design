@@ -2,9 +2,9 @@ const express = require("express");
 const router = express.Router();
 const orgDB = require("../models/organization");
 
-router.patch('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const organizationID = req.body.organizationID;
-    const titleToLookFor = req.body.titleToLookFor;
+    const titleToLookFor = req.body.oldTitle;
     const newTitle = req.body.newTitle;
     const updatedContent = req.body.newContent;
 
