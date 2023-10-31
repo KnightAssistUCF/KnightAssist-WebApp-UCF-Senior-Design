@@ -9,14 +9,15 @@ import Paper from '@mui/material/Paper';
 import Header from '../StudentHome/StudentHeader';
 import SearchSwitch from './SearchSwitch';
 import Search from './Search';
+import EventModal from './EventModal';
 import './StudentExplore.css'
 import '../StudentHome/StudentHome.css';
 
-
-
 function StudentExplore()
 {
-    const [searchType, setSearchType] = useState();
+    const [searchType, setSearchType] = useState("events");
+    const [openEvent, setOpenEvent] = useState(false); 
+    const [eventID, setEventID] = useState("");
 
     return(
       <div id='homePage'>
@@ -25,8 +26,9 @@ function StudentExplore()
 	    <div class="exploreTitle StudentHomePage-title">Explore</div>
 	    <SearchSwitch setSearchType={setSearchType}/>
 	    <div className='moveSearch'>
-		<Search searchType={searchType}/>
+		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    </div>
+	    <EventModal eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>
     );

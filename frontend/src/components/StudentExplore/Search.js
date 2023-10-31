@@ -14,9 +14,6 @@ function Search(props) {
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
-    function openOrgPage(email){
-        console.log(email);
-    }
 
     async function getAllEvents(flag){
         let organizationID = "12345";
@@ -67,6 +64,15 @@ function Search(props) {
         setOrgs(tmp);
     }
 
+    function handleClick(id){
+        if(props.searchType == "events"){
+            props.setEventID(id);
+            props.setOpenEvent(true);
+        }else{
+
+        }
+    }
+
     useEffect(()=>{
         console.log("called");
         getAllEvents(1);
@@ -88,7 +94,7 @@ function Search(props) {
     useEffect(()=>{
       getAllEvents(0);
       console.log(events);
-    },[props.resetEventSearch])
+    },[props.resetEventSearch]);
 
     return (
       <div>
@@ -96,8 +102,11 @@ function Search(props) {
           <Autocomplete 
             freeSolo
             disableClearable
-            onChange={(e, value) => console.log(value.id)}
+            onChange={(e, value) => {handleClick(value.id)}}
             options={options}
+            value={null}
+            clearOnBlur={true}
+            blurOnSelect={true}
             renderInput={(params) => (
               <TextField
                 {...params}
