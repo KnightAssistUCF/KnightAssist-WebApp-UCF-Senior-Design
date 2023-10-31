@@ -173,3 +173,7 @@
     transform: translateY(0); /* Adjust the value as needed */
   }
 }
+
+.moveEverything{
+  margin-left: 100px;
+}
