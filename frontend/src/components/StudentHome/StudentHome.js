@@ -57,23 +57,25 @@ function StudentHome()
     
       <div id='homePage'>
         <StudentHeader/>
+        <div className="studHomePage">
         <div class="StudentHomePage-title">Welcome, First Last</div>
         <div class="StudentHomePage-subtitle">Fall 2023</div>
+        <div class="StudentHomePage-subtitle2">Next Event</div>
         
         <div className="content-container">
           <div class="StudentHomePage-card">
-            <p class="upcoming-shift">Next Shift: <strong>Arboretum</strong></p>
-            <p class="upcoming-shift-time">October 20th, 12:30pm-3pm</p>
-            <div class="volunteer-goal">
-              <label for="volunteerGoal">Volunteer Hour Goal:</label>
-              <input
-                // type="number"
-                id="volunteerGoal"
-                value={volunteerGoal}
-                onChange={handleVolunteerGoalChange}
-              />
+            <div className="card1-text">
+              <p class="upcoming-shift"><strong>Arboretum</strong></p>
+              <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+              <p class="upcoming-shift-time location">Location</p>
             </div>
-
+          </div>
+          <div class="StudentHomePage-card">
+            <div className="card1-text">
+              <p class="upcoming-shift"><strong>Arboretum</strong></p>
+              <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+              <p class="upcoming-shift-time location">Location</p>
+            </div>
           </div>
         </div>
 
@@ -138,7 +140,7 @@ function StudentHome()
         </Dialog>
 
 
-
+      </div>
       </div>
    );
 };
