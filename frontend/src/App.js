@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css';
+import "@fontsource/league-spartan";
 import {
-  BrowserRouter,
+  HashRouter as Router,
   Route,
   Routes,
 } from "react-router-dom";
@@ -15,13 +16,17 @@ function App()
   return (
     <div className="App">
       <header className="App-header">
-        <BrowserRouter>
+        <Router>
           <Routes>
-            <Route path="/" index element={<LoginPage />} />
-            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
-            <Route path="/studenthomepage" index element={<StudentHomePage />} />
+            <Route path="/" element={<LoginPage/>}></Route>
           </Routes>
-       </BrowserRouter>
+          <Routes>
+            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>
+          </Routes>
+       </Router>
       </header>
     </div>
   );

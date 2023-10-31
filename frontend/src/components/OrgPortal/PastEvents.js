@@ -10,21 +10,24 @@ import './OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents(props)
+function PastEvents(props)
 {
 
     const [eventCards, setEventCards] = useState();
 
     function openEventModal(id){
+        console.log("ID:", id);
         props.setEventID(id);
         props.setOpenEvent(true);
     }
 
-    function eventIsUpcoming(date){
-        return new Date().toISOString() < new Date(date).toISOString();
+    let events = [];
+
+    function eventIsPast(date){
+        return new Date().toISOString() > new Date(date).toISOString();
     }
 
-    async function getUpcomingEvents(){
+    async function getPastEvents(){
         const organizationID = "12345";
         
         let url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
@@ -49,24 +52,23 @@ function UpcomingEvents(props)
 
         console.log(res);    
 
-        const events = [];
+        events = [];
 
-        for(let event of res){
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
-        }       
+        for(let event of res)
+            if(eventIsPast(event.date))
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)   
+                
+        console.log(events);
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
+        return <h1 className='upcomingEvents spartan'>Your Past Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props){
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -99,16 +101,15 @@ function UpcomingEvents(props)
     }
 
     useEffect(()=>{
-        getUpcomingEvents();
+        getPastEvents();
     },[])
 
     useEffect(()=>{
-        console.log("its working!")
-        getUpcomingEvents();
+        getPastEvents();
     },[props.reset])
 
     return(
-     <div className='upcomingEventsSpace'>
+     <div>
         <EventHeader/>
         <div>
             <Events/>
@@ -117,4 +118,4 @@ function UpcomingEvents(props)
     );
 };
 
-export default UpcomingEvents;
+export default PastEvents;

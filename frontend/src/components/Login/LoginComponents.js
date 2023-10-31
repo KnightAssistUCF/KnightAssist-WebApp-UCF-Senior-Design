@@ -4,6 +4,8 @@ import './Login.css';
 
 function LoginComponents(){
 
+    console.log("Test");
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
@@ -41,10 +43,13 @@ function LoginComponents(){
             console.log(res);
 
             /// The credentials matched an existing account
-            if(res.includes("User logged in successfully ->")){
+            if(res.includes("Organization logged in successfully ->")) {
                 window.location.href="/#/orgportal"
                 setIsInvalid("");
-            }else{
+            }else if(res.includes("User logged in successfully ->")) {
+                window.location.href="/#/studenthomepage";
+            }
+            else {
                 setIsInvalid("is-invalid");
             }
             

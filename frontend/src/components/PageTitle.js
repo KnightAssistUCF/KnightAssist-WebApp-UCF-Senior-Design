@@ -1,6 +1,6 @@
 import React from 'react';
 import Logo from './Logo';
-import './Header.css';
+import './OrgPortal/Header.css';
 
 function PageTitle(props)
 {

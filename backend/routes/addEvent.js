@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs'); // I will use this to hash the password
 
 const event = require('../models/events');
 const organizationSchema = require('../models/organization');
@@ -14,8 +13,8 @@ router.post('/', async (req, res) => {
             date: req.body.date,
             sponsoringOrganization: req.body.sponsoringOrganization,
             startTime: req.body.startTime,
-            endTIme: req.body.endTime,
-            eventLinks: req.body.eventLinks,
+            endTime: req.body.endTime,
+            // eventLinks: req.body.eventLinks,
             eventTags: req.body.eventTags,
             semester: req.body.semester,
             maxAttendees: req.body.maxAttendees
