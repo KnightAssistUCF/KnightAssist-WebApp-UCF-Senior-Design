@@ -26,6 +26,9 @@ router.post('/', async (req, res) => {
             announcement.content = updatedContent;
         }
 
+        console.log(organization)
+
+
         // save this new content
         await organization.save();
         res.status(200).send('Announcement updated successfully');

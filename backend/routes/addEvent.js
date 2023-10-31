@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs'); // I will use this to hash the password
 
 const event = require('../models/events');
 const organizationSchema = require('../models/organization');
