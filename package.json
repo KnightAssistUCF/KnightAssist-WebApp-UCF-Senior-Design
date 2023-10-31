@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "@devexpress/dx-react-core": "^4.0.5",
+    "@devexpress/dx-react-scheduler": "^4.0.5",
+    "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "@material-ui/core": "^4.12.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -12,8 +15,11 @@
     "mdb-ui-kit": "^6.4.2",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
-    "react": "^18.2.0",
     "nodemailer": "^6.9.7",
+    "react": "^18.2.0",
+    "react-circular": "^1.0.1",
+    "react-circular-progressbar": "^2.1.0",
+    "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
     "react-router-dom": "^6.17.0"
   },
