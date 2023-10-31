@@ -59,16 +59,21 @@ function EventModal(props)
         let event = res[0];
 
         console.log(event);
-        
-        setName(event.name);
-        setDescription(event.description);
-        setDate(event.date);
-        setLocation(event.location);
-        setStartTime(event.startTime);
-        setEndTime(event.endTime);
-        setVolunteers(event.registeredVolunteers.length)
-        setMaxVolunteers(event.maxAttendees);
-        setTags(event.eventTags);
+
+	if(event) {
+        	setName(event.name);
+        	setDescription(event.description);
+        	setDate(event.date);
+        	setLocation(event.location);
+        	setStartTime(event.startTime);
+	        setEndTime(event.endTime);
+	        setVolunteers(event.registeredVolunteers.length)
+	        setMaxVolunteers(event.maxAttendees);
+	        setTags(event.eventTags);
+	} else {
+		console.log("Event undefined or not found");
+	}
+	    
     }
 
     function EventName(){
