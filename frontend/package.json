@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@autocomplete/material-ui": "^0.0.17",
+    "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/league-spartan": "^5.0.15",
@@ -23,7 +24,9 @@
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
+    "react-mui-scheduler": "^2.0.4",
     "react-router-dom": "^6.17.0",
     "react-scripts": "^5.0.1",
     "web-vitals": "^3.5.0"
