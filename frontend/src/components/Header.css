@@ -32,6 +32,7 @@
     width: 50px;
     height: 50px;
 }
+
   
 .titleHeader{
     font-size: 18px;
@@ -110,7 +111,7 @@ ul.nav_list {
     font-weight: 400;
 }
 
-.menuIcon {
+.menuIcon{
     position: absolute;
     color: #fff;
     left: 65%;
@@ -122,14 +123,30 @@ ul.nav_list {
     line-height: 28px;
     transform: translateX(-80%);
     display: none;
-    transition: all 0.4s ease;
+}
+
+.moveLogo{
+    margin-top: 50px;
+    width: 40px;
+    height: 40px;
+    margin-left: 2%;
+}
+
+.logoSidebar{
+    position: absolute;
+    height: 60px;
+    width: 60px;
+    margin-top: 30px;
+    margin-left: -37%;
 }
 
 .sidebar ul{
     margin-top: 30px;
 }
 
-
+.moveLogoContent{
+    margin-bottom: 50px;
+}
 
 
 .sidebar ul li {
@@ -294,11 +311,13 @@ ul.nav_list li a .settingsIcon {
     transition: all 0.4s ease;
     width: 100%;
 }
+
 .sidebar.active ul li a .links_name {
     transition: all 0.4s ease;
     font-size: 30px;
     display: flex;
 }
+
 .sidebar.active ul li a {
     justify-content: center;
     display: flex;

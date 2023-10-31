@@ -22,11 +22,6 @@ function StudentHome()
     };
 
 
-
-
-  
-
-
    return(
     
       <div id='homePage'>
