@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form} from 'react-bootstrap';
 import Logo from '../Logo';
@@ -21,41 +21,31 @@ function StudentHome()
     const handleVolunteerGoalChange = (e) => {
         setVolunteerGoal(e.target.value);
     };
+    const [userData, setUserData] = useState(null);
+    useEffect(() => {
+      // Call the API when the component mounts
+      getStudentInfo();
+    }, []);
 
 
 
-    async function getStudentInfo(){
-
-      const json = {
-        email: 'sdf'
-      };
-
-      console.log(json);
-
-      const url = buildPath("api/searchUser");
-
+    async function getStudentInfo() {
+      const email = 'anisharanjan55@gmail.com'; // Replace with the desired email
+      const url = buildPath(`api/searchUser?email=${email}`); // Pass the email as a query parameter
+    
       try {
-          const response = await fetch(url, {
-              method: "POST",
-              body: JSON.stringify(json),
-              headers: {"Content-Type": "application/json"},
-          });
-
-          let res = await response.text();
-          console.log(res);
-
-          // if(eventIsUpcoming(date))
-          //     props.setReset(props.reset * -1);
-          // else
-          //     props.setResetPast(props.resetPast * -1);
-
-          // props.setResetSearch(props.resetSearch * -1);
-
-          // handleClose();
-      }catch{
-          console.log("An error has occurred");
+        const response = await fetch(url, {
+          method: "GET", // Use GET request
+          headers: { "Content-Type": "application/json" },
+        });
+        let res = JSON.parse(await response.text());
+        console.log(res);
+    
+        
+      } catch (error) {
+        console.log("An error has occurred" + error);
       }
-  }
+    }
 
 
 
