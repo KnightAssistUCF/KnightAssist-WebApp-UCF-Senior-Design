@@ -8,6 +8,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import StudentHeader from './StudentHeader';
+import { buildPath } from '../../path';
 
 
 
@@ -20,6 +21,41 @@ function StudentHome()
     const handleVolunteerGoalChange = (e) => {
         setVolunteerGoal(e.target.value);
     };
+
+
+
+    async function getStudentInfo(){
+
+      const json = {
+        email: 'sdf'
+      };
+
+      console.log(json);
+
+      const url = buildPath("api/searchUser");
+
+      try {
+          const response = await fetch(url, {
+              method: "POST",
+              body: JSON.stringify(json),
+              headers: {"Content-Type": "application/json"},
+          });
+
+          let res = await response.text();
+          console.log(res);
+
+          // if(eventIsUpcoming(date))
+          //     props.setReset(props.reset * -1);
+          // else
+          //     props.setResetPast(props.resetPast * -1);
+
+          // props.setResetSearch(props.resetSearch * -1);
+
+          // handleClose();
+      }catch{
+          console.log("An error has occurred");
+      }
+  }
 
 
 
