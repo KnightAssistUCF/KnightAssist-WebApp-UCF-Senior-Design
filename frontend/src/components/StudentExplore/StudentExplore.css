@@ -12,3 +12,18 @@
     float: left;
     margin-right: -30px;
 }
+
+.RSVPbtn{
+    margin-top: 100px;
+    width: 100px;
+    background-color: #5f5395;
+    border: none;
+}
+
+.RSVPbtn:hover{
+    background-color: #7566b4;
+}
+    
+.addEventBtn:visited{
+    background-color: #5f5395;
+}

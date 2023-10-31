@@ -27,7 +27,6 @@ const eventPic = require("../Login/loginPic.png");
 function EventModal(props)
 {
     const handleCloseModal = () => {props.setOpen(false);}
-    const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
@@ -41,10 +40,7 @@ function EventModal(props)
     const [curVolunteers, setVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
- 
-    function eventIsUpcoming(date){
-        return new Date().toISOString() < new Date(date).toISOString();
-    }
+    const [isRSVP, setIsRSVP] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -74,6 +70,10 @@ function EventModal(props)
             console.log("Event undefined or not found");
         }
 	    
+    }
+
+    function doRSVP(){
+
     }
 
     function EventName(){
@@ -131,10 +131,16 @@ function EventModal(props)
         return (
                 <div>
                     <p>Tags:</p>
-                    <Grid marginLeft={"200px"} marginRight={"100px"}>
+                    <Grid marginLeft={"200px"} marginRight={"100px"} marginBottom={"55px"}>
                         {tags.map(t => <Tag tag={t}/>)}
                     </Grid>
                 </div>
+        )
+    }
+
+    function RSVPButton(){
+        return (
+            <button type="button" class="RSVPbtn btn btn-primary" onClick={() => doRSVP()}>RSVP</button>
         )
     }
 
@@ -175,9 +181,10 @@ function EventModal(props)
                                 </Grid>
 
                                 <Volunteers/>
-
+                                
                                 <Tags/>
-    
+
+                                <RSVPButton/>
                             </Box>
                         </Container>
                     </CardContent>   

@@ -106,7 +106,6 @@ function Search(props) {
             options={options}
             value={null}
             clearOnBlur={true}
-            blurOnSelect={true}
             renderInput={(params) => (
               <TextField
                 {...params}
