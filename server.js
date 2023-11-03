@@ -49,71 +49,71 @@ app.use((req, res, next) =>
 });
 
 // importing routes here soon (Endpoints)
-const user_signup = require('./backend/routes/userStudentSignUp');
+const user_signup = require('./backend/routes/volunteers/userStudentSignUp');
 app.use('/api/userStudentSignUp', user_signup);
 
-const organization_signup = require('./backend/routes/organizationSignUp');
+const organization_signup = require('./backend/routes/organizations/organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
 
 // login supports both organization and user lookup
-const login = require('./backend/routes/Login'); 
+const login = require('./backend/routes/volunteers/Login'); 
 app.use('/api/Login', login);
 
-const userStudentsDelete = require('./backend/routes/userStudentsDelete');
+const userStudentsDelete = require('./backend/routes/volunteers/userStudentsDelete');
 app.use('/api/userStudentDelete', userStudentsDelete);
 
-const organizationDelete = require('./backend/routes/organizationDelete');
+const organizationDelete = require('./backend/routes/organizations/organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
-const searchUser = require('./backend/routes/searchUser');
+const searchUser = require('./backend/routes/volunteers/searchUser');
 app.use('/api/searchUser', searchUser);
 
-const searchOrganization = require('./backend/routes/searchOrganization');
+const searchOrganization = require('./backend/routes/organizations/searchOrganization');
 app.use('/api/searchOrganization', searchOrganization);
 
-const editUserProfile = require('./backend/routes/editUserProfile');
+const editUserProfile = require('./backend/routes/volunteers/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
 
-const loadAllOrganizations = require('./backend/routes/loadAllOrganizations');
+const loadAllOrganizations = require('./backend/routes/organizations/loadAllOrganizations');
 app.use('/api/loadAllOrganizations', loadAllOrganizations);
 
-const addEvent = require('./backend/routes/addEvent');
+const addEvent = require('./backend/routes/events/addEvent');
 app.use('/api/addEvent', addEvent);
 
-const searchAllEventsOfAnOrg = require('./backend/routes/searchEventsForOrg');
+const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
-const deleteAllEvents = require('./backend/routes/deleteAllEvents');
+const deleteAllEvents = require('./backend/routes/events/deleteAllEvents');
 app.use('/api/deleteAllEvents', deleteAllEvents);
 
-const deleteSingleEvent = require('./backend/routes/deleteSingleEvent');
+const deleteSingleEvent = require('./backend/routes/events/deleteSingleEvent');
 app.use('/api/deleteSingleEvent', deleteSingleEvent);
 
-const editEvent = require('./backend/routes/editEvent');
+const editEvent = require('./backend/routes/events/editEvent');
 app.use('/api/editEvent', editEvent);
 
-const editOrganizationProfile = require('./backend/routes/editOrganizationProfile');
+const editOrganizationProfile = require('./backend/routes/organizations/editOrganizationProfile');
 app.use('/api/editOrganizationProfile', editOrganizationProfile);
 
-const loadAllStudentsInOrganization = require('./backend/routes/allStudentsInOrganization');
+const loadAllStudentsInOrganization = require('./backend/routes/organizations/allStudentsInOrganization');
 app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
 
-const searchOneEvent = require('./backend/routes/searchOneEvent');
+const searchOneEvent = require('./backend/routes/events/searchOneEvent');
 app.use('/api/searchOneEvent', searchOneEvent);
 
-const deleteSingleOrganizationAnnouncement = require('./backend/routes/deleteSingleOrgAnnouncement');
+const deleteSingleOrganizationAnnouncement = require('./backend/routes/announcements/deleteSingleOrgAnnouncement');
 app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnnouncement);
 
-const searchForAnnouncement = require('./backend/routes/searchForAnnouncement');
+const searchForAnnouncement = require('./backend/routes/announcements/searchForAnnouncement');
 app.use('/api/searchForAnnouncement', searchForAnnouncement);
 
-const deleteAllOrganizationAnnouncements = require('./backend/routes/deleteAllOrganizationAnnouncements');
+const deleteAllOrganizationAnnouncements = require('./backend/routes/announcements/deleteAllOrganizationAnnouncements');
 app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnouncements);
 
-const editOrganizationAnnouncement = require('./backend/routes/editAnAnnouncement');
+const editOrganizationAnnouncement = require('./backend/routes/announcements/editAnAnnouncement');
 app.use('/api/editOrganizationAnnouncement', editOrganizationAnnouncement);
 
-const createOrganizationAnnouncement = require('./backend/routes/createAnnouncement');
+const createOrganizationAnnouncement = require('./backend/routes/announcements/createAnnouncement');
 app.use('/api/createOrganizationAnnouncement', createOrganizationAnnouncement);
 
 /*

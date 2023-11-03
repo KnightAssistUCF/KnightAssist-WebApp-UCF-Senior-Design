@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const event = require('../models/events');
-const organizationSchema = require('../models/organization');
+const event = require('../../models/events');
+const organizationSchema = require('../../models/organization');
 
 router.post('/', async (req, res) => {
         var newEvent = new event({

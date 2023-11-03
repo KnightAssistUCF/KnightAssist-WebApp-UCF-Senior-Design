@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const orgDB = require("../models/organization");
+const orgDB = require("../../models/organization");
 
 router.post('/', async (req, res) => {
     const fetchID = req.body.organizationID;

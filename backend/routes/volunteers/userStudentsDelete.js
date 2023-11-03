@@ -6,7 +6,7 @@
 const express = require('express');
 const router = express.Router();
 
-const userStudent = require('../models/userStudent');
+const userStudent = require('../../models/userStudent');
 
 // lookUp user by email
 router.get('/', async (req, res) => {

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const event = require('../models/events');
+const event = require('../../models/events');
 
 router.get('/', async (req, res) => {
     const searchID = req.query.eventID;
