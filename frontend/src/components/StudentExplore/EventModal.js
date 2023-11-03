@@ -26,7 +26,7 @@ const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {props.setOpen(false);}
+    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setOpen(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
@@ -41,6 +41,7 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
     const [isRSVP, setIsRSVP] = useState(false);
+    const [showMSG, setShowMSG] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -57,15 +58,32 @@ function EventModal(props)
         console.log(event);
 
         if(event) {
-                setName(event.name);
-                setDescription(event.description);
-                setDate(event.date);
-                setLocation(event.location);
-                setStartTime(event.startTime);
-                setEndTime(event.endTime);
-                setVolunteers(event.registeredVolunteers.length)
-                setMaxVolunteers(event.maxAttendees);
-                setTags(event.eventTags);
+            setName(event.name);
+            setDescription(event.description);
+            setDate(event.date);
+            setLocation(event.location);
+            setStartTime(event.startTime);
+            setEndTime(event.endTime);
+            setVolunteers(event.registeredVolunteers.length)
+            setMaxVolunteers(event.maxAttendees);
+            setTags(event.eventTags);
+            
+            //API route
+            url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
+
+            response = await fetch(url, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            res = JSON.parse(await response.text());
+
+            if(res == 0)
+                setIsRSVP(true);
+            else
+                setIsRSVP(false);
+
+            console.log(event);
         } else {
             console.log("Event undefined or not found");
         }
@@ -73,7 +91,13 @@ function EventModal(props)
     }
 
     function doRSVP(){
-
+        setIsRSVP(!isRSVP);
+        
+        setShowMSG(true);
+        // Remove message after 2 seconds
+        setTimeout(() => {
+            setShowMSG(false);
+        }, 2000);
     }
 
     function EventName(){
@@ -138,9 +162,25 @@ function EventModal(props)
         )
     }
 
+    function RSVPMessage(){
+        
+        return (
+            <div>
+                {(showMSG) == true
+                    ?
+                        <div className='rsvpMsg'>
+                            {(isRSVP) ? "Succesfully RSVP'd!" : "Undid RSVP"}
+                        </div>
+                    :
+                        null
+                }
+            </div>
+        )
+    }
+
     function RSVPButton(){
         return (
-            <button type="button" class="RSVPbtn btn btn-primary" onClick={() => doRSVP()}>RSVP</button>
+            <button type="button" class="RSVPbtn btn btn-primary" onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
         )
     }
 
@@ -183,6 +223,8 @@ function EventModal(props)
                                 <Volunteers/>
                                 
                                 <Tags/>
+
+                                <RSVPMessage/>
 
                                 <RSVPButton/>
                             </Box>
