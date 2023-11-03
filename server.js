@@ -50,7 +50,7 @@ app.use((req, res, next) =>
 
 // importing routes here soon (Endpoints)
 const user_signup = require('./backend/routes/volunteers/userStudentSignUp');
-app.use('/api/userStudentSignUp', user_signup);
+app.use('/api/userSignUp', user_signup);
 
 const organization_signup = require('./backend/routes/organizations/organizationSignUp');
 app.use('/api/organizationSignUp', organization_signup);
@@ -60,16 +60,16 @@ const login = require('./backend/routes/volunteers/Login');
 app.use('/api/Login', login);
 
 const userStudentsDelete = require('./backend/routes/volunteers/userStudentsDelete');
-app.use('/api/userStudentDelete', userStudentsDelete);
+app.use('/api/userDelete', userStudentsDelete);
 
 const organizationDelete = require('./backend/routes/organizations/organizationDelete');
 app.use('/api/organizationDelete', organizationDelete);
 
 const searchUser = require('./backend/routes/volunteers/searchUser');
-app.use('/api/searchUser', searchUser);
+app.use('/api/userSearch', searchUser);
 
 const searchOrganization = require('./backend/routes/organizations/searchOrganization');
-app.use('/api/searchOrganization', searchOrganization);
+app.use('/api/organizationSearch', searchOrganization);
 
 const editUserProfile = require('./backend/routes/volunteers/editUserProfile');
 app.use('/api/editUserProfile', editUserProfile);
@@ -96,25 +96,25 @@ const editOrganizationProfile = require('./backend/routes/organizations/editOrga
 app.use('/api/editOrganizationProfile', editOrganizationProfile);
 
 const loadAllStudentsInOrganization = require('./backend/routes/organizations/allStudentsInOrganization');
-app.use('/api/allStudentsInOrganization', loadAllStudentsInOrganization);
+app.use('/api/loadAllStudentsInORG', loadAllStudentsInOrganization);
 
 const searchOneEvent = require('./backend/routes/events/searchOneEvent');
 app.use('/api/searchOneEvent', searchOneEvent);
 
 const deleteSingleOrganizationAnnouncement = require('./backend/routes/announcements/deleteSingleOrgAnnouncement');
-app.use('/api/deleteSingleOrganizationAnnouncement', deleteSingleOrganizationAnnouncement);
+app.use('/api/deleteSingleOrgAnnouncement', deleteSingleOrganizationAnnouncement);
 
 const searchForAnnouncement = require('./backend/routes/announcements/searchForAnnouncement');
 app.use('/api/searchForAnnouncement', searchForAnnouncement);
 
 const deleteAllOrganizationAnnouncements = require('./backend/routes/announcements/deleteAllOrganizationAnnouncements');
-app.use('/api/deleteAllOrganizationAnnouncements', deleteAllOrganizationAnnouncements);
+app.use('/api/deleteAllOrgAnnouncements', deleteAllOrganizationAnnouncements);
 
 const editOrganizationAnnouncement = require('./backend/routes/announcements/editAnAnnouncement');
-app.use('/api/editOrganizationAnnouncement', editOrganizationAnnouncement);
+app.use('/api/editOrgAnnouncement', editOrganizationAnnouncement);
 
 const createOrganizationAnnouncement = require('./backend/routes/announcements/createAnnouncement');
-app.use('/api/createOrganizationAnnouncement', createOrganizationAnnouncement);
+app.use('/api/createOrgAnnouncement', createOrganizationAnnouncement);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
