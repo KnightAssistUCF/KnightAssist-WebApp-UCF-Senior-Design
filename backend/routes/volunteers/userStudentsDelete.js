@@ -5,6 +5,7 @@
 
 const express = require('express');
 const router = express.Router();
+const { authenticateToken_User } = require('../../utils/jwtUtils');
 
 const userStudent = require('../../models/userStudent');
 
@@ -17,7 +18,7 @@ router.get('/', async (req, res) => {
 });
 
 // delete user by email
-router.delete('/', async (req, res) => {
+router.delete('/', authenticateToken_User, async (req, res) => {
     await userStudent.findOne({ email: req.body.email }).then(async (user) => {
         if (user) {
             await userStudent.deleteOne({ email: req.body.email }).then((user) => {
