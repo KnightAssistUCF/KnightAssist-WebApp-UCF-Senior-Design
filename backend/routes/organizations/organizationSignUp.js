@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const { generateToken } = require('../utils/jwtUtils');
+const { generateToken } = require('../../utils/jwtUtils');
 
-const organizationSchema = require('../models/organization');
+const organizationSchema = require('../../models/organization');
 
 router.post('/', async (req, res) => {
     // intake: name, description, logoURL, category, events, 

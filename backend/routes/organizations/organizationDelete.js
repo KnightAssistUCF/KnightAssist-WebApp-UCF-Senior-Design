@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const organization = require('../models/organization');
+const organization = require('../../models/organization');
 
 // first we lookup the organization by their email
 router.get('/', async (req, res) => {

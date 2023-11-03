@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const orgDB = require("../models/organization");
+const orgDB = require("../../models/organization");
 
 router.delete('/', async (req, res) => {
     const searchID = req.body.organizationID;

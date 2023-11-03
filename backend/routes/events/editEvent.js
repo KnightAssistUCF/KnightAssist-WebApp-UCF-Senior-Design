@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const event = require('../models/events');
+const event = require('../../models/events');
 
 router.post('/', async (req, res) => {
     const searchID = req.body.organizationID;

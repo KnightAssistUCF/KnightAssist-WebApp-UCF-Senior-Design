@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs'); 
-const { generateToken } = require('../utils/jwtUtils');
-const { authenticateToken_User, authenticateToken_Organization } = require('../utils/jwtUtils');
+const { generateToken } = require('../../utils/jwtUtils');
+const { authenticateToken_User, authenticateToken_Organization } = require('../../utils/jwtUtils');
 
-const userStudent = require('../models/userStudent');
-const organization = require('../models/organization');
+const userStudent = require('../../models/userStudent');
+const organization = require('../../models/organization');
 
 router.post('/', async (req, res) => {
     const loginEmail = req.body.email;

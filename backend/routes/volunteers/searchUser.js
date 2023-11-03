@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const organization = require('../models/organization');
+const userStudent = require('../../models/userStudent');
 
 router.get('/', async (req, res) => {
     const searchEmail = req.query.email;
 
-    await organization.findOne({ organizationID: req.query.organizationID }).then((organization) => {
-        if (organization) {
-            res.status(200).json(organization);
+    await userStudent.findOne({ email: searchEmail }).then((user) => {
+        if (user) {
+            res.status(200).json(user);
         } else {
-            res.status(404).send("Organization not found");
+            res.status(404).send("User not found");
         }
     }).catch((err) => {
         res.status(503).send("Internal server error: " + err);
