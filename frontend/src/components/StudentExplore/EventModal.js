@@ -14,8 +14,7 @@ import EventIcon from '@mui/icons-material/Event';
 import PlaceIcon from '@mui/icons-material/Place';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Alert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -42,6 +41,7 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -94,10 +94,12 @@ function EventModal(props)
         setIsRSVP(!isRSVP);
         
         setShowMSG(true);
+        setDisabled(true);
         // Remove message after 2 seconds
         setTimeout(() => {
             setShowMSG(false);
-        }, 2000);
+            setDisabled(false);
+        }, 3000);
     }
 
     function EventName(){
@@ -169,7 +171,8 @@ function EventModal(props)
                 {(showMSG) == true
                     ?
                         <div className='rsvpMsg'>
-                            {(isRSVP) ? "Succesfully RSVP'd!" : "Undid RSVP"}
+                            {(isRSVP) ? <Alert severity="info">Event RSVP successful. Check for email confirmation.</Alert> : 
+                                        <Alert severity="info">Your RSVP has been cancelled.</Alert>}
                         </div>
                     :
                         null
@@ -180,7 +183,7 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <button type="button" class="RSVPbtn btn btn-primary" onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
+            <button type="button" class="RSVPbtn btn btn-primary" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
         )
     }
 
@@ -224,9 +227,9 @@ function EventModal(props)
                                 
                                 <Tags/>
 
-                                <RSVPMessage/>
-
                                 <RSVPButton/>
+
+                                <RSVPMessage/>
                             </Box>
                         </Container>
                     </CardContent>   
