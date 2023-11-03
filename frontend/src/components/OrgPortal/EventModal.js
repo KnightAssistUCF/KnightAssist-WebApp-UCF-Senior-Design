@@ -43,7 +43,7 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
  
     function eventIsUpcoming(date){
-        return new Date().toISOString() < new Date(date).toISOString();
+        return new Date().toISOString() <= new Date(date).toISOString();
     }
 
     async function setInfo(){        

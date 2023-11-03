@@ -21,7 +21,7 @@ function UpcomingEvents(props)
     }
 
     function eventIsUpcoming(date){
-        return new Date().toISOString() < new Date(date).toISOString();
+        return new Date().toISOString() <= new Date(date).toISOString();
     }
 
     async function getUpcomingEvents(){
