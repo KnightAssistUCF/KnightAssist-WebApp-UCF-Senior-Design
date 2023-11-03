@@ -24,7 +24,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -79,4 +79,9 @@ html, body {
 
 .spartan{
   font-family: "League Spartan";
+}
+
+.landing{
+  min-width: 600px;
+  background-color: white !important;
 }
