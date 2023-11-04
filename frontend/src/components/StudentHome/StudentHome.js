@@ -41,12 +41,17 @@ function StudentHome()
         });
         let res = JSON.parse(await response.text());
         console.log(res);
+        console.log(res.firstName);
+        setUserData(res);
     
         
       } catch (error) {
         console.log("An error has occurred" + error);
       }
     }
+    useEffect(() => {
+      console.log(userData); // This will log the updated userData
+    }, [userData]);
 
     const eventPic = require("../Login/loginPic.png");
 
@@ -64,7 +69,7 @@ function StudentHome()
       <div id='homePage'>
         <StudentHeader/>
         <div className="studHomePage">
-          <div class="StudentHomePage-title">Welcome, First Last</div>
+          <div class="StudentHomePage-title">Welcome, {userData.firstName} {userData.lastName}</div>
           <div class="StudentHomePage-subtitle">Fall 2023</div>
           
           {/* first row with upcoming shift and announcements */}
@@ -120,7 +125,7 @@ function StudentHome()
               <Card>
                 <Box sx={{ position: 'relative', display: 'inline-flex', margin: '20px 20px' }}>
                   <div className="progress-1">
-                    <CircularProgress determinate value={66.67} sx={{ 'color': 'green', 'stroke': 'green', '--CircularProgress-size': '80px' }}>
+                    <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px' }}>
                       2 / 3
                     </CircularProgress>
                     <div className="StudentHomePage-paragraph">Semester</div>
