@@ -129,6 +129,9 @@ app.use('/api/RSVPForEvent', RSVPForEvent);
 const cancelRSVPForEvent = require('./backend/routes/events/cancelRSVPForEvent');
 app.use('/api/cancelRSVP', cancelRSVPForEvent);
 
+const addFavoriteOrg = require('./backend/routes/volunteers/addFavoriteOrg');
+app.use('/api/addFavoriteOrg', addFavoriteOrg);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

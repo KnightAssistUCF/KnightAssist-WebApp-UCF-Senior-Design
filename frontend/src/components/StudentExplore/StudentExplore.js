@@ -10,6 +10,7 @@ import Header from '../StudentHome/StudentHeader';
 import SearchSwitch from './SearchSwitch';
 import Search from './Search';
 import EventModal from './EventModal';
+import OrgFavoriteEvents from './OrgFavoriteEvents';
 import './StudentExplore.css'
 import '../StudentHome/StudentHome.css';
 
@@ -23,11 +24,12 @@ function StudentExplore()
       <div id='homePage'>
 	<Header/>
 	<div className='moveEverything'>
-	    <div class="exploreTitle StudentHomePage-title">Explore</div>
+	    <div class="exploreTitle">Explore</div>
 	    <SearchSwitch setSearchType={setSearchType}/>
 	    <div className='moveSearch'>
 		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    </div>
+	    <OrgFavoriteEvents/>
 	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>
