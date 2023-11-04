@@ -170,8 +170,8 @@ function EventModal(props)
             <div>
                 {(showMSG) == true
                     ?
-                        <div className='rsvpMsg'>
-                            {(isRSVP) ? <Alert severity="info">Event RSVP successful. Check for email confirmation.</Alert> : 
+                        <div>
+                            {(isRSVP) ? <Alert severity="success">Event RSVP successful. Check for email confirmation.</Alert> : 
                                         <Alert severity="info">Your RSVP has been cancelled.</Alert>}
                         </div>
                     :

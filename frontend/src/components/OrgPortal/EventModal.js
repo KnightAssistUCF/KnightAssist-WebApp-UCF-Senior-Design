@@ -43,6 +43,7 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
  
     function eventIsUpcoming(date){
+        date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));

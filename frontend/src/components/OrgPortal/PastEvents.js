@@ -24,6 +24,7 @@ function PastEvents(props)
     let events = [];
 
     function eventIsPast(date){
+        date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
@@ -34,7 +35,7 @@ function PastEvents(props)
     async function getPastEvents(){
         const organizationID = "12345";
         
-        let url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
+        let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
         let response = await fetch(url, {
             method: "GET",
