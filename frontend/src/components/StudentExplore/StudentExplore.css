@@ -13,9 +13,21 @@
     margin-right: -30px;
 }
 
+.tag{
+    background-color: #bc70c8 !important;
+    width: 100px;
+    height: 30px;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 20px;
+    float: left;
+    font-family: "League Spartan";
+    margin-bottom: 5px;
+}
+
 .RSVPbtn{
+    float: left;
     margin-top: 100px;
-    margin-bottom: 20px;
     width: 120px;
     background-color: #5f5395;
     border: none;

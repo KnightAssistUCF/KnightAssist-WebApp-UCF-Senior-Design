@@ -25,12 +25,13 @@ const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setOpen(false);}
+    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(""); props.setOpen(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
 
     const [name, setName] = useState("");
+    const [id, setID] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -59,26 +60,37 @@ function EventModal(props)
 
         if(event) {
             setName(event.name);
+            setID(event._id);
             setDescription(event.description);
             setDate(event.date);
             setLocation(event.location);
             setStartTime(event.startTime);
             setEndTime(event.endTime);
-            setVolunteers(event.registeredVolunteers.length)
+            setVolunteers(event.registeredVolunteers.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
             
-            //API route
-            url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
+            const json = {
+                eventID: event._id,
+                eventName: event.name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+                check: 1
+            };
+
+            url = buildPath(`api/RSVPForEvent`);
 
             response = await fetch(url, {
-                method: "GET",
+                body: JSON.stringify(json),
+                method: "POST",
                 headers: {"Content-Type": "application/json"},
             });
         
             res = JSON.parse(await response.text());
 
-            if(res == 0)
+            console.log("Result: ", res);
+
+            if(res.RSVPStatus == 1)
                 setIsRSVP(true);
             else
                 setIsRSVP(false);
@@ -87,10 +99,50 @@ function EventModal(props)
         } else {
             console.log("Event undefined or not found");
         }
-	    
     }
 
-    function doRSVP(){
+    async function doRSVP(){
+        if(isRSVP){
+            const json = {
+                eventID: id,
+                eventName: name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+            };
+
+            const url = buildPath(`api/cancelRSVP`);
+
+            const response = await fetch(url, {
+                body: JSON.stringify(json),
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            const res = await response.text();
+
+            console.log(res);
+        }else{
+            const json = {
+                eventID: id,
+                eventName: name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+                check: 0
+            };
+
+            const url = buildPath(`api/RSVPForEvent`);
+
+            const response = await fetch(url, {
+                body: JSON.stringify(json),
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            const res = JSON.parse(await response.text());
+
+            console.log("Result: ", res);
+        }
+
         setIsRSVP(!isRSVP);
         
         setShowMSG(true);
@@ -227,7 +279,9 @@ function EventModal(props)
                                 
                                 <Tags/>
 
-                                <RSVPButton/>
+                                <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
+                                    <RSVPButton/>
+                                </Grid>  
 
                                 <RSVPMessage/>
                             </Box>

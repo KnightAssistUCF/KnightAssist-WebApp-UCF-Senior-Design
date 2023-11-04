@@ -28,7 +28,6 @@ function PastEvents(props)
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
         return today > date;    
     }
 

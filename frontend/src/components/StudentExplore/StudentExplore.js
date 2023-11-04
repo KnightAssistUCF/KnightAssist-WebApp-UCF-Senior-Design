@@ -28,7 +28,7 @@ function StudentExplore()
 	    <div className='moveSearch'>
 		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    </div>
-	    <EventModal eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>
     );
