@@ -3,7 +3,7 @@ const router = express.Router();
 
 const Event = require('../../models/events'); 
 const UserStudent = require('../../models/userStudent');
-router.post('/rsvp', async (req, res) => {
+router.post('/', async (req, res) => {
         const { eventID, eventName, userID, userEmail } = req.body;
 
         if (!eventID || !userID || !eventName || !userEmail) {
