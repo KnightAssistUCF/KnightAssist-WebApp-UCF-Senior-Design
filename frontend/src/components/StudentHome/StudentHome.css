@@ -13,13 +13,14 @@
   font-size: 20px;
 }
 .next-event {
-  padding-right: 10%;
+  padding-right: 7%;
 
 }
 .announcement {
-  padding-right: 10%;
+  padding-right: 2%;
 }
 .second-row {
+  margin-top: 20px;
   display: flex;
 }
 .calendar {

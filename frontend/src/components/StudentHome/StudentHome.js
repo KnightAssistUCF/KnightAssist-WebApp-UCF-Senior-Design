@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form} from 'react-bootstrap';
 import Logo from '../Logo';
 import './StudentHome.css';
-import { List, ListItemButton, ListItemText, Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
+import { Divider, List, ListItemButton, ListItemText, Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -97,21 +97,26 @@ function StudentHome()
             {/* announcements */}
             <div className="announcement">
               <div className="StudentHomePage-subtitle">Announcements</div>
-                <Box sx={{ border: 1, borderColor: 'grey.200', width: '100%', minWidth: 360, bgcolor: 'background.paper', color: 'black' }}>
+                <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
                   <List >
                     <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
                       <ListItemButton>
-                        <ListItemText primary="10-20-23 Arboretum sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " sx={{ width: '100%' }} />
+                        <ListItemText primary="10-20-23 Arboretum"
+                        secondary="sldkfj sdlfjsdlfj sdlfjsdlfjd skfjsgfs sdf dskfhkd kdf fdgdfgjhkdfh sdfd sfdf..." />
                       </ListItemButton>
                     </ListItem>
+                    <Divider variant="middle" />
                     <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
                       <ListItemButton>
-                        <ListItemText primary="10-20-23 Knight Hacks sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " />
+                      <ListItemText primary="10-20-23 Knight Hacks"
+                        secondary="sldkfjsd lfjsdlfjsdlfjsdl fjdskfj sgfsdf asdfsdf sfdsfsdfsfd..." />
                       </ListItemButton>
                     </ListItem>
+                    <Divider variant="middle" />
                     <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
                       <ListItemButton>
-                        <ListItemText primary="10-20-23 Knight Hacks sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " />
+                      <ListItemText primary="10-20-23 Arboretum"
+                        secondary="sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd..." />
                       </ListItemButton>
                     </ListItem>
 
@@ -127,15 +132,13 @@ function StudentHome()
           <div className="second-row">
 
             <div className="calendar">
-              <div className="StudentHomePage-subtitle">Calendar</div>
-                <Card>
+                <Card variant="outlined" sx={{ minWidth: 830,  display: 'flex', marginBottom: '0', maxHeight: 850 }}>
 
                 </Card>
             </div>
 
             <div className="stat-card">
-            <div className="StudentHomePage-subtitle">Stats</div>
-              <Card>
+              <Card variant="outlined">
                 <Box sx={{ position: 'relative', display: 'inline-flex', margin: '20px 20px' }}>
                   <div className="progress-1">
                     <CircularProgress determinate value={(3/10)*100} sx={{ '--CircularProgress-size': '80px' }}>
