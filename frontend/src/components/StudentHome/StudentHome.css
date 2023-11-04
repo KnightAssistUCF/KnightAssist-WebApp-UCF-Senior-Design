@@ -24,6 +24,18 @@
   padding-right: 8%;
 }
 
+.StudentHomePage-paragraph {
+  margin-top: 5px;
+  font-size: 15px;
+}
+.StudentHomePage-paragraph2 {
+  font-size: 12px;
+}
+
+.progress-1 {
+  margin-right: 20px;
+}
+
 /* Style for the "Announcements" section */
 
 

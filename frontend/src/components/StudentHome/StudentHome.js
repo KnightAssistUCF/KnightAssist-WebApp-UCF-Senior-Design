@@ -31,8 +31,8 @@ function StudentHome()
 
 
     async function getStudentInfo() {
-      const email = 'anisharanjan55@gmail.com'; // Replace with the desired email
-      const url = buildPath(`api/searchUser?email=${email}`); // Pass the email as a query parameter
+      const email = 'anisharanjan55@gmail.com';
+      const url = buildPath(`api/searchUser?email=${email}`);
     
       try {
         const response = await fetch(url, {
@@ -118,14 +118,28 @@ function StudentHome()
             <div className="stat-card">
             <div className="StudentHomePage-subtitle">Stats</div>
               <Card>
-                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
-                  <CircularProgress determinate value={66.67} sx={{ 'color': 'green', 'stroke': 'green', '--CircularProgress-size': '80px', marginLeft: '20px', marginRight: '20px', marginTop: '20px' }}>
-                    2 / 3
-                  </CircularProgress>
-                  <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px', marginTop: '20px', marginRight: '20px', }}>
-                    2 / 3
-                  </CircularProgress>
+                <Box sx={{ position: 'relative', display: 'inline-flex', margin: '20px 20px' }}>
+                  <div className="progress-1">
+                    <CircularProgress determinate value={66.67} sx={{ 'color': 'green', 'stroke': 'green', '--CircularProgress-size': '80px' }}>
+                      2 / 3
+                    </CircularProgress>
+                    <div className="StudentHomePage-paragraph">Semester</div>
+                    <div className="StudentHomePage-paragraph2">3 out of 10</div>
+                  </div>
+                 
+                  <div className="progress-2">
+                    <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px' }}>
+                      2 / 3
+                    </CircularProgress>
+                    <div className="StudentHomePage-paragraph">Cumulative</div>
+                    <div className="StudentHomePage-paragraph2">20 hours</div>
+                  </div>
+                  
                 </Box>
+                <Box sx={{margin: '0px 15px 0px 15px'}}>
+                  <div className="StudentHomePage-subtitle" style={{ textAlign: 'center' }}>You've accumulated<br />124 points!</div>
+                </Box>
+                
               </Card>
             </div>
           </div>
