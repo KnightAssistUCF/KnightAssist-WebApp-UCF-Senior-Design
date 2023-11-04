@@ -2,17 +2,16 @@ import * as React from 'react';
 import { ThemeProvider, createTheme } from '@mui/material';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
+import Lottie, {LottieRefCurrentProps} from "lottie-react";
+import animationData from './landingAnimation2';
 import PreLoginNavBar from '../PreLoginNavBar';
 import useStyles from '../PreLoginStyles';
 
 function Landing() {
-  const theme = createTheme({
-    palette: {
-      mode: "light",
-    }
-  });
-
   const classes = useStyles();
+  const theme = createTheme({
+   
+  });
 
   return (
     <>
@@ -22,21 +21,20 @@ function Landing() {
       <Box className={classes.heroBox}>
       <Grid container spacing={6} className={classes.gridContainer}>
         <Grid item xs={12} md={7}>
-          <Typography variant="h3" fontWeight={700} className={classes.title}>
-            Let's scale your business
+          <Typography variant="h3" fontWeight={700} className={classes.title} sx={{color: 'black'}} paddingBottom='20px'>
+            Looking for Volunteer Opportunities?
           </Typography>
-          <Typography variant="h6" className={classes.subtitle}>
-            Hire professionals who will help your business make 10X your
-            previous income. With over 5years experience in Marketing & Business
-            strategy, we are your best client.
+          <Typography variant="h6" className={classes.subtitle} sx={{color: 'black', opacity: '0.7'}} paddingBottom='30px'>
+          KnightAssist has your back! Find campus organizations you’re interested in and start volunteering today! Interested?
           </Typography>
           <Button
-            variant="contained"
-            color="primary"
-            sx={{ width: '200px', fontSize: '16px' }}
+            variant="contained" sx={{ bgcolor: '#F5D6BA', color: 'black', width: '200px', fontSize: '16px', fontWeight: '600' }}
           >
-            HIRE US
+            Sign Up!
           </Button>
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <Lottie style={{ backgroundColor:'white', maxHeight: '400px', maxWidth: '400px' }} animationData={animationData} />
         </Grid>
       </Grid>
     </Box>
@@ -44,5 +42,4 @@ function Landing() {
     </>
   );
 }
-
 export default Landing;

@@ -1,4 +1,4 @@
-import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 
 {/* need to edit for my mui components*/}
 const styles = (theme) => {
@@ -130,5 +130,5 @@ const styles = (theme) => {
   };
 };
 
-const useStyles = makeStyles(styles);
+const useStyles = styled(styles);
 export default useStyles;
