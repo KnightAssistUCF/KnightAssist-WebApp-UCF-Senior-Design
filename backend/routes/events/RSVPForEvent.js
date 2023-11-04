@@ -3,6 +3,14 @@ const router = express.Router();
 
 const Event = require('../../models/events'); 
 const userStudent = require('../../models/userStudent');
+
+
+/* 0 - registered volunteer for event
+   1 - already registered for event
+   2 - event at full capacity
+*/
+
+
 router.post('/', async (req, res) => {
         const { eventID, eventName, userID, userEmail } = req.body;
 
@@ -30,13 +38,15 @@ router.post('/', async (req, res) => {
                 || selectedEvent.registeredVolunteers.includes(userEmail)
                 || selectedEvent.attendees.includes(userEmail)) 
                 {
-                        return res.status(400).send("User already RSVP'd to this event");
+                        res.status(400).send("User already RSVP'd to this event");
+                        return 1;
                 }
 
                 // check if the event is already at max length
                 // if it has a max num of attendees (which is not always the case)
                 if (selectedEvent.maxAttendees && selectedEvent.attendees.length >= selectedEvent.maxAttendees) {
-                        return res.status(400).send("Event is at full capacity");
+                        res.status(400).send("Event is at full capacity");
+                        return 2;
                 }
 
                 // register the user to the event
@@ -54,6 +64,7 @@ router.post('/', async (req, res) => {
                 await userRegistered.save();
 
                 res.status(200).send("RSVP successful for user " + userID + " to event " + eventID);
+                return 0;
         } catch (err) {
                 res.status(503).send("Internal server error: " + err.message);
         }
