@@ -16,8 +16,10 @@
   padding-right: 10%;
 
 }
+.announcement {
+  padding-right: 10%;
+}
 .second-row {
-  margin-top: 40px;
   display: flex;
 }
 .calendar {

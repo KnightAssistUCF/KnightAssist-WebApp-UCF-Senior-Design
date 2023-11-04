@@ -97,7 +97,7 @@ function StudentHome()
             {/* announcements */}
             <div className="announcement">
               <div className="StudentHomePage-subtitle">Announcements</div>
-                <Box sx={{ border: 1, borderColor: 'grey.200', width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'black' }}>
+                <Box sx={{ border: 1, borderColor: 'grey.200', width: '100%', minWidth: 360, bgcolor: 'background.paper', color: 'black' }}>
                   <List >
                     <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
                       <ListItemButton>
