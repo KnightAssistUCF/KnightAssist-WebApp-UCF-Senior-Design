@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form} from 'react-bootstrap';
 import Logo from '../Logo';
 import './StudentHome.css';
-import { Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
+import { List, ListItemButton, ListItemText, Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -12,6 +12,7 @@ import StudentHeader from './StudentHeader';
 import { buildPath } from '../../path';
 import CircularProgress from '@mui/joy/CircularProgress';
 import { createTheme } from '@mui/material/styles';
+import ListItem from '@mui/material/ListItem';
 
 
 
@@ -22,7 +23,6 @@ function StudentHome()
 
     const [userData, setUserData] = useState(null);
     useEffect(() => {
-      // Call the API when the component mounts
       getStudentInfo();
     }, []);
 
@@ -42,16 +42,12 @@ function StudentHome()
         let res = JSON.parse(await response.text());
         console.log(res);
         console.log(res.firstName);
-        setUserData(res);
     
         
       } catch (error) {
         console.log("An error has occurred" + error);
       }
     }
-    useEffect(() => {
-      console.log(userData); // This will log the updated userData
-    }, [userData]);
 
     const eventPic = require("../Login/loginPic.png");
 
@@ -69,7 +65,7 @@ function StudentHome()
       <div id='homePage'>
         <StudentHeader/>
         <div className="studHomePage">
-          <div class="StudentHomePage-title">Welcome, {userData.firstName} {userData.lastName}</div>
+          <div class="StudentHomePage-title">Welcome, First Last</div>
           <div class="StudentHomePage-subtitle">Fall 2023</div>
           
           {/* first row with upcoming shift and announcements */}
@@ -77,7 +73,7 @@ function StudentHome()
             {/* upcoming shift card */}
             <div className="next-event">
               <div className="StudentHomePage-subtitle">Next Event</div>
-              <Card variant="outlined" sx={{ minWidth: 555,  display: 'flex', marginBottom: '0' }}>
+              <Card variant="outlined" sx={{ minWidth: 555,  display: 'flex', marginBottom: '0', maxHeight: 200 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
                   <CardMedia
                     component="img"
@@ -101,9 +97,26 @@ function StudentHome()
             {/* announcements */}
             <div className="announcement">
               <div className="StudentHomePage-subtitle">Announcements</div>
-                <Card>
-                  
-                </Card>
+                <Box sx={{ border: 1, borderColor: 'grey.200', width: '100%', maxWidth: 360, bgcolor: 'background.paper', color: 'black' }}>
+                  <List >
+                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
+                      <ListItemButton>
+                        <ListItemText primary="10-20-23 Arboretum sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " sx={{ width: '100%' }} />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
+                      <ListItemButton>
+                        <ListItemText primary="10-20-23 Knight Hacks sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " />
+                      </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
+                      <ListItemButton>
+                        <ListItemText primary="10-20-23 Knight Hacks sldkfjsdlfjsdlfjsdlfjsdlfjdskfjsgfsdfsdfsfd... " />
+                      </ListItemButton>
+                    </ListItem>
+
+                  </List>
+                </Box>
             </div>
             
           </div>
@@ -125,16 +138,16 @@ function StudentHome()
               <Card>
                 <Box sx={{ position: 'relative', display: 'inline-flex', margin: '20px 20px' }}>
                   <div className="progress-1">
-                    <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px' }}>
-                      2 / 3
+                    <CircularProgress determinate value={(3/10)*100} sx={{ '--CircularProgress-size': '80px' }}>
+                      3 / 10
                     </CircularProgress>
                     <div className="StudentHomePage-paragraph">Semester</div>
                     <div className="StudentHomePage-paragraph2">3 out of 10</div>
                   </div>
                  
                   <div className="progress-2">
-                    <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px' }}>
-                      2 / 3
+                    <CircularProgress determinate value={100} sx={{ '--CircularProgress-size': '80px' }}>
+                      20
                     </CircularProgress>
                     <div className="StudentHomePage-paragraph">Cumulative</div>
                     <div className="StudentHomePage-paragraph2">20 hours</div>
