@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
+const { authenticateToken_Organization } = require('../../utils/jwtUtils');
 
-const organization = require('../models/organization');
+const organization = require('../../models/organization');
 
 // first we lookup the organization by their email
 router.get('/', async (req, res) => {
@@ -12,7 +13,7 @@ router.get('/', async (req, res) => {
 });
 
 // then we delete the organization by their email
-router.delete('/', async (req, res) => {
+router.delete('/', authenticateToken_Organization, async (req, res) => {
     await organization.findOne({ email: req.body.email }).then(async (organization) => {
         if (organization) {
             await organization.deleteOne({ email: req.body.email }).then((organization) => {

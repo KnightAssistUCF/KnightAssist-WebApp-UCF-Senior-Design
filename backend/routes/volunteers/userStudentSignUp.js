@@ -1,14 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs'); // I will use this to hash the password
-const { generateToken } = require('../utils/jwtUtils');
+const { generateToken } = require('../../utils/jwtUtils');
 const crypto = require('crypto');
 const nodemailer = require("nodemailer");
 const dotenv = require('dotenv');
 const mailgen = require('mailgen');
 const path = require('path');
 
-const userStudent = require('../models/userStudent');
+const userStudent = require('../../models/userStudent');
 const jwtSecret = process.env.JWT_SECRET_KEY;
 
 /* email verfication and the jwt tokenization can be gathered here, but later */

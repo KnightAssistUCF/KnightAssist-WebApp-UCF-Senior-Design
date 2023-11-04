@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 
-const organization = require('../models/organization');
+const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
     try {

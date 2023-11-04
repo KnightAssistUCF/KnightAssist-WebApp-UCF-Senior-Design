@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken_User } = require('../utils/jwtUtils');
+const { authenticateToken_User } = require('../../utils/jwtUtils');
 
-const userStudent = require('../models/userStudent');
+const userStudent = require('../../models/userStudent');
 
 router.get('/', async (req, res) => {
     res.status(200).send("In the editProfile Route API");

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken_Organization } = require('../utils/jwtUtils');
+const { authenticateToken_Organization } = require('../../utils/jwtUtils');
 
-const organization = require('../models/organization');
+const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
     res.status(200).send("In the editOrganizationProfile Route API");

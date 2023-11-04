@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const event = require('../models/events');
-const organization = require('../models/organization');
+const event = require('../../models/events');
+const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
     const searchID = req.query.organizationID;
