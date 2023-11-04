@@ -35,7 +35,7 @@ router.delete('/', async (req, res) => {
                 // Find the user and remove the event from their RSVP list
                 const userRegistered = await UserStudent.find({ email: userEmail });
                 if (userRegistered) {
-                        const eventIndex = userRegistered.eventsRSVP.indexOf(eventID);
+                        const eventIndex = userRegistered.eventsRSVP.findIndex(event => event.name === eventName);
                         if (eventIndex !== -1) {
                                 userRegistered.eventsRSVP.splice(eventIndex, 1);
                                 await userRegistered.save();
