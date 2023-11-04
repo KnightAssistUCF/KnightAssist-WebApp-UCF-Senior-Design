@@ -38,15 +38,13 @@ router.post('/', async (req, res) => {
                 || selectedEvent.registeredVolunteers.includes(userEmail)
                 || selectedEvent.attendees.includes(userEmail)) 
                 {
-                        res.status(400).send("User already RSVP'd to this event");
-                        return 1;
+                        return res.status(200).json({ status: "User already registered for event", RSVPStatus: 1 }).send();
                 }
 
                 // check if the event is already at max length
                 // if it has a max num of attendees (which is not always the case)
                 if (selectedEvent.maxAttendees && selectedEvent.attendees.length >= selectedEvent.maxAttendees) {
-                        res.status(400).send("Event is at full capacity");
-                        return 2;
+                        return res.status(200).json({ status: "Event at max capacity", RSVPStatus: 2 }).send();
                 }
 
                 // register the user to the event
@@ -63,8 +61,7 @@ router.post('/', async (req, res) => {
                 userRegistered.eventsRSVP.push(eventID);
                 await userRegistered.save();
 
-                res.status(200).send("RSVP successful for user " + userID + " to event " + eventID);
-                return 0;
+                return res.status(200).json({ status: "User registered for event", RSVPStatus: 0 }).send();
         } catch (err) {
                 res.status(503).send("Internal server error: " + err.message);
         }
