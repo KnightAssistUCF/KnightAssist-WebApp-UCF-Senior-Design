@@ -52,6 +52,23 @@ function StudentHome()
     const eventPic = require("../Login/loginPic.png");
 
 
+
+    
+    const [items, setItems] = useState([
+      { id: 1, primary: '10-20-23 Arboretum', secondary: 'sldkfj sdlfjsdlfj sdlfjsdlfjd skfjsgfs sdf dskfhkd kdf fdgdfgjhkdfh sdfd sfdf...' },
+      { id: 2, primary: '10-20-23 Knight Hacks', secondary: 'sldkfjsd lfjsdlfjsdlfjsdl fjdskfj sgfsdf asdfsdf sfdsfsdfsfd...' },
+      { id: 3, primary: '10-20-23 Another Event', secondary: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd...' },
+      { id: 4, primary: '10-20-23 Another Event', secondary: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf jdskfjsgfsdfsdf sfd...' },
+    ]);
+    const limitedItems = items.slice(0, 3);
+  
+    const handleItemClose = (itemId) => {
+      // Filter the items to remove the one with the given itemId
+      const updatedItems = items.filter((item) => item.id !== itemId);
+      setItems(updatedItems);
+    };
+
+
     
 
 
@@ -97,34 +114,26 @@ function StudentHome()
             {/* announcements */}
             <div className="announcement">
               <div className="StudentHomePage-subtitle">Announcements</div>
-                <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', minWidth: '600px', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
-                  <List >
-                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
-                      <ListItemButton>
-                        <ListItemText primary="10-20-23 Arboretum"
-                        secondary="sldkfj sdlfjsdlfj sdlfjsdlfjd skfjsgfs sdf dskfhkd kdf fdgdfgjhkdfh sdfd sfdf..." />
-                      </ListItemButton>
-                    </ListItem>
-                    <Divider variant="middle" />
-                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
-                      <ListItemButton>
-                      <ListItemText primary="10-20-23 Knight Hacks"
-                        secondary="sldkfjsd lfjsdlfjsdlfjsdl fjdskfj sgfsdf asdfsdf sfdsfsdfsfd..." />
-                      </ListItemButton>
-                    </ListItem>
-                    <Divider variant="middle" />
-                    <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
-                      <ListItemButton>
-                      <ListItemText primary="10-20-23 Arboretum"
-                        secondary="sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd..." />
-                      </ListItemButton>
-                    </ListItem>
-
-                  </List>
+                <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', minWidth: '600px', minHeight: '235px', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
+                  {limitedItems.length <= 0 ? ( 
+                    <div className="StudentHomePage-subtitle" style={{ textAlign: 'center', alignItems: 'center', fontSize: '15px', color: 'darkgray' }}>No announcements available</div> 
+                      ) : (
+                        <List>
+                          {limitedItems.map((item) => (
+                            <div key={item.id}>
+                              <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon onClick={() => handleItemClose(item.id)} /></IconButton>}>
+                                <ListItemButton>
+                                  <ListItemText primary={item.primary} secondary={item.secondary} />
+                                </ListItemButton>
+                              </ListItem>
+                              <Divider variant="middle" />
+                            </div>
+                          ))}
+                        </List> 
+                      )}
                 </Box>
+              </div>
             </div>
-            
-          </div>
 
 
 
