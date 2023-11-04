@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Event = require('../../models/events'); 
-
+const UserStudent = require('../../models/userStudent');
 router.post('/rsvp', async (req, res) => {
         const { eventID, eventName, userID, userEmail } = req.body;
 
@@ -43,6 +43,15 @@ router.post('/rsvp', async (req, res) => {
                 selectedEvent.attendees.push(userID);
 
                 await selectedEvent.save();
+
+                const userRegistered = await userStudent.findOne({ email: userEmail });
+
+                if (!userRegistered) {
+                        return res.status(404).send("User not found in the DB - cannot add to their event history/RSVP");
+                }
+
+                userRegistered.eventsRSVP.push(eventID);
+                await userRegistered.save();
 
                 res.status(200).send("RSVP successful for user " + userID + " to event " + eventID);
         } catch (err) {
