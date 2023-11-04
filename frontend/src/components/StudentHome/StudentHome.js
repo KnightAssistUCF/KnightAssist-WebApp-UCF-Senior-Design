@@ -3,12 +3,15 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form} from 'react-bootstrap';
 import Logo from '../Logo';
 import './StudentHome.css';
-import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/material';
+import { Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
 import StudentHeader from './StudentHeader';
 import { buildPath } from '../../path';
+import CircularProgress from '@mui/joy/CircularProgress';
+import { createTheme } from '@mui/material/styles';
 
 
 
@@ -16,16 +19,14 @@ function StudentHome()
 {
     
     const defaultVol = 15.0;
-    const [open, setModalOpen] = useState(false);
-    const [volunteerGoal, setVolunteerGoal] = useState(defaultVol);
-    const handleVolunteerGoalChange = (e) => {
-        setVolunteerGoal(e.target.value);
-    };
+
     const [userData, setUserData] = useState(null);
     useEffect(() => {
       // Call the API when the component mounts
       getStudentInfo();
     }, []);
+
+    const [open, setOpen] = React.useState(true);
 
 
 
@@ -47,6 +48,11 @@ function StudentHome()
       }
     }
 
+    const eventPic = require("../Login/loginPic.png");
+
+
+    
+
 
 
 
@@ -58,89 +64,116 @@ function StudentHome()
       <div id='homePage'>
         <StudentHeader/>
         <div className="studHomePage">
-        <div class="StudentHomePage-title">Welcome, First Last</div>
-        <div class="StudentHomePage-subtitle">Fall 2023</div>
-        <div class="StudentHomePage-subtitle2">Next Event</div>
-        
-        <div className="content-container">
-          <div class="StudentHomePage-card">
-            <div className="card1-text">
-              <p class="upcoming-shift"><strong>Arboretum</strong></p>
-              <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
-              <p class="upcoming-shift-time location">Location</p>
+          <div class="StudentHomePage-title">Welcome, First Last</div>
+          <div class="StudentHomePage-subtitle">Fall 2023</div>
+          
+          {/* first row with upcoming shift and announcements */}
+          <div className="first-row">
+            {/* upcoming shift card */}
+            <div className="next-event">
+              <div className="StudentHomePage-subtitle">Next Event</div>
+              <Card variant="outlined" sx={{ minWidth: 555,  display: 'flex', marginBottom: '0' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
+                  <CardMedia
+                    component="img"
+                    sx={{width: 155, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
+                    image={require('../Login/loginPic.png')}
+                  />
+                  <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left', marginBottom: '0' }}>
+                    <div className="card1-text">
+                      <div className="card-title"><strong>Arboretum</strong></div>
+                      <div className="card-subtitle">October 20th</div>
+                      <div className="card-subtitle">10:00am - 12:00pm</div>
+                      <div className="card-subtitle">Location</div>
+                    </div>
+                    <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
+                        <Button className='cancel-position' size="small" variant='contained' color="error" justify="flex-end" style={{ marginRight: '15px' }}>Cancel</Button>
+                      </Grid>
+                  </CardContent>
+                </Box>
+              </Card>
+            </div>
+            {/* announcements */}
+            <div className="announcement">
+              <div className="StudentHomePage-subtitle">Announcements</div>
+                <Card>
+                  
+                </Card>
+            </div>
+            
+          </div>
+
+
+
+          {/* second row with calendar and statistics card */}
+          <div className="second-row">
+
+            <div className="calendar">
+              <div className="StudentHomePage-subtitle">Calendar</div>
+                <Card>
+
+                </Card>
+            </div>
+
+            <div className="stat-card">
+            <div className="StudentHomePage-subtitle">Stats</div>
+              <Card>
+                <Box sx={{ position: 'relative', display: 'inline-flex' }}>
+                  <CircularProgress determinate value={66.67} sx={{ 'color': 'green', 'stroke': 'green', '--CircularProgress-size': '80px', marginLeft: '20px', marginRight: '20px', marginTop: '20px' }}>
+                    2 / 3
+                  </CircularProgress>
+                  <CircularProgress determinate value={66.67} sx={{ '--CircularProgress-size': '80px', marginTop: '20px', marginRight: '20px', }}>
+                    2 / 3
+                  </CircularProgress>
+                </Box>
+              </Card>
             </div>
           </div>
-          <div class="StudentHomePage-card">
-            <div className="card1-text">
-              <p class="upcoming-shift"><strong>Arboretum</strong></p>
-              <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
-              <p class="upcoming-shift-time location">Location</p>
+          
+          
+          
+          {/* <div className="parent-row">
+
+          
+            <div class="StudentHomePage-subtitle2">Next Event</div>
+          
+            // top row: upcoming shift + announcements 
+            <div className="content-container">
+              <div class="StudentHomePage-card c1">
+                <div className="card1-text">
+                  <p class="upcoming-shift"><strong>Arboretum</strong></p>
+                  <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+                  <p class="upcoming-shift-time location">Location</p>
+                </div>
+              </div>
+              <div class="StudentHomePage-card c2">
+                <div className="card1-text">
+                  <p class="upcoming-shift"><strong>Arboretum</strong></p>
+                  <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+                  <p class="upcoming-shift-time location">Location</p>
+                </div>
+              </div>
             </div>
-          </div>
+          </div> */}
+
+          {/* bottom row: calendar + progress bars */}
+          {/* <div className="content-container">
+            <div className="StudentHomePage-card">
+                <p class="upcoming-shift"><strong>Arboretum</strong></p>
+                <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+                <p class="upcoming-shift-time location">Location</p>
+            </div>
+            <div className="StudentHomePage-card">
+                <p class="upcoming-shift"><strong>Arboretum</strong></p>
+                <p class="upcoming-shift-time">October 20th<br />12:30pm-3pm</p>
+                <p class="upcoming-shift-time location">Location</p>
+            </div>
+          </div> */}
+
+
+
+
         </div>
-
-        <div className="table-group">
-
-        
-          <div class="titlesub">Upcoming Volunteer Shifts</div>
-          <div class="my-table table-responsive">
-            <table className="table table-hover text-nowrap">
-            <thead className="thead-dark" class="table-bordered table-light">
-              <tr>
-                <th className="col-2">Organization Name</th>
-                <th className="col-1">Date</th>
-                <th className="col-1">Duration</th>
-                <th className="col-1">Check In</th>
-                <th className="col-1">Check Out</th>
-                <th className="col-1">Cancel RSVP</th>
-              </tr>
-            </thead>
-            <tbody>
-                  <tr>
-                    <td>Arboretum</td>
-                    <td>10/20/23</td>
-                    <td>2.5 hours</td>
-                    <td>12:30pm</td>
-                    <td>3:00pm</td>
-                    <td className="text-center">
-                      <Button className="cancelButton" variant="contained" color="error" onClick={() => setModalOpen(true)}>Cancel</Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Knight Hacks</td>
-                    <td>10/20/23</td>
-                    <td>2.5 hours</td>
-                    <td>12:30pm</td>
-                    <td>3:00pm</td>
-                    <td className="text-center">
-                      <Button className="cancelButton" variant="contained" color="error" onClick={() => setModalOpen(true)} >Cancel</Button>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>UCF Volunteer</td>
-                    <td>10/20/23</td>
-                    <td>2.5 hours</td>
-                    <td>12:30pm</td>
-                    <td>3:00pm</td>
-                    <td>
-                      <Button className="cancelButton" variant="contained" color="error" onClick={() => setModalOpen(true)}>Cancel</Button>
-                    </td>
-                  </tr>
-            </tbody>
-          </table>
-      </div>
-      </div>
-
-        <Dialog open={open} onClose={() => setModalOpen(false)}>
-          <DialogTitle>Are you sure you want to cancel your RSVP?</DialogTitle>
-          <DialogActions>
-            <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-            <Button onClick={() => setModalOpen(false)}>Yes</Button>
-          </DialogActions>
-        </Dialog>
-
-
-      </div>
       </div>
    );
 };

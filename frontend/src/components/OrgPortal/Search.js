@@ -32,7 +32,7 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.name + " " + event.date.substring(0, event.date.indexOf("T"))), id: event.eventID});
+            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
         }
 
         setEvents(tmp);

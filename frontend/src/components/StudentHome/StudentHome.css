@@ -1,7 +1,33 @@
 .studHomePage {
   margin-left: 15%;
-  margin-top: 2%;
+  margin-top: 3%;
 }
+.first-row {
+  padding-top: 10px;
+  display: flex;
+}
+.card1-text {
+  font-size: 25px;
+}
+.card-subtitle {
+  font-size: 20px;
+}
+.next-event {
+  padding-right: 8%;
+
+}
+.second-row {
+  margin-top: 40px;
+  display: flex;
+}
+.calendar {
+  padding-right: 8%;
+}
+
+/* Style for the "Announcements" section */
+
+
+
 .StudentHomePage-center {
   text-align: left;
 }
@@ -22,13 +48,16 @@ text-align: left;
 .StudentHomePage-subtitle2 {
   padding-top: 13px;
 }
-.StudentHomePage-card {
-  width: calc(43% - 20px);
-  background: #ffffff; /* Background color of the rectangular box */
+.parent-row {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  /* justify-content: center; */
+  justify-content: flex-start;
+}
+
+.StudentHomePage-card {
+  width: calc(45% - 10px);
+  background: #ffffff; /* Background color of the rectangular box */
+
   text-align: left;
   color: black;
   border-radius: 8px;
@@ -39,6 +68,9 @@ text-align: left;
     -4px 0 4px -2px rgba(0, 0, 0, 0.1);
 
 }
+/* .StudentHomePage-card .c1 {
+  margin-right: 20px;
+} */
 .StudentHomePage-card .card1-text {
   padding-left: 25px;
   padding-top: 10px;
@@ -186,4 +218,8 @@ min-height: 100vh;
 .table-group {
   transform: translateY(0); /* Adjust the value as needed */
 }
+}
+
+.moveEverything{
+  margin-left: 100px;
 }
