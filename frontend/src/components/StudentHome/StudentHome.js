@@ -73,14 +73,14 @@ function StudentHome()
             {/* upcoming shift card */}
             <div className="next-event">
               <div className="StudentHomePage-subtitle">Next Event</div>
-              <Card variant="outlined" sx={{ minWidth: 555,  display: 'flex', marginBottom: '0', maxHeight: 200 }}>
+              <Card variant="outlined" sx={{ minWidth: 555,  display: 'flex', marginBottom: '0', maxHeight: 235 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
                   <CardMedia
                     component="img"
                     sx={{width: 155, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
                     image={require('../Login/loginPic.png')}
                   />
-                  <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left', marginBottom: '0' }}>
+                  <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left', marginTop: '20px' }}>
                     <div className="card1-text">
                       <div className="card-title"><strong>Arboretum</strong></div>
                       <div className="card-subtitle">October 20th</div>
@@ -97,7 +97,7 @@ function StudentHome()
             {/* announcements */}
             <div className="announcement">
               <div className="StudentHomePage-subtitle">Announcements</div>
-                <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
+                <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', minWidth: '600px', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
                   <List >
                     <ListItem disablePadding secondaryAction={ <IconButton edge="end" aria-label="close announcement"><CloseIcon /></IconButton>}>
                       <ListItemButton>
@@ -132,14 +132,14 @@ function StudentHome()
           <div className="second-row">
 
             <div className="calendar">
-                <Card variant="outlined" sx={{ minWidth: 840,  display: 'flex', marginBottom: '0', maxHeight: 850 }}>
+                <Card variant="outlined" sx={{ minWidth: 900,  display: 'flex', marginBottom: '0', maxHeight: 850 }}>
 
                 </Card>
             </div>
 
             <div className="stat-card">
-              <Card variant="outlined">
-                <Box sx={{ position: 'relative', display: 'inline-flex', margin: '20px 20px' }}>
+              <Card variant="outlined" sx={{minWidth: 255}} >
+                <Box sx={{ position: 'relative', display: 'inline-flex', margin: '30px 20px' }}>
                   <div className="progress-1">
                     <CircularProgress determinate value={(3/10)*100} sx={{ '--CircularProgress-size': '80px' }}>
                       3 / 10
@@ -157,7 +157,7 @@ function StudentHome()
                   </div>
                   
                 </Box>
-                <Box sx={{margin: '0px 15px 15px 15px'}}>
+                <Box sx={{margin: '0px 15px 35px 15px'}}>
                   <div className="StudentHomePage-subtitle" style={{ textAlign: 'center' }}>You've accumulated<br />124 points!</div>
                 </Box>
                 
