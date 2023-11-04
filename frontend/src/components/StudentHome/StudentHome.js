@@ -26,7 +26,7 @@ function StudentHome()
       getStudentInfo();
     }, []);
 
-    const [open, setOpen] = React.useState(true);
+    const [open, setModalOpen] = useState(false);
 
 
 
@@ -88,7 +88,7 @@ function StudentHome()
                       <div className="card-subtitle">Location</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-                        <Button className='cancel-position' size="small" variant='contained' color="error" justify="flex-end" style={{ marginRight: '15px' }}>Cancel</Button>
+                        <Button className='cancel-position' size="small" variant='contained' color="error" justify="flex-end" style={{ marginRight: '15px' }} onClick={() => setModalOpen(true)}>Cancel</Button>
                       </Grid>
                   </CardContent>
                 </Box>
@@ -132,7 +132,7 @@ function StudentHome()
           <div className="second-row">
 
             <div className="calendar">
-                <Card variant="outlined" sx={{ minWidth: 830,  display: 'flex', marginBottom: '0', maxHeight: 850 }}>
+                <Card variant="outlined" sx={{ minWidth: 840,  display: 'flex', marginBottom: '0', maxHeight: 850 }}>
 
                 </Card>
             </div>
@@ -157,7 +157,7 @@ function StudentHome()
                   </div>
                   
                 </Box>
-                <Box sx={{margin: '0px 15px 0px 15px'}}>
+                <Box sx={{margin: '0px 15px 15px 15px'}}>
                   <div className="StudentHomePage-subtitle" style={{ textAlign: 'center' }}>You've accumulated<br />124 points!</div>
                 </Box>
                 
@@ -204,6 +204,15 @@ function StudentHome()
                 <p class="upcoming-shift-time location">Location</p>
             </div>
           </div> */}
+
+
+        <Dialog open={open} onClose={() => setModalOpen(false)}>
+          <DialogTitle>Are you sure you want to cancel your RSVP?</DialogTitle>
+          <DialogActions>
+            <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+            <Button onClick={() => setModalOpen(false)}>Yes</Button>
+          </DialogActions>
+        </Dialog>
 
 
 
