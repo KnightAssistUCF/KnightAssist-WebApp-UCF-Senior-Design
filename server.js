@@ -123,6 +123,12 @@ app.use('/api/loadAllOrgAnnouncements', loadAllOrganizationAnnouncements);
 const loadAllEventsAcrossOrgs = require('./backend/routes/events/loadAllEventsAcrossOrgs');
 app.use('/api/loadAllEventsAcrossOrgs', loadAllEventsAcrossOrgs);
 
+const RSVPForEvent = require('./backend/routes/events/RSVPForEvent');
+app.use('/api/RSVPForEvent', RSVPForEvent);
+
+const cancelRSVPForEvent = require('./backend/routes/events/cancelRSVPForEvent');
+app.use('/api/cancelRSVP', cancelRSVPForEvent);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
