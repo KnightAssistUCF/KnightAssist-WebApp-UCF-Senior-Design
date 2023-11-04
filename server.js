@@ -117,6 +117,12 @@ app.use('/api/editOrgAnnouncement', editOrganizationAnnouncement);
 const createOrganizationAnnouncement = require('./backend/routes/announcements/createAnnouncement');
 app.use('/api/createOrgAnnouncement', createOrganizationAnnouncement);
 
+const loadAllOrganizationAnnouncements = require('./backend/routes/announcements/loadAllOrgAnnouncements');
+app.use('/api/loadAllOrgAnnouncements', loadAllOrganizationAnnouncements);
+
+const loadAllEventsAcrossOrgs = require('./backend/routes/events/loadAllEventsAcrossOrgs');
+app.use('/api/loadAllEventsAcrossOrgs', loadAllEventsAcrossOrgs);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
