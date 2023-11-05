@@ -129,17 +129,17 @@ app.use('/api/RSVPForEvent', RSVPForEvent);
 const cancelRSVPForEvent = require('./backend/routes/events/cancelRSVPForEvent');
 app.use('/api/cancelRSVP', cancelRSVPForEvent);
 
-const addFavoriteOrg = require('./backend/routes/volunteers/addFavoriteOrg');
-app.use('/api/addFavoriteOrg', addFavoriteOrg);
+const addFavoriteOrgForUser = require('./backend/routes/volunteers/addFavoriteOrg');
+app.use('/api/addFavoriteOrg', addFavoriteOrgForUser);
 
-const removeFavoriteOrg = require('./backend/routes/volunteers/removeFavoriteOrg');
-app.use('/api/removeFavoriteOrg', removeFavoriteOrg);
+const removeFavoriteOrgForUser = require('./backend/routes/volunteers/removeFavoriteOrg');
+app.use('/api/removeFavoriteOrg', removeFavoriteOrgForUser);
 
-const checkFavoriteOrg = require('./backend/routes/volunteers/checkFavoriteOrg');
-app.use('/api/checkFavoriteOrg', checkFavoriteOrg);
+const searchForOrgInUserFavorites = require('./backend/routes/volunteers/searchForOrgInUserFavorites');
+app.use('/api/searchForOrgInUserFavorites', searchForOrgInUserFavorites);
 
-const loadFavOrgEvents = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
-app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEvents);
+const loadFavOrgEventsForUser = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
+app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEventsForUser);
 
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
