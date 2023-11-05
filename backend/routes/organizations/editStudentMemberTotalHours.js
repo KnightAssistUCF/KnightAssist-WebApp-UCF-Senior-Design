@@ -16,7 +16,7 @@ router.post('/', authenticateToken_User, async (req, res) => {
         if (req.body.email) {
                 query.email = req.body.email;
         } else if (req.body.name) {
-                query.name = req.body.name;
+                query.userID = req.body.userID;
         } else {
                 return res.status(400).send("Search for student failed - no email or name provided");
         }
