@@ -31,9 +31,9 @@ router.get('/', async (req, res) => {
 		} else {
 			res.status(404).send("User not found");
 		}
-		}).catch((err) => {
+	}).catch((err) => {
 		res.status(503).send("Internal server error: " + err);
-		});	
+	});	
 });
 
 module.exports = router;
