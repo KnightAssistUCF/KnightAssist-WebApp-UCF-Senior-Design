@@ -157,13 +157,6 @@
     font-size: 20px;
   }
 
-
-
-
-
-  
-
-
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
     .StudentHomePage-card {
@@ -179,4 +172,8 @@
   .table-group {
     transform: translateY(0); /* Adjust the value as needed */
   }
+}
+
+.moveEverything{
+  margin-left: 100px;
 }

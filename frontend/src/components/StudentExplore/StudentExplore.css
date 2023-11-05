@@ -1,0 +1,48 @@
+.moveSearch{
+    margin-top: 10px;
+    margin-left: 25%;
+}
+
+.moveEverything{
+    margin-left: 15%;
+}
+
+.exploreSearch{
+    width: 500px !important;
+    margin-bottom: 5%;
+}
+
+.exploreTitle{
+    float: left;
+    margin-right: -30px;
+    font-size: 30px;
+    font-family: "League Spartan";
+}
+
+.tag{
+    background-color: #bc70c8 !important;
+    width: 100px;
+    height: 30px;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 20px;
+    float: left;
+    font-family: "League Spartan";
+    margin-bottom: 5px;
+}
+
+.RSVPbtn{
+    float: left;
+    margin-top: 100px;
+    width: 120px;
+    background-color: #5f5395;
+    border: none;
+}
+
+.RSVPbtn:hover{
+    background-color: #7566b4;
+}
+    
+.addEventBtn:visited{
+    background-color: #5f5395;
+}

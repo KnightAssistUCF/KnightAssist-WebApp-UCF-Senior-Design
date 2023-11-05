@@ -12,7 +12,7 @@ const userStudent = require('../../models/userStudent');
 
 
 router.post('/', async (req, res) => {
-        const { eventID, eventName, userID, userEmail } = req.body;
+        const { eventID, eventName, userID, userEmail, check } = req.body;
 
         if (!eventID || !userID || !eventName || !userEmail) {
                 return res.status(400).send("Missing credentials to RSVP for event");
@@ -39,6 +39,8 @@ router.post('/', async (req, res) => {
                 || selectedEvent.attendees.includes(userEmail)) 
                 {
                         return res.status(200).json({ status: "User already registered for event", RSVPStatus: 1 }).send();
+                }else if(check == 1){
+                        return res.status(200).json({ status: "No RSVP Yet", RSVPStatus: 2 }).send();
                 }
 
                 // check if the event is already at max length

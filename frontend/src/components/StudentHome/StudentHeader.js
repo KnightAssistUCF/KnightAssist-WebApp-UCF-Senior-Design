@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom'; 
+import Logo from '../Logo';
 
 function Header()
 {
@@ -32,42 +33,41 @@ function Header()
           fontSize: 15,
           border: '1px solid #8C8C8C',
         },
-      }));
+    }));
 
-      //customizing big log out button
-      const LogOutButton = styled(Button)(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
-        background: 'linear-gradient(45deg, #00785A 30%, #00785A 90%)',
-        '&:hover': {
-          background: 'linear-gradient(45deg, #008463 30%, #008463 80%)',
-        },
-      }));
-      //customizing small log out button
-      const SmallLogOutButton = styled(IconButton)(({ theme }) => ({
-        color: theme.palette.getContrastText(purple[500]),
-        background: 'linear-gradient(45deg, #00785A 30%, #00785A 90%)',
-        '&:hover': {
-          background: 'linear-gradient(45deg, #008463 30%, #008463 90%)',
-        },
-      }));
+    //customizing big log out button
+    const LogOutButton = styled(Button)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    background: 'linear-gradient(45deg, #00785A 30%, #00785A 90%)',
+    '&:hover': {
+        background: 'linear-gradient(45deg, #008463 30%, #008463 80%)',
+    },
+    }));
+    //customizing small log out button
+    const SmallLogOutButton = styled(IconButton)(({ theme }) => ({
+    color: theme.palette.getContrastText(purple[500]),
+    background: 'linear-gradient(45deg, #00785A 30%, #00785A 90%)',
+    '&:hover': {
+        background: 'linear-gradient(45deg, #008463 30%, #008463 90%)',
+    },
+    }));
 
-      const [isSidebarActive, setSidebarActive] = useState(false);
-      const handleToggleSidebar = () => {
-        setSidebarActive(!isSidebarActive);
-      };
-
-      
+    const [isSidebarActive, setSidebarActive] = useState(false);
+    const handleToggleSidebar = () => {
+    setSidebarActive(!isSidebarActive);
+    };
 
     return(
      <div>
-        
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
-            <div className="logo_content">
+            <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
                 <div className="logo">
                     <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
-                <BiMenu onClick={handleToggleSidebar} className='menuIcon'></BiMenu>
+                <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
+                <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
             </div>
+
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
@@ -78,10 +78,10 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                    <LightTooltip title={!isSidebarActive ? "Explore" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/explore">
                             <BiSearch className='searchIcon'></BiSearch>
-                            <span class="links_name">Events</span>
+                            <span class="links_name">Explore</span>
                         </a>
                     </LightTooltip>
                 </li>

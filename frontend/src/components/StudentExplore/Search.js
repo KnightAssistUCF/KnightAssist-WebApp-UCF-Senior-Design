@@ -2,9 +2,9 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import './OrgPortal.css';
 import { useState, useEffect } from 'react';
 import { buildPath } from '../../path';
+import './StudentExplore.css';
 
 function Search(props) {
   
@@ -14,13 +14,22 @@ function Search(props) {
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
-    function openOrgPage(email){
-        console.log(email);
+    // Gets org name from organizationID
+    async function getOrgName(id){
+      let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+
+      let response = await fetch(url, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+      });
+
+      let res = JSON.parse(await response.text());
+
+      return res.name;
     }
 
     async function getAllEvents(flag){
-        let organizationID = "12345";
-        let url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
+        let url = buildPath(`api/loadAllEventsAcrossOrgs`);
 
         let response = await fetch(url, {
           method: "GET",
@@ -32,7 +41,8 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+            if("name" in event && "date" in event)
+                tmp.push({label: ("(" + await getOrgName(event.sponsoringOrganization) + ") " + event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
         }
 
         setEvents(tmp);
@@ -67,6 +77,15 @@ function Search(props) {
         setOrgs(tmp);
     }
 
+    function handleClick(id){
+        if(props.searchType == "events"){
+            props.setEventID(id);
+            props.setOpenEvent(true);
+        }else{
+
+        }
+    }
+
     useEffect(()=>{
         console.log("called");
         getAllEvents(1);
@@ -88,16 +107,18 @@ function Search(props) {
     useEffect(()=>{
       getAllEvents(0);
       console.log(events);
-    },[props.resetEventSearch])
+    },[props.resetEventSearch]);
 
     return (
       <div>
-        <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
+        <Stack className="exploreSearch" spacing={2} sx={{ width: 300 }}>
           <Autocomplete 
             freeSolo
             disableClearable
-            onChange={(e, value) => console.log(value.id)}
+            onChange={(e, value) => {handleClick(value.id)}}
             options={options}
+            value={null}
+            clearOnBlur={true}
             renderInput={(params) => (
               <TextField
                 {...params}
