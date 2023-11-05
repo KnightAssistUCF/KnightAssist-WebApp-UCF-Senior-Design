@@ -43,7 +43,7 @@ function OrgFavoriteEvents(props)
 
         console.log(res);    
 
-	const events = [];
+	    const events = [];
 
         for(let org of res){
 		
@@ -59,10 +59,14 @@ function OrgFavoriteEvents(props)
 	    console.log(res);    
 		
 	    for(let event of res){
-		if(eventIsUpcoming(event.date))
-		    events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
-	    }   
+            if(eventIsUpcoming(event.date))
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+            }   
         }       
+
+        events.sort(function(a,b){ 
+            return a.props.date.localeCompare(b.props.date)
+        });
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);

@@ -61,6 +61,12 @@ function UpcomingEvents(props)
                 events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
         }       
 
+        events.sort(function(a,b){ 
+            return a.props.date.localeCompare(b.props.date)
+        });
+
+        console.log(events);
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
     }

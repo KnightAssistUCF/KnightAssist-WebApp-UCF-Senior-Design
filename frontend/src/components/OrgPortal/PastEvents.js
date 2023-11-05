@@ -62,7 +62,9 @@ function PastEvents(props)
             if(eventIsPast(event.date))
                 events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)   
                 
-        console.log(events);
+        events.sort(function(a,b){ 
+            return a.props.date.localeCompare(b.props.date)
+        });
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
