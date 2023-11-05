@@ -144,6 +144,9 @@ app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEventsForUser);
 const editVolunteerHourGoal = require('./backend/routes/volunteers/editUserVolunteerHourGoal');
 app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
 
+const editStudentMemberTotalHours = require('./backend/routes/organizations/editStudentMemberTotalHours');
+app.use('/api/editMemberTotalHours', editStudentMemberTotalHours);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
