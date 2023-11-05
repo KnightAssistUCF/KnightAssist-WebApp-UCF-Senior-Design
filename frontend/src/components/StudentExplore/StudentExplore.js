@@ -11,6 +11,7 @@ import SearchSwitch from './SearchSwitch';
 import Search from './Search';
 import EventModal from './EventModal';
 import OrgFavoriteEvents from './OrgFavoriteEvents';
+import RecommendedEvents from './RecommendedEvents';
 import './StudentExplore.css'
 import '../StudentHome/StudentHome.css';
 
@@ -31,6 +32,7 @@ function StudentExplore()
 	    </div>
 	    <OrgFavoriteEvents setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+	    <RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>
     );
