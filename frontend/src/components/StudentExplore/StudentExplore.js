@@ -29,7 +29,7 @@ function StudentExplore()
 	    <div className='moveSearch'>
 		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    </div>
-	    <OrgFavoriteEvents/>
+	    <OrgFavoriteEvents setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>
