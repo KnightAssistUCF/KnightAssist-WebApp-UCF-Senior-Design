@@ -138,6 +138,9 @@ app.use('/api/removeFavoriteOrg', removeFavoriteOrg);
 const checkFavoriteOrg = require('./backend/routes/volunteers/checkFavoriteOrg');
 app.use('/api/checkFavoriteOrg', checkFavoriteOrg);
 
+const loadFavOrgEvents = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
+app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEvents);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now
