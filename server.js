@@ -147,9 +147,15 @@ app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
 const editStudentMemberTotalHours = require('./backend/routes/organizations/editStudentMemberTotalHours');
 app.use('/api/editMemberTotalHours', editStudentMemberTotalHours);
 
+const loadAllEventsForOrg = require('./backend/routes/organizations/loadAllOrgEvents');
+app.use('/api/loadAllOrgEvents', loadAllEventsForOrg);
+
+const loadAllEventAttendees = require('./backend/routes/events/loadAllAttendeesOfAnEvent');
+app.use('/api/loadAllEventAttendees', loadAllEventAttendees);
+
 /*
-  @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
-          can be omitted for now
+  if we plan to have specific settings for the configuration in production, we will need to add that here.
+  can be omitted for now
 */
 if (process.env.NODE_ENV === 'production') {
     // [NOTE]: Please change this as is needed later
