@@ -7,7 +7,7 @@ router.get('/', async (req, res) => {
         const query = {
                 $or: [
                         { eventID: req.query.eventID },
-                        { eventName: req.query.eventName }
+                        { name: req.query.name }
                 ]
         };
         

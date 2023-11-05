@@ -147,9 +147,6 @@ app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
 const editStudentMemberTotalHours = require('./backend/routes/organizations/editStudentMemberTotalHours');
 app.use('/api/editMemberTotalHours', editStudentMemberTotalHours);
 
-const loadAllEventsForOrg = require('./backend/routes/organizations/loadAllOrgEvents');
-app.use('/api/loadAllOrgEvents', loadAllEventsForOrg);
-
 const loadAllEventAttendees = require('./backend/routes/events/loadAllAttendeesOfAnEvent');
 app.use('/api/loadAllEventAttendees', loadAllEventAttendees);
 
