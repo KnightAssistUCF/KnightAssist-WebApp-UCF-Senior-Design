@@ -100,7 +100,7 @@ function PastEvents(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="belowSpace eventsCard card">       
                 {eventCards}
             </div>
         )
