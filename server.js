@@ -141,6 +141,9 @@ app.use('/api/searchForOrgInUserFavorites', searchForOrgInUserFavorites);
 const loadFavOrgEventsForUser = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
 app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEventsForUser);
 
+const editVolunteerHourGoal = require('./backend/routes/volunteers/editUserVolunteerHourGoal');
+app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
+
 /*
   @yohan: if we plan to have specific settings for the configuration in production, we will need to add that here.
           can be omitted for now

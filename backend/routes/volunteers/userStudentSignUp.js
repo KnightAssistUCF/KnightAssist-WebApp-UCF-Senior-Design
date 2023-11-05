@@ -27,6 +27,7 @@ router.post('/', async (req, res) => {
                 password: hashedPassword,
                 profilePicture: req.body.profilePicture,
                 totalVolunteerHours: req.body.totalVolunteerHours,
+                semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
                 confirmToken: generateToken({ email: req.body.email }, jwtSecret),
                 valid: false,
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
