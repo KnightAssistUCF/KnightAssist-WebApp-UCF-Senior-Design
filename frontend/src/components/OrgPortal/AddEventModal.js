@@ -137,10 +137,9 @@ function AddEventModal(props)
             let res = await response.text();
             console.log(res);
 
-            if(eventIsUpcoming(date)){
+            if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
-                console.log("Its upcoming")
-            }else
+            else
                 props.setResetPast(props.resetPast * -1);
 
             props.setResetSearch(props.resetSearch * -1);
@@ -184,10 +183,10 @@ function AddEventModal(props)
             
             props.setEditMode(0);
 
-            if(eventIsUpcoming(date))
+            if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
             else
-                props.setResetPast(props.resetPast * -1);   
+                props.setResetPast(props.resetPast * -1);
             
             props.setResetSearch(props.resetSearch * -1);
             
