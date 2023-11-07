@@ -13,9 +13,13 @@
 }
 
 .cards{
-    overflow-y: scroll;
-    display: inline !important;
-    max-height: 750px;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+.pagination{
+    margin-top: 15px;
+    margin-left: 500px;
 }
 
 .cardWhite{
@@ -24,7 +28,8 @@
 }
 
 .card-body{
-    width: 100%;
+    width: 99%;
+    margin-left: 10px;
 }
 
 .upcomingEvents{
@@ -49,7 +54,6 @@
 }
 
 .eventsCard{
-    margin-right: 15%;
     width: 1200px;
 }
   

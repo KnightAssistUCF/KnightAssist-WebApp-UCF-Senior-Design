@@ -84,7 +84,7 @@ function AddEventModal(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
-        return today <= date;
+        return date.localeCompare(today) >= 0;
     }
 
     function resetValues(){
@@ -137,9 +137,10 @@ function AddEventModal(props)
             let res = await response.text();
             console.log(res);
 
-            if(eventIsUpcoming(date))
+            if(eventIsUpcoming(date)){
                 props.setReset(props.reset * -1);
-            else
+                console.log("Its upcoming")
+            }else
                 props.setResetPast(props.resetPast * -1);
 
             props.setResetSearch(props.resetSearch * -1);

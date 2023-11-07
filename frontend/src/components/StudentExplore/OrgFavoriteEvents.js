@@ -26,7 +26,7 @@ function OrgFavoriteEvents(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
-        return today <= date;
+        return date.localeCompare(today) >= 0;
     }
 
     async function getEvents(){
@@ -73,7 +73,7 @@ function OrgFavoriteEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Favortied Organization Events</h1>
+        return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
     }
 
     function Event(props) {

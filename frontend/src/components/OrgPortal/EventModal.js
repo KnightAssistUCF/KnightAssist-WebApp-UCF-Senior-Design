@@ -48,7 +48,7 @@ function EventModal(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
-        return today <= date;    
+        return date.localeCompare(today) >= 0;
     }
 
     async function setInfo(){        
