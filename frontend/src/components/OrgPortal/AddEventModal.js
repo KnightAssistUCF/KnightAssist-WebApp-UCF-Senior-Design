@@ -7,6 +7,8 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
 import Logo from '../Logo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -37,6 +39,9 @@ function AddEventModal(props)
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
+
+    // Will eventually be an API call to get the tags of an org
+    const [definedTags, setDefinedTags] = useState(["Gaming", "Sports", "Food"]);
 
     /*
     eventID: {
@@ -260,6 +265,8 @@ function AddEventModal(props)
         const taggyNames = tagNames;
         setTagNames([...taggyNames, currentTag]);
         setCurrentTag("");
+        let idx = definedTags.indexOf(currentTag);
+        setDefinedTags(definedTags.slice(0, idx).concat(definedTags.slice(idx + 1)))
     }
 
     useEffect(()=>{
@@ -340,7 +347,25 @@ function AddEventModal(props)
 
                                 <div className='addEventHeader'>Tags</div>
                                 <Grid container spacing={2} marginTop={"50px"} marginBottom={"10px"}>
-                                    {GridTextField({xm:12, sm:6, name:"Tag", label:"Tag", value:currentTag, required:false, onChange:(e) => setCurrentTag(e.target.value)})}
+                                    <Grid item xs={12} sm={6}>
+                                            <Autocomplete 
+                                                freeSolo
+                                                disableClearable
+                                                onChange={(e, value) => setCurrentTag(value)}
+                                                options={definedTags}
+                                                value={currentTag}
+                                                renderInput={(params) => (
+                                                <TextField
+                                                    {...params}
+                                                    label="Select Tags"
+                                                    InputProps={{
+                                                    ...params.InputProps,
+                                                    type: 'search',
+                                                    }}
+                                                />
+                                                )}
+                                            />
+                                    </Grid>
                                     <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
                                     {tags}
                                 </Grid>
