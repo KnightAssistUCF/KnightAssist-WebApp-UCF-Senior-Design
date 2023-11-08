@@ -31,7 +31,6 @@ function LoginComponents(){
         const url = buildPath("api/Login");
 
         try {
-           window.location.href="/#/orgportal"
 
             const response = await fetch(url, {
                 method: "POST",
@@ -44,9 +43,13 @@ function LoginComponents(){
             console.log(res);
 
             /// The credentials matched an existing account
-            if(res.includes("User logged in successfully ->")){
+            if(res.includes("Organization logged in successfully ->")) {
+                window.location.href="/#/orgportal"
                 setIsInvalid("");
-            }else{
+            }else if(res.includes("User logged in successfully ->")) {
+                window.location.href="/#/studenthomepage";
+            }
+            else {
                 setIsInvalid("is-invalid");
             }
             
