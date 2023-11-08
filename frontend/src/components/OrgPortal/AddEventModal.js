@@ -40,6 +40,8 @@ function AddEventModal(props)
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
 
+    const [redoTags, setRedoTags] = useState(1);
+
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState(["Gaming", "Sports", "Food"]);
 
@@ -253,20 +255,39 @@ function AddEventModal(props)
         return (
             <Grid item>
                 <Card className='tag'>
+                    <CloseIcon onClick={() => deleteTag(props.tag)}/>
                     {props.tag}
                 </Card>
             </Grid>
         )
     }
 
-    function createTag(){
-        const taggy = tags;
-        setTags([...taggy, <Tag tag={currentTag}/>]);
-        const taggyNames = tagNames;
-        setTagNames([...taggyNames, currentTag]);
+    function deleteTag(tag){        
+        let idx = tagNames.indexOf(tag);
+        const taggy = tags.slice(0, idx).concat(tags.slice(idx + 1));
+        setTags([...taggy]);
+        const taggyNames = tagNames.slice(0, idx).concat(tagNames.slice(idx + 1));
+        console.log(taggyNames)
+        setTagNames([...taggyNames]);
+
+        setDefinedTags(definedTags.concat(tag));
+
+        setRedoTags(redoTags * -1);
+    }   
+
+    const createTag = () => {
+
+        setTags(tags.concat(<div>
+            {Tag({"tag": currentTag})}
+        </div>));
+
+        setTagNames(tagNames.concat(currentTag));
+
         setCurrentTag("");
         let idx = definedTags.indexOf(currentTag);
-        setDefinedTags(definedTags.slice(0, idx).concat(definedTags.slice(idx + 1)))
+        setDefinedTags(definedTags.slice(0, idx).concat(definedTags.slice(idx + 1)));
+
+        setRedoTags(redoTags * -1);
     }
 
     useEffect(()=>{
@@ -311,7 +332,22 @@ function AddEventModal(props)
 
         if(props.editMode == 1)
             addFields();
-    },[props.editMode])
+    },[props.editMode]);
+
+    // This is due to a bug that occurs when
+    // deleting a tag, remakes all of the tags
+    useEffect(() => {
+        const updatedTags = [];
+        const updatedTagNames = [];
+ 
+        for(let str of tagNames){
+            updatedTags.push(Tag({"tag": str}));
+            updatedTagNames.push(str);
+        }
+
+        setTags(updatedTags);
+        setTagNames(updatedTagNames);
+    }, [redoTags])
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
