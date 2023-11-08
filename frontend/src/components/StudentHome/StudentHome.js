@@ -31,7 +31,7 @@ function StudentHome()
 
 
     async function getStudentInfo() {
-      const email = 'anisharanjan55@gmail.com';
+      const email = '';
       const url = buildPath(`api/searchUser?email=${email}`);
     
       try {
@@ -45,7 +45,7 @@ function StudentHome()
     
         
       } catch (error) {
-        console.log("An error has occurred" + error);
+        //console.log("An error has occurred" + error);
       }
     }
 
