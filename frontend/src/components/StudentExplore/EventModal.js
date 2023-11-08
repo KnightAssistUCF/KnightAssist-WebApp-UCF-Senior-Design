@@ -7,15 +7,14 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
-import './OrgPortal.css';
+import '../OrgPortal/OrgPortal.css';
 import { buildPath } from '../../path';
 import { useEffect, useState } from 'react';
 import EventIcon from '@mui/icons-material/Event';
 import PlaceIcon from '@mui/icons-material/Place';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Alert from '@mui/material/Alert';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -26,13 +25,13 @@ const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {props.setOpen(false);}
-    const handleCloseAlert = () => {setOpenAlert(false);}
+    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(""); props.setOpen(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
 
     const [name, setName] = useState("");
+    const [id, setID] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -41,15 +40,9 @@ function EventModal(props)
     const [curVolunteers, setVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
- 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;    
-    }
+    const [isRSVP, setIsRSVP] = useState(false);
+    const [showMSG, setShowMSG] = useState(false);
+    const [disabled, setDisabled] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -65,20 +58,100 @@ function EventModal(props)
 
         console.log(event);
 
-	if(event) {
-        	setName(event.name);
-        	setDescription(event.description);
-        	setDate(event.date);
-        	setLocation(event.location);
-        	setStartTime(event.startTime);
-	        setEndTime(event.endTime);
-	        setVolunteers(event.registeredVolunteers.length)
-	        setMaxVolunteers(event.maxAttendees);
-	        setTags(event.eventTags);
-	} else {
-		console.log("Event undefined or not found");
-	}
-	    
+        if(event) {
+            setName(event.name);
+            setID(event._id);
+            setDescription(event.description);
+            setDate(event.date);
+            setLocation(event.location);
+            setStartTime(event.startTime);
+            setEndTime(event.endTime);
+            setVolunteers(event.registeredVolunteers.length);
+            setMaxVolunteers(event.maxAttendees);
+            setTags(event.eventTags);
+            
+            const json = {
+                eventID: event._id,
+                eventName: event.name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+                check: 1
+            };
+
+            url = buildPath(`api/RSVPForEvent`);
+
+            response = await fetch(url, {
+                body: JSON.stringify(json),
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            res = JSON.parse(await response.text());
+
+            console.log("Result: ", res);
+
+            if(res.RSVPStatus == 1)
+                setIsRSVP(true);
+            else
+                setIsRSVP(false);
+
+            console.log(event);
+        } else {
+            console.log("Event undefined or not found");
+        }
+    }
+
+    async function doRSVP(){
+        if(isRSVP){
+            const json = {
+                eventID: id,
+                eventName: name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+            };
+
+            const url = buildPath(`api/cancelRSVP`);
+
+            const response = await fetch(url, {
+                body: JSON.stringify(json),
+                method: "DELETE",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            const res = await response.text();
+
+            console.log(res);
+        }else{
+            const json = {
+                eventID: id,
+                eventName: name,
+                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userEmail: "johndoe@example.com",
+                check: 0
+            };
+
+            const url = buildPath(`api/RSVPForEvent`);
+
+            const response = await fetch(url, {
+                body: JSON.stringify(json),
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            const res = JSON.parse(await response.text());
+
+            console.log("Result: ", res);
+        }
+
+        setIsRSVP(!isRSVP);
+        
+        setShowMSG(true);
+        setDisabled(true);
+        // Remove message after 2 seconds
+        setTimeout(() => {
+            setShowMSG(false);
+            setDisabled(false);
+        }, 3000);
     }
 
     function EventName(){
@@ -136,59 +209,36 @@ function EventModal(props)
         return (
                 <div>
                     <p>Tags:</p>
-                    <Grid marginLeft={"200px"} marginRight={"100px"}>
+                    <Grid marginLeft={"200px"} marginRight={"100px"} marginBottom={"55px"}>
                         {tags.map(t => <Tag tag={t}/>)}
                     </Grid>
                 </div>
         )
     }
 
-    function edit(){
-        handleCloseModal();
-        props.setEditMode(1);
-        props.setOpenAdd(true);
+    function RSVPMessage(){
+        
+        return (
+            <div>
+                {(showMSG) == true
+                    ?
+                        <div>
+                            {(isRSVP) ? <Alert severity="success">Event RSVP successful. Check for email confirmation.</Alert> : 
+                                        <Alert severity="info">Your RSVP has been cancelled.</Alert>}
+                        </div>
+                    :
+                        null
+                }
+            </div>
+        )
     }
 
-    async function deleteEvent(){
-        const organizationID = "12345";
-
-        const json = {
-            eventID: props.eventID,
-            organizationID: organizationID
-        };
-
-        console.log(json);
-
-        let url = buildPath(`api/deleteSingleEvent`);
-
-        let response = await fetch(url, {
-            method: "DELETE",
-            body: JSON.stringify(json),
-            headers: {"Content-Type": "application/json"},
-        });
-    
-        let res = await response.text();
-
-        console.log(res);
-
-        if(eventIsUpcoming(date))
-            props.setReset(props.reset * -1);
-        else
-            props.setResetPast(props.resetPast * -1);  
-
-        props.setResetSearch(props.resetSearch * -1);
-    
-        handleCloseAlert();
-        handleCloseModal();
+    function RSVPButton(){
+        return (
+            <button type="button" class="RSVPbtn btn btn-primary" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
+        )
     }
 
-    // For when edit finishes, so the most recently
-    // open event's changes are reflected
-    useEffect(()=>{
-        if(props.eventID != undefined)
-            setInfo();
-    }, [props.editMode])
-    
     useEffect(()=>{
         console.log("event id called here")
         setInfo();
@@ -226,37 +276,14 @@ function EventModal(props)
                                 </Grid>
 
                                 <Volunteers/>
-
+                                
                                 <Tags/>
-      
-                                <Grid container marginLeft={"30%"} marginTop={"150px"}>
-                                    <Grid item xs={3}>
-                                        Edit: <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
-                                    </Grid>
-                                    <Grid item xs={0}>
-                                        Delete: <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
-                                    </Grid>
-                                </Grid>   
 
-                                        <Dialog
-                                            open={openAlert}
-                                            onClose={handleCloseAlert}
-                                            aria-labelledby="alert-dialog-title"
-                                            aria-describedby="alert-dialog-description"
-                                            >
-                                                <DialogTitle id="alert-dialog-title">
-                                                {"Delete Event?"}
-                                                </DialogTitle>
-                                                <DialogContent>
-                                                <DialogContentText id="alert-dialog-description">
-                                                Doing so will remove this event from all volunteer's past and future history. 
-                                                </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                <Button onClick={handleCloseAlert}>Undo</Button>
-                                                <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
-                                                </DialogActions>
-                                        </Dialog> 
+                                <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
+                                    <RSVPButton/>
+                                </Grid>  
+
+                                <RSVPMessage/>
                             </Box>
                         </Container>
                     </CardContent>   

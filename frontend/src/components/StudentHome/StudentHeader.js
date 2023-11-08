@@ -78,10 +78,10 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                    <LightTooltip title={!isSidebarActive ? "Explore" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/explore">
                             <BiSearch className='searchIcon'></BiSearch>
-                            <span class="links_name">Events</span>
+                            <span class="links_name">Explore</span>
                         </a>
                     </LightTooltip>
                 </li>

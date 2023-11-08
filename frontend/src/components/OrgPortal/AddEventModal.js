@@ -79,7 +79,12 @@ function AddEventModal(props)
     */
 
     function eventIsUpcoming(date){
-        return new Date().toISOString() < new Date(date).toISOString();
+        date = String(date);
+        date = date.substring(0, date.indexOf("T"));
+        let today = new Date().toISOString();
+        today = today.substring(0, today.indexOf("T"));
+        console.log(date, today)
+        return today <= date;
     }
 
     function resetValues(){
@@ -140,8 +145,8 @@ function AddEventModal(props)
             props.setResetSearch(props.resetSearch * -1);
 
             handleClose();
-        }catch{
-            console.log("An error has occurred");
+        }catch(err){
+            console.log("An error has occurred: ", err);
         }
     }
 

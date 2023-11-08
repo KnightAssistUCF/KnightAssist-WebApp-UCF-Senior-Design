@@ -5,12 +5,12 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import './OrgPortal.css';
+import '../OrgPortal/OrgPortal.css';
 
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents(props)
+function OrgFavoriteEvents(props)
 {
 
     const [eventCards, setEventCards] = useState();
@@ -29,36 +29,39 @@ function UpcomingEvents(props)
         return today <= date;
     }
 
-    async function getUpcomingEvents(){
-        const organizationID = "12345";
-        
-        let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
+    async function getEvents(){
+        const userID = "6519e4fd7a6fa91cd257bfda";
+
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
 
         let response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         });
-    
+
         let res = JSON.parse(await response.text());
-
-        console.log(res);
-
-        url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
-
-        response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-
-        res = JSON.parse(await response.text());
 
         console.log(res);    
 
-        const events = [];
+	const events = [];
 
-        for(let event of res){
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+        for(let org of res){
+		
+	    url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
+
+	    response = await fetch(url, {
+		method: "GET",
+		headers: {"Content-Type": "application/json"},
+	    });
+	
+	    res = JSON.parse(await response.text());
+	
+	    console.log(res);    
+		
+	    for(let event of res){
+		if(eventIsUpcoming(event.date))
+		    events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+	    }   
         }       
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
@@ -66,7 +69,7 @@ function UpcomingEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
+        return <h1 className='upcomingEvents spartan'>Favortied Organization Events</h1>
     }
 
     function Event(props) {
@@ -104,12 +107,12 @@ function UpcomingEvents(props)
     }
 
     useEffect(()=>{
-        getUpcomingEvents();
+        getEvents();
     },[])
 
     useEffect(()=>{
         console.log("its working!")
-        getUpcomingEvents();
+        getEvents();
     },[props.reset])
 
     return(
@@ -122,4 +125,4 @@ function UpcomingEvents(props)
     );
 };
 
-export default UpcomingEvents;
+export default OrgFavoriteEvents;

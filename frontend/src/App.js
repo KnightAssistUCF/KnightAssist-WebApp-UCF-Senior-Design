@@ -10,6 +10,7 @@ import {
 import LoginPage from './pages/LoginPage';
 import OrgPortalPage from './pages/OrgPortalPage';
 import StudentHomePage from './pages/StudentHomePage';
+import StudentExplorePage from './pages/StudentExplorePage';
 
 function App() 
 {
@@ -25,6 +26,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/explore" element={<StudentExplorePage/>}></Route>
           </Routes>
        </Router>
       </header>
