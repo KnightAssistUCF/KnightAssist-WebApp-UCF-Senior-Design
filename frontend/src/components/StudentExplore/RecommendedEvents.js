@@ -27,7 +27,7 @@ function RecommendedEvents(props)
 
     function openEventModal(id){
         props.setEventID(id);
-        props.setOpenEvent(true);
+        props.setOpen(true);
     }
 
     function eventIsUpcoming(date){

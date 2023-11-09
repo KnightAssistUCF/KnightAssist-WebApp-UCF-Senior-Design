@@ -7,6 +7,10 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
 import Logo from '../Logo';
@@ -109,6 +113,8 @@ function AddEventModal(props)
         setCurrentTag("");
         setTags([]);
         setTagNames([]);
+
+        setDefinedTags(["Gaming", "Sports", "Food"])
     }
     
     async function submitEvent(){
@@ -263,6 +269,7 @@ function AddEventModal(props)
     }
 
     function deleteTag(tag){        
+        console.log(tagNames);
         let idx = tagNames.indexOf(tag);
         const taggy = tags.slice(0, idx).concat(tags.slice(idx + 1));
         setTags([...taggy]);
@@ -321,13 +328,23 @@ function AddEventModal(props)
             const taggy = [];
             const taggyNames = [];
 
+            const unusedTags = definedTags;
+
             for(let tagName of event.eventTags){
-                taggy.push(<Tag tag={tagName}/>)
+                taggy.push(Tag({"tag": tagName}));
                 taggyNames.push(tagName);
+
+                // Make sure the available options are of tags not selected
+                // for the event already
+                unusedTags.splice(unusedTags.indexOf(tagName), 1);
             }
             
             setTags(taggy);
             setTagNames(taggyNames);
+
+            //setDefinedTags(unusedTags);
+
+            setRedoTags(redoTags * -1);
         }
 
         if(props.editMode == 1)
@@ -382,25 +399,28 @@ function AddEventModal(props)
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>
-                                <Grid container spacing={2} marginTop={"50px"} marginBottom={"10px"}>
+                                <Grid container spacing={2} marginTop={"65px"} marginBottom={"10px"}>
                                     <Grid item xs={12} sm={6}>
-                                            <Autocomplete 
-                                                freeSolo
-                                                disableClearable
-                                                onChange={(e, value) => setCurrentTag(value)}
-                                                options={definedTags}
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-select-small-label">Select Tag</InputLabel>
+                                            <Select
                                                 value={currentTag}
-                                                renderInput={(params) => (
-                                                <TextField
-                                                    {...params}
-                                                    label="Select Tags"
-                                                    InputProps={{
-                                                    ...params.InputProps,
-                                                    type: 'search',
-                                                    }}
-                                                />
-                                                )}
-                                            />
+                                                label="Select Tag"
+                                                onChange={(e) => {console.log(e); setCurrentTag(e.target.value)}}
+                                                sx={{fontSize:'large'}}
+
+                                            >
+                                                {definedTags.map((tag) => (
+                                                    <MenuItem
+                                                        key={tag}
+                                                        value={tag}
+                                                        size
+                                                    >
+                                                    {tag}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
                                     </Grid>
                                     <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
                                     {tags}
