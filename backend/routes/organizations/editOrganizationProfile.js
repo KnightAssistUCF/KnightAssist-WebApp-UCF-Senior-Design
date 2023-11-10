@@ -20,7 +20,6 @@ router.post('/', authenticateToken_Organization, async (req, res) => {
             user.password = newHashedPassword;
             user.description = req.body.description;
             user.logoUrl = req.body.logoUrl;
-            user.category = req.body.category;
             user.followers = req.body.followers; // I doubt these work as of yet
             user.favorites = req.body.favorites; // I doubt these work as of yet
             user.updates = req.body.updates;
@@ -31,6 +30,7 @@ router.post('/', authenticateToken_Organization, async (req, res) => {
             user.backgroundURL = req.body.backgroundURL;
             user.eventsArray = req.body.eventsArray;
             user.location = req.body.location;
+            user.categoryTags = req.body.categoryTags;
             /* we will add more here as is needed later once we determine what actually can 
             be editatble */
             user.save();
