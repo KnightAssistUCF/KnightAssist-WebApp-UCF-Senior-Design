@@ -1,0 +1,40 @@
+#emailVerified {
+        font-size: 30px;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      .emailTitle {
+        color: black;
+      }
+      
+      .verifyIcon {
+        margin: 30px;
+        color: #00664D;
+        font-size: 150px;
+      }
+      
+      .countdown {
+        color: black;
+      }
+      
+      .logoIcon {
+        font-size: 50px;
+      }
+      
+      .CardContainer {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -60%);
+      }
+      
+      .Card {
+        max-width: 600px;
+        min-height: 400px;
+        width: 100%;
+        text-align: center;
+      }
+      
