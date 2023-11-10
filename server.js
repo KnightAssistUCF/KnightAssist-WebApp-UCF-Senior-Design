@@ -150,6 +150,11 @@ app.use('/api/editMemberTotalHours', editStudentMemberTotalHours);
 const loadAllEventAttendees = require('./backend/routes/events/loadAllAttendeesOfAnEvent');
 app.use('/api/loadAllEventAttendees', loadAllEventAttendees);
 
+// call this api to return all the interest/categorization tags
+const getAllAvailableTags = require('./backend/routes/tags_&_recommendations/getAllAvailableTags');
+app.use('/api/getAllAvailableTags', getAllAvailableTags);
+
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
