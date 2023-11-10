@@ -62,6 +62,7 @@ const userStudentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'studentSemester',
     }],
+    categoryTags: [String], // stores interest tags
     recoveryToken: {
         type: String,
         default: null

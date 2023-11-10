@@ -30,7 +30,7 @@ const organizationSchema = new Schema({
         required: true
     },
     logoUrl: String,
-    category: [String], // what type of organization is this? (e.g. academic, social, etc.)
+    categoryTags: [String], // store tags for org
     followers: [{
         type: Schema.Types.ObjectId, // people that follow this organization
         ref: 'userStudent',
