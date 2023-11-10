@@ -154,6 +154,9 @@ app.use('/api/loadAllEventAttendees', loadAllEventAttendees);
 const getAllAvailableTags = require('./backend/routes/tags_&_recommendations/getAllAvailableTags');
 app.use('/api/getAllAvailableTags', getAllAvailableTags);
 
+const returnSingleOrgTags = require('./backend/routes/tags_&_recommendations/returnAnOrgTags');
+app.use('/api/returnSingleOrgTags', returnSingleOrgTags);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
