@@ -47,7 +47,7 @@ function RecommendedOrganizations(props)
 	    const orgs = [];
 
         for(let org of res)
-            orgs.push(<Org name={org.name} id={org.organizationID}/>)  
+            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
@@ -81,6 +81,9 @@ function RecommendedOrganizations(props)
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {props.name}
+                            </Typography>
+                            <Typography>
+                                {(props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description}
                             </Typography>
                         </CardContent>
                     </Card>
