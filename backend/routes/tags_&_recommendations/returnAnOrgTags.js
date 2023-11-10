@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
                         return res.status(404).send('Organization not found in the database');
                 }
 
-                return res.json(organization.categoryTags).status(200).send('Organization tags returned successfully');
+                return res.json(organization.categoryTags);
         } catch (err) {
                 return res.status(500).send('Internal server error: ' + err);
         }

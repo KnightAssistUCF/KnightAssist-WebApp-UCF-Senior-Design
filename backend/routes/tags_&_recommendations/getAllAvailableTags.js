@@ -19,7 +19,7 @@ const tags = [
 ];
 
 router.get('/', async (req, res) => {
-        res.json(tags).status(200).send("List of tags for categorization and interests was sent successfully");
+        res.json(tags);
 });
 
 module.exports = router;
