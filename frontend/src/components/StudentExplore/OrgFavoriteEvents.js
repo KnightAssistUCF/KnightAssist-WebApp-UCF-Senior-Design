@@ -56,22 +56,20 @@ function OrgFavoriteEvents(props)
 	    const events = [];
 
         for(let org of res){
-		
             url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
 
             response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-	    });
-	
-	    res = JSON.parse(await response.text());
-	
-	    console.log(res);    
-		
-	    for(let event of res){
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
-            }   
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            res = JSON.parse(await response.text());
+        
+            console.log(res);    
+            
+            for(let event of res)
+                if(eventIsUpcoming(event.date))
+                    events.push(<Event eventName={event.name} orgName={org.name} date={event.date} id={event.eventID}/>)
         }       
 
         events.sort(function(a,b){ 
@@ -113,10 +111,10 @@ function OrgFavoriteEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
+                                {props.eventName}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
+                                {props.orgName} - {new Date(props.date).toISOString().split("T")[0]}
                             </Typography>
                         </CardContent>
                     </Card>

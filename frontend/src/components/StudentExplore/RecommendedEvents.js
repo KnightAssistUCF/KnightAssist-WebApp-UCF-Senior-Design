@@ -39,6 +39,19 @@ function RecommendedEvents(props)
         return today <= date;
     }
 
+    async function getOrgName(id){
+        let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        return res.name;
+    }
+
     async function getEvents(){
         const userID = "123456789";
 
@@ -55,9 +68,12 @@ function RecommendedEvents(props)
 
 	    const events = [];
 
-        for(let event of res)
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)  
+        for(let event of res){
+            if(eventIsUpcoming(event.date)){
+                const orgName = await getOrgName(event.sponsoringOrganization);
+                events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
+            }
+        }
 
         events.sort(function(a,b){ 
             return a.props.date.localeCompare(b.props.date)
@@ -96,10 +112,10 @@ function RecommendedEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
+                                {props.eventName}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
+                                {props.orgName} - {new Date(props.date).toISOString().split("T")[0]}
                             </Typography>
                         </CardContent>
                     </Card>
