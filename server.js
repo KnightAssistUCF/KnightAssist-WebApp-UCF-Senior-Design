@@ -157,6 +157,9 @@ app.use('/api/getAllAvailableTags', getAllAvailableTags);
 const returnSingleOrgTags = require('./backend/routes/tags_&_recommendations/returnAnOrgTags');
 app.use('/api/returnSingleOrgTags', returnSingleOrgTags);
 
+const getSingleUserInterestTags = require('./backend/routes/tags_&_recommendations/getSingleUserInterestTags');
+app.use('/api/getSingleUserInterestTags', getSingleUserInterestTags);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
