@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const UserVolunteer = require('../../models/userStudent'); 
 
-
+/* locates a user within the database and then return their interest tags */
 router.get('/', async (req, res) => {
         try {
                 const userID = req.query.userID;
@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
                 }
 
                 
-                return res.json(user.categoryTags).status(200).send('Located single user tags and returned them successfully');
+                return res.json(user.categoryTags);
         } catch (error) {
                 return res.status(500).send('Internal server error: ' + error);
         }
