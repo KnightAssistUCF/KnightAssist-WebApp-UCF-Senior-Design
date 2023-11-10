@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userStudent = require('../../models/userStudent');
 const eventModel = require('../../models/events');
+const organizationModel = require('../../models/organization');
 
 router.get('/', async (req, res) => {
         try {
@@ -15,10 +16,10 @@ router.get('/', async (req, res) => {
                 // get the interest tags of the user
                 const userTags = user.categoryTags;
 
-                // locate events that match the user interest tags
-                const suggestedEvents = await eventModel.find({ eventTags: { $in: userTags } });
+                // locate organizations that have within their tags the user's interest tags
+                const suggestedOrganizations = await organizationModel.find({ categoryTags: { $in: userTags } });
 
-                return res.json(suggestedEvents);
+                return res.json(suggestedOrganizations);
         } catch (error) {
                 res.status(500).send(error);
         }

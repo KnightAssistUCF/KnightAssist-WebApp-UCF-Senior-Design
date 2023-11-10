@@ -160,6 +160,12 @@ app.use('/api/returnSingleOrgTags', returnSingleOrgTags);
 const getSingleUserInterestTags = require('./backend/routes/tags_&_recommendations/getSingleUserInterestTags');
 app.use('/api/getSingleUserInterestTags', getSingleUserInterestTags);
 
+const getSuggestedEvents = require('./backend/routes/tags_&_recommendations/getSuggestedEvents');
+app.use('/api/getSuggestedEvents_ForUser', getSuggestedEvents);
+
+const getSuggestedOrganizations = require('./backend/routes/tags_&_recommendations/getSuggestedOrganizations');
+app.use('/api/getSuggestedOrganizations_ForUser', getSuggestedOrganizations);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
