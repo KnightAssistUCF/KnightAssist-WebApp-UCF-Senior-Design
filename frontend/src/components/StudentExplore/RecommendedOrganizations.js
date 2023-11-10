@@ -11,38 +11,29 @@ import '../OrgPortal/OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function RecommendedEvents(props)
+function RecommendedOrganizations(props)
 {
 
-    const [events, setEvents] = useState([]);
-    const [eventCards, setEventCards] = useState();
+    const [orgs, setOrgs] = useState([]);
+    const [orgCards, setOrgCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
 
     function changePage(e, value){
         setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setEventCards(content);
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
+        setOrgCards(content);
     }
 
-    function openEventModal(id){
-        props.setEventID(id);
-        props.setOpen(true);
+    // Will open the organization's page
+    function openOrgPage(id){
+        
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;
-    }
-
-    async function getEvents(){
+    async function getOrgs(){
         const userID = "123456789";
 
-        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${userID}`);
+        let url = buildPath(`api/getSuggestedOrganizations_ForUser?userID=${userID}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -53,42 +44,35 @@ function RecommendedEvents(props)
 
         console.log(res);    
 
-	    const events = [];
+	    const orgs = [];
 
-        for(let event of res)
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)  
+        for(let org of res)
+            orgs.push(<Org name={org.name} id={org.organizationID}/>)  
 
-        events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
-        });
-
-        setNumPages(Math.ceil(events.length / 4))
-        setEvents(events);
+        setNumPages(Math.ceil(orgs.length / 4))
+        setOrgs(orgs);
 
         let extraBack = 0;
         
         // Need to go a page back due to deletion
-        if(((page - 1) * 4) >= events.length){
+        if(((page - 1) * 4) >= orgs.length){
             setPage(page - 1);
             extraBack = 1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
-        setEventCards(content);
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
+        setOrgCards(content);
     }
 
-    function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
+    function OrgHeader(){
+        return <h1 className='upcomingEvents spartan'>Recommended Organizations</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Org(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
+                    <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
@@ -98,9 +82,6 @@ function RecommendedEvents(props)
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {props.name}
                             </Typography>
-                            <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
-                            </Typography>
                         </CardContent>
                     </Card>
                 </CardActionArea>
@@ -108,32 +89,32 @@ function RecommendedEvents(props)
         )
     }
 
-    function Events(){
+    function Orgs(){
         return (
             <div className="eventsCard card">       
-                {eventCards}
+                {orgCards}
             </div>
         )
     }
 
     useEffect(()=>{
-        getEvents();
+        getOrgs();
     },[])
 
     useEffect(()=>{
         console.log("its working!")
-        getEvents();
+        getOrgs();
     },[props.reset])
 
     return(
      <div className='upcomingEventsSpace'>
-        <EventHeader/>
+        <OrgHeader/>
         <div>
-            <Events/>            
+            <Orgs/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
         </div>
      </div>
     );
 };
 
-export default RecommendedEvents;
+export default RecommendedOrganizations;

@@ -139,7 +139,8 @@
 
 .tag{
     background-color: #bc70c8 !important;
-    width: 100px;
+    min-width: 100px;
+    width: auto !important;
     height: 30px;
     margin-top: 0px;
     margin-right: 10px;

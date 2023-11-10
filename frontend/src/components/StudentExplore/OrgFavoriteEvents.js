@@ -57,11 +57,11 @@ function OrgFavoriteEvents(props)
 
         for(let org of res){
 		
-	    url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
+            url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
 
-	    response = await fetch(url, {
-		method: "GET",
-		headers: {"Content-Type": "application/json"},
+            response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
 	    });
 	
 	    res = JSON.parse(await response.text());

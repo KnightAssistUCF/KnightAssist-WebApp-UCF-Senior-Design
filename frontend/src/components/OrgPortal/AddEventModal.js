@@ -47,7 +47,7 @@ function AddEventModal(props)
     const [redoTags, setRedoTags] = useState(1);
 
     // Will eventually be an API call to get the tags of an org
-    const [definedTags, setDefinedTags] = useState(["Gaming", "Sports", "Food"]);
+    const [definedTags, setDefinedTags] = useState([]);
 
     /*
     eventID: {
@@ -98,7 +98,7 @@ function AddEventModal(props)
         return date.localeCompare(today) >= 0;
     }
 
-    function resetValues(){
+    async function resetValues(){
         setModalType("Add");
         setButtonText("Add");
 
@@ -114,7 +114,7 @@ function AddEventModal(props)
         setTags([]);
         setTagNames([]);
 
-        setDefinedTags(["Gaming", "Sports", "Food"])
+        setDefinedTags(await getOrgTags());
     }
     
     async function submitEvent(){
@@ -296,6 +296,30 @@ function AddEventModal(props)
 
         setRedoTags(redoTags * -1);
     }
+
+    const getOrgTags = async () => {
+        const organizationID = "12345";
+        const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = JSON.parse(await response.text());
+            console.log(res);
+
+            return res;
+            
+        }catch (err){
+            console.log("An error has occurred: ", err);
+        }
+    }
+
+    useEffect(async ()=>{
+        setDefinedTags(await getOrgTags());
+    }, [])
 
     useEffect(()=>{
         const addFields = async () => {
