@@ -2,6 +2,15 @@ const express = require('express');
 const router = express.Router();
 const userStudent = require('../../models/userStudent');
 const eventModel = require('../../models/events');
+const organizationModel = require('../../models/organization');
+
+function shuffleThis(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+}
 
 router.get('/', async (req, res) => {
         try {
@@ -43,6 +52,10 @@ router.get('/', async (req, res) => {
 
                 let finalSuggestedListOfEvents = [].concat(...Object.values(eventsPerOrganization));
                 console.log("Length of the final suggested events -> " + finalSuggestedListOfEvents.length);
+                
+                // shuffle the events just for randomization at each call of the endpoint
+                finalSuggestedListOfEvents = shuffleThis(finalSuggestedListOfEvents);
+                console.log("printing the shuffled list of events");
                 console.log(finalSuggestedListOfEvents);
                 return res.json(finalSuggestedListOfEvents);
         } catch (error) {
