@@ -19,8 +19,8 @@ router.get('/', async (req, res) => {
                 let suggestedOrganizations = await organizationModel.find({ categoryTags: { $in: userTags } });
 
                 // remove organiaztions that the user already favorited
-                const favoritedOrganizationIds = user.favoritedOrganizations.map(org => org._id.toString());
-                suggestedOrganizations = suggestedOrganizations.filter(org => !favoritedOrganizationIds.includes(org._id.toString()));
+                const favoritedORGS = user.favoritedOrganizations.map(org => org._id.toString());
+                suggestedOrganizations = suggestedOrganizations.filter(org => !favoritedORGs.includes(org._id.toString()));
 
                 return res.json(suggestedOrganizations);
         } catch (error) {
