@@ -24,6 +24,7 @@ router.post('/', authenticateToken_User, async (req, res) => {
             user.totalVolunteerHours = req.body.totalVolunteerHours;
             user.confirmToken = req.body.confirmToken;
             user.semesterVolunteerHourGoal = req.body.semesterVolunteerHourGoal;
+            user.categoryTags = req.body.categoryTags; // stores tags marking their interests
             /* For now this is based on what the schema has */
             user.save();
             res.status(200).send("User updated successfully");

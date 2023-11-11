@@ -28,6 +28,7 @@ router.post('/', async (req, res) => {
                 profilePicture: req.body.profilePicture,
                 totalVolunteerHours: req.body.totalVolunteerHours,
                 semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
+                categoryTags: req.body.categoryTags, // stores tags marking their interests
                 confirmToken: generateToken({ email: req.body.email }, jwtSecret),
                 valid: false,
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
