@@ -50,6 +50,7 @@ function PreLoginNavBar() {
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
+              ":hover": {color: '#F5D6BA'}
             }} >
             KnightAssist
           </Typography>
@@ -81,11 +82,11 @@ function PreLoginNavBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none' },
+                display: { xs: 'block', md: 'none'},
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{":hover": { color: '#5B4E77'}}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -116,6 +117,7 @@ function PreLoginNavBar() {
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
+              ":hover": {color: '#F5D6BA'}
             }}
           >
             KnightAssist
@@ -127,7 +129,7 @@ function PreLoginNavBar() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'white', display: 'block', ":hover": { color: '#F5D6BA', bgcolor: '#003D2E'}}}
               >
                 {page}
               </Button>
@@ -135,7 +137,7 @@ function PreLoginNavBar() {
           </Box>
 
           {/* login button*/}
-          <Button variant="contained" sx={{ bgcolor: '#593959' }}>Login</Button>
+          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}}>Login</Button>
         </Toolbar>
       </Container>
     </AppBar>
