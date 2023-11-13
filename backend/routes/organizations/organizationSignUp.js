@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
                 email: req.body.email,
                 description: req.body.description,
                 logoUrl: req.body.logoUrl,
-                category: req.body.category,
+                categoryTags: req.body.categoryTags,
                 events: req.body.events,
                 followers: req.body.followers,
                 favorites: req.body.favorites,

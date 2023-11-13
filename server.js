@@ -150,6 +150,23 @@ app.use('/api/editMemberTotalHours', editStudentMemberTotalHours);
 const loadAllEventAttendees = require('./backend/routes/events/loadAllAttendeesOfAnEvent');
 app.use('/api/loadAllEventAttendees', loadAllEventAttendees);
 
+// call this api to return all the interest/categorization tags
+const getAllAvailableTags = require('./backend/routes/tags_&_recommendations/getAllAvailableTags');
+app.use('/api/getAllAvailableTags', getAllAvailableTags);
+
+const returnSingleOrgTags = require('./backend/routes/tags_&_recommendations/returnAnOrgTags');
+app.use('/api/returnSingleOrgTags', returnSingleOrgTags);
+
+const getSingleUserInterestTags = require('./backend/routes/tags_&_recommendations/getSingleUserInterestTags');
+app.use('/api/getSingleUserInterestTags', getSingleUserInterestTags);
+
+const getSuggestedEvents = require('./backend/routes/tags_&_recommendations/getSuggestedEvents');
+app.use('/api/getSuggestedEvents_ForUser', getSuggestedEvents);
+
+const getSuggestedOrganizations = require('./backend/routes/tags_&_recommendations/getSuggestedOrganizations');
+app.use('/api/getSuggestedOrganizations_ForUser', getSuggestedOrganizations);
+
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
