@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
+import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom'; 
 import Logo from '../Logo';
 
@@ -72,8 +73,8 @@ function Header()
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
                         <a href="#">
-                            <BiHome className='homeIcon'></BiHome>
-                            <span class="links_name">Home</span>
+                            <CgProfile className='homeIcon'/>
+                            <span class="links_name">Profile</span>
                         </a>
                     </LightTooltip>
                 </li>
