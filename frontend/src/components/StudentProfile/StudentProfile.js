@@ -15,6 +15,7 @@ import CircularProgress from '@mui/joy/CircularProgress';
 import { createTheme } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import { MdOutlineMail } from "react-icons/md";
+import FavoriteOrganizations from './FavoriteOrganizations';
 import './StudentProfile.css'
 
 function StudentProfile()
@@ -109,6 +110,7 @@ function StudentProfile()
             <div className='interests'>
                <Interests/>
             </div>
+            <FavoriteOrganizations/>
 	      </div>
       </div>
    );
