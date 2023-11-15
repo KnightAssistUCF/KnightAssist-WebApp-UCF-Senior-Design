@@ -16,6 +16,8 @@ router.get('/', async (req, res) => {
                         return res.status(404).send('user not found in the database');
                 }
 
+                console.log(user);
+
                 // look up all events the user has RSVPed for and return their full objects
                 const eventsRSVPed = await Event.find({
                         '_id': { $in: user.eventsRSVP }

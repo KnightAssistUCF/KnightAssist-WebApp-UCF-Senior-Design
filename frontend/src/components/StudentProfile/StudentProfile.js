@@ -16,6 +16,7 @@ import { createTheme } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
 import { MdOutlineMail } from "react-icons/md";
 import FavoriteOrganizations from './FavoriteOrganizations';
+import RecentEvents from './RecentEvents';
 import './StudentProfile.css'
 
 function StudentProfile()
@@ -111,6 +112,7 @@ function StudentProfile()
                <Interests/>
             </div>
             <FavoriteOrganizations/>
+            <RecentEvents/>
 	      </div>
       </div>
    );
