@@ -72,7 +72,7 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studentprofile">
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
                         </a>

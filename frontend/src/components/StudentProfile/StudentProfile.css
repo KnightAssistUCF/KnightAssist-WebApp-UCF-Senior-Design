@@ -1,0 +1,58 @@
+.moveEverything{
+    margin-left: 15%;
+    margin-top: 2%;
+}
+
+.profilePic{
+    width: 200px;
+    height: 200px;
+    margin-right: -200px;
+    float: left;
+}
+
+.name{
+    font-size: 40px;
+    font-family: "League Spartan";
+    color: black;
+}
+
+.topInfo{
+    margin-left: 10%;
+}
+
+.volunteerSince{
+    font-size: 20px;
+    color: black;
+    font-family: "League Spartan";
+}
+
+.volunteerHours{
+    font-size: 25px;
+    color: black;
+    font-family: "League Spartan";	
+    text-decoration-line: underline;
+}
+
+.email{
+    font-size: 25px;
+    color: black;
+    font-family: "League Spartan";
+    word-wrap: break-word;
+}
+
+.mailIcon{
+    font-size: 40px;
+    margin-right: 20px;
+}
+
+.interestsTitle{
+    font-size: 25px;
+    color: black;
+    font-family: "League Spartan";
+    word-wrap: break-word;
+}
+
+.interests{
+    margin-top: 125px;
+    margin-left: -25px;
+}
