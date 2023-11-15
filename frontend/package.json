@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "@autocomplete/material-ui": "^0.0.17",
-    "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/league-spartan": "^5.0.15",
