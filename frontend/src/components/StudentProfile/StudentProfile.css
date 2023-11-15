@@ -50,9 +50,27 @@
     color: black;
     font-family: "League Spartan";
     word-wrap: break-word;
+    margin-left: -15%;
+}
+
+.interestsBorder{
+    border: 2px solid black;
+    border-radius: 12px;
+    float: left;
 }
 
 .interests{
     margin-top: 125px;
-    margin-left: -25px;
+    margin-left: 25%;
+}
+
+.tagBox{
+    margin-left: 3%;
+    min-width: 500px !important;
+
+}
+
+.tag{
+    margin-right: 20px;
+    margin-bottom: 10px;
 }

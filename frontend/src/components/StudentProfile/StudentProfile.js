@@ -17,11 +17,10 @@ import ListItem from '@mui/material/ListItem';
 import { MdOutlineMail } from "react-icons/md";
 import './StudentProfile.css'
 
-
-
 function StudentProfile()
 {
-    
+   const [tags, setTags] = useState(["Stuff", "Environffffffffffffffffffffment","Stuff", "Environment","Stuff", "Environment","Stuff", "Environment"]);
+
    function Name(){
       return (
          <div className='name'>FirstName LastName</div>
@@ -49,11 +48,20 @@ function StudentProfile()
       )
    }
 
+   function Tag(props){
+      return (
+          <Grid item>
+              <Card className='tag'>
+                  {props.tag}
+              </Card>
+          </Grid>
+      )
+  }
+
    function Tags(){
       return (
               <div>
-                  <p>Tags:</p>
-                  <Grid marginLeft={"200px"} marginRight={"100px"}>
+                  <Grid>
                       {tags.map(t => <Tag tag={t}/>)}
                   </Grid>
               </div>
@@ -62,8 +70,13 @@ function StudentProfile()
 
    function Interests(){
       return (
-         <div className='interestsTitle'>
-            Interests
+         <div className='interestsBorder'>
+            <div className='interestsTitle'>
+               Interests
+            </div>
+            <Box className="tagBox">
+               <Tags/>
+            </Box>
          </div>
       )
    }
