@@ -14,108 +14,164 @@ import { buildPath } from '../../path';
 import CircularProgress from '@mui/joy/CircularProgress';
 import { createTheme } from '@mui/material/styles';
 import ListItem from '@mui/material/ListItem';
-import { MdOutlineMail } from "react-icons/md";
+import { MdOutlineMail, MdPictureInPictureAlt } from "react-icons/md";
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
+import Avatar from '@mui/material/Avatar';
 import './StudentProfile.css'
+const pic = require("./DefaultPic.png");
 
-function StudentProfile()
+
+function StudentProfile(props)
 {
-   const [tags, setTags] = useState(["Stuff", "Environffffffffffffffffffffment","Stuff", "Environment","Stuff", "Environment","Stuff", "Environment"]);
+      const [firstName, setFirstName] = useState("");
+      const [lastName, setLastName] = useState("");
+      const [joinDate, setJoinDate] = useState("");
+      const [currentHours, setCurrentHours] = useState(0);
+      const [hourGoal, setHourGoal] = useState(0);
+      const [email, setEmail] = useState("");
+      const [tags, setTags] = useState([]);
 
-   function Name(){
-      return (
-         <div className='name'>FirstName LastName</div>
-      )
-   }
+      async function getFields(){
+         const email = "johndoe@example.com";
 
-   function DateJoined(){
-      return (
-         <div className='volunteerSince'>Volunteer Since: 2023-10-15</div>
-      )
-   }
+         let url = buildPath(`api/userSearch?email=${email}`);
 
-   function VolunteerHours(){
-      return (
-         <div className='volunteerHours'>Volunteer Hours: 10/50</div>
-      )
-   }
+         let response = await fetch(url, {
+               method: "GET",
+               headers: {"Content-Type": "application/json"},
+         });
 
-   function Email(){
-      return (
-         <div className='email'>
-            <MdOutlineMail className='mailIcon'/>
-            stufflotsofstufflotsofstuff@gmail.com
-         </div>
-      )
-   }
+         let res = JSON.parse(await response.text());
 
-   function Tag(props){
-      return (
-          <Grid item>
-              <Card className='tag'>
-                  {props.tag}
-              </Card>
-          </Grid>
-      )
-  }
+         console.log(res);
+         
+         setFirstName(res.firstName);
+         setLastName(res.lastName);
+         setJoinDate(res.updatedAt);
+         setCurrentHours(res.totalVolunteerHours);
+         setHourGoal(res.semesterVolunteerHourGoal);
+         setEmail(res.email);
+         setTags(res.categoryTags);
+      }
 
-   function Tags(){
-      return (
-              <div>
-                  <Grid>
-                      {tags.map(t => <Tag tag={t}/>)}
-                  </Grid>
-              </div>
-      )
-  }
+      function goToEdit(){
 
-   function Interests(){
-      return (
-         <div className='interestsBorder'>
-            <div className='interestsTitle'>
-               Interests
+      }
+
+      function Name(){
+         return (
+            <div className='name'>{firstName} {lastName}</div>
+         )
+      }
+
+      function DateJoined(){
+         return (
+            <div className='volunteerSince'>Volunteer Since: {joinDate.substring(0, joinDate.indexOf('T'))}</div>
+         )
+      }
+
+      function VolunteerHours(){
+         return (
+            <div className='volunteerHours'>Volunteer Hours: {currentHours}/{hourGoal}</div>
+         )
+      }
+
+      function Email(){
+         return (
+            <div className='email'>
+               <MdOutlineMail className='mailIcon'/>
+               {email}
             </div>
-            <Box className="tagBox">
-               <Tags/>
-            </Box>
-         </div>
-      )
+         )
+      }
+
+      function Tag(props){
+         return (
+            <Grid item>
+               <Card className='tag'>
+                     {props.tag}
+               </Card>
+            </Grid>
+         )
    }
 
-   return(
-      <div id='homePage'>
-        <StudentHeader/>
-        <div className='moveEverything'>
-            <div className='topInfo'>
-               <DefaultPic theStyle="profilePic"/>
-               <Container component="main">
-                  <Box spacing={2} marginTop={"40px"}>
+      function Tags(){
+         return (
+               <div>
                      <Grid>
-                        <Grid item xs={12} sm={12}>
-                           <Name/>
-                        </Grid>  
-                        <Grid item xs={12} sm={12}>
-                           <DateJoined/>
-                        </Grid>  
-                        <Grid item xs={12} sm={12} marginTop={"40px"}>
-                           <VolunteerHours/>
-                        </Grid> 
-                        <Grid item xs={12} sm={12} marginTop={"20px"}>
-                           <Email/>
-                        </Grid>   
-                     </Grid>                           
-                  </Box>
-               </Container>
+                        {tags.map(t => <Tag tag={t}/>)}
+                     </Grid>
+               </div>
+         )
+   }
+
+      function Interests(){
+         return (
+            <div className='interestsBorder'>
+               <div className='interestsTitle'>
+                  Interests
+               </div>
+               <Box className="tagBox">
+                  <Tags/>
+               </Box>
             </div>
-            <div className='interests'>
-               <Interests/>
+         )
+      }
+
+      function EditProfileBtn(){
+         return (
+            <div>
+               <button className='editProfileBtn btn btn-primary' onClick={() => goToEdit()}>Edit Profile</button>
             </div>
-            <FavoriteOrganizations/>
-            <RecentEvents/>
-	      </div>
-      </div>
-   );
+         )
+      }
+
+      useEffect(()=>{
+         getFields();
+      },[])
+
+      return(
+         <div id='homePage'>
+         <StudentHeader/>
+         <div className='moveEverything'>
+               <div className='topInfo'>
+                  <Container className='profileContainer'>
+                     <Box marginTop={"40px"}>
+                        <Grid>
+                           <Avatar
+                              src={pic}
+                              className="profilePic"
+                           />
+                           <Grid item xs={12} sm={12}>
+                              <Name/>
+                           </Grid>  
+                           <Grid item xs={12} sm={12}>
+                              <DateJoined/>
+                           </Grid>  
+                           <Grid item xs={12} sm={12} marginTop={"40px"}>
+                              <VolunteerHours/>
+                           </Grid> 
+                           <Grid item xs={12} sm={12} marginTop={"20px"}>
+                              <Email/>
+                           </Grid>   
+                           <Grid item xs={12} sm={12} marginTop={"20px"}>
+                              {EditProfileBtn()}
+                           </Grid>   
+                        </Grid>                           
+                     </Box>
+                  </Container>
+               </div>
+               <div className='interests'>
+                  <Interests/>
+               </div>
+               <div className='cardSections'>
+                  <FavoriteOrganizations/>
+                  <RecentEvents/>
+               </div>
+            </div>
+         </div>
+      );
 };
 
 export default StudentProfile;

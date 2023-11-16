@@ -2,13 +2,13 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StudentProfile from '../components/StudentProfile/StudentProfile';
 
-const StudentExplorePage = () =>
+function StudentExplorePage()
 {
     return(
       <div className="studentProfilePage">
-        <StudentProfile/>
+        <StudentProfile volunteerMode={1}/>
       </div>
     );
-};
+}
 
 export default StudentExplorePage;
