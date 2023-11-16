@@ -5,7 +5,7 @@
     "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@material-ui/core": "^4.12.4",
+    "@mui/material": "^5.14.17",
     "@mui/material": "^5.14.17",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
@@ -14,7 +14,6 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.2",
     "mailgen": "^2.0.28",
-    "material-ui": "^0.20.0",
     "mdb-ui-kit": "^6.4.2",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
@@ -42,8 +41,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix frontend &&   npm run build --prefix frontend"
+    "start": "node server.js",
+    "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC"
