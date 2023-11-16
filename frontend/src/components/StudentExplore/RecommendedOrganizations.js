@@ -103,11 +103,7 @@ function RecommendedOrganizations(props)
     useEffect(()=>{
         getOrgs();
     },[])
-
-    useEffect(()=>{
-        console.log("its working!")
-        getOrgs();
-    },[props.reset])
+    
 
     return(
      <div className='upcomingEventsSpace'>

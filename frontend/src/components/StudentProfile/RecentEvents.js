@@ -29,14 +29,13 @@ function RecentEvents(props)
         props.setEventID(id);
         props.setOpen(true);
     }
-
-    function eventIsUpcoming(date){
+    
+    function eventIsPast(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;
+        return date.localeCompare(today) < 0;
     }
 
     async function getOrgName(id){
@@ -69,7 +68,7 @@ function RecentEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsPast(event.date)){
                 const orgName = await getOrgName(event.sponsoringOrganization);
                 events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
             }

@@ -21,6 +21,8 @@ function StudentExplore()
     const [searchType, setSearchType] = useState("events");
     const [openEvent, setOpenEvent] = useState(false); 
     const [eventID, setEventID] = useState("");
+    const [resetFavorite, setResetFavorite] = useState(1);
+    const [resetRecEvents, setResetRecEvents] = useState(1);
 
     return(
       <div id='homePage'>
@@ -31,9 +33,9 @@ function StudentExplore()
 	    <div className='moveSearch'>
 		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 	    </div>
-	    <OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
-	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
-	    <RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
+	    <OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
+	    <RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
 	    <RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
 	</div>
       </div>

@@ -67,9 +67,29 @@ function OrgFavoriteEvents(props)
         
             console.log(res);    
             
-            for(let event of res)
-                if(eventIsUpcoming(event.date))
+            for(let event of res){
+                const json = {
+                    eventID: event.eventID,
+                    eventName: event.name,
+                    userID: "6519e4fd7a6fa91cd257bfda",
+                    userEmail: "johndoe@example.com",
+                    check: 1
+                };
+    
+                const url = buildPath(`api/RSVPForEvent`);
+    
+                const response = await fetch(url, {
+                    body: JSON.stringify(json),
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                });
+            
+                const res = JSON.parse(await response.text());
+    
+                // Don't show event if user already RSVP'd
+                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date))
                     events.push(<Event eventName={event.name} orgName={org.name} date={event.date} id={event.eventID}/>)
+            }
         }       
 
         events.sort(function(a,b){ 
