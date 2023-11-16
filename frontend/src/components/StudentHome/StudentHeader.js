@@ -72,6 +72,14 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/studenthomepage">
+                            <BiHome className='homeIcon'></BiHome>
+                            <span class="links_name">Home</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+                <li>
+                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
                         <a href="#/studentprofile">
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
