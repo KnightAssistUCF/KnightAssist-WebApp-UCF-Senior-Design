@@ -6,7 +6,7 @@ import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/mat
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import Header from '../StudentHome/StudentHeader';
+import Header from '../StudentHeader';
 import SearchSwitch from './SearchSwitch';
 import Search from './Search';
 import EventModal from './EventModal';

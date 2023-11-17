@@ -1,3 +1,7 @@
 #studentAnnouncements {
-        color: black;
+    color: black;
+    margin-left: 15%;
+    margin-top: 3%;
+    margin-right: 2%;
+    text-align: left;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageTitle from '../PageTitle';
+import PageTitle from './PageTitle';
 import {BiMenu, BiHome, BiSearch, BiBell, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom'; 
-import Logo from '../Logo';
+import Logo from './Logo';
 
 function Header()
 {
