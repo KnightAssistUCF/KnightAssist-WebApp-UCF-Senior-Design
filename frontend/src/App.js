@@ -12,6 +12,7 @@ import OrgPortalPage from './pages/OrgPortalPage';
 import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
+import StudentAnnouncementsPage from './pages/StudentAnnouncementsPage';
 
 function App() 
 {
@@ -33,6 +34,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/emailverified" element={<EmailVerifiedPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/studentannouncements" element={<StudentAnnouncementsPage/>}></Route>
           </Routes>
        </Router>
       </header>
