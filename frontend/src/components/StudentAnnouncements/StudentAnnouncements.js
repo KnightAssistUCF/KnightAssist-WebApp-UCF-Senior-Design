@@ -14,7 +14,11 @@ function StudentAnnouncements() {
 return (
         <div id='studentAnnouncements'>
             <StudentHeader />
-            <h3>Announcements</h3>
+            <div className="studAnnouncementsPage">
+                <div class="StudentAnnouncements-title">Annoucements</div>
+                <div class="StudentAnnouncements-subtitle">Fall 2023</div>
+            </div>
+            
         </div>
       );
     }
