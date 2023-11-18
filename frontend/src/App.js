@@ -13,6 +13,7 @@ import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 
 function App() 
 {
@@ -37,6 +38,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/emailverified" element={<EmailVerifiedPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/postverifyquestions" element={<PostVerificationQuestionsPage/>}></Route>
           </Routes>
        </Router>
       </header>
