@@ -4,8 +4,8 @@ import { Grid, Typography, Button, Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Lottie from "lottie-react";
 import animationData from './landingAnimation2';
-import PreLoginNavBar from '../PreLoginNavBar';
-import useStyles from '../PreLoginStyles';
+import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
+import useStyles from '../../PreLogin/PreLoginStyles';
 import Footer from '../Footer';
 
 function Landing() {

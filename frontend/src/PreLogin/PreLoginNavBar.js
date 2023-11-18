@@ -24,6 +24,10 @@ function PreLoginNavBar() {
     setAnchorElNav(null);
   };
 
+  const handleClick = () => {
+    window.location.href = '#/login';
+  };
+
   return (
     <AppBar position="fixed" sx={{ bgcolor: "#00241B" }}>
       <Container maxWidth="xl">
@@ -137,7 +141,7 @@ function PreLoginNavBar() {
           </Box>
 
           {/* login button*/}
-          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}}>Login</Button>
+          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={handleClick}>Login</Button>
         </Toolbar>
       </Container>
     </AppBar>
