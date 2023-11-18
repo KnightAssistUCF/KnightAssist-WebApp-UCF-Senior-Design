@@ -22,14 +22,15 @@ function PostVerifiedQuestions()
     const [makeTags, setMakeTags] = useState([]);
 
     function handleClick(idx){
-	console.log(tagNames)
 	if(colors[idx] != "default"){
 	    selectedTags.splice(selectedTags.indexOf(tagNames[idx]), 1);
 	    colors[idx] = "default"; 
 	}else{
-	    selectedTags.push(tagNames[idx]);
-	    console.log(selectedTags);
-	    colors[idx] = "#5f5395";
+	    if(selectedTags.length < 10){
+		selectedTags.push(tagNames[idx]);
+		console.log(selectedTags);
+		colors[idx] = "#5f5395";
+	    }
 	}
 
 	getAllTags();
