@@ -17,3 +17,13 @@
     align-items: center; */
     margin-top: 20px;
 }
+.results {
+    margin-top: 35px;
+}
+.updateOrgTitle {
+    font-size: 20px;
+}
+.date {
+    font-size: 15px;
+    color: rgb(113, 113, 113);
+}

@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './Search.js';
 import { buildPath } from '../../path';
+import {CardMedia, CardContent, Divider } from '@mui/material';
 
 
 function StudentAnnouncements() {
@@ -68,6 +69,25 @@ return (
                 <div class="StudentAnnouncements-title">Announcements</div>
                 <div className="search">
                     <SearchBar onSearch={handleSearch}/>
+                </div>
+                <div className="results">
+                    <Card variant='outlined' sx={{ display: 'flex'}}>
+                        <Box sx={{ display: 'flex', alignItems: 'center',  pl: 1 }}>
+                            <CardMedia
+                            component="img"
+                            sx={{width: 35, borderRadius: '700px'}}
+                            image={require('../Login/loginPic.png')}
+                            />
+                            <CardContent sx={{display: 'flex', alignItems: 'center'}} >
+                                <div className="updateOrgTitle">Arboretum</div>
+                                <div className="date" style={{ marginLeft: 'auto' }}>
+                                    <div className="day">3 days</div>
+                                </div>
+                            </CardContent>
+                            <Divider />
+                        </Box>
+
+                    </Card>
                 </div>
             </div>
             
