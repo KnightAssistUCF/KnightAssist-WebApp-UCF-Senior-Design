@@ -63,7 +63,7 @@ function StudentAnnouncements() {
                 res = JSON.parse(await response.text());
             
                 console.log(res);
-                updates.push(res);     
+                updates.push({Orgname: org.name, res});     
         
         
             }
@@ -90,6 +90,7 @@ return (
                 <div className="results">
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
+                        
                         <Card variant='outlined' className='cardResult' onClick={handleClick}>
                             <CardContent>
                                 <Grid container alignItems='center'>
