@@ -38,5 +38,12 @@
     padding-top: 5px;
     padding-left: 10px;
 }
+.updateTitle {
+    font-size: 23px;
+}
+.divider {
+    margin-top: 7px;
+    border-top: 1px solid #dadada;
+}
 
 

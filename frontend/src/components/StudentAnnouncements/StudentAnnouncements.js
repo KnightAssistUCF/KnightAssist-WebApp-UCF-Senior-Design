@@ -94,6 +94,8 @@ return (
                                         <div className='date'>3 days ago</div>
                                     </Grid>
                                 </Grid>
+                                <div className="divider"></div>
+                                <div className="updateTitle">10-13 Announcement Title!</div>
                                 <div className='updateDescription'>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d </div>
                             </CardContent>
                         </Card>
