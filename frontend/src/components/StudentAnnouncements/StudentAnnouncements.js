@@ -7,8 +7,20 @@ import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Logo from '../Logo';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import SearchIcon from '@mui/icons-material/Search';
+import SearchBar from './Search.js';
+
 
 function StudentAnnouncements() {
+
+
+    const handleSearch = (searchTerm) => {
+        // Implement your search logic here
+        console.log('Searching for:', searchTerm);
+      };
+
 
 
 return (
@@ -16,7 +28,10 @@ return (
             <StudentHeader />
             <div className="studAnnouncementsPage">
                 <div class="StudentAnnouncements-title">Announcements</div>
-                <div class="StudentAnnouncements-subtitle">Fall 2023</div>
+                <div className="search">
+                    <SearchBar onSearch={handleSearch}/>
+
+                </div>
             </div>
             
         </div>
