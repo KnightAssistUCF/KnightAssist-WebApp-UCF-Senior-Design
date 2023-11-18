@@ -18,7 +18,7 @@ function StudentAnnouncements() {
 
 
     const handleSearch = (searchTerm) => {
-        // Implement your search logic here
+        // search logic
         console.log('Searching for:', searchTerm);
       };
 
@@ -56,9 +56,8 @@ function StudentAnnouncements() {
     }
 
         useEffect(() => {
-            // Call getEvents when the component mounts
             getEvents();
-          }, []);
+        }, []);
 
 
 

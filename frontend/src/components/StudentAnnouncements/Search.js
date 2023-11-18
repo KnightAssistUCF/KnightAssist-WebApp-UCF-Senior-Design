@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const SearchBar = ({ onSearch }) => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -31,10 +33,14 @@ const SearchBar = ({ onSearch }) => {
         value={searchTerm}
         onChange={handleInputChange}
         onKeyPress={handleKeyPress} sx={{ width: '25ch' }}
+        InputProps={{
+            endAdornment: (
+            <InputAdornment position="end">
+                <SearchIcon onClick={handleSearch} style={{ cursor: 'pointer' }} />
+            </InputAdornment>
+            ),
+        }}
       />
-      <IconButton onClick={handleSearch} color="primary">
-        <SearchIcon />
-      </IconButton>
     </div>
   );
 };
