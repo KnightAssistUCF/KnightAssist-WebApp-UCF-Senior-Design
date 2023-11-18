@@ -20,7 +20,10 @@ function App()
       <header className="App-header">
         <Router>
           <Routes>
-          <Route path="/landingpage" element={<LandingPage/>}></Route>
+            <Route path="/" element={<LandingPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/login" element={<LoginPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
