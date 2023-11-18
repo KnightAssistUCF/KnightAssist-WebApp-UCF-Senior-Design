@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Logo from '../Logo';
 import { styled } from '@mui/material/styles';
+import { withStyles } from "@material-ui/core/styles";
 import Chip from '@mui/material/Chip';
-import Paper from '@mui/material/Paper';
-import TagFacesIcon from '@mui/icons-material/TagFaces';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
@@ -15,19 +14,54 @@ function PostVerifiedQuestions()
     const [isVolunteerView, setIsVolunteerView] = useState(true);
     const [hourlyGoal, setHourlyGoal] = useState(0);
     const [tagNames, setTagNames] = useState([]);
+    const [tags, setTags] = useState([]);
+    const [colors, setColors] = useState(makeColorsArray());
     const [selectedTags, setSelectedTags] = useState([]);
 
-    const ListItem = styled('li')(({ theme }) => ({
-	margin: theme.spacing(0.5),
-    }));
+    // State needed due to bug where tag names where undefined
+    const [makeTags, setMakeTags] = useState([]);
 
-    function handleClick(){
+    function handleClick(idx){
+	console.log(tagNames)
+	if(colors[idx] != "default"){
+	    selectedTags.splice(selectedTags.indexOf(tagNames[idx]), 1);
+	    colors[idx] = "default"; 
+	}else{
+	    selectedTags.push(tagNames[idx]);
+	    console.log(selectedTags);
+	    colors[idx] = "#5f5395";
+	}
 
+	getAllTags();
+    }
+
+    function makeColorsArray(){
+	const colors = [];
+	for(let i = 0; i < 50; i++)
+	    colors.push("default");
+
+	return colors;
     }
 
     function getAccountType(){
 	
     }
+
+    async function getTagNames(){
+	let url = buildPath(`api/getAllAvailableTags`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+	setTagNames(res);
+
+	setMakeTags(true);
+    }
+
 
     async function getAllTags(){
 	let url = buildPath(`api/getAllAvailableTags`);
@@ -39,13 +73,17 @@ function PostVerifiedQuestions()
     
         let res = JSON.parse(await response.text());
 
-	setTagNames(
+	setTags(
 	    res.map((name, idx) => {
 		return (
 		    <Chip
 			label={name}
 			className='tagChip'
 			onClick={() => handleClick(idx)}
+			sx={{backgroundColor: colors[idx], 
+				"&:hover": {
+				backgroundColor: (colors[idx] == "default") ? "default" : "purple"
+			}}}
 		    />
 		);
 	    })
@@ -53,7 +91,7 @@ function PostVerifiedQuestions()
     }
 
     async function submit(){
-
+	console.log(selectedTags);
     }
 
     function Header(){
@@ -88,7 +126,7 @@ function PostVerifiedQuestions()
 	    <div>
 		<p className='tagQuestion'>Select up to 10 of the below interests:</p>
 		<div className='allTags'>
-		    {tagNames}
+		    {tags}
 		</div>
 	    </div>
 	)
@@ -96,15 +134,21 @@ function PostVerifiedQuestions()
 
     useEffect(()=>{
         getAccountType();
-	getAllTags();
+	getTagNames();
     },[])
+
+    
+    useEffect(()=>{
+	getAllTags();
+    },[makeTags])
+
 
     return(
       <div id='homePage'>
 	<Header/>
 	<SemesterGoal/>
 	<AllTags/>
-	<button type="button" class="submitBtn btn btn-primary" onClick={() => submit(true)}>Submit</button>
+	<button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button>
       </div>
     );
 };
