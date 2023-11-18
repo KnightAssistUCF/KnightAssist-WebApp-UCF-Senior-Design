@@ -31,6 +31,12 @@
 .date {
     font-size: 17px;
     color: rgb(113, 113, 113);
-    margin-left: auto;
 }
+.updateDescription {
+    font-size: 17px;
+    color: rgb(113, 113, 113);
+    padding-top: 5px;
+    padding-left: 10px;
+}
+
 

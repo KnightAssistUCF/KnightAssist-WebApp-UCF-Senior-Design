@@ -13,6 +13,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import SearchBar from './Search.js';
 import { buildPath } from '../../path';
 import {CardMedia, CardContent, Divider } from '@mui/material';
+import Grid from '@mui/material/Grid';
 
 
 function StudentAnnouncements() {
@@ -78,22 +79,23 @@ return (
                 <div className="results">
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
-                        <Card variant='outlined' sx={{ display: 'flex'}}>
-                            <Box sx={{ display: 'flex', alignItems: 'center',  pl: 1, marginLeft: '6px' }}>
-                                <CardMedia
-                                component="img"
-                                sx={{width: 35, borderRadius: '700px'}}
-                                image={require('../Login/loginPic.png')}
-                                />
-                                <div className="updateOrgTitle">Arboretum</div>
-                                <CardContent sx={{display: 'flex', alignItems: 'center', marginLeft: 'auto'}} >
-                                    
-                                    <div className="date" >
-                                        <div className="day">3 days</div>
-                                    </div>
-                                </CardContent>
-                                <Divider />
-                            </Box>
+                        <Card variant='outlined'>
+                            <CardContent>
+                                <Grid container alignItems='center'>
+                                    <Grid item>
+                                        <CardMedia
+                                        component="img"
+                                        sx={{width: 35, borderRadius: '700px'}}
+                                        image={require('../Login/loginPic.png')}
+                                        />
+                                    </Grid>
+                                    <div className='updateOrgTitle'>Arboretum</div>
+                                    <Grid marginLeft="auto">
+                                        <div className='date'>3 days ago</div>
+                                    </Grid>
+                                </Grid>
+                                <div className='updateDescription'>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d </div>
+                            </CardContent>
                         </Card>
                     </div>
                     <div className="oldAnnouncements">
