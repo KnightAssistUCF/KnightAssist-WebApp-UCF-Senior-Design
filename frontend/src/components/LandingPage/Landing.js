@@ -18,8 +18,8 @@ function Landing() {
     <>
       <CssBaseline />
       <PreLoginNavBar />
-      <Box className={classes.heroBox} sx={{ flexGrow: 1, padding: 20}}>
-        <Grid container spacing={6} sx={{ alignItems: 'center'}}>
+      <Box className={classes.heroBox} sx={{ flexGrow: 1, padding: 20, justifyContent: 'center'}}>
+        <Grid container spacing={6} sx={{ alignItems: 'center', justifyContent: 'center'}}>
           <Grid item xs={12} md={7}>
             <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}} >
               <Grid item sx={{display: 'flex', textAlign:'center', alignItems: 'center', justifyContent: 'center'}}>
@@ -44,8 +44,8 @@ function Landing() {
               Sign Up!
             </Button>
           </Grid>
-          <Grid item xs={12} md={5} sx={{ alignItems: 'center', justifyContent: 'center'}}>
-            <Lottie style={{ backgroundColor:'white', maxHeight: '400px', maxWidth: '400px' }} animationData={animationData} />
+          <Grid item xs={10} md={5} xl={3} sx={{ backgroundColor:'white', alignItems: 'center', justifyContent: 'center'}}>
+            <Lottie style={{ maxHeight: '400px', maxWidth: '400px' }} animationData={animationData} />
           </Grid>
         </Grid>
       </Box>
