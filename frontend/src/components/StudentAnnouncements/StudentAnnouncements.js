@@ -19,6 +19,7 @@ import AnnouncementModal from './AnnouncementModal';
 
 function StudentAnnouncements() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [updateTitle, setUpdateTitle] = useState('Is my props working');
 
     const handleClick = () => {
         console.log("click!");
@@ -104,11 +105,11 @@ return (
                                     </Grid>
                                 </Grid>
                                 <div className="divider"></div>
-                                <div className="updateTitle">10-13 Announcement Title!</div>
+                                <div className="updateTitle">{updateTitle}</div>
                                 <div className='updateDescription'>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d </div>
                             </CardContent>
                         </Card>
-                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} />
+                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
                     </div>
                     <div className="oldAnnouncements">
 
