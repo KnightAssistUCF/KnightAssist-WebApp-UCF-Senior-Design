@@ -38,6 +38,7 @@ function StudentAnnouncements() {
 
         const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        const updates = [];
         try {
 
         
@@ -50,8 +51,6 @@ function StudentAnnouncements() {
 
             console.log(res);
 
-            const updates = [];
-
             for(let org of res){
             
                 url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org.organizationID}`);
@@ -63,13 +62,15 @@ function StudentAnnouncements() {
             
                 res = JSON.parse(await response.text());
             
-                console.log(res);        
+                console.log(res);
+                updates.push(res);     
         
         
             }
         } catch(e) {
             console.log("nice try");
         }
+        console.log(updates);
     }
 
         useEffect(() => {
