@@ -10,6 +10,10 @@
 .StudentAnnouncements-title {
     font-size: 30px;
 }
+.StudentAnnouncements-subtitle {
+    font-size: 25px;
+    margin-bottom: 10px;
+}
 .search {
     /* aligns search bar to center of the page
     display: flex;
@@ -18,12 +22,15 @@
     margin-top: 20px;
 }
 .results {
-    margin-top: 35px;
+    margin-top: 25px;
 }
 .updateOrgTitle {
     font-size: 20px;
+    margin-left: 12px;
 }
 .date {
-    font-size: 15px;
+    font-size: 17px;
     color: rgb(113, 113, 113);
+    margin-left: auto;
 }
+
