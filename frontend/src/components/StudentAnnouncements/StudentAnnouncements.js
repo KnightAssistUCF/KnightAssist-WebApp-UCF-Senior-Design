@@ -79,7 +79,7 @@ return (
                 <div className="results">
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
-                        <Card variant='outlined'>
+                        <Card variant='outlined' className='cardResult'>
                             <CardContent>
                                 <Grid container alignItems='center'>
                                     <Grid item>
