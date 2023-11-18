@@ -12,6 +12,7 @@ import OrgPortalPage from './pages/OrgPortalPage';
 import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
+import StudentProfile from './components/StudentProfile/StudentProfile';
 
 function App() 
 {
@@ -30,6 +31,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/explore" element={<StudentExplorePage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/studentprofile" element={<StudentProfile/>}></Route>
           </Routes>
           <Routes>
             <Route path="/emailverified" element={<EmailVerifiedPage/>}></Route>
