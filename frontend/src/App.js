@@ -6,9 +6,9 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-
 import LoginPage from './pages/LoginPage';
 import OrgPortalPage from './pages/OrgPortalPage';
+import LandingPage from './pages/LandingPage';
 import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
@@ -21,7 +21,10 @@ function App()
       <header className="App-header">
         <Router>
           <Routes>
-            <Route path="/" element={<LoginPage/>}></Route>
+            <Route path="/" element={<LandingPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/login" element={<LoginPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/orgportal" element={<OrgPortalPage/>}></Route>

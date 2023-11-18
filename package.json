@@ -1,11 +1,7 @@
 {
   "dependencies": {
-    "@devexpress/dx-react-core": "^4.0.5",
-    "@devexpress/dx-react-scheduler": "^4.0.5",
-    "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@mui/material": "^5.14.17",
     "@mui/material": "^5.14.17",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
