@@ -15,7 +15,7 @@ return (
         <div id='studentAnnouncements'>
             <StudentHeader />
             <div className="studAnnouncementsPage">
-                <div class="StudentAnnouncements-title">Annoucements</div>
+                <div class="StudentAnnouncements-title">Announcements</div>
                 <div class="StudentAnnouncements-subtitle">Fall 2023</div>
             </div>
             
