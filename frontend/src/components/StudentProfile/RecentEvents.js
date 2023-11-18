@@ -11,7 +11,7 @@ import '../OrgPortal/OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function OrgFavoriteEvents(props)
+function RecentEvents(props)
 {
 
     const [events, setEvents] = useState([]);
@@ -29,20 +29,32 @@ function OrgFavoriteEvents(props)
         props.setEventID(id);
         props.setOpen(true);
     }
-
-    function eventIsUpcoming(date){
+    
+    function eventIsPast(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
+        return date.localeCompare(today) < 0;
+    }
+
+    async function getOrgName(id){
+        let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        return res.name;
     }
 
     async function getEvents(){
-        const userID = "6519e4fd7a6fa91cd257bfda";
+        const userID = "123456789";
 
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${userID}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -55,48 +67,16 @@ function OrgFavoriteEvents(props)
 
 	    const events = [];
 
-        for(let org of res){
-            url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
-
-            response = await fetch(url, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-            });
-        
-            res = JSON.parse(await response.text());
-        
-            console.log(res);    
-            
-            for(let event of res){
-                const json = {
-                    eventID: event.eventID,
-                    eventName: event.name,
-                    userID: "6519e4fd7a6fa91cd257bfda",
-                    userEmail: "johndoe@example.com",
-                    check: 1
-                };
-    
-                const url = buildPath(`api/RSVPForEvent`);
-    
-                const response = await fetch(url, {
-                    body: JSON.stringify(json),
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                });
-            
-                const res = JSON.parse(await response.text());
-    
-                // Don't show event if user already RSVP'd
-                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date))
-                    events.push(<Event eventName={event.name} orgName={org.name} date={event.date} id={event.eventID}/>)
+        for(let event of res){
+            if(eventIsPast(event.date)){
+                const orgName = await getOrgName(event.sponsoringOrganization);
+                events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
             }
-        }       
+        }
 
         events.sort(function(a,b){ 
             return a.props.date.localeCompare(b.props.date)
         });
-
-        console.log(events);
 
         setNumPages(Math.ceil(events.length / 4))
         setEvents(events);
@@ -114,7 +94,7 @@ function OrgFavoriteEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
+        return <h1 className='favHeader spartan'>Recent Events</h1>
     }
 
     function Event(props) {
@@ -155,20 +135,15 @@ function OrgFavoriteEvents(props)
         getEvents();
     },[])
 
-    useEffect(()=>{
-        console.log("its working!")
-        getEvents();
-    },[props.reset])
-
     return(
      <div className='upcomingEventsSpace'>
         <EventHeader/>
         <div>
-            <Events/>
+            <Events/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
         </div>
      </div>
     );
 };
 
-export default OrgFavoriteEvents;
+export default RecentEvents;

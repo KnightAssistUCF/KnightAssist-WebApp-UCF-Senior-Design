@@ -48,7 +48,7 @@ function EventModal(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
-        return today <= date;    
+        return date.localeCompare(today) >= 0;
     }
 
     async function setInfo(){        
@@ -65,19 +65,19 @@ function EventModal(props)
 
         console.log(event);
 
-	if(event) {
-        	setName(event.name);
-        	setDescription(event.description);
-        	setDate(event.date);
-        	setLocation(event.location);
-        	setStartTime(event.startTime);
-	        setEndTime(event.endTime);
-	        setVolunteers(event.registeredVolunteers.length)
-	        setMaxVolunteers(event.maxAttendees);
-	        setTags(event.eventTags);
-	} else {
-		console.log("Event undefined or not found");
-	}
+        if(event) {
+                setName(event.name);
+                setDescription(event.description);
+                setDate(event.date);
+                setLocation(event.location);
+                setStartTime(event.startTime);
+                setEndTime(event.endTime);
+                setVolunteers(event.registeredVolunteers.length)
+                setMaxVolunteers(event.maxAttendees);
+                setTags(event.eventTags);
+        } else {
+            console.log("Event undefined or not found");
+        }
 	    
     }
 
