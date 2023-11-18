@@ -62,18 +62,24 @@ const userStudentSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'studentSemester',
     }],
+    categoryTags: [String], // stores interest tags
     recoveryToken: {
         type: String,
         default: null
     },
     confirmToken: { // where the generated JWT token will be stored
         type: String,
-        required: true,
+        // required: true,
         default: ''
     },
-    valid: {
+    EmailToken: { // store the email token
+        type: String,
+        // required: true,
+        default: ''
+    },
+    EmailValidated: { // if the user validated their email
         type: Boolean,
-        required: true,
+        // required: true,
         default: false
     }, 
     __v: {
@@ -83,7 +89,7 @@ const userStudentSchema = new mongoose.Schema({
         select: false
     }
     
-}, {collection: 'userStudent', timestamps: true});
+}, {collection: 'userStudent', timestamps: true, versionKey: false});
 
 
 

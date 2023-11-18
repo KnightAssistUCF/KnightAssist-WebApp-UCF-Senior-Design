@@ -28,8 +28,9 @@ html, body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  /*align-items: center;
+  justify-content: center; */
+  
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -84,4 +85,18 @@ html, body {
 .landing{
   min-width: 600px;
   background-color: white !important;
+}
+
+.explorePage{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.emailVerifiedPage {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
 }

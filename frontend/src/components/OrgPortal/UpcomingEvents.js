@@ -10,20 +10,31 @@ import './OrgPortal.css';
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents()
+function UpcomingEvents(props)
 {
 
     const [eventCards, setEventCards] = useState();
 
-    let events = []
+    function openEventModal(id){
+        props.setEventID(id);
+        props.setOpenEvent(true);
+    }
 
+    function eventIsUpcoming(date){
+        date = String(date);
+        date = date.substring(0, date.indexOf("T"));
+        let today = new Date().toISOString();
+        today = today.substring(0, today.indexOf("T"));
+        console.log(date, today)
+        return today <= date;
+    }
 
     async function getUpcomingEvents(){
-        const organizationID = "33";
+        const organizationID = "12345";
         
-        const url = buildPath(`api/searchOrganization?organizationID=${organizationID}`);
+        let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
-        const response = await fetch(url, {
+        let response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json"},
         });
@@ -32,11 +43,24 @@ function UpcomingEvents()
 
         console.log(res);
 
-        events = [];
+        url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
 
-        for(let event of res.eventsArray)
-            events.push(<Event name={event.name} date={event.date}/>)
-            
+        response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+
+        res = JSON.parse(await response.text());
+
+        console.log(res);    
+
+        const events = [];
+
+        for(let event of res){
+            if(eventIsUpcoming(event.date))
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+        }       
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events}</div>
         setEventCards(content);
     }
@@ -45,11 +69,13 @@ function UpcomingEvents()
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function Event(props){
+    function Event(props) {
+        const date = new Date(props.date);
+      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => console.log(props.name)}>
+                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
@@ -81,8 +107,13 @@ function UpcomingEvents()
         getUpcomingEvents();
     },[])
 
+    useEffect(()=>{
+        console.log("its working!")
+        getUpcomingEvents();
+    },[props.reset])
+
     return(
-     <div>
+     <div className='upcomingEventsSpace'>
         <EventHeader/>
         <div>
             <Events/>

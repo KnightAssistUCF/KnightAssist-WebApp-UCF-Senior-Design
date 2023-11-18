@@ -30,7 +30,7 @@ const organizationSchema = new Schema({
         required: true
     },
     logoUrl: String,
-    category: [String], // what type of organization is this? (e.g. academic, social, etc.)
+    categoryTags: [String], // store tags for org
     followers: [{
         type: Schema.Types.ObjectId, // people that follow this organization
         ref: 'userStudent',
@@ -39,7 +39,7 @@ const organizationSchema = new Schema({
         type: Schema.Types.ObjectId, // people that liked and favorited this organization
         ref: 'userStudent',
     }],
-    updates: [{
+    updates: [{ // this work as announcements for the organization
         title: String,
         content: String,
         date: {
@@ -114,12 +114,17 @@ const organizationSchema = new Schema({
     },
     confirmTokenForORG: { // where the generated JWT token will be stored
         type: String,
-        required: true,
+        // required: true,
         default: ''
     },
-    validForORG: {
+    EmailTokenForORG: { // store the email token
+        type: String,
+        // required: true,
+        default: ''
+    },
+    EmailValidated: { // if the organization validated their email
         type: Boolean,
-        required: true,
+        // required: true,
         default: false
     }, 
     __v: {
@@ -128,6 +133,6 @@ const organizationSchema = new Schema({
         default: 0,
         select: true
     }
-}, {collection: 'organization', timestamps: true, select: true});
+}, {collection: 'organization', timestamps: true, select: true, versionKey: false});
 
 module.exports = mongoose.model('organization', organizationSchema);

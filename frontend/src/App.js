@@ -6,10 +6,12 @@ import {
   Route,
   Routes,
 } from "react-router-dom";
-
 import LoginPage from './pages/LoginPage';
 import OrgPortalPage from './pages/OrgPortalPage';
 import LandingPage from './pages/LandingPage';
+import StudentHomePage from './pages/StudentHomePage';
+import StudentExplorePage from './pages/StudentExplorePage';
+import EmailVerifiedPage from './pages/EmailVerifiedPage';
 
 function App() 
 {
@@ -18,13 +20,19 @@ function App()
       <header className="App-header">
         <Router>
           <Routes>
-            <Route path="/" element={<LoginPage/>}></Route>
+          <Route path="/landingpage" element={<LandingPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
           </Routes>
           <Routes>
-            <Route path="/LandingPage" element={<LandingPage/>}></Route>
+            <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/explore" element={<StudentExplorePage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/emailverified" element={<EmailVerifiedPage/>}></Route>
           </Routes>
        </Router>
       </header>

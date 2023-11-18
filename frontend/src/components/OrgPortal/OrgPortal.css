@@ -1,16 +1,21 @@
 .move{
-    margin-left: 13%;
+    margin-left: 15%;
 }
  
 .orgSearch{
-    width: 50% !important;
-    margin-left: 25% !important;
-    margin-top: 5%;
+    width: 500px !important;
     margin-bottom: 5%;
 }
 
+.moveSearch{
+    margin-top: 10px;
+    margin-left: 500px;
+}
+
 .cards{
-    overflow: scroll;
+    overflow-y: scroll;
+    display: inline !important;
+    max-height: 750px;
 }
 
 .cardWhite{
@@ -31,9 +36,11 @@
 }
 
 .event{
-    min-width: 25%;
-    max-width: 25%;
-    margin-right: 25px;
+    min-width: 22%;
+    max-width: 22%;
+    margin-left: 25px;
+    margin-bottom: 20px;
+    float: left;
 }
 
 .MuiCard-root{
@@ -42,13 +49,16 @@
 }
 
 .eventsCard{
-    margin-right: 10%;
+    margin-right: 15%;
+    width: 1200px;
 }
   
 .welcome{
     text-align: left;
+    margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
+    float: left;
 }
 
 .spartan{
@@ -72,12 +82,33 @@
 }
 
 .addEventBtn{
-    margin-bottom: 30px;
+    margin-right: 500px;
+    margin-top: 50px;
+    background-color: #5f5395;
+    border: none;
 }
 
-.addEventCard{
+.addEventBtn:hover{
+    background-color: #7566b4;
+}
+
+.addEventBtn:visited{
+    background-color: #5f5395;
+}
+
+.addEventBtn:active{
+    background-color: #5f5395;
+}
+
+.addEventModalCard{
     height: 75vh;
     width: 75vh;
+    overflow-y: scroll !important;
+}
+
+.eventModalCard{
+    height: 90vh;
+    width: 100vh;
     overflow-y: scroll !important;
 }
 
@@ -87,11 +118,8 @@
     align-items: "center";
 }
 
-.datePicker{
-}
-
 .closeAddEvent{
-    margin-left: 93%;
+    margin-left: 95%;
     background: none;
     border: none;
 }
@@ -103,4 +131,59 @@
 .addEventHeader{
     float: left;  
     margin-bottom: -8px; 
+}
+
+.tag{
+    background-color: #bc70c8 !important;
+    width: 100px;
+    height: 30px;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 20px;
+    float: left;
+    font-family: "League Spartan";
+    margin-bottom: 5px;
+}
+
+.upcomingEventsSpace{
+    margin-top: 5%;
+    margin-bottom: 8%;
+}
+
+.boxImg{
+    width: 90%;
+    height: 200px !important;
+}
+
+.bigName{
+    font-size: 40px;
+    left: 50%;
+    margin-bottom: 20px;
+}
+
+.description{
+    font-size: 20px;
+    white-space: pre-wrap;
+}
+
+.lessSpace{
+    margin-bottom: -2px;
+}
+
+.editEventBtn{
+    background: none;
+    border: none;
+}
+
+.deleteEventBtn{
+    background: none;
+    border: none;
+}
+
+.orgPortalTop{
+}
+
+.searchSwitch{
+    float: left;
+    margin-left: 150px;
 }
