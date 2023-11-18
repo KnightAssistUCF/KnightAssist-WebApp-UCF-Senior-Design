@@ -14,10 +14,19 @@ import SearchBar from './Search.js';
 import { buildPath } from '../../path';
 import {CardMedia, CardContent, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import AnnouncementModal from './AnnouncementModal';
 
 
 function StudentAnnouncements() {
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
+    const handleClick = () => {
+        console.log("click!");
+        setIsModalOpen(true);
+    };
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+    };
 
     const handleSearch = (searchTerm) => {
         // search logic
@@ -79,7 +88,7 @@ return (
                 <div className="results">
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
-                        <Card variant='outlined' className='cardResult'>
+                        <Card variant='outlined' className='cardResult' onClick={handleClick}>
                             <CardContent>
                                 <Grid container alignItems='center'>
                                     <Grid item>
@@ -99,6 +108,7 @@ return (
                                 <div className='updateDescription'>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d </div>
                             </CardContent>
                         </Card>
+                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} />
                     </div>
                     <div className="oldAnnouncements">
 
