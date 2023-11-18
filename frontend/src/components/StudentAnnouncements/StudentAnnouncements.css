@@ -10,3 +10,10 @@
 .StudentAnnouncements-title {
     font-size: 30px;
 }
+.search {
+    /* aligns search bar to center of the page
+    display: flex;
+    flex-direction: column;
+    align-items: center; */
+    margin-top: 20px;
+}

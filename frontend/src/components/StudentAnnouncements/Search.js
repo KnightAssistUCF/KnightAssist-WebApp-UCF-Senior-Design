@@ -25,12 +25,12 @@ const SearchBar = ({ onSearch }) => {
   return (
     <div>
       <TextField
-        label="Search"
+        label="Search Announcements"
         variant="outlined"
         size="small"
         value={searchTerm}
         onChange={handleInputChange}
-        onKeyPress={handleKeyPress}
+        onKeyPress={handleKeyPress} sx={{ width: '25ch' }}
       />
       <IconButton onClick={handleSearch} color="primary">
         <SearchIcon />
