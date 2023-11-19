@@ -39,6 +39,7 @@ function StudentAnnouncements() {
         const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
         const updates = [];
+        const recentUpdates = [];
         try {
 
         
@@ -49,7 +50,10 @@ function StudentAnnouncements() {
 
             let res = JSON.parse(await response.text());
 
-            console.log(res);
+            const weekAgo = new Date();
+            console.log(weekAgo);
+            weekAgo.setDate(weekAgo.getDate() - 7);
+            console.log(weekAgo);
 
             for(let org of res){
             
@@ -60,10 +64,36 @@ function StudentAnnouncements() {
                 headers: {"Content-Type": "application/json"},
                 });
             
-                res = JSON.parse(await response.text());
+                let orgUpdates = JSON.parse(await response.text());
             
-                console.log(res);
-                updates.push({Orgname: org.name, res});     
+                if(orgUpdates.title != undefined) {
+                    updates.push({Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
+                }
+                 
+
+                for (let announcement of orgUpdates.announcements) {
+                    let updateDate = new Date(announcement.date);
+        
+                    if (updateDate >= weekAgo) {
+                        recentUpdates.push({
+                            Orgname: org.name,
+                            Announcement: {
+                                title: announcement.title,
+                                content: announcement.content,
+                                date: announcement.date,
+                            },
+                        });
+                    } else {
+                        updates.push({
+                            Orgname: org.name,
+                            Announcement: {
+                                title: announcement.title,
+                                content: announcement.content,
+                                date: announcement.date,
+                            },
+                        });
+                    }
+                }
         
         
             }
@@ -71,6 +101,7 @@ function StudentAnnouncements() {
             console.log("nice try");
         }
         console.log(updates);
+        console.log(recentUpdates);
     }
 
         useEffect(() => {
