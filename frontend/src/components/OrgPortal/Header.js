@@ -71,7 +71,7 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/orgportal">
                             <BiHome className='homeIcon'></BiHome>
                             <span class="links_name">Home</span>
                         </a>
