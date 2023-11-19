@@ -1,12 +1,14 @@
 .aboutContainer {
-    margin-top: 80px;
+    margin: 80px 20px 20px 20px;
 }
 .aboutTitle {
     font-size: 40px;
+    font-weight: 30;
     margin-bottom: 25px;
 }
 .aboutParagraph {
     font-size: 20px;
+    font-weight: 30;
 }
 .aboutTopRow {
     display: flex;
@@ -18,4 +20,7 @@
 }
 .aboutParagraph {
     text-align: left;
+}
+.lottie {
+    margin-right: 20%;
 }
