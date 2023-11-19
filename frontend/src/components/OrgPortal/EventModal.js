@@ -190,7 +190,6 @@ function EventModal(props)
     }, [props.editMode])
     
     useEffect(()=>{
-        console.log("event id called here")
         setInfo();
     },[props.eventID])
 

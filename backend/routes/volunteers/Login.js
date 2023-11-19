@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
             const isPasswordValid = await bcrypt.compare(loginPassword, user.password);
             if (isPasswordValid) {
                 const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
-                res.status(200).set("authorization", token).send("User logged in successfully -> " + user); 
+                res.status(200).set("authorization", token).send(user); 
             } else {
                 return res.status(400).send("Invalid password");
             }
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
                 const isPasswordValid = await bcrypt.compare(loginPassword, user.password);
                 if (isPasswordValid) {
                     const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
-                    return res.status(200).set("authorization", token).send("Organization logged in successfully -> " + user);
+                    return res.status(200).set("authorization", token).send(user);
                 } else {
                     return res.status(400).send("Invalid password");
                 }
