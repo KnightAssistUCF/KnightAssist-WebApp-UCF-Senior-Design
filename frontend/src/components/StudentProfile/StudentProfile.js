@@ -37,9 +37,13 @@ function StudentProfile(props)
 
          let url = buildPath(`api/userSearch?email=${email}`);
 
+         console.log(localStorage.getItem('token'))
+
          let response = await fetch(url, {
                method: "GET",
-               headers: {"Content-Type": "application/json"},
+               headers: {"Content-Type": "application/json",
+                  "Authorization": `Bearer ${localStorage.getItem("token")}`
+               }
          });
 
          let res = JSON.parse(await response.text());

@@ -106,7 +106,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userID: localStorage.getItem("token"), 
                 userEmail: "johndoe@example.com",
             };
 

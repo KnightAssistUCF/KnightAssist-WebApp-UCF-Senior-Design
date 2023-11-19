@@ -40,8 +40,8 @@ function LoginComponents(){
         
             let res = JSON.parse(await response.text());
 
-            localStorage.setItem("token", res.confirmToken);
-            localStorage.setItem("ID", res._id)
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("ID", res.user._id)
             
             console.log(res);
 

@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 
 const userStudent = require('../../models/userStudent');
+const { authenticateToken_User } = require('../../utils/jwtUtils');
 
-router.get('/', async (req, res) => {
+router.get('/', authenticateToken_User, async (req, res) => {
     const searchEmail = req.query.email;
 
     await userStudent.findOne({ email: searchEmail }).then((user) => {
