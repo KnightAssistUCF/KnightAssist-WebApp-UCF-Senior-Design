@@ -147,6 +147,10 @@ function EventModal(props)
         
         setShowMSG(true);
         setDisabled(true);
+
+        props.setResetFavorite(props.resetFavorite * -1);
+        props.setResetRecEvents(props.resetRecEvents * -1);
+        
         // Remove message after 2 seconds
         setTimeout(() => {
             setShowMSG(false);

@@ -166,6 +166,10 @@ app.use('/api/getSuggestedEvents_ForUser', getSuggestedEvents);
 const getSuggestedOrganizations = require('./backend/routes/tags_&_recommendations/getSuggestedOrganizations');
 app.use('/api/getSuggestedOrganizations_ForUser', getSuggestedOrganizations);
 
+// return all the events that the user has RSVPed for
+const searchEventsRSVPedFor_ByUser = require('./backend/routes/events/searchEventsRSVPedFor_ByUser');
+app.use('/api/searchUserRSVPedEvents', searchEventsRSVPedFor_ByUser);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

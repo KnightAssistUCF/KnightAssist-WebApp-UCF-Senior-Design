@@ -7,6 +7,12 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Stack from '@mui/material/Stack';
+import Autocomplete from '@mui/material/Autocomplete';
 import Logo from '../Logo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -37,6 +43,11 @@ function AddEventModal(props)
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
+
+    const [redoTags, setRedoTags] = useState(1);
+
+    // Will eventually be an API call to get the tags of an org
+    const [definedTags, setDefinedTags] = useState([]);
 
     /*
     eventID: {
@@ -84,10 +95,10 @@ function AddEventModal(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
-        return today <= date;
+        return date.localeCompare(today) >= 0;
     }
 
-    function resetValues(){
+    async function resetValues(){
         setModalType("Add");
         setButtonText("Add");
 
@@ -102,6 +113,8 @@ function AddEventModal(props)
         setCurrentTag("");
         setTags([]);
         setTagNames([]);
+
+        setDefinedTags(await getOrgTags());
     }
     
     async function submitEvent(){
@@ -137,7 +150,7 @@ function AddEventModal(props)
             let res = await response.text();
             console.log(res);
 
-            if(eventIsUpcoming(date))
+            if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
             else
                 props.setResetPast(props.resetPast * -1);
@@ -183,10 +196,10 @@ function AddEventModal(props)
             
             props.setEditMode(0);
 
-            if(eventIsUpcoming(date))
+            if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
             else
-                props.setResetPast(props.resetPast * -1);   
+                props.setResetPast(props.resetPast * -1);
             
             props.setResetSearch(props.resetSearch * -1);
             
@@ -248,19 +261,65 @@ function AddEventModal(props)
         return (
             <Grid item>
                 <Card className='tag'>
+                    <CloseIcon onClick={() => deleteTag(props.tag)}/>
                     {props.tag}
                 </Card>
             </Grid>
         )
     }
 
-    function createTag(){
-        const taggy = tags;
-        setTags([...taggy, <Tag tag={currentTag}/>]);
-        const taggyNames = tagNames;
-        setTagNames([...taggyNames, currentTag]);
+    function deleteTag(tag){        
+        console.log(tagNames);
+        let idx = tagNames.indexOf(tag);
+        const taggy = tags.slice(0, idx).concat(tags.slice(idx + 1));
+        setTags([...taggy]);
+        const taggyNames = tagNames.slice(0, idx).concat(tagNames.slice(idx + 1));
+        console.log(taggyNames)
+        setTagNames([...taggyNames]);
+
+        setDefinedTags(definedTags.concat(tag));
+
+        setRedoTags(redoTags * -1);
+    }   
+
+    const createTag = () => {
+
+        setTags(tags.concat(<div>
+            {Tag({"tag": currentTag})}
+        </div>));
+
+        setTagNames(tagNames.concat(currentTag));
+
         setCurrentTag("");
+        let idx = definedTags.indexOf(currentTag);
+        setDefinedTags(definedTags.slice(0, idx).concat(definedTags.slice(idx + 1)));
+
+        setRedoTags(redoTags * -1);
     }
+
+    const getOrgTags = async () => {
+        const organizationID = "12345";
+        const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
+
+        try {
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = JSON.parse(await response.text());
+            console.log(res);
+
+            return res;
+            
+        }catch (err){
+            console.log("An error has occurred: ", err);
+        }
+    }
+
+    useEffect(async ()=>{
+        setDefinedTags(await getOrgTags());
+    }, [])
 
     useEffect(()=>{
         const addFields = async () => {
@@ -293,18 +352,43 @@ function AddEventModal(props)
             const taggy = [];
             const taggyNames = [];
 
+            const unusedTags = definedTags;
+
             for(let tagName of event.eventTags){
-                taggy.push(<Tag tag={tagName}/>)
+                taggy.push(Tag({"tag": tagName}));
                 taggyNames.push(tagName);
+
+                // Make sure the available options are of tags not selected
+                // for the event already
+                unusedTags.splice(unusedTags.indexOf(tagName), 1);
             }
             
             setTags(taggy);
             setTagNames(taggyNames);
+
+            //setDefinedTags(unusedTags);
+
+            setRedoTags(redoTags * -1);
         }
 
         if(props.editMode == 1)
             addFields();
-    },[props.editMode])
+    },[props.editMode]);
+
+    // This is due to a bug that occurs when
+    // deleting a tag, remakes all of the tags
+    useEffect(() => {
+        const updatedTags = [];
+        const updatedTagNames = [];
+ 
+        for(let str of tagNames){
+            updatedTags.push(Tag({"tag": str}));
+            updatedTagNames.push(str);
+        }
+
+        setTags(updatedTags);
+        setTagNames(updatedTagNames);
+    }, [redoTags])
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
@@ -339,8 +423,29 @@ function AddEventModal(props)
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>
-                                <Grid container spacing={2} marginTop={"50px"} marginBottom={"10px"}>
-                                    {GridTextField({xm:12, sm:6, name:"Tag", label:"Tag", value:currentTag, required:false, onChange:(e) => setCurrentTag(e.target.value)})}
+                                <Grid container spacing={2} marginTop={"65px"} marginBottom={"10px"}>
+                                    <Grid item xs={12} sm={6}>
+                                        <FormControl fullWidth>
+                                            <InputLabel id="demo-select-small-label">Select Tag</InputLabel>
+                                            <Select
+                                                value={currentTag}
+                                                label="Select Tag"
+                                                onChange={(e) => {console.log(e); setCurrentTag(e.target.value)}}
+                                                sx={{fontSize:'large'}}
+
+                                            >
+                                                {definedTags.map((tag) => (
+                                                    <MenuItem
+                                                        key={tag}
+                                                        value={tag}
+                                                        size
+                                                    >
+                                                    {tag}
+                                                    </MenuItem>
+                                                ))}
+                                            </Select>
+                                        </FormControl>
+                                    </Grid>
                                     <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
                                     {tags}
                                 </Grid>
