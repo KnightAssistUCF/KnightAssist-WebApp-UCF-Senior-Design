@@ -30,8 +30,12 @@ function AboutUs()
               Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam nostrum fugiat sed voluptatem nulla earum, fugit aspernatur. Delectus quos amet eum quidem eveniet dolore dolores repellat sit nisi aperiam? Nobis eligendi ullam ex natus quibusdam deleniti quaerat corrupti ab aspernatur voluptatum, nam beatae dolore similique numquam distinctio iste fugiat id culpa sed ea aliquid architecto. Deserunt possimus natus impedit adipisci asperiores consectetur fugit iusto, sunt quo officia! Cupiditate pariatur natus libero?
             </div>
           </div>
-          <Team></Team>
-        </div>
+          </div>
+          <div className="teamColor">
+            <Team></Team>
+          </div>
+          
+        
         
       </div>
     );
