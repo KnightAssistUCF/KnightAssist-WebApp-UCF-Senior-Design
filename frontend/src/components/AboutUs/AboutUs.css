@@ -1,0 +1,21 @@
+.aboutContainer {
+    margin-top: 80px;
+}
+.aboutTitle {
+    font-size: 40px;
+    margin-bottom: 25px;
+}
+.aboutParagraph {
+    font-size: 20px;
+}
+.aboutTopRow {
+    display: flex;
+    margin-bottom: 20px;
+}
+.lottieImage {
+    margin-right: 500px;
+    align-items: center;
+}
+.aboutParagraph {
+    text-align: left;
+}
