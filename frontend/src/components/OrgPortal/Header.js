@@ -71,7 +71,7 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="/">
                             <BiHome className='homeIcon'></BiHome>
                             <span class="links_name">Home</span>
                         </a>
@@ -79,7 +79,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="/">
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Events</span>
                         </a>
@@ -87,7 +87,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="/">
                             <BiHistory className='historyIcon'></BiHistory>
                             <span class="links_name">History</span>
                         </a>
@@ -95,7 +95,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Settings" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="/">
                             <BiCog className='settingsIcon'></BiCog>
                             <span class="links_name">Settings</span>
                         </a>
