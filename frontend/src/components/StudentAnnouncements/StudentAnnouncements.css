@@ -36,15 +36,13 @@
     font-size: 15px;
     color: rgb(113, 113, 113);
     padding-top: 5px;
-    padding-left: 10px;
 }
 .updateTitle {
     font-size: 20px;
 }
 .divider {
     margin-top: 7px;
-    border-top: 1px solid #dadada;
-    width: 100%;
+
 }
 .cardResult {
     margin-bottom: 10px;

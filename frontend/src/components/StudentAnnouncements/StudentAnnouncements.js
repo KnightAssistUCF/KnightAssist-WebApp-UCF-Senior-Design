@@ -147,7 +147,7 @@ return (
                                 </Grid>
                                 <div className="divider"></div>
                                 <div className="updateTitle">{updateTitle}</div>
-                                <div className='updateDescription'>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d </div>
+                                <div className='updateDescription'><i>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d</i></div>
                             </CardContent>
                         </Card>
                         <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
@@ -167,12 +167,12 @@ return (
                                     </Grid>
                                     <div className='updateOrgTitle'>Arboretum</div>
                                     <Grid marginLeft="auto">
-                                        <div className='date'>3 days ago</div>
+                                        <div className='date'>{update.Announcement.date}</div>
                                     </Grid>
                                 </Grid>
                                 <div className="divider"></div>
                                 <div className="updateTitle">{update.Announcement.title}</div>
-                                <div className='updateDescription'>{update.Announcement.content}</div>
+                                <div className='updateDescription'><i>{update.Announcement.content}</i></div>
                             </CardContent>
                         </Card>
                         ))}
