@@ -25,7 +25,7 @@
     margin-top: 25px;
 }
 .updateOrgTitle {
-    font-size: 20px;
+    font-size: 17px;
     margin-left: 12px;
 }
 .date {
@@ -33,17 +33,21 @@
     color: rgb(113, 113, 113);
 }
 .updateDescription {
-    font-size: 17px;
+    font-size: 15px;
     color: rgb(113, 113, 113);
     padding-top: 5px;
     padding-left: 10px;
 }
 .updateTitle {
-    font-size: 23px;
+    font-size: 20px;
 }
 .divider {
     margin-top: 7px;
     border-top: 1px solid #dadada;
+    width: 100%;
+}
+.cardResult {
+    margin-bottom: 10px;
 }
 .cardResult:hover {
     background-color: #f2f2f2;

@@ -20,6 +20,9 @@ import AnnouncementModal from './AnnouncementModal';
 function StudentAnnouncements() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [updateTitle, setUpdateTitle] = useState('Is my props working');
+    const [oldUpdates, setOldUpdates] = useState([]);
+    const [newUpdates, setNewUpdates] = useState([]);
+
 
     const handleClick = () => {
         console.log("click!");
@@ -38,9 +41,12 @@ function StudentAnnouncements() {
 
         const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+
         const updates = [];
         const recentUpdates = [];
+        
         try {
+            
 
         
             let response = await fetch(url, {
@@ -94,9 +100,11 @@ function StudentAnnouncements() {
                         });
                     }
                 }
-        
+                
         
             }
+            setOldUpdates(updates);
+            setNewUpdates(recentUpdates);
         } catch(e) {
             console.log("nice try");
         }
@@ -145,7 +153,30 @@ return (
                         <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
                     </div>
                     <div className="oldAnnouncements">
-
+                        <div class="StudentAnnouncements-subtitle">All</div>
+                        {oldUpdates.map((update, index) => (
+                        <Card key={index} variant='outlined' className='cardResult' onClick={handleClick}>
+                            <CardContent>
+                                <Grid container alignItems='center'>
+                                    <Grid item>
+                                        <CardMedia
+                                        component="img"
+                                        sx={{width: 35, borderRadius: '700px'}}
+                                        image={require('../Login/loginPic.png')}
+                                        />
+                                    </Grid>
+                                    <div className='updateOrgTitle'>Arboretum</div>
+                                    <Grid marginLeft="auto">
+                                        <div className='date'>3 days ago</div>
+                                    </Grid>
+                                </Grid>
+                                <div className="divider"></div>
+                                <div className="updateTitle">{update.Announcement.title}</div>
+                                <div className='updateDescription'>{update.Announcement.content}</div>
+                            </CardContent>
+                        </Card>
+                        ))}
+                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
                     </div>
                 </div>
             </div>
