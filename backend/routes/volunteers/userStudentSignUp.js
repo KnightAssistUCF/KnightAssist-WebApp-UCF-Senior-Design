@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
                 semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
                 categoryTags: req.body.categoryTags, // stores tags marking their interests
                 confirmToken: generateToken({ email: req.body.email }, jwtSecret),
+                EmailToken: crypto.randomBytes(64).toString('hex'),
                 valid: false,
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
                 // we can add more here as we wish for the sign up 
@@ -61,16 +62,13 @@ router.post('/', async (req, res) => {
                 },
             });
 
-            // encrypt again the token for the email confirmation
-            var encryptedTokenForEmail = bcrypt.hashSync(newUser.confirmToken, 10);
-
             let response = {
                 body: {
                     name: req.body.firstName + ' ' + req.body.lastName,
                     intro: 'Welcome to KnightAssist! We\'re very excited to have you on board.',
                     action: {
 
-                        instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app: ' + encryptedTokenForEmail + '',
+                        instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app: ' + newUser.EmailToken + '',
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
                             text: 'Login and confirm your account',
