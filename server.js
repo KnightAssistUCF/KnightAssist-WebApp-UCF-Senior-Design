@@ -170,6 +170,11 @@ app.use('/api/getSuggestedOrganizations_ForUser', getSuggestedOrganizations);
 const searchEventsRSVPedFor_ByUser = require('./backend/routes/events/searchEventsRSVPedFor_ByUser');
 app.use('/api/searchUserRSVPedEvents', searchEventsRSVPedFor_ByUser);
 
+// email Communications Endpoints
+/* Check if the user student has verified their email or not {returns either true or false} */
+const checkIfEmailWasVerified_Volunteer = require('./backend/routes/emailCommunications/checkIfEmailWasVerified_Volunteer');
+app.use('/api/checkIfEmailWasVerified_Volunteer', checkIfEmailWasVerified_Volunteer);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
                 semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
                 categoryTags: req.body.categoryTags, // stores tags marking their interests
                 confirmToken: generateToken({ email: req.body.email }, jwtSecret),
-                EmailToken: crypto.randomBytes(64).toString('hex'),
+                EmailToken: crypto.randomBytes(64).toString('hex').toString(),
                 valid: false,
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
                 // we can add more here as we wish for the sign up 
