@@ -40,6 +40,7 @@ const eventSchema = new Schema({
     semester: String,
     maxAttendees: {
         type: Number,
+        required: true
     },
     __v: {
         type: String,

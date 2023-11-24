@@ -66,12 +66,21 @@ router.post('/', async (req, res) => {
                     name: req.body.firstName + ' ' + req.body.lastName,
                     intro: 'Welcome to KnightAssist! We\'re very excited to have you on board.',
                     action: {
-                        instructions: 'To get started with KnightAssist, please click here:',
+                        // instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app:',
+                        // button: {
+                        //     color: '#22BC66', //[makes the button green, can change later]
+                        //     text: 'Confirm your account',
+                        //     link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                        // }
+
+                        // add text that contains the user's generated confirmtoken 
+                        instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app: ' + newUser.confirmToken + '',
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
-                            text: 'Confirm your account',
+                            text: 'Login and confirm your account',
                             link: 'https://nodejs.org/en/' // change this later with the correct redirect link
                         }
+
                     },
                     outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
                 }
