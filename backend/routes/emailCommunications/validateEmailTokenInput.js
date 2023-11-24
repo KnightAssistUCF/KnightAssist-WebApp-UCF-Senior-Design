@@ -3,7 +3,7 @@ const router = express.Router();
 const userStudent = require('../../models/userStudent');
 
 router.post('/', async (req, res) => {
-        const { userEmail, tokenEnterByUser } = req.body;
+        const { userEmail, tokenEnteredByUser } = req.body;
 
         try {
                 const user = await userStudent.findOne({ email: userEmail });
@@ -12,12 +12,12 @@ router.post('/', async (req, res) => {
                         return res.status(404).send('User not found in the database');
                 }
 
-                if (user.EmailToken === tokenEnterByUser) {
+                if (user.EmailToken === tokenEnteredByUser) {
                         user.EmailValidated = true;
                         await user.save();
                         res.send({ success: true });
                 } else {
-                        console.log("the user entered the wrong token. The token they entered was " + tokenEnterByUser + " and the token in the database is " + user.EmailToken);
+                        console.log("the user entered the wrong token. The token they entered was " + tokenEnteredByUser + " and the token in the database is " + user.EmailToken);
                         res.send({ success: false });
                 }
         } catch (err) {
