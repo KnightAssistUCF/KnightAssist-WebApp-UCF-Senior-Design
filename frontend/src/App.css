@@ -24,7 +24,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #ffffff;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -82,6 +82,11 @@ html, body {
   font-family: "League Spartan";
 }
 
+.landing{
+  min-width: 600px;
+  background-color: white !important;
+}
+
 .explorePage{
   height: 100vh;
   width: 100%;
@@ -103,7 +108,6 @@ html, body {
   background-color: white;
   color: black;
 }
-
 .postVerifyQsPage{
   height: 100vh;
   width: 100%;
