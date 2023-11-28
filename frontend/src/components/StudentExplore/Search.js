@@ -16,16 +16,21 @@ function Search(props) {
 
     // Gets org name from organizationID
     async function getOrgName(id){
-      let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+        let url = buildPath(`api/organizationSearch?organizationID=${id}`);
 
-      let response = await fetch(url, {
-        method: "GET",
-        headers: {"Content-Type": "application/json"},
-      });
+        let response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
 
-      let res = JSON.parse(await response.text());
+        console.log(id);
 
-      return res.name;
+      try{
+          let res = JSON.parse(await response.text());
+          return res.name;
+      }catch{
+          return -1;
+      }
     }
 
     async function getAllEvents(flag){
@@ -41,8 +46,11 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            if("name" in event && "date" in event)
-                tmp.push({label: ("(" + await getOrgName(event.sponsoringOrganization) + ") " + event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+            if("name" in event && "date" in event){
+                const orgName = await getOrgName(event.sponsoringOrganization);
+                if(orgName != -1)
+                  tmp.push({label: ("(" + orgName + ") " + event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+            }
         }
 
         setEvents(tmp);

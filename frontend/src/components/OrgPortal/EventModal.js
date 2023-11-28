@@ -72,7 +72,7 @@ function EventModal(props)
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
-                setVolunteers(event.registeredVolunteers.length)
+                setVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
         } else {
@@ -190,7 +190,6 @@ function EventModal(props)
     }, [props.editMode])
     
     useEffect(()=>{
-        console.log("event id called here")
         setInfo();
     },[props.eventID])
 

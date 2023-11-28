@@ -38,24 +38,24 @@ function LoginComponents(){
                 headers: {"Content-Type": "application/json"},
             });
         
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
 
+            localStorage.setItem("token", res.token);
+            localStorage.setItem("ID", res.user._id)
+            
             console.log(res);
 
             /// The credentials matched an existing account
-            if(res.includes("Organization logged in successfully ->")) {
+            if(!('studentID' in res)) {
                 window.location.href="/#/orgportal"
                 setIsInvalid("");
-            }else if(res.includes("User logged in successfully ->")) {
+            }else if(!('organizationID' in res)) {
                 window.location.href="/#/studenthomepage";
-            }
-            else {
-                setIsInvalid("is-invalid");
             }
             
         } catch (e) {
             console.log(e.toString());
-            return;
+            setIsInvalid("is-invalid");
         }
     }
 

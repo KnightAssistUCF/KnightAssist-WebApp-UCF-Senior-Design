@@ -66,7 +66,7 @@ function EventModal(props)
             setLocation(event.location);
             setStartTime(event.startTime);
             setEndTime(event.endTime);
-            setVolunteers(event.registeredVolunteers.length);
+            setVolunteers(event.attendees.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
             
@@ -106,7 +106,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
+                userID: localStorage.getItem("token"), 
                 userEmail: "johndoe@example.com",
             };
 
