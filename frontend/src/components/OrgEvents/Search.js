@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import './OrgPortal.css';
+import './OrgEvents';
 import { useState, useEffect } from 'react';
 import { buildPath } from '../../path';
 

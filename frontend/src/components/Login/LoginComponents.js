@@ -41,13 +41,13 @@ function LoginComponents(){
             let res = JSON.parse(await response.text());
 
             localStorage.setItem("token", res.token);
-            localStorage.setItem("ID", res.user._id)
+            localStorage.setItem("ID", res.user._id);
             
             console.log(res);
 
             /// The credentials matched an existing account
             if(!('studentID' in res)) {
-                window.location.href="/#/orgportal"
+                window.location.href="/#/orgevents"
                 setIsInvalid("");
             }else if(!('organizationID' in res)) {
                 window.location.href="/#/studenthomepage";

@@ -1,5 +1,5 @@
 import React from 'react';
-import './OrgPortal.css';
+import './OrgEvents';
 
 function Welcome()
 {

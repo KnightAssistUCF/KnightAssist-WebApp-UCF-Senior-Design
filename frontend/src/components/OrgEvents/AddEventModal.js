@@ -20,7 +20,7 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
-import './OrgPortal.css';
+import './OrgEvents';
 import { buildPath } from '../../path';
 import { useEffect, useState } from 'react';
 

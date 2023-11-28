@@ -1,5 +1,5 @@
 import {useState} from 'react';
-//import Header from '../Header';
+
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
 import Welcome from './Welcome';
@@ -8,9 +8,9 @@ import AddEventModal from './AddEventModal';
 import EventModal from './EventModal';
 import SearchSwitch from './SearchSwitch';
 import Header from './Header';
-import './OrgPortal.css';
+import './OrgEvents.css';
 
-function OrgPortal()
+function OrgEvents()
 {
 
     const [openModal, setOpenModal] = useState(false);
@@ -43,4 +43,4 @@ function OrgPortal()
     );
 };
 
-export default OrgPortal;
+export default OrgEvents;
