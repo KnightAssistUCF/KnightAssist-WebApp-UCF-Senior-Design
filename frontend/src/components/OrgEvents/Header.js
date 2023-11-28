@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom'; 
+import './OrgEvents.css';
 import Logo from '../Logo';
 
 function Header()
@@ -71,7 +72,7 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/orgportal">
+                        <a>
                             <BiHome className='homeIcon'></BiHome>
                             <span class="links_name">Home</span>
                         </a>
@@ -79,7 +80,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/orgevents">
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Events</span>
                         </a>

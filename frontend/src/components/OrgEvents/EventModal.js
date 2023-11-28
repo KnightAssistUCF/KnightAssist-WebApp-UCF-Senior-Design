@@ -7,7 +7,7 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
-import './OrgPortal.css';
+import './OrgEvents';
 import { buildPath } from '../../path';
 import { useEffect, useState } from 'react';
 import EventIcon from '@mui/icons-material/Event';

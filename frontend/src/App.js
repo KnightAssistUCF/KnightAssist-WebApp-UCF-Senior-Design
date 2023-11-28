@@ -7,7 +7,7 @@ import {
   Routes,
 } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
-import OrgPortalPage from './pages/OrgPortalPage';
+import OrgEventsPage from './pages/OrgEventsPage';
 import LandingPage from './pages/LandingPage';
 import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
@@ -28,7 +28,7 @@ function App()
             <Route path="/login" element={<LoginPage/>}></Route>
           </Routes>
           <Routes>
-            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
+            <Route path="/orgevents" element={<OrgEventsPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>

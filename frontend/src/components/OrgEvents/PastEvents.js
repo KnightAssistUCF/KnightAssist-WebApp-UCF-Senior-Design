@@ -4,21 +4,20 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import './OrgPortal.css';
+import { CardActionArea } from '@mui/material';
+import './OrgEvents';
 
 const logo = require("../Login/loginPic.png");
 
 
-function UpcomingEvents(props)
+function PastEvents(props)
 {
 
     const [events, setEvents] = useState([]);
     const [eventCards, setEventCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
-
 
     function changePage(e, value){
         setPage(value);
@@ -27,20 +26,20 @@ function UpcomingEvents(props)
     }
 
     function openEventModal(id){
+        console.log("ID:", id);
         props.setEventID(id);
         props.setOpenEvent(true);
     }
 
-    function eventIsUpcoming(date){
+    function eventIsPast(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
+        return date.localeCompare(today) < 0;
     }
 
-    async function getUpcomingEvents(){
+    async function getPastEvents(){
         const organizationID = "12345";
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
@@ -67,18 +66,18 @@ function UpcomingEvents(props)
 
         const events = [];
 
-        for(let event of res){
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
-        }       
-
+        for(let event of res)
+            if(eventIsPast(event.date))
+                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)   
+                
         events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
+            return b.props.date.localeCompare(a.props.date)
         });
 
         console.log(events);
 
         setNumPages(Math.ceil(events.length / 4))
+
         setEvents(events);
 
         let extraBack = 0;
@@ -94,12 +93,10 @@ function UpcomingEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
+        return <h1 className='upcomingEvents spartan'>Your Past Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props){
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -125,23 +122,22 @@ function UpcomingEvents(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="belowSpace eventsCard card">       
                 {eventCards}
             </div>
         )
     }
 
     useEffect(()=>{
-        getUpcomingEvents();
+        getPastEvents();
     },[])
 
     useEffect(()=>{
-        console.log("its working!")
-        getUpcomingEvents();
+        getPastEvents();
     },[props.reset])
 
     return(
-     <div className='upcomingEventsSpace'>
+     <div>
         <EventHeader/>
         <div>
             <Events/>
@@ -151,4 +147,4 @@ function UpcomingEvents(props)
     );
 };
 
-export default UpcomingEvents;
+export default PastEvents;
