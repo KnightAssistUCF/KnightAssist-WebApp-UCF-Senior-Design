@@ -2,7 +2,6 @@ import {useState} from 'react';
 
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
-import Welcome from './Welcome';
 import Search from './Search';
 import AddEventModal from './AddEventModal';
 import EventModal from './EventModal';
@@ -10,7 +9,7 @@ import SearchSwitch from './SearchSwitch';
 import Header from './Header';
 import './OrgEvents.css';
 
-function OrgEvents()
+function OrgPortal()
 {
 
     const [openModal, setOpenModal] = useState(false);
@@ -22,12 +21,20 @@ function OrgEvents()
     const [resetSearch, setResetSearch] = useState(1);
     const [searchType, setSearchType] = useState();
     
+    function Title(){
+      return(
+        <div className='yourEvents spartan'>
+           <h1>Events</h1>
+        </div>
+      )
+    }
+
     return(
       <div>
         <Header/>
         <div className='move'>
           <div className="orgPortalTop">
-            <Welcome/>
+            <Title/>
             <SearchSwitch setSearchType={setSearchType}/>
             <div className='moveSearch'>
               <Search searchType={searchType} resetEventSearch={resetSearch}/>
@@ -43,4 +50,4 @@ function OrgEvents()
     );
 };
 
-export default OrgEvents;
+export default OrgPortal;
