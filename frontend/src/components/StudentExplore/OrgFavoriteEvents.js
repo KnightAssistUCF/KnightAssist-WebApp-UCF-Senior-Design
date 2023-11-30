@@ -40,9 +40,7 @@ function OrgFavoriteEvents(props)
     }
 
     async function getEvents(){
-        const userID = "6519e4fd7a6fa91cd257bfda";
-
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -71,8 +69,7 @@ function OrgFavoriteEvents(props)
                 const json = {
                     eventID: event.eventID,
                     eventName: event.name,
-                    userID: "6519e4fd7a6fa91cd257bfda",
-                    userEmail: "johndoe@example.com",
+                    userID: localStorage.getItem("ID"),
                     check: 1
                 };
     

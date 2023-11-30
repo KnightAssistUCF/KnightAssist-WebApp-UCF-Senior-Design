@@ -12,9 +12,9 @@ const userStudent = require('../../models/userStudent');
 
 
 router.post('/', async (req, res) => {
-        const { eventID, eventName, userID, userEmail, check } = req.body;
+        const { eventID, eventName, userID, check } = req.body;
 
-        if (!eventID || !userID || !eventName || !userEmail) {
+        if (!eventID || !userID || !eventName) {
                 return res.status(400).send("Missing credentials to RSVP for event");
         }
 
@@ -34,9 +34,7 @@ router.post('/', async (req, res) => {
 
                 // Check if the user already registered
                 if (selectedEvent.attendees.includes(userID)
-                || selectedEvent.registeredVolunteers.includes(userID)
-                || selectedEvent.registeredVolunteers.includes(userEmail)
-                || selectedEvent.attendees.includes(userEmail)) 
+                || selectedEvent.registeredVolunteers.includes(userID)) 
                 {
                         return res.status(200).json({ status: "User already registered for event", RSVPStatus: 1 }).send();
                 }else if(check == 1){
@@ -54,11 +52,13 @@ router.post('/', async (req, res) => {
 
                 await selectedEvent.save();
 
-                const userRegistered = await userStudent.findOne({ email: userEmail });
+                const userRegistered = await userStudent.findOne({ _id: userID});
 
                 if (!userRegistered) {
                         return res.status(404).send("User not found in the DB - cannot add to their event history/RSVP");
                 }
+
+                console.log(userRegistered);
 
                 userRegistered.eventsRSVP.push(eventID);
                 await userRegistered.save();

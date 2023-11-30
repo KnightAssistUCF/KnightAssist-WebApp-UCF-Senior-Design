@@ -53,9 +53,7 @@ function RecommendedEvents(props)
     }
 
     async function getEvents(){
-        const userID = "123456789";
-
-        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${userID}`);
+        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",

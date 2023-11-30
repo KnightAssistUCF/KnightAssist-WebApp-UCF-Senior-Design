@@ -73,8 +73,7 @@ function EventModal(props)
             const json = {
                 eventID: event._id,
                 eventName: event.name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"),
                 check: 1
             };
 
@@ -103,11 +102,11 @@ function EventModal(props)
 
     async function doRSVP(){
         if(isRSVP){
+            console.log("its happening here");
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("token"), 
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"), 
             };
 
             const url = buildPath(`api/cancelRSVP`);
@@ -125,8 +124,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"),
                 check: 0
             };
 
