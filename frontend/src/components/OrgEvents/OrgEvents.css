@@ -189,3 +189,25 @@
     float: left;
     margin-left: 150px;
 }
+
+.volunteersBtn{
+    background: none;
+    border: none;
+}
+
+.volunteersBtn:hover{
+    color: #00785A;
+}
+
+.volunteersBtn:active{
+    color: #02be8f;
+}
+
+.volunteerItem{
+
+}
+
+.volunteerPic{
+    width: 20px;
+    height: 20px;
+}

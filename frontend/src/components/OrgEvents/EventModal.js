@@ -21,8 +21,15 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
 
 const eventPic = require("../Login/loginPic.png");
+const avatarPic = require("./DefaultPic.png");
 
 function EventModal(props)
 {
@@ -32,14 +39,17 @@ function EventModal(props)
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
 
+    const [openVolunteers, setOpenVolunteers] = useState(false);
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
-    const [curVolunteers, setVolunteers] = useState(0);
+    const [curVolunteers, setCurVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
+    const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
  
     function eventIsUpcoming(date){
@@ -49,6 +59,23 @@ function EventModal(props)
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
         return date.localeCompare(today) >= 0;
+    }
+
+    async function getVolunteerInfo(id){
+        let url = buildPath(`api/userSearch?userID=${id}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }        
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        console.log(res);
+        
+        return {"name": res.firstName + " " + res.lastName, "profilePic": res.profilePic, "userID": res._id};
     }
 
     async function setInfo(){        
@@ -72,9 +99,17 @@ function EventModal(props)
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
-                setVolunteers(event.attendees.length)
+                setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+                const volunteers = [];
+
+                for(let id of event.attendees)
+                    volunteers.push(getVolunteerInfo(id));
+
+                setVolunteerInfo(volunteers);
+
         } else {
             console.log("Event undefined or not found");
         }
@@ -113,12 +148,32 @@ function EventModal(props)
         ) 
     }
 
+    function VolunteerItem(props){
+        return (
+            <ListItemButton className='volunteerItem'>
+                <Avatar
+                    src={avatarPic}
+                    className="volunteerPic"
+                />
+                <ListItemText primary={props.info.name} />
+            </ListItemButton>
+        )
+    }
+
+
     function Volunteers(){
         return (
             <div>
-                <p className='lessSpace'>Registered Volunteers:</p>
-                <p>{curVolunteers}/{maxVolunteers}</p>
-            </div>
+                <button className="volunteersBtn" onClick={() => setOpenVolunteers(!openVolunteers)}>
+                    <p className='lessSpace'>Registered Volunteers:</p>
+                    <p>{curVolunteers}/{maxVolunteers}</p>
+                </button>
+                <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        {volunteerInfo.map(info => <VolunteerItem info={info}/>)}
+                    </List>
+                </Collapse>
+           </div>
         )
     }
 
@@ -224,7 +279,7 @@ function EventModal(props)
                                     <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
                                 </Grid>
 
-                                <Volunteers/>
+                                {Volunteers()}
 
                                 <Tags/>
       

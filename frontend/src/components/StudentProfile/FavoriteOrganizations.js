@@ -31,7 +31,7 @@ function FavoriteOrganizations(props)
     }
 
     async function getOrgs(){
-	const userID = "6519e4fd7a6fa91cd257bfda";
+	    const userID = "6519e4fd7a6fa91cd257bfda";
 
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
 
@@ -42,7 +42,7 @@ function FavoriteOrganizations(props)
 
         let res = JSON.parse(await response.text());
 
-	console.log(res);
+	    console.log(res);
 
         for(let org of res)
             orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
