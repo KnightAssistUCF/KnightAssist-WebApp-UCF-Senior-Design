@@ -22,7 +22,6 @@ router.post('/', async (req, res) => {
             events.eventTags = req.body.eventTags;
             events.semester = req.body.semester;
             events.maxAttendees = req.body.maxAttendees;
-            events.attendees = req.body.attendees;
             events.registeredVolunteers = req.body.registeredVolunteers;
             events.save();            
             console.log(events);

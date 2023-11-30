@@ -203,8 +203,17 @@
     color: #02be8f;
 }
 
-.volunteerItem{
+.volunteerList{
+    left: 35%;
+    margin-bottom: 50px !important;
+}
 
+.volunteerItem{
+    width: 200px;
+}
+
+.volunteerName{
+    margin-left: 20px;
 }
 
 .volunteerPic{

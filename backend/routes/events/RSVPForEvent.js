@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
 
 
                 if (!selectedEvent) {
-                        return res.status(404).send("Event not found with neither the ID nor the name (potentially not in the DB)");
+                        return res.status(404).send({ status: "Event not found with neither the ID nor the name (potentially not in the DB)", RSVPStatus: 3 });
                 }
 
                 // Check if the user already registered
@@ -65,7 +65,7 @@ router.post('/', async (req, res) => {
 
                 return res.status(200).json({ status: "User registered for event", RSVPStatus: 0 }).send();
         } catch (err) {
-                res.status(503).send("Internal server error: " + err.message);
+                res.status(503).send({status: "Internal server error: " + err.message, RSVPStatus: 3});
         }
 });
 

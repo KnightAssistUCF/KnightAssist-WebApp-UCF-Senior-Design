@@ -62,6 +62,8 @@ function EventModal(props)
     }
 
     async function getVolunteerInfo(id){
+
+        console.log(localStorage.getItem("token"))
         let url = buildPath(`api/userSearch?userID=${id}`);
 
         let response = await fetch(url, {
@@ -106,7 +108,7 @@ function EventModal(props)
                 const volunteers = [];
 
                 for(let id of event.attendees)
-                    volunteers.push(getVolunteerInfo(id));
+                    volunteers.push(await getVolunteerInfo(id));
 
                 setVolunteerInfo(volunteers);
 
@@ -149,13 +151,14 @@ function EventModal(props)
     }
 
     function VolunteerItem(props){
+        console.log(props.info);
         return (
             <ListItemButton className='volunteerItem'>
                 <Avatar
                     src={avatarPic}
                     className="volunteerPic"
                 />
-                <ListItemText primary={props.info.name} />
+                <ListItemText className="volunteerName" primary={props.info.name} />
             </ListItemButton>
         )
     }
@@ -168,8 +171,9 @@ function EventModal(props)
                     <p className='lessSpace'>Registered Volunteers:</p>
                     <p>{curVolunteers}/{maxVolunteers}</p>
                 </button>
+
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
+                    <List className="volunteerList" component="div" disablePadding>
                         {volunteerInfo.map(info => <VolunteerItem info={info}/>)}
                     </List>
                 </Collapse>
