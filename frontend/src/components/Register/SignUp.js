@@ -1,18 +1,42 @@
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import React from "react";
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import UserForm from './UserForm';
+import OrganizationForm from './OrganizationForm';
 
 const defaultTheme = createTheme();
 
+const state =['User', 'Organization'];
+
+function getForm(state) {
+  switch (state) {
+    case 0:
+      return <UserForm />;
+    case 1:
+      return <OrganizationForm />;
+    default:
+      throw new Error('Unknown step');
+  }
+}
+
 export default function SignUp() {
+  const [activeState, setActiveState] = React.useState(0);
+  const handleToggle = () => {
+    if(activeState == 0){
+      setActiveState(1);
+    } else {
+      setActiveState(0);
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -20,69 +44,29 @@ export default function SignUp() {
       email: data.get('email'),
       password: data.get('password'),
     });
-  };
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <Typography component="h1" variant="h4" sx={{paddingBottom: 2}}>
-            Create an Account
-          </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  autoComplete="given-name"
-                  name="firstName"
-                  required
-                  fullWidth
-                  id="firstName"
-                  label="First Name"
-                  autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
-                />
-              </Grid>
-            </Grid>
-            <Button
+          <Box
+            sx={{
+              marginTop: 8,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+          <Typography component="h1" variant="h5" sx={{paddingBottom: 2}}>Register as: </Typography>
+          <ToggleButtonGroup value={state} exclusive onChange={handleToggle}>
+            <ToggleButton value="User" aria-label="User Sign Up">User</ToggleButton>
+            <ToggleButton value="Organization" aria-label="Org Sign Up">Org</ToggleButton>
+          </ToggleButtonGroup>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} >
+            {getForm(activeState)}
+          </Box>
+          <Button
               type="submit"
               fullWidth
               variant="contained"
@@ -90,14 +74,13 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            <Grid container justifyContent="center">
+          <Grid container justifyContent="center">
               <Grid item>
                 <Link href="#" variant="body2" sx={{ color: '#4E878C'}}>
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
-          </Box>
         </Box>
       </Container>
     </ThemeProvider>
