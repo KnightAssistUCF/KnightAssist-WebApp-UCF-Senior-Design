@@ -174,9 +174,15 @@ app.use('/api/searchUserRSVPedEvents', searchEventsRSVPedFor_ByUser);
 /* Check if the user student has verified their email or not {returns either true or false} */
 const checkIfEmailWasVerified_Volunteer = require('./backend/routes/emailCommunications/checkIfEmailWasVerified_Volunteer');
 app.use('/api/checkIfEmailWasVerified_Volunteer', checkIfEmailWasVerified_Volunteer);
+/*Check if the user organization verified their email or not {returns either true or false} */
+const checkIfEmailWasVerified_Organization = require('./backend/routes/emailCommunications/checkIfEmailWasVerified_Organization');
+app.use('/api/checkIfEmailWasVerified_Organization', checkIfEmailWasVerified_Organization);
 /* Check the entered token by the user if it matches the one we generated and sent to them through email {returns either true or false} */
-const validateEmailTokenInput = require('./backend/routes/emailCommunications/validateEmailTokenInput');
-app.use('/api/validateEmailTokenInput', validateEmailTokenInput);
+const validateEmailTokenInput_student = require('./backend/routes/emailCommunications/validateEmailTokenInput_student');
+app.use('/api/validateEmailTokenInput_student', validateEmailTokenInput_student);
+/* Check if the organization has verified their email or not {returns either true or false} */
+const validateEmailTokenInput_organization= require('./backend/routes/emailCommunications/validateEmailTokenInput_org');
+app.use('/api/validateEmailTokenInput_organization', validateEmailTokenInput_organization);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
