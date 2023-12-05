@@ -184,6 +184,11 @@ app.use('/api/validateEmailTokenInput_student', validateEmailTokenInput_student)
 const validateEmailTokenInput_organization= require('./backend/routes/emailCommunications/validateEmailTokenInput_org');
 app.use('/api/validateEmailTokenInput_organization', validateEmailTokenInput_organization);
 
+
+// QR CODE endpoints
+const generateQRCode_checkIn = require('./backend/routes/QRCode/createCheckIn_QRCode');
+app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
