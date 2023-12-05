@@ -7,8 +7,8 @@ const QRCode = require('qrcode');
 
 router.get("/", async (req, res) => {
         try {
-                const eventOngoing = req.query.event;
-                const eventObj = await event.findOne(eventOngoing);
+                const eventOngoingID = req.query.eventID;
+                const eventObj = await event.findOne({ _id: eventOngoingID });
                 
                 if (!eventObj) {
                         return res.status(404).send("Event not found in the database");
@@ -17,9 +17,10 @@ router.get("/", async (req, res) => {
                 }
                 
                 // store the ID of the event to check for in the QR Code string
-                const QRCodeString = eventObj._id;
-                const QRCodeImage = await QRCode.toDataURL(QRCodeString);
-                res.send(`<img src="${QRCodeImage}">`);
+                const QRCodeString = eventObj._id.toString();
+                const QRCodeImage = QRCode.toDataURL(QRCodeString);
+                console.log(QRCodeImage);
+                return res.json({ QRCodeImageBlock: "<img src=" + QRCodeImage+ "/>" });
         } catch (err) {
                 res.status(500).send(err);
         }
