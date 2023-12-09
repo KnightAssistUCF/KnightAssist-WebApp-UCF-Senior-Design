@@ -7,19 +7,20 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import React from "react";
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import UserForm from './UserForm';
+import VolunteerForm from './VolunteerForm';
 import OrganizationForm from './OrganizationForm';
+import Tab from "@mui/material/Tab";
+import TabContext from "@mui/lab/TabContext";
+import TabList from "@mui/lab/TabList";
 
 const defaultTheme = createTheme();
 
-const state =['User', 'Organization'];
+const state = ['User', 'Organization'];
 
 function getForm(state) {
   switch (state) {
     case 0:
-      return <UserForm />;
+      return <VolunteerForm />;
     case 1:
       return <OrganizationForm />;
     default:
@@ -32,7 +33,7 @@ export default function SignUp() {
   const handleToggle = () => {
     if(activeState == 0){
       setActiveState(1);
-    } else {
+    } else if (activeState == 1){
       setActiveState(0);
     }
   };
@@ -52,17 +53,23 @@ export default function SignUp() {
         <CssBaseline />
           <Box
             sx={{
-              marginTop: 8,
+              marginTop: 3,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
             }}
           >
-          <Typography component="h1" variant="h5" sx={{paddingBottom: 2}}>Register as: </Typography>
-          <ToggleButtonGroup value={state} exclusive onChange={handleToggle}>
-            <ToggleButton value="User" aria-label="User Sign Up">User</ToggleButton>
-            <ToggleButton value="Organization" aria-label="Org Sign Up">Org</ToggleButton>
-          </ToggleButtonGroup>
+          <Typography component="h1" variant="h5" sx={{paddingBottom: 3}}>Create an Account</Typography>
+          <Box sx={{ width: '100%', typography: 'body1' }}>
+            <TabContext value={activeState}>
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <TabList onChange={handleToggle} aria-label="toggle between forms" indicatorColor="#4E878C" centered>
+                  <Tab label="Volunteer" value="Volunteer" />
+                  <Tab label="Organization" value="Org" />
+                </TabList>
+              </Box>
+            </TabContext>
+          </Box>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} >
             {getForm(activeState)}
           </Box>
