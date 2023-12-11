@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { IconButton, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -27,6 +27,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 
 const eventPic = require("../Login/loginPic.png");
 const avatarPic = require("./DefaultPic.png");
@@ -267,54 +268,90 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container marginLeft={"30%"} marginTop={"40px"}>
-                                    <GridIcon icon={<EventIcon/>}/>
-                                    <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Date" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<EventIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                    </Grid>                            
 
-                                    <GridIcon icon={<PlaceIcon/>}/>
-                                    <GridInfo info={location}/>
-                                </Grid>                            
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Location" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<PlaceIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={location}/>
+                                    </Grid>
+                                </Grid>
 
-                                <Grid container marginLeft={"30%"} marginTop={"30px"} marginBottom={"40px"}>
-                                    <GridIcon icon={<PlayArrowIcon/>}/>
-                                    <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+                                <Grid container sx={{justifyContent:'center'}} marginBottom={"30px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Start Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<PlayArrowIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+                                    </Grid>
 
-                                    <GridIcon icon={<StopIcon/>}/>
-                                    <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="End Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<StopIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    </Grid>
                                 </Grid>
 
                                 {Volunteers()}
 
                                 <Tags/>
       
-                                <Grid container marginLeft={"30%"} marginTop={"150px"}>
+                                <Grid container marginLeft={"30%"} marginTop={"100px"}>
                                     <Grid item xs={3}>
-                                        Edit: <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
+                                        <Tooltip title="Edit" placement="top">
+                                            <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
+                                        </Tooltip>
                                     </Grid>
                                     <Grid item xs={0}>
-                                        Delete: <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+                                        <Tooltip title="Delete" placement="top">
+                                            <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+                                        </Tooltip>
                                     </Grid>
                                 </Grid>   
 
-                                        <Dialog
-                                            open={openAlert}
-                                            onClose={handleCloseAlert}
-                                            aria-labelledby="alert-dialog-title"
-                                            aria-describedby="alert-dialog-description"
-                                            >
-                                                <DialogTitle id="alert-dialog-title">
-                                                {"Delete Event?"}
-                                                </DialogTitle>
-                                                <DialogContent>
-                                                <DialogContentText id="alert-dialog-description">
-                                                Doing so will remove this event from all volunteer's past and future history. 
-                                                </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                <Button onClick={handleCloseAlert}>Undo</Button>
-                                                <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
-                                                </DialogActions>
-                                        </Dialog> 
+                                <Dialog
+                                    open={openAlert}
+                                    onClose={handleCloseAlert}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">
+                                        {"Delete Event?"}
+                                        </DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                        Doing so will remove this event from all volunteer's past and future history. 
+                                        </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button onClick={handleCloseAlert}>Undo</Button>
+                                        <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
+                                        </DialogActions>
+                                </Dialog> 
                             </Box>
                         </Container>
                     </CardContent>   
