@@ -106,6 +106,14 @@ function OrgFavoriteEvents(props)
             extraBack = 1;
         }
 
+        // There were no events prior and now there is one
+        if(page == 0 && events.length > 0){
+            setPage(1);
+            extraBack = -1;
+        }
+
+        console.log(page);
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
         setEventCards(content);
     }
