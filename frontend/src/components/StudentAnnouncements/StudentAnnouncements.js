@@ -15,6 +15,7 @@ import { buildPath } from '../../path';
 import {CardMedia, CardContent, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import AnnouncementModal from './AnnouncementModal';
+import AnnouncementCard from './AnnouncementsCard';
 
 
 function StudentAnnouncements() {
@@ -130,53 +131,27 @@ return (
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
                         
-                        <Card variant='outlined' className='cardResult' onClick={handleClick}>
-                            <CardContent>
-                                <Grid container alignItems='center'>
-                                    <Grid item>
-                                        <CardMedia
-                                        component="img"
-                                        sx={{width: 35, borderRadius: '700px'}}
-                                        image={require('../Login/loginPic.png')}
-                                        />
-                                    </Grid>
-                                    <div className='updateOrgTitle'>Arboretum</div>
-                                    <Grid marginLeft="auto">
-                                        <div className='date'>3 days ago</div>
-                                    </Grid>
-                                </Grid>
-                                <div className="divider"></div>
-                                <div className="updateTitle">{updateTitle}</div>
-                                <div className='updateDescription'><i>sdlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d dlfj flsdfjlsdjf ;slfj;lsdkf j;lsd fsl;d</i></div>
-                            </CardContent>
-                        </Card>
-                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
+                        {newUpdates.map((update, index) => (
+                        <AnnouncementCard
+                            key={index}
+                            orgName={update.Orgname}
+                            date={new Date(update.Announcement.date).toLocaleDateString()}
+                            title={update.Announcement.title}
+                            content={update.Announcement.content}
+                        />
+                        ))}
                     </div>
                     <div className="oldAnnouncements">
                         <div class="StudentAnnouncements-subtitle">All</div>
                         {oldUpdates.map((update, index) => (
-                        <Card key={index} variant='outlined' className='cardResult' onClick={handleClick}>
-                            <CardContent>
-                                <Grid container alignItems='center'>
-                                    <Grid item>
-                                        <CardMedia
-                                        component="img"
-                                        sx={{width: 35, borderRadius: '700px'}}
-                                        image={require('../Login/loginPic.png')}
-                                        />
-                                    </Grid>
-                                    <div className='updateOrgTitle'>Arboretum</div>
-                                    <Grid marginLeft="auto">
-                                        <div className='date'>{update.Announcement.date}</div>
-                                    </Grid>
-                                </Grid>
-                                <div className="divider"></div>
-                                <div className="updateTitle">{update.Announcement.title}</div>
-                                <div className='updateDescription'><i>{update.Announcement.content}</i></div>
-                            </CardContent>
-                        </Card>
+                        <AnnouncementCard
+                            key={index}
+                            orgName={update.Orgname}
+                            date={new Date(update.Announcement.date).toLocaleDateString()}
+                            title={update.Announcement.title}
+                            content={update.Announcement.content}
+                        />
                         ))}
-                        <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={updateTitle} />
                     </div>
                 </div>
             </div>
