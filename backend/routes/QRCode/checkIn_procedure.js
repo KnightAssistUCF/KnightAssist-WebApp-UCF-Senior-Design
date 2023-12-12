@@ -19,7 +19,15 @@ function onScanSuccess(decodedText, decodedResult) {
                 },
                 body: JSON.stringify({ qrCodeData: decodedText, studentId: '' }),
         })
-                .then(response => response.json())
+                .then(response => {
+                        // if the response is success then redirect to success page
+                        // else redirect to failure page
+                        if (response.status == 200) {
+                                window.location.href = ''; // plug page later here [TODO]
+                        } else {
+                                window.location.href = ''; // plug page later here [TODO]
+                        }
+                })
                 .then(data => {
                         console.log('Success:', data);
                 })
