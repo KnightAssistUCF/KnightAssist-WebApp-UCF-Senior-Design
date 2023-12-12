@@ -52,9 +52,7 @@ function RecentEvents(props)
     }
 
     async function getEvents(){
-        const userID = "123456789";
-
-        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${userID}`);
+        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",

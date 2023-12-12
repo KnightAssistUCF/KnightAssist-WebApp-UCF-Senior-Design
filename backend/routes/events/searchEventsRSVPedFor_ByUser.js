@@ -9,19 +9,21 @@ router.get('/', async (req, res) => {
                 const { email, studentID } = req.query;
 
                 const user = await UserStudent.findOne({
-                        $or: [{ email: email }, { studentID: studentID }]
+                        $or: [{ email: email }, { _id: studentID }]
                 }).exec();
 
                 if (!user) {
                         return res.status(404).send('user not found in the database');
                 }
 
+                console.log(user);
+
                 // look up all events the user has RSVPed for and return their full objects
                 const eventsRSVPed = await Event.find({
                         '_id': { $in: user.eventsRSVP }
                 }).exec();
 
-                console.log("eventsRSVPed for by user: " + user.name);
+                console.log("eventsRSVPed for by user: " + user.firstName);
                 console.log(eventsRSVPed);
 
                 return res.json(eventsRSVPed);

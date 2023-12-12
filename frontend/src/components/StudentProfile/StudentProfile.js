@@ -33,11 +33,7 @@ function StudentProfile(props)
       const [tags, setTags] = useState([]);
 
       async function getFields(){
-         const email = "johndoe@example.com";
-
-         let url = buildPath(`api/userSearch?email=${email}`);
-
-         console.log(localStorage.getItem('token'))
+         let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
 
          let response = await fetch(url, {
                method: "GET",

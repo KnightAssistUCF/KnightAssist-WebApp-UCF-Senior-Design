@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { IconButton, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -21,8 +21,16 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import List from '@mui/material/List';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import Collapse from '@mui/material/Collapse';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
 
 const eventPic = require("../Login/loginPic.png");
+const avatarPic = require("./DefaultPic.png");
 
 function EventModal(props)
 {
@@ -32,14 +40,17 @@ function EventModal(props)
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
 
+    const [openVolunteers, setOpenVolunteers] = useState(false);
+
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
-    const [curVolunteers, setVolunteers] = useState(0);
+    const [curVolunteers, setCurVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
+    const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
  
     function eventIsUpcoming(date){
@@ -49,6 +60,25 @@ function EventModal(props)
         today = today.substring(0, today.indexOf("T"));
         console.log(date, today)
         return date.localeCompare(today) >= 0;
+    }
+
+    async function getVolunteerInfo(id){
+
+        console.log(localStorage.getItem("token"))
+        let url = buildPath(`api/userSearch?userID=${id}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            }        
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        console.log(res);
+        
+        return {"name": res.firstName + " " + res.lastName, "profilePic": res.profilePic, "userID": res._id};
     }
 
     async function setInfo(){        
@@ -72,9 +102,17 @@ function EventModal(props)
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
-                setVolunteers(event.attendees.length)
+                setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+                const volunteers = [];
+
+                for(let id of event.attendees)
+                    volunteers.push(await getVolunteerInfo(id));
+
+                setVolunteerInfo(volunteers);
+
         } else {
             console.log("Event undefined or not found");
         }
@@ -113,12 +151,34 @@ function EventModal(props)
         ) 
     }
 
+    function VolunteerItem(props){
+        console.log(props.info);
+        return (
+            <ListItemButton className='volunteerItem'>
+                <Avatar
+                    src={avatarPic}
+                    className="volunteerPic"
+                />
+                <ListItemText className="volunteerName" primary={props.info.name} />
+            </ListItemButton>
+        )
+    }
+
+
     function Volunteers(){
         return (
             <div>
-                <p className='lessSpace'>Registered Volunteers:</p>
-                <p>{curVolunteers}/{maxVolunteers}</p>
-            </div>
+                <button className="volunteersBtn" onClick={() => setOpenVolunteers(!openVolunteers)}>
+                    <p className='lessSpace'>Registered Volunteers:</p>
+                    <p>{curVolunteers}/{maxVolunteers}</p>
+                </button>
+
+                <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
+                    <List className="volunteerList" component="div" disablePadding>
+                        {volunteerInfo.map(info => <VolunteerItem info={info}/>)}
+                    </List>
+                </Collapse>
+           </div>
         )
     }
 
@@ -208,54 +268,90 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container marginLeft={"30%"} marginTop={"40px"}>
-                                    <GridIcon icon={<EventIcon/>}/>
-                                    <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Date" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<EventIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                    </Grid>                            
 
-                                    <GridIcon icon={<PlaceIcon/>}/>
-                                    <GridInfo info={location}/>
-                                </Grid>                            
-
-                                <Grid container marginLeft={"30%"} marginTop={"30px"} marginBottom={"40px"}>
-                                    <GridIcon icon={<PlayArrowIcon/>}/>
-                                    <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
-
-                                    <GridIcon icon={<StopIcon/>}/>
-                                    <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Location" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<PlaceIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={location}/>
+                                    </Grid>
                                 </Grid>
 
-                                <Volunteers/>
+                                <Grid container sx={{justifyContent:'center'}} marginBottom={"30px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Start Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<PlayArrowIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+                                    </Grid>
+
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="End Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<StopIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    </Grid>
+                                </Grid>
+
+                                {Volunteers()}
 
                                 <Tags/>
       
-                                <Grid container marginLeft={"30%"} marginTop={"150px"}>
+                                <Grid container marginLeft={"30%"} marginTop={"100px"}>
                                     <Grid item xs={3}>
-                                        Edit: <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
+                                        <Tooltip title="Edit" placement="top">
+                                            <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
+                                        </Tooltip>
                                     </Grid>
                                     <Grid item xs={0}>
-                                        Delete: <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+                                        <Tooltip title="Delete" placement="top">
+                                            <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+                                        </Tooltip>
                                     </Grid>
                                 </Grid>   
 
-                                        <Dialog
-                                            open={openAlert}
-                                            onClose={handleCloseAlert}
-                                            aria-labelledby="alert-dialog-title"
-                                            aria-describedby="alert-dialog-description"
-                                            >
-                                                <DialogTitle id="alert-dialog-title">
-                                                {"Delete Event?"}
-                                                </DialogTitle>
-                                                <DialogContent>
-                                                <DialogContentText id="alert-dialog-description">
-                                                Doing so will remove this event from all volunteer's past and future history. 
-                                                </DialogContentText>
-                                                </DialogContent>
-                                                <DialogActions>
-                                                <Button onClick={handleCloseAlert}>Undo</Button>
-                                                <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
-                                                </DialogActions>
-                                        </Dialog> 
+                                <Dialog
+                                    open={openAlert}
+                                    onClose={handleCloseAlert}
+                                    aria-labelledby="alert-dialog-title"
+                                    aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogTitle id="alert-dialog-title">
+                                        {"Delete Event?"}
+                                        </DialogTitle>
+                                        <DialogContent>
+                                        <DialogContentText id="alert-dialog-description">
+                                        Doing so will remove this event from all volunteer's past and future history. 
+                                        </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                        <Button onClick={handleCloseAlert}>Undo</Button>
+                                        <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
+                                        </DialogActions>
+                                </Dialog> 
                             </Box>
                         </Container>
                     </CardContent>   
