@@ -4,10 +4,18 @@ const router = express.Router();
 const userStudent = require('../../models/userStudent');
 const { authenticateToken_User } = require('../../utils/jwtUtils');
 
-router.get('/', authenticateToken_User, async (req, res) => {
+router.get('/',async (req, res) => {
+    const userID = req.query.userID;
     const searchEmail = req.query.email;
 
-    await userStudent.findOne({ email: searchEmail }).then((user) => {
+    const query = {
+        $or: [
+                { _id: userID },
+                { email: searchEmail }
+        ]
+    };
+
+    await userStudent.findOne(query).then((user) => {
         if (user) {
             res.status(200).json(user);
         } else {

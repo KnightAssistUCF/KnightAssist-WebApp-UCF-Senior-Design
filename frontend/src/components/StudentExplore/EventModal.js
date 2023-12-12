@@ -15,11 +15,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import Alert from '@mui/material/Alert';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import Tooltip from '@mui/material/Tooltip';
 
 const eventPic = require("../Login/loginPic.png");
 
@@ -73,8 +69,7 @@ function EventModal(props)
             const json = {
                 eventID: event._id,
                 eventName: event.name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"),
                 check: 1
             };
 
@@ -103,11 +98,11 @@ function EventModal(props)
 
     async function doRSVP(){
         if(isRSVP){
+            console.log("its happening here");
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("token"), 
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"), 
             };
 
             const url = buildPath(`api/cancelRSVP`);
@@ -125,8 +120,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: "6519e4fd7a6fa91cd257bfda", // Temporary, will be id of logged in volunteer
-                userEmail: "johndoe@example.com",
+                userID: localStorage.getItem("ID"),
                 check: 0
             };
 
@@ -257,26 +251,59 @@ function EventModal(props)
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
                         <img className='boxImg' src={eventPic}></img>
+        
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>
 
                                 <Description/>
 
-                                <Grid container marginLeft={"30%"} marginTop={"40px"}>
-                                    <GridIcon icon={<EventIcon/>}/>
-                                    <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Date" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<EventIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                    </Grid>                            
 
-                                    <GridIcon icon={<PlaceIcon/>}/>
-                                    <GridInfo info={location}/>
-                                </Grid>                            
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Location" placement="top">
+                                                <div>
+                                                    <GridIcon icon={<PlaceIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={location}/>
+                                    </Grid>
+                                </Grid>
 
-                                <Grid container marginLeft={"30%"} marginTop={"30px"} marginBottom={"40px"}>
-                                    <GridIcon icon={<PlayArrowIcon/>}/>
-                                    <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+                                <Grid container sx={{justifyContent:'center'}} marginBottom={"30px"}>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="Start Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<PlayArrowIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+                                    </Grid>
 
-                                    <GridIcon icon={<StopIcon/>}/>
-                                    <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    <Grid item width={"20%"}>
+                                        <div className='anIcon'>
+                                            <Tooltip title="End Time" placement="bottom">
+                                                <div>
+                                                    <GridIcon icon={<StopIcon/>}/>
+                                                </div>
+                                            </Tooltip>
+                                        </div>
+                                        <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+                                    </Grid>
                                 </Grid>
 
                                 <Volunteers/>

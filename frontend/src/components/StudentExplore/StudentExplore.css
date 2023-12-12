@@ -46,3 +46,11 @@
 .addEventBtn:visited{
     background-color: #5f5395;
 }
+
+.iconInfo{
+    margin-left: 13%;
+}
+
+.anIcon{
+    float: left;
+}

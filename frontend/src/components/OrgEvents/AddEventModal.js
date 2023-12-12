@@ -18,6 +18,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Alert from '@mui/material/Alert';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgEvents';
@@ -45,9 +46,11 @@ function AddEventModal(props)
     const [tagNames, setTagNames] = useState([]);
 
     const [redoTags, setRedoTags] = useState(1);
+    const [showError, setShowError] = useState(false);
 
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState([]);
+
 
     /*
     eventID: {
@@ -212,7 +215,23 @@ function AddEventModal(props)
         }
     }
 
+    function validInput(){
+        // The errors are set automatically, this just
+        // checks that at least one of them would be set
+        if(name == "" || description == "" || location == "" || maxVolunteers == ""){
+            setShowError(true);
+            return false;
+        }
+
+        return true;
+    }
+
     function buttonEvent(){
+        if(!validInput()){
+            setShowError(true);
+            return;
+        }
+
         if(modalType == "Add")
             submitEvent();
         else
@@ -232,6 +251,7 @@ function AddEventModal(props)
                     minRows={props.minRows}
                     onChange={props.onChange}
                     value={props.value}
+                    error={showError && props.required && props.value == ""}
                 />
             </Grid>
         )
@@ -265,6 +285,21 @@ function AddEventModal(props)
                     {props.tag}
                 </Card>
             </Grid>
+        )
+    }
+
+    function ErrorMessage(){
+        return (
+            <div>
+                {(showError) == true
+                    ?
+                        <div>
+                            <Alert severity="error">Several fields are empty!</Alert>
+                        </div>
+                    :
+                        null
+                }
+            </div>
         )
     }
 
@@ -409,8 +444,8 @@ function AddEventModal(props)
                                 <div className='addEventHeader'>Event Info</div>
                                 <Grid container spacing={2} marginBottom={"40px"}>
                                     {GridTextField({xm:12, sm:12, name:"Name", label:"Name", required:true, multiline:false, value:name, onChange:(e) => setName(e.target.value)})}
-                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:false, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
-                                    {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:false, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
+                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
+                                    {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:true, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
 
                                     {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
 
@@ -419,7 +454,7 @@ function AddEventModal(props)
                                     {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e)})}  
                                     {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e)})}  
 
-                                    {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:false, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
+                                    {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:true, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>
