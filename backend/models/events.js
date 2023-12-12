@@ -36,6 +36,10 @@ const eventSchema = new Schema({
         instagram: String,
         website: String
     },
+    checkedInStudents: [{
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent',
+    }],
     eventTags: [String],
     semester: String,
     maxAttendees: {
