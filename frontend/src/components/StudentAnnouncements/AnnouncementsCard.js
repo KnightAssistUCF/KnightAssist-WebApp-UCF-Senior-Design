@@ -11,8 +11,8 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = () => {
-    setIsModalOpen(true);
     markRead();
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
@@ -23,10 +23,12 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
         try {
                 const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
                 let url = buildPath(`api/readAnnouncement?userID=${userID}`);
+                console.log("hello");
+                console.log(organizationID);
+                console.log(title);
           
-                // Send the organization ID and title as part of the request body
                 const requestBody = {
-                  orgID: organizationID,
+                  organizationID: organizationID,
                   oldTitle: title,
                 };
           

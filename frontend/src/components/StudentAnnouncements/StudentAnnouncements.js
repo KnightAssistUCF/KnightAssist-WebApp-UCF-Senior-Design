@@ -138,7 +138,7 @@ return (
                                 date={new Date(update.Announcement.date).toLocaleDateString()}
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
-                                orgID = {update.organizationID}
+                                organizationID = {update.organizationID}
                             />
                             ))
                         ) : (
@@ -155,7 +155,7 @@ return (
                                 date={new Date(update.Announcement.date).toLocaleDateString()}
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
-                                orgID = {update.organizationID}
+                                organizationID = {update.organizationID}
                             />
                             ))
                         ) : (
