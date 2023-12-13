@@ -45,6 +45,10 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
               }
     }
 
+    const getShortenedContent = () => {
+        return content.length > 300 ? content.slice(0, 300) + ' ...' : content;
+      };
+
   return (
     <>
       <Card variant='outlined' className='cardResult' onClick={handleClick}>
@@ -65,7 +69,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
           <div className='divider'></div>
           <div className='updateTitle'>{title}</div>
           <div className='updateDescription'>
-            <i>{content}</i>
+            <i>{getShortenedContent()}</i>
           </div>
         </CardContent>
       </Card>

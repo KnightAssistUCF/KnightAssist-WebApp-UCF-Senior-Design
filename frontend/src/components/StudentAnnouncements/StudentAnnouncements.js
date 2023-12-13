@@ -131,7 +131,7 @@ return (
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
                         {newUpdates.length > 0 ? (
-                        newUpdates.map((update, index) => (
+                        newUpdates.reverse().map((update, index) => (
                             <AnnouncementCard
                                 key={index}
                                 orgName={update.Orgname}
