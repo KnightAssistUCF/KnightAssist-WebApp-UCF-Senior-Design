@@ -6,7 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import AnnouncementModal from './AnnouncementModal';
 import { buildPath } from '../../path';
-import { BiCheckShield } from 'react-icons/bi';
+import { BiSolidCircle } from 'react-icons/bi';
 
 const AnnouncementCard = ({ orgName, date, title, content, organizationID, read }) => {
     
@@ -70,7 +70,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID, read 
             <Grid marginLeft='auto'>
                 <div className='date'>            
                     {isReadIcon ? null : (
-                        <BiCheckShield style={{ color: 'red', marginRight: '5px' }} />
+                        <BiSolidCircle   style={{ color: 'red', marginRight: '5px' }} />
                     )}
                     {date}
                 </div>
