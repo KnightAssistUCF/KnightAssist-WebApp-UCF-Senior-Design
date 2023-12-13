@@ -70,6 +70,7 @@ function StudentAnnouncements() {
                 });
             
                 let orgUpdates = JSON.parse(await response.text());
+                console.log(orgUpdates);
             
                 if(orgUpdates.title != undefined) {
                     updates.push({organizationID: org.organizationID,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
@@ -87,6 +88,7 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
+                                read: announcement.read
                             },
                         });
                     } else {
@@ -97,6 +99,7 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
+                                read: announcement.read
                             },
                         });
                     }
@@ -139,6 +142,7 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
+                                read = {update.read}    
                             />
                             ))
                         ) : (
@@ -156,6 +160,7 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
+                                read = {update.read}
                             />
                             ))
                         ) : (

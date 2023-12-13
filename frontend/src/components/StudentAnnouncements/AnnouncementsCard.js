@@ -7,7 +7,7 @@ import Grid from '@mui/material/Grid';
 import AnnouncementModal from './AnnouncementModal';
 import { buildPath } from '../../path';
 
-const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => {
+const AnnouncementCard = ({ orgName, date, title, content, organizationID, read }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = () => {
@@ -47,7 +47,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
 
     const getShortenedContent = () => {
         return content.length > 300 ? content.slice(0, 300) + ' ...' : content;
-      };
+    };
 
   return (
     <>
@@ -73,7 +73,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID }) => 
           </div>
         </CardContent>
       </Card>
-      <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={title} content={content} date={date} orgID={organizationID} />
+      <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={title} content={content} date={date} orgID={organizationID} read={read} />
     </>
   );
 };
