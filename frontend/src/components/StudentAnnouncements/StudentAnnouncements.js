@@ -20,7 +20,6 @@ import AnnouncementCard from './AnnouncementsCard';
 
 function StudentAnnouncements() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [updateTitle, setUpdateTitle] = useState('Is my props working');
     const [oldUpdates, setOldUpdates] = useState([]);
     const [newUpdates, setNewUpdates] = useState([]);
 
@@ -142,7 +141,7 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
-                                read = {update.read}    
+                                read = {update.Announcement.read}
                             />
                             ))
                         ) : (
@@ -160,7 +159,7 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
-                                read = {update.read}
+                                read = {update.Announcement.read}
                             />
                             ))
                         ) : (

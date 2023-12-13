@@ -6,12 +6,16 @@ import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
 import AnnouncementModal from './AnnouncementModal';
 import { buildPath } from '../../path';
+import { BiCheckShield } from 'react-icons/bi';
 
 const AnnouncementCard = ({ orgName, date, title, content, organizationID, read }) => {
+    
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isReadIcon, setIsReadIcon] = useState(read);
 
   const handleClick = () => {
     markRead();
+    setIsReadIcon(true);
     setIsModalOpen(true);
   };
 
@@ -20,6 +24,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID, read 
   };
 
   async function markRead() {
+    console.log(title, read, isReadIcon);
         try {
                 const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
                 let url = buildPath(`api/readAnnouncement?userID=${userID}`);
@@ -63,7 +68,12 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID, read 
             </Grid>
             <div className='updateOrgTitle'>{orgName}</div>
             <Grid marginLeft='auto'>
-              <div className='date'>{date}</div>
+                <div className='date'>            
+                    {isReadIcon ? null : (
+                        <BiCheckShield style={{ color: 'red', marginRight: '5px' }} />
+                    )}
+                    {date}
+                </div>
             </Grid>
           </Grid>
           <div className='divider'></div>
