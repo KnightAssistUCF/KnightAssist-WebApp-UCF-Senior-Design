@@ -189,6 +189,9 @@ app.use('/api/validateEmailTokenInput_organization', validateEmailTokenInput_org
 const generateQRCode_checkIn = require('./backend/routes/QRCode/createCheckIn_QRCode');
 app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
 
+const checkIn_Afterscan = require('./backend/routes/QRCode/checkIn_Afterscan');
+app.use('/api/checkIn_Afterscan', checkIn_Afterscan);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
