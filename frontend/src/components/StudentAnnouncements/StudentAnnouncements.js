@@ -87,7 +87,8 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
-                                read: announcement.read
+                                read: announcement.read,
+                                updateID: announcement.updateID
                             },
                         });
                     } else {
@@ -98,7 +99,8 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
-                                read: announcement.read
+                                read: announcement.read,
+                                updateID: announcement.updateID
                             },
                         });
                     }
@@ -142,6 +144,7 @@ return (
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
                                 read = {update.Announcement.read}
+                                updateID = {update.Announcement.updateID}
                             />
                             ))
                         ) : (
@@ -160,6 +163,7 @@ return (
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
                                 read = {update.Announcement.read}
+                                updateID = {update.Announcement.updateID}
                             />
                             ))
                         ) : (

@@ -8,7 +8,7 @@ import AnnouncementModal from './AnnouncementModal';
 import { buildPath } from '../../path';
 import { BiSolidCircle } from 'react-icons/bi';
 
-const AnnouncementCard = ({ orgName, date, title, content, organizationID, read }) => {
+const AnnouncementCard = ({ orgName, date, title, content, organizationID, read, updateID }) => {
     
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReadIcon, setIsReadIcon] = useState(read);
@@ -31,10 +31,11 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID, read 
                 console.log("hello");
                 console.log(organizationID);
                 console.log(title);
+                console.log(updateID);
           
                 const requestBody = {
                   organizationID: organizationID,
-                  oldTitle: title,
+                  updateID: updateID,
                 };
           
                 let response = await fetch(url, {
@@ -83,7 +84,7 @@ const AnnouncementCard = ({ orgName, date, title, content, organizationID, read 
           </div>
         </CardContent>
       </Card>
-      <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={title} content={content} date={date} orgID={organizationID} read={read} />
+      <AnnouncementModal open={isModalOpen} onClose={handleCloseModal} title={title} content={content} date={date} orgID={organizationID} read={read} updateID={updateID} />
     </>
   );
 };
