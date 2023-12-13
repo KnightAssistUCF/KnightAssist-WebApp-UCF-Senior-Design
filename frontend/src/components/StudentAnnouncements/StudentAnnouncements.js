@@ -36,9 +36,9 @@ function StudentAnnouncements() {
     const handleSearch = (searchTerm) => {
         // search logic
         console.log('Searching for:', searchTerm);
-      };
+    };
 
-      async function getEvents(){
+    async function getEvents(){
 
         const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
@@ -47,8 +47,6 @@ function StudentAnnouncements() {
         const recentUpdates = [];
         
         try {
-            
-
         
             let response = await fetch(url, {
                 method: "GET",
@@ -74,7 +72,7 @@ function StudentAnnouncements() {
                 let orgUpdates = JSON.parse(await response.text());
             
                 if(orgUpdates.title != undefined) {
-                    updates.push({Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
+                    updates.push({organizationID: org.organizationID,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
                 }
                  
 
@@ -83,6 +81,7 @@ function StudentAnnouncements() {
         
                     if (updateDate >= weekAgo) {
                         recentUpdates.push({
+                            organizationID: org.organizationID,
                             Orgname: org.name,
                             Announcement: {
                                 title: announcement.title,
@@ -92,6 +91,7 @@ function StudentAnnouncements() {
                         });
                     } else {
                         updates.push({
+                            organizationID: org.organizationID,
                             Orgname: org.name,
                             Announcement: {
                                 title: announcement.title,
@@ -113,9 +113,9 @@ function StudentAnnouncements() {
         console.log(recentUpdates);
     }
 
-        useEffect(() => {
-            getEvents();
-        }, []);
+    useEffect(() => {
+        getEvents();
+    }, []);
 
 
 
@@ -138,6 +138,7 @@ return (
                                 date={new Date(update.Announcement.date).toLocaleDateString()}
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
+                                orgID = {update.organizationID}
                             />
                             ))
                         ) : (
@@ -154,6 +155,7 @@ return (
                                 date={new Date(update.Announcement.date).toLocaleDateString()}
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
+                                orgID = {update.organizationID}
                             />
                             ))
                         ) : (
