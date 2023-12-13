@@ -130,28 +130,35 @@ return (
                 <div className="results">
                     <div className="recentAnnouncements">
                         <div class="StudentAnnouncements-subtitle">Recent</div>
-                        
-                        {newUpdates.map((update, index) => (
-                        <AnnouncementCard
-                            key={index}
-                            orgName={update.Orgname}
-                            date={new Date(update.Announcement.date).toLocaleDateString()}
-                            title={update.Announcement.title}
-                            content={update.Announcement.content}
-                        />
-                        ))}
+                        {newUpdates.length > 0 ? (
+                        newUpdates.map((update, index) => (
+                            <AnnouncementCard
+                                key={index}
+                                orgName={update.Orgname}
+                                date={new Date(update.Announcement.date).toLocaleDateString()}
+                                title={update.Announcement.title}
+                                content={update.Announcement.content}
+                            />
+                            ))
+                        ) : (
+                            <div className='announcementsMessage'>No Recent Announcements</div>
+                        )}
                     </div>
                     <div className="oldAnnouncements">
                         <div class="StudentAnnouncements-subtitle">All</div>
-                        {oldUpdates.map((update, index) => (
-                        <AnnouncementCard
-                            key={index}
-                            orgName={update.Orgname}
-                            date={new Date(update.Announcement.date).toLocaleDateString()}
-                            title={update.Announcement.title}
-                            content={update.Announcement.content}
-                        />
-                        ))}
+                        {oldUpdates.length > 0 ? (
+                            oldUpdates.map((update, index) => (
+                            <AnnouncementCard
+                                key={index}
+                                orgName={update.Orgname}
+                                date={new Date(update.Announcement.date).toLocaleDateString()}
+                                title={update.Announcement.title}
+                                content={update.Announcement.content}
+                            />
+                            ))
+                        ) : (
+                            <div className='announcementsMessage'>No Announcements Available</div>
+                        )}
                     </div>
                 </div>
             </div>
