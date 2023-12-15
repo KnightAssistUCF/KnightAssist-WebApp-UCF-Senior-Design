@@ -68,7 +68,7 @@ function PastEvents(props)
 
         for(let event of res)
             if(eventIsPast(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)   
+                events.push(<Event name={event.name} picLink={event.picLink} date={event.date} id={event.eventID}/>)   
                 
         events.sort(function(a,b){ 
             return b.props.date.localeCompare(a.props.date)
@@ -110,7 +110,7 @@ function PastEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={props.picLink}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

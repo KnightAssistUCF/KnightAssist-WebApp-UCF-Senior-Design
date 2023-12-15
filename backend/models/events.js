@@ -28,6 +28,7 @@ const eventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userStudent',
     }],
+    picLink: String,
     startTime: Date,
     endTime: Date,
     eventLinks: {
