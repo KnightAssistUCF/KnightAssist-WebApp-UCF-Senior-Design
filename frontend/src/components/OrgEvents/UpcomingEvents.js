@@ -69,7 +69,7 @@ function UpcomingEvents(props)
 
         for(let event of res){
             if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+                events.push(<Event name={event.name} picLink={event.picLink} date={event.date} id={event.eventID}/>)
         }       
 
         events.sort(function(a,b){ 
@@ -113,7 +113,7 @@ function UpcomingEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={props.picLink}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

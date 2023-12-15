@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
             events.location = req.body.location;
             events.date = req.body.date;
             events.sponsoringOrganization = req.body.organizationID;
+            events.picLink = req.body.picLink;
             events.startTime = req.body.startTime;
             events.endTime = req.body.endTime;
             events.eventLinks = req.body.eventLinks;

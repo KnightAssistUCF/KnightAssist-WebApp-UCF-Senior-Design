@@ -14,6 +14,7 @@ router.post('/', async (req, res) => {
             sponsoringOrganization: req.body.sponsoringOrganization,
             startTime: req.body.startTime,
             endTime: req.body.endTime,
+            picLink: req.body.picLink,
             // eventLinks: req.body.eventLinks,
             eventTags: req.body.eventTags,
             semester: req.body.semester,
