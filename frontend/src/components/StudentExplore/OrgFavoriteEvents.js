@@ -85,7 +85,7 @@ function OrgFavoriteEvents(props)
     
                 // Don't show event if user already RSVP'd
                 if(res.RSVPStatus != 1 && eventIsUpcoming(event.date))
-                    events.push(<Event eventName={event.name} orgName={org.name} date={event.date} id={event.eventID}/>)
+                    events.push(<Event eventName={event.name} picLink={event.picLink} orgName={org.name} date={event.date} id={event.eventID}/>)
             }
         }       
 
@@ -132,7 +132,7 @@ function OrgFavoriteEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={<img className="loginPhoto" src={props.picLink}/>}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

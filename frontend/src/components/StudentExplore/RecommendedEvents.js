@@ -69,7 +69,7 @@ function RecommendedEvents(props)
         for(let event of res){
             if(eventIsUpcoming(event.date)){
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} picLink={event.picLink} orgName={orgName} date={event.date} id={event.eventID}/>)  
             }
         }
 
@@ -112,7 +112,7 @@ function RecommendedEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={<img className="loginPhoto" src={props.picLink}/>}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
