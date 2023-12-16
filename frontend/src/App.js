@@ -14,6 +14,7 @@ import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
+import OrgHomePage from './pages/OrgHomePage';
 
 function App() 
 {
@@ -26,6 +27,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/login" element={<LoginPage/>}></Route>
+          </Routes>
+		  <Routes>
+            <Route path="/orghome" element={<OrgHomePage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/orgevents" element={<OrgEventsPage/>}></Route>
