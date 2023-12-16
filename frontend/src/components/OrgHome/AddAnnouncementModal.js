@@ -35,7 +35,28 @@ function AddAnnouncementModal(props){
 	}
 
 	async function submit(){
+        const json = {
+            organizationID: "12345", //Will be changed to localstorage
+            title: title,
+			content: content
+        };
 
+        const url = buildPath("api/createOrgAnnouncement");
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = await response.text();
+            console.log(res);
+			
+            handleClose();
+        }catch(err){
+            console.log("An error has occurred: ", err);
+        }
 	}
 
 	function GridTextField(props){
