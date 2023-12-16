@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
                 // Don't add again by accident
                 if(!(eventObj.checkedInStudents.includes(student._id)))
                         eventObj.checkedInStudents.push(student._id);
-
+          
                 await eventObj.save();
 
                 res.status(200).send("Check-in successful and the ID of the student" + student._id + "has been added to the event" + qrCodeData_eventID + "");
