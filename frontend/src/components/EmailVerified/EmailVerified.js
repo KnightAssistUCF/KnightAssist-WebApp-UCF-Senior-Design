@@ -6,35 +6,67 @@ import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
 import Logo from '../Logo';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import { buildPath } from "../../path";
 
 function EmailVerified() {
   const navigate = useNavigate();
-  const [countdown, setCountdown] = useState(4);
+  const [verificationCode, setVerificationCode] = useState('');
+  const [message, setMessage] = useState('');
 
-  useEffect(() => {
-    const redirectTimeout = setTimeout(() => {
-        window.location.href = '/';
-    }, countdown * 1000); 
 
-    const countdownInterval = setInterval(() => {
-      setCountdown((prevCountdown) => prevCountdown - 1);
-    }, 1000);
 
-    return () => {
-      clearTimeout(redirectTimeout);
-      clearInterval(countdownInterval);
+
+  async function submitVerifyCode() {
+    const url = buildPath("api/validateEmailTokenInput_student");
+    // get STUDENT email
+    var email = "anisharanjan55@gmail.com";
+
+    const json = {
+      userEmail: email,
+      tokenEnteredByUser: verificationCode
     };
-  }, [navigate, countdown]);
+
+    console.log(json);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(json),
+        headers: {"Content-Type": "application/json"},
+      });
+
+      let res = JSON.parse(await response.text());
+      console.log(res);
+      if(response.ok) {
+        setMessage("Correct code");
+      } else if(!response.success) {
+        setMessage("*Incorrect verification code, please enter again");
+      } else {
+        setMessage("*Error occured");
+      }
+
+    } catch(e) {
+      console.log("oopsies");
+      setMessage("*Error occured, email not found");
+    }
+
+  }
 
 return (
         <div id='emailVerified'>
           <div className="CardContainer">
             <Card variant="outlined" className="Card">
               <Box sx={{ margin: '20px' }}>
-                <div className="emailTitle">Email Successfully Verified</div>
+                <div className="emailTitle">Student Email Successfully Verified</div>
                 <BiCheckShield className='verifyIcon'></BiCheckShield>
-                <div className="countdown">Redirecting to login in {countdown} seconds</div>
               </Box>
+              <TextField id="outlined-basic" label="Verification Code" variant="outlined" value={verificationCode} onChange={(event) => setVerificationCode(event.target.value)} />
+              <Button className="submitBtn" variant="contained" color="primary" onClick={submitVerifyCode}>
+                Submit
+              </Button>
+              <div className="message">{message}</div>
             </Card>
           </div>
         </div>
