@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const dotenv = require('dotenv');
+require('dotenv').config();
 
 const Event = require('../../models/events');
 const Organization = require('../../models/organization');
@@ -27,7 +27,7 @@ const upload = multer({ storage: storage });
 const algorithm = 'aes-256-ctr';
 const secretKey = process.env.secretKey_images;
 // intiialization vectore here
-const iv = process.env.iv_images;
+const iv = Buffer.from(process.env.iv_images, 'hex'); // Convert hex string to bytes
 
 /*
 
@@ -43,14 +43,18 @@ Requirements:
 */
 router.post('/', upload.single('profilePic'), async (req, res) => {
         try {
-                const entityType = req.body.entityType;   
+                const entityType = req.body.entityType.toLowerCase().toString();   
                 const id = req.body.id;
                 const filePath = req.file.path;
+
+                console.log('entityType: ', entityType);
+                console.log('id: ', id);
+                console.log('filePath: ', filePath);
 
                 // Encrypt the file
                 encryptFile(filePath);
 
-                const user = null;
+                let user;
                 switch (entityType) {
                         case 'event':
                                 user = await Event.findById(id);
@@ -72,6 +76,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                         throw new Error('User not found');
                 }
 
+                console.log('user: ', user);
                 res.json({ message: 'Profile picture uploaded and user updated successfully' });
         } catch (error) {
                 console.error(error);
@@ -81,7 +86,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
 
 function encryptFile(filePath) {
         const fileContent = fs.readFileSync(filePath);
-        const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey), iv);
+        const cipher = crypto.createCipheriv(algorithm, Buffer.from(secretKey, 'hex'), iv);
         const encrypted = Buffer.concat([cipher.update(fileContent), cipher.final()]);
         fs.writeFileSync(filePath, encrypted);
 }
