@@ -415,7 +415,7 @@ function AddEventModal(props)
                                 <div className='addEventHeader'>Event Info</div>
                                 <Grid container spacing={2} marginBottom={"40px"}>
                                     {GridTextField({xm:12, sm:12, name:"Name", label:"Name", required:true, multiline:false, value:name, onChange:(e) => setName(e.target.value)})}
-                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
+                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", required:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
                                     {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:true, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
 
                                     {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
