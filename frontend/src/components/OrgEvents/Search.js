@@ -112,7 +112,7 @@ function Search(props) {
         </Stack>
       </div>
 
-    );
+    );  
 }
 
 export default Search;

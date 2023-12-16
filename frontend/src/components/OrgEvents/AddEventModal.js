@@ -53,47 +53,6 @@ function AddEventModal(props)
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState([]);
 
-
-    /*
-    eventID: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    name: {
-        type: String,
-        required: true
-    },
-    description: String,
-    location: String,
-    date: Date,
-    sponsoringOrganization: {
-        type: String,
-        required: true
-    },
-    attendees: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
-    }],
-    registeredVolunteers: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
-    }],
-    startTime: Date,
-    endTime: Date,
-    eventLinks: {
-        facebook: String,
-        twitter: String,
-        instagram: String,
-        website: String
-    },
-    eventTags: [String],
-    semester: String,
-    maxAttendees: {
-        type: Number,
-    },
-    */
-
     function eventIsUpcoming(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
