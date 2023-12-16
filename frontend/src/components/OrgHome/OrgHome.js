@@ -2,7 +2,7 @@ import {useState} from 'react';
 
 import AddAnnouncementModal from './AddAnnouncementModal';
 import Header from '../OrgEvents/Header';
-import '.OrgHome.css';
+import './OrgHome.css';
 
 function OrgHome()
 {
@@ -25,7 +25,8 @@ function OrgHome()
             <Title/>
           </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenAnnouncement(true)}>Add Announcement</button>
-        </div>
+		  <AddAnnouncementModal open={openAnnouncement} setOpen={setOpenAnnouncement}/>
+		</div>
       </div>
     );
 };
