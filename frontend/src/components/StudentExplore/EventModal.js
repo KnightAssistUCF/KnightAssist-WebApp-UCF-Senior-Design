@@ -31,6 +31,7 @@ function EventModal(props)
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
+    const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [curVolunteers, setVolunteers] = useState(0);
@@ -60,6 +61,7 @@ function EventModal(props)
             setDescription(event.description);
             setDate(event.date);
             setLocation(event.location);
+            setPicLink(event.picLink);
             setStartTime(event.startTime);
             setEndTime(event.endTime);
             setVolunteers(event.attendees.length);
@@ -250,7 +252,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={eventPic}></img>
+                        <img className='boxImg' src={picLink}></img>
         
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>

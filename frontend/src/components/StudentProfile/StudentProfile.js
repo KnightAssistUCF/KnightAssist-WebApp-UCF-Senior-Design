@@ -32,6 +32,9 @@ function StudentProfile(props)
       const [email, setEmail] = useState("");
       const [tags, setTags] = useState([]);
 
+      const [open, setOpen] = useState(false);
+      const [eventID, setEventID] = useState("");
+
       async function getFields(){
          let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
 
@@ -167,7 +170,7 @@ function StudentProfile(props)
                </div>
                <div className='cardSections'>
                   <FavoriteOrganizations/>
-                  <RecentEvents/>
+                  <RecentEvents setOpen={setOpen} setEventID={setEventID}/>
                </div>
             </div>
          </div>

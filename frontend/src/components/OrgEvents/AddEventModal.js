@@ -23,11 +23,13 @@ import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
 import './OrgEvents';
 import { buildPath } from '../../path';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef} from 'react';
 
 function AddEventModal(props)
 {
     const handleClose = () => {resetValues(); props.setEditMode(0); props.setOpen(false);}
+
+    const fileSelect = useRef();
 
     const [modalType, setModalType] = useState("Add");
     const [buttonText, setButtonText] = useState("Add");
@@ -36,7 +38,7 @@ function AddEventModal(props)
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
     const [date, setDate] = useState(new Date());
-    const [picLink, setPicLink] = useState("");
+    const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
     const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
     const semester = "Fall 2023" //This will be implemented some other way later
@@ -116,6 +118,7 @@ function AddEventModal(props)
         setCurrentTag("");
         setTags([]);
         setTagNames([]);
+        setShowError(false);
 
         setDefinedTags(await getOrgTags());
     }
@@ -129,6 +132,7 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
+            picLink: picLink,
             sponsoringOrganization: "12345",
             attendees: [],
             registeredVolunteers: [],
@@ -173,6 +177,7 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
+            picLink: picLink,
             organizationID: "12345",
             attendees: [],
             registeredVolunteers: [],
@@ -264,6 +269,14 @@ function AddEventModal(props)
                     <DatePicker label={props.label} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>    
+        )
+    }
+
+    function PhotoInput(props){
+        return (
+            <Grid item xs={props.xs} sm={props.sm}>
+                <input ref={fileSelect} type="file" onChange={() => setPicLink(URL.createObjectURL(fileSelect.current.files[0]))}/>
+            </Grid>
         )
     }
 
@@ -378,6 +391,7 @@ function AddEventModal(props)
             setDescription(event.description);
             setDate(new Date(event.date));
             setLocation(event.location);
+            setPicLink(event.picLink);
             setStartTime(dayjs(event.startTime));
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
@@ -400,8 +414,6 @@ function AddEventModal(props)
             
             setTags(taggy);
             setTagNames(taggyNames);
-
-            //setDefinedTags(unusedTags);
 
             setRedoTags(redoTags * -1);
         }
@@ -449,8 +461,8 @@ function AddEventModal(props)
 
                                     {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
 
-                                    {GridTextField({xm:12, sm:6, name:"Picture Link", label:"Picture Link", required:false, multiline:false, value:picLink, onChange:(e) => setPicLink(e.target.value)})}
-
+                                    {PhotoInput({xm:12, sm:6})}
+            
                                     {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e)})}  
                                     {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e)})}  
 
@@ -495,6 +507,8 @@ function AddEventModal(props)
                                     >
                                     {buttonText}
                                 </Button>
+
+                                <ErrorMessage/>
 
                             </Box>
                             </Box>
