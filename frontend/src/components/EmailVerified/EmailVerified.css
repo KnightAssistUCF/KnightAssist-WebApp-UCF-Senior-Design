@@ -9,10 +9,14 @@
 .emailTitle {
   color: black;
 }
+.emailContent {
+  color: black;
+  font-size: 25px;
+}
 
 .verifyIcon {
   margin: 30px;
-  color: #00664D;
+  color: #5B4E77;
   font-size: 150px;
 }
 
@@ -27,7 +31,7 @@
 .CardContainer {
   position: absolute;
   left: 50%;
-  top: 50%;
+  top: 60%;
   transform: translate(-50%, -60%);
 }
 

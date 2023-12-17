@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './EmailVerified.css';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { BiCheckShield } from 'react-icons/bi';
+import { BiMailSend  } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
@@ -9,6 +8,8 @@ import Logo from '../Logo';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { buildPath } from "../../path";
+import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
+import useStyles from '../../PreLogin/PreLoginStyles';
 
 function EmailVerified() {
   const navigate = useNavigate();
@@ -39,9 +40,10 @@ function EmailVerified() {
 
       let res = JSON.parse(await response.text());
       console.log(res);
-      if(response.ok) {
+      console.log(response);
+      if(res.success) {
         setMessage("Correct code");
-      } else if(!response.success) {
+      } else if(!res.success) {
         setMessage("*Incorrect verification code, please enter again");
       } else {
         setMessage("*Error occured");
@@ -56,11 +58,13 @@ function EmailVerified() {
 
 return (
         <div id='emailVerified'>
+          <PreLoginNavBar />
           <div className="CardContainer">
             <Card variant="outlined" className="Card">
               <Box sx={{ margin: '20px' }}>
                 <div className="emailTitle">Student Email Successfully Verified</div>
-                <BiCheckShield className='verifyIcon'></BiCheckShield>
+                <div className="emailContent">Thanks for signing up! Please enter the confirmation code from your email to verify your account.</div>
+                <BiMailSend  className='verifyIcon'></BiMailSend >
               </Box>
               <TextField id="outlined-basic" label="Verification Code" variant="outlined" value={verificationCode} onChange={(event) => setVerificationCode(event.target.value)} />
               <Button className="submitBtn" variant="contained" color="primary" onClick={submitVerifyCode}>
