@@ -16,8 +16,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 function StudentTopBar()
 {
-    const pages = ['Products', 'Pricing', 'Blog'];
-    const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+    const settings = ['Profile', 'Logout'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -38,7 +37,7 @@ function StudentTopBar()
 
    return(
       <div className="StudentTopBar">
-    <AppBar variant='contained' position="static" sx={{ backgroundColor: '#ffffff' }}>
+    <AppBar variant='contained'  position="static" sx={{ backgroundColor: '#ffffff' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
 
@@ -48,7 +47,7 @@ function StudentTopBar()
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Profile">
+            <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={"First" + " " +"Last"} src="/static/images/avatar/2.jpg" />
               </IconButton>
