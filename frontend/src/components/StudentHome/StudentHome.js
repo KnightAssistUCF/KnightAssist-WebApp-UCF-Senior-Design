@@ -31,13 +31,19 @@ function StudentHome()
 
 
     async function getStudentInfo() {
-      const email = '';
-      const url = buildPath(`api/searchUser?email=${email}`);
+      // modify localStorage methods to recieve from login
+      localStorage.setItem('ID', '657dff4c5f28be97b30edff1');
+      console.log(localStorage.getItem("ID"));
+      const url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
+      localStorage.setItem("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFuaXNoYXJhbmphbjU1QGdtYWlsLmNvbSIsImlhdCI6MTcwMjc1NjE3MiwiZXhwIjoxNzAzNjIwMTcyfQ.APq6qyG1YHumfZN0Thne9x4qbMad2GVT_UaMHLHZF5A");
+      const authToken = localStorage.getItem("token");
     
       try {
         const response = await fetch(url, {
           method: "GET", // Use GET request
-          headers: { "Content-Type": "application/json" },
+          headers: {"Content-Type": "application/json",
+          "Authorization": `Bearer ${authToken}`
+          }
         });
         let res = JSON.parse(await response.text());
         console.log(res);
