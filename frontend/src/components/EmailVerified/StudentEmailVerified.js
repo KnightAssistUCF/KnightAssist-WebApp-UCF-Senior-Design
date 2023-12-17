@@ -11,7 +11,7 @@ import { buildPath } from "../../path";
 import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import useStyles from '../../PreLogin/PreLoginStyles';
 
-function EmailVerified() {
+function StudentEmailVerified() {
   const navigate = useNavigate();
   const [verificationCode, setVerificationCode] = useState('');
   const [email, setEmail] = useState('');
@@ -62,7 +62,6 @@ return (
           <div className="CardContainer">
             <Card variant="outlined" className="Card" style={{backgroundColor: "rgba(169, 169, 169, 0.05)"}}>
               <Box sx={{ margin: '20px' }}>
-                <div className="emailTitle">Student Email Successfully Verified</div>
                 <div className="emailContent">Thanks for signing up! Please enter the confirmation code from your email to verify your account.</div>
                 <BiMailSend  className='verifyIcon'></BiMailSend >
               </Box>
@@ -78,4 +77,4 @@ return (
       );
     }
 
-export default EmailVerified;
+export default StudentEmailVerified;
