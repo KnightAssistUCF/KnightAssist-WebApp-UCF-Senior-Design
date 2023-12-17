@@ -38,7 +38,6 @@ function AddEventModal(props)
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
     const [date, setDate] = useState(new Date());
-    const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
     const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
     const semester = "Fall 2023" //This will be implemented some other way later
@@ -46,6 +45,8 @@ function AddEventModal(props)
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
+
+	const [picFile, setPicFile] = useState(null);
 
     const [redoTags, setRedoTags] = useState(1);
     const [showError, setShowError] = useState(false);
@@ -70,7 +71,7 @@ function AddEventModal(props)
         setDescription("");
         setLocation("");
         setDate(new Date());
-        setPicLink("");
+        setPicFile(null);
         setStartTime(dayjs('2022-04-17T15:30'));
         setEndTime(dayjs('2022-04-17T15:30'));
         setMaxVolunteers();
@@ -91,7 +92,6 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
-            picLink: picLink,
             sponsoringOrganization: "12345",
             attendees: [],
             registeredVolunteers: [],
@@ -113,8 +113,22 @@ function AddEventModal(props)
                 headers: {"Content-Type": "application/json"},
             });
 
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
             console.log(res);
+
+			const formData = new FormData();
+			formData.append('profilePic', picFile); 
+			formData.append('entityType', 'event');
+			formData.append('id', res.ID);
+
+			// Store the picture selected to be associated with the event
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
 
             if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
@@ -136,7 +150,6 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
-            picLink: picLink,
             organizationID: "12345",
             attendees: [],
             registeredVolunteers: [],
@@ -158,8 +171,22 @@ function AddEventModal(props)
                 headers: {"Content-Type": "application/json"},
             });
 
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
             console.log(res);
+
+			const formData = new FormData();
+			formData.append('profilePic', picFile); 
+			formData.append('entityType', 'event');
+			formData.append('id', res.ID);
+
+			// Store the picture selected to be associated with the event
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
             
             props.setEditMode(0);
 
@@ -234,7 +261,7 @@ function AddEventModal(props)
     function PhotoInput(props){
         return (
             <Grid item xs={props.xs} sm={props.sm}>
-                <input ref={fileSelect} type="file" onChange={() => setPicLink(URL.createObjectURL(fileSelect.current.files[0]))}/>
+                <input ref={fileSelect} type="file" onChange={() => setPicFile(fileSelect.current.files[0])}/>
             </Grid>
         )
     }
@@ -350,7 +377,6 @@ function AddEventModal(props)
             setDescription(event.description);
             setDate(new Date(event.date));
             setLocation(event.location);
-            setPicLink(event.picLink);
             setStartTime(dayjs(event.startTime));
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
