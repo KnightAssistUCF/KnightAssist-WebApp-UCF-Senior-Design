@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const dotenv = require('dotenv');
+require('dotenv').config();
 
 const Event = require('../../models/events');
 const Organization = require('../../models/organization');

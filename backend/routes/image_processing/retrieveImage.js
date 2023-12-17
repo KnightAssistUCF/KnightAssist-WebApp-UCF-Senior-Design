@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const router = express.Router();
-const dotenv = require('dotenv');
+require('dotenv').config();
 
 const Event = require('../../models/events');
 const Organization = require('../../models/organization');
@@ -13,7 +13,7 @@ const UserStudent = require('../../models/userStudent');
 // Encryption key and algorithm
 const algorithm = 'aes-256-ctr';
 const secretKey = process.env.secretKey_images;
-const iv = process.env.iv_images;
+const iv = Buffer.from(process.env.iv_images, 'hex'); // Convert hex string to bytes
 
 router.get('/', async (req, res) => {
         try {
