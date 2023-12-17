@@ -16,7 +16,7 @@ router.delete('/', async (req, res) => {
                 const entityType = req.body.entityType;
                 const id = req.body.id;
 
-                const user = null;
+                let user;
                 switch (entityType) {
                         case 'event':
                                 user = await Event.findById(id);
@@ -38,7 +38,7 @@ router.delete('/', async (req, res) => {
                 const filePath = user.profilePicPath;
 
                 // Delete the file from the filesystem
-                fs.unlink(filePath, (err) => {
+                fs.unlink(filePath.substring(filePath.indexOf("backend")), (err) => {
                         if (err) {
                                 console.error(err);
                                 return res.status(500).send('Error deleting the file');

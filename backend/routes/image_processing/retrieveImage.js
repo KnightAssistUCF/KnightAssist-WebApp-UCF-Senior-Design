@@ -17,8 +17,11 @@ const iv = Buffer.from(process.env.iv_images, 'hex'); // Convert hex string to b
 
 router.get('/', async (req, res) => {
         try {
-                const id = req.params.id;
-                const entityType = req.params.entityType;
+                const id = req.query.id;
+                const entityType = req.query.entityType;
+
+				console.log('entityType: ', entityType);
+                console.log('id: ', id);
 
                 let user;
                 switch (entityType) {
@@ -41,8 +44,10 @@ router.get('/', async (req, res) => {
 
                 const filePath = user.profilePicPath; 
 
+				console.log(filePath.substring(filePath.indexOf("backend")))
+
                 // Decrypt the file
-                const decryptedImage = decryptFile(filePath);
+                const decryptedImage = decryptFile(filePath.substring(filePath.indexOf("backend")));
 
                 // update the response header with the content type
                 if (path.extname(filePath) === '.png') {

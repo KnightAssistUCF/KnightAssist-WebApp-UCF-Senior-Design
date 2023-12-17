@@ -101,12 +101,22 @@ function EventModal(props)
                 setDescription(event.description);
                 setDate(event.date);
                 setLocation(event.location);
-                setPicLink(event.picLink);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
+				setPicLink(URL.createObjectURL(pic));
 
                 const volunteers = [];
 

@@ -66,9 +66,22 @@ function PastEvents(props)
 
         const events = [];
 
-        for(let event of res)
-            if(eventIsPast(event.date))
-                events.push(<Event name={event.name} picLink={event.picLink} date={event.date} id={event.eventID}/>)   
+        for(let event of res){
+            if(eventIsPast(event.date)){
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
+				console.log(pic);
+		
+				events.push(<Event name={event.name} pic={pic} date={event.date} id={event.eventID}/>)
+			}
+		}
                 
         events.sort(function(a,b){ 
             return b.props.date.localeCompare(a.props.date)
@@ -110,7 +123,7 @@ function PastEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={props.picLink}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

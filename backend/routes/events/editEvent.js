@@ -16,7 +16,6 @@ router.post('/', async (req, res) => {
             events.location = req.body.location;
             events.date = req.body.date;
             events.sponsoringOrganization = req.body.organizationID;
-            events.picLink = req.body.picLink;
             events.startTime = req.body.startTime;
             events.endTime = req.body.endTime;
             events.eventLinks = req.body.eventLinks;
@@ -26,7 +25,7 @@ router.post('/', async (req, res) => {
             events.registeredVolunteers = req.body.registeredVolunteers;
             events.save();            
             console.log(events);
-            res.status(200).send("Event updated successfully");
+			res.status(200).json({message: "Successful", ID: events._id});
         } else {
             res.status(404).send("Event not found in the database");
         }

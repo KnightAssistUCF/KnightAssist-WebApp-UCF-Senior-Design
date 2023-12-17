@@ -67,8 +67,17 @@ function RecentEvents(props)
 
         for(let event of res){
             if(eventIsPast(event.date)){
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} picLink={event.picLink} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event.eventID}/>)  
             }
         }
 
@@ -105,7 +114,7 @@ function RecentEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={props.picLink}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
