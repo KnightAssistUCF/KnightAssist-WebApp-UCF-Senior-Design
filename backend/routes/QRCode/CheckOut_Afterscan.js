@@ -8,6 +8,11 @@ router.post("/", async (req, res) => {
     try {
         const { qrCodeData_eventID_WithHash, studentId } = req.body;
 
+		// Not a check out code
+		if(qrCodeData_eventID_WithHash.length <= 24 || !qrCodeData_eventID_WithHash.endsWith('out')){
+			return res.status(404).send("The QRCode is not a checkout code");
+		}
+
         // store the correct event ID after removing the random appended value at the end
         const qrCodeData_eventID_Modified = qrCodeData_eventID_WithHash.substring(0, 24);
 
