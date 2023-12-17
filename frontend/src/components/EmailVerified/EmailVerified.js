@@ -60,14 +60,14 @@ return (
         <div id='emailVerified'>
           <PreLoginNavBar />
           <div className="CardContainer">
-            <Card variant="outlined" className="Card">
+            <Card variant="outlined" className="Card" style={{backgroundColor: "rgba(169, 169, 169, 0.05)"}}>
               <Box sx={{ margin: '20px' }}>
                 <div className="emailTitle">Student Email Successfully Verified</div>
                 <div className="emailContent">Thanks for signing up! Please enter the confirmation code from your email to verify your account.</div>
                 <BiMailSend  className='verifyIcon'></BiMailSend >
               </Box>
               <TextField id="outlined-basic" label="Verification Code" variant="outlined" value={verificationCode} onChange={(event) => setVerificationCode(event.target.value)} />
-              <Button className="submitBtn" variant="contained" color="primary" onClick={submitVerifyCode}>
+              <Button className="submitBtn" variant="contained" color="primary" style={{ backgroundColor: '#5B4E77'}} onClick={submitVerifyCode}>
                 Submit
               </Button>
               <div className="message">{message}</div>
