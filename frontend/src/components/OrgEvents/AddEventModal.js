@@ -357,9 +357,13 @@ function AddEventModal(props)
         }
     }
 
-    useEffect(async ()=>{
-        setDefinedTags(await getOrgTags());
-    }, [])
+    useEffect(()=>{
+        const setTags = async () => {
+			setDefinedTags(await getOrgTags());
+		}
+
+		setTags();
+    }, []);
 
     useEffect(()=>{
         const addFields = async () => {
