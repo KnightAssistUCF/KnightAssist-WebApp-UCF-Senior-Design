@@ -192,6 +192,14 @@ app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
 const checkIn_Afterscan = require('./backend/routes/QRCode/checkIn_Afterscan');
 app.use('/api/checkIn_Afterscan', checkIn_Afterscan);
 
+// Image Processing Endpoints
+const deleteImage = require('./backend/routes/image_processing/deleteImage');
+app.use('/api/deleteImage', deleteImage);
+const storeImage = require('./backend/routes/image_processing/storeImage&path');
+app.use('/api/storeImage', storeImage);
+const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
+app.use('/api/retrieveImage', retrieveImage);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now

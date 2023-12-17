@@ -66,26 +66,36 @@ function OrgFavoriteEvents(props)
             console.log(res);    
             
             for(let event of res){
-                const json = {
+                let json = {
                     eventID: event.eventID,
                     eventName: event.name,
                     userID: localStorage.getItem("ID"),
                     check: 1
                 };
     
-                const url = buildPath(`api/RSVPForEvent`);
+                let url = buildPath(`api/RSVPForEvent`);
     
-                const response = await fetch(url, {
+                let response = await fetch(url, {
                     body: JSON.stringify(json),
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                 });
             
-                const res = JSON.parse(await response.text());
+                let res = JSON.parse(await response.text());
     
                 // Don't show event if user already RSVP'd
-                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date))
-                    events.push(<Event eventName={event.name} picLink={event.picLink} orgName={org.name} date={event.date} id={event.eventID}/>)
+                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date)){
+					url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+					response = await fetch(url, {
+						method: "GET",
+						headers: {"Content-Type": "application/json"},
+					});
+			
+					let pic = await response.blob();
+
+					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.date} id={event.eventID}/>)
+				}
             }
         }       
 
@@ -132,7 +142,7 @@ function OrgFavoriteEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={<img className="loginPhoto" src={props.picLink}/>}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

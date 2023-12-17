@@ -28,7 +28,10 @@ const eventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userStudent',
     }],
-    picLink: String,
+    profilePicPath: {
+        type: String,
+        default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+    },
     startTime: Date,
     endTime: Date,
     eventLinks: {
