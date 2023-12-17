@@ -13,7 +13,7 @@ router.post('/', async (req, res) => {
                         return res.status(404).send('Organization not found in the database');
                 }
 
-                if (currentOrgn.EmailTokenForORG === tokenEnteredByOrg) {
+                if (currentOrg.EmailTokenForORG === tokenEnteredByOrg) {
                         currentOrg.EmailValidated = true;
                         await currentOrg.save();
                         res.send({ success: true });
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
                         res.send({ success: false });
                 }
         } catch (err) {
-                res.status(500).send('Server error');
+                res.status(500).send(`Server error: ${err.message}`);
         }
 });
 
