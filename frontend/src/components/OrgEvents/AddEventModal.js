@@ -46,6 +46,7 @@ function AddEventModal(props)
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
 
+	const [picName, setPicName] = useState(null);
 	const [picFile, setPicFile] = useState(null);
 
     const [redoTags, setRedoTags] = useState(1);
@@ -71,6 +72,7 @@ function AddEventModal(props)
         setDescription("");
         setLocation("");
         setDate(new Date());
+		setPicName(null)
         setPicFile(null);
         setStartTime(dayjs('2022-04-17T15:30'));
         setEndTime(dayjs('2022-04-17T15:30'));
@@ -261,7 +263,11 @@ function AddEventModal(props)
     function PhotoInput(props){
         return (
             <Grid item xs={props.xs} sm={props.sm}>
-                <input ref={fileSelect} type="file" onChange={() => setPicFile(fileSelect.current.files[0])}/>
+				<label for="upload" className="picBtn btn btn-primary">Select Pic</label>
+				<div className='imgDemo'>
+					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)}/> : ""}
+				</div>
+                <input ref={fileSelect} id="upload" type="file" style={{display:"none"}} onChange={() => {if(fileSelect.current.files.length > 0){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
         )
     }
