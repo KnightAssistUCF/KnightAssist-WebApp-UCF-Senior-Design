@@ -14,6 +14,7 @@ import useStyles from '../../PreLogin/PreLoginStyles';
 function EmailVerified() {
   const navigate = useNavigate();
   const [verificationCode, setVerificationCode] = useState('');
+  const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
 
@@ -22,7 +23,6 @@ function EmailVerified() {
   async function submitVerifyCode() {
     const url = buildPath("api/validateEmailTokenInput_student");
     // get STUDENT email
-    var email = "anisharanjan55@gmail.com";
 
     const json = {
       userEmail: email,
@@ -66,11 +66,12 @@ return (
                 <div className="emailContent">Thanks for signing up! Please enter the confirmation code from your email to verify your account.</div>
                 <BiMailSend  className='verifyIcon'></BiMailSend >
               </Box>
+              <TextField id="outlined-basic" label="Student Email" variant="outlined" value={email} onChange={(event) => setEmail(event.target.value)} style={{ marginBottom: '10px'}} />
               <TextField id="outlined-basic" label="Verification Code" variant="outlined" value={verificationCode} onChange={(event) => setVerificationCode(event.target.value)} />
               <Button className="submitBtn" variant="contained" color="primary" style={{ backgroundColor: '#5B4E77'}} onClick={submitVerifyCode}>
                 Submit
               </Button>
-              <div className="message">{message}</div>
+              <div style={{ color: message === "Correct code" ? "green" : "red", fontSize: '20px' }}>{message}</div>
             </Card>
           </div>
         </div>
