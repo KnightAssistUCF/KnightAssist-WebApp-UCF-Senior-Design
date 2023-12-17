@@ -18,13 +18,16 @@ router.post("/", async (req, res) => {
                         return res.status(404).send("Student not found in the database");
                 }
 
-                if (eventObj.checkedInStudents.includes(student._id)) {
+                const alreadyCheckedIn = eventObj.checkedInStudents.some(checkIn => checkIn.studentId.equals(student._id));
+                if (alreadyCheckedIn) {
                         return res.status(400).send("Student already checked in for this event");
                 }
 
-                // Don't add again by accident
-                if(!(eventObj.checkedInStudents.includes(student._id)))
-                        eventObj.checkedInStudents.push(student._id);
+                eventObj.checkedInStudents.push({
+                        studentId: student._id,
+                        checkInTime: new Date(),
+                        checkOutTime: null 
+                });
           
                 await eventObj.save();
 

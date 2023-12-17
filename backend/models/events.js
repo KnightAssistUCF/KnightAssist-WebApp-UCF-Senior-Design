@@ -41,8 +41,12 @@ const eventSchema = new Schema({
         website: String
     },
     checkedInStudents: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
+        studentId: {
+            type: Schema.Types.ObjectId,
+            ref: 'userStudent',
+        },
+        checkInTime: Date,
+        checkOutTime: Date
     }],
     eventTags: [String],
     semester: String,

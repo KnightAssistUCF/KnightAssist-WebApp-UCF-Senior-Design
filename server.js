@@ -192,6 +192,12 @@ app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
 const checkIn_Afterscan = require('./backend/routes/QRCode/checkIn_Afterscan');
 app.use('/api/checkIn_Afterscan', checkIn_Afterscan);
 
+const generateQRCode_checkOut = require('./backend/routes/QRCode/createCheckOut_QRCode');
+app.use('/api/generateQRCode_checkOut', generateQRCode_checkOut);
+
+const CheckOut_Afterscan = require('./backend/routes/QRCode/CheckOut_Afterscan');
+app.use('/api/CheckOut_Afterscan', CheckOut_Afterscan);
+
 // Image Processing Endpoints
 const deleteImage = require('./backend/routes/image_processing/deleteImage');
 app.use('/api/deleteImage', deleteImage);
