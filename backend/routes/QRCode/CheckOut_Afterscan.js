@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
             return res.status(404).send("Student not found in the database");
         }
 
+		console.log("STUDENT ID", student);
         
         const checkInRecord = eventObj.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
 

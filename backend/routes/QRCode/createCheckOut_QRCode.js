@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         const QRCodeString = eventObj._id.toString();
 
         // encoding the difference for the checkout QR Code 
-        QRCodeString = QRCodeString + crypto.randomBytes(16).toString('hex');
+        //QRCodeString = QRCodeString + crypto.randomBytes(16).toString('hex');
         const QRCodeImage = await QRCode.toDataURL(QRCodeString);
         console.log(QRCodeImage);
         return res.json({ QRCodeImageBlock: "<img src=" + QRCodeImage + "/>" });
