@@ -43,7 +43,7 @@ Requirements:
 */
 router.post('/', upload.single('profilePic'), async (req, res) => {
         try {
-                const entityType = req.body.entityType.toLowerCase().toString();   
+                const entityType = req.body.entityType;   
                 const id = req.body.id;
                 const filePath = req.file.path;
 
@@ -57,13 +57,13 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                 let user;
                 switch (entityType) {
                         case 'event':
-                                user = await Event.findById(id);
+                                user = await Event.findOne({ _id: id });
                                 break;
                         case 'organization':
-                                user = await Organization.findById(id);
+                                user = await Organization.findOne({ _id: id });
                                 break;
                         case 'student':
-                                user = await UserStudent.findById(id);
+                                user = await UserStudent.findOne({ _id: id });
                                 break;
                         default:
                                 throw new Error('Invalid entity type');
