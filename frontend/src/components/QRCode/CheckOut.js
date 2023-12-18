@@ -10,19 +10,19 @@ import { buildPath } from '../../path';
 
 */
 
-function CheckIn(){
+function CheckOut(){
 
 	async function onScanSuccess(decodedText, decodedResult) {
 		console.log(`QR Code detected: ${decodedText}`); // decoded text will be the event ID
 				
-		let url = buildPath('api/checkIn_Afterscan');
+		let url = buildPath('api/checkOut_Afterscan');
 
 		console.log(url);
 
 		await fetch(url, {
 				method: 'POST',
 				headers: {"Content-Type": "application/json"},
-				body: JSON.stringify({qrCodeData_eventID: decodedText, studentId: localStorage.getItem("ID")})
+				body: JSON.stringify({qrCodeData_eventID_WithHash: decodedText, studentId: localStorage.getItem("ID")})
 		})
 		.then(response => {
 				console.log(response.text());
@@ -32,7 +32,7 @@ function CheckIn(){
 						console.log("Success");
 						//window.location.href = ''; // plug page later here [TODO]
 				} else {
-						console.log("Already checked in");
+						console.log("Already checked out");
 						//window.location.href = ''; // plug page later here [TODO]
 				}
 		})
@@ -56,4 +56,4 @@ function CheckIn(){
 	);
 }
 
-export default CheckIn;
+export default CheckOut;
