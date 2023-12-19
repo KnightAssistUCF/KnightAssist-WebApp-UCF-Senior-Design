@@ -42,10 +42,14 @@ router.get('/', async (req, res) => {
                         return res.status(404).send('Image not found or entity does not exist');
                 }
 
+				user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+
+				filePath = path.normalize(user.profilePicPath);
+				console.log(filePath);
                 // converts the path to be a neutral format 
-                const normalizedPath = user.profilePicPath.replace(/\\/g, '/');
+               /* const normalizedPath = user.profilePicPath.replace(/\\/g, '/');
                 const baseDir = path.join(__dirname, '..', '..', 'backend');
-                const filePath = path.join(baseDir, normalizedPath);
+                const filePath = path.join(baseDir, normalizedPath);*/
 
                 // Decrypt the file
                 const decryptedImage = decryptFile(filePath);
