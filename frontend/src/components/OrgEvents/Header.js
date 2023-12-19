@@ -17,7 +17,7 @@ function Header()
     console.warn(user);
 
     function logOut() {
-        // handle logOut logic
+        // handle logout logic
         // bring user to landing page
         localStorage.clear();
         navigate('/'); 
