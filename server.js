@@ -206,6 +206,10 @@ app.use('/api/storeImage', storeImage);
 const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
 app.use('/api/retrieveImage', retrieveImage);
 
+/* Contact form submission endpoint */
+const contactUsFormSubmission = require('./backend/routes/contactUs_Form/submitForm');
+app.use('/api/contactUsFormSubmission', contactUsFormSubmission);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
