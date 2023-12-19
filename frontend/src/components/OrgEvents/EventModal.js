@@ -111,7 +111,7 @@ function EventModal(props)
 
 				response = await fetch(url, {
 					method: "GET",
-					headers: {"Content-Type": "image/jpeg"},
+					headers: {"Content-Type": "application/json"},
 				});
 		
 				let pic = await response.blob();
