@@ -33,7 +33,7 @@ function StudentHome()
     async function getStudentInfo() {
       const email = '';
       const url = buildPath(`api/searchUser?email=${email}`);
-      console.log("testing heroku deployment");
+      console.log("2 testing heroku deployment");
     
       try {
         const response = await fetch(url, {
