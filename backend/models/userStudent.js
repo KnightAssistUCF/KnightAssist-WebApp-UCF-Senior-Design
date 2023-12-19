@@ -10,11 +10,12 @@ const mongoose = require('mongoose');
 
 const userStudentSchema = new mongoose.Schema({
     /* To be added maybe: graduation date, major, etc. */
-    studentID: {
-        type: String, // keeping it as string for now, maybe it makes things easier (alternative Int32)
-        required: true,
-        unique: true
-    },
+    /* NOTE -> We don't use this one anymore, we simply use the object ID attributed by mongoDB itself */
+    // studentID: {
+    //     type: String, // keeping it as string for now, maybe it makes things easier (alternative Int32)
+    //     required: true,
+    //     unique: true
+    // },
     firstName: {
         type: String,
         required: true

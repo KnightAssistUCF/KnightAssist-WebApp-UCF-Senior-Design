@@ -52,7 +52,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                 console.log('filePath: ', filePath);
 
                 // Encrypt the file
-                encryptFile(filePath);
+                await encryptFile(filePath);
 
                 let user;
                 switch (entityType) {

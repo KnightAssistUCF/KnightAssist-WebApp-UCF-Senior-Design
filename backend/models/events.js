@@ -4,11 +4,12 @@ const Schema = mongoose.Schema;
 // const Organization = require('./organization.js').schema;
 
 const eventSchema = new Schema({
-    eventID: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    /* remove this for now we will be relying on the native mongoDB provided ids */
+    // eventID: {
+    //     type: String,
+    //     required: true,
+    //     unique: true
+    // },
     name: {
         type: String,
         required: true

@@ -5,11 +5,12 @@ const Schema = mongoose.Schema;
 // const OrganizationSemester = require('./organizationSemester.js').schema;
 
 const organizationSchema = new Schema({
-    organizationID: {
-        type: String, // keeping it as a string for now for ease of use
-        required: true,
-        unique: true
-    },
+    /* This is not used anymore we will rely on the mongo natively provided IDs */
+    // organizationID: {
+    //     type: String, // keeping it as a string for now for ease of use
+    //     required: true,
+    //     unique: true
+    // },
     name: {
         type: String,
         required: true,
