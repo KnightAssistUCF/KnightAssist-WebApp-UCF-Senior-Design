@@ -260,6 +260,18 @@ function AddEventModal(props)
         )
     }
 
+	function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length == 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
+
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType == "png" || fileType == "gif" || fileType == "jpg" || fileType == "jpeg";
+	}
+
     function PhotoInput(props){
         return (
             <Grid item xs={props.xs} sm={props.sm}>
@@ -267,7 +279,7 @@ function AddEventModal(props)
 				<div className='imgDemo'>
 					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)}/> : ""}
 				</div>
-                <input ref={fileSelect} id="upload" type="file" style={{display:"none"}} onChange={() => {if(fileSelect.current.files.length > 0){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
+                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
         )
     }
