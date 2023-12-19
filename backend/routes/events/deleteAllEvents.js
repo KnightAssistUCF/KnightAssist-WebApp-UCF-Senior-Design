@@ -5,7 +5,7 @@ const event = require('../../models/events');
 const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
-    const searchID = req.query.organizationID;
+    const searchID = req.query.organizationID; // taken as a string
 
     await event.find({ sponsoringOrganization: searchID}).then((events) => {
         if (events) {
@@ -19,7 +19,7 @@ router.get('/', async (req, res) => {
 });
 
 router.delete('/', async (req, res) => {
-    const searchID = req.body.organizationID;
+    const searchID = req.body.organizationID;// taken as a string
 
     await event.find({ sponsoringOrganization: searchID}).then(async (events) => {
         if (events) {

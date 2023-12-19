@@ -6,7 +6,7 @@ const organizationSchema = require('../../models/organization');
 
 router.post('/', async (req, res) => {
         var newEvent = new event({
-            eventID: "1234" + req.body.name, //will be generated in some other way
+            // eventID: "1234" + req.body.name, //will be generated in some other way
             name: req.body.name,
             description: req.body.description,
             location: req.body.location,
@@ -22,7 +22,7 @@ router.post('/', async (req, res) => {
         });
         
         await newEvent.save().then(async (user) => {
-            await organizationSchema.findOne({ organizationID: req.body.sponsoringOrganization }).then((user) => {
+            await organizationSchema.findOne({ _id: req.body.sponsoringOrganization }).then((user) => {
                 console.log(user.eventsArray)
                 user.eventsArray.push(newEvent.eventID)
                 console.log(user.eventsArray)

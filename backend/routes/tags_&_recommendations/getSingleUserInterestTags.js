@@ -6,7 +6,7 @@ const UserVolunteer = require('../../models/userStudent');
 router.get('/', async (req, res) => {
         try {
                 const userID = req.query.userID;
-                const user = await UserVolunteer.findOne({ studentID: userID });
+                const user = await UserVolunteer.findOne({ _id: userID });
 
                 if (!user) {
                         return res.status(404).send('User not found in the database, cannot fetch their interest tags');

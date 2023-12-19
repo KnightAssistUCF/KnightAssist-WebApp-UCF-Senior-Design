@@ -16,7 +16,7 @@ function shuffleThis(array) {
 router.get('/', async (req, res) => {
         try {
                 const userID = req.query.userID;
-                const user = await userStudent.findOne({ studentID: userID }).populate('favoritedOrganizations');
+                const user = await userStudent.findOne({ _id: userID }).populate('favoritedOrganizations');
 
                 if (!user) {
                         return res.status(404).send('User not found in the database');

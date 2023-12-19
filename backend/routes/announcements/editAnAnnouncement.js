@@ -9,7 +9,7 @@ router.post('/', async (req, res) => {
     const updatedContent = req.body.newContent;
 
     try {
-        const organization = await orgDB.findOne({ organizationID });
+        const organization = await orgDB.findOne({ _id: organizationID });
         if (!organization) return res.status(404).send('Organization not found');
         const announcementIndex = organization.updates.findIndex(update => update.title === titleToLookFor);
         if (announcementIndex === -1) return res.status(404).send('Announcement not found');

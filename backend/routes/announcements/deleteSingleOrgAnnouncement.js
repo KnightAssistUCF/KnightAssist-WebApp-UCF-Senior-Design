@@ -8,7 +8,7 @@ router.delete('/', async (req, res) => {
     const organizationID = req.body.organizationID;
     try {
 
-        const organization = await orgDB.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ _id: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
         var index = -1;

@@ -6,12 +6,12 @@ const userStudent = require('../../models/userStudent');
 
 
 router.get('/', async (req, res) => {
-        const organizationID = req.query.organizationID;
+    const organizationID = req.query.organizationID;
 	const userID = req.query.userID;
 	
-        if (!organizationID || !userID ) {
-                return res.status(400).send("Missing credentials to Favorite");
-        }
+	if (!organizationID || !userID ) {
+			return res.status(400).send("Missing credentials to Favorite");
+	}
 
 	await organization.findOne({ _id: organizationID }).then(async (organization) => {
 		if (organization) {

@@ -7,11 +7,12 @@ router.post('/', async (req, res) => {
     const searchID = req.body.organizationID;
     const eventID = req.body.eventID;
 
-    await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then(async (events) => {
+    await event.findOne({ sponsoringOrganization: searchID, _id: eventID }).then(async (events) => {
         console.log(events);
         if (events) {
             events.name = req.body.name;
-            events.eventID = req.body.eventID;
+            // events.eventID = req.body.eventID;
+            events._id = req.body.eventID;
             events.description = req.body.description;
             events.location = req.body.location;
             events.date = req.body.date;

@@ -6,7 +6,18 @@ const organization = require('../../models/organization');
 router.get('/', async (req, res) => {
     const searchEmail = req.query.email;
 
-    await organization.findOne({ organizationID: req.query.organizationID }).then((organization) => {
+    const query = {};
+    if (searchEmail) {
+        query.email = searchEmail;
+    } else {
+        return res.status(400).send("Search for organization failed - no email provided");
+    }
+
+    if (req.query.organizationID) {
+        query._id = req.query.organizationID;
+    }
+
+    await organization.findOne(query).then((organization) => {
         if (organization) {
             res.status(200).json(organization);
         } else {

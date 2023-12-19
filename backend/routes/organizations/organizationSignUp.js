@@ -21,7 +21,6 @@ router.post('/', async (req, res) => {
             var hashedPassword = bcrypt.hashSync(req.body.password, 10);
             var newOrganization = new organizationSchema({
                 // Note: some components here can be omitted for the signUP phase
-                organizationID: req.body.organizationID, // this should be stored after its generated at the front end level
                 name: req.body.name,
                 password: hashedPassword,
                 email: req.body.email,
