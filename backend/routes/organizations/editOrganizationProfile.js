@@ -15,7 +15,7 @@ router.post('/', authenticateToken_Organization, async (req, res) => {
         if (user) {
             var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.name = req.body.name;
-            user.organizationID = req.body.organizationID;
+            user._id = req.body._id;
             user.email = req.body.email;
             user.password = newHashedPassword;
             user.description = req.body.description;
