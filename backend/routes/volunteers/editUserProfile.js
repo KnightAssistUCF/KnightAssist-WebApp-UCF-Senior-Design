@@ -16,7 +16,7 @@ router.post('/', authenticateToken_User, async (req, res) => {
         if (user) {
             var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.firstName = req.body.firstName;
-            user.studentID = req.body.studentID;
+            // user.studentID = req.body.studentID; removing this as we are using _id for now
             user.lastName = req.body.lastName;
             user.email = req.body.email;
             user.password = newHashedPassword;
