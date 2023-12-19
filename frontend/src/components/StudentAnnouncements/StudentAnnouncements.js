@@ -87,7 +87,6 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
-                                read: announcement.read,
                                 updateID: announcement.updateID
                             },
                         });
@@ -99,7 +98,6 @@ function StudentAnnouncements() {
                                 title: announcement.title,
                                 content: announcement.content,
                                 date: announcement.date,
-                                read: announcement.read,
                                 updateID: announcement.updateID
                             },
                         });
@@ -143,7 +141,6 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
-                                read = {update.Announcement.read}
                                 updateID = {update.Announcement.updateID}
                             />
                             ))
@@ -162,7 +159,6 @@ return (
                                 title={update.Announcement.title}
                                 content={update.Announcement.content}
                                 organizationID = {update.organizationID}
-                                read = {update.Announcement.read}
                                 updateID = {update.Announcement.updateID}
                             />
                             ))

@@ -46,10 +46,6 @@ const organizationSchema = new Schema({
             type: Date,
             default: Date.now
         },
-        read: {
-            type: Boolean, 
-            default: false
-        }
     }],
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
