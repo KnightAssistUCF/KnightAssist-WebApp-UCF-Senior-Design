@@ -68,15 +68,26 @@ router.post('/', async (req, res) => {
         let responseToKnightAssist = {
             ...response,
             body: {
-                ...response.body,
-                intro: `A user has submitted a contact form - ${firstName} ${lastName}`
+                // change the name to be knight assist dev team
+                name: "KnightAssist Dev Team",
+                intro: `A user has submitted a contact form - ${firstName} ${lastName}`,
+                table: {
+                    data: [
+                        { item: "First Name", description: firstName },
+                        { item: "Last Name", description: lastName },
+                        { item: "Email", description: email },
+                        { item: "Phone Number", description: phone_number },
+                        { item: "Message", description: messageContent }
+                    ]
+                },
+                outro: "Please respond within the next 3-5 days. Either send an email to the user or call them. Thank you!"
             }
         };
         let mailToKnightAssist = mailGenerator.generate(responseToKnightAssist);
         let messageToKnightAssist = {
             from: process.env.EMAIL,
             to: process.env.EMAIL,
-            subject: `KnightAssist - Contact Form Submission - ${firstName} ${lastName}`,
+            subject: `KnightAssist - Contact Form Submission - From: ${firstName} ${lastName}`,
             html: mailToKnightAssist
         };
 
