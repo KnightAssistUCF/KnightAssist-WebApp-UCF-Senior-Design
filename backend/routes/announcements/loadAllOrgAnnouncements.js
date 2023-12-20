@@ -20,7 +20,6 @@ router.get('/', async (req, res) => {
                                 title: update.title,
                                 content: update.content,
                                 date: update.date,
-                                read: update.read,
                                 updateID: update._id
                         };
                 });

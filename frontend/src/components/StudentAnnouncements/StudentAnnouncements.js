@@ -22,6 +22,9 @@ function StudentAnnouncements() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [oldUpdates, setOldUpdates] = useState([]);
     const [newUpdates, setNewUpdates] = useState([]);
+    const [favOrgsID, setfavOrgs] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+    const [allUpdates, setUpdates] = useState([]);
 
 
     const handleClick = () => {
@@ -32,9 +35,9 @@ function StudentAnnouncements() {
         setIsModalOpen(false);
     };
 
-    const handleSearch = (searchTerm) => {
-        // search logic
-        console.log('Searching for:', searchTerm);
+    const handleSearchResults = (results) => {
+        setSearchResults(results);
+        console.log(results);
     };
 
     async function getEvents(){
@@ -42,6 +45,7 @@ function StudentAnnouncements() {
         const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
 
+        const favOrgs = [];
         const updates = [];
         const recentUpdates = [];
         
@@ -70,6 +74,7 @@ function StudentAnnouncements() {
             
                 let orgUpdates = JSON.parse(await response.text());
                 console.log(orgUpdates);
+                favOrgs.push({organizationID: org.organizationID}); 
             
                 if(orgUpdates.title != undefined) {
                     updates.push({organizationID: org.organizationID,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
@@ -108,11 +113,15 @@ function StudentAnnouncements() {
             }
             setOldUpdates(updates);
             setNewUpdates(recentUpdates);
+            setfavOrgs(favOrgs);
+            setUpdates([...updates, ...recentUpdates]);
         } catch(e) {
             console.log("nice try");
         }
         console.log(updates);
         console.log(recentUpdates);
+        console.log(favOrgs);
+        console.log(allUpdates)
     }
 
     useEffect(() => {
@@ -127,7 +136,7 @@ return (
             <div className="studAnnouncementsPage">
                 <div class="StudentAnnouncements-title">Announcements</div>
                 <div className="search">
-                    <SearchBar onSearch={handleSearch}/>
+                    <SearchBar favOrgs={favOrgsID} onSearchResults={handleSearchResults} />
                 </div>
                 <div className="results">
                     <div className="recentAnnouncements">
