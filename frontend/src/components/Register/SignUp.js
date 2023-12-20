@@ -12,30 +12,24 @@ import OrganizationForm from './OrganizationForm';
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
+import TabPanel from '@mui/lab/TabPanel';
 
-const defaultTheme = createTheme();
-
-const state = ['User', 'Organization'];
-
-function getForm(state) {
-  switch (state) {
-    case 0:
-      return <VolunteerForm />;
-    case 1:
-      return <OrganizationForm />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+const defaultTheme = createTheme({
+  palette: {
+    primary: {
+      main: '#4E878C',
+    },
+    secondary: {
+      main: '#593959',
+      contrastText: '#FFFFFF'
+    },
+  },
+});
 
 export default function SignUp() {
-  const [activeState, setActiveState] = React.useState(0);
-  const handleToggle = () => {
-    if(activeState == 0){
-      setActiveState(1);
-    } else if (activeState == 1){
-      setActiveState(0);
-    }
+  const [value, setValue] = React.useState("1");
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
   };
 
   const handleSubmit = (event) => {
@@ -51,36 +45,22 @@ export default function SignUp() {
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
-          <Box
-            sx={{
-              marginTop: 3,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-          <Typography component="h1" variant="h5" sx={{paddingBottom: 3}}>Create an Account</Typography>
-          <Box sx={{ width: '100%', typography: 'body1' }}>
-            <TabContext value={activeState}>
-              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                <TabList onChange={handleToggle} aria-label="toggle between forms" indicatorColor="#4E878C" centered>
-                  <Tab label="Volunteer" value="Volunteer" />
-                  <Tab label="Organization" value="Org" />
-                </TabList>
-              </Box>
-            </TabContext>
-          </Box>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }} >
-            {getForm(activeState)}
-          </Box>
-          <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2, bgcolor: '#3E283E' }}
-            >
+          <Typography component="h1" variant="h5" sx={{paddingBottom: 2}}>Create an Account</Typography>
+          <TabContext value={value}>
+            <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+              <TabList onChange={handleChange} centered indicatorColor="secondary" textColor="secondary">
+                <Tab label="Volunteer" value="1" />
+                <Tab label="Organization" value="2" />
+              </TabList>
+            </Box>
+            <TabPanel value="1"><VolunteerForm /></TabPanel>
+            <TabPanel value="2"><OrganizationForm /></TabPanel>
+          </TabContext>
+
+          <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2, bgcolor: '#3E283E', textColor: '#FFFFFF', ":hover": {bgcolor: '#593959'} }} onClick={handleSubmit} >
               Sign Up
-            </Button>
+          </Button>
+
           <Grid container justifyContent="center">
               <Grid item>
                 <Link href="#" variant="body2" sx={{ color: '#4E878C'}}>
@@ -88,7 +68,6 @@ export default function SignUp() {
                 </Link>
               </Grid>
             </Grid>
-        </Box>
       </Container>
     </ThemeProvider>
   );
