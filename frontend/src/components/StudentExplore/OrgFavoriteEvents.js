@@ -54,7 +54,7 @@ function OrgFavoriteEvents(props)
 	    const events = [];
 
         for(let org of res){
-            url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
+            url = buildPath(`api/searchEvent?organizationID=${org._id}`);
 
             response = await fetch(url, {
                 method: "GET",
@@ -67,7 +67,7 @@ function OrgFavoriteEvents(props)
             
             for(let event of res){
                 let json = {
-                    eventID: event.eventID,
+                    eventID: event._id,
                     eventName: event.name,
                     userID: localStorage.getItem("ID"),
                     check: 1
@@ -94,7 +94,7 @@ function OrgFavoriteEvents(props)
 			
 					let pic = await response.blob();
 
-					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.date} id={event.eventID}/>)
+					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.date} id={event._id}/>)
 				}
             }
         }       

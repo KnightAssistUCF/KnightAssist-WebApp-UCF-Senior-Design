@@ -252,8 +252,8 @@ function EventModal(props)
     }
 
     useEffect(()=>{
-        console.log("event id called here")
-        setInfo();
+		if(props.eventID != undefined)
+        	setInfo();
     },[props.eventID])
 
     return(

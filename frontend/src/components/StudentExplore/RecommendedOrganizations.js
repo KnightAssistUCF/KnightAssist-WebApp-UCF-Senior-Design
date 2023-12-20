@@ -31,9 +31,7 @@ function RecommendedOrganizations(props)
     }
 
     async function getOrgs(){
-        const userID = "123456789";
-
-        let url = buildPath(`api/getSuggestedOrganizations_ForUser?userID=${userID}`);
+        let url = buildPath(`api/getSuggestedOrganizations_ForUser?userID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -47,7 +45,7 @@ function RecommendedOrganizations(props)
 	    const orgs = [];
 
         for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
+            orgs.push(<Org name={org.name} description={org.description} id={org._id}/>)  
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);

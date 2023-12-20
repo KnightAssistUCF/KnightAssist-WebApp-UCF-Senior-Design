@@ -40,7 +40,7 @@ function PastEvents(props)
     }
 
     async function getPastEvents(){
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -79,7 +79,7 @@ function PastEvents(props)
 
 				console.log(pic);
 		
-				events.push(<Event name={event.name} pic={pic} date={event.date} id={event.eventID}/>)
+				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
 			}
 		}
                 

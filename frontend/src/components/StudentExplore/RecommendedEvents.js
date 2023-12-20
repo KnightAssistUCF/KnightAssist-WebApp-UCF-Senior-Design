@@ -78,7 +78,7 @@ function RecommendedEvents(props)
 				let pic = await response.blob();
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
             }
         }
 

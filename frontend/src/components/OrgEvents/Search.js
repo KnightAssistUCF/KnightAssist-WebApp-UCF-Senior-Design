@@ -19,7 +19,7 @@ function Search(props) {
     }
 
     async function getAllEvents(flag){
-        let organizationID = "12345";
+        let organizationID = "6530608eae2eedf04961794e";
         let url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
 
         let response = await fetch(url, {
@@ -32,7 +32,7 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event._id});
         }
 
         setEvents(tmp);
@@ -59,8 +59,8 @@ function Search(props) {
         const tmp = [];
 
         for(let org of res){
-            if("organizationID" in org){
-              tmp.push({label: org.name, id: org.organizationID})
+            if("name" in org){
+              tmp.push({label: org.name, id: org._id})
             }
         }
        
