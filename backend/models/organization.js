@@ -43,6 +43,7 @@ const organizationSchema = new Schema({
     updates: [{ // this work as announcements for the organization
         title: String,
         content: String,
+        // sponsoringOrganization: String, [removed for now]
         date: {
             type: Date,
             default: Date.now
@@ -132,6 +133,11 @@ const organizationSchema = new Schema({
         // required: true,
         default: false
     }, 
+    role : {
+        type: String,
+        default: 'organization',
+        required: true
+    },
     __v: {
         type: String,
         required: true,
