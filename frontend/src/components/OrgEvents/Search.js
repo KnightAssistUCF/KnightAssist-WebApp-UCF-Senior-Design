@@ -67,6 +67,15 @@ function Search(props) {
         setOrgs(tmp);
     }
 
+	function handleClick(id){
+        if(props.searchType == "events"){
+            props.setEventID(id);
+            props.setOpenEvent(true);
+        }else{
+
+        }
+    }
+
     useEffect(()=>{
         console.log("called");
         getAllEvents(1);
@@ -96,7 +105,7 @@ function Search(props) {
           <Autocomplete 
             freeSolo
             disableClearable
-            onChange={(e, value) => console.log(value.id)}
+            onChange={(e, value) => {handleClick(value.id)}}
             options={options}
             renderInput={(params) => (
               <TextField
