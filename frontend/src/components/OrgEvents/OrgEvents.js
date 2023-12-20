@@ -21,7 +21,7 @@ function OrgPortal()
     const [resetUpcoming, setResetUpcoming] = useState(1);
     const [resetPast, setResetPast] = useState(1);
     const [resetSearch, setResetSearch] = useState(1);
-    const [searchType, setSearchType] = useState();
+    const [searchType, setSearchType] = useState("events");
     
     function Title(){
       return(
@@ -39,7 +39,7 @@ function OrgPortal()
             <Title/>
             <SearchSwitch setSearchType={setSearchType}/>
             <div className='moveSearch'>
-              <Search searchType={searchType} resetEventSearch={resetSearch}/>
+              <Search searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent}/>
             </div>
           </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
