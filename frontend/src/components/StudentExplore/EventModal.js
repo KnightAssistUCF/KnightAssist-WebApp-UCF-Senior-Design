@@ -21,7 +21,7 @@ const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(""); props.setOpen(false);}
+    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(undefined); props.setOpen(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
     const tagNames = [];
@@ -43,6 +43,8 @@ function EventModal(props)
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
+
+		console.log(props.eventID);
 
         let response = await fetch(url, {
             method: "GET",
