@@ -20,7 +20,7 @@ function StudentExplore()
 {
     const [searchType, setSearchType] = useState("events");
     const [openEvent, setOpenEvent] = useState(false); 
-    const [eventID, setEventID] = useState("");
+    const [eventID, setEventID] = useState(undefined)
     const [resetFavorite, setResetFavorite] = useState(1);
     const [resetRecEvents, setResetRecEvents] = useState(1);
 

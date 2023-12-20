@@ -43,7 +43,7 @@ function FavoriteOrganizations(props)
 	    console.log(res);
 
         for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
+            orgs.push(<Org name={org.name} description={org.description} id={org._id}/>)  
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);

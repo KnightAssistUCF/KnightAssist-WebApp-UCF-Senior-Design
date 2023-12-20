@@ -67,6 +67,7 @@ function RecentEvents(props)
 
         for(let event of res){
             if(eventIsPast(event.date)){
+				console.log(event)
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -77,7 +78,7 @@ function RecentEvents(props)
 				let pic = await response.blob();
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
             }
         }
 

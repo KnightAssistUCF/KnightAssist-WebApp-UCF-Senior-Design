@@ -222,7 +222,7 @@ function EventModal(props)
     }
 
     async function deleteEvent(){
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
 
         const json = {
             eventID: props.eventID,
@@ -262,7 +262,8 @@ function EventModal(props)
     }, [props.editMode])
     
     useEffect(()=>{
-        setInfo();
+        if(props.eventID != undefined)
+        	setInfo();
     },[props.eventID])
 
     return(

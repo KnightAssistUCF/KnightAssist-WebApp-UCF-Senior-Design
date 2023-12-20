@@ -49,7 +49,7 @@ function Search(props) {
             if("name" in event && "date" in event){
                 const orgName = await getOrgName(event.sponsoringOrganization);
                 if(orgName != -1)
-                  tmp.push({label: ("(" + orgName + ") " + event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+                  tmp.push({label: ("(" + orgName + ") " + event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event._id});
             }
         }
 
@@ -77,8 +77,8 @@ function Search(props) {
         const tmp = [];
 
         for(let org of res){
-            if("organizationID" in org){
-              tmp.push({label: org.name, id: org.organizationID})
+            if("name" in org){
+              tmp.push({label: org.name, id: org._id})
             }
         }
        

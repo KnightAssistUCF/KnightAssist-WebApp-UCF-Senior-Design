@@ -89,12 +89,11 @@ function AddEventModal(props)
         console.log(tagNames);
 
         const json = {
-            eventID: "1234" + name,
             name: name,
             description: description,
             location: location,
             date: date,
-            sponsoringOrganization: "12345",
+            sponsoringOrganization: "6530608eae2eedf04961794e", //ID of organization Y, will be changed to local storage
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -152,7 +151,7 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
-            organizationID: "12345",
+            organizationID: "6530608eae2eedf04961794e",
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -350,7 +349,7 @@ function AddEventModal(props)
     }
 
     const getOrgTags = async () => {
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
         const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
 
         try {

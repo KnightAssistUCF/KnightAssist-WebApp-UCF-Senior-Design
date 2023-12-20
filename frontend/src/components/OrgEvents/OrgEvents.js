@@ -17,7 +17,7 @@ function OrgPortal()
     const [openModal, setOpenModal] = useState(false);
     const [openEvent, setOpenEvent] = useState(false);
     const [editMode, setEditMode] = useState(0);
-    const [eventID, setEventID] = useState("");
+    const [eventID, setEventID] = useState(undefined);
     const [resetUpcoming, setResetUpcoming] = useState(1);
     const [resetPast, setResetPast] = useState(1);
     const [resetSearch, setResetSearch] = useState(1);
