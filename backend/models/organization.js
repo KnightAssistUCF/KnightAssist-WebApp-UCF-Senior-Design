@@ -51,7 +51,8 @@ const organizationSchema = new Schema({
     }],
     profilePicPath: {
         type: String,
-        default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+        // assign the default to be the image in utils called orgdefaultbackground.png
+        default: '../utils/orgdefaultbackground.png'
     },
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
@@ -62,6 +63,7 @@ const organizationSchema = new Schema({
             facebook: String,
             twitter: String,
             instagram: String,
+            linkedin: String,
             // we can add more social media platforms here as needed
         }
     },
