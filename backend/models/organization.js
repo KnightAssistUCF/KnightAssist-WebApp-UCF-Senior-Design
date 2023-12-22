@@ -51,8 +51,8 @@ const organizationSchema = new Schema({
     }],
     profilePicPath: {
         type: String,
-        // assign the default to be the image in utils called orgdefaultbackground.png
-        default: '../utils/orgdefaultbackground.png'
+        // assign the default to be the image in images called orgdefaultbackground.png
+        default: 'backend/images/orgdefaultbackground.png'
     },
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
