@@ -5,7 +5,7 @@ const event = require('../../models/events');
 const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
-    const searchID = req.query.organizationID; // taken as a string
+    const searchID = req.query.organizationID; // taken as a string but its the organization ID
 
     await event.find({ sponsoringOrganization: searchID}).then((events) => {
         if (events) {
