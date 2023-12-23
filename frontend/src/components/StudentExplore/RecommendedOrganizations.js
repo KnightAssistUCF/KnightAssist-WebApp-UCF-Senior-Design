@@ -44,8 +44,18 @@ function RecommendedOrganizations(props)
 
 	    const orgs = [];
 
-        for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org._id}/>)  
+        for(let org of res){
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+            orgs.push(<Org name={org.name} pic={pic} description={org.description} id={org._id}/>)  
+		}
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
@@ -71,10 +81,10 @@ function RecommendedOrganizations(props)
             <div className="event spartan">
                 <CardActionArea className='test'>
                     <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
-                        <CardMedia
+					<CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
