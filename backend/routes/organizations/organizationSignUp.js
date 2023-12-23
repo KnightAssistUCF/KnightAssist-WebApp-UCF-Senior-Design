@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
                 backgroundURL: req.body.backgroundURL,
                 confirmTokenForORG: generateToken({ email: req.body.email}, process.env.JWT_SECRET_KEY),
                 EmailTokenForORG: crypto.randomBytes(64).toString('hex').toString(),
+                profilePicPath: req.body.profilePicPath,
                 // rest of the components can be added later here if needed
             });
             newOrganization.save().then((organization) => {

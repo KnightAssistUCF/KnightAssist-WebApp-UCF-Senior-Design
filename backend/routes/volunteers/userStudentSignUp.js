@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: hashedPassword,
-                profilePicture: req.body.profilePicture,
+                profilePicPath: req.body.profilePicPath,
                 totalVolunteerHours: req.body.totalVolunteerHours,
                 semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
                 categoryTags: req.body.categoryTags, // stores tags marking their interests
