@@ -26,18 +26,18 @@ function StudentExplore()
 
     return(
       <div id='homePage'>
-	<Header/>
-	<div className='moveEverything'>
-	    <div class="exploreTitle">Explore</div>
-	    <SearchSwitch setSearchType={setSearchType}/>
-	    <div className='moveSearch'>
-		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
-	    </div>
-	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
-	    <OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
-	    <RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
-	    <RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
-	</div>
+		<Header/>
+		<div className='moveEverything'>
+			<div class="exploreTitle">Explore</div>
+			<SearchSwitch setSearchType={setSearchType}/>
+			<div className='moveSearch'>
+			<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
+			</div>
+			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
+			<OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
+			<RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
+			<RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+			</div>
       </div>
     );
 };
