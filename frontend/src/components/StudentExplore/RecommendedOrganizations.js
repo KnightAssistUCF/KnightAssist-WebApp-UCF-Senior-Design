@@ -81,19 +81,28 @@ function RecommendedOrganizations(props)
             <div className="event spartan">
                 <CardActionArea className='test'>
                     <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
-					<CardMedia
-                            component="img"
-                            height="150"
-                            image={URL.createObjectURL(props.pic)}
-                        />
-                        <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
-                            </Typography>
-                            <Typography>
-                                {(props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description}
-                            </Typography>
-                        </CardContent>
+						<div className='logoandbg'>
+								<CardMedia
+									component="img"
+									className='cardBg'
+									height="150"
+									image={URL.createObjectURL(props.pic)}
+								/>
+								<CardMedia
+									className='cardLogo'
+									component="img"
+									height="75"
+									image={logo}
+								/>
+						</div>
+						<CardContent>
+							<Typography className='eventName' clagutterBottom variant="h6" component="div">
+								{props.name}
+							</Typography>
+							<Typography>
+								{(props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description}
+							</Typography>
+						</CardContent>
                     </Card>
                 </CardActionArea>
             </div>

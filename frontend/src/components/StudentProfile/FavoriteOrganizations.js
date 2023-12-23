@@ -79,11 +79,20 @@ function FavoriteOrganizations(props)
             <div className="event spartan">
                 <CardActionArea className='test'>
                     <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={URL.createObjectURL(props.pic)}
-                        />
+						<div className='logoandbg'>
+							<CardMedia
+								component="img"
+								className='cardBg'
+								height="150"
+								image={URL.createObjectURL(props.pic)}
+							/>
+							<CardMedia
+								className='cardLogo'
+								component="img"
+								height="75"
+								image={logo}
+							/>
+						</div>
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {props.name}

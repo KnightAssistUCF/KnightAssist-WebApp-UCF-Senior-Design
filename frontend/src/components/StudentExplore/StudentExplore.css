@@ -54,3 +54,20 @@
 .anIcon{
     float: left;
 }
+
+.logoandbg{
+	position: relative;
+}
+
+.cardBg{
+	position: relative;
+	z-index: 1;
+}
+
+.cardLogo{
+	z-index: 2;
+	position: absolute;
+	width: 100px !important;
+	left: 30%;
+	top: 25% !important;
+}
