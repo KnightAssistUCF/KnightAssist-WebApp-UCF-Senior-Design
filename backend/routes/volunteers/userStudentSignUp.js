@@ -14,7 +14,13 @@ const jwtSecret = process.env.JWT_SECRET_KEY;
 /* email verfication and the jwt tokenization can be gathered here, but later */
 
 router.post('/', async (req, res) => {
-    await userStudent.findOne({ email: req.body.email }).then((user) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+    await userStudent.findOne(query).then((user) => {
         if (user) {
             res.status(409).send('User already exists');
         } else {
