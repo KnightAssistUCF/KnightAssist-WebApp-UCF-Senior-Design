@@ -65,7 +65,7 @@ function StudentAnnouncements() {
 
             for(let org of res){
             
-                url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org.organizationID}`);
+                url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org._id}`);
 
                 response = await fetch(url, {
                 method: "GET",
@@ -74,10 +74,10 @@ function StudentAnnouncements() {
             
                 let orgUpdates = JSON.parse(await response.text());
                 console.log(orgUpdates);
-                favOrgs.push({organizationID: org.organizationID}); 
+                favOrgs.push({organizationID: org._id}); 
             
                 if(orgUpdates.title != undefined) {
-                    updates.push({organizationID: org.organizationID,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
+                    updates.push({organizationID: org._id,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
                 }
                  
 

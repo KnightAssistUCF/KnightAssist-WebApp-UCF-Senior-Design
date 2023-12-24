@@ -11,7 +11,7 @@ export default function Filter(props) {
     <div>
       <FormControl variant="outlined" className="formControl">
         <InputLabel id="demo-simple-select-outlined-label">
-          Filter By Region
+          Filter
         </InputLabel>
         <Select
           onChange={(event) => {
@@ -21,11 +21,7 @@ export default function Filter(props) {
           <MenuItem value={""}>
             <em>All</em>
           </MenuItem>
-          <MenuItem value={"Africa"}>Africa</MenuItem>
-          <MenuItem value={"Population"}>Population (0-9)</MenuItem>
-          <MenuItem value={"Population-down"}>Population (9-0)</MenuItem>
-          <MenuItem value={"Europe"}>Europe</MenuItem>
-          <MenuItem value={"Oceania"}>Oceania</MenuItem>
+          <MenuItem value={"New"}>Favorited</MenuItem>
         </Select>
       </FormControl>
     </div>

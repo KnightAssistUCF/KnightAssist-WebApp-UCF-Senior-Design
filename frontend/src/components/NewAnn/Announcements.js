@@ -1,18 +1,13 @@
 import React from "react";
-import Card from "@mui/material//Card";
+import Card from "@mui/material/Card";
 import { Grid } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { NavLink } from "react-router-dom";
-
-
-// ... (import statements)
 
 const Announcements = (props) => {
-  console.log(props.announcements); 
+  console.log(props.announcements);
+  
   return (
     <div className="ann">
       <Grid
@@ -23,17 +18,16 @@ const Announcements = (props) => {
         alignItems="flex-start"
       >
         {props.announcements.map((announcement) => {
-          const { updateID, title, content1, content2 } = announcement;
+          const { updateID, title, organizationName, content1, content2 } = announcement;
 
           return (
-            <Grid item xs={13} sm={8} md={8} key={updateID}>
-              {/* Add key={_id} to the outermost element */}
+            <Grid item xs={12} sm={6} md={4} lg={3} key={updateID}>
               <Card variant="outlined">
                 <CardActionArea>
                   <CardContent className="content">
                     <Typography
                       gutterBottom
-                      variant="h5"
+                      variant="h6"
                       component="h2"
                       className={"title"}
                     >
@@ -45,6 +39,13 @@ const Announcements = (props) => {
                       component="p"
                     >
                       Announcement ID: {updateID}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Organization: {organizationName}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -72,4 +73,3 @@ const Announcements = (props) => {
 };
 
 export default Announcements;
-
