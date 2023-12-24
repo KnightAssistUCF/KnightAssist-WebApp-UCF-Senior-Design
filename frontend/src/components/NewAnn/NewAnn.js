@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import Filter from "./Filter";
 import Announcements from "./Announcements";
 import './Announcements.css';
+import { buildPath } from '../../path';
 
 
 
@@ -13,7 +14,40 @@ function NewAnn() {
     const [searchAnnouncement, setSearchAnnouncement] = useState([]);
     const [filterTerm, setFilterTerm] = useState("");
     const url = "https://restcountries.com/v2/all";
+    const url2 = buildPath(`api/loadAllOrganizations`);
     const [searchTerm, setSearchTerm] = useState("");
+
+    const fetchAllUpdates = async () => {
+
+        try {
+            let response = await fetch(url2, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+
+            let res = JSON.parse(await response.text());
+            console.log(res);
+
+            for(let org of res) {
+                try {
+                    url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org.organizationID}`);
+
+                    response = await fetch(url, {
+                    method: "GET",
+                    headers: {"Content-Type": "application/json"},
+                    });
+                
+                    let orgUpdates = JSON.parse(await response.text());
+                    console.log(orgUpdates);
+                } catch(e) {
+
+                }
+            }
+            
+        } catch(e) {
+
+        }
+    }
 
 
     const fetchCountryData = async () => {
@@ -61,6 +95,7 @@ function NewAnn() {
       
       useEffect(() => {
         fetchCountryData();
+        fetchAllUpdates();
       }, []);
 
 
