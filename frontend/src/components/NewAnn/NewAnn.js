@@ -19,6 +19,14 @@ function NewAnn() {
   const url2 = buildPath(`api/loadAllOrganizations`);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const fetchFavoritedUpdates = async () => {
+    try {
+
+    } catch(e) {
+
+    }
+  }
+
   const fetchAllUpdates = async () => {
     try {
       let response = await fetch(url2, {
@@ -62,6 +70,7 @@ function NewAnn() {
           console.error("Failed to fetch org updates:", e);
         }
       }
+      updatesArray.reverse();
 
       setAnnouncements(updatesArray);
       setSearchAnnouncement(updatesArray);
@@ -95,9 +104,11 @@ function NewAnn() {
   
       return includesSearchTerm;
     });
+    const reversedSearchResults = [...searchResults].reverse();
+
+    console.log("Search Results:", reversedSearchResults);
+    setSearchAnnouncement(reversedSearchResults);
   
-    console.log("Search Results:", searchResults);
-    setSearchAnnouncement(searchResults);
   };
   
   
