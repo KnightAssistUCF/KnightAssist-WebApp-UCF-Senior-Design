@@ -18,70 +18,91 @@ function NewAnn() {
     const [searchTerm, setSearchTerm] = useState("");
 
     const fetchAllUpdates = async () => {
-
-        try {
-            let response = await fetch(url2, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-            });
-
-            let res = JSON.parse(await response.text());
-            console.log(res);
-
-            for(let org of res) {
-                try {
-                    url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org.organizationID}`);
-
-                    response = await fetch(url, {
-                    method: "GET",
-                    headers: {"Content-Type": "application/json"},
-                    });
-                
-                    let orgUpdates = JSON.parse(await response.text());
-                    console.log(orgUpdates);
-                } catch(e) {
-
-                }
-            }
-            
-        } catch(e) {
-
-        }
-    }
-
-
-    const fetchCountryData = async () => {
-        const response = await fetch(url);
-        const announcements = await response.json();
-        setAnnouncements(announcements);
-        setSearchAnnouncement(announcements);
-      };
-
-
-
-
-      const searchAnnouncements = (searchTerm) => {
-        let filteredResults = [...announcements];
-      
-        if (filterTerm) {
-          // Apply filter if one is selected
-          filteredResults = filteredResults.filter((a) =>
-            a.region.toLowerCase().includes(filterTerm.toLowerCase())
-          );
-        }
-      
-        const searchResults = filteredResults.filter((a) => {
-          const b = a.name.toLowerCase().includes(searchTerm.toLowerCase());
-          const c = a.population
-            .toString()
-            .includes(searchTerm.toLowerCase().replaceAll(",", ""));
-          const d = a.region.toLowerCase().includes(searchTerm.toLowerCase());
-      
-          return b || c || d;
+      try {
+        let response = await fetch(url2, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
         });
-      
-        setSearchAnnouncement(searchResults);
-      };
+    
+        let res = await response.json();
+        console.log(res);
+    
+        let updatesArray = [];
+    
+        for (let org of res) {
+          console.log(org._id);
+          try {
+            var url3 = buildPath(
+              `api/loadAllOrgAnnouncements?organizationID=${org._id}`
+            );
+    
+            response = await fetch(url3, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            });
+    
+            let orgUpdates = await response.json();
+    
+            // Check if orgUpdates has the "announcements" property
+            if (orgUpdates.announcements && Array.isArray(orgUpdates.announcements)) {
+              updatesArray.push(...orgUpdates.announcements);
+            } else {
+              console.error("Invalid response from org updates API:", orgUpdates);
+            }
+          } catch (e) {
+            console.error("Failed to fetch org updates:", e);
+          }
+        }
+        console.log(updatesArray);
+    
+        setAnnouncements(updatesArray);
+        setSearchAnnouncement(updatesArray);
+      } catch (e) {
+        console.error("API call failed:", e);
+      }
+    };
+    
+    
+  
+  
+  
+
+
+    // const fetchCountryData = async () => {
+    //     const response = await fetch(url);
+    //     const announcements = await response.json();
+    //     setAnnouncements(announcements);
+    //     setSearchAnnouncement(announcements);
+    //   };
+
+
+
+
+    const searchAnnouncements = (searchTerm) => {
+      let filteredResults = [...announcements];
+    
+      if (filterTerm) {
+        // Apply filter if one is selected
+        filteredResults = filteredResults.filter((a) =>
+          a.region.toLowerCase().includes(filterTerm.toLowerCase())
+        );
+      }
+    
+      const searchResults = filteredResults.filter((a) => {
+        // Assuming your announcement structure has properties like title, content, and region
+        const title = a.title ? a.title.toLowerCase() : '';
+        const content = a.content ? a.content.toLowerCase() : '';
+    
+        const includesSearchTerm =
+          title.includes(searchTerm.toLowerCase()) ||
+          content.includes(searchTerm.toLowerCase());
+    
+        return includesSearchTerm;
+      });
+    
+      setSearchAnnouncement(searchResults);
+    };
+    
       
       
 
@@ -94,7 +115,7 @@ function NewAnn() {
       };
       
       useEffect(() => {
-        fetchCountryData();
+        //fetchCountryData();
         fetchAllUpdates();
       }, []);
 

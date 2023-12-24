@@ -9,8 +9,10 @@ import Typography from "@mui/material/Typography";
 import { NavLink } from "react-router-dom";
 
 
-const Announcements = (props) => {
+// ... (import statements)
 
+const Announcements = (props) => {
+  console.log(props.announcements); 
   return (
     <div className="ann">
       <Grid
@@ -21,57 +23,46 @@ const Announcements = (props) => {
         alignItems="flex-start"
       >
         {props.announcements.map((announcement) => {
-          const {
-            numericCode,
-            flag,
-            name,
-            population,
-            region,
-            capital,
-            alpha3Code
-          } = announcement;
+          const { updateID, title, content1, content2 } = announcement;
 
           return (
-            <Grid item xs={12} sm={6} md={3} key={numericCode}>
-              <NavLink className="nav" to={`/${alpha3Code}`}>
-                <Card>
-                  <CardActionArea>
-                    <CardMedia className="media" image={flag} />
-                    <CardContent className="content">
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="h2"
-                        className={"title"}
-                      >
-                        {name}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Population: {population}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Region: {region}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        color="textSecondary"
-                        component="p"
-                      >
-                        Capital: {capital}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions></CardActions>
-                </Card>
-              </NavLink>
+            <Grid item xs={13} sm={8} md={8} key={updateID}>
+              {/* Add key={_id} to the outermost element */}
+              <Card variant="outlined">
+                <CardActionArea>
+                  <CardContent className="content">
+                    <Typography
+                      gutterBottom
+                      variant="h5"
+                      component="h2"
+                      className={"title"}
+                    >
+                      {title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      Announcement ID: {updateID}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {content1}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      component="p"
+                    >
+                      {content2}
+                    </Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
             </Grid>
           );
         })}
@@ -81,3 +72,4 @@ const Announcements = (props) => {
 };
 
 export default Announcements;
+
