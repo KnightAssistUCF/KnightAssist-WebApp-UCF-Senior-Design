@@ -14,6 +14,7 @@ import StudentExplorePage from './pages/StudentExplorePage';
 import EmailVerifiedPage from './pages/EmailVerifiedPage';
 import StudentAnnouncementsPage from './pages/StudentAnnouncementsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import NewAnnPage from './pages/NewAnnPage';
 
 function App() 
 {
@@ -44,6 +45,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/studentannouncements" element={<StudentAnnouncementsPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/newann" element={<NewAnnPage/>}></Route>
           </Routes>
        </Router>
       </header>
