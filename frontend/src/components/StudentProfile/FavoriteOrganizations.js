@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
+import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
 
 const logo = require("../Login/loginPic.png");
@@ -83,15 +84,14 @@ function FavoriteOrganizations(props)
 							<CardMedia
 								component="img"
 								className='cardBg'
-								height="150"
+								height="125"
 								image={URL.createObjectURL(props.pic)}
 							/>
-							<CardMedia
+							<Avatar
 								className='cardLogo'
-								component="img"
-								height="75"
-								image={logo}
-							/>
+                              	src={logo}
+								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
+                           />
 						</div>
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
