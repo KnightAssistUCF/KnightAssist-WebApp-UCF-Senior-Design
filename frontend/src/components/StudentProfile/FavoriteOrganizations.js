@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import '../OrgPortal/OrgPortal.css';
+import '../OrgEvents/OrgEvents';
 
 const logo = require("../Login/loginPic.png");
 
@@ -31,9 +31,7 @@ function FavoriteOrganizations(props)
     }
 
     async function getOrgs(){
-	const userID = "6519e4fd7a6fa91cd257bfda";
-
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -42,10 +40,20 @@ function FavoriteOrganizations(props)
 
         let res = JSON.parse(await response.text());
 
-	console.log(res);
+	    console.log(res);
 
-        for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
+        for(let org of res){
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+            orgs.push(<Org name={org.name} pic={pic} description={org.description} id={org._id}/>) 
+		}
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
@@ -74,7 +82,7 @@ function FavoriteOrganizations(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

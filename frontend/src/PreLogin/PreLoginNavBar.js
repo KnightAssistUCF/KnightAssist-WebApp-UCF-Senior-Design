@@ -24,6 +24,17 @@ function PreLoginNavBar() {
     setAnchorElNav(null);
   };
 
+  const handleMenuItemClick = (page) => {
+    if (page === 'Home') {
+      console.log('Redirecting to #/');
+      // Redirect to the desired page when Home is clicked
+      window.location.href = '/#';
+    } else {
+      // Handle other menu items
+    }
+    handleCloseNavMenu();
+  };
+
   const handleClick = () => {
     window.location.href = '#/login';
   };
@@ -90,7 +101,7 @@ function PreLoginNavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{":hover": { color: '#5B4E77'}}}>
+                <MenuItem key={page} onClick={() => handleMenuItemClick(page)} sx={{":hover": { color: '#5B4E77'}}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}

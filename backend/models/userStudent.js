@@ -8,13 +8,15 @@ const mongoose = require('mongoose');
 // const StudentSemester = require('./studentSemester.js').schema;
 // const Organization = require('./organization.js').schema;
 
+
 const userStudentSchema = new mongoose.Schema({
     /* To be added maybe: graduation date, major, etc. */
-    studentID: {
-        type: String, // keeping it as string for now, maybe it makes things easier (alternative Int32)
-        required: true,
-        unique: true
-    },
+    /* NOTE -> We don't use this one anymore, we simply use the object ID attributed by mongoDB itself */
+    // studentID: {
+    //     type: String, // keeping it as string for now, maybe it makes things easier (alternative Int32)
+    //     required: true,
+    //     unique: true
+    // },
     firstName: {
         type: String,
         required: true
@@ -22,6 +24,11 @@ const userStudentSchema = new mongoose.Schema({
     lastName: {
         type: String,
         required: true
+    },
+    role: {
+        type: String,
+        required: true,
+        default: 'student'
     },
     email: {
         type: String,
@@ -32,7 +39,7 @@ const userStudentSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    profilePicture: {
+    profilePicPath: {
         type: String,
         default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
     },
@@ -74,8 +81,7 @@ const userStudentSchema = new mongoose.Schema({
     },
     EmailToken: { // store the email token
         type: String,
-        // required: true,
-        default: ''
+        required: true
     },
     EmailValidated: { // if the user validated their email
         type: Boolean,

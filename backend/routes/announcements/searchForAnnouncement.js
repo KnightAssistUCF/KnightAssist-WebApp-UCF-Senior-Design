@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
     const organizationID = req.query.organizationID;
 
     try {
-        const organization = await orgDB.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ _id: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
         const matchingUpdates = organization.updates.filter(update => update.title.toLowerCase().includes(titleToLookFor.toLowerCase()));

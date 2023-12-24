@@ -8,7 +8,7 @@ router.get('/', async (req, res) => {
         const organizationName = req.query.organizationName;
 
         const query = {};
-        if (organizationID) query.organizationID = organizationID;
+        if (organizationID) query._id = organizationID;
         if (organizationName) query.organizationName = organizationName;
 
         try {

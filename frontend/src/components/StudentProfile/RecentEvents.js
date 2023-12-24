@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import '../OrgPortal/OrgPortal.css';
+import '../OrgEvents/OrgEvents';
 
 const logo = require("../Login/loginPic.png");
 
@@ -52,9 +52,7 @@ function RecentEvents(props)
     }
 
     async function getEvents(){
-        const userID = "123456789";
-
-        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${userID}`);
+        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -69,8 +67,18 @@ function RecentEvents(props)
 
         for(let event of res){
             if(eventIsPast(event.date)){
+				console.log(event)
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
             }
         }
 
@@ -107,7 +115,7 @@ function RecentEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

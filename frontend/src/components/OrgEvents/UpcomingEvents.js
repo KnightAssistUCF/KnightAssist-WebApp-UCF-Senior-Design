@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import './OrgPortal.css';
+import './OrgEvents';
 
 const logo = require("../Login/loginPic.png");
 
@@ -41,7 +41,7 @@ function UpcomingEvents(props)
     }
 
     async function getUpcomingEvents(){
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -68,8 +68,20 @@ function UpcomingEvents(props)
         const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date))
-                events.push(<Event name={event.name} date={event.date} id={event.eventID}/>)
+            if(eventIsUpcoming(event.date)){
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
+				console.log(pic);
+		
+				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+			}
         }       
 
         events.sort(function(a,b){ 
@@ -87,6 +99,12 @@ function UpcomingEvents(props)
         if(((page - 1) * 4) >= events.length){
             setPage(page - 1);
             extraBack = 1;
+        }
+
+        // There were no events prior and now there is one
+        if(page == 0 && events.length > 0){
+            setPage(1);
+            extraBack = -1;
         }
 
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
@@ -107,7 +125,7 @@ function UpcomingEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

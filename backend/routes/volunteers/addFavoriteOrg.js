@@ -14,12 +14,12 @@ router.post('/', async (req, res) => {
 
 	await organization.findOne({ _id: organizationID }).then(async (organization) => {
 		if (organization) {
-			await userStudent.findOne({ _id : userID }).then((user) => {
+			await userStudent.findOne({ _id : userID }).then(async (user) => {
 				if (user) {
 				    user.favoritedOrganizations.push(organization._id);
 				    organization.favorites.push(user._id);
-				    user.save();
-				    organization.save();
+				    await user.save();
+				    await organization.save();
 				    console.log(user);
 				    res.status(200).json("Favorite org added");
 				} else {

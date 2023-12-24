@@ -6,7 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import '../OrgPortal/OrgPortal.css';
+import '../OrgEvents/OrgEvents';
 
 const logo = require("../Login/loginPic.png");
 
@@ -40,9 +40,7 @@ function OrgFavoriteEvents(props)
     }
 
     async function getEvents(){
-        const userID = "6519e4fd7a6fa91cd257bfda";
-
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -56,7 +54,7 @@ function OrgFavoriteEvents(props)
 	    const events = [];
 
         for(let org of res){
-            url = buildPath(`api/searchEvent?organizationID=${org.organizationID}`);
+            url = buildPath(`api/searchEvent?organizationID=${org._id}`);
 
             response = await fetch(url, {
                 method: "GET",
@@ -68,27 +66,36 @@ function OrgFavoriteEvents(props)
             console.log(res);    
             
             for(let event of res){
-                const json = {
-                    eventID: event.eventID,
+                let json = {
+                    eventID: event._id,
                     eventName: event.name,
-                    userID: "6519e4fd7a6fa91cd257bfda",
-                    userEmail: "johndoe@example.com",
+                    userID: localStorage.getItem("ID"),
                     check: 1
                 };
     
-                const url = buildPath(`api/RSVPForEvent`);
+                let url = buildPath(`api/RSVPForEvent`);
     
-                const response = await fetch(url, {
+                let response = await fetch(url, {
                     body: JSON.stringify(json),
                     method: "POST",
                     headers: {"Content-Type": "application/json"},
                 });
             
-                const res = JSON.parse(await response.text());
+                let res = JSON.parse(await response.text());
     
                 // Don't show event if user already RSVP'd
-                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date))
-                    events.push(<Event eventName={event.name} orgName={org.name} date={event.date} id={event.eventID}/>)
+                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date)){
+					url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+					response = await fetch(url, {
+						method: "GET",
+						headers: {"Content-Type": "application/json"},
+					});
+			
+					let pic = await response.blob();
+
+					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.date} id={event._id}/>)
+				}
             }
         }       
 
@@ -109,6 +116,14 @@ function OrgFavoriteEvents(props)
             extraBack = 1;
         }
 
+        // There were no events prior and now there is one
+        if(page == 0 && events.length > 0){
+            setPage(1);
+            extraBack = -1;
+        }
+
+        console.log(page);
+
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
         setEventCards(content);
     }
@@ -127,7 +142,7 @@ function OrgFavoriteEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">

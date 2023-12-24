@@ -57,7 +57,7 @@
     width: 1200px;
 }
   
-.welcome{
+.yourEvents{
     text-align: left;
     margin-top: 20px;
     font-size: 20px;
@@ -102,6 +102,32 @@
 
 .addEventBtn:active{
     background-color: #5f5395;
+}
+
+.picBtn{
+	background-color: #5f5395;
+	margin-top: 10px;
+	border: none;
+	float: left;
+}
+
+.picBtn:hover{
+    background-color: #7566b4;
+}
+
+.picBtn:visited{
+    background-color: #5f5395;
+}
+
+.picBtn:active{
+    background-color: #5f5395;
+}
+
+.imgDemo{
+	float: left;
+	margin-left: 10px;
+	width: 50px;
+	height: 50px;
 }
 
 .addEventModalCard{
@@ -188,4 +214,39 @@
 .searchSwitch{
     float: left;
     margin-left: 150px;
+}
+
+.volunteersBtn{
+    background: none;
+    border: none;
+}
+
+.volunteersBtn:hover{
+    color: #00785A;
+}
+
+.volunteersBtn:active{
+    color: #02be8f;
+}
+
+.volunteerList{
+    left: 35%;
+    margin-bottom: 50px !important;
+}
+
+.volunteerItem{
+    width: 200px;
+}
+
+.volunteerName{
+    margin-left: 20px;
+}
+
+.volunteerPic{
+    width: 20px;
+    height: 20px;
+}
+
+.anIcon{
+    float: left;
 }

@@ -4,9 +4,14 @@ const router = express.Router();
 const organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
-    const searchEmail = req.query.email;
+	const query = {
+		$or: [
+				{ _id: req.query.organizationID },
+				{ email: req.query.email }
+		]
+	};
 
-    await organization.findOne({ organizationID: req.query.organizationID }).then((organization) => {
+    await organization.findOne(query).then((organization) => {
         if (organization) {
             res.status(200).json(organization);
         } else {

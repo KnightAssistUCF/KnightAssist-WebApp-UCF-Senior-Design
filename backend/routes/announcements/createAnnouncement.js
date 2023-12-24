@@ -12,7 +12,7 @@ router.post('/', async (req, res) => {
     if (!newAnnouncementTitle) 
         newAnnouncementTitle = req.body.title || 'Untitled';
     try {
-        const organization = await orgDB.findOne({ organizationID: fetchID });
+        const organization = await orgDB.findOne({ _id: fetchID });
         if (!organization) return res.status(404).send('Organization not found');
         
         var newAnnouncement =  {

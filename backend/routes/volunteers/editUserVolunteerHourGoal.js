@@ -11,8 +11,14 @@ router.get('/', async (req, res) => {
 );
 
 router.post('/', authenticateToken_User, async (req, res) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
 
-    await userStudent.findOne({ email: req.body.email }).then((user) => {
+    await userStudent.findOne(query).then((user) => {
         console.log(user); 
         if (user) {
             user.semesterVolunteerHourGoal = req.body.semesterVolunteerHourGoal;

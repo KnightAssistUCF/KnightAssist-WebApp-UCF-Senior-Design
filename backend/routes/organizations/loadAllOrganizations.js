@@ -6,7 +6,7 @@ const organizationSchema = require('../../models/organization');
 
 router.get('/', async (req, res) => {
     try {
-        const allOrganizations = await organizationSchema.find().select('name organizationID');
+        const allOrganizations = await organizationSchema.find().select('name _id');
         res.json(allOrganizations);
         console.log("All organizations fetched successfully ***");
     } catch (error) {

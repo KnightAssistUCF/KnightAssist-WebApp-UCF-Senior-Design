@@ -2,7 +2,7 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
 import Autocomplete from '@mui/material/Autocomplete';
-import './OrgPortal.css';
+import './OrgEvents';
 import { useState, useEffect } from 'react';
 import { buildPath } from '../../path';
 
@@ -19,7 +19,7 @@ function Search(props) {
     }
 
     async function getAllEvents(flag){
-        let organizationID = "12345";
+        let organizationID = "6530608eae2eedf04961794e";
         let url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
 
         let response = await fetch(url, {
@@ -32,7 +32,7 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event.eventID});
+            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event._id});
         }
 
         setEvents(tmp);
@@ -59,12 +59,21 @@ function Search(props) {
         const tmp = [];
 
         for(let org of res){
-            if("organizationID" in org){
-              tmp.push({label: org.name, id: org.organizationID})
+            if("name" in org){
+              tmp.push({label: org.name, id: org._id})
             }
         }
        
         setOrgs(tmp);
+    }
+
+	function handleClick(id){
+        if(props.searchType == "events"){
+            props.setEventID(id);
+            props.setOpenEvent(true);
+        }else{
+
+        }
     }
 
     useEffect(()=>{
@@ -96,7 +105,7 @@ function Search(props) {
           <Autocomplete 
             freeSolo
             disableClearable
-            onChange={(e, value) => console.log(value.id)}
+            onChange={(e, value) => {handleClick(value.id)}}
             options={options}
             renderInput={(params) => (
               <TextField
@@ -112,7 +121,7 @@ function Search(props) {
         </Stack>
       </div>
 
-    );
+    );  
 }
 
 export default Search;

@@ -7,13 +7,16 @@ import {
   Routes,
 } from "react-router-dom";
 import LoginPage from './pages/LoginPage';
-import OrgPortalPage from './pages/OrgPortalPage';
+import OrgEventsPage from './pages/OrgEventsPage';
 import LandingPage from './pages/LandingPage';
 import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
-import EmailVerifiedPage from './pages/EmailVerifiedPage';
+import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
+import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
 import StudentAnnouncementsPage from './pages/StudentAnnouncementsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
+import OrgHomePage from './pages/OrgHomePage';
 import NewAnnPage from './pages/NewAnnPage';
 
 function App() 
@@ -28,8 +31,11 @@ function App()
           <Routes>
             <Route path="/login" element={<LoginPage/>}></Route>
           </Routes>
+		  <Routes>
+            <Route path="/orghome" element={<OrgHomePage/>}></Route>
+          </Routes>
           <Routes>
-            <Route path="/orgportal" element={<OrgPortalPage/>}></Route>
+            <Route path="/orgevents" element={<OrgEventsPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/studenthomepage" element={<StudentHomePage/>}></Route>
@@ -41,7 +47,13 @@ function App()
             <Route path="/studentprofile" element={<StudentProfile/>}></Route>
           </Routes>
           <Routes>
-            <Route path="/emailverified" element={<EmailVerifiedPage/>}></Route>
+            <Route path="/studentemailverified" element={<StudentEmailVerified/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/postverifyquestions" element={<PostVerificationQuestionsPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/studentannouncements" element={<StudentAnnouncementsPage/>}></Route>

@@ -1,14 +1,15 @@
 import {useState} from 'react';
-//import Header from '../Header';
+
 import UpcomingEvents from './UpcomingEvents';
 import PastEvents from './PastEvents';
-import Welcome from './Welcome';
 import Search from './Search';
 import AddEventModal from './AddEventModal';
 import EventModal from './EventModal';
 import SearchSwitch from './SearchSwitch';
 import Header from './Header';
-import './OrgPortal.css';
+import './OrgEvents.css';
+import CheckIn from '../QRCode/CheckIn';
+import CheckOut from '../QRCode/CheckOut';
 
 function OrgPortal()
 {
@@ -16,21 +17,29 @@ function OrgPortal()
     const [openModal, setOpenModal] = useState(false);
     const [openEvent, setOpenEvent] = useState(false);
     const [editMode, setEditMode] = useState(0);
-    const [eventID, setEventID] = useState("");
+    const [eventID, setEventID] = useState(undefined);
     const [resetUpcoming, setResetUpcoming] = useState(1);
     const [resetPast, setResetPast] = useState(1);
     const [resetSearch, setResetSearch] = useState(1);
-    const [searchType, setSearchType] = useState();
+    const [searchType, setSearchType] = useState("events");
     
+    function Title(){
+      return(
+        <div className='yourEvents spartan'>
+           <h1>Events</h1>
+        </div>
+      )
+    }
+
     return(
       <div>
         <Header/>
         <div className='move'>
           <div className="orgPortalTop">
-            <Welcome/>
+            <Title/>
             <SearchSwitch setSearchType={setSearchType}/>
             <div className='moveSearch'>
-              <Search searchType={searchType} resetEventSearch={resetSearch}/>
+              <Search searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent}/>
             </div>
           </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
@@ -38,6 +47,7 @@ function OrgPortal()
           <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
           <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/>
           <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetPast}/>
+		  <CheckOut/>
         </div>
       </div>
     );

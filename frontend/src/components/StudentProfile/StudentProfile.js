@@ -32,14 +32,17 @@ function StudentProfile(props)
       const [email, setEmail] = useState("");
       const [tags, setTags] = useState([]);
 
-      async function getFields(){
-         const email = "johndoe@example.com";
+      const [open, setOpen] = useState(false);
+      const [eventID, setEventID] = useState("");
 
-         let url = buildPath(`api/userSearch?email=${email}`);
+      async function getFields(){
+         let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
 
          let response = await fetch(url, {
                method: "GET",
-               headers: {"Content-Type": "application/json"},
+               headers: {"Content-Type": "application/json",
+                  "Authorization": `Bearer ${localStorage.getItem("token")}`
+               }
          });
 
          let res = JSON.parse(await response.text());
@@ -167,7 +170,7 @@ function StudentProfile(props)
                </div>
                <div className='cardSections'>
                   <FavoriteOrganizations/>
-                  <RecentEvents/>
+                  <RecentEvents setOpen={setOpen} setEventID={setEventID}/>
                </div>
             </div>
          </div>

@@ -7,7 +7,7 @@ const organizationModel = require('../../models/organization');
 router.get('/', async (req, res) => {
         try {
                 const organizationID = req.query.organizationID;
-                const organization = await organizationModel.findOne({ organizationID: organizationID });
+                const organization = await organizationModel.findOne({ _id: organizationID });
 
                 if (!organization) {
                         return res.status(404).send('Organization not found in the database');
