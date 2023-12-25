@@ -9,16 +9,15 @@ import { buildPath } from '../../path';
 
 
 
-// ... (import statements)
-
 function NewAnn() {
-  const [announcements, setAnnouncements] = useState([]);
-  const [searchAnnouncement, setSearchAnnouncement] = useState([]);
-  const [filterTerm, setFilterTerm] = useState("");
-  const [currentFilter, setCurrentFilter] = useState("all"); // Default to "all"
+  var [announcements, setAnnouncements] = useState([]);
+  var [searchAnnouncement, setSearchAnnouncement] = useState([]);
+  var [filterTerm, setFilterTerm] = useState("");
+  var [favOrgs, setFavOrgs] = useState([]);
+  var [favUpdates, setFavUpdates] = useState([]);
 
-  // Inside NewAnn component
-const reverseSearchResults = () => {
+
+  const reverseSearchResults = () => {
   setSearchAnnouncement((prevResults) => [...prevResults].reverse());
 };
 
@@ -29,26 +28,25 @@ const reverseSearchResults = () => {
   const fetchFavoritedUpdates = async () => {
     const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
     url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
-    const favOrgs = [];
     try {
       let response = await fetch(url2, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
       });
       let res1 = await response.json();
+      var favUpdates = [];
       for(let org of res1) {
-        if(org.updates.length != 0) {
+        if(org.updates.length !== 0) {
           console.log(org.updates);
-          favOrgs.push({_id: org._id, orgName: org.name, update: org.updates});
+          favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
         }
-        
-        console.log(favOrgs);
-
       }
+      setFavUpdates(favUpdates); // Update the state with favUpdates
     } catch(e) {
       console.log("failed to fetch fav updates");
     }
   };
+  
 
   const fetchAllUpdates = async () => {
     try {
@@ -120,7 +118,6 @@ const reverseSearchResults = () => {
     });
     const reversedSearchResults = [...searchResults].reverse();
 
-    console.log("Search Results:", reversedSearchResults);
     
     setSearchAnnouncement(reversedSearchResults);
   
@@ -133,22 +130,38 @@ const reverseSearchResults = () => {
   const filterAnnouncements = (filterTerm) => {
     console.log('Filter Term:', filterTerm);
   
-    // If filterTerm is undefined, set an empty string
     const term = filterTerm || "";
   
     setFilterTerm(term);
   
     // Filter announcements based on the term
-    var filteredAnnouncements = [...announcements];
+    let filteredAnnouncements = [...announcements];
   
     if (term !== "") {
-      filteredAnnouncements = filteredAnnouncements.filter((a) =>
-        a.title && a.title.includes(term)
-      );
+      if (term === "Favorited") {
+        console.log("favorited!!!");
+        console.log(favUpdates);
+  
+        // Extract the announcements from favUpdates and add organizationName to each announcement
+        filteredAnnouncements = favUpdates.flatMap(org => (
+          org.update.map(announcement => ({
+            ...announcement,
+            organizationName: org.orgName, // Include organizationName
+          }))
+        ));
+        filteredAnnouncements.reverse();
+      } else {
+        filteredAnnouncements = filteredAnnouncements.filter((a) =>
+          a.title && a.title.includes(term)
+        );
+      }
     }
   
     setSearchAnnouncement(filteredAnnouncements);
   };
+  
+  
+  
   
   
 

@@ -5,6 +5,30 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
+// Function to truncate text
+const truncateText = (text, maxLength) => {
+  // Check if text is defined and not null
+  if (text && text.length > maxLength) {
+    return text.substring(0, maxLength) + " ...";
+  }
+  return text;
+};
+
+const formatDate = (dateString) => {
+  // Check if the date string is already in a valid format
+  const isValidDate = !isNaN(new Date(dateString).getTime());
+
+  if (isValidDate) {
+    const options = { year: "numeric", month: "long", day: "numeric"};
+    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    return formattedDate;
+  } else {
+    return dateString;
+  }
+};
+
+
+
 const Announcements = (props) => {
   return (
     <div className="ann">
@@ -20,7 +44,7 @@ const Announcements = (props) => {
             announcement;
 
           return (
-            <Grid item xs={8}key={updateID}>
+            <Grid item xs={7} key={updateID}>
               <Card variant="outlined">
                 <CardActionArea>
                   <CardContent className="content">
@@ -44,14 +68,14 @@ const Announcements = (props) => {
                       color="textSecondary"
                       component="p"
                     >
-                      {date}
+                      {formatDate(date)}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      {content}
+                      {truncateText(content, 150)} {/* Adjust the maxLength as needed */}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -65,4 +89,3 @@ const Announcements = (props) => {
 };
 
 export default Announcements;
-
