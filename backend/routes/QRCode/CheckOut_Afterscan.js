@@ -44,6 +44,9 @@ router.post("/", async (req, res) => {
 
         await eventObj.save();
 
+        // add the event to the history of events of the user
+        student.eventsHistory.push(eventObj._id);
+
         res.status(200).send("Check-out successful and the ID of the student -> " + student._id + "has been removed from the checked in ppl in the event -> " + qrCodeData_eventID_Modified + "");
     } catch (err) {
         res.status(500).send(err.message);
