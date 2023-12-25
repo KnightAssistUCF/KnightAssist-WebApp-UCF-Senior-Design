@@ -5,10 +5,7 @@ import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
-// ... (import statements)
-
 const Announcements = (props) => {
-  console.log(props.announcements);
   return (
     <div className="ann">
       <Grid

@@ -15,17 +15,40 @@ function NewAnn() {
   const [announcements, setAnnouncements] = useState([]);
   const [searchAnnouncement, setSearchAnnouncement] = useState([]);
   const [filterTerm, setFilterTerm] = useState("");
-  const [organizationFilter, setOrganizationFilter] = useState(""); // New state for organization name
-  const url2 = buildPath(`api/loadAllOrganizations`);
+  const [currentFilter, setCurrentFilter] = useState("all"); // Default to "all"
+
+  // Inside NewAnn component
+const reverseSearchResults = () => {
+  setSearchAnnouncement((prevResults) => [...prevResults].reverse());
+};
+
+
+  var url2 = buildPath(`api/loadAllOrganizations`);
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchFavoritedUpdates = async () => {
+    const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
+    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+    const favOrgs = [];
     try {
+      let response = await fetch(url2, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+      });
+      let res1 = await response.json();
+      for(let org of res1) {
+        if(org.updates.length != 0) {
+          console.log(org.updates);
+          favOrgs.push({_id: org._id, orgName: org.name, update: org.updates});
+        }
+        
+        console.log(favOrgs);
 
+      }
     } catch(e) {
-
+      console.log("failed to fetch fav updates");
     }
-  }
+  };
 
   const fetchAllUpdates = async () => {
     try {
@@ -35,12 +58,10 @@ function NewAnn() {
       });
 
       let res = await response.json();
-      console.log(res);
 
       let updatesArray = [];
 
       for (let org of res) {
-        console.log(org._id);
         try {
           var url3 = buildPath(
             `api/loadAllOrgAnnouncements?organizationID=${org._id}`
@@ -80,18 +101,11 @@ function NewAnn() {
   };
 
   const searchAnnouncements = (searchTerm) => {
+    console.log(searchTerm);
     let filteredResults = [...announcements];
   
-    // Additional filter based on organization name
-    if (organizationFilter) {
-      filteredResults = filteredResults.filter(
-        (a) =>
-          a.organizationName.toLowerCase().trim() ===
-          organizationFilter.toLowerCase().trim()
-      );
-    }
+
   
-    console.log("Organization Filter:", organizationFilter);
     console.log("Filtered Results:", filteredResults);
   
     const searchResults = filteredResults.filter((a) => {
@@ -107,6 +121,7 @@ function NewAnn() {
     const reversedSearchResults = [...searchResults].reverse();
 
     console.log("Search Results:", reversedSearchResults);
+    
     setSearchAnnouncement(reversedSearchResults);
   
   };
@@ -138,12 +153,11 @@ function NewAnn() {
   
 
   // New function to handle organization name filtering
-  const filterByOrganization = (organizationName) => {
-    setOrganizationFilter(organizationName);
-  };
+
 
   useEffect(() => {
     fetchAllUpdates();
+    fetchFavoritedUpdates();
   }, []);
 
   return (
@@ -155,10 +169,12 @@ function NewAnn() {
             setSearchTerm={setSearchTerm}
             searchTerm={searchTerm}
             filterTerm={filterTerm}
+            setFilterTerm={setFilterTerm} // Pass setFilterTerm to SearchBar
+            reverseSearchResults={reverseSearchResults}
+            fetchAllUpdates={fetchAllUpdates}
           />
           <Filter
             filterAnnouncements={filterAnnouncements}
-            filterByOrganization={filterByOrganization}
           />
         </div>
         <Announcements announcements={searchAnnouncement} />
