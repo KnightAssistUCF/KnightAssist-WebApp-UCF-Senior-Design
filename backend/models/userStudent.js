@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 // const StudentSemester = require('./studentSemester.js').schema;
 // const Organization = require('./organization.js').schema;
 
+
 const userStudentSchema = new mongoose.Schema({
     /* To be added maybe: graduation date, major, etc. */
     /* NOTE -> We don't use this one anymore, we simply use the object ID attributed by mongoDB itself */

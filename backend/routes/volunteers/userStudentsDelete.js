@@ -11,7 +11,13 @@ const userStudent = require('../../models/userStudent');
 
 // lookUp user by email
 router.get('/', async (req, res) => {
-    await userStudent.findOne({ email: req.query.email }).then((user) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+    await userStudent.findOne(query).then((user) => {
         if (user) { res.status(200).send(user); }
         else throw new Error()
     }).catch((err) => { res.status(400).send("User not found") });
@@ -19,7 +25,13 @@ router.get('/', async (req, res) => {
 
 // delete user by email
 router.delete('/', authenticateToken_User, async (req, res) => {
-    await userStudent.findOne({ email: req.body.email }).then(async (user) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+    await userStudent.findOne(query).then(async (user) => {
         if (user) {
             await userStudent.deleteOne({ email: req.body.email }).then((user) => {
                 res.status(200).send("User deleted successfully" + user);

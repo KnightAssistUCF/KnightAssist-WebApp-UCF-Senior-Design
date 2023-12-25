@@ -81,6 +81,10 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/events/addEvent');
 app.use('/api/addEvent', addEvent);
 
+/* get the history of the events that the user attanded and checked out successfully */
+const historyOfEvents_User = require('./backend/routes/volunteers/historyOfEvents_User');
+app.use('/api/historyOfEvents_User', historyOfEvents_User);
+
 const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
