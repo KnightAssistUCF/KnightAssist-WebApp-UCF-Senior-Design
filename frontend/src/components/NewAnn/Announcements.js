@@ -40,21 +40,14 @@ const Announcements = (props) => {
                       color="textSecondary"
                       component="p"
                     >
-                      Organization Name: {organizationName}
+                      {organizationName}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
                     >
-                      Date {date}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                    >
-                      Announcement ID: {updateID}
+                      {date}
                     </Typography>
                     <Typography
                       variant="body2"
