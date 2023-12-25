@@ -100,28 +100,44 @@ function NewAnn() {
 
   const searchAnnouncements = (searchTerm) => {
     console.log(searchTerm);
-    let filteredResults = [...announcements];
+    let filteredResults = [...searchAnnouncement];
   
-
+    if (filterTerm !== "") {
+      // If a filter is applied, search through the filtered announcements
+      console.log("Searching through filtered results");
+      filteredResults = filteredResults.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
   
-    console.log("Filtered Results:", filteredResults);
+        const includesSearchTerm =
+          title.includes(searchTerm.toLowerCase()) ||
+          organizationName.includes(searchTerm.toLowerCase());
   
-    const searchResults = filteredResults.filter((a) => {
-      const title = a.title ? a.title.toLowerCase() : '';
-      const organizationName = a.organizationName ? a.organizationName.toLowerCase() : '';
+        return includesSearchTerm;
+      });
+      const reversedSearchResults = [...filteredResults].reverse();
+      setSearchAnnouncement(reversedSearchResults);
+    } else {
+      filteredResults = filteredResults.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
   
-      const includesSearchTerm =
-        title.includes(searchTerm.toLowerCase()) ||
-        organizationName.includes(searchTerm.toLowerCase());
+        const includesSearchTerm =
+          title.includes(searchTerm.toLowerCase()) ||
+          organizationName.includes(searchTerm.toLowerCase());
   
-      return includesSearchTerm;
-    });
-    const reversedSearchResults = [...searchResults].reverse();
-
-    
-    setSearchAnnouncement(reversedSearchResults);
+        return includesSearchTerm;
+      });
+      const reversedSearchResults = [...filteredResults].reverse();
+      setSearchAnnouncement(reversedSearchResults);
+    }
   
   };
+  
   
   
   
@@ -149,16 +165,20 @@ function NewAnn() {
             organizationName: org.orgName, // Include organizationName
           }))
         ));
-        filteredAnnouncements.reverse();
+        //filteredAnnouncements.reverse();
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
           a.title && a.title.includes(term)
         );
       }
+      setSearchAnnouncement(filteredAnnouncements.reverse());
+    } else {
+      setSearchAnnouncement(filteredAnnouncements);
     }
   
-    setSearchAnnouncement(filteredAnnouncements);
+    
   };
+  
   
   
   

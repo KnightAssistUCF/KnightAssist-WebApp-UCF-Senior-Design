@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
-import CircularProgress from '@mui/material/CircularProgress';
 
 function SearchBar(props) {
   const { searchTerm, setSearchTerm, reverseSearchResults, searchAnnouncements } = props;
@@ -11,7 +10,7 @@ function SearchBar(props) {
 
   const handleClear = () => {
     setSearchTerm('');
-    showAllUpdates();
+    // showAllUpdates();
   };
   
   const showAllUpdates = () => {
@@ -31,6 +30,7 @@ function SearchBar(props) {
 
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
+      console.log(searchTerm);
       searchAnnouncements(searchTerm);
     }
   };
