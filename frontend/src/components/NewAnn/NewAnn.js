@@ -100,43 +100,24 @@ function NewAnn() {
 
   const searchAnnouncements = (searchTerm) => {
     console.log(searchTerm);
-    let filteredResults = [...searchAnnouncement];
-  
-    if (filterTerm !== "") {
-      // If a filter is applied, search through the filtered announcements
-      console.log("Searching through filtered results");
-      filteredResults = filteredResults.filter((a) => {
-        const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
-          : "";
-  
-        const includesSearchTerm =
-          title.includes(searchTerm.toLowerCase()) ||
-          organizationName.includes(searchTerm.toLowerCase());
-  
-        return includesSearchTerm;
-      });
-      const reversedSearchResults = [...filteredResults].reverse();
-      setSearchAnnouncement(reversedSearchResults);
-    } else {
-      filteredResults = filteredResults.filter((a) => {
-        const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
-          : "";
-  
-        const includesSearchTerm =
-          title.includes(searchTerm.toLowerCase()) ||
-          organizationName.includes(searchTerm.toLowerCase());
-  
-        return includesSearchTerm;
-      });
-      const reversedSearchResults = [...filteredResults].reverse();
-      setSearchAnnouncement(reversedSearchResults);
-    }
-  
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+    const filteredResults = searchAnnouncement.filter((a) => {
+      const title = a.title ? a.title.toLowerCase() : "";
+      const organizationName = a.organizationName
+        ? a.organizationName.toLowerCase()
+        : "";
+
+      const includesSearchTerm =
+        title.includes(lowerCaseSearchTerm) ||
+        organizationName.includes(lowerCaseSearchTerm);
+
+      return includesSearchTerm;
+    });
+
+    setSearchAnnouncement(filteredResults);
   };
+  
   
   
   
@@ -145,19 +126,17 @@ function NewAnn() {
 
   const filterAnnouncements = (filterTerm) => {
     console.log('Filter Term:', filterTerm);
-  
-    const term = filterTerm || "";
-  
-    setFilterTerm(term);
-  
+
+    const term = filterTerm.toLowerCase();
+
     // Filter announcements based on the term
     let filteredAnnouncements = [...announcements];
-  
+
     if (term !== "") {
-      if (term === "Favorited") {
+      if (term === "favorited") {
         console.log("favorited!!!");
         console.log(favUpdates);
-  
+
         // Extract the announcements from favUpdates and add organizationName to each announcement
         filteredAnnouncements = favUpdates.flatMap(org => (
           org.update.map(announcement => ({
@@ -165,18 +144,14 @@ function NewAnn() {
             organizationName: org.orgName, // Include organizationName
           }))
         ));
-        //filteredAnnouncements.reverse();
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
-          a.title && a.title.includes(term)
+          a.title && a.title.toLowerCase().includes(term)
         );
       }
-      setSearchAnnouncement(filteredAnnouncements.reverse());
-    } else {
-      setSearchAnnouncement(filteredAnnouncements);
     }
-  
-    
+
+    setSearchAnnouncement(filteredAnnouncements);
   };
   
   
@@ -202,13 +177,11 @@ function NewAnn() {
             setSearchTerm={setSearchTerm}
             searchTerm={searchTerm}
             filterTerm={filterTerm}
-            setFilterTerm={setFilterTerm} // Pass setFilterTerm to SearchBar
-            reverseSearchResults={reverseSearchResults}
+            setFilterTerm={setFilterTerm}
+            reverseSearchResults={reverseSearchResults} // Pass reverseSearchResults as a prop
             fetchAllUpdates={fetchAllUpdates}
           />
-          <Filter
-            filterAnnouncements={filterAnnouncements}
-          />
+          <Filter filterAnnouncements={filterAnnouncements} />
         </div>
         <Announcements announcements={searchAnnouncement} />
       </div>

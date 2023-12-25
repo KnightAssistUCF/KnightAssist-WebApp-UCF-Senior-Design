@@ -28,12 +28,14 @@ function SearchBar(props) {
     setSearchTerm(newValue);
   };
 
-  const handleKeyPress = (event) => {
-    if (event.key === 'Enter') {
-      console.log(searchTerm);
-      searchAnnouncements(searchTerm);
-    }
-  };
+const handleKeyPress = (event) => {
+  if (event.key === 'Enter') {
+    console.log(searchTerm);
+    setSearchTerm(searchTerm);
+    searchAnnouncements(searchTerm);
+  }
+};
+
 
   useEffect(() => {
     console.log('Search term updated:', searchTerm);
