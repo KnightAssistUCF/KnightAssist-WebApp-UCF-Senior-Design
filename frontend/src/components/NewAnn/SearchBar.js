@@ -21,18 +21,37 @@ function SearchBar(props) {
   const handleInputChange = (event) => {
     const newValue = event.target.value;
 
-    if (searchTerm !== '' && newValue === '') {
-      reverseSearchResults();
-    }
+    // if (searchTerm !== '' && newValue === '') {
+    //   reverseSearchResults();
+    // }
 
     setSearchTerm(newValue);
   };
 
 const handleKeyPress = (event) => {
   if (event.key === 'Enter') {
-    console.log(searchTerm);
+    console.log("searchTerm: "+searchTerm);
     setSearchTerm(searchTerm);
+    var tempTerm = props.filterTerm;
+    console.log(tempTerm);
+    props.setFilterTerm(tempTerm);
     searchAnnouncements(searchTerm);
+    if(searchTerm == '') {
+      if(props.filterTerm == 'favorited') {
+        console.log("surprise");
+        console.log(props.finalFavUpdates);
+        const flattenedAnnouncements = props.finalFavUpdates.flatMap(org => (
+          org.update.map(announcement => ({
+            organizationName: org.orgName,
+            ...announcement,
+          }))
+        ));
+        props.setSearchAnnouncement(flattenedAnnouncements);
+      } else {
+        console.log("here---------");
+      }
+      
+    }
   }
 };
 

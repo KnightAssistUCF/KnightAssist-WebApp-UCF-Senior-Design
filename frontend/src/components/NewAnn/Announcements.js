@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import Card from "@mui/material/Card";
 import { Grid } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 
 // Function to truncate text
 const truncateText = (text, maxLength) => {
@@ -19,17 +25,30 @@ const formatDate = (dateString) => {
   const isValidDate = !isNaN(new Date(dateString).getTime());
 
   if (isValidDate) {
-    const options = { year: "numeric", month: "long", day: "numeric"};
-    const formattedDate = new Date(dateString).toLocaleDateString(undefined, options);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    const formattedDate = new Date(dateString).toLocaleDateString(
+      undefined,
+      options
+    );
     return formattedDate;
   } else {
     return dateString;
   }
 };
 
-
-
 const Announcements = (props) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+
+  const handleClick = (announcement) => {
+    setSelectedAnnouncement(announcement);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="ann">
       <Grid
@@ -45,7 +64,7 @@ const Announcements = (props) => {
 
           return (
             <Grid item xs={7} key={updateID}>
-              <Card variant="outlined">
+              <Card variant="outlined" onClick={() => handleClick(announcement)}>
                 <CardActionArea>
                   <CardContent className="content">
                     <Typography
@@ -75,7 +94,7 @@ const Announcements = (props) => {
                       color="textSecondary"
                       component="p"
                     >
-                      {truncateText(content, 150)} {/* Adjust the maxLength as needed */}
+                      {truncateText(content, 150)}
                     </Typography>
                   </CardContent>
                 </CardActionArea>
@@ -84,6 +103,17 @@ const Announcements = (props) => {
           );
         })}
       </Grid>
+
+      {/* Modal */}
+      <Dialog open={isModalOpen} onClose={handleCloseModal}>
+        <DialogTitle>{selectedAnnouncement?.title}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>{selectedAnnouncement?.content}</DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseModal}>Close</Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

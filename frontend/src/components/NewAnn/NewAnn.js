@@ -15,6 +15,7 @@ function NewAnn() {
   var [filterTerm, setFilterTerm] = useState("");
   var [favOrgs, setFavOrgs] = useState([]);
   var [favUpdates, setFavUpdates] = useState([]);
+  var [finalFavUpdates, setFinalFavUpdates] = useState([]);
 
 
   const reverseSearchResults = () => {
@@ -37,10 +38,10 @@ function NewAnn() {
       var favUpdates = [];
       for(let org of res1) {
         if(org.updates.length !== 0) {
-          console.log(org.updates);
           favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
         }
       }
+      setFinalFavUpdates(favUpdates);
       setFavUpdates(favUpdates); // Update the state with favUpdates
     } catch(e) {
       console.log("failed to fetch fav updates");
@@ -99,23 +100,44 @@ function NewAnn() {
   };
 
   const searchAnnouncements = (searchTerm) => {
-    console.log(searchTerm);
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
-
-    const filteredResults = searchAnnouncement.filter((a) => {
-      const title = a.title ? a.title.toLowerCase() : "";
-      const organizationName = a.organizationName
-        ? a.organizationName.toLowerCase()
-        : "";
-
-      const includesSearchTerm =
-        title.includes(lowerCaseSearchTerm) ||
-        organizationName.includes(lowerCaseSearchTerm);
-
-      return includesSearchTerm;
-    });
-
-    setSearchAnnouncement(filteredResults);
+    console.log(filterTerm);
+  
+    if (filterTerm !== "") {
+      console.log("HEREE-------------------");
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  
+      const filteredResults = searchAnnouncement.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
+  
+        const includesSearchTerm =
+          title.includes(lowerCaseSearchTerm) ||
+          organizationName.includes(lowerCaseSearchTerm);
+  
+        return includesSearchTerm;
+      });
+      setSearchAnnouncement(filteredResults); // Reverse the filtered results
+    } else {
+      // If no filter is applied, search through the original announcements
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  
+      const filteredResults = announcements.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
+  
+        const includesSearchTerm =
+          title.includes(lowerCaseSearchTerm) ||
+          organizationName.includes(lowerCaseSearchTerm);
+  
+        return includesSearchTerm;
+      });
+  
+      setSearchAnnouncement(filteredResults.reverse()); // Reverse the original announcements
+    }
   };
   
   
@@ -125,9 +147,9 @@ function NewAnn() {
   
 
   const filterAnnouncements = (filterTerm) => {
-    console.log('Filter Term:', filterTerm);
 
     const term = filterTerm.toLowerCase();
+    setFilterTerm(term);
 
     // Filter announcements based on the term
     let filteredAnnouncements = [...announcements];
@@ -135,7 +157,6 @@ function NewAnn() {
     if (term !== "") {
       if (term === "favorited") {
         console.log("favorited!!!");
-        console.log(favUpdates);
 
         // Extract the announcements from favUpdates and add organizationName to each announcement
         filteredAnnouncements = favUpdates.flatMap(org => (
@@ -144,6 +165,7 @@ function NewAnn() {
             organizationName: org.orgName, // Include organizationName
           }))
         ));
+        console.log(filteredAnnouncements);
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
           a.title && a.title.toLowerCase().includes(term)
@@ -178,8 +200,10 @@ function NewAnn() {
             searchTerm={searchTerm}
             filterTerm={filterTerm}
             setFilterTerm={setFilterTerm}
-            reverseSearchResults={reverseSearchResults} // Pass reverseSearchResults as a prop
             fetchAllUpdates={fetchAllUpdates}
+            finalFavUpdates = {finalFavUpdates}
+            setSearchAnnouncement={setSearchAnnouncement}
+            initialAnnouncements={announcements}
           />
           <Filter filterAnnouncements={filterAnnouncements} />
         </div>
