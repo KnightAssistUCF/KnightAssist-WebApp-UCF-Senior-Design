@@ -21,8 +21,15 @@ router.get("/", async (req, res) => {
             return res.status(404).send("No events found in the history records for this student");
         }
 
-        res.status(200).send(events);
+		const eventHistory = [];
 
+		for(let event of events){
+			const checkInRecord = event.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
+			const totalHours = ((checkInRecord.checkOutTime - checkInRecord.checkInTime) / 3600000).toFixed(2);
+			eventHistory.push({"name": event.name, "checkIn": checkInRecord.checkInTime, "checkOut": checkInRecord.checkOutTime, hours: totalHours});
+		}
+
+        res.status(200).send(eventHistory);
     } catch (err) {
         res.status(500).send(err.message);
     }
