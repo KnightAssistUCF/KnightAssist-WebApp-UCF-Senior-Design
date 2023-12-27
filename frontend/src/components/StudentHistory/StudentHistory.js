@@ -16,10 +16,27 @@ function StudentHistory()
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
 
+	// Max number of event histories per page
+	const [amtPerPage, setAmtPerPage] = useState(5);
+
     function changePage(e, value){
         setPage(value);
-        //let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-	
+
+		const histories = eventHistories.slice(amtPerPage * (value - 1), amtPerPage * (value - 1) + amtPerPage);
+		setShownHistories(histories.map(history => 	
+			<div>
+				<ListItem>
+					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
+											{"Event Attended: " + history.name}
+										  </span>} 						
+ 								secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+									{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
+								 	+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+								 		</span>}
+					/>
+				</ListItem>
+			</div>
+		))
 	}
 
 	async function getHistory(){        
@@ -33,8 +50,9 @@ function StudentHistory()
         let res = JSON.parse(await response.text());
 
         setEventHistories(res);
+		setNumPages(Math.ceil(res.length / amtPerPage));
 
-		const histories = res.slice(0, 4);
+		const histories = res.slice(0, amtPerPage);
 
 		console.log(histories);
 
@@ -51,7 +69,7 @@ function StudentHistory()
 					/>
 				</ListItem>
 			</div>
-		))
+		));
 	}
 
     function Title(){
