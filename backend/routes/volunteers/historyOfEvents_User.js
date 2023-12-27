@@ -25,8 +25,12 @@ router.get("/", async (req, res) => {
 
 		for(let event of events){
 			const checkInRecord = event.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
+
+			const checkIn = [checkInRecord.checkInTime.toLocaleDateString(), checkInRecord.checkInTime.toLocaleTimeString()];
+			const checkOut = [checkInRecord.checkOutTime.toLocaleDateString(), checkInRecord.checkOutTime.toLocaleTimeString()]
+
 			const totalHours = ((checkInRecord.checkOutTime - checkInRecord.checkInTime) / 3600000).toFixed(2);
-			eventHistory.push({"name": event.name, "checkIn": checkInRecord.checkInTime, "checkOut": checkInRecord.checkOutTime, "hours": totalHours});
+			eventHistory.push({"name": event.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours});
 		}
 
         res.status(200).send(eventHistory);

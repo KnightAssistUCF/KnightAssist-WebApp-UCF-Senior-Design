@@ -41,7 +41,14 @@ function StudentHistory()
 		setShownHistories(histories.map(history => 	
 			<div>
 				<ListItem>
-					<ListItemText primary={"Event Attended: " + history.name} secondary={"Hours Accumulated: +" + history.hours} />
+					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
+											{"Event Attended: " + history.name}
+										  </span>} 						
+ 								secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+									{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
+								 	+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+								 		</span>}
+					/>
 				</ListItem>
 			</div>
 		))
