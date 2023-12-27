@@ -50,10 +50,6 @@ function StudentHistory()
         });
     
         let res = JSON.parse(await response.text());
-		res = res.concat(res);
-		res = res.concat(res);
-		res = res.concat(res);
-		
 
         setEventHistories(res);
 		setNumPages(Math.ceil(res.length / amtPerPage));
