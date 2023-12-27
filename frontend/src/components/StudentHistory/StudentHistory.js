@@ -23,8 +23,9 @@ function StudentHistory()
         setPage(value);
 
 		const histories = eventHistories.slice(amtPerPage * (value - 1), amtPerPage * (value - 1) + amtPerPage);
-		setShownHistories(histories.map(history => 	
+		setShownHistories(histories.map((history, i) => 	
 			<div>
+				{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 				<ListItem>
 					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
 											{"Event Attended: " + history.name}
@@ -34,7 +35,8 @@ function StudentHistory()
 								 	+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
 								 		</span>}
 					/>
-				</ListItem>
+				</ListItem>				
+				<Divider sx={{background: "black"}}/>
 			</div>
 		))
 	}
@@ -48,6 +50,10 @@ function StudentHistory()
         });
     
         let res = JSON.parse(await response.text());
+		res = res.concat(res);
+		res = res.concat(res);
+		res = res.concat(res);
+		
 
         setEventHistories(res);
 		setNumPages(Math.ceil(res.length / amtPerPage));
@@ -56,8 +62,9 @@ function StudentHistory()
 
 		console.log(histories);
 
-		setShownHistories(histories.map(history => 	
+		setShownHistories(histories.map((history, i) => 	
 			<div>
+				{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 				<ListItem>
 					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
 											{"Event Attended: " + history.name}
@@ -68,6 +75,7 @@ function StudentHistory()
 								 		</span>}
 					/>
 				</ListItem>
+				<Divider sx={{background: "black"}}/>
 			</div>
 		));
 	}
