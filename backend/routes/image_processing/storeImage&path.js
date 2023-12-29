@@ -47,6 +47,8 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                 const id = req.body.id;
                 const filePath = req.file.path;
 
+                const profilePicOrBackGround = req.body.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
+
                 console.log('entityType: ', entityType);
                 console.log('id: ', id);
                 console.log('filePath: ', filePath);
@@ -69,15 +71,25 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                                 throw new Error('Invalid entity type');
                 }
                
-                if (user) {
+               
+                if (user && entityType !== 'organization') {
                         user.profilePicPath = filePath;
+                        await user.save();
+                } else if (user && entityType === 'organization') {
+                        if (profilePicOrBackGround === '0') {
+                                user.profilePicPath = filePath;
+                        } else if (profilePicOrBackGround === '1') {
+                                user.backgroundURL = filePath;
+                        } else {
+                                throw new Error('Invalid profilePicOrBackGround');
+                        }
                         await user.save();
                 } else {
                         throw new Error('User not found');
                 }
 
                 console.log('user: ', user);
-                res.json({ message: 'Profile picture uploaded and user updated successfully' });
+                res.json({ message: 'picture uploaded and user updated successfully' });
         } catch (error) {
                 console.error(error);
                 res.status(500).send('An error occurred');
