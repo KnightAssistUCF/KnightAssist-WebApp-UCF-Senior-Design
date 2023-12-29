@@ -4,7 +4,6 @@
     margin-left: 225px;
     margin-top: 5%;
     margin-right: 2%;
-    text-align: left;
 }
 
 
@@ -13,57 +12,19 @@
     margin-bottom: 12px;
     align-items: flex-start;
 }
+.announcementSection {
+    text-align: left;
+}
     
     .StudentAnnouncements-title {
         font-size: 30px;
+        text-align: left;
     }
     .StudentAnnouncements-subtitle {
         font-size: 25px;
         margin-bottom: 10px;
     }
-    .search {
-        /* aligns search bar to center of the page
-        display: flex;
-        flex-direction: column;
-        align-items: center; */
-        margin-top: 20px;
-    }
-    .results {
-        margin-top: 25px;
-    }
-    .results .announcementsMessage {
-        font-size: 17px;
-        color: rgb(113, 113, 113);
-        text-align: center;
-    }
-    .updateOrgTitle {
-        font-size: 17px;
-        margin-left: 12px;
-    }
-    .date {
-        font-size: 17px;
-        color: rgb(113, 113, 113);
-    }
-    .updateDescription {
-        font-size: 15px;
-        color: rgb(113, 113, 113);
-        padding-top: 5px;
-    }
-    .updateTitle {
-        font-size: 20px;
-    }
-    .divider {
-        margin-top: 7px;
-    
-    }
-    .cardResult {
-        margin-bottom: 10px;
-    }
-    .cardResult:hover {
-        background-color: #f2f2f2;
-        cursor: pointer;
-        transition: ease 0.2s all;
-    }
+
     
     
     

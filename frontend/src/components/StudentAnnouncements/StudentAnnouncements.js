@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import StudentHeader from '../StudentHome/StudentHeader.js';
-import '../Header.css';
 import SearchBar from "./SearchBar.js";
 import Filter from "./Filter.js";
 import Announcements from "./Announcements.js";
@@ -216,22 +215,24 @@ function NewAnn() {
       <div class="StudentAnnouncements-title">Announcements</div>
         <div className="testing">
           <StudentHeader/>
-          <div className="topSection">
-            <SearchBar
-              searchAnnouncements={searchAnnouncements}
-              setSearchTerm={setSearchTerm}
-              searchTerm={searchTerm}
-              filterTerm={filterTerm}
-              setFilterTerm={setFilterTerm}
-              fetchAllUpdates={fetchAllUpdates}
-              finalFavUpdates = {finalFavUpdates}
-              setSearchAnnouncement={setSearchAnnouncement}
-              initialAnnouncements={announcements}
-            />
-            <Filter filterAnnouncements={filterAnnouncements} />
+          <div className="announcementSection">
+            <div className="topSection">
+              <SearchBar
+                searchAnnouncements={searchAnnouncements}
+                setSearchTerm={setSearchTerm}
+                searchTerm={searchTerm}
+                filterTerm={filterTerm}
+                setFilterTerm={setFilterTerm}
+                fetchAllUpdates={fetchAllUpdates}
+                finalFavUpdates = {finalFavUpdates}
+                setSearchAnnouncement={setSearchAnnouncement}
+                initialAnnouncements={announcements}
+              />
+              <Filter filterAnnouncements={filterAnnouncements} />
+            </div>
+            <Announcements announcements={searchAnnouncement} />
           </div>
         </div>
-        <Announcements announcements={searchAnnouncement} />
       </div>
     </div>
   );
