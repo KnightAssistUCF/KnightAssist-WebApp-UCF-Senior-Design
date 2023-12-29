@@ -41,6 +41,11 @@ function NewAnn() {
           favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
         }
       }
+      
+      var favUpdates = favUpdates.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+      console.log(favUpdates);
       setFinalFavUpdates(favUpdates);
       setFavUpdates(favUpdates);
     } catch(e) {
@@ -90,7 +95,8 @@ function NewAnn() {
           console.error("Failed to fetch org updates:", e);
         }
       }
-      updatesArray.reverse();
+      //updatesArray.reverse();
+      updatesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       setAnnouncements(updatesArray);
       setSearchAnnouncement(updatesArray);
@@ -135,7 +141,7 @@ function NewAnn() {
         return includesSearchTerm;
       });
   
-      setSearchAnnouncement(filteredResults.reverse());
+      setSearchAnnouncement(filteredResults);
     }
   };
   
