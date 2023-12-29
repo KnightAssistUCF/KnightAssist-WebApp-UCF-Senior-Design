@@ -48,7 +48,7 @@ router.get('/', async (req, res) => {
                 
                 if (!user 
                 || (entityType !== 'organization' && !user.profilePicPath)
-                || (entityType === 'organization' && !user && !user.profilePicPath && !user.backgroundPicPath)) {
+                || (entityType === 'organization' && !user && (!user.profilePicPath || !user.backgroundPicPath))) {
                         return res.status(404).send('Image not found or entity does not exist');
                 }
 
