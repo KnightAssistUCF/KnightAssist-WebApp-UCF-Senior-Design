@@ -41,7 +41,7 @@ router.delete('/', async (req, res) => {
                         return res.status(404).send('No picture to delete or the user does not exist');
                 }
 
-                const filePath;
+                let filePath;
                 if (entityType !== 'organization') {
                         filePath = user.profilePicPath;
                 } else if (entityType === 'organization' && profilePicOrBackGround === '0') {
