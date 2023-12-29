@@ -62,10 +62,10 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                         await user.save();
                 } else if (user && entityType === 'organization') {
                         if (profilePicOrBackGround === '0') {
-                                user.profilePicPath = path.normalize(filePath); // Normalize the path
+                                user.profilePicPath = path.normalize(filePath); 
                         } else if (profilePicOrBackGround === '1') {
                                 console.log("heree");
-                                user.backgroundURL = path.normalize(filePath); // Normalize the path
+                                user.backgroundURL = path.normalize(filePath); 
                         } else {
                                 throw new Error('Invalid profilePicOrBackGround');
                         }

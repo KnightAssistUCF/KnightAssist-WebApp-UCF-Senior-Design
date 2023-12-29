@@ -1,8 +1,7 @@
 const express = require('express');
-const multer = require('multer');
-const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+const crypto = require('crypto');
 const router = express.Router();
 require('dotenv').config();
 
@@ -19,15 +18,14 @@ router.get('/', async (req, res) => {
         try {
                 const id = req.query.id;
                 const entityType = req.query.entityType;
-
-                const profilePicOrBackGround = req.query.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
+                const profilePicOrBackGround = req.query.profilePicOrBackGround;
 
                 console.log('entityType: ', entityType);
                 console.log('id: ', id);
 
                 let user;
-                let defaultPath_Background;
-                let defaultPath_ProfilePic;
+                let defaultPath_Background = 'images/orgdefaultbackground.png';
+                let defaultPath_ProfilePic = 'images/defaultProfilePic.png';
 
                 switch (entityType) {
                         case 'event':
@@ -35,64 +33,46 @@ router.get('/', async (req, res) => {
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
-                                defaultPath_Background = 'backend/images/orgdefaultbackground.png';
-                                defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png';
                                 break;
                         case 'student':
                                 user = await UserStudent.findById(id);
                                 break;
                         default:
-                                throw new Error('Invalid entity type');
+                                return res.status(400).send('Invalid entity type');
                 }
 
-                if (!user ||
-                        (entityType !== 'organization' && !user.profilePicPath) ||
-                        (entityType === 'organization' && !user && (!user.profilePicPath || !user.backgroundPicPath))) {
-                        return res.status(404).send('Image not found or entity does not exist');
+                if (!user) {
+                        return res.status(404).send('Entity not found');
                 }
 
-                console.log(user);
-
-                let filePath;
-
-                if (entityType === 'organization' && profilePicOrBackGround === '0') {
-                        user.profilePicPath = user.profilePicPath.replace(/\\/g, '/'); // Replace backslashes with forward slashes
-                        console.log(user.profilePicPath);
-                        filePath = path.join(__dirname, '..', '..', 'backend', user.profilePicPath); // Use path.join to create the normalized path
-                } else if (entityType === 'organization' && profilePicOrBackGround === '1') {
-                        user.backgroundURL = user.backgroundURL.replace(/\\/g, '/'); 
-                        console.log(user.backgroundURL);
-                        filePath = path.join(__dirname, '..', '..', 'backend', user.backgroundURL); 
+                let imagePath;
+                if (entityType === 'organization') {
+                        imagePath = (profilePicOrBackGround === '0') ? user.profilePicPath : user.backgroundPicPath;
+                        imagePath = imagePath || ((profilePicOrBackGround === '0') ? defaultPath_ProfilePic : defaultPath_Background);
                 } else {
-                        user.profilePicPath = user.profilePicPath.replace(/\\/g, '/'); 
-                        console.log(user.profilePicPath);
-                        filePath = path.join(__dirname, '..', '..', 'backend', user.profilePicPath); 
+                        imagePath = user.profilePicPath || defaultPath_ProfilePic;
                 }
 
-                console.log(filePath);
+                imagePath = imagePath.replace(/\\/g, '/'); // Normalize
+                const filePath = path.join(__dirname, '..', '..', imagePath);
 
-                if (entityType === 'organization' && profilePicOrBackGround === '1' && user.backgroundURL === defaultPath_Background) {
-                        res.send(fs.readFileSync(filePath));
-                } else if (entityType === 'organization' && profilePicOrBackGround === '0' && user.profilePicPath === defaultPath_ProfilePic) {
-                        res.send(fs.readFileSync(filePath));
-                } else if (entityType !== 'organization' && user.profilePicPath === defaultPath_ProfilePic) {
-                        res.send(fs.readFileSync(filePath));
+                console.log('File Path:', filePath);
+
+                if (!fs.existsSync(filePath)) {
+                        return res.status(404).send('Image file not found');
+                }
+
+                let image;
+                if (filePath === path.join(__dirname, '..', '..', defaultPath_Background) ||
+                        filePath === path.join(__dirname, '..', '..', defaultPath_ProfilePic)) {
+                        image = fs.readFileSync(filePath);
                 } else {
-                        // Decrypt the file
-                        const decryptedImage = decryptFile(filePath);
-
-                        // update the response header with the content type
-                        if (path.extname(filePath) === '.png') {
-                                res.setHeader('Content-Type', 'image/png');
-                        } else if (path.extname(filePath) === '.jpg') {
-                                res.setHeader('Content-Type', 'image/jpeg');
-                        } else {
-                                throw new Error('Invalid file type');
-                        }
-
-                        // Send the response with the decrypted image
-                        res.send(decryptedImage);
+                        image = decryptFile(filePath);
                 }
+
+                res.setHeader('Content-Type', 'image/' + path.extname(filePath).slice(1));
+                res.send(image);
+
         } catch (error) {
                 console.error(error);
                 res.status(500).send('An error occurred');
