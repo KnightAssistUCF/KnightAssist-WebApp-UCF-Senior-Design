@@ -6,6 +6,7 @@ import Chip from '@mui/material/Chip';
 import { buildPath } from '../../path';
 import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader';
+import Avatar from '@mui/material/Avatar';
 import { List, ListItem, ListItemText, Divider } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './StudentHistory.css'
@@ -64,22 +65,40 @@ function StudentHistory()
 
 		console.log(histories);
 
-		setShownHistories(histories.map((history, i) => 	
-			<div>
-				{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
-				<ListItem>
-					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
-											{history.name + " (" + history.org + ")"}
-										</span>} 						
-								secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
-									{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-									+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
-										</span>}
-					/>
-				</ListItem>
-				<Divider sx={{background: "black"}}/>
-			</div>
-		));
+		for(let i = 0; i < histories.length; i++){
+			const history = histories[i];
+
+			url = buildPath(`api/retrieveImage?entityType=event&id=${history.ID}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic =  await response.blob();
+
+			histories[i] =  <div>
+							{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
+							<ListItem>
+								<Avatar
+									src={URL.createObjectURL(pic)}
+									className="profilePic"
+								/>
+								<ListItemText className='historyDetails' primary={<span style={{ whiteSpace: 'pre-wrap' }}>
+														{history.name + " (" + history.org + ")"}
+													</span>} 						
+											secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+												{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
+												+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+													</span>}
+								/>
+							</ListItem>
+							<Divider sx={{background: "black"}}/>
+						</div>
+		}
+
+
+		setShownHistories(histories);
 	}
 
     function Title(){
