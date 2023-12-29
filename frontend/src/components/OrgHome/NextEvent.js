@@ -1,9 +1,13 @@
 import {useState} from 'react';
-import {Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
+import {Dialog, DialogTitle, DialogActions, Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
 
 function NextEvent()
 {
-    const [setModalOpen, setModalClose] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const handleClose = () => {
+      setModalOpen(false);
+    };
 
     return(
         <div>
@@ -22,12 +26,19 @@ function NextEvent()
                       <div className="card-subtitle">Location</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-                        <Button className='create-qr-code' size="small" variant='outlined' justify="flex-end" style={{ marginRight: '15px',  color: '#5f5395', borderColor: '#5f5395', '&:hover': {
-      borderColor: '#5f5395', color: '#7566b4'  }  }} onClick={() => setModalOpen(true)}>Generate QR Code</Button>
+                        <Button className='create-qr-code' size="small" variant='outlined' justify="flex-end" style={{ marginRight: '15px',  color: '#5f5395', borderColor: '#968dbf', '&:hover': {
+                        borderColor: '#5f5395', color: '#7566b4'  }  }} onClick={() => setModalOpen(true)}>Generate QR Code</Button>
                       </Grid>
                   </CardContent>
                 </Box>
             </Card>
+
+            <Dialog open={modalOpen} onClose={handleClose} maxWidth="lg" fullWidth >
+                <DialogTitle>Put QR Code Here Maybe?</DialogTitle>
+                <DialogActions>
+                <Button onClick={handleClose}>Close</Button>
+                </DialogActions>
+            </Dialog>
         </div>
 
     );
