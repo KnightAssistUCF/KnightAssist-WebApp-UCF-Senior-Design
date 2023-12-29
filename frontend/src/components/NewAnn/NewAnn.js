@@ -62,6 +62,7 @@ function NewAnn() {
       });
 
       let res = await response.json();
+      console.log(res);
 
       let updatesArray = [];
 
@@ -77,7 +78,6 @@ function NewAnn() {
           });
 
           let orgUpdates = await response.json();
-
           if (
             orgUpdates.announcements &&
             Array.isArray(orgUpdates.announcements)

@@ -107,7 +107,9 @@ const Announcements = (props) => {
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>{selectedAnnouncement?.title}</DialogTitle>
         <DialogContent>
-          <DialogContentText>{selectedAnnouncement?.content}</DialogContentText>
+        <DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
+        <DialogContentText style={{ marginTop: '10px' }}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
+        <DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCloseModal}>Close</Button>
