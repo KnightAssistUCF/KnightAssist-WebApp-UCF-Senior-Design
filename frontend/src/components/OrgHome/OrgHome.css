@@ -1,5 +1,11 @@
 .move{
     margin-left: 15%;
+    margin-top: 3%;
+    color: black;
+    text-align: left;
+}
+.orgHomeTitle {
+    font-size: 30px;
 }
 
 .yourEvents{
@@ -9,4 +15,7 @@
     margin-bottom: 50px;
     float: left;
 	color: black;
+}
+.orgHomeTopRow {
+    
 }
