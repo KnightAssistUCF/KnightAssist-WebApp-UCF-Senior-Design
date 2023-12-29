@@ -23,11 +23,11 @@ router.get('/', async (req, res) => {
 
                 const profilePicOrBackGround = req.body.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
 
-		console.log('entityType: ', entityType);
+				console.log('entityType: ', entityType);
                 console.log('id: ', id);
 
                 let user;
-		let defaultPath_Background;
+				let defaultPath_Background;
                 let defaultPath_ProfilePic;
 
                 switch (entityType) {

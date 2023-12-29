@@ -47,6 +47,8 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                 const id = req.body.id;
                 const filePath = req.file.path;
 
+				console.log(filePath);
+
                 const profilePicOrBackGround = req.body.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
 
                 console.log('entityType: ', entityType);
