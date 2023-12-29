@@ -47,7 +47,7 @@ const organizationSchema = new Schema({
         date: {
             type: Date,
             default: Date.now
-        },
+        }
     }],
     profilePicPath: {
         type: String,

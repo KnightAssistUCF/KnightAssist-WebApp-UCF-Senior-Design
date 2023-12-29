@@ -18,8 +18,7 @@ router.post('/', async (req, res) => {
         var newAnnouncement =  {
             "date": Date.now(),
             "title": newAnnouncementTitle,
-            "content": newAnnouncementContent,
-            "read": false
+            "content": newAnnouncementContent
         }
 
         organization.updates.push(newAnnouncement);
