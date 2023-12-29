@@ -28,7 +28,10 @@ function NewAnn() {
 
   const fetchFavoritedUpdates = async () => {
     const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
-    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+    // need to localStorage ID retrival later
+    localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
+    console.log(localStorage.getItem("ID"));
+    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
     try {
       let response = await fetch(url2, {
         method: "GET",
