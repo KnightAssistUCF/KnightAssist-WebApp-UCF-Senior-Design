@@ -8,6 +8,7 @@ import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader';
 import { List, ListItem, ListItemText, Divider } from '@mui/material';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './StudentHistory.css'
 
 function StudentHistory()
 {
@@ -68,12 +69,12 @@ function StudentHistory()
 				{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 				<ListItem>
 					<ListItemText primary={<span style={{ whiteSpace: 'pre-wrap' }}>
-											{"Event Attended: " + history.name}
-										  </span>} 						
- 								secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+											{history.name + " (" + history.org + ")"}
+										</span>} 						
+								secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 									{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-								 	+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
-								 		</span>}
+									+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+										</span>}
 					/>
 				</ListItem>
 				<Divider sx={{background: "black"}}/>

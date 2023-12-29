@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const event = require("../../models/events");
 const userStudent = require("../../models/userStudent");
+const organization = require("../../models/organization");
 
 
 router.get("/", async (req, res) => {
@@ -26,11 +27,13 @@ router.get("/", async (req, res) => {
 		for(let event of events){
 			const checkInRecord = event.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
 
+			const org = await organization.findById(event.sponsoringOrganization);
+
 			const checkIn = [checkInRecord.checkInTime.toLocaleDateString(), checkInRecord.checkInTime.toLocaleTimeString()];
 			const checkOut = [checkInRecord.checkOutTime.toLocaleDateString(), checkInRecord.checkOutTime.toLocaleTimeString()]
 
 			const totalHours = ((checkInRecord.checkOutTime - checkInRecord.checkInTime) / 3600000).toFixed(2);
-			eventHistory.push({"name": event.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours});
+			eventHistory.push({"name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours});
 		}
 
         res.status(200).send(eventHistory);
