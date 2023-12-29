@@ -124,12 +124,6 @@ app.use('/api/createOrgAnnouncement', createOrganizationAnnouncement);
 const loadAllOrganizationAnnouncements = require('./backend/routes/announcements/loadAllOrgAnnouncements');
 app.use('/api/loadAllOrgAnnouncements', loadAllOrganizationAnnouncements);
 
-const readAnnouncement = require('./backend/routes/announcements/readAnnouncement');
-app.use('/api/readAnnouncement', readAnnouncement);
-
-const readAllAnnouncements = require('./backend/routes/announcements/readAllAnnouncements');
-app.use('/api/readAllAnnouncements', readAllAnnouncements);
-
 const loadAllEventsAcrossOrgs = require('./backend/routes/events/loadAllEventsAcrossOrgs');
 app.use('/api/loadAllEventsAcrossOrgs', loadAllEventsAcrossOrgs);
 
