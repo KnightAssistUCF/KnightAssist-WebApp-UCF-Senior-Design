@@ -5,6 +5,7 @@ import Header from '../OrgEvents/Header';
 import './OrgHome.css';
 import {Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
 import NextEventCard from './NextEvent';
+import OrgTopBar from './OrgTopBar';
 
 function OrgHome()
 {
@@ -22,6 +23,7 @@ function OrgHome()
 
     return(
       <div>
+        <OrgTopBar/>
         <Header/>
         <div className='move'>
           <div className="orgPortalTop">
