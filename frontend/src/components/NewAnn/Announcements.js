@@ -76,6 +76,7 @@ const Announcements = (props) => {
                       variant="body2"
                       color="textSecondary"
                       component="p"
+                      style={{ color: 'black'}}
                     >
                       {organizationName}
                     </Typography>

@@ -36,14 +36,24 @@ function NewAnn() {
       });
       let res1 = await response.json();
       var favUpdates = [];
+      //var tempFavUpdates = [];
       for(let org of res1) {
         if(org.updates.length !== 0) {
-          favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
+          //favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
+          favUpdates = favUpdates.concat(
+            org.updates.map(update => ({
+              organizationID: org._id,
+              name: org.name,
+              title: update.title,
+              content: update.content,
+              date: update.date,
+            })));
         }
       }
+      console.log(favUpdates);
       
       var favUpdates = favUpdates.sort((a, b) => {
-        return new Date(b.date) - new Date(a.date);
+        return new Date(a.date) - new Date(b.date);
       });
       console.log(favUpdates);
       setFinalFavUpdates(favUpdates);
@@ -62,7 +72,6 @@ function NewAnn() {
       });
 
       let res = await response.json();
-      console.log(res);
 
       let updatesArray = [];
 
@@ -162,13 +171,10 @@ function NewAnn() {
       if (term === "favorited") {
         console.log("favorited!!!");
 
-        filteredAnnouncements = favUpdates.flatMap(org => (
-          org.update.map(announcement => ({
-            ...announcement,
-            organizationName: org.orgName,
-          }))
-        ));
-        console.log(filteredAnnouncements);
+        filteredAnnouncements = favUpdates.map(update => ({
+          ...update,
+          organizationName: update.name,
+        }));
         setSearchAnnouncement(filteredAnnouncements.reverse());
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>

@@ -40,13 +40,12 @@ const handleKeyPress = (event) => {
       if(props.filterTerm == 'favorited') {
         console.log("surprise");
         console.log(props.finalFavUpdates);
-        const flattenedAnnouncements = props.finalFavUpdates.flatMap(org => (
-          org.update.map(announcement => ({
-            organizationName: org.orgName,
-            ...announcement,
-          }))
-        ));
-        props.setSearchAnnouncement(flattenedAnnouncements);
+        const allFavAnnouncements = props.finalFavUpdates.map(update => ({
+          ...update,
+          organizationName: update.name,
+        }));
+        
+        props.setSearchAnnouncement(allFavAnnouncements.reverse());
       } else {
         console.log("here---------");
       }
