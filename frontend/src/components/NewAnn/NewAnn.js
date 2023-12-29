@@ -42,7 +42,7 @@ function NewAnn() {
         }
       }
       setFinalFavUpdates(favUpdates);
-      setFavUpdates(favUpdates); // Update the state with favUpdates
+      setFavUpdates(favUpdates);
     } catch(e) {
       console.log("failed to fetch fav updates");
     }
@@ -118,9 +118,8 @@ function NewAnn() {
   
         return includesSearchTerm;
       });
-      setSearchAnnouncement(filteredResults); // Reverse the filtered results
+      setSearchAnnouncement(filteredResults);
     } else {
-      // If no filter is applied, search through the original announcements
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
       const filteredResults = announcements.filter((a) => {
@@ -136,7 +135,7 @@ function NewAnn() {
         return includesSearchTerm;
       });
   
-      setSearchAnnouncement(filteredResults.reverse()); // Reverse the original announcements
+      setSearchAnnouncement(filteredResults.reverse());
     }
   };
   
@@ -151,18 +150,16 @@ function NewAnn() {
     const term = filterTerm.toLowerCase();
     setFilterTerm(term);
 
-    // Filter announcements based on the term
     let filteredAnnouncements = [...announcements];
 
     if (term !== "") {
       if (term === "favorited") {
         console.log("favorited!!!");
 
-        // Extract the announcements from favUpdates and add organizationName to each announcement
         filteredAnnouncements = favUpdates.flatMap(org => (
           org.update.map(announcement => ({
             ...announcement,
-            organizationName: org.orgName, // Include organizationName
+            organizationName: org.orgName,
           }))
         ));
         console.log(filteredAnnouncements);
@@ -173,6 +170,9 @@ function NewAnn() {
         );
         setSearchAnnouncement(filteredAnnouncements);
       }
+    } else {
+      console.log("All!!!");
+      setSearchAnnouncement(filteredAnnouncements);
     }
 
     

@@ -66,7 +66,7 @@ const handleKeyPress = (event) => {
         placeholder="Search by Announcement Name"
         value={searchTerm}
         onChange={handleInputChange}
-        sx={{ width: '25ch' }}
+        sx={{ width: '26ch', paddingTop: '3px' }}
         size='medium'
         onKeyPress={handleKeyPress}
         InputProps={{
@@ -78,7 +78,7 @@ const handleKeyPress = (event) => {
           endAdornment: (
             <InputAdornment position="end">
               <ClearIcon
-                onClick={handleClear} // Clear the search term
+                onClick={handleClear}
                 onMouseDown={(e) => e.preventDefault()}
                 style={{ cursor: 'pointer' }}
               />
