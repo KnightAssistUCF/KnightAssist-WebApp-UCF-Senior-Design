@@ -6,6 +6,12 @@
         margin-right: 2%;
         text-align: left;
     }
+
+.topSection {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: flex-start;
+}
     
     .StudentAnnouncements-title {
         font-size: 30px;

@@ -166,14 +166,16 @@ function NewAnn() {
           }))
         ));
         console.log(filteredAnnouncements);
+        setSearchAnnouncement(filteredAnnouncements.reverse());
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
           a.title && a.title.toLowerCase().includes(term)
         );
+        setSearchAnnouncement(filteredAnnouncements);
       }
     }
 
-    setSearchAnnouncement(filteredAnnouncements);
+    
   };
   
   
@@ -192,20 +194,23 @@ function NewAnn() {
 
   return (
     <div id="studentAnnouncements">
-      <div className="studentAnnouncements">
-        <div className={"testing"}>
-          <SearchBar
-            searchAnnouncements={searchAnnouncements}
-            setSearchTerm={setSearchTerm}
-            searchTerm={searchTerm}
-            filterTerm={filterTerm}
-            setFilterTerm={setFilterTerm}
-            fetchAllUpdates={fetchAllUpdates}
-            finalFavUpdates = {finalFavUpdates}
-            setSearchAnnouncement={setSearchAnnouncement}
-            initialAnnouncements={announcements}
-          />
-          <Filter filterAnnouncements={filterAnnouncements} />
+      <div className="studAnnouncementsPage">
+        <div className="testing">
+          <StudentHeader/>
+          <div className="topSection">
+            <SearchBar
+              searchAnnouncements={searchAnnouncements}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              filterTerm={filterTerm}
+              setFilterTerm={setFilterTerm}
+              fetchAllUpdates={fetchAllUpdates}
+              finalFavUpdates = {finalFavUpdates}
+              setSearchAnnouncement={setSearchAnnouncement}
+              initialAnnouncements={announcements}
+            />
+            <Filter filterAnnouncements={filterAnnouncements} />
+          </div>
         </div>
         <Announcements announcements={searchAnnouncement} />
       </div>

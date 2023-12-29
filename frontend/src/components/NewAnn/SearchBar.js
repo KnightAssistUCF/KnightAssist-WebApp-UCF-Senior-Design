@@ -66,6 +66,8 @@ const handleKeyPress = (event) => {
         placeholder="Search by Announcement Name"
         value={searchTerm}
         onChange={handleInputChange}
+        sx={{ width: '25ch' }}
+        size='medium'
         onKeyPress={handleKeyPress}
         InputProps={{
           startAdornment: (

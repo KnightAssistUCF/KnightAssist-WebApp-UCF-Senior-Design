@@ -7,8 +7,8 @@ import Select from "@mui/material/Select";
 export default function Filter(props) {
   return (
     <div>
-      <FormControl variant="outlined" className="formControl">
-        <InputLabel id="demo-simple-select-outlined-label">Filter</InputLabel>
+      <FormControl fullWidth className="formControl" style={{ minWidth: "120px", marginLeft: "16px", padding: "4px 8px", fontSize: "10px" }}>
+        <InputLabel id="demo-simple-select-label" >Filter</InputLabel>
         <Select
           onChange={(event) => {
             const selectedValue = event.target.value;
@@ -20,9 +20,8 @@ export default function Filter(props) {
           }}
         >
           <MenuItem value={""}>
-            <em>All</em>
+            <em>None</em>
           </MenuItem>
-          <MenuItem value={"New"}>New</MenuItem>
           <MenuItem value={"Favorited"}>Favorited</MenuItem>
         </Select>
       </FormControl>

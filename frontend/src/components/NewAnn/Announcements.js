@@ -11,9 +11,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
-// Function to truncate text
 const truncateText = (text, maxLength) => {
-  // Check if text is defined and not null
   if (text && text.length > maxLength) {
     return text.substring(0, maxLength) + " ...";
   }
@@ -21,7 +19,6 @@ const truncateText = (text, maxLength) => {
 };
 
 const formatDate = (dateString) => {
-  // Check if the date string is already in a valid format
   const isValidDate = !isNaN(new Date(dateString).getTime());
 
   if (isValidDate) {
@@ -63,7 +60,7 @@ const Announcements = (props) => {
             announcement;
 
           return (
-            <Grid item xs={7} key={updateID}>
+            <Grid item xs={12} key={updateID}>
               <Card variant="outlined" onClick={() => handleClick(announcement)}>
                 <CardActionArea>
                   <CardContent className="content">
