@@ -20,11 +20,14 @@ router.get('/', async (req, res) => {
                 const id = req.query.id;
                 const entityType = req.query.entityType;
 
+                const profilePicOrBackGround = req.query.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
+
 				console.log('entityType: ', entityType);
                 console.log('id: ', id);
 
                 let user;
-				let defaultPath;
+				let defaultPath_Background;
+                let defaultPath_ProfilePic;
 
                 switch (entityType) {
                         case 'event':
@@ -32,7 +35,8 @@ router.get('/', async (req, res) => {
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
-								defaultPath = 'backend/images/orgdefaultbackground.png'
+								defaultPath_Background = 'backend/images/orgdefaultbackground.png'
+                                defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png'
                                 break;
                         case 'student':
                                 user = await UserStudent.findById(id);
@@ -41,43 +45,58 @@ router.get('/', async (req, res) => {
                                 throw new Error('Invalid entity type');
                 }
                 
-                if (!user || !user.profilePicPath) {
+                if (!user 
+                || (entityType !== 'organization' && !user.profilePicPath)
+                || (entityType === 'organization' && !user && (!user.profilePicPath || !user.backgroundPicPath))) {
                         return res.status(404).send('Image not found or entity does not exist');
                 }
 
-				console.log(user);
-				
-				user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+                console.log(user);
 
-				console.log(user.profilePicPath);
+                if (entityType === 'organization' && profilePicOrBackGround === '0') {
+                        user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+                        console.log(user.profilePicPath);
+                        filePath = path.normalize(user.profilePicPath);
+                } else if (entityType === 'organization' && profilePicOrBackGround === '1') {
+                        user.backgroundURL = user.backgroundURL.substring(user.backgroundURL.lastIndexOf('backend'));
+                        console.log(user.backgroundURL);
+                        filePath = path.normalize(user.backgroundURL);
+                } else {
+                        user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+                        console.log(user.profilePicPath);
+                        filePath = path.normalize(user.profilePicPath);
+                }
 
-				filePath = path.normalize(user.profilePicPath);
-				
-				console.log(filePath);
+                
+                console.log(filePath);
 
                 // converts the path to be a neutral format 
                /* const normalizedPath = user.profilePicPath.replace(/\\/g, '/');
                 const baseDir = path.join(__dirname, '..', '..', 'backend');
                 const filePath = path.join(baseDir, normalizedPath);*/
 
-				if(user.profilePicPath == defaultPath){
-					res.send(fs.readFileSync(filePath));
-				}else{
-					// Decrypt the file
-					const decryptedImage = decryptFile(filePath);
+                if(entityType === 'organization' && profilePicOrBackGround === '1' && user.backgroundURL === defaultPath_Background){
+                        res.send(fs.readFileSync(filePath));
+                } else if (entityType === 'organization' && profilePicOrBackGround === '0' && user.profilePicPath === defaultPath_ProfilePic){
+                        res.send(fs.readFileSync(filePath));
+                } else if (entityType !== 'organization' && user.profilePicPath === defaultPath_ProfilePic){
+                        res.send(fs.readFileSync(filePath));
+                } else{
+                        // Decrypt the file
+                        const decryptedImage = decryptFile(filePath);
 
-					// update the response header with the content type
-					if (path.extname(filePath) === '.png') {
-							res.setHeader('Content-Type', 'image/png');
-					} else if (path.extname(filePath) === '.jpg') {
-							res.setHeader('Content-Type', 'image/jpeg');
-					} else {
-							throw new Error('Invalid file type');
-					}
+                        // update the response header with the content type
+                        if (path.extname(filePath) === '.png') {
+                                        res.setHeader('Content-Type', 'image/png');
+                        } else if (path.extname(filePath) === '.jpg') {
+                                        res.setHeader('Content-Type', 'image/jpeg');
+                        } else {
+                                        throw new Error('Invalid file type');
+                        }
 
-					// Send the response with the decrypted image
-					res.send(decryptedImage);
-				}
+                        // Send the response with the decrypted image
+                        res.send(decryptedImage);
+                }
 
         } catch (error) {
                 console.error(error);

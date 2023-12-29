@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PageTitle from './PageTitle';
+import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiBell, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
@@ -8,7 +8,7 @@ import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom'; 
-import Logo from './Logo';
+import Logo from '../Logo';
 
 function Header()
 {
@@ -96,7 +96,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studenthistory">
                             <BiHistory className='historyIcon'></BiHistory>
                             <span class="links_name">History</span>
                         </a>

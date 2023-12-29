@@ -8,7 +8,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import StudentHeader from '../StudentHeader';
+import StudentHeader from './StudentHeader';
 import { buildPath } from '../../path';
 import CircularProgress from '@mui/joy/CircularProgress';
 import { createTheme } from '@mui/material/styles';

@@ -72,7 +72,7 @@ function AddEventModal(props)
         setDescription("");
         setLocation("");
         setDate(new Date());
-		setPicName(null)
+		setPicName(null);
         setPicFile(null);
         setStartTime(dayjs('2022-04-17T15:30'));
         setEndTime(dayjs('2022-04-17T15:30'));
@@ -175,19 +175,23 @@ function AddEventModal(props)
             let res = JSON.parse(await response.text());
             console.log(res);
 
-			const formData = new FormData();
-			formData.append('profilePic', picFile); 
-			formData.append('entityType', 'event');
-			formData.append('id', res.ID);
+			// For issue where images are blobs
+			if(typeof picFile.name == "string"){
+				const formData = new FormData();
+				formData.append('profilePic', picFile); 
+				formData.append('entityType', 'event');
+				formData.append('id', res.ID);
+				formData.append('profilePicOrBackGround', '0');
 
-			// Store the picture selected to be associated with the event
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
+				// Store the picture selected to be associated with the event
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
             
             props.setEditMode(0);
 
@@ -401,6 +405,18 @@ function AddEventModal(props)
             setStartTime(dayjs(event.startTime));
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
+			
+			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+			setPicName(pic);
+			setPicFile(pic);
 
             console.log(date, startTime, endTime);
 

@@ -6,7 +6,7 @@ import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/mat
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import Header from '../StudentHeader';
+import Header from '../StudentHome/StudentHeader';
 import SearchSwitch from './SearchSwitch';
 import Search from './Search';
 import EventModal from './EventModal';
@@ -26,18 +26,18 @@ function StudentExplore()
 
     return(
       <div id='homePage'>
-	<Header/>
-	<div className='moveEverything'>
-	    <div class="exploreTitle">Explore</div>
-	    <SearchSwitch setSearchType={setSearchType}/>
-	    <div className='moveSearch'>
-		<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
-	    </div>
-	    <EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
-	    <OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
-	    <RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
-	    <RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
-	</div>
+		<Header/>
+		<div className='moveEverything'>
+			<div class="exploreTitle">Explore</div>
+			<SearchSwitch setSearchType={setSearchType}/>
+			<div className='moveSearch'>
+			<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
+			</div>
+			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
+			<OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
+			<RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
+			<RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+			</div>
       </div>
     );
 };

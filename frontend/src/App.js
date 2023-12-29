@@ -13,10 +13,10 @@ import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
-import StudentAnnouncementsPage from './pages/StudentAnnouncementsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
+import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
 
 function App() 
@@ -46,6 +46,9 @@ function App()
           <Routes>
             <Route path="/studentprofile" element={<StudentProfile/>}></Route>
           </Routes>
+		  <Routes>
+            <Route path="/studenthistory" element={<StudentHistory/>}></Route>
+          </Routes>
           <Routes>
             <Route path="/studentemailverified" element={<StudentEmailVerified/>}></Route>
           </Routes>
@@ -56,10 +59,7 @@ function App()
             <Route path="/postverifyquestions" element={<PostVerificationQuestionsPage/>}></Route>
           </Routes>
           <Routes>
-            <Route path="/studentannouncements" element={<StudentAnnouncementsPage/>}></Route>
-          </Routes>
-          <Routes>
-            <Route path="/newann" element={<NewAnnPage/>}></Route>
+            <Route path="/studentannouncements" element={<NewAnnPage/>}></Route>
           </Routes>
        </Router>
       </header>

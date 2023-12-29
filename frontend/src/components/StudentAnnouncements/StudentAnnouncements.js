@@ -1,185 +1,241 @@
 import React, { useState, useEffect } from 'react';
-import './StudentAnnouncements.css';
-import StudentHeader from '../StudentHeader.js';
+import StudentHeader from '../StudentHome/StudentHeader.js';
 import '../Header.css';
-import { BiCheckShield } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
-import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Logo from '../Logo';
-import TextField from '@mui/material/TextField';
-import IconButton from '@mui/material/IconButton';
-import SearchIcon from '@mui/icons-material/Search';
-import SearchBar from './Search.js';
-import { buildPath } from '../../path';
-import {CardMedia, CardContent, Divider } from '@mui/material';
-import Grid from '@mui/material/Grid';
-import AnnouncementModal from './AnnouncementModal';
-import AnnouncementCard from './AnnouncementsCard';
+import SearchBar from "./SearchBar.js";
+import Filter from "./Filter.js";
+import Announcements from "./Announcements.js";
+import './Announcements.css';
+import { buildPath } from '../../path.js';
 
 
-function StudentAnnouncements() {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [oldUpdates, setOldUpdates] = useState([]);
-    const [newUpdates, setNewUpdates] = useState([]);
-    const [favOrgsID, setfavOrgs] = useState([]);
-    const [searchResults, setSearchResults] = useState([]);
-    const [allUpdates, setUpdates] = useState([]);
+
+function NewAnn() {
+  var [announcements, setAnnouncements] = useState([]);
+  var [searchAnnouncement, setSearchAnnouncement] = useState([]);
+  var [filterTerm, setFilterTerm] = useState("");
+  var [favOrgs, setFavOrgs] = useState([]);
+  var [favUpdates, setFavUpdates] = useState([]);
+  var [finalFavUpdates, setFinalFavUpdates] = useState([]);
 
 
-    const handleClick = () => {
-        console.log("click!");
-        setIsModalOpen(true);
-    };
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-    };
+  const reverseSearchResults = () => {
+  setSearchAnnouncement((prevResults) => [...prevResults].reverse());
+};
 
-    const handleSearchResults = (results) => {
-        setSearchResults(results);
-        console.log(results);
-    };
 
-    async function getEvents(){
+  var url2 = buildPath(`api/loadAllOrganizations`);
+  const [searchTerm, setSearchTerm] = useState("");
 
-        const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
-
-        const favOrgs = [];
-        const updates = [];
-        const recentUpdates = [];
-        
-        try {
-        
-            let response = await fetch(url, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-            });
-
-            let res = JSON.parse(await response.text());
-
-            const weekAgo = new Date();
-            console.log(weekAgo);
-            weekAgo.setDate(weekAgo.getDate() - 7);
-            console.log(weekAgo);
-
-            for(let org of res){
-            
-                url = buildPath(`api/loadAllOrgAnnouncements?organizationID=${org._id}`);
-
-                response = await fetch(url, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-                });
-            
-                let orgUpdates = JSON.parse(await response.text());
-                console.log(orgUpdates);
-                favOrgs.push({organizationID: org._id}); 
-            
-                if(orgUpdates.title != undefined) {
-                    updates.push({organizationID: org._id,Orgname: org.name, Announcement: {title: orgUpdates.title}}); 
-                }
-                 
-
-                for (let announcement of orgUpdates.announcements) {
-                    let updateDate = new Date(announcement.date);
-        
-                    if (updateDate >= weekAgo) {
-                        recentUpdates.push({
-                            organizationID: org.organizationID,
-                            Orgname: org.name,
-                            Announcement: {
-                                title: announcement.title,
-                                content: announcement.content,
-                                date: announcement.date,
-                                updateID: announcement.updateID
-                            },
-                        });
-                    } else {
-                        updates.push({
-                            organizationID: org.organizationID,
-                            Orgname: org.name,
-                            Announcement: {
-                                title: announcement.title,
-                                content: announcement.content,
-                                date: announcement.date,
-                                updateID: announcement.updateID
-                            },
-                        });
-                    }
-                }
-                
-        
-            }
-            setOldUpdates(updates);
-            setNewUpdates(recentUpdates);
-            setfavOrgs(favOrgs);
-            setUpdates([...updates, ...recentUpdates]);
-        } catch(e) {
-            console.log("nice try");
+  const fetchFavoritedUpdates = async () => {
+    const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
+    // need to localStorage ID retrival later
+    localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
+    console.log(localStorage.getItem("ID"));
+    const authToken = localStorage.getItem("token");
+    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
+    try {
+      let response = await fetch(url2, {
+        method: "GET",
+        headers: {"Content-Type": "application/json",
+        "Authorization": `Bearer ${authToken}`
+      },
+      });
+      let res1 = await response.json();
+      var favUpdates = [];
+      //var tempFavUpdates = [];
+      for(let org of res1) {
+        if(org.updates.length !== 0) {
+          //favUpdates.push({_id: org._id, orgName: org.name, update: org.updates});
+          favUpdates = favUpdates.concat(
+            org.updates.map(update => ({
+              organizationID: org._id,
+              name: org.name,
+              title: update.title,
+              content: update.content,
+              date: update.date,
+            })));
         }
-        console.log(updates);
-        console.log(recentUpdates);
-        console.log(favOrgs);
-        console.log(allUpdates)
+      }
+      console.log(favUpdates);
+      
+      var favUpdates = favUpdates.sort((a, b) => {
+        return new Date(a.date) - new Date(b.date);
+      });
+      console.log(favUpdates);
+      setFinalFavUpdates(favUpdates);
+      setFavUpdates(favUpdates);
+    } catch(e) {
+      console.log("failed to fetch fav updates");
+    }
+  };
+  
+
+  const fetchAllUpdates = async () => {
+    try {
+      let response = await fetch(url2, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      let res = await response.json();
+
+      let updatesArray = [];
+
+      for (let org of res) {
+        try {
+          var url3 = buildPath(
+            `api/loadAllOrgAnnouncements?organizationID=${org._id}`
+          );
+
+          response = await fetch(url3, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+
+          let orgUpdates = await response.json();
+          if (
+            orgUpdates.announcements &&
+            Array.isArray(orgUpdates.announcements)
+          ) {
+            const announcementsWithOrgName = orgUpdates.announcements.map((announcement) => ({
+              ...announcement,
+              organizationName: org.name.trim(),
+            }));
+
+            updatesArray.push(...announcementsWithOrgName);
+          } else {
+            console.error("Invalid response from org updates API:", orgUpdates);
+          }
+        } catch (e) {
+          console.error("Failed to fetch org updates:", e);
+        }
+      }
+      //updatesArray.reverse();
+      updatesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+      setAnnouncements(updatesArray);
+      setSearchAnnouncement(updatesArray);
+    } catch (e) {
+      console.error("API call failed:", e);
+    }
+  };
+
+  const searchAnnouncements = (searchTerm) => {
+    console.log(filterTerm);
+  
+    if (filterTerm !== "") {
+      console.log("HEREE-------------------");
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  
+      const filteredResults = searchAnnouncement.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
+  
+        const includesSearchTerm =
+          title.includes(lowerCaseSearchTerm) ||
+          organizationName.includes(lowerCaseSearchTerm);
+  
+        return includesSearchTerm;
+      });
+      setSearchAnnouncement(filteredResults);
+    } else {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  
+      const filteredResults = announcements.filter((a) => {
+        const title = a.title ? a.title.toLowerCase() : "";
+        const organizationName = a.organizationName
+          ? a.organizationName.toLowerCase()
+          : "";
+  
+        const includesSearchTerm =
+          title.includes(lowerCaseSearchTerm) ||
+          organizationName.includes(lowerCaseSearchTerm);
+  
+        return includesSearchTerm;
+      });
+  
+      setSearchAnnouncement(filteredResults);
+    }
+  };
+  
+  
+  
+  
+  
+  
+
+  const filterAnnouncements = (filterTerm) => {
+
+    const term = filterTerm.toLowerCase();
+    setFilterTerm(term);
+
+    let filteredAnnouncements = [...announcements];
+
+    if (term !== "") {
+      if (term === "favorited") {
+        console.log("favorited!!!");
+
+        filteredAnnouncements = favUpdates.map(update => ({
+          ...update,
+          organizationName: update.name,
+        }));
+        setSearchAnnouncement(filteredAnnouncements.reverse());
+      } else {
+        filteredAnnouncements = filteredAnnouncements.filter((a) =>
+          a.title && a.title.toLowerCase().includes(term)
+        );
+        setSearchAnnouncement(filteredAnnouncements);
+      }
+    } else {
+      console.log("All!!!");
+      setSearchAnnouncement(filteredAnnouncements);
     }
 
-    useEffect(() => {
-        getEvents();
-    }, []);
+    
+  };
+  
+  
+  
+  
+  
+  
+
+  // New function to handle organization name filtering
 
 
+  useEffect(() => {
+    fetchAllUpdates();
+    fetchFavoritedUpdates();
+  }, []);
 
-return (
-        <div id='studentAnnouncements'>
-            <StudentHeader />
-            <div className="studAnnouncementsPage">
-                <div class="StudentAnnouncements-title">Announcements</div>
-                <div className="search">
-                    <SearchBar favOrgs={favOrgsID} onSearchResults={handleSearchResults} />
-                </div>
-                <div className="results">
-                    <div className="recentAnnouncements">
-                        <div class="StudentAnnouncements-subtitle">Recent</div>
-                        {newUpdates.length > 0 ? (
-                        newUpdates.reverse().map((update, index) => (
-                            <AnnouncementCard
-                                key={index}
-                                orgName={update.Orgname}
-                                date={new Date(update.Announcement.date).toLocaleDateString()}
-                                title={update.Announcement.title}
-                                content={update.Announcement.content}
-                                organizationID = {update.organizationID}
-                                updateID = {update.Announcement.updateID}
-                            />
-                            ))
-                        ) : (
-                            <div className='announcementsMessage'>No Recent Announcements</div>
-                        )}
-                    </div>
-                    <div className="oldAnnouncements">
-                        <div class="StudentAnnouncements-subtitle">All</div>
-                        {oldUpdates.length > 0 ? (
-                            oldUpdates.map((update, index) => (
-                            <AnnouncementCard
-                                key={index}
-                                orgName={update.Orgname}
-                                date={new Date(update.Announcement.date).toLocaleDateString()}
-                                title={update.Announcement.title}
-                                content={update.Announcement.content}
-                                organizationID = {update.organizationID}
-                                updateID = {update.Announcement.updateID}
-                            />
-                            ))
-                        ) : (
-                            <div className='announcementsMessage'>No Announcements Available</div>
-                        )}
-                    </div>
-                </div>
-            </div>
-            
+  return (
+    <div id="studentAnnouncements">
+      <div className="studAnnouncementsPage">
+      <div class="StudentAnnouncements-title">Announcements</div>
+        <div className="testing">
+          <StudentHeader/>
+          <div className="topSection">
+            <SearchBar
+              searchAnnouncements={searchAnnouncements}
+              setSearchTerm={setSearchTerm}
+              searchTerm={searchTerm}
+              filterTerm={filterTerm}
+              setFilterTerm={setFilterTerm}
+              fetchAllUpdates={fetchAllUpdates}
+              finalFavUpdates = {finalFavUpdates}
+              setSearchAnnouncement={setSearchAnnouncement}
+              initialAnnouncements={announcements}
+            />
+            <Filter filterAnnouncements={filterAnnouncements} />
+          </div>
         </div>
-      );
-    }
+        <Announcements announcements={searchAnnouncement} />
+      </div>
+    </div>
+  );
+}
 
-export default StudentAnnouncements;
+export default NewAnn;
+

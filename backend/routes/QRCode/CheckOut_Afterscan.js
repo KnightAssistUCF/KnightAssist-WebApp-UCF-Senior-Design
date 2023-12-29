@@ -27,14 +27,16 @@ router.post("/", async (req, res) => {
         }
 
 		console.log("STUDENT ID", student);
-        
+
         const checkInRecord = eventObj.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
 
         if (!checkInRecord) {
             return res.status(400).send("Student did not check in for this event earlier");
-        } else {
+        } else if(checkInRecord.checkOutTime != null) {
+			return res.status(400).send("Student already checked out for event");
+        }else{
             checkInRecord.checkOutTime = new Date();
-        }
+		}
 
         // get the total volunteering time of the student
         const totalVolunteeringTimeMilliseconds = checkInRecord.checkOutTime - checkInRecord.checkInTime;
@@ -43,6 +45,11 @@ router.post("/", async (req, res) => {
         student.totalVolunteerHours += totalVolunteeringTimeHours;
 
         await eventObj.save();
+
+        // add the event to the history of events of the user
+        student.eventsHistory.push(eventObj._id);
+
+		await student.save();
 
         res.status(200).send("Check-out successful and the ID of the student -> " + student._id + "has been removed from the checked in ppl in the event -> " + qrCodeData_eventID_Modified + "");
     } catch (err) {

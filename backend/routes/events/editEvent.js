@@ -24,7 +24,6 @@ router.post('/', async (req, res) => {
             events.semester = req.body.semester;
             events.maxAttendees = req.body.maxAttendees;
             events.registeredVolunteers = req.body.registeredVolunteers;
-            events.profilePicPath = req.body.profilePicPath;
             events.save();            
             console.log(events);
 			res.status(200).json({message: "Successful", ID: events._id});

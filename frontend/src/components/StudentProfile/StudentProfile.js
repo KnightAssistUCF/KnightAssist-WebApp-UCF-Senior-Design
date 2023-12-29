@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Paper from '@mui/material/Paper';
-import StudentHeader from '../StudentHeader';
+import StudentHeader from '../StudentHome/StudentHeader';
 import DefaultPic from './DefaultPic';
 import Container from '@mui/material/Container';
 import { buildPath } from '../../path';

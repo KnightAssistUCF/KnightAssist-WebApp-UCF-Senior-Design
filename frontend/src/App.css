@@ -100,7 +100,7 @@ html, body {
   background-color: white;
   color: black;
 }
-.studentAnnouncements {
+.studentAnnouncementsPage {
   height: 100vh;
   width: 100%;
   background-color: white;
@@ -128,12 +128,6 @@ html, body {
   color: black;
 }
 
-.aboutUsPage {
-  height: 100vh;
-  width: 100%;
-  background-color: white;
-  color: black;
-}
 
 
 .orgHomePage{
