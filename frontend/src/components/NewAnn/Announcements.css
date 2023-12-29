@@ -1,11 +1,12 @@
 
 .studAnnouncementsPage {
-        color: black;
-        margin-left: 225px;
-        margin-top: 3%;
-        margin-right: 2%;
-        text-align: left;
-    }
+    color: black;
+    margin-left: 225px;
+    margin-top: 5%;
+    margin-right: 2%;
+    text-align: left;
+}
+
 
 .topSection {
     display: flex;

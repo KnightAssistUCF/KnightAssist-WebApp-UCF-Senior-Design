@@ -47,7 +47,7 @@ const Announcements = (props) => {
   };
 
   return (
-    <div className="ann">
+    <div className="announcementCardList">
       <Grid
         container
         spacing={2}
@@ -68,7 +68,7 @@ const Announcements = (props) => {
                       gutterBottom
                       variant="h5"
                       component="h2"
-                      className={"title"}
+                      className="title"
                     >
                       {title}
                     </Typography>
@@ -83,6 +83,7 @@ const Announcements = (props) => {
                       variant="body2"
                       color="textSecondary"
                       component="p"
+                      style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
                     >
                       {formatDate(date)}
                     </Typography>
@@ -90,8 +91,9 @@ const Announcements = (props) => {
                       variant="body2"
                       color="textSecondary"
                       component="p"
+                      style={{ marginTop: '6px' }}
                     >
-                      {truncateText(content, 150)}
+                      <i>{truncateText(content, 320)}</i>
                     </Typography>
                   </CardContent>
                 </CardActionArea>

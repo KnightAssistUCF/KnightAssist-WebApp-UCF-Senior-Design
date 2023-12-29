@@ -195,6 +195,7 @@ function NewAnn() {
   return (
     <div id="studentAnnouncements">
       <div className="studAnnouncementsPage">
+      <div class="StudentAnnouncements-title">Announcements</div>
         <div className="testing">
           <StudentHeader/>
           <div className="topSection">
