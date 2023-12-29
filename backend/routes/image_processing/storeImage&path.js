@@ -10,7 +10,7 @@ const Event = require('../../models/events');
 const Organization = require('../../models/organization');
 const UserStudent = require('../../models/userStudent');
 
-// setup multer storage 
+// setup multer storage
 const storage = multer.diskStorage({
         destination: (req, file, cb) => cb(null, path.join(__dirname, '../../images/')),
         filename: (req, file, cb) => {
@@ -26,30 +26,14 @@ const upload = multer({ storage: storage });
 // Encryption key and algorithm
 const algorithm = 'aes-256-ctr';
 const secretKey = process.env.secretKey_images;
-// intiialization vectore here
+// initialization vector here
 const iv = Buffer.from(process.env.iv_images, 'hex'); // Convert hex string to bytes
 
-/*
-
-image processing here:
-
-* take the uploaded file as input and store its path in the modal of the correct entity (i.e. event, organization, student)
-* while getting the path, we encrypt the image and then store it in a secure folder within the database (not open sourced)
-
-Requirements:
--the frontend needs to pass in the entity type (event, organization, student) and the id of the entity
--the frontend needs to pass in the image file and name it 'profilePic'           
-
-*/
 router.post('/', upload.single('profilePic'), async (req, res) => {
         try {
-                const entityType = req.body.entityType;   
+                const entityType = req.body.entityType;
                 const id = req.body.id;
                 const filePath = req.file.path;
-
-				console.log(filePath);
-
-                const profilePicOrBackGround = req.body.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
 
                 console.log('entityType: ', entityType);
                 console.log('id: ', id);
@@ -72,17 +56,16 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                         default:
                                 throw new Error('Invalid entity type');
                 }
-               
-               
+
                 if (user && entityType !== 'organization') {
-                        user.profilePicPath = filePath;
+                        user.profilePicPath = path.normalize(filePath); // Normalize the path
                         await user.save();
                 } else if (user && entityType === 'organization') {
                         if (profilePicOrBackGround === '0') {
-                                user.profilePicPath = filePath;
+                                user.profilePicPath = path.normalize(filePath); // Normalize the path
                         } else if (profilePicOrBackGround === '1') {
-								console.log("heree");
-                                user.backgroundURL = filePath;
+                                console.log("heree");
+                                user.backgroundURL = path.normalize(filePath); // Normalize the path
                         } else {
                                 throw new Error('Invalid profilePicOrBackGround');
                         }
