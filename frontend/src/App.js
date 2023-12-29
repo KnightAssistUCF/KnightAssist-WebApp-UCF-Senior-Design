@@ -16,6 +16,7 @@ import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
+import StudentHistory from './components/StudentHistory/StudentHistory';
 
 function App() 
 {
@@ -43,6 +44,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/studentprofile" element={<StudentProfile/>}></Route>
+          </Routes>
+		  <Routes>
+            <Route path="/studenthistory" element={<StudentHistory/>}></Route>
           </Routes>
           <Routes>
             <Route path="/studentemailverified" element={<StudentEmailVerified/>}></Route>

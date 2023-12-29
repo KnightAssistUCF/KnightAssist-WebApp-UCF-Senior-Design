@@ -96,7 +96,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studenthistory">
                             <BiHistory className='historyIcon'></BiHistory>
                             <span class="links_name">History</span>
                         </a>

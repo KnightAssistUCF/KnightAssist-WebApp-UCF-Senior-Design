@@ -1,7 +1,7 @@
 import React from 'react';
 import './OrgPortal/Header';
 
-const logo = require("./ucfLogo.jpg");
+const logo = require("./puff.jpg");
 
 function UCFLogo()
 {
