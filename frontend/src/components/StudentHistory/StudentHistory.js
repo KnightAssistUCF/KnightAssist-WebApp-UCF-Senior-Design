@@ -51,6 +51,11 @@ function StudentHistory()
     
         let res = JSON.parse(await response.text());
 
+		// Sort by time if date is equal, date otherwise
+		res.sort(function(a, b) {
+			return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
+		});
+
         setEventHistories(res);
 		setNumPages(Math.ceil(res.length / amtPerPage));
 
