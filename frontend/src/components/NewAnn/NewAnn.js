@@ -31,11 +31,14 @@ function NewAnn() {
     // need to localStorage ID retrival later
     localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
     console.log(localStorage.getItem("ID"));
+    const authToken = localStorage.getItem("token");
     url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
     try {
       let response = await fetch(url2, {
         method: "GET",
-        headers: {"Content-Type": "application/json"},
+        headers: {"Content-Type": "application/json",
+        "Authorization": `Bearer ${authToken}`
+      },
       });
       let res1 = await response.json();
       var favUpdates = [];
