@@ -181,7 +181,8 @@ function AddEventModal(props)
 				formData.append('profilePic', picFile); 
 				formData.append('entityType', 'event');
 				formData.append('id', res.ID);
-	
+				formData.append('profilePicOrBackGround', '0');
+
 				// Store the picture selected to be associated with the event
 				await fetch(buildPath(`api/storeImage`), {
 					method: 'POST',

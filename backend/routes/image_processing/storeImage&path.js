@@ -81,6 +81,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                         if (profilePicOrBackGround === '0') {
                                 user.profilePicPath = filePath;
                         } else if (profilePicOrBackGround === '1') {
+								console.log("heree");
                                 user.backgroundURL = filePath;
                         } else {
                                 throw new Error('Invalid profilePicOrBackGround');

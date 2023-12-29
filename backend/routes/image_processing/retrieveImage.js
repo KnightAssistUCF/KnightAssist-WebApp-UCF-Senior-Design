@@ -20,8 +20,7 @@ router.get('/', async (req, res) => {
                 const id = req.query.id;
                 const entityType = req.query.entityType;
 
-
-                const profilePicOrBackGround = req.body.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
+                const profilePicOrBackGround = req.query.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
 
 				console.log('entityType: ', entityType);
                 console.log('id: ', id);
@@ -36,7 +35,7 @@ router.get('/', async (req, res) => {
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
-				defaultPath_Background = 'backend/images/orgdefaultbackground.png'
+								defaultPath_Background = 'backend/images/orgdefaultbackground.png'
                                 defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png'
                                 break;
                         case 'student':
