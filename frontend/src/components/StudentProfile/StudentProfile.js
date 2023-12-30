@@ -18,9 +18,10 @@ import { MdOutlineMail, MdPictureInPictureAlt } from "react-icons/md";
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
 import Avatar from '@mui/material/Avatar';
+import EventModal from '../StudentHistory/EventModal';
 import './StudentProfile.css'
-const pic = require("./DefaultPic.png");
 
+const pic = require("./DefaultPic.png");
 
 function StudentProfile(props)
 {
@@ -32,8 +33,8 @@ function StudentProfile(props)
       const [email, setEmail] = useState("");
       const [tags, setTags] = useState([]);
 
-      const [open, setOpen] = useState(false);
-      const [eventID, setEventID] = useState("");
+	  const [eventID, setEventID] = useState(undefined);
+	  const [openModal, setOpenModal] = useState(false);
 
       async function getFields(){
          let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
@@ -76,7 +77,7 @@ function StudentProfile(props)
 
       function VolunteerHours(){
          return (
-            <div className='volunteerHours'>Volunteer Hours: {currentHours}/{hourGoal}</div>
+            <div className='volunteerHours'>Volunteer Hours: {currentHours.toFixed(2)}/{hourGoal}</div>
          )
       }
 
@@ -170,8 +171,9 @@ function StudentProfile(props)
                </div>
                <div className='cardSections'>
                   <FavoriteOrganizations/>
-                  <RecentEvents setOpen={setOpen} setEventID={setEventID}/>
+                  <RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>
                </div>
+			   <EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
             </div>
          </div>
       );

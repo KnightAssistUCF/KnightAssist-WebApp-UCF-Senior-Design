@@ -149,7 +149,7 @@ function RecentEvents(props)
         <div>
             <Events/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		</div>
      </div>
     );
 };
