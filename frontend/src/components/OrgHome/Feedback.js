@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Dialog, DialogTitle, DialogActions, Button, Typography, Rating } from '@mui/material';
+import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 function Feedback() {
@@ -10,16 +10,15 @@ function Feedback() {
   };
 
   const [items, setItems] = useState([
-    { id: 1, primary: '10-20-23 Arboretum', secondary: 'This event was really cool, I enjoyed the dsfoglj fldfkj lfglsdjkf sd...', rating: 4 },
-    { id: 2, primary: '10-20-23 Knight Hacks', secondary: 'I wish the jls sd;flkdj flgdfj ;lsjf ;ldsfj ;sljf...', rating: 3 },
-    { id: 3, primary: '10-20-23 Another Event', secondary: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd...', rating: 5 },
-    { id: 4, primary: '10-20-23 Another Event', secondary: 'This event sucked osdflgj fdl;jsda;l jfsldjgd;fgjl;flj...', rating: 1 },
+    { id: 1, dateOrg: '10-20-23 Arboretum', content: 'This event was really cool, I enjoyed the dsfoglj fldfkj lfglsdjkf sd...', rating: 4 },
+    { id: 2, dateOrg: '10-20-23 Knight Hacks', content: 'I wish the jls sd;flkdj flgdfj ;lsjf ;ldsfj ;sljf...', rating: 3 },
+    { id: 3, dateOrg: '10-20-23 Another Event', content: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd...', rating: 5 },
+    { id: 4, dateOrg: '10-20-23 Another Event', content: 'This event sucked osdflgj fdl;jsda;l jfsldjgd;fgjl;flj...', rating: 1 },
   ]);
 
   const limitedItems = items.slice(0, 3);
 
   const handleItemClose = (itemId) => {
-    // Filter the items to remove the one with the given itemId
     const updatedItems = items.filter((item) => item.id !== itemId);
     setItems(updatedItems);
   };
@@ -35,7 +34,7 @@ function Feedback() {
               <div key={item.id}>
                 <ListItem disablePadding sx={{ maxHeight: '60px' }} secondaryAction={<IconButton edge="end" aria-label="close announcement"><CloseIcon onClick={() => handleItemClose(item.id)} /></IconButton>}>
                   <ListItemButton sx={{ maxHeight: '60px' }}>
-                    <ListItemText primary={item.primary} secondary={item.secondary} />
+                    <ListItemText primary={item.dateOrg} secondary={item.content} />
                     <Rating value={item.rating} readOnly />
                   </ListItemButton>
                 </ListItem>
