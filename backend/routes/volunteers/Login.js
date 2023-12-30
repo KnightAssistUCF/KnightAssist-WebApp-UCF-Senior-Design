@@ -13,7 +13,6 @@ router.post('/', async (req, res) => {
     const loginPassword = req.body.password;
 
     try {
-
         /* [ADMIN] Only */
         let admin = await admin.findOne({ email: loginEmail });
 
@@ -27,7 +26,6 @@ router.post('/', async (req, res) => {
             }
         }
         /* [ADMIN] Only */
-
         
         let user = await userStudent.findOne({ email: loginEmail });
 
