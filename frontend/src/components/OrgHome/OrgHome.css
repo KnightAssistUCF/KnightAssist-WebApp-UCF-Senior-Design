@@ -1,23 +1,35 @@
-.move{
+.move {
     margin-left: 15%;
     color: black;
     text-align: left;
 }
+
 .orgHomeTitle {
     font-size: 30px;
 }
 
-.yourEvents{
+.yourEvents {
     text-align: left;
     margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
     float: left;
-	color: black;
+    color: black;
 }
-.orgHomeTopRow {
 
+.orgHomeTopRow {
+    display: flex;
+    justify-content: space-between;
 }
-.nextEventCard {
-    
+
+.nextEvent {
+    width: 48%;
+}
+.feedback {
+    padding-right: 5%;
+}
+
+.subtitle {
+    font-size: 18px;
+    margin-bottom: 10px;
 }
