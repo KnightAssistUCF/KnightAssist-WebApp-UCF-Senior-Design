@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating } from '@mui/material';
+import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 function Feedback() {
@@ -24,27 +24,28 @@ function Feedback() {
   };
 
   return (
-    <div>
-      <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', minWidth: '600px', minHeight: '200px', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
-        {limitedItems.length <= 0 ? (
-          <div className="StudentHomePage-subtitle" style={{ textAlign: 'center', alignItems: 'center', fontSize: '15px', color: 'darkgray' }}>No feedback available</div>
-        ) : (
-          <List>
-            {limitedItems.map((item) => (
-              <div key={item.id}>
-                <ListItem disablePadding sx={{ maxHeight: '60px' }} secondaryAction={<IconButton edge="end" aria-label="close announcement"><CloseIcon onClick={() => handleItemClose(item.id)} /></IconButton>}>
-                  <ListItemButton sx={{ maxHeight: '60px' }}>
-                    <ListItemText primary={item.dateOrg} secondary={item.content} />
-                    <Rating value={item.rating} readOnly />
-                  </ListItemButton>
-                </ListItem>
-                <Divider variant="middle" />
-              </div>
-            ))}
-          </List>
-        )}
-      </Box>
-    </div>
+    <Box sx={{ border: 1, borderColor: 'grey.300', width: '100%', minWidth: '600px', height: '250px', display: 'flex', flexDirection: 'column', bgcolor: 'background.paper', color: 'black', borderRadius: '3px' }}>
+      <Typography variant="h5" sx={{ paddingLeft: 2, paddingTop: 2, paddingBottom: 1 }}>
+        Feedback
+      </Typography>
+      {limitedItems.length <= 0 ? (
+        <div className="StudentHomePage-subtitle" style={{ textAlign: 'center', alignItems: 'center', fontSize: '15px', color: 'darkgray' }}>No feedback available</div>
+      ) : (
+        <List sx={{ flex: 1 }}>
+          {limitedItems.map((item) => (
+            <div key={item.id}>
+              <ListItem disablePadding sx={{ maxHeight: '60px' }} secondaryAction={<IconButton edge="end" aria-label="close announcement"><CloseIcon onClick={() => handleItemClose(item.id)} /></IconButton>}>
+                <ListItemButton sx={{ maxHeight: '60px' }}>
+                  <ListItemText primary={item.dateOrg} secondary={item.content} />
+                  <Rating value={item.rating} readOnly />
+                </ListItemButton>
+              </ListItem>
+              <Divider variant="middle" />
+            </div>
+          ))}
+        </List>
+      )}
+    </Box>
   );
 }
 

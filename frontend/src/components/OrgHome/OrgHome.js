@@ -24,11 +24,9 @@ function OrgHome() {
               </div>
               <div className="orgHomeTopRow">
                 <div className="nextEvent">
-                  <div className="subtitle">Next Event</div>
                   <NextEventCard />
                 </div>
                 <div className="feedback">
-                  <div className="subtitle">Feedback</div>
                   <Feedback />
                 </div>
               </div>

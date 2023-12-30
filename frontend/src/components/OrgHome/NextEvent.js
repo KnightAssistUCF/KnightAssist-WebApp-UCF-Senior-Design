@@ -1,5 +1,5 @@
 import {useState} from 'react';
-import {Dialog, DialogTitle, DialogActions, Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
+import {Typography, Dialog, DialogTitle, DialogActions, Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
 
 function NextEvent()
 {
@@ -11,11 +11,14 @@ function NextEvent()
 
     return(
         <div>
-            <Card variant="outlined" sx={{ maxWidth: 555,  display: 'flex', marginBottom: '0', maxHeight: 200 }}>
+            <Card variant="outlined" sx={{ maxWidth: 555,  display: 'flex', marginBottom: '0', maxHeight: 270 }}>
+            <Typography variant="h5" sx={{ paddingLeft: 2, paddingTop: 1, marginBottom: '0'}}>
+                Next Event
+            </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
                   <CardMedia
                     component="img"
-                    sx={{width: 155, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
+                    sx={{width: 145, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
                     image={require('../Login/loginPic.png')}
                   />
                   <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left'}}>
@@ -26,7 +29,7 @@ function NextEvent()
                       <div className="card-subtitle">Location</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-                        <Button className='create-qr-code' size="small" variant='outlined' justify="flex-end" style={{ marginRight: '15px',  color: '#5f5395', borderColor: '#968dbf', '&:hover': {
+                        <Button className='create-qr-code' size="medium" variant='outlined' justify="flex-end" style={{ marginRight: '10px',  color: '#5f5395', borderColor: '#968dbf', '&:hover': {
                         borderColor: '#5f5395', color: '#7566b4'  }  }} onClick={() => setModalOpen(true)}>Generate QR Code</Button>
                       </Grid>
                   </CardContent>
