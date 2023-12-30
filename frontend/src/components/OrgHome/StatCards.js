@@ -8,7 +8,7 @@ function StatCards() {
   return (
       <div>
         <div className='statCards'>
-            <Card variant='contained' sx={{ maxWidth: 255,  display: 'flex', marginBottom: '0',marginTop: '10px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #5ca1a7 11.2%, #63aeb4 91.1% )', color: 'white' }}>
+            <Card variant='contained' sx={{ borderRadius: '14px', maxWidth: 255,  display: 'flex', marginBottom: '0',marginTop: '10px', paddingLeft: '6px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #65B891 11.2%, #65B891 91.1% )', color: 'white' }}>
                 <div className="stat">
                     12
                 </div>
@@ -16,7 +16,7 @@ function StatCards() {
                     Upcoming Events
                 </div>
             </Card>
-            <Card variant='contained' sx={{ maxWidth: 255,  display: 'flex', marginTop: '10px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #5ca1a7 11.2%, #63aeb4 91.1% )', color: 'white' }}>
+            <Card variant='contained' sx={{ borderRadius: '14px', maxWidth: 255,  display: 'flex', marginTop: '10px', paddingLeft: '6px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #65B891 11.2%, #65B891 91.1% )', color: 'white' }}>
                 <div className="stat">
                     73%
                 </div>

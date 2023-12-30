@@ -29,7 +29,7 @@ function NextEvent()
                       <div className="card-subtitle">Location</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-                        <Button className='create-qr-code' size="medium" variant='outlined' justify="flex-end" style={{ marginRight: '10px',  color: '#5f5395', borderColor: '#968dbf', '&:hover': {
+                        <Button className='create-qr-code' size="medium" variant='contained' justify="flex-end" style={{ marginRight: '10px',  backgroundColor: '#5f5395', borderColor: '#968dbf', '&:hover': {
                         borderColor: '#5f5395', color: '#7566b4'  }  }} onClick={() => setModalOpen(true)}>Generate QR Code</Button>
                       </Grid>
                   </CardContent>

@@ -8,7 +8,7 @@ import Feedback from './Feedback';
 import StatCards from './StatCards';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Card from '@mui/material/Card';
-import { Typography, CardContent } from '@mui/material';
+import { Button, Typography, CardContent } from '@mui/material';
 
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
@@ -24,9 +24,9 @@ function OrgHome() {
               <Typography variant="h5">
                 Welcome, Organization
               </Typography>
-              <button type="button" className="addEventBtn btn btn-primary" onClick={() => setOpenAnnouncement(true)}>
+              <Button variant="contained" sx={{backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
                 Add Announcement
-              </button>
+              </Button>
               <AddAnnouncementModal open={openAnnouncement} setOpen={setOpenAnnouncement} />
             </CardContent>
           </Card>
