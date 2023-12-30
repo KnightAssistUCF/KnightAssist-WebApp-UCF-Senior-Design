@@ -214,6 +214,15 @@ app.use('/api/retrieveImage', retrieveImage);
 const contactUsFormSubmission = require('./backend/routes/contactUs_Form/submitForm');
 app.use('/api/contactUsFormSubmission', contactUsFormSubmission);
 
+
+/* ADMIN ACCOUNT ENDPOINTS - Other Ones that are needed for functionality can be used from the prior ones */
+/* ADMIN Only on Web */
+const loadAllStudentsData = require('./backend/routes/Admin_Endpoints/loadAllStudentsData');
+app.use('/api/loadAllStudentsData', loadAllStudentsData);
+
+const loadAllOrganizationsData = require('./backend/routes/Admin_Endpoints/loadAllOrgsData');
+app.use('/api/loadAllOrganizationsData', loadAllOrganizationsData);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
