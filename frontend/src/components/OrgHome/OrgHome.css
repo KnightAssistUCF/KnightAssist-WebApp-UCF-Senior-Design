@@ -9,12 +9,12 @@
     font-size: 30px;
 }
 
-.orgPortalTop {
+/* .orgPortalTop {
     padding-bottom: 10px;
-  }
+  } */
   
 .addEventBtn {
-margin-top: 10px;
+    margin: 0;
 }
   
 
