@@ -114,7 +114,7 @@ function Header()
             <div className="profile_content">
                 <div className="profile">
                     <LightTooltip title={!isSidebarActive ? "Log Out" : ""} placement="right" className="custom-tooltip">
-                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />} onClick={logOut}>
+                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />} onClick={logOut} style={{ textTransform: 'none' }}>
                                 Sign Out
                             </LogOutButton>
                             <SmallLogOutButton className="smallLogOut" style={{borderRadius: 5}} onClick={logOut}>
