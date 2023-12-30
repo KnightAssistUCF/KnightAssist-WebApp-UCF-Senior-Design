@@ -72,7 +72,7 @@ function StudentHistory()
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 5, ml:10, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Event Info</Button>
+										<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
@@ -121,7 +121,7 @@ function StudentHistory()
 							{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 							<ListItem>
 								<Grid container layout={'row'} className='listsItems'>
-									<Grid item>
+									<Grid item sm={1}>
 										<Avatar
 											src={URL.createObjectURL(pic)}
 											className="eventPic"
@@ -138,7 +138,7 @@ function StudentHistory()
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 5, ml:10, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+										<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
