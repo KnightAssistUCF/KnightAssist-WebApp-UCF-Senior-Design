@@ -7,6 +7,7 @@ import NextEventCard from './NextEvent';
 import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
+import { BarChart } from '@mui/x-charts/BarChart';
 
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
@@ -40,7 +41,13 @@ function OrgHome() {
                 </div>
               </div>
               <div className="orgHomeBottomRow">
-                  <StatCards/>
+                <StatCards/>
+                <BarChart
+                  xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}
+                  series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+                  width={900}
+                  height={300}
+                />
               </div>
           </div>
       </div>

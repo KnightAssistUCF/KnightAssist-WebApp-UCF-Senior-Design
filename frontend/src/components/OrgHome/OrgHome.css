@@ -45,3 +45,6 @@
     font-size: 25px;
     padding: 0 5px;
 }
+.orgHomeBottomRow {
+    display: flex;
+}
