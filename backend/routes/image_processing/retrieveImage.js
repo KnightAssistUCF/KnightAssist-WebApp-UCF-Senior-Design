@@ -1,7 +1,8 @@
 const express = require('express');
+const multer = require('multer');
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const crypto = require('crypto');
 const router = express.Router();
 require('dotenv').config();
 
@@ -18,14 +19,15 @@ router.get('/', async (req, res) => {
         try {
                 const id = req.query.id;
                 const entityType = req.query.entityType;
-                const profilePicOrBackGround = req.query.profilePicOrBackGround;
 
-                console.log('entityType: ', entityType);
+                const profilePicOrBackGround = req.query.profilePicOrBackGround; // always 0 for profile pic and 1 for background (background only for org)
+
+				console.log('entityType: ', entityType);
                 console.log('id: ', id);
 
                 let user;
-                let defaultPath_Background = 'images/orgdefaultbackground.png';
-                let defaultPath_ProfilePic = 'images/defaultProfilePic.png';
+				let defaultPath_Background;
+                let defaultPath_ProfilePic;
 
                 switch (entityType) {
                         case 'event':
@@ -33,45 +35,68 @@ router.get('/', async (req, res) => {
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
+								defaultPath_Background = 'backend/images/orgdefaultbackground.png'
+                                defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png'
                                 break;
                         case 'student':
                                 user = await UserStudent.findById(id);
                                 break;
                         default:
-                                return res.status(400).send('Invalid entity type');
+                                throw new Error('Invalid entity type');
+                }
+                
+                if (!user 
+                || (entityType !== 'organization' && !user.profilePicPath)
+                || (entityType === 'organization' && !user && (!user.profilePicPath || !user.backgroundPicPath))) {
+                        return res.status(404).send('Image not found or entity does not exist');
                 }
 
-                if (!user) {
-                        return res.status(404).send('Entity not found');
-                }
+                console.log(user);
 
-                let imagePath;
-                if (entityType === 'organization') {
-                        imagePath = (profilePicOrBackGround === '0') ? user.profilePicPath : user.backgroundPicPath;
-                        imagePath = imagePath || ((profilePicOrBackGround === '0') ? defaultPath_ProfilePic : defaultPath_Background);
+                if (entityType === 'organization' && profilePicOrBackGround === '0') {
+                        user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+                        console.log(user.profilePicPath);
+                        filePath = path.normalize(user.profilePicPath);
+                } else if (entityType === 'organization' && profilePicOrBackGround === '1') {
+                        user.backgroundURL = user.backgroundURL.substring(user.backgroundURL.lastIndexOf('backend'));
+                        console.log(user.backgroundURL);
+                        filePath = path.normalize(user.backgroundURL);
                 } else {
-                        imagePath = user.profilePicPath || defaultPath_ProfilePic;
+                        user.profilePicPath = user.profilePicPath.substring(user.profilePicPath.lastIndexOf('backend'));
+                        console.log(user.profilePicPath);
+                        filePath = path.normalize(user.profilePicPath);
                 }
 
-                imagePath = imagePath.replace(/\\/g, '/'); // Normalize
-                const filePath = path.join(__dirname, '..', '..', imagePath);
+                
+                console.log(filePath);
 
-                console.log('File Path:', filePath);
+                // converts the path to be a neutral format 
+               /* const normalizedPath = user.profilePicPath.replace(/\\/g, '/');
+                const baseDir = path.join(__dirname, '..', '..', 'backend');
+                const filePath = path.join(baseDir, normalizedPath);*/
 
-                if (!fs.existsSync(filePath)) {
-                        return res.status(404).send('Image file not found');
+                if(entityType === 'organization' && profilePicOrBackGround === '1' && user.backgroundURL === defaultPath_Background){
+                        res.send(fs.readFileSync(filePath));
+                } else if (entityType === 'organization' && profilePicOrBackGround === '0' && user.profilePicPath === defaultPath_ProfilePic){
+                        res.send(fs.readFileSync(filePath));
+                } else if (entityType !== 'organization' && user.profilePicPath === defaultPath_ProfilePic){
+                        res.send(fs.readFileSync(filePath));
+                } else{
+                        // Decrypt the file
+                        const decryptedImage = decryptFile(filePath);
+
+                        // update the response header with the content type
+                        if (path.extname(filePath) === '.png') {
+                                        res.setHeader('Content-Type', 'image/png');
+                        } else if (path.extname(filePath) === '.jpg') {
+                                        res.setHeader('Content-Type', 'image/jpeg');
+                        } else {
+                                        throw new Error('Invalid file type');
+                        }
+
+                        // Send the response with the decrypted image
+                        res.send(decryptedImage);
                 }
-
-                let image;
-                if (filePath === path.join(__dirname, '..', '..', defaultPath_Background) ||
-                        filePath === path.join(__dirname, '..', '..', defaultPath_ProfilePic)) {
-                        image = fs.readFileSync(filePath);
-                } else {
-                        image = decryptFile(filePath);
-                }
-
-                res.setHeader('Content-Type', 'image/' + path.extname(filePath).slice(1));
-                res.send(image);
 
         } catch (error) {
                 console.error(error);

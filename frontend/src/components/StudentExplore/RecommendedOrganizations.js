@@ -46,16 +46,27 @@ function RecommendedOrganizations(props)
 	    const orgs = [];
 
         for(let org of res){
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}`);
+			// Gets profile pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let profilePic = await response.blob();
 
-            orgs.push(<Org name={org.name} pic={pic} description={org.description} id={org._id}/>)  
+			// Gets background pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let background = await response.blob();
+
+            orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
 		}
 
         setNumPages(Math.ceil(orgs.length / 4))
@@ -87,11 +98,11 @@ function RecommendedOrganizations(props)
 								component="img"
 								className='cardBg'
 								height="125"
-								image={URL.createObjectURL(props.pic)}
+								image={URL.createObjectURL(props.background)}
 							/>
 							<Avatar
 								className='cardLogo'
-                              	src={logo}
+                              	src={URL.createObjectURL(props.profilePic)}
 								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
                            />
 						</div>
