@@ -9,14 +9,15 @@
     font-size: 30px;
 }
 
-.yourEvents {
-    text-align: left;
-    margin-top: 20px;
-    font-size: 20px;
-    margin-bottom: 50px;
-    float: left;
-    color: black;
+.orgPortalTop {
+    padding-bottom: 10px;
+  }
+  
+.addEventBtn {
+margin-top: 10px;
 }
+  
+
 
 .orgHomeTopRow {
     display: flex;

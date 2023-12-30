@@ -12,21 +12,13 @@ import { BarChart } from '@mui/x-charts/BarChart';
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
 
-  function Title() {
-      return (
-          <div className='yourEvents spartan'>
-              <h1>Welcome, Organization</h1>
-          </div>
-      );
-  }
-
   return (
       <div>
           <OrgTopBar />
           <Header />
           <div className='move'>
+              <div className="title">Welcome, Organization</div>
               <div className="orgPortalTop">
-                  <div className="orgHomeTitle">Dashboard</div>
                   <button type="button" className="addEventBtn btn btn-primary" onClick={() => setOpenAnnouncement(true)}>Add Announcement</button>
                   <AddAnnouncementModal open={openAnnouncement} setOpen={setOpenAnnouncement} />
               </div>
@@ -42,11 +34,12 @@ function OrgHome() {
               </div>
               <div className="orgHomeBottomRow">
                 <StatCards/>
-                <BarChart
-                  xAxis={[{ scaleType: 'band', data: ['group A', 'group B', 'group C'] }]}
+                <BarChart 
+                  sx={{ rx: 15 }}
+                  xAxis={[{ scaleType: 'band', data: ['Event 1', 'Event 2', 'Event 3'] }]}
                   series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-                  width={900}
-                  height={300}
+                  width={1000}
+                  height={310}
                 />
               </div>
           </div>
