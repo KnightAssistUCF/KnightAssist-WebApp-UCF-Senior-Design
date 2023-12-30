@@ -37,14 +37,15 @@ margin-top: 10px;
 }
 .statCards {
     text-align: left;
+    margin-top: 15px;
 }
 .stat {
     font-size: 50px;
-    padding: 5px;
+    padding: 0 0 0 3px;
 }
 .statTitle {
     font-size: 25px;
-    padding: 0 5px;
+    padding: 0 10px 5px;
 }
 .orgHomeBottomRow {
     display: flex;
