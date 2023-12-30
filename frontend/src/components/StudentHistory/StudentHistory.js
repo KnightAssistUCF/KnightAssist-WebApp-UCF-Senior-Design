@@ -11,6 +11,7 @@ import Header from '../StudentHome/StudentHeader';
 import Avatar from '@mui/material/Avatar';
 import { List, ListItem, ListItemText, Divider } from '@mui/material';
 import {Button} from '@mui/material';
+import EventModal from './EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './StudentHistory.css'
 
@@ -22,8 +23,16 @@ function StudentHistory()
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
 
+	const [eventID, setEventID] = useState(undefined);
+	const [openModal, setOpenModal] = useState(false);
+
 	// Max number of event histories per page
 	const [amtPerPage, setAmtPerPage] = useState(5);
+
+	function setUpModal(id){
+		setEventID(id);
+		setOpenModal(true);
+	}
 
     async function changePage(e, value){
         setPage(value);
@@ -83,7 +92,7 @@ function StudentHistory()
         });
     
         let res = JSON.parse(await response.text());
-		
+
 		// Sort by time if date is equal, date otherwise
 		res.sort(function(a, b) {
 			return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
@@ -129,7 +138,7 @@ function StudentHistory()
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 5, ml:10, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Event Info</Button>
+										<Button sx={{ mt: 5, ml:10, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
@@ -162,6 +171,7 @@ function StudentHistory()
 				{shownHistories}
 			</List>
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
 		</div>
       </div>
     );
