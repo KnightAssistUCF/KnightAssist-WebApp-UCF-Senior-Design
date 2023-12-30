@@ -2,6 +2,7 @@
     margin-left: 15%;
     color: black;
     text-align: left;
+    margin-top: 1%;
 }
 
 .orgHomeTitle {
@@ -32,4 +33,15 @@
 .subtitle {
     font-size: 18px;
     margin-bottom: 10px;
+}
+.statCards {
+    text-align: left;
+}
+.stat {
+    font-size: 50px;
+    padding: 5px;
+}
+.statTitle {
+    font-size: 25px;
+    padding: 0 5px;
 }
