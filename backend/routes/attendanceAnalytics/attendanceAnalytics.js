@@ -56,45 +56,46 @@ const mockEvents = [
 
 router.get('/', async (req, res) => {
     try {
+        // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-        // const { orgId } = req.params;
-        // const organization = await Organization.findById(orgId);
+        const { orgId } = req.params;
+        const organization = await Organization.findById(orgId);
 
-        // if (!organization) {
-        //     return res.status(404).send('Organization not found in the database');
-        // }
+        if (!organization) {
+            return res.status(404).send('Organization not found in the database');
+        }
 
-        // // Find all events by this org
-        // const events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) });
+        // Find all events by this org
+        const events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) });
 
-        // /*
-        //     @labels: event names
-        //     @rsvpCountData: RSVP count
-        //     @checkedInCountData: checked-in count
-        // */
-        // const labels = []; 
-        // const rsvpCountData = []; 
-        // const checkedInCountData = []; 
+        /*
+            @labels: event names
+            @rsvpCountData: RSVP count
+            @checkedInCountData: checked-in count
+        */
+        const labels = []; 
+        const rsvpCountData = []; 
+        const checkedInCountData = []; 
 
-        // // go over each event that this org has and we collect the data
-        // for (const event of events) {
-        //     labels.push(event.name);
-        //     rsvpCountData.push(event.registeredVolunteers.length);
-        //     checkedInCountData.push(event.checkedInStudents.length);
-        // }
+        // go over each event that this org has and we collect the data
+        for (const event of events) {
+            labels.push(event.name);
+            rsvpCountData.push(event.registeredVolunteers.length);
+            checkedInCountData.push(event.checkedInStudents.length);
+        }
 
         /* DUMMY DATA !!!!!!!!!!!!!!!!!!!!!*/
-        const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
+        // const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
 
-        const labels = orgEvents.map(event => event.name);
-        const rsvpCountData = orgEvents.map(event => event.registeredVolunteers.length);
-        const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
+        // const labels = orgEvents.map(event => event.name);
+        // const rsvpCountData = orgEvents.map(event => event.registeredVolunteers.length);
+        // const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
         /* DUMMY DATA */
 
         // we get the no show data 
         const noShowData = rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]);
 
-        // overall configuration for the chart
+
         const chartCallback = (ChartJS) => {
             ChartJS.defaults.font.family = 'Arial';
             ChartJS.defaults.font.size = 16;
@@ -103,7 +104,7 @@ router.get('/', async (req, res) => {
             ChartJS.defaults.plugins.tooltip.intersect = false;
         };
 
-        // create an array of adequate 4 color blind colors
+        
         const colorBlindColors = [
             'rgba(0, 158, 115, 0.5)',    // Sky Blue
             'rgba(0, 115, 179, 0.5)',    // Bluish Green
@@ -113,7 +114,7 @@ router.get('/', async (req, res) => {
 
         const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
         const configuration = {
-            type: 'bar', // Using a bar chart as the base
+            type: 'bar', 
             data: {
                 labels: labels,
                 datasets: [
@@ -147,11 +148,11 @@ router.get('/', async (req, res) => {
                     {
                         label: 'No Show Trend',
                         data: noShowData,
-                        type: 'line', // Overlaying a line chart for 'No Show' data
+                        type: 'line', 
                         borderColor: 'rgba(213, 94, 0, 1)',
                         backgroundColor: 'transparent',
                         fill: false,
-                        tension: 0.4, // Smoothes the line
+                        tension: 0.4, 
                         borderWidth: 2,
                         pointRadius: 3,
                         pointBackgroundColor: 'rgba(213, 94, 0, 1)'
