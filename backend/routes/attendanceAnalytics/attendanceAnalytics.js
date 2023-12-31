@@ -91,6 +91,9 @@ router.get('/', async (req, res) => {
         const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
         /* DUMMY DATA */
 
+        // we get the no show data 
+        const noShowData = rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]);
+
         // overall configuration for the chart
         const chartCallback = (ChartJS) => {
             ChartJS.defaults.font.family = 'Arial';
@@ -110,42 +113,75 @@ router.get('/', async (req, res) => {
 
         const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
         const configuration = {
-            type: 'bar',
+            type: 'bar', // Using a bar chart as the base
             data: {
                 labels: labels,
-                datasets: [{
-                    label: 'RSVPed',
-                    backgroundColor: colorBlindColors[0],
-                    borderColor: colorBlindColors[0],
-                    borderWidth: 1,
-                    data: rsvpCountData,
-                }, {
-                    label: 'Attended',
-                    backgroundColor: colorBlindColors[1],
-                    borderColor: colorBlindColors[1],
-                    borderWidth: 1,
-                    data: checkedInCountData,
-                },
-                {
-                    label: 'No Show',
-                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
-                    borderColor: 'rgba(255, 99, 132, 0.5)',
-                    borderWidth: 1,
-                    data: rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]),
-                }
-            ], 
+                datasets: [
+                    {
+                        label: 'RSVPed',
+                        backgroundColor: 'rgba(0, 158, 115, 0.5)',
+                        borderColor: 'rgba(0, 158, 115, 1)',
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.5,
+                        borderWidth: 1,
+                        data: rsvpCountData,
+                    },
+                    {
+                        label: 'Attended',
+                        backgroundColor: 'rgba(0, 115, 179, 0.5)',
+                        borderColor: 'rgba(0, 115, 179, 1)',
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.5,
+                        borderWidth: 1,
+                        data: checkedInCountData,
+                    },
+                    {
+                        label: 'No Show',
+                        backgroundColor: 'rgba(213, 94, 0, 0.5)',
+                        borderColor: 'rgba(213, 94, 0, 1)',
+                        barPercentage: 0.7,
+                        categoryPercentage: 0.5,
+                        borderWidth: 1,
+                        data: noShowData,
+                    },
+                    {
+                        label: 'No Show Trend',
+                        data: noShowData,
+                        type: 'line', // Overlaying a line chart for 'No Show' data
+                        borderColor: 'rgba(213, 94, 0, 1)',
+                        backgroundColor: 'transparent',
+                        fill: false,
+                        tension: 0.4, // Smoothes the line
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        pointBackgroundColor: 'rgba(213, 94, 0, 1)'
+                    }
+                ]
             },
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Number of Attendees'
+                        }
                     },
                     x: {
-                        // none for now
+                        title: {
+                            display: true,
+                            text: 'Event Names'
+                        }
                     }
                 },
                 responsive: true,
-                maintainAspectRatio: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Event Attendance Analysis'
+                    }
+                }
             }
         };
 
