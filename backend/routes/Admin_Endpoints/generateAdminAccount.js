@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs'); // I will use this to hash the password
+const bcrypt = require('bcryptjs'); 
 const { generateToken } = require('../../utils/jwtUtils');
 const crypto = require('crypto');
 const nodemailer = require("nodemailer");
@@ -8,10 +8,8 @@ const dotenv = require('dotenv');
 const mailgen = require('mailgen');
 const path = require('path');
 
-const userStudent = require('../../models/userStudent');
+const admin = require('../../models/admin');
 const jwtSecret = process.env.JWT_SECRET_KEY;
-
-/* email verfication and the jwt tokenization can be gathered here, but later */
 
 router.post('/', async (req, res) => {
     const query = {
@@ -20,28 +18,21 @@ router.post('/', async (req, res) => {
             { email: req.body.email }
         ]
     };
-    await userStudent.findOne(query).then((user) => {
+    await admin.findOne(query).then((user) => {
         if (user) {
             res.status(409).send('User already exists');
         } else {
-            var hashedPassword = bcrypt.hashSync(req.body.password, 10);
-            var newUser = new userStudent({
+            // generate a randome 8 character string
+            let tempPassword = crypto.randomBytes(4).toString('hex');
+            let hashedPassword = bcrypt.hashSync(tempPassword, 10);
+            var newUser = new admin({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: hashedPassword,
-                profilePicPath: req.body.profilePicPath,
-                totalVolunteerHours: req.body.totalVolunteerHours,
-                semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
-                categoryTags: req.body.categoryTags, // stores tags marking their interests
-                confirmToken: generateToken({ email: req.body.email }, jwtSecret),
-                EmailToken: crypto.randomBytes(64).toString('hex').toString(),
-                valid: false,
-                // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
-                // we can add more here as we wish for the sign up 
             });
             newUser.save().then((user) => {
-                res.status(200).send("User created - please confirm new user's email address");
+                res.status(200).send("Admin created - Admin Credentials Sent to Email");
             }).catch((err) => {
                 res.status(503).send("Failed to create user: " + err);
             });
@@ -56,24 +47,21 @@ router.post('/', async (req, res) => {
             const transporterForLogin = nodemailer.createTransport(config);
 
             const mailGenerator = new mailgen({
-                theme: 'default', // neopolitan, default, and cerberus are themes I liked
+                theme: 'default', 
                 product: {
                     name: 'KnightAssist',
-                    link: 'https://mailgen.js/', // dummy link will change later
-                    // [not working yet]
-                    // logo: '../utils/logo.svg', 
-                    // logoWidth: '150px', 
-                    // logoHeight: '50px', 
+                    link: 'https://mailgen.js/', // dummy link will change later 
                 },
             });
 
             let response = {
                 body: {
                     name: req.body.firstName + ' ' + req.body.lastName,
-                    intro: 'Welcome to KnightAssist! We\'re very excited to have you on board.',
+                    intro: 'Welcome to KnightAssist! We\'re very excited to have you as an Admin on board.',
                     action: {
 
-                        instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app: ' + newUser.EmailToken + '',
+                        instructions: 'As an admin, to get started with KnightAssist, please use the following credentials to access the admin tools and privileges of our app: '
+                        + 'Email: ' + req.body.email + ' Password: ' + tempPassword,
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
                             text: 'Login and confirm your account',
@@ -90,7 +78,7 @@ router.post('/', async (req, res) => {
             let message = {
                 from: process.env.EMAIL,
                 to: req.body.email,
-                subject: 'Welcome to KnightAssist!',
+                subject: '[ADMIN] Welcome to KnightAssist!',
                 html: mail
             }
 
