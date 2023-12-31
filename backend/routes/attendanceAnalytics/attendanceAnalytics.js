@@ -3,6 +3,7 @@ const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const Organization = require('../../models/organization');
 const Event = require('../../models/events');
 const router = express.Router();
+const mongoose = require('mongoose');
 // GRAPH Dimensions
 const width = 800; 
 const height = 600; 
@@ -15,7 +16,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'Charity Run',
-        registeredVolunteers: Array.from({ length: 50 }, mockObjectId),
+        attendees: Array.from({ length: 50 }, mockObjectId),
         checkedInStudents: Array.from({ length: 30 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -23,7 +24,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'Beach Cleanup',
-        registeredVolunteers: Array.from({ length: 75 }, mockObjectId),
+        attendees: Array.from({ length: 75 }, mockObjectId),
         checkedInStudents: Array.from({ length: 65 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1', 
@@ -31,7 +32,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'reatrd',
-        registeredVolunteers: Array.from({ length: 58 }, mockObjectId),
+        attendees: Array.from({ length: 58 }, mockObjectId),
         checkedInStudents: Array.from({ length: 22 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -39,7 +40,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'ucf jhwl',
-        registeredVolunteers: Array.from({ length: 69 }, mockObjectId),
+        attendees: Array.from({ length: 69 }, mockObjectId),
         checkedInStudents: Array.from({ length: 53 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -47,7 +48,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'ahhh',
-        registeredVolunteers: Array.from({ length: 20 }, mockObjectId),
+        attendees: Array.from({ length: 20 }, mockObjectId),
         checkedInStudents: Array.from({ length: 20 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -58,7 +59,7 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-        const { orgId } = req.params;
+        const { orgId } = req.query;
         const organization = await Organization.findById(orgId);
 
         if (!organization) {
@@ -66,7 +67,7 @@ router.get('/', async (req, res) => {
         }
 
         // Find all events by this org
-        const events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) });
+        const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
 
         /*
             @labels: event names
@@ -80,7 +81,7 @@ router.get('/', async (req, res) => {
         // go over each event that this org has and we collect the data
         for (const event of events) {
             labels.push(event.name);
-            rsvpCountData.push(event.registeredVolunteers.length);
+            rsvpCountData.push(event.attendees.length);
             checkedInCountData.push(event.checkedInStudents.length);
         }
 
@@ -88,7 +89,7 @@ router.get('/', async (req, res) => {
         // const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
 
         // const labels = orgEvents.map(event => event.name);
-        // const rsvpCountData = orgEvents.map(event => event.registeredVolunteers.length);
+        // const rsvpCountData = orgEvents.map(event => event.attendees.length);
         // const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
         /* DUMMY DATA */
 
