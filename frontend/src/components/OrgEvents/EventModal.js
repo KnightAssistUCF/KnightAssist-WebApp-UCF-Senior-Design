@@ -49,6 +49,9 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
+
+	// If the event has started, you can generateACode
+	const [canGenerateCodes, setCanGenerateCodes] = useState(true);
  
     function eventIsUpcoming(date){
         date = String(date);
@@ -77,6 +80,10 @@ function EventModal(props)
         
         return {"name": res.firstName + " " + res.lastName, "profilePic": res.profilePic, "userID": res._id};
     }
+
+	function isEventOccuring(date){
+		
+	}
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -176,7 +183,7 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <button className="volunteersBtn" onClick={() => setOpenVolunteers(!openVolunteers)}>
+                <button className="volunteersBtn" onClick={() => {if(curVolunteers > 0) setOpenVolunteers(!openVolunteers)}}>
                     <p className='lessSpace'>Registered Volunteers:</p>
                     <p>{curVolunteers}/{maxVolunteers}</p>
                 </button>
@@ -331,9 +338,19 @@ function EventModal(props)
 
                                 {Volunteers()}
 
-                                <Tags/>
+								{(tags.length > 0) ? <Tags/> : null}
+
+								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
+									<Grid item xs={4}>
+										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Generate Check-In Code</Button>
+
+									</Grid>
+									<Grid item xs={4}>
+										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Generate Check-Out Code</Button>
+									</Grid>
+								</Grid>   
       
-                                <Grid container marginLeft={"30%"} marginTop={"100px"}>
+                                <Grid container marginLeft={"30%"} marginTop={"50px"}>
                                     <Grid item xs={3}>
                                         <Tooltip title="Edit" placement="top">
                                             <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
