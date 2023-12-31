@@ -18,6 +18,7 @@ import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage
 import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
+import AdminHomePage from './pages/AdminHomePage';
 
 function App() 
 {
@@ -60,6 +61,9 @@ function App()
           </Routes>
           <Routes>
             <Route path="/studentannouncements" element={<NewAnnPage/>}></Route>
+          </Routes>
+          <Routes>
+            <Route path="/adminhome" element={<AdminHomePage/>}></Route>
           </Routes>
        </Router>
       </header>
