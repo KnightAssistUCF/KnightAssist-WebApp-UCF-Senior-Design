@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function OrgFavoriteEvents(props)
 {
 
@@ -84,7 +81,7 @@ function OrgFavoriteEvents(props)
                 let res = JSON.parse(await response.text());
     
                 // Don't show event if user already RSVP'd
-                if(res.RSVPStatus != 1 && eventIsUpcoming(event.date)){
+                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.date)){
 					url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 					response = await fetch(url, {
@@ -117,7 +114,7 @@ function OrgFavoriteEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -132,9 +129,7 @@ function OrgFavoriteEvents(props)
         return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -168,11 +163,13 @@ function OrgFavoriteEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
         console.log("its working!")
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(

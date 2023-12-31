@@ -1,11 +1,5 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form} from 'react-bootstrap';
-import Logo from '../Logo';
-import { Modal, Dialog, DialogTitle, Box, DialogActions, Button } from '@mui/material';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper';
 import Header from '../StudentHome/StudentHeader';
 import SearchSwitch from './SearchSwitch';
 import Search from './Search';

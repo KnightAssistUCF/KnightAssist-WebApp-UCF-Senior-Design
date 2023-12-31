@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
-import {BiMenu, BiHome, BiSearch, BiBell, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -104,7 +104,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Settings" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studentsettings">
                             <BiCog className='settingsIcon'></BiCog>
                             <span class="links_name">Settings</span>
                         </a>

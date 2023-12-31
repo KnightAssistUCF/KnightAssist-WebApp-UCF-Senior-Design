@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { buildPath } from "../../path";
 import './Login.css';
 
 function LoginComponents(){
@@ -100,13 +99,13 @@ function LoginComponents(){
 
     function ForgotPassword(){
         return (
-            <button className="forgotPWD">forgot password</button>
+            <button className="forgotPWD" onClick={() => sendToForgotPassword()}>forgot password</button>
         )
     }
 
     function Register(){
         return (
-            <button className="register">register</button>
+            <button className="register" onClick={() => onRegister()}>register</button>
         )
     }
 

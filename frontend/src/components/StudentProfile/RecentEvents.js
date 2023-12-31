@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function RecentEvents(props)
 {
 
@@ -105,9 +102,7 @@ function RecentEvents(props)
         return <h1 className='favHeader spartan'>Recent Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -141,6 +136,7 @@ function RecentEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return(

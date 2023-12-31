@@ -226,6 +226,10 @@ app.use('/api/loadAllOrganizationsData', loadAllOrganizationsData);
 const generateAdminAccount = require('./backend/routes/Admin_Endpoints/generateAdminAccount');
 app.use('/api/generateAdminAccount', generateAdminAccount);
 
+/* FORGOT PASSWORD ENDPOINTS*/
+const forgotPassword = require('./backend/routes/Password_Reset/forgotPassword');
+app.use('/api/forgotPassword', forgotPassword);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now

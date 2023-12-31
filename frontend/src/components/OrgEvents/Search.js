@@ -10,7 +10,6 @@ function Search(props) {
   
     const [events, setEvents] = useState([]);
     const [orgs, setOrgs] = useState([]);
-    const [orgName, setOrgName] = useState("");
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
@@ -39,10 +38,10 @@ function Search(props) {
 
         // Due to bug and since this function is only called
         // upon initialization
-        if(flag == 1)
+        if(flag === 1)
           setOptions(tmp);
         else
-          if(props.searchType != "organizations")
+          if(props.searchType !== "organizations")
             setOptions(tmp);
     }
 
@@ -68,35 +67,37 @@ function Search(props) {
     }
 
 	function handleClick(id){
-        if(props.searchType == "events"){
+        if(props.searchType === "events"){
             props.setEventID(id);
             props.setOpenEvent(true);
         }else{
-
+			openOrgPage();
         }
     }
 
     useEffect(()=>{
-        console.log("called");
         getAllEvents(1);
         getAllOrganization();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
     useEffect(()=>{
-        if(props.searchType == undefined) return;
+        if(props.searchType === undefined) return;
 
-        if(props.searchType == "events"){
+        if(props.searchType === "events"){
           setLabel("Search For Events");
           setOptions(events);
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
         }
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
 
     useEffect(()=>{
       getAllEvents(0);
       console.log(events);
+	  // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.resetEventSearch])
 
     return (

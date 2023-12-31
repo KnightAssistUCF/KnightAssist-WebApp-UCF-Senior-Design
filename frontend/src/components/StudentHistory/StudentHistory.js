@@ -1,10 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import TextField from '@mui/material/TextField';
+import React, { useState, useEffect} from 'react';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Logo from '../Logo';
-import Chip from '@mui/material/Chip';
 import { buildPath } from '../../path';
 import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader.js';
@@ -53,7 +48,7 @@ function StudentHistory()
 			let pic =  await response.blob();
 
 			histories[i] =  <div>
-							{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
+							{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 							<ListItem>
 								<Grid container layout={'row'} className='listsItems'>
 									<Grid item>
@@ -121,7 +116,7 @@ function StudentHistory()
 				let pic =  await response.blob();
 
 				histories[i] =  <div>
-								{(i == 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
+								{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 								<ListItem>
 									<Grid container layout={'row'} className='listsItems'>
 										<Grid item sm={1}>
@@ -166,7 +161,9 @@ function StudentHistory()
 	}
 
 	useEffect(() => {
+		setAmtPerPage(5);
 		getHistory();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
     return(
