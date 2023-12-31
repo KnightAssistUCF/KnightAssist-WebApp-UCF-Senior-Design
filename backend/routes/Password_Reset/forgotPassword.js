@@ -118,7 +118,7 @@ router.post("/", async (req, res) => {
         
         //********************** */
         console.log("Password changed successfully - New Temp Password Sent To User Email -> " + user.email);
-        return res.status(200).json({ message: "Email with temporary password sent successfully, and encrypted password stored in the DB" }, { newTempPass: tempPass });
+        return res.status(200).json({ message: "Email with temporary password sent successfully, and encrypted password stored in the DB" });
     } catch (err) {
         console.log(err);
         return res.status(500).json({ error: "Error - Error Printed To The Console" });
