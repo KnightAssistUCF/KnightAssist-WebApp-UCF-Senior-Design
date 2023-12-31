@@ -39,16 +39,18 @@ function LoginComponents(){
         
             let res = JSON.parse(await response.text());
 
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("ID", res.user._id);
             
             console.log(res);
 
             /// The credentials matched an existing account
-            if(!('studentID' in res)) {
+            if(res.role == "organization") {
+                localStorage.setItem("ID", res._id);
+                localStorage.setItem("token", res.token);
                 window.location.href="/#/orgevents"
                 setIsInvalid("");
-            }else if(!('organizationID' in res)) {
+            }else if(res.user?.role == "student") {
+                localStorage.setItem("ID", res.user._id);
+                localStorage.setItem("token", res.token);
                 window.location.href="/#/studenthomepage";
             }
             
