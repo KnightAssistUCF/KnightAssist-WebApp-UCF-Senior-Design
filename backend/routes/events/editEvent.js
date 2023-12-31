@@ -7,16 +7,16 @@ router.post('/', async (req, res) => {
     const searchID = req.body.organizationID;
     const eventID = req.body.eventID;
 
-    await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then(async (events) => {
+    await event.findOne({ sponsoringOrganization: searchID, _id: eventID }).then(async (events) => {
         console.log(events);
         if (events) {
             events.name = req.body.name;
-            events.eventID = req.body.eventID;
+            // events.eventID = req.body.eventID;
+            events._id = req.body.eventID;
             events.description = req.body.description;
             events.location = req.body.location;
             events.date = req.body.date;
             events.sponsoringOrganization = req.body.organizationID;
-            events.picLink = req.body.picLink;
             events.startTime = req.body.startTime;
             events.endTime = req.body.endTime;
             events.eventLinks = req.body.eventLinks;
@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
             events.registeredVolunteers = req.body.registeredVolunteers;
             events.save();            
             console.log(events);
-            res.status(200).send("Event updated successfully");
+			res.status(200).json({message: "Successful", ID: events._id});
         } else {
             res.status(404).send("Event not found in the database");
         }

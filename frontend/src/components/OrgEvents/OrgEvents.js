@@ -8,7 +8,6 @@ import EventModal from './EventModal';
 import SearchSwitch from './SearchSwitch';
 import Header from './Header';
 import './OrgEvents.css';
-import CheckIn from '../QRCode/CheckIn';
 
 function OrgPortal()
 {
@@ -16,11 +15,11 @@ function OrgPortal()
     const [openModal, setOpenModal] = useState(false);
     const [openEvent, setOpenEvent] = useState(false);
     const [editMode, setEditMode] = useState(0);
-    const [eventID, setEventID] = useState("");
+    const [eventID, setEventID] = useState(undefined);
     const [resetUpcoming, setResetUpcoming] = useState(1);
     const [resetPast, setResetPast] = useState(1);
     const [resetSearch, setResetSearch] = useState(1);
-    const [searchType, setSearchType] = useState();
+    const [searchType, setSearchType] = useState("events");
     
     function Title(){
       return(
@@ -38,7 +37,7 @@ function OrgPortal()
             <Title/>
             <SearchSwitch setSearchType={setSearchType}/>
             <div className='moveSearch'>
-              <Search searchType={searchType} resetEventSearch={resetSearch}/>
+              <Search searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent}/>
             </div>
           </div>
           <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button>
@@ -46,9 +45,8 @@ function OrgPortal()
           <EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
           <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/>
           <PastEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetPast}/>
-          <CheckIn/>
-        </div>
-      </div>
+		</div>
+		</div>
     );
 };
 

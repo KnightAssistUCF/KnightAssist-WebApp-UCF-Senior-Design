@@ -6,10 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
+import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
-
-const logo = require("../Login/loginPic.png");
-
 
 function FavoriteOrganizations(props)
 {
@@ -42,8 +40,29 @@ function FavoriteOrganizations(props)
 
 	    console.log(res);
 
-        for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
+        for(let org of res){
+			// Gets profile pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let profilePic = await response.blob();
+
+			// Gets background pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let background = await response.blob();
+
+            orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
+		}
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
@@ -69,11 +88,19 @@ function FavoriteOrganizations(props)
             <div className="event spartan">
                 <CardActionArea className='test'>
                     <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={logo}
-                        />
+						<div className='logoandbg'>
+							<CardMedia
+								component="img"
+								className='cardBg'
+								height="125"
+								image={URL.createObjectURL(props.background)}
+							/>
+							<Avatar
+								className='cardLogo'
+                              	src={URL.createObjectURL(props.profilePic)}
+								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
+                           />
+						</div>
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {props.name}
@@ -98,6 +125,7 @@ function FavoriteOrganizations(props)
 
     useEffect(()=>{
         getOrgs();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return(

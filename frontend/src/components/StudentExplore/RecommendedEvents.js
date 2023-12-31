@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function RecommendedEvents(props)
 {
 
@@ -68,8 +65,17 @@ function RecommendedEvents(props)
 
         for(let event of res){
             if(eventIsUpcoming(event.date)){
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} picLink={event.picLink} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
             }
         }
 
@@ -89,7 +95,7 @@ function RecommendedEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -102,9 +108,7 @@ function RecommendedEvents(props)
         return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -112,7 +116,7 @@ function RecommendedEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={<img className="loginPhoto" src={props.picLink}/>}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -138,11 +142,13 @@ function RecommendedEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
         console.log("its working!")
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(

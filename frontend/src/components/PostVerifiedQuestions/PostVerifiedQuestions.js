@@ -1,9 +1,7 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Logo from '../Logo';
-import { styled } from '@mui/material/styles';
-import { withStyles } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -11,7 +9,7 @@ import './PostVerifiedQuestions.css'
 
 function PostVerifiedQuestions()
 {
-    const [isVolunteerView, setIsVolunteerView] = useState(true);
+    //const [isVolunteerView, setIsVolunteerView] = useState(true);
     const [hourlyGoal, setHourlyGoal] = useState(0);
     const [tagNames, setTagNames] = useState([]);
     const [tags, setTags] = useState([]);
@@ -21,27 +19,31 @@ function PostVerifiedQuestions()
     // State needed due to bug where tag names where undefined
     const [makeTags, setMakeTags] = useState([]);
 
-    function handleClick(idx){
-	if(colors[idx] != "default"){
-	    selectedTags.splice(selectedTags.indexOf(tagNames[idx]), 1);
-	    colors[idx] = "default"; 
-	}else{
-	    if(selectedTags.length < 10){
-		selectedTags.push(tagNames[idx]);
-		console.log(selectedTags);
-		colors[idx] = "#5f5395";
-	    }
-	}
+	function handleClick(idx){
+		if(colors[idx] !== "default"){
+			selectedTags.splice(selectedTags.indexOf(tagNames[idx]), 1);
+			colors[idx] = "default"; 
+		}else{
+			if(selectedTags.length < 10){
+			selectedTags.push(tagNames[idx]);
+			console.log(selectedTags);
+			colors[idx] = "#5f5395";
+			}
+		}
 
-	getAllTags();
+		setSelectedTags(selectedTags);
+
+		getAllTags();
     }
 
     function makeColorsArray(){
-	const colors = [];
-	for(let i = 0; i < 50; i++)
-	    colors.push("default");
+		const colors = [];
+		for(let i = 0; i < 50; i++)
+			colors.push("default");
 
-	return colors;
+		setColors(colors);
+
+		return colors;
     }
 
     function getAccountType(){
@@ -49,50 +51,50 @@ function PostVerifiedQuestions()
     }
 
     async function getTagNames(){
-	let url = buildPath(`api/getAllAvailableTags`);
+		let url = buildPath(`api/getAllAvailableTags`);
 
-        let response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-    
-        let res = JSON.parse(await response.text());
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let res = JSON.parse(await response.text());
 
-	setTagNames(res);
+		setTagNames(res);
 
-	setMakeTags(true);
+		setMakeTags(true);
     }
 
 
     async function getAllTags(){
-	let url = buildPath(`api/getAllAvailableTags`);
+		let url = buildPath(`api/getAllAvailableTags`);
 
-        let response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-    
-        let res = JSON.parse(await response.text());
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let res = JSON.parse(await response.text());
 
-	setTags(
-	    res.map((name, idx) => {
-		return (
-		    <Chip
-			label={name}
-			className='tagChip'
-			onClick={() => handleClick(idx)}
-			sx={{backgroundColor: colors[idx], 
-				"&:hover": {
-				backgroundColor: (colors[idx] == "default") ? "default" : "purple"
-			}}}
-		    />
-		);
-	    })
-	)
+		setTags(
+			res.map((name, idx) => {
+				return (
+					<Chip
+					label={name}
+					className='tagChip'
+					onClick={() => handleClick(idx)}
+					sx={{backgroundColor: colors[idx], 
+						"&:hover": {
+						backgroundColor: (colors[idx] === "default") ? "default" : "purple"
+					}}}
+					/>
+				);
+			})
+		)
     }
 
     async function submit(){
-	console.log(selectedTags);
+		console.log(selectedTags);
     }
 
     function Header(){
@@ -123,24 +125,26 @@ function PostVerifiedQuestions()
     }
 
     function AllTags(){
-	return (
-	    <div>
-		<p className='tagQuestion'>Select up to 10 of the below interests:</p>
-		<div className='allTags'>
-		    {tags}
-		</div>
-	    </div>
-	)
+		return (
+			<div>
+			<p className='tagQuestion'>Select up to 10 of the below interests:</p>
+			<div className='allTags'>
+				{tags}
+			</div>
+			</div>
+		)
     }
 
     useEffect(()=>{
         getAccountType();
-	getTagNames();
+		getTagNames();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     
     useEffect(()=>{
-	getAllTags();
+		getAllTags();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[makeTags])
 
 

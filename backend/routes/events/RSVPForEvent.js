@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         try {
                 const query = {
                         $or: [
-                                { eventID: eventID },
+                                { _id: eventID },
                                 { name: eventName }
                         ]
                 };

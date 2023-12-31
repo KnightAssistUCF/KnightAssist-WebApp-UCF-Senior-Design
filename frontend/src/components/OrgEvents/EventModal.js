@@ -1,4 +1,4 @@
-import { IconButton, Modal } from '@mui/material';
+import { Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -23,13 +23,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
-const eventPic = require("../Login/loginPic.png");
 const avatarPic = require("./DefaultPic.png");
 
 function EventModal(props)
@@ -38,8 +36,6 @@ function EventModal(props)
     const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
-    const tagNames = [];
-
     const [openVolunteers, setOpenVolunteers] = useState(false);
 
     const [name, setName] = useState("");
@@ -101,12 +97,22 @@ function EventModal(props)
                 setDescription(event.description);
                 setDate(event.date);
                 setLocation(event.location);
-                setPicLink(event.picLink);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
+				setPicLink(URL.createObjectURL(pic));
 
                 const volunteers = [];
 
@@ -212,7 +218,7 @@ function EventModal(props)
     }
 
     async function deleteEvent(){
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
 
         const json = {
             eventID: props.eventID,
@@ -247,12 +253,17 @@ function EventModal(props)
     // For when edit finishes, so the most recently
     // open event's changes are reflected
     useEffect(()=>{
-        if(props.eventID != undefined)
+        if(props.eventID !== undefined)
             setInfo();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.editMode])
     
     useEffect(()=>{
-        setInfo();
+        if(props.eventID !== undefined)
+        	setInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
     return(
@@ -263,7 +274,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={picLink}></img>
+                        <img className='boxImg' src={picLink} alt=""></img>
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>

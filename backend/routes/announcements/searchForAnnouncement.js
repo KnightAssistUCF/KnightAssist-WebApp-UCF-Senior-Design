@@ -8,13 +8,14 @@ router.get('/', async (req, res) => {
     const organizationID = req.query.organizationID;
 
     try {
-        const organization = await orgDB.findOne({ organizationID: organizationID });
+        const organization = await orgDB.findOne({ _id: organizationID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
-        const indexOfAnnouncement = organization.updates.findIndex(update => update.title.localeCompare(titleToLookFor) === 0);
-        if (indexOfAnnouncement === -1) return res.status(404).send('Annoucement/update not found');
+        const matchingUpdates = organization.updates.filter(update => update.title.toLowerCase().includes(titleToLookFor.toLowerCase()));
 
-        res.status(200).json(organization.updates[indexOfAnnouncement]);
+        if (matchingUpdates.length === 0) return res.status(200).send('No matching announcements/updates found');
+
+        res.status(200).json(matchingUpdates);
     } catch (error) {
         console.error(error);
         res.status(500).send('An error occurred - could not search for announcement');

@@ -1,23 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './EmailVerified.css';
 import { BiMailSend  } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
 import Card from '@mui/material/Card';
 import Box from '@mui/material/Box';
-import Logo from '../Logo';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { buildPath } from "../../path";
 import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
-import useStyles from '../../PreLogin/PreLoginStyles';
 
 function OrganizationEmailVerified() {
-  const navigate = useNavigate();
   const [verificationCode, setVerificationCode] = useState('');
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
-
-
 
 
   async function submitVerifyCode() {

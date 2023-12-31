@@ -8,9 +8,6 @@ import Pagination from '@mui/material/Pagination';
 import { CardActionArea } from '@mui/material';
 import './OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function PastEvents(props)
 {
 
@@ -40,7 +37,7 @@ function PastEvents(props)
     }
 
     async function getPastEvents(){
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -66,9 +63,20 @@ function PastEvents(props)
 
         const events = [];
 
-        for(let event of res)
-            if(eventIsPast(event.date))
-                events.push(<Event name={event.name} picLink={event.picLink} date={event.date} id={event.eventID}/>)   
+        for(let event of res){
+            if(eventIsPast(event.date)){
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+		
+				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+			}
+		}
                 
         events.sort(function(a,b){ 
             return b.props.date.localeCompare(a.props.date)
@@ -89,7 +97,7 @@ function PastEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -110,7 +118,7 @@ function PastEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={props.picLink}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -136,10 +144,12 @@ function PastEvents(props)
 
     useEffect(()=>{
         getPastEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
         getPastEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(

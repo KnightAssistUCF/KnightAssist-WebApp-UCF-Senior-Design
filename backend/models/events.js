@@ -4,11 +4,12 @@ const Schema = mongoose.Schema;
 // const Organization = require('./organization.js').schema;
 
 const eventSchema = new Schema({
-    eventID: {
-        type: String,
-        required: true,
-        unique: true
-    },
+    /* remove this for now we will be relying on the native mongoDB provided ids */
+    // eventID: {
+    //     type: String,
+    //     required: true,
+    //     unique: true
+    // },
     name: {
         type: String,
         required: true
@@ -28,7 +29,10 @@ const eventSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'userStudent',
     }],
-    picLink: String,
+    profilePicPath: {
+        type: String,
+        default: 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'
+    },
     startTime: Date,
     endTime: Date,
     eventLinks: {
@@ -38,8 +42,12 @@ const eventSchema = new Schema({
         website: String
     },
     checkedInStudents: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
+        studentId: {
+            type: Schema.Types.ObjectId,
+            ref: 'userStudent',
+        },
+        checkInTime: Date,
+        checkOutTime: Date
     }],
     eventTags: [String],
     semester: String,

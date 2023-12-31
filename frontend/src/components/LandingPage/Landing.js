@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { ThemeProvider, createTheme } from '@mui/material';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import CssBaseline from '@mui/material/CssBaseline';
 import Lottie from "lottie-react";
@@ -10,9 +9,6 @@ import Footer from '../Footer';
 
 function Landing() {
   const classes = useStyles();
-  const theme = createTheme({
-   
-  });
 
   return (
     <>

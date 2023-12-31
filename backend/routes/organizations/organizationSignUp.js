@@ -14,14 +14,19 @@ router.post('/', async (req, res) => {
     // intake: name, description, logoURL, category, events, 
     // followers, favorites, updates, calendarLink, contact, 
     // isActive, eventHappeningNow
-    await organizationSchema.findOne({ email: req.body.email }).then((organization) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+    await organizationSchema.findOne(query).then((organization) => {
         if (organization) {
             res.status(409).send('Organization already exists');
         } else {
             var hashedPassword = bcrypt.hashSync(req.body.password, 10);
             var newOrganization = new organizationSchema({
                 // Note: some components here can be omitted for the signUP phase
-                organizationID: req.body.organizationID, // this should be stored after its generated at the front end level
                 name: req.body.name,
                 password: hashedPassword,
                 email: req.body.email,
@@ -39,6 +44,7 @@ router.post('/', async (req, res) => {
                 backgroundURL: req.body.backgroundURL,
                 confirmTokenForORG: generateToken({ email: req.body.email}, process.env.JWT_SECRET_KEY),
                 EmailTokenForORG: crypto.randomBytes(64).toString('hex').toString(),
+                profilePicPath: req.body.profilePicPath,
                 // rest of the components can be added later here if needed
             });
             newOrganization.save().then((organization) => {

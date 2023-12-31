@@ -11,16 +11,23 @@ router.get('/', async (req, res) => {
 
 router.post('/', authenticateToken_User, async (req, res) => {
 
-    await userStudent.findOne({ email: req.body.email }).then((user) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+
+    await userStudent.findOne(query).then((user) => {
         console.log(user); // debugging
         if (user) {
             var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
             user.firstName = req.body.firstName;
-            user.studentID = req.body.studentID;
+            // user.studentID = req.body.studentID; removing this as we are using _id for now
             user.lastName = req.body.lastName;
             user.email = req.body.email;
             user.password = newHashedPassword;
-            user.profilePicture = req.body.profilePicture;
+            user.profilePicPath = req.body.profilePicPath;
             user.totalVolunteerHours = req.body.totalVolunteerHours;
             user.confirmToken = req.body.confirmToken;
             user.semesterVolunteerHourGoal = req.body.semesterVolunteerHourGoal;

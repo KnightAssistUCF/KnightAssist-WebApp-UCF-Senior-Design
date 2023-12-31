@@ -81,6 +81,10 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/events/addEvent');
 app.use('/api/addEvent', addEvent);
 
+/* get the history of the events that the user attanded and checked out successfully */
+const historyOfEvents_User = require('./backend/routes/volunteers/historyOfEvents_User');
+app.use('/api/historyOfEvents_User', historyOfEvents_User);
+
 const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
@@ -191,6 +195,36 @@ app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
 
 const checkIn_Afterscan = require('./backend/routes/QRCode/checkIn_Afterscan');
 app.use('/api/checkIn_Afterscan', checkIn_Afterscan);
+
+const generateQRCode_checkOut = require('./backend/routes/QRCode/createCheckOut_QRCode');
+app.use('/api/generateQRCode_checkOut', generateQRCode_checkOut);
+
+const CheckOut_Afterscan = require('./backend/routes/QRCode/CheckOut_Afterscan');
+app.use('/api/CheckOut_Afterscan', CheckOut_Afterscan);
+
+// Image Processing Endpoints
+const deleteImage = require('./backend/routes/image_processing/deleteImage');
+app.use('/api/deleteImage', deleteImage);
+const storeImage = require('./backend/routes/image_processing/storeImage&path');
+app.use('/api/storeImage', storeImage);
+const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
+app.use('/api/retrieveImage', retrieveImage);
+
+/* Contact form submission endpoint */
+const contactUsFormSubmission = require('./backend/routes/contactUs_Form/submitForm');
+app.use('/api/contactUsFormSubmission', contactUsFormSubmission);
+
+
+/* ADMIN ACCOUNT ENDPOINTS - Other Ones that are needed for functionality can be used from the prior ones */
+/* ADMIN Only on Web */
+const loadAllStudentsData = require('./backend/routes/Admin_Endpoints/loadAllStudentsData');
+app.use('/api/loadAllStudentsData', loadAllStudentsData);
+
+const loadAllOrganizationsData = require('./backend/routes/Admin_Endpoints/loadAllOrgsData');
+app.use('/api/loadAllOrganizationsData', loadAllOrganizationsData);
+
+const generateAdminAccount = require('./backend/routes/Admin_Endpoints/generateAdminAccount');
+app.use('/api/generateAdminAccount', generateAdminAccount);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

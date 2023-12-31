@@ -11,8 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
 import Logo from '../Logo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -38,7 +36,6 @@ function AddEventModal(props)
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
     const [date, setDate] = useState(new Date());
-    const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
     const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
     const semester = "Fall 2023" //This will be implemented some other way later
@@ -46,6 +43,9 @@ function AddEventModal(props)
     const [currentTag, setCurrentTag] = useState("");
     const [tags, setTags] = useState([]);
     const [tagNames, setTagNames] = useState([]);
+
+	const [picName, setPicName] = useState(null);
+	const [picFile, setPicFile] = useState(null);
 
     const [redoTags, setRedoTags] = useState(1);
     const [showError, setShowError] = useState(false);
@@ -70,7 +70,8 @@ function AddEventModal(props)
         setDescription("");
         setLocation("");
         setDate(new Date());
-        setPicLink("");
+		setPicName(null);
+        setPicFile(null);
         setStartTime(dayjs('2022-04-17T15:30'));
         setEndTime(dayjs('2022-04-17T15:30'));
         setMaxVolunteers();
@@ -86,13 +87,11 @@ function AddEventModal(props)
         console.log(tagNames);
 
         const json = {
-            eventID: "1234" + name,
             name: name,
             description: description,
             location: location,
             date: date,
-            picLink: picLink,
-            sponsoringOrganization: "12345",
+            sponsoringOrganization: "6530608eae2eedf04961794e", //ID of organization Y, will be changed to local storage
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -113,8 +112,22 @@ function AddEventModal(props)
                 headers: {"Content-Type": "application/json"},
             });
 
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
             console.log(res);
+
+			const formData = new FormData();
+			formData.append('profilePic', picFile); 
+			formData.append('entityType', 'event');
+			formData.append('id', res.ID);
+
+			// Store the picture selected to be associated with the event
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
 
             if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
@@ -136,8 +149,7 @@ function AddEventModal(props)
             description: description,
             location: location,
             date: date,
-            picLink: picLink,
-            organizationID: "12345",
+            organizationID: "6530608eae2eedf04961794e",
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -158,8 +170,26 @@ function AddEventModal(props)
                 headers: {"Content-Type": "application/json"},
             });
 
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
             console.log(res);
+
+			// For issue where images are blobs
+			if(typeof picFile.name === "string"){
+				const formData = new FormData();
+				formData.append('profilePic', picFile); 
+				formData.append('entityType', 'event');
+				formData.append('id', res.ID);
+				formData.append('profilePicOrBackGround', '0');
+
+				// Store the picture selected to be associated with the event
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
             
             props.setEditMode(0);
 
@@ -182,7 +212,7 @@ function AddEventModal(props)
     function validInput(){
         // The errors are set automatically, this just
         // checks that at least one of them would be set
-        if(name == "" || description == "" || location == "" || maxVolunteers == ""){
+        if(name === "" || description === "" || location === "" || maxVolunteers === ""){
             setShowError(true);
             return false;
         }
@@ -196,7 +226,7 @@ function AddEventModal(props)
             return;
         }
 
-        if(modalType == "Add")
+        if(modalType === "Add")
             submitEvent();
         else
             editEvent();
@@ -215,7 +245,7 @@ function AddEventModal(props)
                     minRows={props.minRows}
                     onChange={props.onChange}
                     value={props.value}
-                    error={showError && props.required && props.value == ""}
+                    error={showError && props.required && props.value === ""}
                 />
             </Grid>
         )
@@ -231,10 +261,26 @@ function AddEventModal(props)
         )
     }
 
+	function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length === 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
+
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
+	}
+
     function PhotoInput(props){
         return (
             <Grid item xs={props.xs} sm={props.sm}>
-                <input ref={fileSelect} type="file" onChange={() => setPicLink(URL.createObjectURL(fileSelect.current.files[0]))}/>
+				<label for="upload" className="picBtn btn btn-primary">Select Pic</label>
+				<div className='imgDemo'>
+					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)} alt=''/> : ""}
+				</div>
+                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
         )
     }
@@ -263,7 +309,7 @@ function AddEventModal(props)
     function ErrorMessage(){
         return (
             <div>
-                {(showError) == true
+                {(showError) === true
                     ?
                         <div>
                             <Alert severity="error">Several fields are empty!</Alert>
@@ -305,7 +351,7 @@ function AddEventModal(props)
     }
 
     const getOrgTags = async () => {
-        const organizationID = "12345";
+        const organizationID = "6530608eae2eedf04961794e";
         const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
 
         try {
@@ -324,9 +370,15 @@ function AddEventModal(props)
         }
     }
 
-    useEffect(async ()=>{
-        setDefinedTags(await getOrgTags());
-    }, [])
+    useEffect(()=>{
+        const setTags = async () => {
+			setDefinedTags(await getOrgTags());
+		}
+
+		setTags();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(()=>{
         const addFields = async () => {
@@ -350,10 +402,21 @@ function AddEventModal(props)
             setDescription(event.description);
             setDate(new Date(event.date));
             setLocation(event.location);
-            setPicLink(event.picLink);
             setStartTime(dayjs(event.startTime));
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
+			
+			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+			setPicName(pic);
+			setPicFile(pic);
 
             console.log(date, startTime, endTime);
 
@@ -377,8 +440,10 @@ function AddEventModal(props)
             setRedoTags(redoTags * -1);
         }
 
-        if(props.editMode == 1)
+        if(props.editMode === 1)
             addFields();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.editMode]);
 
     // This is due to a bug that occurs when
@@ -394,6 +459,7 @@ function AddEventModal(props)
 
         setTags(updatedTags);
         setTagNames(updatedTagNames);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [redoTags])
 
     return(
@@ -415,7 +481,7 @@ function AddEventModal(props)
                                 <div className='addEventHeader'>Event Info</div>
                                 <Grid container spacing={2} marginBottom={"40px"}>
                                     {GridTextField({xm:12, sm:12, name:"Name", label:"Name", required:true, multiline:false, value:name, onChange:(e) => setName(e.target.value)})}
-                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", require:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
+                                    {GridTextField({xm:12, sm:12, name:"Description", label:"Description", required:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
                                     {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:true, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
 
                                     {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}

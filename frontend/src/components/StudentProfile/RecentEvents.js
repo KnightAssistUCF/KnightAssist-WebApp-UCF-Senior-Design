@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function RecentEvents(props)
 {
 
@@ -67,8 +64,18 @@ function RecentEvents(props)
 
         for(let event of res){
             if(eventIsPast(event.date)){
+				console.log(event)
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} picLink={event.picLink} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
             }
         }
 
@@ -95,9 +102,7 @@ function RecentEvents(props)
         return <h1 className='favHeader spartan'>Recent Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -105,7 +110,7 @@ function RecentEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={props.picLink}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -131,6 +136,7 @@ function RecentEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     return(
@@ -139,7 +145,7 @@ function RecentEvents(props)
         <div>
             <Events/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		</div>
      </div>
     );
 };

@@ -6,7 +6,7 @@ const userStudent = require('../../models/userStudent');
 router.get('/', async (req, res) => {
         const query = {
                 $or: [
-                        { eventID: req.query.eventID },
+                        { _id: req.query.eventID },
                         { name: req.query.name }
                 ]
         };

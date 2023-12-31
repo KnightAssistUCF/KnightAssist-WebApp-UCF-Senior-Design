@@ -1,26 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form} from 'react-bootstrap';
-import Logo from '../Logo';
-import { Divider, List, ListItemButton, ListItemText, Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Grid, Box} from '@mui/material';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper';
 import StudentHeader from '../StudentHome/StudentHeader';
-import DefaultPic from './DefaultPic';
 import Container from '@mui/material/Container';
 import { buildPath } from '../../path';
-import CircularProgress from '@mui/joy/CircularProgress';
-import { createTheme } from '@mui/material/styles';
-import ListItem from '@mui/material/ListItem';
-import { MdOutlineMail, MdPictureInPictureAlt } from "react-icons/md";
+import { MdOutlineMail} from "react-icons/md";
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
 import Avatar from '@mui/material/Avatar';
+import EventModal from '../StudentHistory/EventModal';
 import './StudentProfile.css'
-const pic = require("./DefaultPic.png");
 
+const pic = require("./DefaultPic.png");
 
 function StudentProfile(props)
 {
@@ -32,8 +24,8 @@ function StudentProfile(props)
       const [email, setEmail] = useState("");
       const [tags, setTags] = useState([]);
 
-      const [open, setOpen] = useState(false);
-      const [eventID, setEventID] = useState("");
+	  const [eventID, setEventID] = useState(undefined);
+	  const [openModal, setOpenModal] = useState(false);
 
       async function getFields(){
          let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
@@ -76,7 +68,7 @@ function StudentProfile(props)
 
       function VolunteerHours(){
          return (
-            <div className='volunteerHours'>Volunteer Hours: {currentHours}/{hourGoal}</div>
+            <div className='volunteerHours'>Volunteer Hours: {currentHours.toFixed(2)}/{hourGoal}</div>
          )
       }
 
@@ -132,6 +124,7 @@ function StudentProfile(props)
 
       useEffect(()=>{
          getFields();
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
       },[])
 
       return(
@@ -170,8 +163,9 @@ function StudentProfile(props)
                </div>
                <div className='cardSections'>
                   <FavoriteOrganizations/>
-                  <RecentEvents setOpen={setOpen} setEventID={setEventID}/>
+                  <RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>
                </div>
+			   <EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
             </div>
          </div>
       );
