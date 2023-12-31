@@ -100,6 +100,13 @@ router.get('/', async (req, res) => {
             ChartJS.defaults.plugins.tooltip.intersect = false;
         };
 
+        // create an array of adequate 4 color blind colors
+        const colorBlindColors = [
+            'rgba(0, 158, 115, 0.5)',    // Sky Blue
+            'rgba(0, 115, 179, 0.5)',    // Bluish Green
+            'rgba(213, 94, 0, 0.5)',     // Vermilion
+            'rgba(204, 121, 167, 0.5)'   // Orange-Pink
+        ];
 
         const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
         const configuration = {
@@ -108,17 +115,25 @@ router.get('/', async (req, res) => {
                 labels: labels,
                 datasets: [{
                     label: 'RSVPed',
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    borderColor: 'rgba(54, 162, 235, 0.5)',
+                    backgroundColor: colorBlindColors[0],
+                    borderColor: colorBlindColors[0],
                     borderWidth: 1,
                     data: rsvpCountData,
                 }, {
                     label: 'Attended',
-                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                    borderColor: 'rgba(153, 102, 255, 0.5)',
+                    backgroundColor: colorBlindColors[1],
+                    borderColor: colorBlindColors[1],
                     borderWidth: 1,
                     data: checkedInCountData,
-                }]
+                },
+                {
+                    label: 'No Show',
+                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                    borderColor: 'rgba(255, 99, 132, 0.5)',
+                    borderWidth: 1,
+                    data: rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]),
+                }
+            ], 
             },
             options: {
                 scales: {
@@ -129,8 +144,8 @@ router.get('/', async (req, res) => {
                         // none for now
                     }
                 },
-                responsive: false,
-                maintainAspectRatio: false,
+                responsive: true,
+                maintainAspectRatio: true,
             }
         };
 
