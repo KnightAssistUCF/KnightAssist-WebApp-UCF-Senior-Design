@@ -1,0 +1,15 @@
+.adminPage {
+    margin-left: 15%;
+    color: black;
+    text-align: left;
+    margin-top: 1%;
+}
+
+.adminHomeTitle {
+    font-size: 30px;
+}
+
+.topFeatures {
+    display: flex;
+    margin-top: 30px;
+}
