@@ -36,7 +36,7 @@ function StudentEmailVerified() {
       console.log(res);
       console.log(response);
       if(res.success) {
-        setMessage("Correct code");
+        setMessage("Correct code, please login");
       } else if(!res.success) {
         setMessage("*Incorrect verification code, please enter again");
       } else {
