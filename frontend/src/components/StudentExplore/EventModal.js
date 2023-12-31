@@ -1,7 +1,6 @@
 import { Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Button} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -17,14 +16,9 @@ import StopIcon from '@mui/icons-material/Stop';
 import Alert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
 
-const eventPic = require("../Login/loginPic.png");
-
 function EventModal(props)
 {
     const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(undefined); props.setOpen(false);}
-
-    const [openAlert, setOpenAlert] = useState(false);
-    const tagNames = [];
 
     const [name, setName] = useState("");
     const [id, setID] = useState("");
@@ -101,7 +95,7 @@ function EventModal(props)
 
             console.log("Result: ", res);
 
-            if(res.RSVPStatus == 1)
+            if(res.RSVPStatus === 1)
                 setIsRSVP(true);
             else
                 setIsRSVP(false);
@@ -234,7 +228,7 @@ function EventModal(props)
         
         return (
             <div>
-                {(showMSG) == true
+                {(showMSG) === true
                     ?
                         <div>
                             {(isRSVP) ? <Alert severity="success">Event RSVP successful. Check for email confirmation.</Alert> : 
@@ -254,8 +248,9 @@ function EventModal(props)
     }
 
     useEffect(()=>{
-		if(props.eventID != undefined)
+		if(props.eventID !== undefined)
         	setInfo();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
     return(
@@ -266,7 +261,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={picLink}></img>
+                        <img className='boxImg' src={picLink} alt=""></img>
         
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>

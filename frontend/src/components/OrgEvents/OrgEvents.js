@@ -8,8 +8,6 @@ import EventModal from './EventModal';
 import SearchSwitch from './SearchSwitch';
 import Header from './Header';
 import './OrgEvents.css';
-import CheckIn from '../QRCode/CheckIn';
-import CheckOut from '../QRCode/CheckOut';
 
 function OrgPortal()
 {

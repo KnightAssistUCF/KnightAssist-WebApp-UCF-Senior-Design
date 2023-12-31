@@ -12,23 +12,21 @@ function NewAnn() {
   var [announcements, setAnnouncements] = useState([]);
   var [searchAnnouncement, setSearchAnnouncement] = useState([]);
   var [filterTerm, setFilterTerm] = useState("");
-  var [favOrgs, setFavOrgs] = useState([]);
+  //var [favOrgs, setFavOrgs] = useState([]);
   var [favUpdates, setFavUpdates] = useState([]);
   var [finalFavUpdates, setFinalFavUpdates] = useState([]);
 
 
-  const reverseSearchResults = () => {
+  /*const reverseSearchResults = () => {
   setSearchAnnouncement((prevResults) => [...prevResults].reverse());
-};
+};*/
 
 
   var url2 = buildPath(`api/loadAllOrganizations`);
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchFavoritedUpdates = async () => {
-    const userID = "6519e4fd7a6fa91cd257bfda"; // John Doe
-    // need to localStorage ID retrival later
-    localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
+    //localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
     console.log(localStorage.getItem("ID"));
     const authToken = localStorage.getItem("token");
     url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
@@ -57,7 +55,7 @@ function NewAnn() {
       }
       console.log(favUpdates);
       
-      var favUpdates = favUpdates.sort((a, b) => {
+      favUpdates = favUpdates.sort((a, b) => {
         return new Date(a.date) - new Date(b.date);
       });
       console.log(favUpdates);
@@ -158,12 +156,6 @@ function NewAnn() {
       setSearchAnnouncement(filteredResults);
     }
   };
-  
-  
-  
-  
-  
-  
 
   const filterAnnouncements = (filterTerm) => {
 
@@ -207,6 +199,7 @@ function NewAnn() {
   useEffect(() => {
     fetchAllUpdates();
     fetchFavoritedUpdates();
+	// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

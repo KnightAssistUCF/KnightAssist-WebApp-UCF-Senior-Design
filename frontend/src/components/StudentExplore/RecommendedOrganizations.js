@@ -9,9 +9,6 @@ import Pagination from '@mui/material/Pagination';
 import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function RecommendedOrganizations(props)
 {
 
@@ -130,6 +127,7 @@ function RecommendedOrganizations(props)
 
     useEffect(()=>{
         getOrgs();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     
 

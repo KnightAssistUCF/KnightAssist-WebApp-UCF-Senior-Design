@@ -1,7 +1,6 @@
 import { Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Button} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -14,17 +13,14 @@ import EventIcon from '@mui/icons-material/Event';
 import PlaceIcon from '@mui/icons-material/Place';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
-import Alert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
-
-const eventPic = require("../Login/loginPic.png");
 
 function EventModal(props)
 {
     const handleCloseModal = () => {props.setEventID(undefined); props.setOpen(false);}
 
     const [name, setName] = useState("");
-    const [id, setID] = useState("");
+    //const [id, setID] = useState("");
     const [description, setDescription] = useState("");
     const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
@@ -53,7 +49,7 @@ function EventModal(props)
 
         if(event) {
             setName(event.name);
-            setID(event._id);
+            //setID(event._id);
             setDescription(event.description);
             setDate(event.date);
             setLocation(event.location);
@@ -144,8 +140,9 @@ function EventModal(props)
     }
 
     useEffect(()=>{
-		if(props.eventID != undefined)
+		if(props.eventID !== undefined)
         	setInfo();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
     return(
@@ -156,7 +153,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={picLink}></img>
+                        <img className='boxImg' src={picLink} alt=""></img>
         
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>

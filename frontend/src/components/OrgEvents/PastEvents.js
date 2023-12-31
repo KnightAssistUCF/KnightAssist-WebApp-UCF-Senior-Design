@@ -8,9 +8,6 @@ import Pagination from '@mui/material/Pagination';
 import { CardActionArea } from '@mui/material';
 import './OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function PastEvents(props)
 {
 
@@ -76,8 +73,6 @@ function PastEvents(props)
 				});
 		
 				let pic = await response.blob();
-
-				console.log(pic);
 		
 				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
 			}
@@ -102,7 +97,7 @@ function PastEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -149,10 +144,12 @@ function PastEvents(props)
 
     useEffect(()=>{
         getPastEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
         getPastEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(
