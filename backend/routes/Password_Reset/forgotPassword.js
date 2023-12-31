@@ -5,10 +5,12 @@ const org = require("../../models/organization");
 const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const { reset } = require("nodemon");
+const nodemailer = require("nodemailer");
+const mailgen = require("mailgen");
 
 router.post("/", async (req, res) => {
     try {
-        // Input expected is email, first name and last name
+        // Input expected is email
         const { email } = req.body;
         if (!email) {
             return res.status(400).json({ error: "Please provide email so we can send a new password to the user" });
