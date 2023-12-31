@@ -11,8 +11,6 @@ import InputLabel from '@mui/material/InputLabel';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
 import Logo from '../Logo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -176,7 +174,7 @@ function AddEventModal(props)
             console.log(res);
 
 			// For issue where images are blobs
-			if(typeof picFile.name == "string"){
+			if(typeof picFile.name === "string"){
 				const formData = new FormData();
 				formData.append('profilePic', picFile); 
 				formData.append('entityType', 'event');
@@ -214,7 +212,7 @@ function AddEventModal(props)
     function validInput(){
         // The errors are set automatically, this just
         // checks that at least one of them would be set
-        if(name == "" || description == "" || location == "" || maxVolunteers == ""){
+        if(name === "" || description === "" || location === "" || maxVolunteers === ""){
             setShowError(true);
             return false;
         }
@@ -228,7 +226,7 @@ function AddEventModal(props)
             return;
         }
 
-        if(modalType == "Add")
+        if(modalType === "Add")
             submitEvent();
         else
             editEvent();
@@ -247,7 +245,7 @@ function AddEventModal(props)
                     minRows={props.minRows}
                     onChange={props.onChange}
                     value={props.value}
-                    error={showError && props.required && props.value == ""}
+                    error={showError && props.required && props.value === ""}
                 />
             </Grid>
         )
@@ -265,14 +263,14 @@ function AddEventModal(props)
 
 	function validateImgSelection(fileSelect){
 		// No files selected
-		if(fileSelect.current.files.length == 0) return false;
+		if(fileSelect.current.files.length === 0) return false;
 		
 		const file = fileSelect.current.files[0].name;
 		console.log(file)
 
 		const fileType = file.substring(file.lastIndexOf(".") + 1);
 
-		return fileType == "png" || fileType == "gif" || fileType == "jpg" || fileType == "jpeg";
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
 	}
 
     function PhotoInput(props){
@@ -280,7 +278,7 @@ function AddEventModal(props)
             <Grid item xs={props.xs} sm={props.sm}>
 				<label for="upload" className="picBtn btn btn-primary">Select Pic</label>
 				<div className='imgDemo'>
-					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)}/> : ""}
+					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)} alt=''/> : ""}
 				</div>
                 <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
@@ -311,7 +309,7 @@ function AddEventModal(props)
     function ErrorMessage(){
         return (
             <div>
-                {(showError) == true
+                {(showError) === true
                     ?
                         <div>
                             <Alert severity="error">Several fields are empty!</Alert>
@@ -378,6 +376,8 @@ function AddEventModal(props)
 		}
 
 		setTags();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(()=>{
@@ -440,8 +440,10 @@ function AddEventModal(props)
             setRedoTags(redoTags * -1);
         }
 
-        if(props.editMode == 1)
+        if(props.editMode === 1)
             addFields();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.editMode]);
 
     // This is due to a bug that occurs when
@@ -457,6 +459,7 @@ function AddEventModal(props)
 
         setTags(updatedTags);
         setTagNames(updatedTagNames);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [redoTags])
 
     return(

@@ -49,6 +49,7 @@ function CheckIn(){
 		let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
 	
 		html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

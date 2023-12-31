@@ -1,4 +1,4 @@
-import { IconButton, Modal } from '@mui/material';
+import { Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -23,13 +23,11 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import List from '@mui/material/List';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
-const eventPic = require("../Login/loginPic.png");
 const avatarPic = require("./DefaultPic.png");
 
 function EventModal(props)
@@ -38,8 +36,6 @@ function EventModal(props)
     const handleCloseAlert = () => {setOpenAlert(false);}
 
     const [openAlert, setOpenAlert] = useState(false);
-    const tagNames = [];
-
     const [openVolunteers, setOpenVolunteers] = useState(false);
 
     const [name, setName] = useState("");
@@ -257,13 +253,17 @@ function EventModal(props)
     // For when edit finishes, so the most recently
     // open event's changes are reflected
     useEffect(()=>{
-        if(props.eventID != undefined)
+        if(props.eventID !== undefined)
             setInfo();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.editMode])
     
     useEffect(()=>{
-        if(props.eventID != undefined)
+        if(props.eventID !== undefined)
         	setInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
     return(
@@ -274,7 +274,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={picLink}></img>
+                        <img className='boxImg' src={picLink} alt=""></img>
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>

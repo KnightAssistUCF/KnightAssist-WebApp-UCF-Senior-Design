@@ -1,20 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form} from 'react-bootstrap';
-import Logo from '../Logo';
-import { Divider, List, ListItemButton, ListItemText, Alert, IconButton, Grid, CardMedia, Modal, Dialog, DialogTitle, Box, DialogActions, Button, Typography } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Grid, Box} from '@mui/material';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Paper from '@mui/material/Paper';
 import StudentHeader from '../StudentHome/StudentHeader';
-import DefaultPic from './DefaultPic';
 import Container from '@mui/material/Container';
 import { buildPath } from '../../path';
-import CircularProgress from '@mui/joy/CircularProgress';
-import { createTheme } from '@mui/material/styles';
-import ListItem from '@mui/material/ListItem';
-import { MdOutlineMail, MdPictureInPictureAlt } from "react-icons/md";
+import { MdOutlineMail} from "react-icons/md";
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
 import Avatar from '@mui/material/Avatar';
@@ -133,6 +124,7 @@ function StudentProfile(props)
 
       useEffect(()=>{
          getFields();
+		 // eslint-disable-next-line react-hooks/exhaustive-deps
       },[])
 
       return(
