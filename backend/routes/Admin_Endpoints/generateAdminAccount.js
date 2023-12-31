@@ -24,11 +24,12 @@ router.post('/', async (req, res) => {
         } else {
             // generate a randome 8 character string
             let tempPassword = crypto.randomBytes(4).toString('hex');
+            let hashedPassword = bcrypt.hashSync(tempPassword, 10);
             var newUser = new admin({
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
-                password: tempPassword,
+                password: hashedPassword,
             });
             newUser.save().then((user) => {
                 res.status(200).send("Admin created - Admin Credentials Sent to Email");

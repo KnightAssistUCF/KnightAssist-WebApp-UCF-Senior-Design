@@ -17,9 +17,7 @@ router.post('/', async (req, res) => {
         let adminUser = await admin.findOne({ email: loginEmail });
 
         if (adminUser) {
-            const isPasswordValid = await bcrypt.compare(adminUser.password, loginPassword);
-            console.log("adminUser:"+ adminUser.password + "loginPassword:"+loginPassword+"-");
-            console.log(isPasswordValid);
+            const isPasswordValid = await bcrypt.compare(loginPassword, adminUser.password);
             if (isPasswordValid) {
                 const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
                 return res.status(200).set("authorization", token).send({adminUser, "token": token}); 
