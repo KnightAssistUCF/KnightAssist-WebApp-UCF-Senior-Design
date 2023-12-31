@@ -14,13 +14,15 @@ router.post('/', async (req, res) => {
 
     try {
         /* [ADMIN] Only */
-        let admin = await admin.findOne({ email: loginEmail });
+        let adminUser = await admin.findOne({ email: loginEmail });
 
-        if (admin) {
-            const isPasswordValid = await bcrypt.compare(loginPassword, admin.password);
+        if (adminUser) {
+            const isPasswordValid = await bcrypt.compare(adminUser.password, loginPassword);
+            console.log("adminUser:"+ adminUser.password + "loginPassword:"+loginPassword+"-");
+            console.log(isPasswordValid);
             if (isPasswordValid) {
                 const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
-                return res.status(200).set("authorization", token).send({admin, "token": token}); 
+                return res.status(200).set("authorization", token).send({adminUser, "token": token}); 
             } else {
                 return res.status(400).send("Invalid password");
             }
