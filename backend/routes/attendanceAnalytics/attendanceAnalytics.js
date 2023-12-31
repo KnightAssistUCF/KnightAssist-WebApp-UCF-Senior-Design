@@ -3,6 +3,7 @@ const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const Organization = require('../../models/organization');
 const Event = require('../../models/events');
 const router = express.Router();
+const mongoose = require('mongoose');
 // GRAPH Dimensions
 const width = 800; 
 const height = 600; 
@@ -58,7 +59,8 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-        const { orgId } = req.params;
+        const { orgId } = req.query;
+        console.log(orgId);
         const organization = await Organization.findById(orgId);
 
         if (!organization) {
@@ -66,7 +68,7 @@ router.get('/', async (req, res) => {
         }
 
         // Find all events by this org
-        const events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) });
+        const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
 
         /*
             @labels: event names
