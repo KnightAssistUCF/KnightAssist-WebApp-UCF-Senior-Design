@@ -16,7 +16,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'Charity Run',
-        registeredVolunteers: Array.from({ length: 50 }, mockObjectId),
+        attendees: Array.from({ length: 50 }, mockObjectId),
         checkedInStudents: Array.from({ length: 30 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -24,7 +24,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'Beach Cleanup',
-        registeredVolunteers: Array.from({ length: 75 }, mockObjectId),
+        attendees: Array.from({ length: 75 }, mockObjectId),
         checkedInStudents: Array.from({ length: 65 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1', 
@@ -32,7 +32,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'reatrd',
-        registeredVolunteers: Array.from({ length: 58 }, mockObjectId),
+        attendees: Array.from({ length: 58 }, mockObjectId),
         checkedInStudents: Array.from({ length: 22 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -40,7 +40,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'ucf jhwl',
-        registeredVolunteers: Array.from({ length: 69 }, mockObjectId),
+        attendees: Array.from({ length: 69 }, mockObjectId),
         checkedInStudents: Array.from({ length: 53 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -48,7 +48,7 @@ const mockEvents = [
     {
         _id: mockObjectId(),
         name: 'ahhh',
-        registeredVolunteers: Array.from({ length: 20 }, mockObjectId),
+        attendees: Array.from({ length: 20 }, mockObjectId),
         checkedInStudents: Array.from({ length: 20 }, mockObjectId),
         date: new Date(),
         sponsoringOrganization: 'someOrgId1',
@@ -60,7 +60,6 @@ router.get('/', async (req, res) => {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
         const { orgId } = req.query;
-        console.log(orgId);
         const organization = await Organization.findById(orgId);
 
         if (!organization) {
@@ -82,7 +81,7 @@ router.get('/', async (req, res) => {
         // go over each event that this org has and we collect the data
         for (const event of events) {
             labels.push(event.name);
-            rsvpCountData.push(event.registeredVolunteers.length);
+            rsvpCountData.push(event.attendees.length);
             checkedInCountData.push(event.checkedInStudents.length);
         }
 
@@ -90,12 +89,12 @@ router.get('/', async (req, res) => {
         // const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
 
         // const labels = orgEvents.map(event => event.name);
-        // const rsvpCountData = orgEvents.map(event => event.registeredVolunteers.length);
+        // const rsvpCountData = orgEvents.map(event => event.attendees.length);
         // const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
         /* DUMMY DATA */
 
         // we get the no show data 
-        const noShowData = rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]);
+        const noShowData = rsvpCountData.map((rsvp, index) => Math.max(0, rsvp - checkedInCountData[index]));
 
 
         const chartCallback = (ChartJS) => {
