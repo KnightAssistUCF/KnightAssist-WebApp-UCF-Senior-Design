@@ -4,7 +4,6 @@
 .aboutTitle {
     font-size: 40px;
     font-weight: 30;
-    margin-bottom: 25px;
 }
 .aboutParagraph {
     font-size: 20px;
@@ -12,11 +11,18 @@
 }
 .aboutTopRow {
     display: flex;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
+    align-items: center;
+    margin: 0px 140px 20px;
 }
 .lottieImage {
-    margin-right: 500px;
-    align-items: center;
+    margin-right: 40px;
+}
+.lottieImage > div {
+    max-height: 400px;
+    max-width: 400px;
+    min-height: 300px;
+    min-width: 300px;
 }
 .aboutParagraph {
     text-align: left;
@@ -27,4 +33,15 @@
 .teamColor {
     background-color: #F5D6BA;
 
+}
+
+@media (max-width: 600px) {
+    .aboutContainer {
+        margin: 40px 10px 10px 10px;
+    }
+
+    .aboutTopRow {
+        margin: 0px 10px 10px;
+        display: block;
+    }
 }

@@ -18,6 +18,7 @@ import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage
 import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
+import AboutUsPage from './pages/AboutUsPage';
 
 function App() 
 {
@@ -60,9 +61,6 @@ function App()
           </Routes>
           <Routes>
             <Route path="/studentannouncements" element={<NewAnnPage/>}></Route>
-          </Routes>
-          <Routes>
-            <Route path="/about" element={<AboutUsPage/>}></Route>
           </Routes>
           <Routes>
             <Route path="/about" element={<AboutUsPage/>}></Route>
