@@ -5,11 +5,12 @@ const Schema = mongoose.Schema;
 // const OrganizationSemester = require('./organizationSemester.js').schema;
 
 const organizationSchema = new Schema({
-    organizationID: {
-        type: String, // keeping it as a string for now for ease of use
-        required: true,
-        unique: true
-    },
+    /* This is not used anymore we will rely on the mongo natively provided IDs */
+    // organizationID: {
+    //     type: String, // keeping it as a string for now for ease of use
+    //     required: true,
+    //     unique: true
+    // },
     name: {
         type: String,
         required: true,
@@ -42,11 +43,16 @@ const organizationSchema = new Schema({
     updates: [{ // this work as announcements for the organization
         title: String,
         content: String,
+        // sponsoringOrganization: String, [removed for now]
         date: {
             type: Date,
             default: Date.now
         }
     }],
+    profilePicPath: {
+        type: String,
+        default: 'backend/images/defaultProfilePic.png'
+    },
     calendarLink: String, // Could be a Google Calendar link or other platform
     contact: {
         email: String,
@@ -56,6 +62,7 @@ const organizationSchema = new Schema({
             facebook: String,
             twitter: String,
             instagram: String,
+            linkedin: String,
             // we can add more social media platforms here as needed
         }
     },
@@ -67,7 +74,10 @@ const organizationSchema = new Schema({
         type: Boolean,
         default: false
     },
-    backgroundURL: String,
+    backgroundURL: {
+        type: String,
+        default: 'backend/images/orgdefaultbackground.png'
+    },
     eventsArray: [{
         type: String
     }],
@@ -127,6 +137,11 @@ const organizationSchema = new Schema({
         // required: true,
         default: false
     }, 
+    role : {
+        type: String,
+        default: 'organization',
+        required: true
+    },
     __v: {
         type: String,
         required: true,

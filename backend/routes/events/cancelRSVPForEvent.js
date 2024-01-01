@@ -5,16 +5,16 @@ const Event = require('../../models/events');
 const UserStudent = require('../../models/userStudent');
 
 router.delete('/', async (req, res) => {
-        const { eventID, eventName, userID, userEmail } = req.body; 
+        const { eventID, eventName, userID} = req.body; 
 
-        if (!eventID || !userID || !eventName || !userEmail) {
+        if (!eventID || !userID || !eventName) {
                 return res.status(400).send("event and user credentials are incorrect to perform RSVP cancellation");
         }
 
         try {
                 const query = {
                         $or: [
-                                { eventID: eventID },
+                                { _id: eventID },
                                 { name: eventName }
                         ]
                 };
@@ -25,7 +25,9 @@ router.delete('/', async (req, res) => {
 
                 // delete the user student from the attendees list if found
                 const attendeeIndex = selectedEvent.attendees.indexOf(userID);
-                if (attendeeIndex !== -1) {
+                console.log("ID", userID);
+                console.log("ATTENDEES", selectedEvent.attendees);
+                if (attendeeIndex != -1) {
                         selectedEvent.attendees.splice(attendeeIndex, 1);
                         await selectedEvent.save();
                 } else {
@@ -33,9 +35,13 @@ router.delete('/', async (req, res) => {
                 }
 
                 // Find the user and remove the event from their RSVP list
-                const userRegistered = await UserStudent.findOne({ email: userEmail });
+                const userRegistered = await UserStudent.findOne({ _id: userID });
                 if (userRegistered) {
-                        const eventIndex = userRegistered.eventsRSVP.findIndex(event => event.name === eventName);
+                        console.log(eventID);
+                        console.log(userRegistered.eventsRSVP);
+
+                        const eventIndex = userRegistered.eventsRSVP.findIndex(event => event == eventID);
+
                         if (eventIndex !== -1) {
                                 userRegistered.eventsRSVP.splice(eventIndex, 1);
                                 await userRegistered.save();

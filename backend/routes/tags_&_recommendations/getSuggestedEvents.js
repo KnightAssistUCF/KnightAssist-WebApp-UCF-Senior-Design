@@ -5,7 +5,7 @@ const eventModel = require('../../models/events');
 const organizationModel = require('../../models/organization');
 
 function shuffleThis(array) {
-        for (let i = array.length - 1; i > 0; i--) {
+        for (let i = array.length - 1; i >= 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
         }
@@ -15,7 +15,7 @@ function shuffleThis(array) {
 router.get('/', async (req, res) => {
         try {
                 const userID = req.query.userID;
-                const user = await userStudent.findOne({ studentID: userID });
+                const user = await userStudent.findOne({ _id: userID });
 
                 if (!user) {
                         return res.status(404).send('User not found in the database');

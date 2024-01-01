@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const searchID = req.query.organizationID;
     const eventID = req.query.eventID;
 
-    await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then((events) => {
+    await event.findOne({ sponsoringOrganization: searchID, _id: eventID }).then((events) => {
         if (events) {
             res.status(200).json(events);
         } else {
@@ -25,9 +25,9 @@ router.delete('/', async (req, res) => {
     const searchID = req.body.organizationID;
     const eventID = req.body.eventID;
 
-    await event.findOne({ sponsoringOrganization: searchID, eventID: eventID }).then(async (events) => {
+    await event.findOne({ sponsoringOrganization: searchID, _id: eventID }).then(async (events) => {
         if (events) {
-            await event.deleteOne({ sponsoringOrganization: searchID, eventID: eventID }).then((events) => {
+            await event.deleteOne({ sponsoringOrganization: searchID, _id: eventID }).then((events) => {
                 res.status(200).send("Event deleted successfully" + events);
             }).catch((err) => { res.status(400).send("Internal server error: " + err); })
         }

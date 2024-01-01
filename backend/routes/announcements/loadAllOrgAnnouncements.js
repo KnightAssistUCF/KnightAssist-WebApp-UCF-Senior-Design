@@ -8,18 +8,20 @@ router.get('/', async (req, res) => {
         const organizationName = req.query.organizationName;
 
         const query = {};
-        if (organizationID) query.organizationID = organizationID;
-        if (organizationName) query.organizationName = organizationName;
+        if (organizationID) query._id = organizationID;
+        if (organizationName) query.name = organizationName;
 
         try {
-                const organization = await orgDB.findOne({ $or: [query] });
+                console.log('Query:', query);
+                const organization = await orgDB.findOne( query );
                 if (!organization) return res.status(404).send('Organization not found in the database');
 
                 const announcements = organization.updates.map(update => {
                         return {
                                 title: update.title,
                                 content: update.content,
-                                date: update.date
+                                date: update.date,
+                                updateID: update._id
                         };
                 });
 

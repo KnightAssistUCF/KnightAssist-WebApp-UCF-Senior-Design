@@ -24,7 +24,7 @@ html, body {
 }
 
 .App-header {
-  background-color: #ffffff;
+  background-color: white;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -67,7 +67,7 @@ html, body {
   width: 100%;
 }
 
-.orgPortal{
+.orgEvents{
   height: 100vh;
   width: 100%;
   background-color: white;
@@ -82,7 +82,25 @@ html, body {
   font-family: "League Spartan";
 }
 
+.landing{
+  min-width: 600px;
+  background-color: white !important;
+}
+
 .explorePage{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.studentProfilePage{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+.studentAnnouncementsPage {
   height: 100vh;
   width: 100%;
   background-color: white;
@@ -103,3 +121,32 @@ html, body {
   color: black;
 }
 
+.aboutUsPage {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.postVerifyQsPage{
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+.aboutUsPage {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+
+
+.orgHomePage{
+	height: 100vh;
+	width: 100%;
+	background-color: white;
+	color: black;
+} 

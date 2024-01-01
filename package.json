@@ -1,27 +1,32 @@
 {
   "dependencies": {
-    "@devexpress/dx-react-core": "^4.0.5",
-    "@devexpress/dx-react-scheduler": "^4.0.5",
-    "@devexpress/dx-react-scheduler-material-ui": "^4.0.5",
-    "@material-ui/core": "^4.12.4",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mui/material": "^5.14.17",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
+    "chartjs-node-canvas": "^4.1.6",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "html5-qrcode": "^2.3.8",
     "jsonwebtoken": "^9.0.2",
     "mailgen": "^2.0.28",
-    "material-ui": "^0.20.0",
     "mdb-ui-kit": "^6.4.2",
     "mongodb": "^6.2.0",
     "mongoose": "^7.6.3",
+    "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.7",
+    "nodemon": "^3.0.2",
+    "qrcode": "^1.5.3",
     "react": "^18.2.0",
     "react-circular": "^1.0.1",
     "react-circular-progressbar": "^2.1.0",
     "react-hook-form": "^7.47.0",
     "react-icons": "^4.11.0",
-    "react-router-dom": "^6.17.0"
+    "react-router-dom": "^6.17.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "bcryptjs": "^2.4.3",
   "body-parser": "^1.20.2",
@@ -39,8 +44,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js",
-    "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix frontend &&   npm run build --prefix frontend"
+    "start": "node server.js",
+    "heroku-postbuild": " NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC"

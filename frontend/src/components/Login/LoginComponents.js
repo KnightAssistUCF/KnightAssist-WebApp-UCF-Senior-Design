@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { buildPath } from "../../path";
 import './Login.css';
 
 function LoginComponents(){
@@ -38,24 +37,26 @@ function LoginComponents(){
                 headers: {"Content-Type": "application/json"},
             });
         
-            let res = await response.text();
+            let res = JSON.parse(await response.text());
 
+            
             console.log(res);
 
             /// The credentials matched an existing account
-            if(res.includes("Organization logged in successfully ->")) {
-                window.location.href="/#/orgportal"
+            if(res.role == "organization") {
+                localStorage.setItem("ID", res._id);
+                localStorage.setItem("token", res.token);
+                window.location.href="/#/orgevents"
                 setIsInvalid("");
-            }else if(res.includes("User logged in successfully ->")) {
+            }else if(res.user?.role == "student") {
+                localStorage.setItem("ID", res.user._id);
+                localStorage.setItem("token", res.token);
                 window.location.href="/#/studenthomepage";
-            }
-            else {
-                setIsInvalid("is-invalid");
             }
             
         } catch (e) {
             console.log(e.toString());
-            return;
+            setIsInvalid("is-invalid");
         }
     }
 
@@ -100,13 +101,13 @@ function LoginComponents(){
 
     function ForgotPassword(){
         return (
-            <button className="forgotPWD">forgot password</button>
+            <button className="forgotPWD" onClick={() => sendToForgotPassword()}>forgot password</button>
         )
     }
 
     function Register(){
         return (
-            <button className="register">register</button>
+            <button className="register" onClick={() => onRegister()}>register</button>
         )
     }
 

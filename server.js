@@ -81,6 +81,10 @@ app.use('/api/loadAllOrganizations', loadAllOrganizations);
 const addEvent = require('./backend/routes/events/addEvent');
 app.use('/api/addEvent', addEvent);
 
+/* get the history of the events that the user attanded and checked out successfully */
+const historyOfEvents_User = require('./backend/routes/volunteers/historyOfEvents_User');
+app.use('/api/historyOfEvents_User', historyOfEvents_User);
+
 const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
@@ -166,6 +170,69 @@ app.use('/api/getSuggestedEvents_ForUser', getSuggestedEvents);
 const getSuggestedOrganizations = require('./backend/routes/tags_&_recommendations/getSuggestedOrganizations');
 app.use('/api/getSuggestedOrganizations_ForUser', getSuggestedOrganizations);
 
+// return all the events that the user has RSVPed for
+const searchEventsRSVPedFor_ByUser = require('./backend/routes/events/searchEventsRSVPedFor_ByUser');
+app.use('/api/searchUserRSVPedEvents', searchEventsRSVPedFor_ByUser);
+
+// email Communications Endpoints
+/* Check if the user student has verified their email or not {returns either true or false} */
+const checkIfEmailWasVerified_Volunteer = require('./backend/routes/emailCommunications/checkIfEmailWasVerified_Volunteer');
+app.use('/api/checkIfEmailWasVerified_Volunteer', checkIfEmailWasVerified_Volunteer);
+/*Check if the user organization verified their email or not {returns either true or false} */
+const checkIfEmailWasVerified_Organization = require('./backend/routes/emailCommunications/checkIfEmailWasVerified_Organization');
+app.use('/api/checkIfEmailWasVerified_Organization', checkIfEmailWasVerified_Organization);
+/* Check the entered token by the user if it matches the one we generated and sent to them through email {returns either true or false} */
+const validateEmailTokenInput_student = require('./backend/routes/emailCommunications/validateEmailTokenInput_student');
+app.use('/api/validateEmailTokenInput_student', validateEmailTokenInput_student);
+/* Check if the organization has verified their email or not {returns either true or false} */
+const validateEmailTokenInput_organization= require('./backend/routes/emailCommunications/validateEmailTokenInput_org');
+app.use('/api/validateEmailTokenInput_organization', validateEmailTokenInput_organization);
+
+
+// QR CODE endpoints
+const generateQRCode_checkIn = require('./backend/routes/QRCode/createCheckIn_QRCode');
+app.use('/api/generateQRCode_checkIn', generateQRCode_checkIn);
+
+const checkIn_Afterscan = require('./backend/routes/QRCode/checkIn_Afterscan');
+app.use('/api/checkIn_Afterscan', checkIn_Afterscan);
+
+const generateQRCode_checkOut = require('./backend/routes/QRCode/createCheckOut_QRCode');
+app.use('/api/generateQRCode_checkOut', generateQRCode_checkOut);
+
+const CheckOut_Afterscan = require('./backend/routes/QRCode/CheckOut_Afterscan');
+app.use('/api/CheckOut_Afterscan', CheckOut_Afterscan);
+
+// Image Processing Endpoints
+const deleteImage = require('./backend/routes/image_processing/deleteImage');
+app.use('/api/deleteImage', deleteImage);
+const storeImage = require('./backend/routes/image_processing/storeImage&path');
+app.use('/api/storeImage', storeImage);
+const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
+app.use('/api/retrieveImage', retrieveImage);
+
+/* Contact form submission endpoint */
+const contactUsFormSubmission = require('./backend/routes/contactUs_Form/submitForm');
+app.use('/api/contactUsFormSubmission', contactUsFormSubmission);
+
+
+/* ADMIN ACCOUNT ENDPOINTS - Other Ones that are needed for functionality can be used from the prior ones */
+/* ADMIN Only on Web */
+const loadAllStudentsData = require('./backend/routes/Admin_Endpoints/loadAllStudentsData');
+app.use('/api/loadAllStudentsData', loadAllStudentsData);
+
+const loadAllOrganizationsData = require('./backend/routes/Admin_Endpoints/loadAllOrgsData');
+app.use('/api/loadAllOrganizationsData', loadAllOrganizationsData);
+
+const generateAdminAccount = require('./backend/routes/Admin_Endpoints/generateAdminAccount');
+app.use('/api/generateAdminAccount', generateAdminAccount);
+
+/* FORGOT PASSWORD ENDPOINTS*/
+const forgotPassword = require('./backend/routes/Password_Reset/forgotPassword');
+app.use('/api/forgotPassword', forgotPassword);
+
+/* DATA ANALYTICS FOR EVENT ATTENDANCE FOR AN ORG */
+const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/attendanceAnalytics');
+app.use('/api/attendanceAnalytics', attendanceAnalytics);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
-import {BiMenu, BiHome, BiSearch, BiBell, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
+import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom'; 
 import Logo from '../Logo';
 
@@ -71,9 +72,17 @@ function Header()
             <ul className="nav_list">
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studenthomepage">
                             <BiHome className='homeIcon'></BiHome>
                             <span class="links_name">Home</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+                <li>
+                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/studentprofile">
+                            <CgProfile className='homeIcon'/>
+                            <span class="links_name">Profile</span>
                         </a>
                     </LightTooltip>
                 </li>
@@ -87,7 +96,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studenthistory">
                             <BiHistory className='historyIcon'></BiHistory>
                             <span class="links_name">History</span>
                         </a>
@@ -95,7 +104,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Settings" : ""} placement="right" className="custom-tooltip">
-                        <a href="#">
+                        <a href="#/studentsettings">
                             <BiCog className='settingsIcon'></BiCog>
                             <span class="links_name">Settings</span>
                         </a>

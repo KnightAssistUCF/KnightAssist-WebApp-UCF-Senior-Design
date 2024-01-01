@@ -14,22 +14,28 @@ const jwtSecret = process.env.JWT_SECRET_KEY;
 /* email verfication and the jwt tokenization can be gathered here, but later */
 
 router.post('/', async (req, res) => {
-    await userStudent.findOne({ email: req.body.email }).then((user) => {
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+    await userStudent.findOne(query).then((user) => {
         if (user) {
             res.status(409).send('User already exists');
         } else {
             var hashedPassword = bcrypt.hashSync(req.body.password, 10);
             var newUser = new userStudent({
-                studentID: req.body.studentID, // this needs to be crafted by some logic from the front end
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
                 password: hashedPassword,
-                profilePicture: req.body.profilePicture,
+                profilePicPath: req.body.profilePicPath,
                 totalVolunteerHours: req.body.totalVolunteerHours,
                 semesterVolunteerHourGoal: req.body.semesterVolunteerHourGoal,
                 categoryTags: req.body.categoryTags, // stores tags marking their interests
                 confirmToken: generateToken({ email: req.body.email }, jwtSecret),
+                EmailToken: crypto.randomBytes(64).toString('hex').toString(),
                 valid: false,
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
                 // we can add more here as we wish for the sign up 
@@ -66,12 +72,14 @@ router.post('/', async (req, res) => {
                     name: req.body.firstName + ' ' + req.body.lastName,
                     intro: 'Welcome to KnightAssist! We\'re very excited to have you on board.',
                     action: {
-                        instructions: 'To get started with KnightAssist, please click here:',
+
+                        instructions: 'To get started with KnightAssist, please use the following code to confirm your email in the app: ' + newUser.EmailToken + '',
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
-                            text: 'Confirm your account',
-                            link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                            text: 'Login and confirm your account',
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/studentemailverified' // change this later with the correct redirect link
                         }
+
                     },
                     outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
                 }
