@@ -74,14 +74,14 @@ function EventModal(props)
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
 		
-		let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString();
-		tomorrow = tomorrow.substring(0, tomorrow.indexOf("T"));
+		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
+		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
 
 		// If its today, can generate both checkin and checkout
-		// If its tomorrow, can generate checkout
+		// If it was yesterday, can generate checkout
 		if(date.localeCompare(today) == 0){
 			return 2;
-		}else if(date.localeCompare(tomorrow) == 0){
+		}else if(date.localeCompare(yesterday) == 0){
 			return 1;
 		}
 
