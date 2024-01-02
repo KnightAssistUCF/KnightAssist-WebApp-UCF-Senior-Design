@@ -4,12 +4,12 @@ import './Team.css';
 
 const Team = () => {
   const teamMembers = [
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Anisha Ranjan', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Melanie Ehrlich', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Yohan Hmaiti', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Noah Seligson', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Rebecca Baker', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Alyssa Yee-Kee', role: 'Team Role', image: require('../Login/loginPic.png') },
   ];
 
   return (
