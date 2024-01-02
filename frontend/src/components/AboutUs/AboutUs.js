@@ -26,16 +26,17 @@ function AboutUs()
               <Lottie animationData={animationData} />
             </div>
             <div className="aboutParagraph">
-              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam nostrum fugiat sed voluptatem nulla earum, fugit aspernatur. Delectus quos amet eum quidem eveniet dolore dolores repellat sit nisi aperiam? Nobis eligendi ullam ex natus quibusdam deleniti quaerat corrupti ab aspernatur voluptatum, nam beatae dolore similique numquam distinctio iste fugiat id culpa sed ea aliquid architecto. Deserunt possimus natus impedit adipisci asperiores consectetur fugit iusto, sunt quo officia! Cupiditate pariatur natus libero?
+              KnightAssist is on a mission to improve how universities manage volunteering processes, offering a secure and user-centric digital platform to simplify authentication, 
+              legitimacy verification, and the collection of volunteer hours, eliminating tedious administrative tasks and paperwork. KnigtAssist is made by students and for students,
+              our vision is to enhance the university experience by fostering community, civic engagement, skill development, and well-being among students, while also connecting them
+              with campus organizations seeking volunteers. KnightAssist streamlines the volunteering experience for students, organizations, and university administrators, powered by new approaches and
+              a robust technology stack. With KnightAssist we hope to create a more connected and engaged university community.
             </div>
           </div>
           </div>
           <div className="teamColor">
             <Team></Team>
           </div>
-          
-        
-        
       </div>
     );
 
