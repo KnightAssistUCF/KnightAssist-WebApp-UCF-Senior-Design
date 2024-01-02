@@ -28,12 +28,12 @@ function QRCodeModal(props)
     const handleClose = () => {resetValues(); props.setOpen(false)}
 
 	const [eventName, setEventName] = useState(undefined);
-	const [QRCode, setQRCode] = useState(undefined);
+	const [QRCodeLink, setQRCodeLink] = useState(undefined);
 
     function resetValues(){
         props.setCheckType(undefined);
 		setEventName(undefined);
-		setQRCode(undefined);
+		setQRCodeLink(undefined);
     }
 	
 	async function setInfo(){
@@ -60,7 +60,7 @@ function QRCodeModal(props)
 		
 			res = JSON.parse(await response.text());
 	
-			setQRCode(res.QRCodeImageBlock);
+			setQRCodeLink(res.QRCodeSrc);
 		}else{
 			url = buildPath(`api/generateQRCode_checkOut?eventID=${props.eventID}`);
 
@@ -71,7 +71,7 @@ function QRCodeModal(props)
 		
 			res = JSON.parse(await response.text());
 
-			setQRCode(res.QRCodeImageBlock);
+			setQRCodeLink(res.QRCodeSrc);
 		}
 	}
 
@@ -83,9 +83,9 @@ function QRCodeModal(props)
     }, [props.checkType]);
 
     return(
-        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
+        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center', overflow:'scroll'}} open={props.open} onClose={handleClose}>
             <div className='center'>
-                <Card className='addEventModalCard spartan'>
+                <Card className='qrCodeCard spartan'>
                     <CardContent>
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleClose()}/>
@@ -95,7 +95,7 @@ function QRCodeModal(props)
 						<div className='qrCodeEvent'>Event: {eventName}</div>
 						<div className='qrCodeInstructions'>Scan the following code with the KnightAssist mobile app:</div>
 
-						<div className='qrCode'>{QRCode}</div>
+						<img className="qrCode" src={QRCodeLink}/>
                     </CardContent>   
                 </Card>
             </div>

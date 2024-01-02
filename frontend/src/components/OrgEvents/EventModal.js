@@ -52,7 +52,8 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
 
 	// If the event has started, you can generateACode
-	const [canGenerateCodes, setCanGenerateCodes] = useState(false);
+	const [generateCheckIn, setGenerateCheckIn] = useState(false);
+	const [generateCheckOut, setGenerateCheckOut] = useState(false);
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
  
@@ -72,14 +73,19 @@ function EventModal(props)
 
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-
-		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
-		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
 		
 		let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString();
 		tomorrow = tomorrow.substring(0, tomorrow.indexOf("T"));
 
-        return date.localeCompare(today) == 0 || date.localeCompare(yesterday) == 0 || date.localeCompare(tomorrow) == 0;
+		// If its today, can generate both checkin and checkout
+		// If its tomorrow, can generate checkout
+		if(date.localeCompare(today) == 0){
+			return 2;
+		}else if(date.localeCompare(tomorrow) == 0){
+			return 1;
+		}
+
+		return 0;
 	}
 
 	function QROnClick(type){
@@ -149,7 +155,18 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
-				setCanGenerateCodes(eventIsOccuring(event.date));
+				const amtCanShow = eventIsOccuring(event.date);
+
+				if(amtCanShow == 1){
+					setGenerateCheckIn(false);
+					setGenerateCheckOut(true);
+				}else if(amtCanShow == 2){
+					setGenerateCheckIn(true);
+					setGenerateCheckOut(true);
+				}else{
+					setGenerateCheckIn(false);
+					setGenerateCheckOut(false);
+				}
         } else {
             console.log("Event undefined or not found");
         }
@@ -364,11 +381,11 @@ function EventModal(props)
 
 								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
 									<Grid item xs={4}>
-										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
 
 									</Grid>
 									<Grid item xs={4}>
-										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-Out Code</Button>
+										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
 									</Grid>
 								</Grid>   
       
