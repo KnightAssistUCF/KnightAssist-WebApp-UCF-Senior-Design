@@ -24,7 +24,7 @@ router.get("/", async (req, res) => {
         //QRCodeString = QRCodeString + crypto.randomBytes(16).toString('hex');
         const QRCodeImage = await QRCode.toDataURL(QRCodeString + "out");
         console.log(QRCodeImage);
-        return res.json({ QRCodeImageBlock: "<img src=" + QRCodeImage + "/>" });
+        return res.json({ QRCodeSrc: QRCodeImage});
     } catch (err) {
         res.status(500).send(err);
     }

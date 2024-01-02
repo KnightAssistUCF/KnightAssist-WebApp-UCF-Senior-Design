@@ -27,6 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
+import QRCodeModal from './QRCodeModal';
 
 const avatarPic = require("./DefaultPic.png");
 
@@ -49,15 +50,48 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
+
+	// If the event has started, you can generateACode
+	const [generateCheckIn, setGenerateCheckIn] = useState(false);
+	const [generateCheckOut, setGenerateCheckOut] = useState(false);
+	const [openQRModal, setOpenQRModal] = useState(false);
+	const [checkType, setCheckType] = useState(undefined);
  
     function eventIsUpcoming(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
         return date.localeCompare(today) >= 0;
     }
+
+	// Codes can be made if the currently occuring,
+	// with some buffer
+	function eventIsOccuring(date){
+		date = String(date);
+        date = date.substring(0, date.indexOf("T"));
+
+        let today = new Date().toISOString();
+        today = today.substring(0, today.indexOf("T"));
+		
+		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
+		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
+
+		// If its today, can generate both checkin and checkout
+		// If it was yesterday, can generate checkout
+		if(date.localeCompare(today) == 0){
+			return 2;
+		}else if(date.localeCompare(yesterday) == 0){
+			return 1;
+		}
+
+		return 0;
+	}
+
+	function QROnClick(type){
+		setCheckType(type);
+		setOpenQRModal(true);
+	}
 
     async function getVolunteerInfo(id){
 
@@ -121,6 +155,18 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
+				const amtCanShow = eventIsOccuring(event.date);
+
+				if(amtCanShow == 1){
+					setGenerateCheckIn(false);
+					setGenerateCheckOut(true);
+				}else if(amtCanShow == 2){
+					setGenerateCheckIn(true);
+					setGenerateCheckOut(true);
+				}else{
+					setGenerateCheckIn(false);
+					setGenerateCheckOut(false);
+				}
         } else {
             console.log("Event undefined or not found");
         }
@@ -176,7 +222,7 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <button className="volunteersBtn" onClick={() => setOpenVolunteers(!openVolunteers)}>
+                <button className="volunteersBtn" onClick={() => {if(curVolunteers > 0) setOpenVolunteers(!openVolunteers)}}>
                     <p className='lessSpace'>Registered Volunteers:</p>
                     <p>{curVolunteers}/{maxVolunteers}</p>
                 </button>
@@ -331,9 +377,19 @@ function EventModal(props)
 
                                 {Volunteers()}
 
-                                <Tags/>
+								{(tags.length > 0) ? <Tags/> : null}
+
+								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
+									<Grid item xs={4}>
+										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+
+									</Grid>
+									<Grid item xs={4}>
+										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
+									</Grid>
+								</Grid>   
       
-                                <Grid container marginLeft={"30%"} marginTop={"100px"}>
+                                <Grid container marginLeft={"30%"} marginTop={"50px"}>
                                     <Grid item xs={3}>
                                         <Tooltip title="Edit" placement="top">
                                             <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
@@ -369,6 +425,8 @@ function EventModal(props)
                         </Container>
                     </CardContent>   
                 </Card>
+
+				<QRCodeModal eventID={props.eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>
             </div>
 	
         </Modal>

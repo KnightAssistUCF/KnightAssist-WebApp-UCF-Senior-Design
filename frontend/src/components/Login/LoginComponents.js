@@ -20,18 +20,18 @@ function LoginComponents(){
 	}
 
     async function doLogin(){
-        const json = {
+        let json = {
                         email: email,
                         password: password
                      };
 
         console.log(json);
 
-        const url = buildPath("api/Login");
+        let url = buildPath("api/Login");
 
         try {
 
-            const response = await fetch(url, {
+            let response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(json),
                 headers: {"Content-Type": "application/json"},
@@ -39,20 +39,50 @@ function LoginComponents(){
         
             let res = JSON.parse(await response.text());
 
-            
             console.log(res);
 
-            /// The credentials matched an existing account
-            if(res.role == "organization") {
-                localStorage.setItem("ID", res._id);
-                localStorage.setItem("token", res.token);
-                window.location.href="/#/orgevents"
-                setIsInvalid("");
-            }else if(res.user?.role == "student") {
-                localStorage.setItem("ID", res.user._id);
-                localStorage.setItem("token", res.token);
-                window.location.href="/#/studenthomepage";
-            }
+            if(res.user.role == "organization") {
+
+				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+			
+				const verifyRes = JSON.parse(await response.text());
+
+				if(verifyRes.emailVerifiedStatus){
+					localStorage.setItem("token", res.token);
+					localStorage.setItem("ID", res.user._id);
+					
+					window.location.href="/#/orghome"
+					setIsInvalid("");
+				}else{
+					setIsInvalid("is-invalid");
+				}
+            }else if(res.user.role == "student") {
+				url = buildPath(`api/checkIfEmailWasVerified_Volunteer?email=${res.user.email}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+			
+				const verifyRes = JSON.parse(await response.text());
+
+				if(verifyRes.emailVerifiedStatus){
+					localStorage.setItem("token", res.token);
+					localStorage.setItem("ID", res.user._id);
+					
+					window.location.href="/#/studenthomepage"
+					setIsInvalid("");
+				}else{
+					setIsInvalid("is-invalid");
+				}
+            }else{
+				// user is an admin
+			}
             
         } catch (e) {
             console.log(e.toString());
