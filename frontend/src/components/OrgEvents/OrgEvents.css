@@ -250,3 +250,26 @@
 .anIcon{
     float: left;
 }
+
+.checkName{
+	font-size: 50px;
+	margin-bottom: 5%;
+}
+
+.qrCodeEvent{
+	margin-bottom: 10%;
+	font-size: 30px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+
+.qrCodeInstructions{
+	margin-bottom: 10%;
+	padding-left: 100px;
+	padding-right: 100px;
+	font-size: 25px;
+}
+
+.qrCode{
+	max-width: 30px;
+}

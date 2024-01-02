@@ -27,6 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
+import QRCodeModal from './QRCodeModal';
 
 const avatarPic = require("./DefaultPic.png");
 
@@ -52,6 +53,8 @@ function EventModal(props)
 
 	// If the event has started, you can generateACode
 	const [canGenerateCodes, setCanGenerateCodes] = useState(false);
+	const [openQRModal, setOpenQRModal] = useState(false);
+	const [checkType, setCheckType] = useState(undefined);
  
     function eventIsUpcoming(date){
         date = String(date);
@@ -77,6 +80,11 @@ function EventModal(props)
 		tomorrow = tomorrow.substring(0, tomorrow.indexOf("T"));
 
         return date.localeCompare(today) == 0 || date.localeCompare(yesterday) == 0 || date.localeCompare(tomorrow) == 0;
+	}
+
+	function QROnClick(type){
+		setCheckType(type);
+		setOpenQRModal(true);
 	}
 
     async function getVolunteerInfo(id){
@@ -356,11 +364,11 @@ function EventModal(props)
 
 								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
 									<Grid item xs={4}>
-										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Generate Check-In Code</Button>
+										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
 
 									</Grid>
 									<Grid item xs={4}>
-										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Generate Check-Out Code</Button>
+										<Button disabled={!canGenerateCodes} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-Out Code</Button>
 									</Grid>
 								</Grid>   
       
@@ -400,6 +408,8 @@ function EventModal(props)
                         </Container>
                     </CardContent>   
                 </Card>
+
+				<QRCodeModal eventID={props.eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>
             </div>
 	
         </Modal>
