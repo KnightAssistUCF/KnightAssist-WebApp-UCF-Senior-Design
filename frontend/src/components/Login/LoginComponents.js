@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import './Login.css';
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 function LoginComponents(){
 
@@ -8,6 +9,8 @@ function LoginComponents(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
+
+	const [openForgotPwd, setOpenForgotPwd] = useState(false);
 
     function buildPath(route) {
 		if (process.env.NODE_ENV === 'production') {
@@ -90,10 +93,6 @@ function LoginComponents(){
         }
     }
 
-    function sendToForgotPassword(){
-        // Send router to forgot password page
-    }
-    
     function onRegister(){
         // Perhaps modal appears asking if you want to 
         // register as a volunteer or org
@@ -131,7 +130,7 @@ function LoginComponents(){
 
     function ForgotPassword(){
         return (
-            <button className="forgotPWD" onClick={() => sendToForgotPassword()}>forgot password</button>
+            <button className="forgotPWD" onClick={() => setOpenForgotPwd(true)}>forgot password</button>
         )
     }
 
@@ -147,10 +146,11 @@ function LoginComponents(){
             {Password()}
             <Login/>
             <div className="center">
-                <ForgotPassword/>
-                <Register/>
+                {ForgotPassword()}
+                {Register()}
             </div>
             <Copyright/>
+			<ForgotPasswordModal open={openForgotPwd} setOpen={setOpenForgotPwd}/>
         </div>
     )
 }
