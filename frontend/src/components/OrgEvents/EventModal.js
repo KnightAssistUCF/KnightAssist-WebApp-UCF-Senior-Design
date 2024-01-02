@@ -51,16 +51,33 @@ function EventModal(props)
     const [tags, setTags] = useState([]);
 
 	// If the event has started, you can generateACode
-	const [canGenerateCodes, setCanGenerateCodes] = useState(true);
+	const [canGenerateCodes, setCanGenerateCodes] = useState(false);
  
     function eventIsUpcoming(date){
         date = String(date);
         date = date.substring(0, date.indexOf("T"));
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
         return date.localeCompare(today) >= 0;
     }
+
+	// Codes can be made if the currently occuring,
+	// with some buffer
+	function eventIsOccuring(date){
+		date = String(date);
+        date = date.substring(0, date.indexOf("T"));
+
+        let today = new Date().toISOString();
+        today = today.substring(0, today.indexOf("T"));
+
+		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
+		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
+		
+		let tomorrow = new Date(new Date().setDate(new Date().getDate() + 1)).toISOString();
+		tomorrow = tomorrow.substring(0, tomorrow.indexOf("T"));
+
+        return date.localeCompare(today) == 0 || date.localeCompare(yesterday) == 0 || date.localeCompare(tomorrow) == 0;
+	}
 
     async function getVolunteerInfo(id){
 
@@ -80,10 +97,6 @@ function EventModal(props)
         
         return {"name": res.firstName + " " + res.lastName, "profilePic": res.profilePic, "userID": res._id};
     }
-
-	function isEventOccuring(date){
-		
-	}
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -128,6 +141,7 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
+				setCanGenerateCodes(eventIsOccuring(event.date));
         } else {
             console.log("Event undefined or not found");
         }
