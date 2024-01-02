@@ -9,7 +9,6 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import KA_Logo from './../KA_Logo.png';
 
 const pages = ['Home', 'About', 'Contact'];
 
@@ -22,32 +21,6 @@ function PreLoginNavBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-  };
-
-  const handleMenuItemClick = (page) => {
-    console.log("clicked "+page);
-    if (page === 'Home') {
-      console.log('Redirecting to #/');
-      window.location.href = '#/';
-      window.location.href = '/#';
-    } else if(page === 'About') {
-      window.location.href = '#/about';
-    }
-    handleCloseNavMenu();
-  };
-  const handleOpenMenuItemClick = (page) => {
-    console.log("clicked "+page);
-    if (page === 'Home') {
-      console.log('Redirecting to #/');
-      window.location.href = '#/';
-      window.location.href = '/#';
-    } else if(page === 'About') {
-      window.location.href = '#/about';
-    }
-  };
-
-  const handleClick = () => {
-    window.location.href = '#/login';
   };
 
   return (
@@ -63,7 +36,7 @@ function PreLoginNavBar() {
               mr: 1
             }}
             alt="KnightAssist Logo"
-            src={KA_Logo}
+        //     src={KA_Logo}
           />
           <Typography
             variant="h6"
@@ -76,7 +49,6 @@ function PreLoginNavBar() {
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
-              ":hover": {color: '#F5D6BA'}
             }} >
             KnightAssist
           </Typography>
@@ -108,11 +80,11 @@ function PreLoginNavBar() {
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none'},
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={() => handleMenuItemClick(page)} sx={{":hover": { color: '#5B4E77'}}}>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -128,7 +100,7 @@ function PreLoginNavBar() {
             mr: 1
             }}
             alt="KnightAssist Logo"
-            src={KA_Logo}
+        //     src={KA_Logo}
         />
           <Typography
             variant="h5"
@@ -143,7 +115,6 @@ function PreLoginNavBar() {
               fontWeight: 700,
               color: 'inherit',
               textDecoration: 'none',
-              ":hover": {color: '#F5D6BA'}
             }}
           >
             KnightAssist
@@ -154,8 +125,8 @@ function PreLoginNavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={() => handleOpenMenuItemClick(page)}
-                sx={{ my: 2, color: 'white', display: 'block', ":hover": { color: '#F5D6BA', bgcolor: '#003D2E'}}}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}
               </Button>
@@ -163,7 +134,7 @@ function PreLoginNavBar() {
           </Box>
 
           {/* login button*/}
-          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={handleClick}>Login</Button>
+          <Button variant="contained" sx={{ bgcolor: '#593959' }}>Login</Button>
         </Toolbar>
       </Container>
     </AppBar>

@@ -226,6 +226,14 @@ app.use('/api/loadAllOrganizationsData', loadAllOrganizationsData);
 const generateAdminAccount = require('./backend/routes/Admin_Endpoints/generateAdminAccount');
 app.use('/api/generateAdminAccount', generateAdminAccount);
 
+/* FORGOT PASSWORD ENDPOINTS*/
+const forgotPassword = require('./backend/routes/Password_Reset/forgotPassword');
+app.use('/api/forgotPassword', forgotPassword);
+
+/* DATA ANALYTICS FOR EVENT ATTENDANCE FOR AN ORG */
+const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/attendanceAnalytics');
+app.use('/api/attendanceAnalytics', attendanceAnalytics);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
