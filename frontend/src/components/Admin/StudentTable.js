@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import './AdminHome.css';
 import { useNavigate } from 'react-router';
+import StudentDetailsPage from './ViewStudent';
 
 function StudentTable(props) {
   const navigate = useNavigate();
