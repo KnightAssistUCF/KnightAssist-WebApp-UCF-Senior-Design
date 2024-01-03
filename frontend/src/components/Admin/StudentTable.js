@@ -10,8 +10,11 @@ import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import './AdminHome.css';
+import { useNavigate } from 'react-router';
 
 function StudentTable(props) {
+  const navigate = useNavigate();
+
   const [orderBy, setOrderBy] = useState('createdAt');
   const [order, setOrder] = useState('desc');
 
@@ -21,8 +24,9 @@ function StudentTable(props) {
     setOrderBy(property);
   };
 
-  const handleViewClick = () => {
-    console.log("clicked student View");
+  const handleViewClick = (studentID) => {
+    console.log(`Clicked student View for ID: ${studentID}`);
+    navigate(`/adminhome/students/${studentID}`);
   };
 
   const stableSort = (array, comparator) => {
@@ -128,7 +132,7 @@ function StudentTable(props) {
             .map(
               (student) => (
                 <TableRow key={student._id}>
-                  <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick()}>View</Button></TableCell>
+                  <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(student._id)}>View</Button></TableCell>
                   <TableCell>{student.firstName}</TableCell>
                   <TableCell>{student.lastName}</TableCell>
                   <TableCell>{student.createdAt}</TableCell>
