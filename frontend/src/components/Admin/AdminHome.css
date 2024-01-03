@@ -18,8 +18,11 @@
 }
 
 .tableContainer {
-    margin-top: 20px;
+    margin-top: 10px;
     width: 97%;
+}
+.total {
+    font-size: 20px;
 }
 
 

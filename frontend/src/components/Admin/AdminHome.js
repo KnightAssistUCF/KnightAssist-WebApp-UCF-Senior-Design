@@ -14,6 +14,8 @@ function AdminHome()
   const [selectedToggle, setSelectedToggle] = useState('student');
   const [students, setStudents] = useState([]);
   const [orgs, setOrgs] = useState([]);
+  const [numOrgs, setNumOrgs] = useState(0);
+  const [numStudents, setNumStudents] = useState(0);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -33,6 +35,7 @@ function AdminHome()
       });
       let res = await response.json();
       setStudents(res);
+      setNumStudents(res.length);
     } catch(e) {
       console.log("Failed to fetch all students");
     }
@@ -51,6 +54,7 @@ function AdminHome()
       });
       let res = await response.json();
       setOrgs(res);
+      setNumOrgs(res.length);
     } catch(e) {
       console.log("Failed to fetch all students");
     }
@@ -79,8 +83,18 @@ function AdminHome()
               <ToggleButton onToggleChange={handleToggleChange}/>
             </div>
             <div className='toggleTables'>
-              {selectedToggle === 'student' && <StudentTable students={students}/>}
-              {selectedToggle === 'organization' && <OrganizationTable orgs={orgs}/>}
+              {selectedToggle === 'student' && (
+                <>
+                  <div className='total'>Total Students: {numStudents}</div>
+                  <StudentTable students={students} />
+                </>
+              )}
+              {selectedToggle === 'organization' && (
+                <>
+                  <div className='total'>Total Organizations: {numOrgs}</div>
+                  <OrganizationTable orgs={orgs} />
+                </>
+              )}
             </div>
         </div>
         
