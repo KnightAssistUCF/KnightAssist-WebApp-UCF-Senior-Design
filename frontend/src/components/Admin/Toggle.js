@@ -4,11 +4,12 @@ import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import OrganizationTable from './OrgTable';
 import StudentTable from './StudentTable';
 
-export default function ColorToggleButton() {
+export default function ColorToggleButton({ onToggleChange }) {
     const [alignment, setAlignment] = React.useState('student');
 
     const handleChange = (event, newAlignment) => {
         setAlignment(newAlignment);
+        onToggleChange(newAlignment);
     };
 
   return (
@@ -25,8 +26,6 @@ export default function ColorToggleButton() {
         <ToggleButton value="student">Student</ToggleButton>
         <ToggleButton value="organization">Organization</ToggleButton>
         </ToggleButtonGroup>
-        {alignment === 'student' && <StudentTable />}
-        {alignment === 'organization' && <OrganizationTable />}
     </div>
   );
 }

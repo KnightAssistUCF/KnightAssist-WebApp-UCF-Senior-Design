@@ -13,3 +13,23 @@
     display: flex;
     margin-top: 30px;
 }
+.toggleTables {
+    display: block;
+}
+
+.tableContainer {
+    width: 97%;
+}
+
+/* const useStyles = makeStyles((theme) => ({
+    tableContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    },
+    table: {
+      minWidth: 650,
+      textAlign: 'center', // Center text within cells
+    },
+  })); */
