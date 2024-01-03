@@ -13,6 +13,7 @@ function AdminHome()
 
   const [selectedToggle, setSelectedToggle] = useState('student');
   const [students, setStudents] = useState([]);
+  const [orgs, setOrgs] = useState([]);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -35,19 +36,36 @@ function AdminHome()
     } catch(e) {
       console.log("Failed to fetch all students");
     }
+  };
 
+  const getAllOrgs = async () => {
+    console.log("loading organizations");
+    var url = buildPath(`api/loadAllOrganizationsData`);
 
+    try {
+      let response = await fetch(url, {
+        method: "GET",
+        headers: {"Content-Type": "application/json",
+        // "Authorization": `Bearer ${authToken}`
+      },
+      });
+      let res = await response.json();
+      setOrgs(res);
+    } catch(e) {
+      console.log("Failed to fetch all students");
+    }
   };
 
 
 
   useEffect(() => {
     getAllStudents();
+    getAllOrgs();
   }, []);
 
   useEffect(() => {
-    console.log(students);
-  }, [students]);
+    console.log(orgs);
+  }, [orgs]);
 
     
 
@@ -62,7 +80,7 @@ function AdminHome()
             </div>
             <div className='toggleTables'>
               {selectedToggle === 'student' && <StudentTable students={students}/>}
-              {selectedToggle === 'organization' && <OrganizationTable/>}
+              {selectedToggle === 'organization' && <OrganizationTable orgs={orgs}/>}
             </div>
         </div>
         

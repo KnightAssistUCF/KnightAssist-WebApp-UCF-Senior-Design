@@ -10,40 +10,41 @@ import Table from '@mui/material/Table';
 import './AdminHome.css';
 
 
-function OrgTable()
+function OrgTable(props)
 {
-  const [students, setStudents] = useState([
-    { id: 1, name: 'Org 1', grade: 'A' },
-    { id: 2, name: 'Org 2', grade: 'B' },
-  ]);
+  
 
-    
-
-    return(
-      <div>
-        <TableContainer className="tableContainer">
-          <Table className="studentTable">
-            <TableHead>
-              <TableRow>
-                <TableCell>First Name</TableCell>
-                <TableCell>Last Name</TableCell>
-                <TableCell>Grade</TableCell>
+  return(
+    <div>
+      <TableContainer className="tableContainer">
+        <Table className="studentTable">
+          <TableHead>
+            <TableRow>
+              <TableCell>Name</TableCell>
+              <TableCell>Created</TableCell>
+              <TableCell>Email</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {props.orgs.length > 0 ? (
+            props.orgs.map((org) => (
+              <TableRow key={org._id}>
+                <TableCell>{org.name}</TableCell>
+                <TableCell>{org.createdAt}</TableCell>
+                <TableCell>{org.email}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {students.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell>{student.id}</TableCell>
-                  <TableCell>{student.name}</TableCell>
-                  <TableCell>{student.grade}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        
-      </div>
-    );
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={3}>No organizations available</TableCell>
+            </TableRow>
+          )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      
+    </div>
+  );
 };
 
 export default OrgTable;
