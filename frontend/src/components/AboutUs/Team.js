@@ -4,12 +4,12 @@ import './Team.css';
 
 const Team = () => {
   const teamMembers = [
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
-    { name: 'First Last', role: 'Team Role', image: require('../Login/loginPic.png') },
+    { name: 'Anisha Ranjan', role: 'Project Manager, Frontend', image: require('../Login/loginPic.png') },
+    { name: 'Melanie Ehrlich', role: 'Project Manager, Backend, Artist, Mobile', image: require('../Login/loginPic.png') },
+    { name: 'Yohan Hmaiti', role: 'Backend, Database', image: require('../Login/loginPic.png') },
+    { name: 'Noah Seligson', role: 'Frontend/Backend, Web', image: require('../Login/loginPic.png') },
+    { name: 'Rebecca Baker', role: 'Mobile', image: require('../Login/loginPic.png') },
+    { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('../Login/loginPic.png') },
   ];
 
   return (
