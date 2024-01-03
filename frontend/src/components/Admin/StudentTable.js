@@ -58,7 +58,7 @@ function StudentTable(props) {
 
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(7);
+  const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,7 +71,7 @@ function StudentTable(props) {
 
   return (
     <div>
-    <Paper variant='none' className='tableContainer'>
+    <Paper variant='outlined' className='tableContainer'>
       <TableContainer >
         <Table className="studentTable">
           <TableHead>
@@ -85,7 +85,7 @@ function StudentTable(props) {
                   direction={orderBy === 'firstName' ? order : 'asc'}
                   onClick={() => handleRequestSort('firstName')}
                 >
-                  First Name
+                  <strong>First Name</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -94,7 +94,7 @@ function StudentTable(props) {
                   direction={orderBy === 'lastName' ? order : 'asc'}
                   onClick={() => handleRequestSort('lastName')}
                 >
-                  Last Name
+                  <strong>Last Name</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -103,7 +103,7 @@ function StudentTable(props) {
                   direction={orderBy === 'createdAt' ? order : 'asc'}
                   onClick={() => handleRequestSort('createdAt')}
                 >
-                  Created
+                  <strong>Created</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -112,7 +112,7 @@ function StudentTable(props) {
                   direction={orderBy === 'email' ? order : 'asc'}
                   onClick={() => handleRequestSort('email')}
                 >
-                  Email
+                  <strong>Email</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
@@ -123,7 +123,7 @@ function StudentTable(props) {
                   }
                   onClick={() => handleRequestSort('totalVolunteerHours')}
                 >
-                  Total Volunteer Hour Goal
+                  <strong>Total Hours</strong>
                 </TableSortLabel>
               </TableCell>
             </TableRow>
@@ -146,7 +146,7 @@ function StudentTable(props) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[7, 15, 25]}
+        rowsPerPageOptions={[6, 15, 25]}
         component="div"
         count={props.students.length}
         rowsPerPage={rowsPerPage}
