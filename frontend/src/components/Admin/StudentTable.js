@@ -8,6 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
 import './AdminHome.css';
 
 function StudentTable(props) {
@@ -18,6 +19,10 @@ function StudentTable(props) {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
+  };
+
+  const handleViewClick = () => {
+    console.log("clicked student View");
   };
 
   const stableSort = (array, comparator) => {
@@ -48,7 +53,7 @@ function StudentTable(props) {
 
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+  const [rowsPerPage, setRowsPerPage] = React.useState(7);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -66,6 +71,9 @@ function StudentTable(props) {
         <Table className="studentTable">
           <TableHead>
             <TableRow>
+            <TableCell>
+                
+              </TableCell>
               <TableCell>
                 <TableSortLabel
                   active={orderBy === 'firstName'}
@@ -110,7 +118,7 @@ function StudentTable(props) {
                   }
                   onClick={() => handleRequestSort('totalVolunteerHours')}
                 >
-                  Total Volunteer Hours
+                  Total Volunteer Hour Goal
                 </TableSortLabel>
               </TableCell>
             </TableRow>
@@ -120,6 +128,7 @@ function StudentTable(props) {
             .map(
               (student) => (
                 <TableRow key={student._id}>
+                  <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick()}>View</Button></TableCell>
                   <TableCell>{student.firstName}</TableCell>
                   <TableCell>{student.lastName}</TableCell>
                   <TableCell>{student.createdAt}</TableCell>
@@ -132,7 +141,7 @@ function StudentTable(props) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[8, 15, 25]}
+        rowsPerPageOptions={[7, 15, 25]}
         component="div"
         count={props.students.length}
         rowsPerPage={rowsPerPage}
