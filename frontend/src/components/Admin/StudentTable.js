@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -12,40 +12,42 @@ import './AdminHome.css';
 
 
 
-function StudentTable()
+function StudentTable(props)
 {
-  const [students, setStudents] = useState([
-    { id: 1, name: 'John Doe', grade: 'A' },
-    { id: 2, name: 'Jane Smith', grade: 'B' },
-  ]);
+  
 
-
-    
-
-    return(
-      <div>
-        <TableContainer className="tableContainer">
-          <Table className="studentTable">
-            <TableHead>
-              <TableRow>
-                <TableCell>First Name</TableCell>
-                <TableCell>Last Name</TableCell>
-                <TableCell>Grade</TableCell>
+  return(
+    <div>
+      <TableContainer className="tableContainer">
+        <Table className="studentTable">
+          <TableHead>
+            <TableRow>
+              <TableCell>First Name</TableCell>
+              <TableCell>Last Name</TableCell>
+              <TableCell>Email</TableCell>
+              <TableCell>Total Volunteer Hours</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+          {props.students.length > 0 ? (
+            props.students.map((student) => (
+              <TableRow key={student._id}>
+                <TableCell>{student.firstName}</TableCell>
+                <TableCell>{student.lastName}</TableCell>
+                <TableCell>{student.email}</TableCell>
+                <TableCell>{student.totalVolunteerHours}</TableCell>
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {students.map((student) => (
-                <TableRow key={student.id}>
-                  <TableCell>{student.id}</TableCell>
-                  <TableCell>{student.name}</TableCell>
-                  <TableCell>{student.grade}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </div>
-    );
+            ))
+          ) : (
+            <TableRow>
+              <TableCell colSpan={3}>No students available</TableCell>
+            </TableRow>
+          )}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </div>
+  );
 };
 
 export default StudentTable;
