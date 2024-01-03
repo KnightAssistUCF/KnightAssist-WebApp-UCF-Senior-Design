@@ -21,6 +21,15 @@
     width: 97%;
 }
 
+
+
+  /* .tableContainer .MuiTablePagination-root {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  } */
+  
+
 /* const useStyles = makeStyles((theme) => ({
     tableContainer: {
       display: 'flex',
