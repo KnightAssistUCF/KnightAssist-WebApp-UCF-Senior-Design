@@ -21,7 +21,7 @@ export default function ColorToggleButton({ onToggleChange }) {
         size='small'
         onChange={handleChange}
         aria-label="Table"
-        sx={{ paddingLeft: '10px' }}
+        sx={{ paddingLeft: '30px' }}
         >
         <ToggleButton value="student">Student</ToggleButton>
         <ToggleButton value="organization">Organization</ToggleButton>

@@ -7,6 +7,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
+import Paper from '@mui/material/Paper';
 import './AdminHome.css';
 
 function StudentTable(props) {
@@ -45,9 +46,23 @@ function StudentTable(props) {
     return 0;
   };
 
+
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(8);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <div>
-      <TableContainer className="tableContainer">
+    <Paper variant='none' className='tableContainer'>
+      <TableContainer >
         <Table className="studentTable">
           <TableHead>
             <TableRow>
@@ -101,7 +116,8 @@ function StudentTable(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {stableSort(props.students, getComparator(order, orderBy)).map(
+            {stableSort(props.students, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(
               (student) => (
                 <TableRow key={student._id}>
                   <TableCell>{student.firstName}</TableCell>
@@ -115,6 +131,16 @@ function StudentTable(props) {
           </TableBody>
         </Table>
       </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[8, 15, 25]}
+        component="div"
+        count={props.students.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+    </Paper>
     </div>
   );
 }
