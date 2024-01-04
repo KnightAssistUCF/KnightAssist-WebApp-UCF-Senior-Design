@@ -20,6 +20,11 @@ const feedbackSchema = new Schema({
         max: 5  // Maximum value
     },
     feedbackText: String,
+    wasReadByUser: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     __v: {
         type: String,
         required: true,

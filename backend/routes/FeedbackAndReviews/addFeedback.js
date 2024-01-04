@@ -1,9 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const app = express();
+const router = express.Router();
 
 const Feedback = mongoose.model('Feedback', feedbackSchema);
-const Event = mongoose.model('Event', eventSchema);
+const Event = require('../../models/events');
 
 router.post('/', async (req, res) => {
     try {
