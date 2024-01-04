@@ -81,7 +81,7 @@ function OrgFavoriteEvents(props)
                 let res = JSON.parse(await response.text());
     
                 // Don't show event if user already RSVP'd
-                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.date)){
+                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.startTime)){
 					url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 					response = await fetch(url, {
@@ -91,7 +91,7 @@ function OrgFavoriteEvents(props)
 			
 					let pic = await response.blob();
 
-					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.date} id={event._id}/>)
+					events.push(<Event eventName={event.name} pic={pic} orgName={org.name} date={event.startTime} id={event._id}/>)
 				}
             }
         }       

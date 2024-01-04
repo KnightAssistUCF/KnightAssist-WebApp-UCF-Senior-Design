@@ -64,7 +64,7 @@ function PastEvents(props)
         const events = [];
 
         for(let event of res){
-            if(eventIsPast(event.date)){
+            if(eventIsPast(event.startTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -74,7 +74,7 @@ function PastEvents(props)
 		
 				let pic = await response.blob();
 		
-				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
 			}
 		}
                 

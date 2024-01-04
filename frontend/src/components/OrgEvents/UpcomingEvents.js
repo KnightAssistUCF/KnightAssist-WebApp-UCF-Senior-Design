@@ -64,7 +64,7 @@ function UpcomingEvents(props)
         const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.startTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -74,7 +74,7 @@ function UpcomingEvents(props)
 		
 				let pic = await response.blob();
 		
-				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
 			}
         }       
 
