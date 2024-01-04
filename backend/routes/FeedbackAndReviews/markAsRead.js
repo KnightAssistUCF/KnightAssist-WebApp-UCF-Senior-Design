@@ -5,7 +5,7 @@ const router = express.Router();
 const Event = require('../../models/events');
 
 router.post('/', async (req, res) => {
-    const { eventId, feedbackId } = req.params;
+    const { eventId, feedbackId } = req.body;
 
     try {
         const event = await Event.findOne({ "_id": eventId, "feedback._id": feedbackId });

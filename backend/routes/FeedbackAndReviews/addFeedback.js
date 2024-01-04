@@ -2,7 +2,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
-const Feedback = mongoose.model('feedback');
 const Event = require('../../models/events');
 
 router.post('/', async (req, res) => {
@@ -20,13 +19,17 @@ router.post('/', async (req, res) => {
 
         let feedbackData = {
             studentId: studentID,
+			eventId: event._id,
             studentName: studentName,
+			eventName: event.name,
             rating: rating,
-            feedbackText: feedbackText
+            feedbackText: feedbackText,
         };
+
+		console.log(feedbackData)
+
         // Create a new feedback instance and fill it with data and save it 
-        const feedback = new Feedback(feedbackData);
-        event.feedback.push(feedback);
+        event.feedback.push(feedbackData);
         await event.save();
 
         res.status(201).send("Feedback from volunteer: " + studentName + " has been added to event " + event.name + " successfully!");

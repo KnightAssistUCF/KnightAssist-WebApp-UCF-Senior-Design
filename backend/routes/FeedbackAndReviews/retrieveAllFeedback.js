@@ -7,8 +7,7 @@ const Organization = require('../../models/organization');
 
 router.get('/', async (req, res) => {
     try {
-        const { orgId } = req.params;
-
+        const { orgId } = req.query;
        
         const organization = await Organization.findById(orgId);
         if (!organization) {

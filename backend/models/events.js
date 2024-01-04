@@ -7,12 +7,18 @@ const feedbackSchema = new Schema({
         ref: 'userStudent',
         required: true
     },
+	eventId: {
+		type: Schema.Types.ObjectId,
+        ref: 'event',
+        required: true,
+	},
     timeFeedbackSubmitted: {
         type: Date,
         required: true,
         default: Date.now
     },
     studentName: String, 
+	eventName: String,
     rating: {
         type: Number,
         required: true,
@@ -95,4 +101,3 @@ const eventSchema = new Schema({
 }, {collection: 'event', timestamps: true});
 
 module.exports = mongoose.model('event', eventSchema);
-module.exports = mongoose.model('feedback', feedbackSchema);
