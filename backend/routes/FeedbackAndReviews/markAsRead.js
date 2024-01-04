@@ -4,7 +4,7 @@ const router = express.Router();
 
 const Event = require('../../models/events');
 
-router.put('/', async (req, res) => {
+router.post('/', async (req, res) => {
     const { eventId, feedbackId } = req.params;
 
     try {
