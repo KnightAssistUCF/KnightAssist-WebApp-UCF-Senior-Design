@@ -1,7 +1,32 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-// const UserStudent = require('./userStudent.js').schema;
-// const Organization = require('./organization.js').schema;
+
+const feedbackSchema = new Schema({
+    studentId: {
+        type: Schema.Types.ObjectId,
+        ref: 'userStudent',
+        required: true
+    },
+    timeFeedbackSubmitted: {
+        type: Date,
+        required: true,
+        default: Date.now
+    },
+    studentName: String, 
+    rating: {
+        type: Number,
+        required: true,
+        min: 1, // Minimum value
+        max: 5  // Maximum value
+    },
+    feedbackText: String,
+    __v: {
+        type: String,
+        required: true,
+        default: 0,
+        select: false
+    }
+}, {timestamps: true});
 
 const eventSchema = new Schema({
     /* remove this for now we will be relying on the native mongoDB provided ids */
@@ -49,6 +74,7 @@ const eventSchema = new Schema({
         checkInTime: Date,
         checkOutTime: Date
     }],
+    feedback: [feedbackSchema],
     eventTags: [String],
     semester: String,
     maxAttendees: {
