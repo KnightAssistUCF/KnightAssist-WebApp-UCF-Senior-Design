@@ -58,35 +58,31 @@ function EventModal(props)
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
  
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
-	// Codes can be made if the currently occuring,
-	// with some buffer
-	function eventIsOccuring(date){
-		date = String(date);
-        date = date.substring(0, date.indexOf("T"));
+	// Can show the check in button if the event has not
+	// ended and it is the same day or the event has started
+	function canShowCheckIn(start, end){
+		let startDay = String(start);
+        startDay = startDay.substring(0, startDay.indexOf("T"));
 
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
 		
-		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
-		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
+		// It is before the day the event starts
+		if(startDay.localeCompare(today) > 0) return false;
+		
+		// It is before the event ends
+		return new Date().toISOString().localeCompare(end) < 0;
+	}
 
-		// If its today, can generate both checkin and checkout
-		// If it was yesterday, can generate checkout
-		if(date.localeCompare(today) == 0){
-			return 2;
-		}else if(date.localeCompare(yesterday) == 0){
-			return 1;
-		}
-
-		return 0;
+	// During the period of the event
+	function canShowCheckOut(start, end){
+		const date = new Date().toISOString();
+		return date.localeCompare(start) > 0 && date.localeCompare(end) < 0;
 	}
 
 	function QROnClick(type){
@@ -164,18 +160,8 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
-				const amtCanShow = eventIsOccuring(event.startTime);
-
-				if(amtCanShow == 1){
-					setGenerateCheckIn(false);
-					setGenerateCheckOut(true);
-				}else if(amtCanShow == 2){
-					setGenerateCheckIn(true);
-					setGenerateCheckOut(true);
-				}else{
-					setGenerateCheckIn(false);
-					setGenerateCheckOut(false);
-				}
+				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
+				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
         } else {
             console.log("Event undefined or not found");
         }
@@ -294,7 +280,7 @@ function EventModal(props)
 
         console.log(res);
 
-        if(eventIsUpcoming(startTime))
+        if(eventIsUpcoming(endTime))
             props.setReset(props.reset * -1);
         else
             props.setResetPast(props.resetPast * -1);  

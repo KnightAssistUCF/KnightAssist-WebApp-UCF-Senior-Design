@@ -27,14 +27,10 @@ function RecommendedEvents(props)
         props.setOpen(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -64,7 +60,7 @@ function RecommendedEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {

@@ -53,13 +53,10 @@ function AddEventModal(props)
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState([]);
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function resetValues(){
         setModalType("Add");
@@ -126,9 +123,9 @@ function AddEventModal(props)
 			.then(data => console.log(data))
 			.catch(error => console.error('Error:', error));
 
-            //if(eventIsUpcoming(date.toISOString()))
+            if(eventIsUpcoming(endTime))
                 props.setReset(props.reset * -1);
-            //else
+            else
                 props.setResetPast(props.resetPast * -1);
 
             props.setResetSearch(props.resetSearch * -1);

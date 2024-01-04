@@ -27,14 +27,10 @@ function OrgFavoriteEvents(props)
         props.setOpen(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getEvents(){
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
@@ -81,7 +77,7 @@ function OrgFavoriteEvents(props)
                 let res = JSON.parse(await response.text());
     
                 // Don't show event if user already RSVP'd
-                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.startTime)){
+                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.endTime)){
 					url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 					response = await fetch(url, {
