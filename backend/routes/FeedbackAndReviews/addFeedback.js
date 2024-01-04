@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 
-const Feedback = mongoose.model('Feedback', feedbackSchema);
+const Feedback = mongoose.model('feedback');
 const Event = require('../../models/events');
 
 router.post('/', async (req, res) => {

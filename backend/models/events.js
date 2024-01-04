@@ -31,7 +31,7 @@ const feedbackSchema = new Schema({
         default: 0,
         select: false
     }
-}, {timestamps: true});
+}, {timestamps: true}, {collection: 'feedback'});
 
 const eventSchema = new Schema({
     /* remove this for now we will be relying on the native mongoDB provided ids */
@@ -95,3 +95,4 @@ const eventSchema = new Schema({
 }, {collection: 'event', timestamps: true});
 
 module.exports = mongoose.model('event', eventSchema);
+module.exports = mongoose.model('feedback', feedbackSchema);
