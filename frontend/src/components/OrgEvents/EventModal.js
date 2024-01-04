@@ -41,7 +41,6 @@ function EventModal(props)
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -50,6 +49,8 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
+
+	const [hasEndDate, sethasEndDate] = useState(false);
 
 	// If the event has started, you can generateACode
 	const [generateCheckIn, setGenerateCheckIn] = useState(false);
@@ -129,13 +130,18 @@ function EventModal(props)
         if(event) {
                 setName(event.name);
                 setDescription(event.description);
-                setDate(event.date);
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+				const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+				const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+	
+				// If the event goes on for more than a day,
+				if(startDay !== endDay) sethasEndDate(true);
 
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -155,7 +161,7 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
-				const amtCanShow = eventIsOccuring(event.date);
+				const amtCanShow = eventIsOccuring(event.startTime);
 
 				if(amtCanShow == 1){
 					setGenerateCheckIn(false);
@@ -285,7 +291,7 @@ function EventModal(props)
 
         console.log(res);
 
-        if(eventIsUpcoming(date))
+        if(eventIsUpcoming(startTime))
             props.setReset(props.reset * -1);
         else
             props.setResetPast(props.resetPast * -1);  
@@ -336,7 +342,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? (" - " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
                                     </Grid>                            
 
                                     <Grid item width={"20%"}>

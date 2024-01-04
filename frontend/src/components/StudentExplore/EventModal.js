@@ -23,7 +23,6 @@ function EventModal(props)
     const [name, setName] = useState("");
     const [id, setID] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState("");
@@ -34,6 +33,8 @@ function EventModal(props)
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
     const [disabled, setDisabled] = useState(false);
+
+	const [hasEndDate, sethasEndDate] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -55,7 +56,6 @@ function EventModal(props)
             setName(event.name);
             setID(event._id);
             setDescription(event.description);
-            setDate(event.date);
             setLocation(event.location);
             setPicLink(event.picLink);
             setStartTime(event.startTime);
@@ -63,6 +63,13 @@ function EventModal(props)
             setVolunteers(event.attendees.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
+
+			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+
+			// If the event goes on for more than a day,
+			if(startDay !== endDay) sethasEndDate(true);
+			
 
 			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -278,8 +285,8 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
-                                    </Grid>                            
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? (" - " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
+                                    </Grid>                 
 
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
@@ -319,7 +326,7 @@ function EventModal(props)
 
                                 <Volunteers/>
                                 
-                                <Tags/>
+								{(tags.length > 0) ? <Tags/> : null}
 
                                 <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
                                     <RSVPButton/>
