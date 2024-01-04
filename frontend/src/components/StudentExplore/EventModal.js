@@ -276,7 +276,7 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
                                             <Tooltip title="Date" placement="top">
@@ -285,7 +285,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? (" - " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
                                     </Grid>                 
 
                                     <Grid item width={"20%"}>
