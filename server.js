@@ -234,6 +234,16 @@ app.use('/api/forgotPassword', forgotPassword);
 const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/attendanceAnalytics');
 app.use('/api/attendanceAnalytics', attendanceAnalytics);
 
+/* ORG Feedback Endpoints */
+const addFeedback = require('./backend/routes/FeedbackAndReviews/addFeedback');
+app.use('/api/addFeedback', addFeedback);
+
+const markAsRead = require('./backend/routes/FeedbackAndReviews/markAsRead');
+app.use('/api/markAsRead', markAsRead);
+
+const retrieveAllFeedback_ForAnOrg = require('./backend/routes/FeedbackAndReviews/retrieveAllFeedback');
+app.use('/api/retrieveAllFeedback_ForAnOrg', retrieveAllFeedback_ForAnOrg);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
