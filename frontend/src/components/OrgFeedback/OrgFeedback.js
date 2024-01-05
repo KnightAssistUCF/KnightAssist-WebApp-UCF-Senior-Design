@@ -35,7 +35,7 @@ function OrgFeedback() {
 
 			console.log(res)
 
-			res.sort((a, b) => new Date(a.timeFeedbackSubmitted) - new Date(b.timeFeedbackSubmitted));
+			res.sort((a, b) => new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted));
 
 			setFeedback(res);
 			setSearchFeedback(res);
