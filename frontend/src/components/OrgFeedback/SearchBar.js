@@ -13,16 +13,10 @@ function SearchBar(props) {
     setSearchTerm('');
     // showAllUpdates();
   };
-  
-  // eslint-disable-next-line
-  const showAllUpdates = () => {
-    props.setFilterTerm('');
-    props.fetchAllUpdates();
-  };
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-	
+
     setSearchTerm(newValue);
   };
 

@@ -4,13 +4,12 @@ import SearchBar from "./SearchBar.js";
 import Feedbacks from "./Feedbacks.js";
 import './OrgFeedback.css';
 import { buildPath } from '../../path.js';
+import Filter from './Filter.js';
 
 function OrgFeedback() {
 	var [feedback, setFeedback] = useState([]);
 	var [searchFeedback, setSearchFeedback] = useState([]);
-	var [filterTerm, setFilterTerm] = useState("");
-	var [favUpdates, setFavUpdates] = useState([]);
-	var [finalFavUpdates, setFinalFavUpdates] = useState([]);
+	var [filterTerm, setFilterTerm] = useState("all");
 
 	const [searchTerm, setSearchTerm] = useState("");
 
@@ -36,7 +35,7 @@ function OrgFeedback() {
 
 			console.log(res)
 
-			res.sort((a, b) => new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted));
+			res.sort((a, b) => new Date(a.timeFeedbackSubmitted) - new Date(b.timeFeedbackSubmitted));
 
 			setFeedback(res);
 			setSearchFeedback(res);
@@ -49,34 +48,25 @@ function OrgFeedback() {
 	const getSeachFeedback = (searchTerm) => {
 		console.log(filterTerm);
 	
-		if (filterTerm !== "") {
+		if (filterTerm === "unread") {
 			const lowerCaseSearchTerm = searchTerm.toLowerCase();
 		
 			const filteredResults = searchFeedback.filter((a) => {
-				const title = a.title ? a.title.toLowerCase() : "";
-				const organizationName = a.organizationName
-				? a.organizationName.toLowerCase()
-				: "";
-		
-				const includesSearchTerm =
-				title.includes(lowerCaseSearchTerm) ||
-				organizationName.includes(lowerCaseSearchTerm);
+				const title = a.eventName ? a.eventName.toLowerCase() : "";
+
+				const includesSearchTerm = title.includes(lowerCaseSearchTerm) 
 		
 				return includesSearchTerm;
 			});
+
 			setSearchFeedback(filteredResults);
 		} else {
 			const lowerCaseSearchTerm = searchTerm.toLowerCase();
 		
 			const filteredResults = feedback.filter((a) => {
-				const title = a.title ? a.title.toLowerCase() : "";
-				const organizationName = a.organizationName
-				? a.organizationName.toLowerCase()
-				: "";
-		
-				const includesSearchTerm =
-				title.includes(lowerCaseSearchTerm) ||
-				organizationName.includes(lowerCaseSearchTerm);
+				const title = a.eventName ? a.eventName.toLowerCase() : "";
+
+				const includesSearchTerm = title.includes(lowerCaseSearchTerm);
 		
 				return includesSearchTerm;
 			});
@@ -85,34 +75,21 @@ function OrgFeedback() {
 		}
 	};
 
-	const filterAnnouncements = (filterTerm) => {
+	const filterFeedback = (filterTerm) => {
 
 		const term = filterTerm.toLowerCase();
 		setFilterTerm(term);
 
-		let filteredAnnouncements = [...feedback];
+		if (term === "unread") {
+			const unreads = [];
+			for(let f of feedback)
+				if(f.wasReadByUser === false)
+					unreads.push(f);
 
-		if (term !== "") {
-			if (term === "favorited") {
-				console.log("favorited!!!");
-
-				filteredAnnouncements = favUpdates.map(update => ({
-				...update,
-				organizationName: update.name,
-				}));
-				setSearchFeedback(filteredAnnouncements.reverse());
-			} else {
-				filteredAnnouncements = filteredAnnouncements.filter((a) =>
-				a.title && a.title.toLowerCase().includes(term)
-				);
-				setSearchFeedback(filteredAnnouncements);
-			}
-		} else {
-			console.log("All!!!");
-			setSearchFeedback(filteredAnnouncements);
+			setSearchFeedback(unreads);
+		}else{
+			setSearchFeedback(feedback)
 		}
-
-		
 	};
 
 	useEffect(() => {
@@ -134,12 +111,12 @@ function OrgFeedback() {
 							filterTerm={filterTerm}
 							setFilterTerm={setFilterTerm}
 							fetchAllUpdates={fetchAllFeedback}
-							finalFavUpdates = {finalFavUpdates}
 							setSearchAnnouncement={setSearchFeedback}
 							initialAnnouncements={feedback}
 						/>
+						<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 					</div>
-				<Feedbacks feedback={searchFeedback} />
+				<Feedbacks feedback={searchFeedback}/>
 			</div>
 			</div>
 		</div>

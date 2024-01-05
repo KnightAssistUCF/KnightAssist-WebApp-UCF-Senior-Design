@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import { buildPath } from '../../path';
 
 const truncateText = (text, maxLength) => {
   if (text && text.length > maxLength) {
@@ -37,9 +38,26 @@ const Feedbacks = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFeedback, setSelectedFeedback] = useState(null);
 
-  const handleClick = (feedback) => {
+  const handleClick = async (feedback) => {
     setSelectedFeedback(feedback);
     setIsModalOpen(true);
+
+	const json = {
+		eventId: feedback.eventId,
+		feedbackId: feedback._id
+	};
+
+	let url = buildPath(`api/markAsRead`);
+
+	let response = await fetch(url, {
+		body: JSON.stringify(json),
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+	});
+
+	let res = await response.text();
+
+	console.log(res);
   };
 
   const handleCloseModal = () => {
