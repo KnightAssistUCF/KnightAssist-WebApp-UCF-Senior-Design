@@ -17,6 +17,7 @@ function StudentHome()
 
     //const [userData, setUserData] = useState(null);
     useEffect(() => {
+	  console.log(sessionStorage)
       getStudentInfo();
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

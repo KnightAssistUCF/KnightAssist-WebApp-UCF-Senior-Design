@@ -86,7 +86,7 @@ function EventModal(props)
             const json = {
                 eventID: event._id,
                 eventName: event.name,
-                userID: localStorage.getItem("ID"),
+                userID: sessionStorage.getItem("ID"),
                 check: 1
             };
 
@@ -119,7 +119,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("ID"), 
+                userID: sessionStorage.getItem("ID"), 
             };
 
             const url = buildPath(`api/cancelRSVP`);
@@ -137,7 +137,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("ID"),
+                userID: sessionStorage.getItem("ID"),
                 check: 0
             };
 

@@ -33,7 +33,7 @@ function OrgFavoriteEvents(props)
 	}
 
     async function getEvents(){
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -62,7 +62,7 @@ function OrgFavoriteEvents(props)
                 let json = {
                     eventID: event._id,
                     eventName: event.name,
-                    userID: localStorage.getItem("ID"),
+                    userID: sessionStorage.getItem("ID"),
                     check: 1
                 };
     

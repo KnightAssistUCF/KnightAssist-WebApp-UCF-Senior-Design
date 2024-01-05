@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Login.css';
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
-function LoginComponents(){
+function LoginComponents(props){
 
-    console.log("Test");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
+	const [changeURL, setChangeURL] = useState(-1);
+
+	// For bug fixing purposes so the user is sent to
+	// the right route always
+	const [loginClicked, setLoginClicked] = useState(false);
 
 	const [openForgotPwd, setOpenForgotPwd] = useState(false);
 
@@ -56,10 +60,14 @@ function LoginComponents(){
 				const verifyRes = JSON.parse(await response.text());
 
 				if(verifyRes.emailVerifiedStatus){
-					localStorage.setItem("token", res.token);
-					localStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("role", "organization");
 					
-					window.location.href="/#/orghome"
+					props.setRole("organization");
+					setChangeURL(changeURL * -1);
+					setLoginClicked(true);
+
 					setIsInvalid("");
 				}else{
 					setIsInvalid("is-invalid");
@@ -75,10 +83,14 @@ function LoginComponents(){
 				const verifyRes = JSON.parse(await response.text());
 
 				if(verifyRes.emailVerifiedStatus){
-					localStorage.setItem("token", res.token);
-					localStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("role", "volunteer");
 					
-					window.location.href="/#/studenthomepage"
+					props.setRole("volunteer");
+					setChangeURL(changeURL * -1);
+					setLoginClicked(true);
+
 					setIsInvalid("");
 				}else{
 					setIsInvalid("is-invalid");
@@ -139,6 +151,22 @@ function LoginComponents(){
             <button className="register" onClick={() => onRegister()}>register</button>
         )
     }
+
+	useEffect(() => {
+		if(loginClicked){
+			if(sessionStorage.getItem("role") === "organization"){
+				window.location.href="/#/orghome"
+			}else if(sessionStorage.getItem("role") === "volunteer"){
+				window.location.href="/#/studenthomepage";
+			}else{
+	
+			}
+		}
+		
+		setLoginClicked(false);
+		
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [changeURL])
 
     return (
         <div className="loginBox">

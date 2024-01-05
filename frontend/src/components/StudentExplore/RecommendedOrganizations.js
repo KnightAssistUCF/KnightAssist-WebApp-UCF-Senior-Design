@@ -29,7 +29,7 @@ function RecommendedOrganizations(props)
     }
 
     async function getOrgs(){
-        let url = buildPath(`api/getSuggestedOrganizations_ForUser?userID=${localStorage.getItem("ID")}`);
+        let url = buildPath(`api/getSuggestedOrganizations_ForUser?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
