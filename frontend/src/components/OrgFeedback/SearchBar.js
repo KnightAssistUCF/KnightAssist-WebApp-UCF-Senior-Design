@@ -22,11 +22,7 @@ function SearchBar(props) {
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-
-    // if (searchTerm !== '' && newValue === '') {
-    //   reverseSearchResults();
-    // }
-
+	
     setSearchTerm(newValue);
   };
 
@@ -65,7 +61,7 @@ const handleKeyPress = (event) => {
   return (
     <div className="classes.root" variant="body1">
       <TextField
-        placeholder="Search by Announcement Name"
+        placeholder="Search By Event Name"
         value={searchTerm}
         onChange={handleInputChange}
         sx={{ width: '26ch', paddingTop: '3px' }}

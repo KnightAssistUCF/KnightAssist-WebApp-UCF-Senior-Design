@@ -19,26 +19,26 @@ const truncateText = (text, maxLength) => {
 };
 
 const formatDate = (dateString) => {
-  const isValidDate = !isNaN(new Date(dateString).getTime());
+	const isValidDate = !isNaN(new Date(dateString).getTime());
 
-  if (isValidDate) {
-    const options = { year: "numeric", month: "long", day: "numeric" };
-    const formattedDate = new Date(dateString).toLocaleDateString(
-      undefined,
-      options
-    );
-    return formattedDate;
-  } else {
-    return dateString;
-  }
+	if (isValidDate) {
+		const options = { year: "numeric", month: "long", day: "numeric" };
+		const formattedDate = new Date(dateString).toLocaleDateString(
+		undefined,
+		options
+		);
+		return formattedDate;
+	} else {
+		return dateString;
+	}
 };
 
 const Feedbacks = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
 
-  const handleClick = (announcement) => {
-    setSelectedAnnouncement(announcement);
+  const handleClick = (feedback) => {
+    setSelectedFeedback(feedback);
     setIsModalOpen(true);
   };
 
@@ -55,13 +55,9 @@ const Feedbacks = (props) => {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {props.announcements.map((announcement) => {
-          const { updateID, title, content, date, organizationName } =
-            announcement;
-
-          return (
-            <Grid item xs={12} key={updateID}>
-              <Card variant="outlined" onClick={() => handleClick(announcement)}>
+        {props.feedback.map(feedback => 
+            <Grid item xs={12}>
+              <Card variant="outlined" onClick={() => handleClick(feedback)}>
                 <CardActionArea>
                   <CardContent className="content">
                     <Typography
@@ -70,7 +66,7 @@ const Feedbacks = (props) => {
                       component="h2"
                       className="title"
                     >
-                      {title}
+                      {feedback.eventName}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -78,7 +74,7 @@ const Feedbacks = (props) => {
                       component="p"
                       style={{ color: 'black'}}
                     >
-                      {organizationName}
+                      {feedback.studentName}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -86,7 +82,7 @@ const Feedbacks = (props) => {
                       component="p"
                       style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
                     >
-                      {formatDate(date)}
+                      {formatDate(feedback.timeFeedbackSubmitted)}
                     </Typography>
                     <Typography
                       variant="body2"
@@ -94,28 +90,30 @@ const Feedbacks = (props) => {
                       component="p"
                       style={{ marginTop: '6px' }}
                     >
-                      <i>{truncateText(content, 320)}</i>
+                      <i>{truncateText(feedback.feedbackText, 320)}</i>
                     </Typography>
                   </CardContent>
                 </CardActionArea>
               </Card>
             </Grid>
-          );
-        })}
+        )}
       </Grid>
 
       {/* Modal */}
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>{selectedAnnouncement?.title}</DialogTitle>
-        <DialogContent>
-        <DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
-        <DialogContentText style={{ marginTop: '10px' }}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-        <DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Close</Button>
-        </DialogActions>
-      </Dialog>
+	  	{(selectedFeedback != null) ?
+			<Dialog open={isModalOpen} onClose={handleCloseModal}>
+				<DialogTitle>{selectedFeedback.eventName}</DialogTitle>
+				<DialogContent>
+				<DialogContentText style={{ color: 'black' }}>{selectedFeedback.studentName}</DialogContentText>
+				<DialogContentText style={{ marginTop: '10px' }}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+				<DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+				<Button onClick={handleCloseModal}>Close</Button>
+				</DialogActions>
+			</Dialog>
+			: null
+		}
     </div>
   );
 };
