@@ -27,13 +27,10 @@ function RecentEvents(props)
         props.setOpen(true);
     }
     
-    function eventIsPast(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) < 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -63,7 +60,7 @@ function RecentEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsPast(event.date)){
+            if(!eventIsUpcoming(event.endTime)){
 				console.log(event)
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -75,7 +72,7 @@ function RecentEvents(props)
 				let pic = await response.blob();
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
             }
         }
 

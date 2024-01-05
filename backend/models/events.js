@@ -52,7 +52,6 @@ const eventSchema = new Schema({
     },
     description: String,
     location: String,
-    date: Date,
     sponsoringOrganization: {
         type: String,
         required: true

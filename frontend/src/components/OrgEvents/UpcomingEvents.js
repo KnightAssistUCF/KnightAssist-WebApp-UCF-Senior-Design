@@ -28,13 +28,10 @@ function UpcomingEvents(props)
         props.setOpenEvent(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getUpcomingEvents(){
         const organizationID = "6530608eae2eedf04961794e";
@@ -64,7 +61,7 @@ function UpcomingEvents(props)
         const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -74,7 +71,7 @@ function UpcomingEvents(props)
 		
 				let pic = await response.blob();
 		
-				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
 			}
         }       
 

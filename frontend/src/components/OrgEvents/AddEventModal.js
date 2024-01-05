@@ -16,6 +16,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import Alert from '@mui/material/Alert';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
@@ -35,7 +36,6 @@ function AddEventModal(props)
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
-    const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
     const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
     const semester = "Fall 2023" //This will be implemented some other way later
@@ -53,14 +53,10 @@ function AddEventModal(props)
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState([]);
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function resetValues(){
         setModalType("Add");
@@ -69,7 +65,6 @@ function AddEventModal(props)
         setName("");
         setDescription("");
         setLocation("");
-        setDate(new Date());
 		setPicName(null);
         setPicFile(null);
         setStartTime(dayjs('2022-04-17T15:30'));
@@ -90,7 +85,6 @@ function AddEventModal(props)
             name: name,
             description: description,
             location: location,
-            date: date,
             sponsoringOrganization: "6530608eae2eedf04961794e", //ID of organization Y, will be changed to local storage
             attendees: [],
             registeredVolunteers: [],
@@ -129,7 +123,7 @@ function AddEventModal(props)
 			.then(data => console.log(data))
 			.catch(error => console.error('Error:', error));
 
-            if(eventIsUpcoming(date.toISOString()))
+            if(eventIsUpcoming(endTime))
                 props.setReset(props.reset * -1);
             else
                 props.setResetPast(props.resetPast * -1);
@@ -148,7 +142,6 @@ function AddEventModal(props)
             name: name,
             description: description,
             location: location,
-            date: date,
             organizationID: "6530608eae2eedf04961794e",
             attendees: [],
             registeredVolunteers: [],
@@ -193,9 +186,9 @@ function AddEventModal(props)
             
             props.setEditMode(0);
 
-            if(eventIsUpcoming(date.toISOString()))
+            //if(eventIsUpcoming(date.toISOString()))
                 props.setReset(props.reset * -1);
-            else
+            //else
                 props.setResetPast(props.resetPast * -1);
             
             props.setResetSearch(props.resetSearch * -1);
@@ -289,7 +282,7 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <TimePicker label={props.label} defaultValue={dayjs('2022-04-17T15:30')} onChange={props.onChange}/>
+					<DateTimePicker label={props.label} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
@@ -400,7 +393,6 @@ function AddEventModal(props)
             
             setName(event.name);
             setDescription(event.description);
-            setDate(new Date(event.date));
             setLocation(event.location);
             setStartTime(dayjs(event.startTime));
             setEndTime(dayjs(event.endTime));
@@ -417,8 +409,6 @@ function AddEventModal(props)
 
 			setPicName(pic);
 			setPicFile(pic);
-
-            console.log(date, startTime, endTime);
 
             const taggy = [];
             const taggyNames = [];
@@ -462,6 +452,8 @@ function AddEventModal(props)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [redoTags])
 
+	//{DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
+
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
             <div className='center'>
@@ -483,15 +475,13 @@ function AddEventModal(props)
                                     {GridTextField({xm:12, sm:12, name:"Name", label:"Name", required:true, multiline:false, value:name, onChange:(e) => setName(e.target.value)})}
                                     {GridTextField({xm:12, sm:12, name:"Description", label:"Description", required:true, multiline:true, minRows:4, value:description, onChange:(e) => setDescription(e.target.value)})}                                
                                     {GridTextField({xm:12, sm:12, name:"Location", label:"Location", required:true, multiline:true, value:location, onChange:(e) => setLocation(e.target.value)})}
-
-                                    {DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
-
-                                    {PhotoInput({xm:12, sm:6})}
             
-                                    {TimeSelector({xm:12, sm:6, label:"Start Time", value:startTime, onChange:(e) => setStartTime(e)})}  
-                                    {TimeSelector({xm:12, sm:6, label:"End Time", value:endTime, onChange:(e) => setEndTime(e)})}  
+                                    {TimeSelector({xm:12, sm:6, label:"Start", value:startTime, onChange:(e) => setStartTime(e)})}  
+                                    {TimeSelector({xm:12, sm:6, label:"End", value:endTime, onChange:(e) => setEndTime(e)})}  
+                                    
+									{GridTextField({xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:true, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
 
-                                    {GridTextField({sx:{marginLeft: 15}, xm:12, sm:5, name:"Max Volunteers", label:"Max Volunteers", required:true, multiline:true, type:"number", value:maxVolunteers, onChange:(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setMaxVolunteers(e.target.value)}})}
+									{PhotoInput({xm:12, sm:6})}
                                 </Grid>
 
                                 <div className='addEventHeader'>Tags</div>

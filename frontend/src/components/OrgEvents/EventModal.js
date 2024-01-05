@@ -41,7 +41,6 @@ function EventModal(props)
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -51,41 +50,39 @@ function EventModal(props)
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
 
+	const [hasEndDate, sethasEndDate] = useState(false);
+
 	// If the event has started, you can generateACode
 	const [generateCheckIn, setGenerateCheckIn] = useState(false);
 	const [generateCheckOut, setGenerateCheckOut] = useState(false);
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
  
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
-	// Codes can be made if the currently occuring,
-	// with some buffer
-	function eventIsOccuring(date){
-		date = String(date);
-        date = date.substring(0, date.indexOf("T"));
+	// Can show the check in button if the event has not
+	// ended and it is the same day or the event has started
+	function canShowCheckIn(start, end){
+		let startDay = String(start);
+        startDay = startDay.substring(0, startDay.indexOf("T"));
 
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
 		
-		let yesterday = new Date(new Date().setDate(new Date().getDate() - 1)).toISOString();
-		yesterday = yesterday.substring(0, yesterday.indexOf("T"));
+		// It is before the day the event starts
+		if(startDay.localeCompare(today) > 0) return false;
+		
+		// It is before the event ends
+		return new Date().toISOString().localeCompare(end) < 0;
+	}
 
-		// If its today, can generate both checkin and checkout
-		// If it was yesterday, can generate checkout
-		if(date.localeCompare(today) == 0){
-			return 2;
-		}else if(date.localeCompare(yesterday) == 0){
-			return 1;
-		}
-
-		return 0;
+	// During the period of the event
+	function canShowCheckOut(start, end){
+		const date = new Date().toISOString();
+		return date.localeCompare(start) > 0 && date.localeCompare(end) < 0;
 	}
 
 	function QROnClick(type){
@@ -129,13 +126,21 @@ function EventModal(props)
         if(event) {
                 setName(event.name);
                 setDescription(event.description);
-                setDate(event.date);
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+
+				const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+				const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+	
+				// If the event goes on for more than a day,
+				if(startDay !== endDay) 
+					sethasEndDate(true);
+				else
+					sethasEndDate(false);
 
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -155,18 +160,8 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
-				const amtCanShow = eventIsOccuring(event.date);
-
-				if(amtCanShow == 1){
-					setGenerateCheckIn(false);
-					setGenerateCheckOut(true);
-				}else if(amtCanShow == 2){
-					setGenerateCheckIn(true);
-					setGenerateCheckOut(true);
-				}else{
-					setGenerateCheckIn(false);
-					setGenerateCheckOut(false);
-				}
+				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
+				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
         } else {
             console.log("Event undefined or not found");
         }
@@ -285,7 +280,7 @@ function EventModal(props)
 
         console.log(res);
 
-        if(eventIsUpcoming(date))
+        if(eventIsUpcoming(endTime))
             props.setReset(props.reset * -1);
         else
             props.setResetPast(props.resetPast * -1);  
@@ -327,7 +322,7 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
                                             <Tooltip title="Date" placement="top">
@@ -336,7 +331,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
                                     </Grid>                            
 
                                     <Grid item width={"20%"}>
