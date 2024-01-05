@@ -6,7 +6,7 @@ import LoginPic2 from './loginPic2';
 import Carousel from 'react-bootstrap/Carousel';
 import './Login.css';
 
-function Login()
+function Login(props)
 {
 
     function LoginSlideshow(){
@@ -30,7 +30,7 @@ function Login()
         <div className="contentHalf">
           <div>
             <PageTitle mainStyle="titleLogo" logoStyle="logo" titleStyle="title center"/>
-            <LoginBox/>
+            <LoginBox markLogin={props.markLogin}/>
           </div>
         </div> 
       </div>

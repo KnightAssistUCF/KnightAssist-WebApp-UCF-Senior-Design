@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import './Login.css';
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
-function LoginComponents(){
+function LoginComponents(props){
 
-    console.log("Test");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -60,6 +59,7 @@ function LoginComponents(){
 					sessionStorage.setItem("ID", res.user._id);
 					
 					window.location.href="/#/orghome"
+					props.markLogin(true);
 					setIsInvalid("");
 				}else{
 					setIsInvalid("is-invalid");
@@ -78,7 +78,8 @@ function LoginComponents(){
 					sessionStorage.setItem("token", res.token);
 					sessionStorage.setItem("ID", res.user._id);
 					
-					window.location.href="/#/studenthomepage"
+					window.location.href="/#/studenthomepage";
+					props.markLogin(true);
 					setIsInvalid("");
 				}else{
 					setIsInvalid("is-invalid");
