@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import { RiFeedbackLine } from "react-icons/ri";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -83,6 +84,14 @@ function Header()
                         <a href="#/orgevents">
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Events</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Feedback" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/orgfeedback">
+                            <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
+                            <span class="links_name">Feedback</span>
                         </a>
                     </LightTooltip>
                 </li>

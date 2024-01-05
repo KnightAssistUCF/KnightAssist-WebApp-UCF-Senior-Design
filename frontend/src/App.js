@@ -20,6 +20,7 @@ import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
 import AboutUsPage from './pages/AboutUsPage';
+import OrgFeedbackPage from './pages/OrgFeedbackPage';
 
 function App() 
 {
@@ -45,6 +46,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/orgevents" element={(role === "organization") ? <OrgEventsPage/> : <Navigate from='/orgevents' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/orgfeedback" element={(role === "organization") ? <OrgFeedbackPage/> : <Navigate from='/orgfeedback' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/studenthomepage" element={(role === "volunteer") ? <StudentHomePage/> : <Navigate from='/studenthomepage' to='/login' />}></Route>
