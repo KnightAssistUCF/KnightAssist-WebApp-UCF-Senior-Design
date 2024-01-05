@@ -48,9 +48,9 @@ function LoginComponents(props){
 
             console.log(res);
 
-            if(res?.role == "organization") {
+            if(res.user.role == "organization") {
 
-				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.email}`);
+				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
 
 				response = await fetch(url, {
 					method: "GET",
@@ -61,7 +61,7 @@ function LoginComponents(props){
 
 				if(verifyRes.emailVerifiedStatus){
 					sessionStorage.setItem("token", res.token);
-					sessionStorage.setItem("ID", res._id);
+					sessionStorage.setItem("ID", res.user._id);
 					sessionStorage.setItem("role", "organization");
 					
 					props.setRole("organization");
