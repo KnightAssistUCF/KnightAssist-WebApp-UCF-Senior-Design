@@ -12,14 +12,14 @@ import Logo from '../Logo';
 
 function Header()
 {
-    let user = JSON.parse(localStorage.getItem('user-info'));
+    let user = JSON.parse(sessionStorage.getItem('user-info'));
     const navigate = useNavigate();
     console.warn(user);
 
     function logOut() {
         // handle logout logic
         // bring user to landing page
-        localStorage.clear();
+        sessionStorage.clear();
         navigate('/'); 
         
     }

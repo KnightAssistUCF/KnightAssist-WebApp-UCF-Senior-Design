@@ -29,7 +29,7 @@ function FavoriteOrganizations(props)
     }
 
     async function getOrgs(){
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",

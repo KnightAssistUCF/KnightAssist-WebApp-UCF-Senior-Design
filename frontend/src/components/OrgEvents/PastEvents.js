@@ -140,6 +140,7 @@ function PastEvents(props)
     }
 
     useEffect(()=>{
+		console.log(sessionStorage)
         getPastEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])

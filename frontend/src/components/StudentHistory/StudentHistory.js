@@ -82,7 +82,7 @@ function StudentHistory()
 	async function getHistory(){ 
 		try {
 		   
-			let url = buildPath(`api/historyOfEvents_User?studentId=${localStorage.getItem("ID")}`);
+			let url = buildPath(`api/historyOfEvents_User?studentId=${sessionStorage.getItem("ID")}`);
 
 			let response = await fetch(url, {
 				method: "GET",

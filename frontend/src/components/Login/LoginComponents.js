@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Login.css';
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
@@ -56,8 +56,8 @@ function LoginComponents(){
 				const verifyRes = JSON.parse(await response.text());
 
 				if(verifyRes.emailVerifiedStatus){
-					localStorage.setItem("token", res.token);
-					localStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
 					
 					window.location.href="/#/orghome"
 					setIsInvalid("");
@@ -75,8 +75,8 @@ function LoginComponents(){
 				const verifyRes = JSON.parse(await response.text());
 
 				if(verifyRes.emailVerifiedStatus){
-					localStorage.setItem("token", res.token);
-					localStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
 					
 					window.location.href="/#/studenthomepage"
 					setIsInvalid("");

@@ -92,13 +92,13 @@ function EventModal(props)
 
     async function getVolunteerInfo(id){
 
-        console.log(localStorage.getItem("token"))
+        console.log(sessionStorage.getItem("token"))
         let url = buildPath(`api/userSearch?userID=${id}`);
 
         let response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`
             }        
         });
     
