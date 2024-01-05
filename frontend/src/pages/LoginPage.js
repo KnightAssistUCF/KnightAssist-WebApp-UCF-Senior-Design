@@ -6,7 +6,7 @@ const LoginPage = (props) =>
 {
     return(
       <div className="login">
-        <Login markLogin={props.markLogin}/>
+        <Login setRole={props.setRole}/>
       </div>
     );
 };

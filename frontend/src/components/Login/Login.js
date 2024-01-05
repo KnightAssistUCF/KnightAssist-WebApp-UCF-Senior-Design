@@ -30,7 +30,7 @@ function Login(props)
         <div className="contentHalf">
           <div>
             <PageTitle mainStyle="titleLogo" logoStyle="logo" titleStyle="title center"/>
-            <LoginBox markLogin={props.markLogin}/>
+            <LoginBox setRole={props.setRole}/>
           </div>
         </div> 
       </div>
