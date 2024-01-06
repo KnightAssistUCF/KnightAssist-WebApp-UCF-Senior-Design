@@ -18,7 +18,6 @@ const mockEvents = [
         name: 'Charity Run',
         attendees: Array.from({ length: 50 }, mockObjectId),
         checkedInStudents: Array.from({ length: 30 }, mockObjectId),
-        date: new Date(),
         sponsoringOrganization: 'someOrgId1',
     },
     {
@@ -26,7 +25,6 @@ const mockEvents = [
         name: 'Beach Cleanup',
         attendees: Array.from({ length: 75 }, mockObjectId),
         checkedInStudents: Array.from({ length: 65 }, mockObjectId),
-        date: new Date(),
         sponsoringOrganization: 'someOrgId1', 
     },
     {
@@ -34,7 +32,6 @@ const mockEvents = [
         name: 'reatrd',
         attendees: Array.from({ length: 58 }, mockObjectId),
         checkedInStudents: Array.from({ length: 22 }, mockObjectId),
-        date: new Date(),
         sponsoringOrganization: 'someOrgId1',
     },
     {
@@ -42,7 +39,6 @@ const mockEvents = [
         name: 'ucf jhwl',
         attendees: Array.from({ length: 69 }, mockObjectId),
         checkedInStudents: Array.from({ length: 53 }, mockObjectId),
-        date: new Date(),
         sponsoringOrganization: 'someOrgId1',
     },
     {
@@ -50,7 +46,6 @@ const mockEvents = [
         name: 'ahhh',
         attendees: Array.from({ length: 20 }, mockObjectId),
         checkedInStudents: Array.from({ length: 20 }, mockObjectId),
-        date: new Date(),
         sponsoringOrganization: 'someOrgId1',
     }
 ];
