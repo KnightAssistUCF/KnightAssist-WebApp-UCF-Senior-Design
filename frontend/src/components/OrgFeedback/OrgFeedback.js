@@ -44,7 +44,6 @@ function OrgFeedback() {
 		}
 	};
 
-	
 	const getSeachFeedback = (searchTerm) => {
 		console.log(filterTerm);
 	

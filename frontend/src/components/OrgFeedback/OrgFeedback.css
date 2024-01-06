@@ -6,7 +6,6 @@
 	margin-bottom: 50px;
 }
 
-
 .topSection {
     display: flex;
     margin-bottom: 12px;
@@ -22,6 +21,12 @@
 	margin-bottom: 10px;
 }
 
-    
+.cardRating{
+	padding-left: 85%;
+}
+
+.cardRatingModal{
+	padding-left: 70%;
+}
     
     

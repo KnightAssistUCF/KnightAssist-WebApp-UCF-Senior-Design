@@ -94,11 +94,12 @@ const Feedbacks = (props) => {
                       style={{ color: 'black'}}
                     >
                       {feedback.studentName}
-                    </Typography>
-					<Rating
+					  <Rating
 						value={feedback.rating}
 						readOnly
+						className='cardRating'
 					/>
+                    </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
@@ -128,11 +129,14 @@ const Feedbacks = (props) => {
 				<DialogTitle>{selectedFeedback.eventName}</DialogTitle>
 				<DialogContent>
 					<DialogContentText style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{ color: 'black' }}>{selectedFeedback.studentName}</DialogContentText>
-					<Rating
-						value={selectedFeedback.rating}
-						readOnly
-					/>
+					<DialogContentText style={{ color: 'black'}}>
+						{selectedFeedback.studentName} 				
+						<Rating
+							value={selectedFeedback.rating}
+							readOnly
+							className='cardRatingModal'
+						/>
+					</DialogContentText>
 					<DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 				<DialogActions>
