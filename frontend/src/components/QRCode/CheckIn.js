@@ -22,7 +22,7 @@ function CheckIn(){
 		await fetch(url, {
 				method: 'POST',
 				headers: {"Content-Type": "application/json"},
-				body: JSON.stringify({qrCodeData_eventID: decodedText, studentId: localStorage.getItem("ID")})
+				body: JSON.stringify({qrCodeData_eventID: decodedText, studentId: sessionStorage.getItem("ID")})
 		})
 		.then(response => {
 				console.log(response.text());
@@ -49,6 +49,7 @@ function CheckIn(){
 		let html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
 	
 		html5QrcodeScanner.render(onScanSuccess, onScanFailure);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

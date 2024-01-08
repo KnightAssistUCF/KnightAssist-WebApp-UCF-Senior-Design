@@ -24,6 +24,8 @@ router.get("/", async (req, res) => {
 
 		const eventHistory = [];
 
+		console.log(events);
+
 		for(let event of events){
 			const checkInRecord = event.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
 

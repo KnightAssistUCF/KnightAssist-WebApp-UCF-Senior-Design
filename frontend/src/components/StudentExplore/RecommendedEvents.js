@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function RecommendedEvents(props)
 {
 
@@ -30,14 +27,10 @@ function RecommendedEvents(props)
         props.setOpen(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -53,7 +46,7 @@ function RecommendedEvents(props)
     }
 
     async function getEvents(){
-        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${localStorage.getItem("ID")}`);
+        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -67,7 +60,7 @@ function RecommendedEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -98,7 +91,7 @@ function RecommendedEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -111,9 +104,7 @@ function RecommendedEvents(props)
         return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -147,11 +138,13 @@ function RecommendedEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
         console.log("its working!")
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(

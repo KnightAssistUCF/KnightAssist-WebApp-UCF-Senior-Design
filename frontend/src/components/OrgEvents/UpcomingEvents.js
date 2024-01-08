@@ -8,9 +8,6 @@ import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
 
-const logo = require("../Login/loginPic.png");
-
-
 function UpcomingEvents(props)
 {
 
@@ -31,14 +28,10 @@ function UpcomingEvents(props)
         props.setOpenEvent(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getUpcomingEvents(){
         const organizationID = "6530608eae2eedf04961794e";
@@ -68,7 +61,7 @@ function UpcomingEvents(props)
         const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -77,10 +70,8 @@ function UpcomingEvents(props)
 				});
 		
 				let pic = await response.blob();
-
-				console.log(pic);
 		
-				events.push(<Event name={event.name} pic={pic} date={event.date} id={event._id}/>)
+				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
 			}
         }       
 
@@ -102,7 +93,7 @@ function UpcomingEvents(props)
         }
 
         // There were no events prior and now there is one
-        if(page == 0 && events.length > 0){
+        if(page === 0 && events.length > 0){
             setPage(1);
             extraBack = -1;
         }
@@ -115,9 +106,7 @@ function UpcomingEvents(props)
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -151,11 +140,12 @@ function UpcomingEvents(props)
 
     useEffect(()=>{
         getUpcomingEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
-        console.log("its working!")
         getUpcomingEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
     return(

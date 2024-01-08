@@ -1,7 +1,6 @@
 import { Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import {Button} from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
@@ -17,19 +16,13 @@ import StopIcon from '@mui/icons-material/Stop';
 import Alert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
 
-const eventPic = require("../Login/loginPic.png");
-
 function EventModal(props)
 {
     const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(undefined); props.setOpen(false);}
 
-    const [openAlert, setOpenAlert] = useState(false);
-    const tagNames = [];
-
     const [name, setName] = useState("");
     const [id, setID] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState("");
@@ -40,6 +33,8 @@ function EventModal(props)
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
     const [disabled, setDisabled] = useState(false);
+
+	const [hasEndDate, sethasEndDate] = useState(false);
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -61,7 +56,6 @@ function EventModal(props)
             setName(event.name);
             setID(event._id);
             setDescription(event.description);
-            setDate(event.date);
             setLocation(event.location);
             setPicLink(event.picLink);
             setStartTime(event.startTime);
@@ -69,6 +63,13 @@ function EventModal(props)
             setVolunteers(event.attendees.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
+
+			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+
+			// If the event goes on for more than a day,
+			if(startDay !== endDay) sethasEndDate(true);
+			
 
 			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -85,7 +86,7 @@ function EventModal(props)
             const json = {
                 eventID: event._id,
                 eventName: event.name,
-                userID: localStorage.getItem("ID"),
+                userID: sessionStorage.getItem("ID"),
                 check: 1
             };
 
@@ -101,7 +102,7 @@ function EventModal(props)
 
             console.log("Result: ", res);
 
-            if(res.RSVPStatus == 1)
+            if(res.RSVPStatus === 1)
                 setIsRSVP(true);
             else
                 setIsRSVP(false);
@@ -118,7 +119,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("ID"), 
+                userID: sessionStorage.getItem("ID"), 
             };
 
             const url = buildPath(`api/cancelRSVP`);
@@ -136,7 +137,7 @@ function EventModal(props)
             const json = {
                 eventID: id,
                 eventName: name,
-                userID: localStorage.getItem("ID"),
+                userID: sessionStorage.getItem("ID"),
                 check: 0
             };
 
@@ -234,7 +235,7 @@ function EventModal(props)
         
         return (
             <div>
-                {(showMSG) == true
+                {(showMSG) === true
                     ?
                         <div>
                             {(isRSVP) ? <Alert severity="success">Event RSVP successful. Check for email confirmation.</Alert> : 
@@ -254,8 +255,9 @@ function EventModal(props)
     }
 
     useEffect(()=>{
-		if(props.eventID != undefined)
+		if(props.eventID !== undefined)
         	setInfo();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
     return(
@@ -266,7 +268,7 @@ function EventModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleCloseModal()}/>
                         </button>
-                        <img className='boxImg' src={picLink}></img>
+                        <img className='boxImg' src={picLink} alt=""></img>
         
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
@@ -274,7 +276,7 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
                                             <Tooltip title="Date" placement="top">
@@ -283,8 +285,8 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
-                                    </Grid>                            
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
+                                    </Grid>                 
 
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
@@ -324,7 +326,7 @@ function EventModal(props)
 
                                 <Volunteers/>
                                 
-                                <Tags/>
+								{(tags.length > 0) ? <Tags/> : null}
 
                                 <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
                                     <RSVPButton/>

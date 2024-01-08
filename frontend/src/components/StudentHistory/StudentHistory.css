@@ -6,3 +6,12 @@
 .historyDetails{
 	margin-left: 25%;
 }
+
+.eventPic{
+	width: 100px !important;
+	height: 100px !important;
+}
+
+.listsItems{
+	margin-left: 20% !important;
+}

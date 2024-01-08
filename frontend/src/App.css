@@ -100,7 +100,12 @@ html, body {
   background-color: white;
   color: black;
 }
-
+.studentAnnouncementsPage {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
 
 .emailVerifiedPage {
   height: 100vh;
@@ -109,6 +114,7 @@ html, body {
   color: black;
 }
 
+
 .postVerifyQsPage{
   height: 100vh;
   width: 100%;
@@ -116,9 +122,18 @@ html, body {
   color: black;
 }
 
+.aboutUsPage {
+  height: 100vh;
+  width: 100%;
+  background-color: white;
+  color: black;
+}
+
+
+
 .orgHomePage{
 	height: 100vh;
 	width: 100%;
 	background-color: white;
 	color: black;
-}
+} 

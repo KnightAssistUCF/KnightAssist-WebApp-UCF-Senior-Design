@@ -1,0 +1,30 @@
+
+.studAnnouncementsPage {
+    color: black;
+    margin-left: 225px;
+    margin-top: 5%;
+    margin-right: 2%;
+}
+
+
+.topSection {
+    display: flex;
+    margin-bottom: 12px;
+    align-items: flex-start;
+}
+.announcementSection {
+    text-align: left;
+}
+    
+    .StudentAnnouncements-title {
+        font-size: 30px;
+        text-align: left;
+    }
+    .StudentAnnouncements-subtitle {
+        font-size: 25px;
+        margin-bottom: 10px;
+    }
+
+    
+    
+    

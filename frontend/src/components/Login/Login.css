@@ -59,3 +59,32 @@
 	height: 100vh;
 	width: 95vh;
 }
+
+.forgotPasswordCard{
+	height: 75vh;
+    width: 75vh;
+	background-color: #7768bc !important;
+}
+
+.forgotPWDName{
+	font-size: 40px;
+	padding-bottom: 20px;
+}
+
+.forgotPWDInstructions{
+	font-size: 20px;
+}
+
+.forgotPWDEmail{
+	width: 75% !important;
+	margin-top: 20px !important;
+}
+
+.forgotPWDLogo{
+	width: 75px;
+	height: 75px;
+}
+
+.forgetPWDAlert{
+	margin-top: 20px !important;
+}

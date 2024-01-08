@@ -26,7 +26,6 @@ router.post('/', async (req, res) => {
         } else {
             var hashedPassword = bcrypt.hashSync(req.body.password, 10);
             var newUser = new userStudent({
-                studentID: req.body.studentID, // this needs to be crafted by some logic from the front end
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
                 email: req.body.email,
@@ -78,7 +77,7 @@ router.post('/', async (req, res) => {
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
                             text: 'Login and confirm your account',
-                            link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/studentemailverified' // change this later with the correct redirect link
                         }
 
                     },
