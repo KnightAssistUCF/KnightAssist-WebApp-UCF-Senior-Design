@@ -51,9 +51,17 @@ const formatDate = (dateString) => {
 			let res = JSON.parse(await response.text());
 
 			console.log(res)
-      setItems(res);
+      var unreadAnnouncements = [];
+      for(let announcement of res) {
+        console.log(announcement.eventName);
+        if(announcement.wasReadByUser === false) {
+          console.log("unread " + announcement._id);
+          unreadAnnouncements.push(announcement);
+        }
+      }
 
-			//res.sort((a, b) => new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted));
+			unreadAnnouncements.sort((a, b) => new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted));
+      setItems(unreadAnnouncements);
 
     } catch(e) {
       console.log("API called failed");
