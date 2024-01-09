@@ -11,6 +11,7 @@ function OrgFeedback() {
 	var [searchFeedback, setSearchFeedback] = useState([]);
 	var [filterTerm, setFilterTerm] = useState("all");
 
+	const [markRead, setMarkRead] = useState("");
 	const [searchTerm, setSearchTerm] = useState("");
 
 	function Title(){
@@ -79,11 +80,15 @@ function OrgFeedback() {
 		const term = filterTerm.toLowerCase();
 		setFilterTerm(term);
 
+		console.log(feedback);
+
 		if (term === "unread") {
 			const unreads = [];
 			for(let f of feedback)
 				if(f.wasReadByUser === false)
 					unreads.push(f);
+
+			console.log(unreads);
 
 			setSearchFeedback(unreads);
 		}else{
@@ -95,6 +100,17 @@ function OrgFeedback() {
 		fetchAllFeedback();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if(markRead !== ""){
+			let index = feedback.findIndex((f) => f._id === markRead);
+			feedback[index].wasReadByUser = true;
+	
+			filterFeedback(filterTerm);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [markRead]);
 
 	return (
 		<div>
@@ -115,7 +131,7 @@ function OrgFeedback() {
 						/>
 						<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 					</div>
-				<Feedbacks feedback={searchFeedback}/>
+				<Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/>
 			</div>
 			</div>
 		</div>

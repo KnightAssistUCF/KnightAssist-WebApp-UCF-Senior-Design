@@ -60,6 +60,8 @@ const Feedbacks = (props) => {
 
 	let res = await response.text();
 
+	props.setMarkRead(feedback._id);
+
 	console.log(res);
   };
 
