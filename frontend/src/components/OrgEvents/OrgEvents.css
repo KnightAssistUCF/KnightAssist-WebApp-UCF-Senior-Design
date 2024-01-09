@@ -12,7 +12,7 @@
 }
 
 .cards{
-    margin-left: 5px;
+    margin-left: 8px;
     margin-top: 10px;
 }
 
@@ -27,7 +27,6 @@
 
 .card-body{
     width: 99%;
-    margin-left: 10px;
 }
 
 .upcomingEvents{
@@ -39,18 +38,11 @@
 }
 
 .event{
-    min-width: 22%;
-    max-width: 22%;
+    min-width: 275px;
+    max-width: 275px;
     margin-right: 2%;
     margin-bottom: 20px;
     float: left;
-}
-
-@media (max-width: 768px) {
-	.event{
-		min-width: 50%;
-		max-width: 50%;
-	}
 }
 
 .MuiCard-root{
@@ -297,4 +289,44 @@
 .qrLogo{
 	width: 75px;
 	height: 75px;
+}
+
+@media (max-width: 1500px) {
+	.event{
+		margin-right: 5%;
+	}
+
+	.eventsCard{
+		width: 95%;
+	}
+	
+}
+
+@media (max-width: 1200px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 85%;
+	}
+}
+
+
+@media (max-width: 925px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 315px;
+	}
 }

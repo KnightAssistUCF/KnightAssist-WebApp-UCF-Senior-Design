@@ -20,7 +20,7 @@ router.get('/', async (req, res) => {
                 if (!user) {
                         return res.status(404).send('User not found in the database');
                 }
-
+				
                 // locate the user interest tags
                 const userTags = user.categoryTags;
 
