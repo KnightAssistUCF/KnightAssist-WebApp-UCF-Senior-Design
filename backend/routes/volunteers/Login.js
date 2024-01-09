@@ -47,6 +47,7 @@ const sendEmail = (role, user) => {
             action: {
 
                 instructions: 'A login has been made to your account at ' + new Date().toLocaleString() + '. If this was not you, please reply to this email and we will open a security ticket.',
+                button: []
 
             },
             outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'

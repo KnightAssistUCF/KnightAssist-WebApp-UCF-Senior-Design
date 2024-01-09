@@ -67,6 +67,7 @@ router.delete('/', authenticateToken_User, async (req, res) => {
                     intro: 'We are very sad to see you go!',
                     action: {
                         instructions: 'The account associated with ' + user_obj.email + ' has been deleted and all data will be removed within 5 days. If you did not request this, please contact us immediately by replying to this email.',
+                        button: []
                     },
                     outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
                 }
