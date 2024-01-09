@@ -47,9 +47,10 @@ function Feedback() {
   };
 
   const fetchAllFeedback = async () => {
+    const organizationID = sessionStorage.getItem("ID");
     try {
       let url = buildPath(
-        `api/retrieveAllFeedback_ForAnOrg?orgId=${"6530608eae2eedf04961794e"}`
+        `api/retrieveAllFeedback_ForAnOrg?orgId=${organizationID}`
       );
 
       let response = await fetch(url, {

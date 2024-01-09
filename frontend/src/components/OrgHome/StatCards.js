@@ -13,7 +13,7 @@ function StatCards() {
  }
 
   async function getUpcomingEvents() {
-    const organizationID = "6530608eae2eedf04961794e";
+    const organizationID = sessionStorage.getItem("ID");
   
     try {
       let eventsUrl = buildPath(`api/searchEvent?organizationID=${organizationID}`);
