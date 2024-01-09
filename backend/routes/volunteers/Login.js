@@ -58,7 +58,7 @@ const sendEmail = (role, user) => {
 
     let message = {
         from: process.env.EMAIL,
-        to: req.body.email,
+        to: user.email,
         subject: 'Successful Login to KnightAssist!',
         html: mail
     }
