@@ -7,18 +7,18 @@ import { lightBlue } from '@mui/material/colors';
 
 function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [selectedFeedback, setSelectedFeedback] = useState(null);
 
   const handleCloseModal = async () => {
-    if (selectedAnnouncement) {
-      await readFeedback(selectedAnnouncement);
+    if (selectedFeedback) {
+      await readFeedback(selectedFeedback);
       fetchAllFeedback();
     }
     setModalOpen(false);
   };
 
-  const handleOpenModal = (announcement) => {
-    setSelectedAnnouncement(announcement);
+  const handleOpenModal = (feedback) => {
+    setSelectedFeedback(feedback);
     setModalOpen(true);
   };
 
@@ -143,7 +143,7 @@ function Feedback() {
             color: "darkgray",
           }}
         >
-          No feedback available
+          No unread feedback available
         </div>
       ) : (
         <List sx={{ flex: 1 }}>
@@ -155,7 +155,7 @@ function Feedback() {
                 secondaryAction={
                   <IconButton
                     edge="end"
-                    aria-label="close announcement"
+                    aria-label="close feedback"
                     onClick={() => handleItemClose(item._id)}
                   >
                     <CloseIcon />
@@ -188,12 +188,11 @@ function Feedback() {
         </List>
       )}
       <Dialog open={modalOpen} onClose={handleCloseModal} maxWidth='lg'>
-        <DialogTitle>{selectedAnnouncement?.eventName}</DialogTitle>
-        <DialogContent style={{ marginTop: '10px' }}>{selectedAnnouncement?.feedbackText}</DialogContent>
+        <DialogTitle>{selectedFeedback?.eventName}</DialogTitle>
+        <DialogContent style={{ marginTop: '10px' }}>{selectedFeedback?.feedbackText}</DialogContent>
       </Dialog>
     </Box>
   );
 }
 
 export default Feedback;
-
