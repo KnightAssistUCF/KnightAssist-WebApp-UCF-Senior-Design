@@ -47,7 +47,11 @@ const sendEmail = (role, user) => {
             action: {
 
                 instructions: 'A login has been made to your account at ' + new Date().toLocaleString() + '. If this was not you, please reply to this email and we will open a security ticket.',
-                button: []
+                button: {
+                    color: '#22BC66', //[makes the button green, can change later]
+                    text: 'Login',
+                    link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/organizationemailverified' // change this later with the correct redirect link
+                }
 
             },
             outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
@@ -58,7 +62,7 @@ const sendEmail = (role, user) => {
 
     let message = {
         from: process.env.EMAIL,
-        to: req.body.email,
+        to: user.email,
         subject: 'Successful Login to KnightAssist!',
         html: mail
     }
