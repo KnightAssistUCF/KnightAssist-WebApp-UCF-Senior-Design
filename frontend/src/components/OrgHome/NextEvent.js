@@ -1,15 +1,17 @@
 import {useState, useEffect} from 'react';
 import {Typography, Dialog, DialogTitle, DialogActions, Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
+import { buildPath } from '../../path';
 
 function NextEvent({upcomingEvents})
 {
     const [modalOpen, setModalOpen] = useState(false);
+    const [eventPic, setEventPic] = useState(null);
 
     const handleClose = () => {
       setModalOpen(false);
     };
 
-    const nextEvent = upcomingEvents[0];
+    const nextEvent = upcomingEvents;
 
     const truncateText = (text, maxLength) => {
       if (text && text.length > maxLength) {
@@ -39,6 +41,33 @@ function NextEvent({upcomingEvents})
         return dateString;
       }
     };
+
+
+    async function getUpcomingEventPic() {
+      try {
+        let url = buildPath(`api/retrieveImage?entityType=event&id=${upcomingEvents._id}`);
+        let response = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        });
+    
+        if (!response.ok) {
+          throw new Error(`Failed to fetch image: ${response.statusText}`);
+        }
+    
+        let picBlob = await response.blob();
+        let picUrl = URL.createObjectURL(picBlob);
+        console.log(picUrl);
+        setEventPic(picUrl);
+      } catch (error) {
+        console.error('Error fetching image:', error);
+      }
+    }
+    
+  
+    useEffect(() => {
+      getUpcomingEventPic();
+    }, []);
     
 
     return(
@@ -52,7 +81,7 @@ function NextEvent({upcomingEvents})
                   <CardMedia
                     component="img"
                     sx={{width: 145, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
-                    image={require('../Login/loginPic.png')}
+                    image={eventPic || require('../Login/loginPic.png')}
                   />
                   <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left'}}>
                   <div className="card-title"><strong>{truncateText(nextEvent.name, 25)}</strong></div>

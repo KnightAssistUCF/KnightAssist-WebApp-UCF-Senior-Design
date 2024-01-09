@@ -69,7 +69,7 @@ function OrgHome() {
         </div>
         <div className="orgHomeTopRow">
           <div className="nextEvent">
-            <NextEventCard upcomingEvents={upcomingEvents} />
+            <NextEventCard upcomingEvents={upcomingEvents[0]} />
           </div>
           <div className="feedback">
             <Feedback />
