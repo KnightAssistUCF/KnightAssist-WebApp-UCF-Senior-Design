@@ -15,12 +15,17 @@ function UpcomingEvents(props)
     const [eventCards, setEventCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
+	const [eventsPerPage, setEventsPerPage] = useState(4);
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
 
 
-    function changePage(e, value){
+    function changePage(e, value, perPage = eventsPerPage){
         setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setEventCards(content);
+		console.log(events);
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setEventCards(content);
     }
 
     function openEventModal(id){
@@ -81,13 +86,15 @@ function UpcomingEvents(props)
 
         console.log(events);
 
-        setNumPages(Math.ceil(events.length / 4))
+        setNumPages(Math.ceil(events.length / eventsPerPage))
         setEvents(events);
+
+		setInitiateListener(initiateListener * -1);
 
         let extraBack = 0;
         
         // Need to go a page back due to deletion
-        if(((page - 1) * 4) >= events.length){
+        if(((page - 1) * eventsPerPage) >= events.length){
             setPage(page - 1);
             extraBack = 1;
         }
@@ -98,7 +105,7 @@ function UpcomingEvents(props)
             extraBack = -1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, (page - 1 - extraBack) * eventsPerPage + eventsPerPage)}</div>
         setEventCards(content);
     }
 
@@ -139,7 +146,7 @@ function UpcomingEvents(props)
     }
 
     useEffect(()=>{
-        getUpcomingEvents();
+		getUpcomingEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -147,6 +154,35 @@ function UpcomingEvents(props)
         getUpcomingEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
+
+	useEffect(()=>{
+		const adjustForSize = () => {
+			const width = window.innerWidth;
+
+			//on page 1, 4 per page
+			//switch to 2 per page
+			//(((page - 1) * numperpage) + 1)/ newnumperpage
+			//(((5 - 1) * 4) + 1) / 1 = 
+
+			const oldEventsPerPage = eventsPerPage;
+
+			if(width >= 768){
+				setEventsPerPage(4);
+				setNumPages(Math.ceil(events.length / 4))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 4), 4);
+			}else if(width >= 500){
+				setEventsPerPage(2);
+				setNumPages(Math.ceil(events.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
+			}else{
+				setEventsPerPage(1);
+				setNumPages(events.length)
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+	},[initiateListener])
 
     return(
      <div className='upcomingEventsSpace'>

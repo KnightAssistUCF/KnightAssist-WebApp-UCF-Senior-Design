@@ -3,13 +3,12 @@
 }
  
 .orgSearch{
-    width: 500px !important;
+    width: 50% !important;
     margin-bottom: 5%;
 }
 
 .moveSearch{
     margin-top: 10px;
-    margin-left: 500px;
 }
 
 .cards{
@@ -19,7 +18,6 @@
 
 .pagination{
     margin-top: 15px;
-    margin-left: 500px;
 }
 
 .cardWhite{
@@ -43,9 +41,16 @@
 .event{
     min-width: 22%;
     max-width: 22%;
-    margin-left: 25px;
+    margin-right: 2%;
     margin-bottom: 20px;
     float: left;
+}
+
+@media (max-width: 768px) {
+	.event{
+		min-width: 50%;
+		max-width: 50%;
+	}
 }
 
 .MuiCard-root{
@@ -54,7 +59,7 @@
 }
 
 .eventsCard{
-    width: 1200px;
+    width: 95%;
 }
   
 .yourEvents{
