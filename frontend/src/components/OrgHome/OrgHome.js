@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AddAnnouncementModal from './AddAnnouncementModal';
 import Header from '../OrgEvents/Header';
 import './OrgHome.css';
@@ -6,6 +6,7 @@ import NextEventCard from './NextEvent';
 import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
+import Analytics from './Analytics';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
@@ -49,6 +50,7 @@ function OrgHome() {
             height={310}
           />
         </div>
+        <Analytics />
       </div>
     </div>
   );
