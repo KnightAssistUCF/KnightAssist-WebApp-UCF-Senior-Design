@@ -31,8 +31,10 @@ router.delete('/', authenticateToken_User, async (req, res) => {
             { email: req.body.email }
         ]
     };
+    let user_obj;
     await userStudent.findOne(query).then(async (user) => {
         if (user) {
+            user_obj = user;
             await userStudent.deleteOne({ email: req.body.email }).then((user) => {
                 res.status(200).send("User deleted successfully" + user);
             }).catch((err) => { res.status(400).send("Internal server error: " + err); })
@@ -66,10 +68,10 @@ router.delete('/', authenticateToken_User, async (req, res) => {
 
     let response = {
         body: {
-            name: req.body.firstName + ' ' + req.body.lastName,
+            name: user_obj.firstName + " " + user_obj.lastName,
             intro: 'We are very sad to see you go!',
             action: {
-                instructions: 'The account associated with ' + req.body.email + ' has been deleted and all data will be removed within 5 days. If you did not request this, please contact us immediately by replying to this email.',
+                instructions: 'The account associated with ' + user_obj.email + ' has been deleted and all data will be removed within 5 days. If you did not request this, please contact us immediately by replying to this email.',
             },
             outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
         }
@@ -80,7 +82,7 @@ router.delete('/', authenticateToken_User, async (req, res) => {
     let message = {
         from: process.env.EMAIL,
         to: req.body.email,
-        subject: 'Account Deletion! [KnightAssist | email: ' + req.body.email + ']',
+        subject: 'Account Deletion! [KnightAssist | email: ' + user_obj.email + ']',
         html: mail
     }
 
