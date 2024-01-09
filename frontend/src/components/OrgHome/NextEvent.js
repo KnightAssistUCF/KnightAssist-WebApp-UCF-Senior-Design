@@ -11,10 +11,35 @@ function NextEvent({upcomingEvents})
 
     const nextEvent = upcomingEvents[0];
 
-    // useEffect(() => {
-    //   console.log(upcomingEvents[0]);
-    //   console.log(nextEvent);
-    // }, []);
+    const truncateText = (text, maxLength) => {
+      if (text && text.length > maxLength) {
+        return text.substring(0, maxLength) + " ...";
+      }
+      return text;
+    };
+
+    const formatDate = (dateString, includeTime = false) => {
+      const isValidDate = !isNaN(new Date(dateString).getTime());
+    
+      if (isValidDate) {
+        const options = {
+          month: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+        };
+    
+        const formattedDate = new Date(dateString).toLocaleDateString(
+          undefined,
+          options
+        );
+    
+        return includeTime ? formattedDate : formattedDate.split(",")[0];
+      } else {
+        return dateString;
+      }
+    };
+    
 
     return(
         <div>
@@ -30,11 +55,11 @@ function NextEvent({upcomingEvents})
                     image={require('../Login/loginPic.png')}
                   />
                   <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left'}}>
-                  <div className="card-title"><strong>{nextEvent.name}</strong></div>
+                  <div className="card-title"><strong>{truncateText(nextEvent.name, 25)}</strong></div>
                     <div className="card1-text">
-                      <div className="card-subtitle">{nextEvent.startTime}</div>
-                      <div className="card-subtitle">{nextEvent.endTime}</div>
-                      <div className="card-subtitle">{nextEvent.location}</div>
+                      <div className="card-subtitle">{formatDate(nextEvent.startTime)}</div>
+                      <div className="card-subtitle">{formatDate(nextEvent.endTime)}</div>
+                      <div className="card-subtitle">{truncateText(nextEvent.location, 10)}</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
                         <Button className='create-qr-code' size="medium" variant='contained' justify="flex-end" style={{ marginRight: '10px',  backgroundColor: '#5f5395', borderColor: '#968dbf', '&:hover': {
