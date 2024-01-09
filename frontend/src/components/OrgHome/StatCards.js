@@ -46,9 +46,15 @@ useEffect(() => {
                 <div className="stat">
                     {numUpcomingEvents}
                 </div>
+                {numUpcomingEvents > 1 ? (
                 <div className="statTitle">
                     Upcoming Events
                 </div>
+                ) : (
+                <div className="statTitle">
+                    Upcoming Event
+                </div>
+                )}
             </Card>
             <Card variant='contained' sx={{ borderRadius: '14px', maxWidth: 255,  display: 'flex', marginTop: '10px', paddingLeft: '6px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #65B891 11.2%, #65B891 91.1% )', color: 'white' }}>
                 <div className="stat">
