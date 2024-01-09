@@ -8,6 +8,9 @@ const router = express.Router();
 const { authenticateToken_User } = require('../../utils/jwtUtils');
 
 const userStudent = require('../../models/userStudent');
+const nodemailer = require("nodemailer");
+const dotenv = require('dotenv');
+const mailgen = require('mailgen');
 
 // lookUp user by email
 router.get('/', async (req, res) => {

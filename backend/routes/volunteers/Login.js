@@ -3,6 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs'); 
 const { generateToken } = require('../../utils/jwtUtils');
 const { authenticateToken_User, authenticateToken_Organization } = require('../../utils/jwtUtils');
+const nodemailer = require("nodemailer");
+const dotenv = require('dotenv');
+const mailgen = require('mailgen');
 
 const userStudent = require('../../models/userStudent');
 const organization = require('../../models/organization');

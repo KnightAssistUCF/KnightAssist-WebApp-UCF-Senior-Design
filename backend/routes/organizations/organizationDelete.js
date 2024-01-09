@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const { authenticateToken_Organization } = require('../../utils/jwtUtils');
+const nodemailer = require("nodemailer");
+const dotenv = require('dotenv');
+const mailgen = require('mailgen');
 
 const organization = require('../../models/organization');
 
