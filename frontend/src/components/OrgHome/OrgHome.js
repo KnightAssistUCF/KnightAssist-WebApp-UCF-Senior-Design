@@ -10,9 +10,44 @@ import Analytics from './Analytics';
 import { BarChart } from '@mui/x-charts/BarChart';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
+import { buildPath } from '../../path';
 
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
+
+  function eventIsUpcoming(endTime){
+    return new Date().toISOString().localeCompare(endTime) < 0;
+ }
+
+  async function getUpcomingEvents() {
+    const organizationID = "6530608eae2eedf04961794e";
+  
+    try {
+      let eventsUrl = buildPath(`api/searchEvent?organizationID=${organizationID}`);
+      let eventsResponse = await fetch(eventsUrl, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+  
+      let eventsData = JSON.parse(await eventsResponse.text());
+  
+      const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
+  
+      console.log("Upcoming Events:", upcomingEvents);
+      setUpcomingEvents(upcomingEvents);
+      setNumUpcomingEvents(upcomingEvents.length);
+  
+    } catch (error) {
+      console.error("Error fetching upcoming events:", error);
+    }
+  }
+
+
+  useEffect(() => {
+    getUpcomingEvents();
+  }, []);
 
   return (
     <div>
@@ -34,7 +69,7 @@ function OrgHome() {
         </div>
         <div className="orgHomeTopRow">
           <div className="nextEvent">
-            <NextEventCard />
+            <NextEventCard upcomingEvents={upcomingEvents} />
           </div>
           <div className="feedback">
             <Feedback />
