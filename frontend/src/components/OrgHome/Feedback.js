@@ -9,7 +9,11 @@ function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = async () => {
+    if (selectedAnnouncement) {
+      await readFeedback(selectedAnnouncement);
+      fetchAllFeedback();
+    }
     setModalOpen(false);
   };
 
@@ -159,33 +163,24 @@ function Feedback() {
                 }
               >
 
-                <ListItemButton
-                  sx={{ maxHeight: "60px" }}
-                  onClick={() => handleOpenModal(item)}
-                >
-                {item.wasReadByUser === false && (
-                    <div
-                      className='unreadIcon'
-                      // style={{
-                      //   width: '8px',
-                      //   height: '8px',
-                      //   borderRadius: '50%',
-                      //   backgroundColor: 'lightBlue',
-                      //   marginRight: '10px',
-                      //   marginBottom: '20px'
-                      // }}
-                    ></div>
-                  )}
-                  <ListItemText
-                    primary={
-                      formatDate(item.createdAt) +
-                      " " +
-                      item.eventName
-                    }
-                    secondary={truncateText(item.feedbackText, 40)}
-                  />
-                  <Rating value={item.rating} readOnly />
-                </ListItemButton>
+              <ListItemButton
+                sx={{ maxHeight: "60px" }}
+                onClick={() => handleOpenModal(item)}
+              >
+                {limitedItems.includes(item) && item.wasReadByUser === false && (
+                  <div className='unreadIcon'></div>
+                )}
+                <ListItemText
+                  primary={
+                    formatDate(item.createdAt) +
+                    " " +
+                    item.eventName
+                  }
+                  secondary={truncateText(item.feedbackText, 40)}
+                />
+                <Rating value={item.rating} readOnly />
+              </ListItemButton>
+
               </ListItem>
               <Divider variant="middle" />
             </div>
