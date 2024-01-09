@@ -20,19 +20,22 @@ router.post('/', async (req, res) => {
 
             // Create a dummy student checked in entry
             const checkedInStudent = {
-                studentId: mongoose.Types.ObjectId('65616a1011a2035f14571238'), // store the object ID of the student you want to register in the event
+                studentId: new mongoose.Types.ObjectId('65616a1011a2035f14571238'), // store the object ID of the student you want to register in the event
                 checkInTime,
                 checkOutTime
             };
 
-            await Event.updateOne(
-                { _id: event._id },
-                { $push: { checkedInStudents: checkedInStudent } }
-            );
+            // The user has not checked into this event already
+            if (event.checkedInStudents.find(checkIn => checkIn.studentId.equals(checkedInStudent.studentId)) === undefined) {
+                await Event.updateOne(
+                    { _id: event._id },
+                    { $push: { checkedInStudents: checkedInStudent } }
+                );
+            }
         }
 
-        res.send("Checked in mock students generated and added to the first "+ events.length +" events.");
-        } catch (error) {
+        res.send("Checked in mock students generated and added to the first " + events.length + " events.");
+    } catch (error) {
         console.error('Error generating checked in volunteers:', error);
         res.status(500).send('Error generating mock checked in volunteers.');
     }
