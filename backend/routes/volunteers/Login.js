@@ -52,6 +52,66 @@ router.post('/', async (req, res) => {
                 return res.status(404).send("Not Found In Either User nor Organization - Invalid Credentials");
             }
         }
+
+        const config = {
+            service: 'gmail',
+            auth: {
+                user: process.env.EMAIL,
+                pass: process.env.EMAIL_PASSWORD
+            }
+        }
+
+        const transporterForLogin = nodemailer.createTransport(config);
+
+        const mailGenerator = new mailgen({
+            theme: 'default', // neopolitan, default, and cerberus are themes I liked
+            product: {
+                name: 'KnightAssist',
+                link: 'https://mailgen.js/', // dummy link will change later
+                // [not working yet]
+                // logo: '../utils/logo.svg', 
+                // logoWidth: '150px', 
+                // logoHeight: '50px', 
+            },
+        });
+
+        let name = '';
+        if (admin) name = admin.firstName + ' ' + admin.lastName;
+        else if (user.role === 'student') name = user.firstName + ' ' + user.lastName;
+        else name = user.name;
+
+        let response = {
+            body: {
+                name: 'Welcome' + name + '!',
+                intro: 'Successful login to KnightAssist! We\'re very excited to have you on board today!',
+                action: {
+
+                    instructions: 'A login has been made to your account at ' + new Date().toLocaleString() + '. If this was not you, please reply to this email and we will open a security ticket.',
+
+                },
+                outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
+            }
+        }
+
+        let mail = mailGenerator.generate(response);
+
+        let message = {
+            from: process.env.EMAIL,
+            to: req.body.email,
+            subject: 'Successful Login to KnightAssist!',
+            html: mail
+        }
+
+        transporterForLogin.sendMail(message, (err, info) => {
+            if (err) {
+                console.log(err);
+                return res.status(500).send("Failed to send login email checkpoint");
+            } else {
+                console.log(info);
+                return res.status(200).send("Email for login checkpoint request sent");
+            }
+        });
+
     } catch (err) {
         return res.status(503).send("Internal server error: " + err);
     }
