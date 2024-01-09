@@ -1,10 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-const { Schema } = mongoose;
+// const { Schema } = mongoose;
 const Event = require('../../models/events');
 
-// Helper function to generate random check-in and check-out times
 const generateRandomTimes = (start, end) => {
     const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     const checkOutTime = new Date(checkInTime.getTime() + Math.random() * (2 * 60 * 60 * 1000));
