@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog } from '@mui/material';
+import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog, DialogTitle, DialogContent } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { buildPath } from '../../path';
+import './OrgHome.css';
+import { lightBlue } from '@mui/material/colors';
 
 function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -156,10 +158,24 @@ function Feedback() {
                   </IconButton>
                 }
               >
+
                 <ListItemButton
                   sx={{ maxHeight: "60px" }}
                   onClick={() => handleOpenModal(item)}
                 >
+                {item.wasReadByUser === false && (
+                    <div
+                      className='unreadIcon'
+                      // style={{
+                      //   width: '8px',
+                      //   height: '8px',
+                      //   borderRadius: '50%',
+                      //   backgroundColor: 'lightBlue',
+                      //   marginRight: '10px',
+                      //   marginBottom: '20px'
+                      // }}
+                    ></div>
+                  )}
                   <ListItemText
                     primary={
                       formatDate(item.createdAt) +
@@ -176,12 +192,9 @@ function Feedback() {
           ))}
         </List>
       )}
-      <Dialog open={modalOpen} onClose={handleCloseModal}>
-        {selectedAnnouncement.eventName}
-        <div>
-          <h2>{selectedAnnouncement ? selectedAnnouncement.eventName : ""}</h2>
-          {/* Add more content as needed */}
-        </div>
+      <Dialog open={modalOpen} onClose={handleCloseModal} maxWidth='lg'>
+        <DialogTitle>{selectedAnnouncement?.eventName}</DialogTitle>
+        <DialogContent style={{ marginTop: '10px' }}>{selectedAnnouncement?.feedbackText}</DialogContent>
       </Dialog>
     </Box>
   );
