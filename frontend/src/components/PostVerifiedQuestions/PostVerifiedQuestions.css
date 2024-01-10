@@ -1,6 +1,7 @@
+
 .header{
     margin-top: 20px;
-    margin-bottom: 75px;
+    margin-bottom: 40px;
     font-size: 50px;
     font-family: "League Spartan";
 }
@@ -10,7 +11,7 @@
 }
 
 .profilePicSelect{
-    margin-left: 20%;
+    margin-left: 40%;
 }
 
 .goalQuestion{
@@ -40,11 +41,11 @@
 
 .allTags{
     margin-left: 30px;
-    margin-right: 30px;
 }
 
 .submitBtn{
     margin-top: 75px;
+	margin-bottom: 20px;
     width: 150px;
     background-color: #5f5395;
     border: none;
@@ -94,4 +95,18 @@
 .picStyle{
 	width: 100px !important;
 	height: 100px !important;
+}
+
+.socials{
+	margin-bottom: 50px;
+}
+
+.pvq{
+	overflow-x: hidden;
+}
+
+@media (max-width: 700px) {
+	.socials{
+	}	
+	
 }

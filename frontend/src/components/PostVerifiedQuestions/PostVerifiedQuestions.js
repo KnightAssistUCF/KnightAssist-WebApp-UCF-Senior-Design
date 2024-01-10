@@ -7,6 +7,9 @@ import Avatar from '@mui/material/Avatar';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
+import { Facebook, Instagram, LinkedIn, Phone, PhoneAndroid, X } from '@mui/icons-material';
+import { RiTwitterXFill } from 'react-icons/ri';
+import { BiGlobeAlt, BiWorld } from 'react-icons/bi';
 
 function PostVerifiedQuestions()
 {
@@ -20,6 +23,12 @@ function PostVerifiedQuestions()
 	const [picFile, setPicFile] = useState(null);
 	const [bgName, setBGName] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
+	const [phone, setPhone] = useState("");
+	const [website, setWebsite] = useState("");
+	const [fb, setFB] = useState("");
+	const [x, setX] = useState("");
+	const [ig, setIG] = useState("");
+	const [lIn, setlIn] = useState("");
 
 
 	const [role, setRole] = useState(undefined);
@@ -170,6 +179,46 @@ function PostVerifiedQuestions()
 		)
 	}
 
+	function Contact(){
+		return (
+			<div>
+				<p className='tagQuestion'>Phone & Website:</p>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
+					<Grid item sx={{marginRight: "50px"}}>
+						<TextField variant="standard" label={<PhoneAndroid/>} required={false} value={phone} onChange={(e) => setPhone(e.target.value)}/>
+					</Grid>
+					<Grid item>
+						<TextField variant="standard" label={<BiWorld/>} required={false} value={website} onChange={(e) => setWebsite(e.target.value)}/>
+					</Grid>
+				</Grid>
+			</div>
+		)
+	}
+
+	function SocialMedia(){
+		return (
+			<div>
+				<p className='tagQuestion'>Socials:</p>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
+					<Grid item sx={{marginRight: "50px"}}>
+						<TextField variant="standard" label={<Facebook/>} required={false} value={fb} onChange={(e) => setFB(e.target.value)}/>
+					</Grid>
+					<Grid item>
+						<TextField variant="standard" label={<RiTwitterXFill/>} required={false} value={x} onChange={(e) => setX(e.target.value)}/>
+					</Grid>
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" marginBottom={"50px"} layout={'row'} className='socials'>
+					<Grid item sx={{marginRight: "50px"}}>
+						<TextField variant="standard" label={<Instagram/>} required={false} value={ig} onChange={(e) => setIG(e.target.value)}/>
+					</Grid>
+					<Grid item>
+						<TextField variant="standard" label={<LinkedIn/>} required={false} value={lIn} onChange={(e) => setlIn(e.target.value)}/>
+					</Grid>
+				</Grid>
+			</div>
+		)
+	}
+
     function AllTags(){
 		return (
 			<div>
@@ -200,11 +249,14 @@ function PostVerifiedQuestions()
 
 
     return(
-      <div id='homePage'>
+      <div className='pvq'>
 		<Header/>
+		<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
 		{ProfilePicture()}
 		{(role === "organization") ? BackgroundPic() : ""}
-		<SemesterGoal/>
+		{(role === "organization") ? Contact() : ""}
+		{(role === "organization") ? SocialMedia() : ""}
+		{(role === "volunteer") ? <SemesterGoal/> : ""}
 		<AllTags/>
 		<button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button>
       </div>
