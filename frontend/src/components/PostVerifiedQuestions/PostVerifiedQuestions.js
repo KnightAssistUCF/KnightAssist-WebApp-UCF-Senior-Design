@@ -8,6 +8,9 @@ import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
 import { Facebook, Instagram, LinkedIn, Phone, PhoneAndroid, X } from '@mui/icons-material';
+import Stepper from '@mui/material/Stepper';
+import Step from '@mui/material/Step';
+import StepLabel from '@mui/material/StepLabel';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { BiGlobeAlt, BiWorld } from 'react-icons/bi';
 import { CardMedia } from '@mui/material';
@@ -31,12 +34,13 @@ function PostVerifiedQuestions()
 	const [x, setX] = useState("");
 	const [ig, setIG] = useState("");
 	const [lIn, setlIn] = useState("");
-
-
 	const [role, setRole] = useState(undefined);
 
     // State needed due to bug where tag names where undefined
     const [makeTags, setMakeTags] = useState([]);
+
+	const [currentStep, setCurrentStep] = useState(0);
+	const [steps, setSteps] = useState(["Account Information", "User Interests"]);
 
 	const backgroundSelect = useRef(null);
 	const profilePicSelect = useRef(null);
@@ -224,11 +228,15 @@ function PostVerifiedQuestions()
 		}
 	}
 
-    async function submit(){
-		if(role === "volunteer"){
-			submitVolunteer();
-		}else{
-			submitOrganization();
+    async function handleBtn(){
+		if(currentStep == 0){
+			setCurrentStep(1);
+		}else{ // Ready to submit
+			if(role === "volunteer"){
+				submitVolunteer();
+			}else{
+				submitOrganization();
+			}
 		}
     }
 
@@ -406,14 +414,28 @@ function PostVerifiedQuestions()
     return(
       <div className='pvq'>
 		<Header/>
-		<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
-		{Pictures()}
-		{(role === "organization") ? Description() : ""}
-		{(role === "organization") ? Contact() : ""}
-		{(role === "organization") ? SocialMedia() : ""}
-		{(role === "volunteer") ? SemesterGoal() : ""}
-		<AllTags/>
-		<button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button>
+		<Stepper activeStep={currentStep} alternativeLabel>
+			{steps.map((label, i) => (
+				<Step key={label} completed={currentStep > 0  && i == 0}>
+					<StepLabel>{label}</StepLabel>
+				</Step>
+			))}
+		</Stepper>
+		{(currentStep == 0) 
+			? 
+				<div>
+					<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
+					{Pictures()}
+					{(role === "organization") ? Description() : ""}
+					{(role === "organization") ? Contact() : ""}
+					{(role === "organization") ? SocialMedia() : ""}
+					{(role === "volunteer") ? SemesterGoal() : ""}				
+				</div>
+
+			:		
+				<AllTags/>
+		}
+		<button type="button" class="submitBtn btn btn-primary" onClick={() => handleBtn()}>{(currentStep == 0) ? "Next" : "Submit"}</button>
       </div>
     );
 };
