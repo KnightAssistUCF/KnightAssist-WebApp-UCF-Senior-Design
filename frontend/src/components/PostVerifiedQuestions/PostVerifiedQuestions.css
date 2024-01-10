@@ -1,12 +1,16 @@
 .header{
-    margin-top: 25px;
-    margin-bottom: 100px;
+    margin-top: 20px;
+    margin-bottom: 75px;
     font-size: 50px;
     font-family: "League Spartan";
 }
 
 .semesterGoal{
     margin-left: 25%;
+}
+
+.profilePicSelect{
+    margin-left: 20%;
 }
 
 .goalQuestion{
@@ -48,7 +52,8 @@
     
 .MuiChip-clickable:hover {
 	background-color: yellow;
-    }
+}
+
 .submitBtn:hover{
     background-color: #7566b4;
 }
@@ -59,4 +64,34 @@
 
 .submitBtn:active{
     background-color: #5f5395;
+}
+
+.selectPPic{
+	background-color: #5f5395;
+	border: none;
+	margin-left: 30px;
+}
+
+.selectPPic:hover{
+    background-color: #7566b4;
+}
+
+.selectPPic:visited{
+    background-color: #5f5395;
+}
+
+.selectPPic:active{
+    background-color: #5f5395;
+}
+
+.pPicQ{
+	font-size: 25px;
+    font-family: "League Spartan";
+	width: 300px;
+	float: left;
+}
+
+.picStyle{
+	width: 100px !important;
+	height: 100px !important;
 }
