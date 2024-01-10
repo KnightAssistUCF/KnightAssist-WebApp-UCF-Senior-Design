@@ -10,6 +10,7 @@ import './PostVerifiedQuestions.css'
 import { Facebook, Instagram, LinkedIn, Phone, PhoneAndroid, X } from '@mui/icons-material';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { BiGlobeAlt, BiWorld } from 'react-icons/bi';
+import { CardMedia } from '@mui/material';
 
 function PostVerifiedQuestions()
 {
@@ -19,6 +20,7 @@ function PostVerifiedQuestions()
     const [tags, setTags] = useState([]);
     const [colors, setColors] = useState(makeColorsArray());
     const [selectedTags, setSelectedTags] = useState([]);
+	const [description, setDescription] = useState("");
 	const [picName, setPicName] = useState(null);
 	const [picFile, setPicFile] = useState(null);
 	const [bgName, setBGName] = useState(null);
@@ -149,32 +151,51 @@ function PostVerifiedQuestions()
 		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
 	}
 
-	function ProfilePicture(){
+	function Pictures(){
 		return (
 			<div className='profilePicSelect'>
 				<Grid container justify="center" alignItems="center" marginBottom={"50px"}>
+					{(role === "organization") ? 
+						<CardMedia
+							component="img"
+							className='bgStyle'
+							image={(bgName !== null) ? URL.createObjectURL(bgName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+							onClick={() => document.getElementById("background").click()}
+						/>
+						: ""
+					}
 					<Avatar
 						src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-						className="picStyle"
+						className={"picStyle " + ((role === "organization") ? "orgPicStyle" : "")}
+						sx={{borderStyle: "solid", borderColor: "white"}}
+						onClick={() => document.getElementById("profilePic").click()}
 					/>
 					<label for="profilePic" className="selectPPic btn btn-primary">Select Profie Picture</label>
 					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]); setPicFile(profilePicSelect.current.files[0])}}}/>
+					{(role === "organization") ? 
+						<div>
+							<label for="background" className="selectPPic btn btn-primary">Select Background</label>
+							<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGName(backgroundSelect.current.files[0]); setBGFile(backgroundSelect.current.files[0])}}}/>
+						</div>
+						: ""
+					}
 				</Grid>
 			</div>
 		)
 	}
 
-	function BackgroundPic(){
+	function Description(){
 		return (
-			<div className='profilePicSelect'>
-				<Grid container justify="center" alignItems="center" marginBottom={"50px"}>
-					<Avatar
-						src={(bgName !== null) ? URL.createObjectURL(bgName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-						className="picStyle"
-					/>
-					<label for="background" className="selectPPic btn btn-primary">Select Background</label>
-					<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGName(backgroundSelect.current.files[0]); setBGFile(backgroundSelect.current.files[0])}}}/>
-				</Grid>
+			<div className='descriptionArea'>
+				<p className='tagQuestion'>Describe Your Organziation:</p>
+                <TextField
+                    label="Description"
+					className='descriptionBox'
+                    multiline
+                    minRows={5}
+                    onChange={(e) => setDescription(e.target.value)}
+                    value={description}
+                />
 			</div>
 		)
 	}
@@ -230,10 +251,25 @@ function PostVerifiedQuestions()
 		)
     }
 
+	async function getDefaultPic(){
+		const url = buildPath(`api/retrieveImage?entityType=organization&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=1`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let defaultBG = await response.blob();
+
+		setBGName(defaultBG);
+		setBGFile(defaultBG)
+	}
+
     useEffect(()=>{
-        if(localStorage.getItem("role") === "volunteer"){
+        if(sessionStorage.getItem("role") === "volunteer"){
 			setRole("volunteer");
 		}else{
+			getDefaultPic();
 			setRole("organization");
 		}
 
@@ -252,8 +288,8 @@ function PostVerifiedQuestions()
       <div className='pvq'>
 		<Header/>
 		<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
-		{ProfilePicture()}
-		{(role === "organization") ? BackgroundPic() : ""}
+		{Pictures()}
+		{(role === "organization") ? Description() : ""}
 		{(role === "organization") ? Contact() : ""}
 		{(role === "organization") ? SocialMedia() : ""}
 		{(role === "volunteer") ? <SemesterGoal/> : ""}

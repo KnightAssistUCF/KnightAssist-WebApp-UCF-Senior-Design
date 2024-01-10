@@ -11,7 +11,7 @@
 }
 
 .profilePicSelect{
-    margin-left: 40%;
+    margin-left: 30%;
 }
 
 .goalQuestion{
@@ -71,6 +71,8 @@
 	background-color: #5f5395;
 	border: none;
 	margin-left: 30px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .selectPPic:hover{
@@ -95,6 +97,19 @@
 .picStyle{
 	width: 100px !important;
 	height: 100px !important;
+	margin-left: 100px;
+}
+
+.orgPicStyle{
+	z-index: 2 !important;
+	position: absolute !important;
+}
+
+.bgStyle{	
+	position: relative;
+	height: 200px !important;
+	width: 300px !important;
+	z-index: 1;
 }
 
 .socials{
@@ -103,6 +118,14 @@
 
 .pvq{
 	overflow-x: hidden;
+}
+
+.descriptionArea{
+	margin-bottom: 50px;
+}
+
+.descriptionBox{
+	width: 40% !important;
 }
 
 @media (max-width: 700px) {

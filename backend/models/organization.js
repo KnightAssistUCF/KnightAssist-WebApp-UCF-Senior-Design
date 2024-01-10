@@ -28,7 +28,6 @@ const organizationSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     logoUrl: String,
     categoryTags: [String], // store tags for org
