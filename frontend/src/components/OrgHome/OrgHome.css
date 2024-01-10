@@ -1,12 +1,61 @@
-.move{
+.move {
     margin-left: 15%;
+    color: black;
+    text-align: left;
+    margin-top: 1%;
 }
 
-.yourEvents{
+.orgHomeTitle {
+    font-size: 30px;
+}
+
+/* .orgPortalTop {
+    padding-bottom: 10px;
+  } */
+  
+.addEventBtn {
+    margin: 0;
+}
+  
+
+
+.orgHomeTopRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nextEvent {
+    width: 48%;
+}
+.feedback {
+    padding-right: 5%;
+}
+
+.subtitle {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+.statCards {
     text-align: left;
-    margin-top: 20px;
-    font-size: 20px;
-    margin-bottom: 50px;
-    float: left;
-	color: black;
+    margin-top: 15px;
+}
+.stat {
+    font-size: 50px;
+    padding: 0 0 0 3px;
+}
+.statTitle {
+    font-size: 25px;
+    padding: 0 10px 5px;
+}
+.orgHomeBottomRow {
+    display: flex;
+}
+
+.unreadIcon {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: lightskyblue;
+    margin-right: 10px;
+    margin-bottom: 20px;
 }
