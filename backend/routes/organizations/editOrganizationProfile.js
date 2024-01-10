@@ -38,6 +38,9 @@ router.post('/', authenticateToken_Organization, async (req, res) => {
             user.eventsArray = (req.body.eventsArray) ? req.body.eventsArray : user.eventsArray;
             user.location = (req.body.location) ? req.body.location : user.location;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags;
+
+			// User has logged in by this point
+			user.firstTimeLogin = false;
             /* we will add more here as is needed later once we determine what actually can 
             be editatble */
             user.save();

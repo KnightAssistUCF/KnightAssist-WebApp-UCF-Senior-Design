@@ -31,6 +31,9 @@ router.post('/', authenticateToken_User, async (req, res) => {
             user.confirmToken = (req.body.confirmToken) ? req.body.confirmToken : user.confirmToken;
             user.semesterVolunteerHourGoal = (req.body.semesterVolunteerHourGoal) ? req.body.semesterVolunteerHourGoal : user.semesterVolunteerHourGoal;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags; 
+			
+			// User has logged in by this point
+			user.firstTimeLogin = false;
             /* For now this is based on what the schema has */
             user.save();
             res.status(200).send("User updated successfully");

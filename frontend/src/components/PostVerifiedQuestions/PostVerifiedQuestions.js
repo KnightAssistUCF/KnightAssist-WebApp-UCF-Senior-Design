@@ -147,6 +147,8 @@ function PostVerifiedQuestions()
 
             let res = await response.text();
             console.log(res);
+
+			window.location.href="/#/studenthomepage"
 		}catch(e){
 			console.log(e);
 		}
@@ -215,6 +217,8 @@ function PostVerifiedQuestions()
 
 			let res = await response.text();
 			console.log(res);
+
+			window.location.href="/#/orghome"
 		}catch(e){
 			console.log(e);
 		}
@@ -285,7 +289,7 @@ function PostVerifiedQuestions()
 						sx={{borderStyle: "solid", borderColor: "white"}}
 						onClick={() => document.getElementById("profilePic").click()}
 					/>
-					<label for="profilePic" className="selectPPic btn btn-primary">Select Profie Picture</label>
+					<label for="profilePic" className="selectPPic btn btn-primary">Select Profile Picture</label>
 					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]); setPicFile(profilePicSelect.current.files[0])}}}/>
 					{(role === "organization") ? 
 						<div>

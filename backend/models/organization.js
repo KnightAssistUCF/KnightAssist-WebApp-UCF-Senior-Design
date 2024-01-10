@@ -136,7 +136,7 @@ const organizationSchema = new Schema({
         // required: true,
         default: false
     }, 
-    role : {
+    role: {
         type: String,
         default: 'organization',
         required: true
