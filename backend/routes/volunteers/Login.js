@@ -104,6 +104,8 @@ router.post('/', async (req, res) => {
             const isPasswordValid = await bcrypt.compare(loginPassword, user.password);
             if (isPasswordValid) {
                 sendEmail('student', user);
+                if (user.firstTimeLogin)
+                    user.firstTimeLogin = false;
                 const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
                 res.status(200).set("authorization", token).send({user, "token": token}); 
             } else {
@@ -116,6 +118,8 @@ router.post('/', async (req, res) => {
                 const isPasswordValid = await bcrypt.compare(loginPassword, user.password);
                 if (isPasswordValid) {
                     sendEmail('organization', user);
+                    if (user.firstTimeLogin)
+                        user.firstTimeLogin = false;
                     const token = generateToken({ email: loginEmail}, process.env.JWT_SECRET_KEY);
 					res.status(200).set("authorization", token).send({user, "token": token}); 
                 } else {
