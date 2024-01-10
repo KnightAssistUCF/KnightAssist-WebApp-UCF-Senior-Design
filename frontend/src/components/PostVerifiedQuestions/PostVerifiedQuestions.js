@@ -411,7 +411,7 @@ function PostVerifiedQuestions()
 		{(role === "organization") ? Description() : ""}
 		{(role === "organization") ? Contact() : ""}
 		{(role === "organization") ? SocialMedia() : ""}
-		{(role === "volunteer") ? <SemesterGoal/> : ""}
+		{(role === "volunteer") ? SemesterGoal() : ""}
 		<AllTags/>
 		<button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button>
       </div>
