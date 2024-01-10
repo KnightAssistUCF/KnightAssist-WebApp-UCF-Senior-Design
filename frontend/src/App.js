@@ -21,6 +21,7 @@ import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
+import OrgProfile from './pages/OrgProfilePage';
 
 function App() 
 {
@@ -76,6 +77,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/orgprofile" element={<OrgProfile/>}></Route>
 			</Routes>
 		</Router>
 		</header>
