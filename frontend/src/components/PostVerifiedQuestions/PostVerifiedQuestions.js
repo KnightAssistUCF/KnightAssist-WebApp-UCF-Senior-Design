@@ -109,8 +109,123 @@ function PostVerifiedQuestions()
 		)
     }
 
+	async function submitVolunteer(){
+		try{
+			// Store picture
+			if(picFile !== null && typeof picFile.name === "string"){
+				let formData = new FormData();
+				formData.append('profilePic', picFile); 
+				formData.append('entityType', 'organization');
+				formData.append('id', sessionStorage.getItem("ID"));
+				formData.append('profilePicOrBackGround', '0');
+
+				// Store the picture selected to be associated with the event
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
+
+			const json = 
+			{
+				id: sessionStorage.getItem("ID"),
+				semesterVolunteerHourGoal: hourlyGoal,
+				categoryTags: selectedTags,
+			}
+
+			const url = buildPath("api/editUserProfile");
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+            });
+
+            let res = await response.text();
+            console.log(res);
+		}catch(e){
+			console.log(e);
+		}
+	}
+
+	async function submitOrganization(){
+		try{
+			// Store pictures
+			if(bgFile !== null && typeof bgFile.name === "string"){
+				let formData = new FormData();
+				formData.append('profilePic', bgFile); 
+				formData.append('entityType', 'organization');
+				formData.append('id', sessionStorage.getItem("ID"));
+				formData.append('profilePicOrBackGround', '0');
+
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+
+				formData = new FormData();
+				formData.append('profilePic', bgFile); 
+				formData.append('entityType', 'organization');
+				formData.append('id', sessionStorage.getItem("ID"));
+				formData.append('profilePicOrBackGround', '1');
+				
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
+
+			const json = 
+			{
+				id: sessionStorage.getItem("ID"),
+				description: description,
+				contact: {
+					phone: phone,
+					website: website,
+					socialMedia:{
+						facebook: fb,
+						twitter: x,
+						instagram: ig,
+						linkedin: lIn
+					}
+				},
+				categoryTags: selectedTags
+			}
+
+			const url = buildPath("api/editOrganizationProfile");
+
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+						"Authorization": `Bearer ${sessionStorage.getItem("token")}`
+			},
+				
+			});
+
+			let res = await response.text();
+			console.log(res);
+		}catch(e){
+			console.log(e);
+		}
+	}
+
     async function submit(){
-		console.log(selectedTags);
+		if(role === "volunteer"){
+			submitVolunteer();
+		}else{
+			submitOrganization();
+		}
     }
 
     function Header(){
