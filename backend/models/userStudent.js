@@ -88,6 +88,11 @@ const userStudentSchema = new mongoose.Schema({
         // required: true,
         default: false
     }, 
+    firstTimeLogin: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     __v: {
         type: String,
         required: true,

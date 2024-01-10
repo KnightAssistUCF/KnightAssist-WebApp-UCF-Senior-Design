@@ -142,6 +142,11 @@ const organizationSchema = new Schema({
         default: 'organization',
         required: true
     },
+    firstTimeLogin: {
+        type: Boolean,
+        required: true,
+        default: true
+    },
     __v: {
         type: String,
         required: true,
