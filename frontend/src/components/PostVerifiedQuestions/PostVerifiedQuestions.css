@@ -40,7 +40,15 @@
 }
 
 .allTags{
-    margin-left: 30px;
+    margin-left: 7%;
+    margin-right: 7%;
+    border: 1px solid #ccc; /* Border color */
+    padding: 10px; /* Padding around the tags */
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Optional: Box shadow */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .submitBtn{

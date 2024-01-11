@@ -18,6 +18,14 @@ import { CardMedia } from '@mui/material';
 function PostVerifiedQuestions()
 {
     //const [isVolunteerView, setIsVolunteerView] = useState(true);
+	function makeColorsArray(){
+		const colors = [];
+		for(let i = 0; i < 50; i++)
+			colors.push("default");
+
+		return colors;
+    }
+	
     const [hourlyGoal, setHourlyGoal] = useState(0);
     const [tagNames, setTagNames] = useState([]);
     const [tags, setTags] = useState([]);
@@ -62,13 +70,7 @@ function PostVerifiedQuestions()
 		getAllTags();
     }
 
-    function makeColorsArray(){
-		const colors = [];
-		for(let i = 0; i < 50; i++)
-			colors.push("default");
 
-		return colors;
-    }
 
     async function getTagNames(){
 		let url = buildPath(`api/getAllAvailableTags`);
@@ -98,12 +100,14 @@ function PostVerifiedQuestions()
 
 		setTags(
 			res.map((name, idx) => {
+				const isSelected = selectedTags.includes(name);
 				return (
 					<Chip
 					label={name}
 					className='tagChip'
 					onClick={() => handleClick(idx)}
 					sx={{backgroundColor: colors[idx], 
+						color: isSelected ? 'white' : 'black',
 						"&:hover": {
 						backgroundColor: (colors[idx] === "default") ? "default" : "purple"
 					}}}
