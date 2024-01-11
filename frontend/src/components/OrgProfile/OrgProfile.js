@@ -6,6 +6,7 @@ import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
+import OrgBox from './OrgBox';
 
 function OrgProfile() {
   
@@ -18,6 +19,7 @@ function OrgProfile() {
             {/* <div className='orgProfileTitle'>Organization Profile</div> */}
             <div className='orgBannerFiller'></div>
             <div className='navTabs'>
+                <OrgBox/>
                 <NavTabs/>
             </div>
         </div>
