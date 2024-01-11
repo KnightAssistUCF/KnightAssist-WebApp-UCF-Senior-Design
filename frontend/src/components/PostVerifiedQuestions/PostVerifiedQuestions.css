@@ -2,7 +2,7 @@
 .header{
     margin-top: 20px;
     margin-bottom: 40px;
-    font-size: 50px;
+    font-size: 45px;
 }
 
 .semesterGoal{
@@ -22,8 +22,8 @@
 }
 
 .logoStyle{
-    width: 75px;
-    height: 75px;
+    width: 60px;
+    height: 60px;
 }
 
 .tagQuestion{
@@ -39,7 +39,7 @@
 .allTags{
     margin-left: 7%;
     margin-right: 7%;
-    border: 1px solid #ccc; /* Border color */
+    border: 1px solid #ededed; /* Border color */
     padding: 10px; /* Padding around the tags */
     border-radius: 5px; /* Optional: Rounded corners */
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
@@ -49,8 +49,8 @@
 }
 
 .submitBtn{
-    margin-top: 75px;
-	margin-bottom: 20px;
+    margin-top: 30px;
+	margin-bottom: 10px;
     width: 150px;
     background-color: #5f5395;
     border: none;
