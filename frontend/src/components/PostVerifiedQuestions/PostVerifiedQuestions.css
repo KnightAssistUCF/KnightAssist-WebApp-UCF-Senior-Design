@@ -3,7 +3,6 @@
     margin-top: 20px;
     margin-bottom: 40px;
     font-size: 50px;
-    font-family: "League Spartan";
 }
 
 .semesterGoal{
@@ -17,7 +16,6 @@
 .goalQuestion{
     font-size: 25px;
     width: 300px;
-    font-family: "League Spartan";
     word-wrap: break-word;
     float: left;
     margin-right: 75px;
@@ -30,7 +28,6 @@
 
 .tagQuestion{
     font-size: 25px;
-    font-family: "League Spartan";
     margin-bottom: 10px;
 }
 
@@ -45,7 +42,7 @@
     border: 1px solid #ccc; /* Border color */
     padding: 10px; /* Padding around the tags */
     border-radius: 5px; /* Optional: Rounded corners */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Optional: Box shadow */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -97,7 +94,6 @@
 
 .pPicQ{
 	font-size: 25px;
-    font-family: "League Spartan";
 	width: 300px;
 	float: left;
 }
