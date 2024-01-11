@@ -13,7 +13,7 @@ function OrgProfile() {
 
   return (
     <div>
-        <OrgTopBar />
+        {/* <OrgTopBar /> */}
         <div className='orgProfilePage'>
             <Header />
             {/* <div className='orgProfileTitle'>Organization Profile</div> */}

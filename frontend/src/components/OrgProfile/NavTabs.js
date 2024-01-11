@@ -48,21 +48,21 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 const BioTabContent = () => (
   <div>
     {/* Content for Bio tab */}
-    <p>Bio content goes here.</p>
+    <p>Bio</p>
   </div>
 );
 
 const UpcomingEventsTabContent = () => (
   <div>
     {/* Content for Upcoming Events tab */}
-    <p>Upcoming Events content goes here.</p>
+    <p>Upcoming Events</p>
   </div>
 );
 
 const RatingsTabContent = () => (
   <div>
     {/* Content for Ratings tab */}
-    <p>Ratings content goes here.</p>
+    <p>Ratings</p>
   </div>
 );
 
