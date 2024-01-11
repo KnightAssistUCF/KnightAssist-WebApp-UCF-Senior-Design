@@ -37,3 +37,12 @@
     /* bottom: 10%;  */
     border: 1px solid #eaeaea;
 }
+
+.navSubTitle {
+    font-size: 20px;
+    color: #7a7a7a;
+}
+
+.navParagraphText {
+    font-size: 17px;
+}

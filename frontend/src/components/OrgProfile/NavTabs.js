@@ -3,6 +3,7 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
+import Bio from './Bio';
 
 const AntTabs = styled(Tabs)({
   borderBottom: '1px solid #e8e8e8',
@@ -48,7 +49,7 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 const BioTabContent = () => (
   <div>
     {/* Content for Bio tab */}
-    <p>Bio</p>
+    <Bio/>
   </div>
 );
 
