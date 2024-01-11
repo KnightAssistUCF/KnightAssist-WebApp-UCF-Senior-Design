@@ -14,6 +14,7 @@
 .cards{
     margin-left: 8px;
     margin-top: 10px;
+	text-align: center;
 }
 
 .pagination{
@@ -73,7 +74,7 @@
 }
 
 .eventName{
-    font-size: 75% !important;
+    font-size: 20px !important;
 }
 
 .eventDate{

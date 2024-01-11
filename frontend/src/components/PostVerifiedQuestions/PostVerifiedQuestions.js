@@ -48,7 +48,7 @@ function PostVerifiedQuestions()
     const [makeTags, setMakeTags] = useState([]);
 
 	const [currentStep, setCurrentStep] = useState(0);
-	const [steps, setSteps] = useState(["Account Information", "User Interests"]);
+	const [steps, setSteps] = useState([]);
 
 	const backgroundSelect = useRef(null);
 	const profilePicSelect = useRef(null);
@@ -232,17 +232,21 @@ function PostVerifiedQuestions()
 		}
 	}
 
-    async function handleBtn(){
+    async function handleStepBtn(){
 		if(currentStep == 0){
 			setCurrentStep(1);
-		}else{ // Ready to submit
-			if(role === "volunteer"){
-				submitVolunteer();
-			}else{
-				submitOrganization();
-			}
+		}else{ 
+			setCurrentStep(0);
 		}
     }
+
+	async function submit(){
+		if(role === "volunteer"){
+			submitVolunteer();
+		}else{
+			submitOrganization();
+		}
+	}
 
     function Header(){
 		return(
@@ -254,16 +258,18 @@ function PostVerifiedQuestions()
 
     function SemesterGoal(){
 		return (
-			<div className='semesterGoal'>
-				<Grid container justify="center" alignItems="center" marginBottom={"50px"}>
-					<p className='goalQuestion'>What is your semester-wide hourly volunteer goal?</p>
+			<div>
+				<Grid container justifyContent="center" alignItems="center" >
+						<p className='goalQuestion'>What is your semester-wide hourly volunteer goal?</p>
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" marginBottom={"40px"}>
 					<TextField
-					name={"Hourly Goal"}
-					required
-					label={"Hourly Goal"}
-					multiline={false}
-					onChange={(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setHourlyGoal(e.target.value)}}
-					value={hourlyGoal}
+						name={"Hourly Goal"}
+						required
+						label={"Hourly Goal"}
+						multiline={false}
+						onChange={(e) => {e.currentTarget.value = e.target.value.replace(/[\D\s]/, ''); setHourlyGoal(e.target.value)}}
+						value={hourlyGoal}
 					/>
 				</Grid>
 			</div>
@@ -374,7 +380,11 @@ function PostVerifiedQuestions()
     function AllTags(){
 		return (
 			<div>
-				<p className='tagQuestion'>Select up to 10 of the below interests:</p>
+				<p className='tagQuestion'>{(role === "volunteer") 
+					? "Select up to 10 of the below interests" 
+					: <div >Select up to 10 tags for your organization<br/><p className='smallText'>This helps connect your organization to volunteers interested in your causes</p></div>
+					}
+				</p>
 				<div className='allTags'>
 					{tags}
 				</div>
@@ -399,8 +409,10 @@ function PostVerifiedQuestions()
     useEffect(()=>{
         if(sessionStorage.getItem("role") === "volunteer"){
 			setRole("volunteer");
+			setSteps(["Account Information", "User Interests"]);
 		}else{
 			getDefaultPic();
+			setSteps(["Account Information", "Organization Tags"]);
 			setRole("organization");
 		}
 
@@ -416,9 +428,9 @@ function PostVerifiedQuestions()
 
 
     return(
-      <div className='pvq'>
+      <div className='spartan pvq'>
 		<Header/>
-		<Stepper activeStep={currentStep} alternativeLabel>
+		<Stepper activeStep={currentStep} alternativeLabel className='stepper'>
 			{steps.map((label, i) => (
 				<Step key={label} completed={currentStep > 0  && i == 0}>
 					<StepLabel>{label}</StepLabel>
@@ -439,7 +451,8 @@ function PostVerifiedQuestions()
 			:		
 				<AllTags/>
 		}
-		<button type="button" class="submitBtn btn btn-primary" onClick={() => handleBtn()}>{(currentStep == 0) ? "Next" : "Submit"}</button>
+		<button type="button" class="stepBtn btn btn-primary" onClick={() => handleStepBtn()}>{(currentStep == 0) ? "Next" : "Back"}</button>
+		{(currentStep == 1) ? <button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button> : ""}
       </div>
     );
 };
