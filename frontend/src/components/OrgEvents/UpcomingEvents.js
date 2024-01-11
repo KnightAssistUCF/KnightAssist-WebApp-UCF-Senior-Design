@@ -140,7 +140,7 @@ function UpcomingEvents(props)
                                 {props.name}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
+                               {new Date(props.date).toISOString().split("T")[0]}
                             </Typography>
                         </CardContent>
                     </Card>
