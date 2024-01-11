@@ -46,3 +46,19 @@
 .navParagraphText {
     font-size: 17px;
 }
+
+.profileEmail {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.navContactText {
+    font-size: 17px;
+    font-weight: 350;
+    padding-left: 12px;
+}
+
+.contactBox {
+    margin-top: 10px;
+}

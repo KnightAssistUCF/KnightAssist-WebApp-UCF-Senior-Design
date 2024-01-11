@@ -4,6 +4,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Bio from './Bio';
+import Contact from './Contact';
 
 const AntTabs = styled(Tabs)({
   borderBottom: '1px solid #e8e8e8',
@@ -51,6 +52,7 @@ const BioTabContent = () => (
   <div>
     {/* Content for Bio tab */}
     <Bio/>
+    <Contact/>
   </div>
 );
 
