@@ -9,6 +9,7 @@ function LoginComponents(props){
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
 	const [changeURL, setChangeURL] = useState(-1);
+	const [firstLogin, setFirstLogin] = useState(undefined);
 
 	// For bug fixing purposes so the user is sent to
 	// the right route always
@@ -19,7 +20,6 @@ function LoginComponents(props){
     function buildPath(route) {
 		if (process.env.NODE_ENV === 'production') {
 			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
-            
 		}
 		else {        
 			return 'http://localhost:8000/' + route;
@@ -65,6 +65,8 @@ function LoginComponents(props){
 					sessionStorage.setItem("role", "organization");
 					
 					props.setRole("organization");
+					console.log(res.user);
+					setFirstLogin(res.user.firstTimeLogin);
 					setChangeURL(changeURL * -1);
 					setLoginClicked(true);
 
@@ -88,6 +90,7 @@ function LoginComponents(props){
 					sessionStorage.setItem("role", "volunteer");
 					
 					props.setRole("volunteer");
+					setFirstLogin(res.user.firstTimeLogin);
 					setChangeURL(changeURL * -1);
 					setLoginClicked(true);
 
@@ -155,9 +158,17 @@ function LoginComponents(props){
 	useEffect(() => {
 		if(loginClicked){
 			if(sessionStorage.getItem("role") === "organization"){
-				window.location.href="/#/orghome"
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/orghome"
+				}
 			}else if(sessionStorage.getItem("role") === "volunteer"){
-				window.location.href="/#/studenthomepage";
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/studenthomepage";
+				}
 			}else{
 	
 			}

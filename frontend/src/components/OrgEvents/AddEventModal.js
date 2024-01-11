@@ -186,10 +186,8 @@ function AddEventModal(props)
             
             props.setEditMode(0);
 
-            //if(eventIsUpcoming(date.toISOString()))
-                props.setReset(props.reset * -1);
-            //else
-                props.setResetPast(props.resetPast * -1);
+			props.setReset(props.reset * -1);
+			props.setResetPast(props.resetPast * -1);
             
             props.setResetSearch(props.resetSearch * -1);
             

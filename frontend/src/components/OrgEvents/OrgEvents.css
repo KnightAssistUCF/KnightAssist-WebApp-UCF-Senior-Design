@@ -3,23 +3,21 @@
 }
  
 .orgSearch{
-    width: 500px !important;
+    width: 50% !important;
     margin-bottom: 5%;
 }
 
 .moveSearch{
     margin-top: 10px;
-    margin-left: 500px;
 }
 
 .cards{
-    margin-left: 5px;
+    margin-left: 8px;
     margin-top: 10px;
 }
 
 .pagination{
     margin-top: 15px;
-    margin-left: 500px;
 }
 
 .cardWhite{
@@ -29,7 +27,6 @@
 
 .card-body{
     width: 99%;
-    margin-left: 10px;
 }
 
 .upcomingEvents{
@@ -41,9 +38,9 @@
 }
 
 .event{
-    min-width: 22%;
-    max-width: 22%;
-    margin-left: 25px;
+    min-width: 275px;
+    max-width: 275px;
+    margin-right: 2%;
     margin-bottom: 20px;
     float: left;
 }
@@ -54,7 +51,7 @@
 }
 
 .eventsCard{
-    width: 1200px;
+    width: 95%;
 }
   
 .yourEvents{
@@ -62,6 +59,7 @@
     margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
+	color: black !important;
     float: left;
 }
 
@@ -292,4 +290,44 @@
 .qrLogo{
 	width: 75px;
 	height: 75px;
+}
+
+@media (max-width: 1500px) {
+	.event{
+		margin-right: 5%;
+	}
+
+	.eventsCard{
+		width: 95%;
+	}
+	
+}
+
+@media (max-width: 1200px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 85%;
+	}
+}
+
+
+@media (max-width: 925px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 315px;
+	}
 }

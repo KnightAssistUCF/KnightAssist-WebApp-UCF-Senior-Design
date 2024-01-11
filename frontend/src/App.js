@@ -21,6 +21,7 @@ import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
+import StudentSettingsPage from './pages/StudentSettingsPage';
 
 function App() 
 {
@@ -73,6 +74,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/studentannouncements" element={(role === "volunteer") ? <NewAnnPage/> : <Navigate from='/studentannouncements' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/studentsettings" element={(role === "volunteer") ? <StudentSettingsPage/> : <Navigate from='/studentsettings' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>

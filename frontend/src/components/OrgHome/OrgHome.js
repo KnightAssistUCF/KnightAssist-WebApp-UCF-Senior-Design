@@ -7,7 +7,7 @@ import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
 import Analytics from './Analytics';
-import { BarChart } from '@mui/x-charts/BarChart';
+import { BarChart } from '@mui/x-charts';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
@@ -79,7 +79,6 @@ function OrgHome() {
           <StatCards />
           <BarChart
             sx={{ rx: 15 }}
-            xAxis={[{ scaleType: 'band', data: ['Event 1', 'Event 2', 'Event 3'] }]}
             series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
             width={1000}
             height={310}

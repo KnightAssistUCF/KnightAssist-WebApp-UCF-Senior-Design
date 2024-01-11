@@ -148,7 +148,7 @@ function StudentHistory()
 			setShownHistories(histories);
 
 		} catch (e) {
-			console.log("failed");
+			console.log(e);
 		}  
 	}
 
