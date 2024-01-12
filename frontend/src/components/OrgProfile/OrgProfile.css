@@ -69,3 +69,16 @@
     /* height: 700px; */
     
 }
+
+.ratingNum {
+    font-size: 80px;
+    font-weight: 340;
+}
+
+/* .ratingAvg {
+    display: flex;
+} */
+
+.ratingtopcol {
+    display: inline;
+}

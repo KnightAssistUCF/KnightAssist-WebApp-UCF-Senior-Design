@@ -5,10 +5,11 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Bio from './Bio';
 import Contact from './Contact';
-import Scheduler from './Scheduler';
+import Calendar from './Scheduler';
+import Ratings from './Ratings';
 
 const AntTabs = styled(Tabs)({
-  borderBottom: '1px solid #e8e8e8',
+//   borderBottom: '1px solid #e8e8e8',
   '& .MuiTabs-indicator': {
     backgroundColor: '#1890ff',
   },
@@ -60,14 +61,14 @@ const BioTabContent = () => (
 const UpcomingEventsTabContent = () => (
   <div>
     {/* Content for Upcoming Events tab */}
-    <Scheduler/>
+    <Calendar/>
   </div>
 );
 
 const RatingsTabContent = () => (
   <div>
     {/* Content for Ratings tab */}
-    <p>Ratings</p>
+    <Ratings/>
   </div>
 );
 

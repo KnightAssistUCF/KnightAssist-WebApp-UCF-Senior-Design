@@ -9,10 +9,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { Scheduler } from "@aldabil/react-scheduler";
 
 
-function Map() {
-    const schedulerStyle = {
-        padding: '1px', // Adjust the padding value as needed
-      };
+function Calendar() {
 
     const myEventsList = [
         {
@@ -32,39 +29,30 @@ function Map() {
 
   return (
     <div>
-        <div style={schedulerStyle}  className='sch'>
-<Scheduler
-  view="month"
-  height={320}
-//   width={400}
-  events={[
-    {
-      event_id: 1,
-      title: "Event 1",
-      start: new Date("2024/1/1 09:30"),
-      end: new Date("2024/1/2 10:30"),
-    },
-    {
-      event_id: 2,
-      title: "Event 2",
-      start: new Date("2021/5/4 10:00"),
-      end: new Date("2021/5/4 11:00"),
-    },
-  ]}
-/>
-</div>
-{/* <div>
-<Calendar
-      localizer={localizer}
-      events={myEventsList}
-      startAccessor="start"
-      endAccessor="end"
-      style={{ height: 500 }}
-    />
-    </div> */}
-      
+      <div className='sch'>
+        <Scheduler
+          view="month"
+          height={320}
+          //width={400}
+          events={[
+            {
+              event_id: 1,
+              title: "Event 1",
+              start: new Date("2024/1/1 09:30"),
+              end: new Date("2024/1/2 10:30"),
+            },
+            {
+              event_id: 2,
+              title: "Event 2",
+              start: new Date("2021/5/4 10:00"),
+              end: new Date("2021/5/4 11:00"),
+            },
+          ]}
+        />
+      </div>
+    
     </div>
   );
 }
 
-export default Map;
+export default Calendar;
