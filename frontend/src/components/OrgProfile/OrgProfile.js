@@ -14,8 +14,8 @@ function OrgProfile() {
   return (
     <div>
         {/* <OrgTopBar /> */}
-        <div className='orgProfilePage'>
             <Header />
+        <div className='orgProfilePage'>
             {/* <div className='orgProfileTitle'>Organization Profile</div> */}
             <div className='orgBannerFiller'></div>
             <div className='navTabs'>

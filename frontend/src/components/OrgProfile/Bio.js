@@ -24,7 +24,7 @@ function Bio() {
             <div className='about'>
                 {/* <div className='navSubTitle'>About</div> */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                    <div className='navParagraphText'>{expanded ? loremIpsumText : `${loremIpsumText.slice(0, 700)}...`}</div>
+                    <div className='navParagraphText'>{expanded ? loremIpsumText : `${loremIpsumText.slice(0, 600)}...`}</div>
                     {!expanded && (
                         <Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', textTransform: 'none', marginTop: '2px' }}>
                             See More

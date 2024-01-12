@@ -19,7 +19,8 @@ function Contact() {
             <div className='navSubTitle'>Contact</div>
             <div className='profileEmail'>
                 <MailOutlineIcon/>
-                <div className='navContactText'>Email@email.org</div>
+                <div className='navContactText'>
+                    <a href='mailto:organizationemail@email.org'>OrganizationEmail@email.org</a></div>
             </div>
             <div className='profileEmail'>
                 <PhoneIcon/>
