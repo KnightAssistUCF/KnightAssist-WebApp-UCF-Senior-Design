@@ -4,11 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import Pagination from '@mui/material/Pagination';
 import { CardActionArea } from '@mui/material';
+import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
 
-function PastEvents(props)
+function SearchResults(props)
 {
 
     const [events, setEvents] = useState([]);
@@ -34,11 +34,11 @@ function PastEvents(props)
 		}
 	}
 
-	function changePage(e, value, perPage = eventsPerPage){
-		setPage(value);
-		let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+    function changePage(e, value, perPage = eventsPerPage){
+        setPage(value);
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
 		setEventCards(content);
-	}
+    }
 
     function openEventModal(id){
         props.setEventID(id);
@@ -50,7 +50,7 @@ function PastEvents(props)
         return new Date().toISOString().localeCompare(endTime) < 0;
 	}
 
-    async function getPastEvents(){
+    async function getUpcomingEvents(){
         const organizationID = "6530608eae2eedf04961794e";
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
@@ -78,7 +78,7 @@ function PastEvents(props)
         const events = [];
 
         for(let event of res){
-            if(!eventIsUpcoming(event.endTime)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -90,16 +90,15 @@ function PastEvents(props)
 		
 				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
 			}
-		}
-                
+        }       
+
         events.sort(function(a,b){ 
-            return b.props.date.localeCompare(a.props.date)
+            return a.props.date.localeCompare(b.props.date)
         });
 
         console.log(events);
 
-        setNumPages(Math.ceil(events.length / 4))
-
+        setNumPages(Math.ceil(events.length / eventsPerPage))
         setEvents(events);
 
 		setInitiateListener(initiateListener * -1);
@@ -107,7 +106,7 @@ function PastEvents(props)
         let extraBack = 0;
         
         // Need to go a page back due to deletion
-        if(((page - 1) * 4) >= events.length){
+        if(((page - 1) * eventsPerPage) >= events.length){
             setPage(page - 1);
             extraBack = 1;
         }
@@ -118,15 +117,15 @@ function PastEvents(props)
             extraBack = -1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
+        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, (page - 1 - extraBack) * eventsPerPage + eventsPerPage)}</div>
         setEventCards(content);
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Your Past Events</h1>
+        return <h1 className='upcomingEvents spartan'>Search Results</h1>
     }
 
-    function Event(props){
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -152,23 +151,21 @@ function PastEvents(props)
 
     function Events(){
         return (
-            <div className="belowSpace eventsCard card">       
+            <div className="eventsCard card">       
                 {eventCards}
             </div>
         )
     }
 
     useEffect(()=>{
-		console.log(sessionStorage)
-        getPastEvents();
+		getUpcomingEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
-        getPastEvents();
+        getUpcomingEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
-
 
 	useEffect(()=>{
 		const adjustForSize = () => {
@@ -199,7 +196,7 @@ function PastEvents(props)
 	},[initiateListener])
 
     return(
-     <div className='centerCards'>
+     <div className='upcomingEventsSpace'>
         <EventHeader/>
         <div>
             <Events/>
@@ -209,4 +206,4 @@ function PastEvents(props)
     );
 };
 
-export default PastEvents;
+export default SearchResults;

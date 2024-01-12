@@ -198,7 +198,7 @@ function UpcomingEvents(props)
     return(
      <div className='upcomingEventsSpace'>
         <EventHeader/>
-        <div>
+        <div className='centerCards'>
             <Events/>
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
         </div>

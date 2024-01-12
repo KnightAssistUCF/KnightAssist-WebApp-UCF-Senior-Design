@@ -13,6 +13,8 @@ function Search(props) {
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
+	const [searchTerm, setSearchTerm] = useState("");
+
     function openOrgPage(email){
         console.log(email);
     }
@@ -100,6 +102,12 @@ function Search(props) {
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.resetEventSearch])
 
+	useEffect(() => {
+		const filtered = options.filter((opt) => opt.label.includes(searchTerm));
+		console.log(filtered);
+		props.results.current = filtered;
+	}, [searchTerm])
+
     return (
       <div>
         <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
@@ -116,6 +124,7 @@ function Search(props) {
                   ...params.InputProps,
                   type: 'search',
                 }}
+				onChange={(e) => setSearchTerm(e.target.value)}
               />
             )}
           />

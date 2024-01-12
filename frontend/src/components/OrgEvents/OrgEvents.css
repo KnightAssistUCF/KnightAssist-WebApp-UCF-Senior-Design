@@ -37,6 +37,10 @@
     margin-bottom: 30px;
 }
 
+.centerCards{
+	text-align: center !important;
+}
+
 .event{
     min-width: 275px;
     max-width: 275px;
