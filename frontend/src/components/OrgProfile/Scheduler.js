@@ -34,7 +34,7 @@ function Calendar() {
       <div className='sch'>
         <Scheduler
           view="month"
-          height={380}
+          height={340}
           //width={400}
           events={[
             {
