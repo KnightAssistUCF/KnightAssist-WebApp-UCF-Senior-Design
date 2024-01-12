@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Bio from './Bio';
 import Contact from './Contact';
+import Scheduler from './Scheduler';
 
 const AntTabs = styled(Tabs)({
   borderBottom: '1px solid #e8e8e8',
@@ -59,7 +60,7 @@ const BioTabContent = () => (
 const UpcomingEventsTabContent = () => (
   <div>
     {/* Content for Upcoming Events tab */}
-    <p>Upcoming Events</p>
+    <Scheduler/>
   </div>
 );
 

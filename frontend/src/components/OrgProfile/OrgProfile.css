@@ -45,6 +45,7 @@
 
 .navParagraphText {
     font-size: 17px;
+    font-weight: 370;
 }
 
 .profileEmail {
@@ -61,4 +62,10 @@
 
 .contactBox {
     margin-top: 10px;
+}
+
+.sch {
+    width: 95%;
+    /* height: 700px; */
+    
 }
