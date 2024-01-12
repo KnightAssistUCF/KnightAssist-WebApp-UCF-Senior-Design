@@ -12,6 +12,7 @@ function AdminHome()
 {
 
   const [selectedToggle, setSelectedToggle] = useState('student');
+  const [allStudents, setAllStudents] = useState([]);
   const [students, setStudents] = useState([]);
   const [orgs, setOrgs] = useState([]);
   const [numOrgs, setNumOrgs] = useState(0);
@@ -37,6 +38,7 @@ function AdminHome()
       },
       });
       let res = await response.json();
+      setAllStudents(res);
       setStudents(res);
       setNumStudents(res.length);
     } catch(e) {
@@ -63,27 +65,26 @@ function AdminHome()
     }
   };
 
-  const searchStudents = (searchTerm) => {
-    // Ensure the searchTerm is not empty
-    console.log(searchTerm);
-    if (searchTerm.trim() !== "") {
-      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  const searchStudents = (term) => {
+    const lowerCaseSearchTerm = term.toLowerCase();
   
-      // Filter students based on the search term
+    if (term.trim() !== "") {
       const filteredStudents = students.filter((student) => {
-        const studentName = student.firstName ? student.firstName.toLowerCase() : "";
-        // Add more fields to search if needed
+        const studentFirstName = student.firstName ? student.firstName.toLowerCase() : "";
+        const studentLastName = student.lastName ? student.lastName.toLowerCase() : "";
   
-        return studentName.includes(lowerCaseSearchTerm);
+        return (
+          studentFirstName.includes(lowerCaseSearchTerm) ||
+          studentLastName.includes(lowerCaseSearchTerm)
+        );
       });
   
-      // Update the state with the filtered results
       setStudents(filteredStudents);
     } else {
-      // If the search term is empty, reset the data to the original state
-      getAllStudents();
+      setStudents(allStudents);
     }
   };
+  
   
 
 
