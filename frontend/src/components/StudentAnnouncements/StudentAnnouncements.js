@@ -26,10 +26,10 @@ function NewAnn() {
   const [searchTerm, setSearchTerm] = useState("");
 
   const fetchFavoritedUpdates = async () => {
-    //localStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
-    console.log(localStorage.getItem("ID"));
-    const authToken = localStorage.getItem("token");
-    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${localStorage.getItem("ID")}`);
+    //sessionStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
+    console.log(sessionStorage.getItem("ID"));
+    const authToken = sessionStorage.getItem("token");
+    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
     try {
       let response = await fetch(url2, {
         method: "GET",

@@ -25,14 +25,25 @@ function PreLoginNavBar() {
   };
 
   const handleMenuItemClick = (page) => {
+    console.log("clicked "+page);
     if (page === 'Home') {
       console.log('Redirecting to #/');
-      // Redirect to the desired page when Home is clicked
+      window.location.href = '#/';
       window.location.href = '/#';
-    } else {
-      // Handle other menu items
+    } else if(page === 'About') {
+      window.location.href = '#/about';
     }
     handleCloseNavMenu();
+  };
+  const handleOpenMenuItemClick = (page) => {
+    console.log("clicked "+page);
+    if (page === 'Home') {
+      console.log('Redirecting to #/');
+      window.location.href = '#/';
+      window.location.href = '/#';
+    } else if(page === 'About') {
+      window.location.href = '#/about';
+    }
   };
 
   const handleClick = () => {
@@ -143,7 +154,7 @@ function PreLoginNavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleOpenMenuItemClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block', ":hover": { color: '#F5D6BA', bgcolor: '#003D2E'}}}
               >
                 {page}

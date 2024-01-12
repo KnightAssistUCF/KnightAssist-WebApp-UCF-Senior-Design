@@ -31,7 +31,7 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.date.substring(0, event.date.indexOf("T")) + ": " + event.name), id: event._id});
+            tmp.push({label: (event.startTime.substring(0, event.startTime.indexOf("T")) + ": " + event.name), id: event._id});
         }
 
         setEvents(tmp);

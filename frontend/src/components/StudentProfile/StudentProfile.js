@@ -28,12 +28,12 @@ function StudentProfile(props)
 	  const [openModal, setOpenModal] = useState(false);
 
       async function getFields(){
-         let url = buildPath(`api/userSearch?userID=${localStorage.getItem("ID")}`);
+         let url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
 
          let response = await fetch(url, {
                method: "GET",
                headers: {"Content-Type": "application/json",
-                  "Authorization": `Bearer ${localStorage.getItem("token")}`
+                  "Authorization": `Bearer ${sessionStorage.getItem("token")}`
                }
          });
 

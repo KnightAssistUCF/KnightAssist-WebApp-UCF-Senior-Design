@@ -6,7 +6,7 @@ const PostVerificationQuestionsPage = () =>
 {
     return(
       <div className="postVerifyQsPage">
-	<PostVerifiedQuestions/>
+		<PostVerifiedQuestions/>
       </div>
     );
 };

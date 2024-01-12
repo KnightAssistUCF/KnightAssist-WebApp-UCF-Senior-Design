@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import { RiFeedbackLine } from "react-icons/ri";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -12,14 +13,14 @@ import Logo from '../Logo';
 
 function Header()
 {
-    let user = JSON.parse(localStorage.getItem('user-info'));
+    let user = JSON.parse(sessionStorage.getItem('user-info'));
     const navigate = useNavigate();
     console.warn(user);
 
     function logOut() {
         // handle logout logic
         // bring user to landing page
-        localStorage.clear();
+        sessionStorage.clear();
         navigate('/'); 
         
     }
@@ -86,6 +87,14 @@ function Header()
                         </a>
                     </LightTooltip>
                 </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Feedback" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/orgfeedback">
+                            <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
+                            <span class="links_name">Feedback</span>
+                        </a>
+                    </LightTooltip>
+                </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
                         <a href='#/orghistory'>
@@ -106,7 +115,7 @@ function Header()
             <div className="profile_content">
                 <div className="profile">
                     <LightTooltip title={!isSidebarActive ? "Log Out" : ""} placement="right" className="custom-tooltip">
-                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />} onClick={logOut}>
+                            <LogOutButton className="bigLogOut" endIcon={<BiLogOut />} onClick={logOut} style={{ textTransform: 'none' }}>
                                 Sign Out
                             </LogOutButton>
                             <SmallLogOutButton className="smallLogOut" style={{borderRadius: 5}} onClick={logOut}>

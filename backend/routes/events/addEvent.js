@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             location: req.body.location,
-            date: req.body.date,
+            // date: req.body.date, [REMOVED AFTER WE AGREED THAT DATE IS TO BE SPLIT INTO START AND END TIME ONLY]
             sponsoringOrganization: req.body.sponsoringOrganization,
             startTime: req.body.startTime,
             endTime: req.body.endTime,

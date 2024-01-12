@@ -22,7 +22,6 @@ function EventModal(props)
     const [name, setName] = useState("");
     //const [id, setID] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [location, setLocation] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [startTime, setStartTime] = useState("");
@@ -30,6 +29,9 @@ function EventModal(props)
     const [curVolunteers, setVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [tags, setTags] = useState([]);
+
+	const [hasEndDate, sethasEndDate] = useState(false);
+
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -51,7 +53,6 @@ function EventModal(props)
             setName(event.name);
             //setID(event._id);
             setDescription(event.description);
-            setDate(event.date);
             setLocation(event.location);
             setPicLink(event.picLink);
             setStartTime(event.startTime);
@@ -161,7 +162,7 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
                                             <Tooltip title="Date" placement="top">
@@ -170,7 +171,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
                                     </Grid>                            
 
                                     <Grid item width={"20%"}>
@@ -211,7 +212,7 @@ function EventModal(props)
 
                                 <Volunteers/>
                                 
-                                <Tags/>
+								{(tags.length > 0) ? <Tags/> : null}
                             </Box>
                         </Container>
                     </CardContent>   

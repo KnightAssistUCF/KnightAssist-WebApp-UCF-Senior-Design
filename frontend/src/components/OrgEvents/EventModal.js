@@ -27,6 +27,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
+import QRCodeModal from './QRCodeModal';
 
 const avatarPic = require("./DefaultPic.png");
 
@@ -40,7 +41,6 @@ function EventModal(props)
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [date, setDate] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [location, setLocation] = useState("");
     const [startTime, setStartTime] = useState("");
@@ -49,25 +49,57 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
+	const [showTags, setShowTags] = useState(false);
+
+	const [hasEndDate, sethasEndDate] = useState(false);
+
+	// If the event has started, you can generateACode
+	const [generateCheckIn, setGenerateCheckIn] = useState(false);
+	const [generateCheckOut, setGenerateCheckOut] = useState(false);
+	const [openQRModal, setOpenQRModal] = useState(false);
+	const [checkType, setCheckType] = useState(undefined);
  
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
+
+	// Can show the check in button if the event has not
+	// ended and it is the same day or the event has started
+	function canShowCheckIn(start, end){
+		let startDay = String(start);
+        startDay = startDay.substring(0, startDay.indexOf("T"));
+
         let today = new Date().toISOString();
         today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return date.localeCompare(today) >= 0;
-    }
+		
+		// It is before the day the event starts
+		if(startDay.localeCompare(today) > 0) return false;
+		
+		// It is before the event ends
+		return new Date().toISOString().localeCompare(end) < 0;
+	}
+
+	// During the period of the event
+	function canShowCheckOut(start, end){
+		const date = new Date().toISOString();
+		return date.localeCompare(start) > 0 && date.localeCompare(end) < 0;
+	}
+
+	function QROnClick(type){
+		setCheckType(type);
+		setOpenQRModal(true);
+	}
 
     async function getVolunteerInfo(id){
 
-        console.log(localStorage.getItem("token"))
+        console.log(sessionStorage.getItem("token"))
         let url = buildPath(`api/userSearch?userID=${id}`);
 
         let response = await fetch(url, {
             method: "GET",
             headers: {"Content-Type": "application/json",
-            "Authorization": `Bearer ${localStorage.getItem("token")}`
+            "Authorization": `Bearer ${sessionStorage.getItem("token")}`
             }        
         });
     
@@ -95,13 +127,22 @@ function EventModal(props)
         if(event) {
                 setName(event.name);
                 setDescription(event.description);
-                setDate(event.date);
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+				setShowTags(event.eventTags.length > 0);
+
+				const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+				const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+	
+				// If the event goes on for more than a day,
+				if(startDay !== endDay) 
+					sethasEndDate(true);
+				else
+					sethasEndDate(false);
 
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
@@ -121,6 +162,8 @@ function EventModal(props)
 
                 setVolunteerInfo(volunteers);
 
+				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
+				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
         } else {
             console.log("Event undefined or not found");
         }
@@ -176,7 +219,7 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <button className="volunteersBtn" onClick={() => setOpenVolunteers(!openVolunteers)}>
+                <button className="volunteersBtn" onClick={() => {if(curVolunteers > 0) setOpenVolunteers(!openVolunteers)}}>
                     <p className='lessSpace'>Registered Volunteers:</p>
                     <p>{curVolunteers}/{maxVolunteers}</p>
                 </button>
@@ -239,7 +282,7 @@ function EventModal(props)
 
         console.log(res);
 
-        if(eventIsUpcoming(date))
+        if(eventIsUpcoming(endTime))
             props.setReset(props.reset * -1);
         else
             props.setResetPast(props.resetPast * -1);  
@@ -281,7 +324,7 @@ function EventModal(props)
 
                                 <Description/>
 
-                                <Grid container sx={{justifyContent:'center'}} marginTop={"30px"} marginBottom={"20px"}>
+                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
                                     <Grid item width={"20%"}>
                                         <div className='anIcon'>
                                             <Tooltip title="Date" placement="top">
@@ -290,7 +333,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={date.substring(0, date.indexOf('T'))}/>
+                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
                                     </Grid>                            
 
                                     <Grid item width={"20%"}>
@@ -331,9 +374,19 @@ function EventModal(props)
 
                                 {Volunteers()}
 
-                                <Tags/>
+								{(showTags) ? <Tags/> : null}
+
+								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
+									<Grid item xs={4}>
+										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+
+									</Grid>
+									<Grid item xs={4}>
+										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
+									</Grid>
+								</Grid>   
       
-                                <Grid container marginLeft={"30%"} marginTop={"100px"}>
+                                <Grid container marginLeft={"30%"} marginTop={"50px"}>
                                     <Grid item xs={3}>
                                         <Tooltip title="Edit" placement="top">
                                             <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
@@ -369,6 +422,8 @@ function EventModal(props)
                         </Container>
                     </CardContent>   
                 </Card>
+
+				<QRCodeModal eventID={props.eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>
             </div>
 	
         </Modal>

@@ -24,7 +24,7 @@ function AddAnnouncementModal(props){
 
 	async function submit(){
         const json = {
-            organizationID: "6530608eae2eedf04961794e", //Will be changed to localstorage
+            organizationID: "6530608eae2eedf04961794e", //Will be changed to sessionStorage
             title: title,
 			content: content
         };

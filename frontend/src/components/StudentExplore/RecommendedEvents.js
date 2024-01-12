@@ -15,26 +15,40 @@ function RecommendedEvents(props)
     const [eventCards, setEventCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
+	const [eventsPerPage, setEventsPerPage] = useState(getInitialPerPage());
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
 
-    function changePage(e, value){
-        setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setEventCards(content);
-    }
+	function getInitialPerPage(){
+		const width = window.innerWidth;
+
+		if(width > 1500){
+			return 4;
+		}else if(width > 1200){
+			return 3;
+		}else if(width > 925){
+			return 2;
+		}else{
+			return 1;
+		}
+	}
+
+	function changePage(e, value, perPage = eventsPerPage){
+		setPage(value);
+		let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setEventCards(content);
+	}
 
     function openEventModal(id){
         props.setEventID(id);
         props.setOpen(true);
     }
 
-    function eventIsUpcoming(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        console.log(date, today)
-        return today <= date;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -50,7 +64,7 @@ function RecommendedEvents(props)
     }
 
     async function getEvents(){
-        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${localStorage.getItem("ID")}`);
+        let url = buildPath(`api/getSuggestedEvents_ForUser?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -64,7 +78,7 @@ function RecommendedEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsUpcoming(event.date)){
+            if(eventIsUpcoming(event.endTime)){
 				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
 				response = await fetch(url, {
@@ -75,7 +89,7 @@ function RecommendedEvents(props)
 				let pic = await response.blob();
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.date} id={event._id}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
             }
         }
 
@@ -85,6 +99,8 @@ function RecommendedEvents(props)
 
         setNumPages(Math.ceil(events.length / 4))
         setEvents(events);
+
+		setInitiateListener(initiateListener * -1);
 
         let extraBack = 0;
         
@@ -150,6 +166,34 @@ function RecommendedEvents(props)
         getEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
+
+	useEffect(()=>{
+		const adjustForSize = () => {
+			const width = window.innerWidth;
+			
+			const oldEventsPerPage = eventsPerPage;
+
+			if(width > 1500){
+				setEventsPerPage(4);
+				setNumPages(Math.ceil(events.length / 4))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 4), 4);
+			}else if(width > 1200){
+				setEventsPerPage(3);
+				setNumPages(Math.ceil(events.length / 3))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 3), 3);
+			}else if(width > 925){
+				setEventsPerPage(2);
+				setNumPages(Math.ceil(events.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
+			}else{
+				setEventsPerPage(1);
+				setNumPages(events.length)
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+	},[initiateListener])
 
     return(
      <div className='upcomingEventsSpace'>

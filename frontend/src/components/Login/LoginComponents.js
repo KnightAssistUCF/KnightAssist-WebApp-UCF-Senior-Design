@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './Login.css';
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
-function LoginComponents(){
+function LoginComponents(props){
 
-    console.log("Test");
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
+	const [changeURL, setChangeURL] = useState(-1);
+	const [firstLogin, setFirstLogin] = useState(undefined);
+
+	// For bug fixing purposes so the user is sent to
+	// the right route always
+	const [loginClicked, setLoginClicked] = useState(false);
+
+	const [openForgotPwd, setOpenForgotPwd] = useState(false);
 
     function buildPath(route) {
 		if (process.env.NODE_ENV === 'production') {
 			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
-            
 		}
 		else {        
 			return 'http://localhost:8000/' + route;
@@ -20,18 +27,18 @@ function LoginComponents(){
 	}
 
     async function doLogin(){
-        const json = {
+        let json = {
                         email: email,
                         password: password
                      };
 
         console.log(json);
 
-        const url = buildPath("api/Login");
+        let url = buildPath("api/Login");
 
         try {
 
-            const response = await fetch(url, {
+            let response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(json),
                 headers: {"Content-Type": "application/json"},
@@ -39,18 +46,61 @@ function LoginComponents(){
         
             let res = JSON.parse(await response.text());
 
-            localStorage.setItem("token", res.token);
-            localStorage.setItem("ID", res.user._id);
-            
             console.log(res);
 
-            /// The credentials matched an existing account
-            if(!('studentID' in res)) {
-                window.location.href="/#/orgevents"
-                setIsInvalid("");
-            }else if(!('organizationID' in res)) {
-                window.location.href="/#/studenthomepage";
-            }
+            if(res.user.role == "organization") {
+
+				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+			
+				const verifyRes = JSON.parse(await response.text());
+
+				if(verifyRes.emailVerifiedStatus){
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("role", "organization");
+					
+					props.setRole("organization");
+					console.log(res.user);
+					setFirstLogin(res.user.firstTimeLogin);
+					setChangeURL(changeURL * -1);
+					setLoginClicked(true);
+
+					setIsInvalid("");
+				}else{
+					setIsInvalid("is-invalid");
+				}
+            }else if(res.user.role == "student") {
+				url = buildPath(`api/checkIfEmailWasVerified_Volunteer?email=${res.user.email}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+			
+				const verifyRes = JSON.parse(await response.text());
+
+				if(verifyRes.emailVerifiedStatus){
+					sessionStorage.setItem("token", res.token);
+					sessionStorage.setItem("ID", res.user._id);
+					sessionStorage.setItem("role", "volunteer");
+					
+					props.setRole("volunteer");
+					setFirstLogin(res.user.firstTimeLogin);
+					setChangeURL(changeURL * -1);
+					setLoginClicked(true);
+
+					setIsInvalid("");
+				}else{
+					setIsInvalid("is-invalid");
+				}
+            }else{
+				// user is an admin
+			}
             
         } catch (e) {
             console.log(e.toString());
@@ -58,10 +108,6 @@ function LoginComponents(){
         }
     }
 
-    function sendToForgotPassword(){
-        // Send router to forgot password page
-    }
-    
     function onRegister(){
         // Perhaps modal appears asking if you want to 
         // register as a volunteer or org
@@ -99,7 +145,7 @@ function LoginComponents(){
 
     function ForgotPassword(){
         return (
-            <button className="forgotPWD" onClick={() => sendToForgotPassword()}>forgot password</button>
+            <button className="forgotPWD" onClick={() => setOpenForgotPwd(true)}>forgot password</button>
         )
     }
 
@@ -109,16 +155,41 @@ function LoginComponents(){
         )
     }
 
+	useEffect(() => {
+		if(loginClicked){
+			if(sessionStorage.getItem("role") === "organization"){
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/orghome"
+				}
+			}else if(sessionStorage.getItem("role") === "volunteer"){
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/studenthomepage";
+				}
+			}else{
+	
+			}
+		}
+		
+		setLoginClicked(false);
+		
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [changeURL])
+
     return (
         <div className="loginBox">
             {Email()}
             {Password()}
             <Login/>
             <div className="center">
-                <ForgotPassword/>
-                <Register/>
+                {ForgotPassword()}
+                {Register()}
             </div>
             <Copyright/>
+			<ForgotPasswordModal open={openForgotPwd} setOpen={setOpenForgotPwd}/>
         </div>
     )
 }
