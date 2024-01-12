@@ -58,7 +58,7 @@ function StudentTable(props) {
 
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -146,7 +146,7 @@ function StudentTable(props) {
         </Table>
       </TableContainer>
       <TablePagination
-        rowsPerPageOptions={[10, 15, 25]}
+        rowsPerPageOptions={[6, 10, 20]}
         component="div"
         count={props.students.length}
         rowsPerPage={rowsPerPage}
