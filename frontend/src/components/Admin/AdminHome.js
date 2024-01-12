@@ -16,6 +16,9 @@ function AdminHome()
   const [orgs, setOrgs] = useState([]);
   const [numOrgs, setNumOrgs] = useState(0);
   const [numStudents, setNumStudents] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  // const [studentSearchResults, setStudentSearchResults] = useState('');
+  
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -60,6 +63,29 @@ function AdminHome()
     }
   };
 
+  const searchStudents = (searchTerm) => {
+    // Ensure the searchTerm is not empty
+    console.log(searchTerm);
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase();
+  
+      // Filter students based on the search term
+      const filteredStudents = students.filter((student) => {
+        const studentName = student.firstName ? student.firstName.toLowerCase() : "";
+        // Add more fields to search if needed
+  
+        return studentName.includes(lowerCaseSearchTerm);
+      });
+  
+      // Update the state with the filtered results
+      setStudents(filteredStudents);
+    } else {
+      // If the search term is empty, reset the data to the original state
+      getAllStudents();
+    }
+  };
+  
+
 
 
   useEffect(() => {
@@ -67,9 +93,6 @@ function AdminHome()
     getAllOrgs();
   }, []);
 
-  useEffect(() => {
-    console.log(orgs);
-  }, [orgs]);
 
     
 
@@ -79,7 +102,11 @@ function AdminHome()
         <div className='adminPage'>
             <div className='adminHomeTitle'>Welcome, Admin</div>
             <div className='topFeatures'>
-              <SearchBar/>
+              <SearchBar
+                searchTerm = {searchTerm}
+                setSearchTerm = {setSearchTerm}
+                searchStudents={searchStudents}
+              />
               <ToggleButton onToggleChange={handleToggleChange}/>
             </div>
             <div className='toggleTables'>
