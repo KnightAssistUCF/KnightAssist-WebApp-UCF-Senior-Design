@@ -40,11 +40,13 @@ function Search(props) {
 
         // Due to bug and since this function is only called
         // upon initialization
-        if(flag === 1)
+        if(flag === 1){
           setOptions(tmp);
-        else
+		  props.results.current = tmp;
+		}else{
           if(props.searchType !== "organizations")
             setOptions(tmp);
+		}
     }
 
     async function getAllOrganization(){
@@ -103,9 +105,10 @@ function Search(props) {
     },[props.resetEventSearch])
 
 	useEffect(() => {
-		const filtered = options.filter((opt) => opt.label.includes(searchTerm));
+		const filtered = options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		console.log(filtered);
 		props.results.current = filtered;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchTerm])
 
     return (
@@ -113,6 +116,7 @@ function Search(props) {
         <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
           <Autocomplete 
             freeSolo
+			autoHighlight={true}
             disableClearable
             onChange={(e, value) => {handleClick(value.id)}}
             options={options}
