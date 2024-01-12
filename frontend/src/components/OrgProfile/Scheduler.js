@@ -11,20 +11,22 @@ import { Scheduler } from "@aldabil/react-scheduler";
 
 function Calendar() {
 
-    const myEventsList = [
-        {
-          id: 1,
-          title: 'Event 1',
-          start: new Date('2024-01-01T09:30:00'),
-          end: new Date('2024-01-02T10:30:00'),
-        },
-        {
-          id: 2,
-          title: 'Event 2',
-          start: new Date('2021-05-04T10:00:00'),
-          end: new Date('2021-05-04T11:00:00'),
-        },
-      ];
+    // const eventList = [
+    //     {
+    //       id: 1,
+    //       title: 'Event 1',
+    //       start: new Date('2024-01-01T09:30:00'),
+    //       end: new Date('2024-01-02T10:30:00'),
+    //       draggable: false,
+    //     },
+    //     {
+    //       id: 2,
+    //       title: 'Event 2',
+    //       start: new Date('2024-01-01T09:30:00'),
+    //       end: new Date('2024-01-02T10:30:00'),
+    //       draggable: false,
+    //     },
+    //   ];
   
 
   return (
@@ -32,7 +34,7 @@ function Calendar() {
       <div className='sch'>
         <Scheduler
           view="month"
-          height={320}
+          height={380}
           //width={400}
           events={[
             {
@@ -40,12 +42,22 @@ function Calendar() {
               title: "Event 1",
               start: new Date("2024/1/1 09:30"),
               end: new Date("2024/1/2 10:30"),
+              draggable: false,
+              deletable: false,
+              fields:  { 
+                  name: "description", 
+                  type: "input" , 
+                  config: { label: "Description", required: true, min: 3, email: true, variant: "outlined"}
+              }
             },
             {
               event_id: 2,
               title: "Event 2",
-              start: new Date("2021/5/4 10:00"),
-              end: new Date("2021/5/4 11:00"),
+              start: new Date("2024/1/2 10:00"),
+              end: new Date("2024/1/2 11:00"),
+              draggable: false,
+              editable: false,
+              deletable: false,
             },
           ]}
         />

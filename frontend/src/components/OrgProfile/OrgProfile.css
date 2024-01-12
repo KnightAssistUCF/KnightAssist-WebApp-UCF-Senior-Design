@@ -36,6 +36,8 @@
     left: 2%; 
     /* bottom: 10%;  */
     border: 1px solid #eaeaea;
+    display: flex;
+    justify-content: center;
 }
 
 .navSubTitle {
