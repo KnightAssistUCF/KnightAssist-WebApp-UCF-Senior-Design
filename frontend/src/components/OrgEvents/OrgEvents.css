@@ -3,8 +3,12 @@
 }
  
 .orgSearch{
-    width: 50% !important;
+	width: 400px !important;
     margin-bottom: 5%;
+}
+
+.theTop{
+	width: 100%;
 }
 
 .moveSearch{
@@ -64,7 +68,7 @@
     font-size: 20px;
     margin-bottom: 50px;
 	color: black !important;
-    float: left;
+    float: left !important;
 }
 
 .spartan{
@@ -88,8 +92,6 @@
 }
 
 .addEventBtn{
-    margin-right: 500px;
-    margin-top: 30px;
     background-color: #5f5395;
     border: none;
 }
@@ -220,8 +222,7 @@
 }
 
 .searchSwitch{
-    float: left;
-    margin-left: 150px;
+    margin-left: 100px;
 }
 
 .volunteersBtn{

@@ -45,56 +45,38 @@ function SearchResults(props)
         props.setOpenEvent(true);
     }
 
-	// Event has not happened yet or is not over
-    function eventIsUpcoming(endTime){
-        return new Date().toISOString().localeCompare(endTime) < 0;
+	function getOrgs(){
+
 	}
 
-    async function getUpcomingEvents(){
-        const organizationID = "6530608eae2eedf04961794e";
-        
-        let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
-
-        let response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-    
-        let res = JSON.parse(await response.text());
-
-        console.log(res);
-
-        url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
-
-        response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-
-        res = JSON.parse(await response.text());
-
-        console.log(res);    
-
+    async function getEvents(){
         const events = [];
-
-        for(let event of res){
-            if(eventIsUpcoming(event.endTime)){
-				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
-
-				response = await fetch(url, {
-					method: "GET",
-					headers: {"Content-Type": "application/json"},
-				});
 		
-				let pic = await response.blob();
-		
-				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
-			}
+		console.log(props.results.current)
+
+        for(let i of props.results.current){
+			let url = buildPath(`api/searchOneEvent?eventID=${i.id}`);
+
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let event = JSON.parse(await response.text());
+
+			event = event[0];
+
+			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+	
+			events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
         }       
-
-        events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
-        });
 
         console.log(events);
 
@@ -158,12 +140,12 @@ function SearchResults(props)
     }
 
     useEffect(()=>{
-		getUpcomingEvents();
+		getEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
-        getUpcomingEvents();
+        getEvents();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
@@ -198,7 +180,7 @@ function SearchResults(props)
     return(
      <div className='upcomingEventsSpace'>
         <EventHeader/>
-        <div>
+        <div className='centerCards'>
             <Events/>
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
         </div>
