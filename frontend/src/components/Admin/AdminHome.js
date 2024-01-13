@@ -1,10 +1,11 @@
 import {useState, useEffect} from 'react';
 
-import Header from '../OrgEvents/Header';
+import AdminHeader from './AdminHeader';
 import './AdminHome.css';
 import ToggleButton from './Toggle';
 import SearchBar from './SearchBar';
 import StudentTable from './StudentTable';
+import AdminTopBar from './AdminTopBar';
 import OrganizationTable from './OrgTable';
 import { buildPath } from '../../path.js';
 
@@ -65,7 +66,7 @@ function AdminHome()
     }
   };
 
-  const searchStudents = (term) => {
+  const searchUsers = (term) => {
     const lowerCaseSearchTerm = term.toLowerCase();
   
     if (term.trim() !== "") {
@@ -99,14 +100,14 @@ function AdminHome()
 
     return(
       <div>
-        <Header/>
+        <AdminTopBar/>
+        <AdminHeader/>
         <div className='adminPage'>
-            <div className='adminHomeTitle'>Welcome, Admin</div>
             <div className='topFeatures'>
               <SearchBar
                 searchTerm = {searchTerm}
                 setSearchTerm = {setSearchTerm}
-                searchStudents={searchStudents}
+                searchUsers={searchUsers}
               />
               <ToggleButton onToggleChange={handleToggleChange}/>
             </div>

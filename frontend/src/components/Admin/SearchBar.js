@@ -17,8 +17,7 @@ function SearchBar(props) {
   const handleInputChange = (event) => {
     const newValue = event.target.value;
     props.setSearchTerm(newValue);
-    // Call searchStudents with the updated search term
-    props.searchStudents(newValue);
+    props.searchUsers(newValue);
   };
 
 const handleKeyPress = (event) => {
