@@ -6,7 +6,7 @@ const logo = require("./loginPic.png");
 function LoginPic()
 {
    return(
-     <img className="loginPhoto" src={logo}/>
+     <img className="loginPhoto" alt="" src={logo}/>
    );
 };
 

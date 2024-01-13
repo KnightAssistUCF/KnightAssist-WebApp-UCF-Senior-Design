@@ -6,10 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import '../OrgPortal/OrgPortal.css';
-
-const logo = require("../Login/loginPic.png");
-
+import '../OrgEvents/OrgEvents';
 
 function RecentEvents(props)
 {
@@ -18,25 +15,40 @@ function RecentEvents(props)
     const [eventCards, setEventCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
+	const [eventsPerPage, setEventsPerPage] = useState(getInitialPerPage());
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
 
-    function changePage(e, value){
-        setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setEventCards(content);
-    }
+	function getInitialPerPage(){
+		const width = window.innerWidth;
 
+		if(width > 1500){
+			return 4;
+		}else if(width > 1200){
+			return 3;
+		}else if(width > 925){
+			return 2;
+		}else{
+			return 1;
+		}
+	}
+
+	function changePage(e, value, perPage = eventsPerPage){
+		setPage(value);
+		let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setEventCards(content);
+	}
+	
     function openEventModal(id){
         props.setEventID(id);
         props.setOpen(true);
     }
     
-    function eventIsPast(date){
-        date = String(date);
-        date = date.substring(0, date.indexOf("T"));
-        let today = new Date().toISOString();
-        today = today.substring(0, today.indexOf("T"));
-        return date.localeCompare(today) < 0;
-    }
+	// Event has not happened yet or is not over
+    function eventIsUpcoming(endTime){
+        return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -52,9 +64,7 @@ function RecentEvents(props)
     }
 
     async function getEvents(){
-        const userID = "123456789";
-
-        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${userID}`);
+        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -68,9 +78,19 @@ function RecentEvents(props)
 	    const events = [];
 
         for(let event of res){
-            if(eventIsPast(event.date)){
+            if(!eventIsUpcoming(event.endTime)){
+				console.log(event)
+				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = await response.blob();
+
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} orgName={orgName} date={event.date} id={event.eventID}/>)  
+                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
             }
         }
 
@@ -80,6 +100,8 @@ function RecentEvents(props)
 
         setNumPages(Math.ceil(events.length / 4))
         setEvents(events);
+
+		setInitiateListener(initiateListener * -1);
 
         let extraBack = 0;
         
@@ -97,9 +119,7 @@ function RecentEvents(props)
         return <h1 className='favHeader spartan'>Recent Events</h1>
     }
 
-    function Event(props) {
-        const date = new Date(props.date);
-      
+    function Event(props) {      
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -107,7 +127,7 @@ function RecentEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={logo}
+                            image={URL.createObjectURL(props.pic)}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -133,7 +153,36 @@ function RecentEvents(props)
 
     useEffect(()=>{
         getEvents();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+	useEffect(()=>{
+		const adjustForSize = () => {
+			const width = window.innerWidth;
+			
+			const oldEventsPerPage = eventsPerPage;
+
+			if(width > 1500){
+				setEventsPerPage(4);
+				setNumPages(Math.ceil(events.length / 4))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 4), 4);
+			}else if(width > 1200){
+				setEventsPerPage(3);
+				setNumPages(Math.ceil(events.length / 3))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 3), 3);
+			}else if(width > 925){
+				setEventsPerPage(2);
+				setNumPages(Math.ceil(events.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
+			}else{
+				setEventsPerPage(1);
+				setNumPages(events.length)
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+	},[initiateListener])
 
     return(
      <div className='upcomingEventsSpace'>
@@ -141,7 +190,7 @@ function RecentEvents(props)
         <div>
             <Events/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		</div>
      </div>
     );
 };

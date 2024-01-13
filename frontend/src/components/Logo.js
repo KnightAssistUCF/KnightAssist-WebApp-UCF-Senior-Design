@@ -4,7 +4,7 @@ const logo = require("../KAlogo.png");
 function Logo(props)
 {
    return(
-     <img className={"spartan " + props.theStyle} src={logo}/>
+     <img className={"spartan " + props.theStyle} src={logo} alt=""/>
    );
 };
 

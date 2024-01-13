@@ -6,7 +6,7 @@ const orgDB = require("../../models/organization");
 router.delete('/', async (req, res) => {
     const searchID = req.body.organizationID;
     try {
-        const organization = await orgDB.findOne({ organizationID: searchID });
+        const organization = await orgDB.findOne({ _id: searchID });
         if (!organization) return res.status(404).send('Organization not found in the database');
 
         organization.updates = [];

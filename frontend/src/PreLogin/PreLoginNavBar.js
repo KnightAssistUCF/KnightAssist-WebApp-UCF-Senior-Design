@@ -24,6 +24,28 @@ function PreLoginNavBar() {
     setAnchorElNav(null);
   };
 
+  const handleMenuItemClick = (page) => {
+    console.log("clicked "+page);
+    if (page === 'Home') {
+      console.log('Redirecting to #/');
+      window.location.href = '#/';
+      window.location.href = '/#';
+    } else if(page === 'About') {
+      window.location.href = '#/about';
+    }
+    handleCloseNavMenu();
+  };
+  const handleOpenMenuItemClick = (page) => {
+    console.log("clicked "+page);
+    if (page === 'Home') {
+      console.log('Redirecting to #/');
+      window.location.href = '#/';
+      window.location.href = '/#';
+    } else if(page === 'About') {
+      window.location.href = '#/about';
+    }
+  };
+
   const handleClick = () => {
     window.location.href = '#/login';
   };
@@ -90,7 +112,7 @@ function PreLoginNavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu} sx={{":hover": { color: '#5B4E77'}}}>
+                <MenuItem key={page} onClick={() => handleMenuItemClick(page)} sx={{":hover": { color: '#5B4E77'}}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -132,7 +154,7 @@ function PreLoginNavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleOpenMenuItemClick(page)}
                 sx={{ my: 2, color: 'white', display: 'block', ":hover": { color: '#F5D6BA', bgcolor: '#003D2E'}}}
               >
                 {page}

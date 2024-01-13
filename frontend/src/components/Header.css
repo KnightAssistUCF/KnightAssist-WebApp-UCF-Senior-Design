@@ -235,13 +235,13 @@ ul.nav_list li a .settingsIcon {
     display: none;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 1276px) {
     .custom-tooltip {
         display: none;
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1275px) {
     .sidebar {
         transition: all 0.2s ease;
         width: 70px;

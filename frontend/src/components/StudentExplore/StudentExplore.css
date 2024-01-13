@@ -46,3 +46,27 @@
 .addEventBtn:visited{
     background-color: #5f5395;
 }
+
+.iconInfo{
+    margin-left: 13%;
+}
+
+.anIcon{
+    float: left;
+}
+
+.logoandbg{
+	position: relative;
+	margin-bottom: 25px;
+}
+
+.cardBg{
+	position: relative;
+	z-index: 1;
+}
+
+.cardLogo{
+	z-index: 2;
+	width: 100px !important;
+	left: 30%;
+}

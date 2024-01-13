@@ -6,7 +6,7 @@ import Select from '@mui/material/Select';
 function SearchSwitch(props)
 {
     function setSearchType(e){
-	if(e.target.value == "events")
+	if(e.target.value === "events")
 	    props.setSearchType("events");
 	else
 	    props.setSearchType("organizations");

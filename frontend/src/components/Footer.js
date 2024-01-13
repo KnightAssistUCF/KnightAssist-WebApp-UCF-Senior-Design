@@ -10,7 +10,7 @@ export default function Footer() {
       <Container maxWidth="xl" sx={{p: 3}}>
         <Typography variant="body2" color="#3C3C3E" align="center">
           {"Copyright © "}
-          <Link color="inherit" href="https://your-website.com/">
+          <Link color="inherit" href="https://knightassist-43ab3aeaada9.herokuapp.com/">
             KnightAssist
           </Link>{" "}
           {new Date().getFullYear()}

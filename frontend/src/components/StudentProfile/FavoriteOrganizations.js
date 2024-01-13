@@ -6,10 +6,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
-import '../OrgPortal/OrgPortal.css';
-
-const logo = require("../Login/loginPic.png");
-
+import Avatar from '@mui/material/Avatar';
+import '../OrgEvents/OrgEvents';
 
 function FavoriteOrganizations(props)
 {
@@ -18,12 +16,31 @@ function FavoriteOrganizations(props)
     const [orgCards, setOrgCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
+	const [orgsPerPage, setOrgsPerPage] = useState(getInitialPerPage());
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
 
-    function changePage(e, value){
-        setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setOrgCards(content);
-    }
+	function getInitialPerPage(){
+		const width = window.innerWidth;
+
+		if(width > 1500){
+			return 4;
+		}else if(width > 1200){
+			return 3;
+		}else if(width > 925){
+			return 2;
+		}else{
+			return 1;
+		}
+	}
+
+	function changePage(e, value, perPage = orgsPerPage){
+		setPage(value);
+		let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setOrgCards(content);
+	}
+
 
     // Will open the organization's page
     function openOrgPage(id){
@@ -31,9 +48,7 @@ function FavoriteOrganizations(props)
     }
 
     async function getOrgs(){
-	const userID = "6519e4fd7a6fa91cd257bfda";
-
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${userID}`);
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -42,13 +57,36 @@ function FavoriteOrganizations(props)
 
         let res = JSON.parse(await response.text());
 
-	console.log(res);
+	    console.log(res);
 
-        for(let org of res)
-            orgs.push(<Org name={org.name} description={org.description} id={org.organizationID}/>)  
+        for(let org of res){
+			// Gets profile pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let profilePic = await response.blob();
+
+			// Gets background pic of org
+			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let background = await response.blob();
+
+            orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
+		}
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
+
+		setInitiateListener(initiateListener * -1);
 
         let extraBack = 0;
         
@@ -71,11 +109,19 @@ function FavoriteOrganizations(props)
             <div className="event spartan">
                 <CardActionArea className='test'>
                     <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
-                        <CardMedia
-                            component="img"
-                            height="150"
-                            image={logo}
-                        />
+						<div className='logoandbg'>
+							<CardMedia
+								component="img"
+								className='cardBg'
+								height="125"
+								image={URL.createObjectURL(props.background)}
+							/>
+							<Avatar
+								className='cardLogo'
+                              	src={URL.createObjectURL(props.profilePic)}
+								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
+                           />
+						</div>
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {props.name}
@@ -100,7 +146,36 @@ function FavoriteOrganizations(props)
 
     useEffect(()=>{
         getOrgs();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+	useEffect(()=>{
+		const adjustForSize = () => {
+			const width = window.innerWidth;
+			
+			const oldOrgsPerPage = orgsPerPage;
+
+			if(width > 1500){
+				setOrgsPerPage(4);
+				setNumPages(Math.ceil(orgs.length / 4))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 4), 4);
+			}else if(width > 1200){
+				setOrgsPerPage(3);
+				setNumPages(Math.ceil(orgs.length / 3))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 3), 3);
+			}else if(width > 925){
+				setOrgsPerPage(2);
+				setNumPages(Math.ceil(orgs.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 2), 2);
+			}else{
+				setOrgsPerPage(1);
+				setNumPages(orgs.length)
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+	},[initiateListener])
 
     return(
      <div className='upcomingEventsSpace'>

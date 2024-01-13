@@ -10,27 +10,37 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', authenticateToken_Organization, async (req, res) => {
-    await organization.findOne({ email: req.body.email }).then((user) => {
+
+    const query = {
+        $or: [
+            { _id: req.body.id },
+            { email: req.body.email }
+        ]
+    };
+
+    await organization.findOne(query).then((user) => {
         console.log(user); // debugging
         if (user) {
-            var newHashedPassword = bcryptjs.hashSync(req.body.password, 10);
-            user.name = req.body.name;
-            user.organizationID = req.body.organizationID;
-            user.email = req.body.email;
+            var newHashedPassword = (req.body.password) ? bcryptjs.hashSync(req.body.password, 10) : user.password;
+            user.name = (req.body.name) ? req.body.name : user.name;
+            user.email = (req.body.email) ? req.body.email : user.email;
             user.password = newHashedPassword;
-            user.description = req.body.description;
-            user.logoUrl = req.body.logoUrl;
-            user.followers = req.body.followers; // I doubt these work as of yet
-            user.favorites = req.body.favorites; // I doubt these work as of yet
-            user.updates = req.body.updates;
-            user.calendarLink = req.body.calendarLink;
-            user.contact = req.body.contact;
-            user.isActive = req.body.isActive;
-            user.eventHappeningNow = req.body.eventHappeningNow;
-            user.backgroundURL = req.body.backgroundURL;
-            user.eventsArray = req.body.eventsArray;
-            user.location = req.body.location;
-            user.categoryTags = req.body.categoryTags;
+            user.description = (req.body.description) ? req.body.description : user.description;
+            user.logoUrl = (req.body.logoUrl) ? req.body.logoUrl : user.logoUrl;
+            user.followers = (req.body.followers) ? req.body.followers : user.followers; 
+            user.favorites = (req.body.favorites) ? req.body.favorites : user.favorites; 
+            user.updates = (req.body.updates) ? req.body.updates : user.updates;
+            user.calendarLink = (req.body.calendarLink) ? req.body.calendarLink : user.calendarLink;
+            user.contact = (req.body.contact) ? req.body.contact : user.contact;
+            user.isActive = (req.body.isActive) ? req.body.isActive : user.isActive;
+            user.eventHappeningNow = (req.body.eventHappeningNow) ? req.body.eventHappeningNow : user.eventHappeningNow;
+            user.backgroundURL = (req.body.backgroundURL) ? req.body.backgroundURL : user.backgroundURL;
+            user.eventsArray = (req.body.eventsArray) ? req.body.eventsArray : user.eventsArray;
+            user.location = (req.body.location) ? req.body.location : user.location;
+            user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags;
+
+			// User has logged in by this point
+			user.firstTimeLogin = false;
             /* we will add more here as is needed later once we determine what actually can 
             be editatble */
             user.save();

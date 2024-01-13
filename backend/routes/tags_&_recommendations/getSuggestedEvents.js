@@ -15,12 +15,12 @@ function shuffleThis(array) {
 router.get('/', async (req, res) => {
         try {
                 const userID = req.query.userID;
-                const user = await userStudent.findOne({ studentID: userID });
+                const user = await userStudent.findOne({ _id: userID });
 
                 if (!user) {
                         return res.status(404).send('User not found in the database');
                 }
-
+				
                 // locate the user interest tags
                 const userTags = user.categoryTags;
 
