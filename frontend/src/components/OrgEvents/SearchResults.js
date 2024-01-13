@@ -105,7 +105,7 @@ function SearchResults(props)
 
     async function getEvents(){
         let events = [];
-		
+
         for(let i of props.results.current){
 			let url = buildPath(`api/searchOneEvent?eventID=${i.id}`);
 
@@ -115,6 +115,9 @@ function SearchResults(props)
 			});
 
 			let event = JSON.parse(await response.text());
+
+			// Not found
+			if(event.length < 1) continue
 
 			event = event[0];
 
@@ -239,7 +242,8 @@ function SearchResults(props)
 		if(props.searchType === "events")
 			getEvents();
 		else
-			getOrgs();		// eslint-disable-next-line react-hooks/exhaustive-deps
+			getOrgs();		
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
 	useEffect(()=>{

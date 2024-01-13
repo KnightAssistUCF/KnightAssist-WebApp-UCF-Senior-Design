@@ -44,8 +44,11 @@ function Search(props) {
           setOptions(tmp);
 		  props.results.current = tmp;
 		}else{
-          if(props.searchType !== "organizations")
+          if(props.searchType !== "organizations"){
             setOptions(tmp);
+			props.results.current = tmp;
+			console.log(props.results.current);
+		  }
 		}
     }
 
@@ -103,9 +106,11 @@ function Search(props) {
     },[props.searchType]);
 
     useEffect(()=>{
-      getAllEvents(0);
-      console.log(events);
-	  // eslint-disable-next-line react-hooks/exhaustive-deps
+		getAllEvents(0);
+		if(props.searchMode)
+			props.setResetSearchCards(props.resetSearchCards * -1);
+		console.log(events);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.resetEventSearch])
 
 	useEffect(() => {

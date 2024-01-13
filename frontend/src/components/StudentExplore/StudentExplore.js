@@ -10,6 +10,7 @@ import RecommendedOrganizations from './RecommendedOrganizations';
 import './StudentExplore.css'
 import '../StudentHome/StudentHome.css';
 import { Grid } from '@mui/material';
+import SearchResults from '../OrgEvents/SearchResults';
 
 function StudentExplore()
 {
@@ -35,7 +36,7 @@ function StudentExplore()
 					<SearchSwitch setSearchType={setSearchType}/>
 				</Grid>
 				<Grid item>
-					<Search searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
+					<Search results={results} searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 				</Grid>
 				<Grid item>
 					<button type="button" class="addEventBtn btn btn-primary" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
@@ -45,9 +46,14 @@ function StudentExplore()
 				</Grid>
 			</Grid>
 			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
-			<OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
-			<RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
-			<RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+			{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType}/> 
+				:
+				<div>
+					<OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>
+					<RecommendedEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetRecEvents}/>
+					<RecommendedOrganizations setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent}/>
+				</div>
+			}
 		</div>
       </div>
     );
