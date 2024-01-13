@@ -28,7 +28,6 @@ const defaultTheme = createTheme({
   },
 });
 
-// ... (import statements)
 
 export default function SignUp() {
   const [value, setValue] = React.useState("1");
@@ -107,7 +106,6 @@ export default function SignUp() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setAlertMessage("");
-    // empty all input fields
   };
 
   const handleFormSubmit = (data) => {
@@ -116,45 +114,29 @@ export default function SignUp() {
     setFormData(data);
   };
 
-  // async function doStudentRegister() {
-
-  //   var url = buildPath("api/userSignUp");
-
-  //   const json = {
-  //       organizationEmail: email,
-  //       tokenEnteredByOrg: verificationCode
-  //   };
-
-  //   console.log(json);
-
-  //   try {
-  //       const response = await fetch(url, {
-  //       method: "POST",
-  //       body: JSON.stringify(json),
-  //       headers: {"Content-Type": "application/json"},
-  //     });
-
-  //     let res = JSON.parse(await response.text());
-  //     console.log(res);
-  //     console.log(response);
-  //     if(res.success) {
-  //       setMessage("Correct code, please login");
-  //     } else if(!res.success) {
-  //       setMessage("*Incorrect verification code, please enter again");
-  //     } else {
-  //       setMessage("*Error occured");
-  //     }
-
-  //   } catch(e) {
-  //     console.log("oopsies");
-  //     setMessage("*Error occured, email not found");
-  //   }
-
-  // }
 
   function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+  }
+
+  function passwordStrengthChecker(userPassword) {
+    const minLength = 8;
+    // Regular expressions to check for different character types
+    const hasUppercase = /[A-Z]/.test(userPassword);
+    const hasLowercase = /[a-z]/.test(userPassword);
+    const hasNumber = /[0-9]/.test(userPassword);
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/.test(userPassword);
+
+    // Check if all criteria are met
+    const isPasswordWeak =
+      userPassword.length >= minLength &&
+      hasUppercase &&
+      hasLowercase &&
+      hasNumber &&
+      hasSymbol;
+
+    return isPasswordWeak;
   }
 
   function validateFields(user) {
@@ -196,8 +178,10 @@ export default function SignUp() {
         setVolErrorField("password", true);
         isValid = false;
       } else {
-        setVolMessageField("password", "");
-        setVolErrorField("password", false);
+        
+          setVolMessageField("password", "");
+          setVolErrorField("password", false);
+        
       }
       if(volConfirmPass.trim() === '') {
         setVolMessageField("confirmPassword", "confirm password empty");
@@ -255,16 +239,21 @@ export default function SignUp() {
   }, [volMessage]);
 
   const handleVolunteerSignUp = async () => {
-    var isValid = validateFields("volunteer");
+    var isEmpty = validateFields("volunteer");
     var url = buildPath("api/userSignUp");
+    var isPasswordWeak = passwordStrengthChecker(volPass);
+    console.log(isPasswordWeak);
   
     if (!isValidEmail(volEmail)) {
       // setMessage("Invalid email address");
       setVolErrorField("email", true);
     } else if(volPass != volConfirmPass) {
       setAlertMessage("Passwords do not match")
-    } else if(!isValid) {
+    } else if(!isEmpty) {
       setAlertMessage("Please fill out the empty fields")
+    }else if(!isPasswordWeak) {
+      setAlertMessage("Weak password. Password must:\n\n- Be at least 8 characters long\n- Include at least one uppercase letter\n- Include at least one lowercase letter\n- Include at least one number\n- Include at least one symbol");
+
     } else {
   
       var json = {
@@ -325,8 +314,6 @@ export default function SignUp() {
           body: JSON.stringify(json),
           headers: {"Content-Type": "application/json"},
         });
-          // let res = JSON.parse(await response.text());
-          // console.log(res);
           console.log(response.status);
           if(response.status === 409 ) {
             setAlertMessage("Organization already exists");
@@ -378,8 +365,19 @@ export default function SignUp() {
           <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} volMessage={volMessage} isVolError={isVolError} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
           <TabPanel value="2"><OrganizationForm orgName={orgName} orgMessage={orgMessage} isOrgError={isOrgError} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
-        {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Alert severity="error">{alertMessage}</Alert> : null}
+        {/* {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? (
+  <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}>
+    <Alert severity="error">{alertMessage}</Alert>
+  </Box>
+) : null}
+{((message !== undefined) && (message.includes("successfully"))) ? (
+  <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}>
+    <Alert severity="success">{message}</Alert>
+  </Box>
+) : null} */}
+       {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}><Alert severity="error">{alertMessage}</Alert></Box> : null}
         {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
+
         <Button
           type="submit"
           fullWidth
