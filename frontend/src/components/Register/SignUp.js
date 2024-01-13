@@ -299,7 +299,7 @@ export default function SignUp() {
   
 
   const handleOrgSignUp = async () => {
-    validateFields("organization");
+    var isValid = validateFields("organization");
     var url = buildPath("api/organizationSignUp");
 
     if (!isValidEmail(orgEmail)) {
@@ -307,6 +307,8 @@ export default function SignUp() {
       setVolErrorField("email", true);
     } else if(orgPass != orgConfirmPassword) {
       setAlertMessage("Passwords do not match")
+    }else if(!isValid) {
+      setAlertMessage("Please fill out the empty fields")
     } else {
       setVolErrorField("email", false);
       var json = {
