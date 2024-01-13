@@ -20,6 +20,13 @@ function UserInput() {
 
 	const [hasSent, setHasSent] = useState(false);
 
+	const styles = theme => ({
+		notchedOutline: {
+		  borderWidth: "1px",
+		  borderColor: "purple !important"
+		}
+	});
+
 	function submit(){
 
 	}
@@ -39,8 +46,15 @@ function UserInput() {
 	function GridTextField(props){
         return (
             <Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
-                <TextField
-                    name={props.name}
+                <TextField   
+					sx={{
+						"& label": {
+						"&.Mui-focused": {
+							color: 'purple'
+						}
+						}
+					}}            
+  					name={props.name}
                     fullWidth
                     required={props.required}
                     label={props.label}
@@ -70,7 +84,7 @@ function UserInput() {
 			</Grid>
 
 			{(!hasSent) ? <SuccessMessage/> : ""}
-			<Button sx={{ mt: 3, mb: 4, width: "75%", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Submit</Button>
+			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Submit</Button>
 
 		</div>
 	);
