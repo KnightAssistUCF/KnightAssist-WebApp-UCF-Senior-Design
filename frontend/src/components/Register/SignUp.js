@@ -43,6 +43,9 @@ export default function SignUp() {
   const [orgPass, setOrgPass] = useState("");
   const [orgConfirmPassword, setOrgConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [isEmpty, setIsEmpty] = useState(false);
+
 
   const [OrgformData, setOrgFormData] = React.useState({
     name: "",
@@ -107,7 +110,10 @@ export default function SignUp() {
 
     if (!isValidEmail(volEmail)) {
       setMessage("Invalid email address");
-    } else {
+    } else if(volFirstName.trim().length == 0) {
+      setMessage("First name is required");
+      setIsEmpty(true);
+    }else {
       var json = {
         firstName: volFirstName,
         lastName: volLastName,
@@ -162,9 +168,9 @@ export default function SignUp() {
           // console.log(res);
           console.log(response.status);
           if(response.status === 409 ) {
-            setMessage("Organization already exists");
+            setAlertMessage("Organization already exists");
           } else if(response.status === 200) {
-            setMessage("Registered successfully, please verify your email")
+            setAlertMessage("Registered successfully, please verify your email")
           }
       } catch(e) {
         console.log("org registration api failed");
@@ -216,7 +222,7 @@ export default function SignUp() {
               <Tab label="Organization" value="2" />
             </TabList>
           </Box>
-          <TabPanel value="1"><VolunteerForm setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
+          <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} message={message} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
           <TabPanel value="2"><OrganizationForm orgName={orgName} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
 
@@ -235,8 +241,8 @@ export default function SignUp() {
         >
           Sign Up
         </Button>
-        {(!(message.trim().length === 0) && (!message.includes("successfully"))) ? <Alert severity="error">{message}</Alert> : null}
-        {((message != undefined) && (message.includes("successfully"))) ? <Alert severity="success">{message}</Alert> : null}
+        {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Alert severity="error">{alertMessage}</Alert> : null}
+        {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
         <Grid container justifyContent="center">
           <Grid item>
             <Link href="#/login" variant="body2" sx={{ color: '#4E878C' }}>

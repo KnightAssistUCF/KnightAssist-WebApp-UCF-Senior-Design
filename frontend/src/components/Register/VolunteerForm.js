@@ -51,6 +51,8 @@ export default function VolunteerForm(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                error={props.isEmpty}
+                helperText={props.message}
                 value={props.volEmail}
                 onChange={(e) => props.setVolEmail(e.target.value)}
               />
