@@ -14,18 +14,27 @@ import { buildPath } from '../../path';
 function UserInput() {
 	const classes = useStyles();
 
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [email, setEmail] = useState("");
-	const [phone, setPhone] = useState("");
-	const [message, setMessage] = useState("");
+	const [firstName, setFirstName] = useState(undefined);
+	const [lastName, setLastName] = useState(undefined);
+	const [email, setEmail] = useState(undefined);
+	const [phone, setPhone] = useState(undefined);
+	const [message, setMessage] = useState(undefined);
 
 	const [hasSent, setHasSent] = useState(false);
+	const [checkedOnce, setCheckedOnce] = useState(false);
 
 	// To allow only letters for first and last name
 	const regex = /[^a-z]/gi;
 
 	async function submit(){
+		setCheckedOnce(true);
+
+		if(firstName === undefined || lastName === undefined || email === undefined
+		   || phone === undefined || message === undefined){
+		   return;
+		}
+			
+
 		const url = buildPath("api/contactUsFormSubmission");
 
 		const json = 
@@ -74,6 +83,7 @@ function UserInput() {
                 <TextField   
 					sx={{
 						"& label": {
+							color: 'purple',
 						"&.Mui-focused": {
 							color: 'purple'
 						}
@@ -89,6 +99,7 @@ function UserInput() {
                     onChange={props.onChange}
 					disabled={hasSent}
                     value={props.value}
+					error={checkedOnce && (props.value === undefined || props.value.length === 0)}
                 />
             </Grid>
         )
@@ -108,7 +119,7 @@ function UserInput() {
 			</Grid>
 
 			{(hasSent) ? <SuccessMessage/> : ""}
-			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Submit</Button>
+			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": {backgroundColor: "#7566b4"}}} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
 
 		</div>
 	);
