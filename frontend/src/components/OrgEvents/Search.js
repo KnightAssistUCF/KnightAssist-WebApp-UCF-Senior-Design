@@ -20,7 +20,7 @@ function Search(props) {
     }
 
     async function getAllEvents(flag){
-        let organizationID = "6530608eae2eedf04961794e";
+        let organizationID = sessionStorage.getItem("ID");
         let url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
 
         let response = await fetch(url, {

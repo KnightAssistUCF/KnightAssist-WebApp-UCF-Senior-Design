@@ -51,7 +51,7 @@ function PastEvents(props)
 	}
 
     async function getPastEvents(){
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
