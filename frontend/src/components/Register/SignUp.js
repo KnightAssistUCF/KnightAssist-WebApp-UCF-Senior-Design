@@ -59,9 +59,18 @@ export default function SignUp() {
     }));
   };
   const [isVolError, setIsVolError] = useState({
-    firstName: true,
-    lastName: true,
+    firstName: false,
+    lastName: false,
+    email: false,
+    password: false,
+    confirmPassword: false
   });
+  const setVolErrorField = (field, message) => {
+    setIsVolError((prevState) => ({
+      ...prevState,
+      [field]: message,
+    }));
+  };
 
 
   const [OrgformData, setOrgFormData] = React.useState({
@@ -73,6 +82,8 @@ export default function SignUp() {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setAlertMessage("");
+    // empty all input fields
   };
 
   const handleFormSubmit = (data) => {
@@ -126,29 +137,44 @@ export default function SignUp() {
     if(user.includes("volunteer")) {
       if(volFirstName.trim() === '') {
         setVolMessageField("firstName", "first name empty");
+        setVolErrorField("firstName", true);
       } else {
         setVolMessageField("firstName", "");
+        setVolErrorField("firstName", false);
       }
       if(volLastName.trim() === '') {
         setVolMessageField("lastName", "last name empty");
+        setVolErrorField("lastName", true);
       } else {
         setVolMessageField("lastName", "");
+        setVolErrorField("lastName", false);
       }
       if(volEmail.trim() === '') {
         setVolMessageField("email", "email empty");
+        setVolErrorField("email", true);
       } else {
         setVolMessageField("email", "");
-        console.log("validating email");
+        if (!isValidEmail(volEmail)) {
+          setVolMessageField("email", "Invalid email");
+          setVolErrorField("email", true);
+        } else {
+          setVolErrorField("email", false);
+          setVolMessageField("email", "");
+        }
       }
       if(volPass.trim() === '') {
         setVolMessageField("password", "password empty");
+        setVolErrorField("password", true);
       } else {
         setVolMessageField("password", "");
+        setVolErrorField("password", false);
       }
       if(volConfirmPass.trim() === '') {
         setVolMessageField("confirmPassword", "confirm password empty");
+        setVolErrorField("confirmPassword", true);
       } else {
         setVolMessageField("confirmPassword", "");
+        setVolErrorField("confirmPassword", false);
       }
       if(volConfirmPass.trim() != '' && volPass.trim() != '') {
         if(volPass != volConfirmPass) {
@@ -168,7 +194,8 @@ export default function SignUp() {
     var url = buildPath("api/userSignUp");
   
     if (!isValidEmail(volEmail)) {
-      setMessage("Invalid email address");
+      // setMessage("Invalid email address");
+      setVolErrorField("email", true);
     } else {
   
       var json = {
@@ -190,9 +217,9 @@ export default function SignUp() {
 
         console.log(response.status);
         if (response.status === 409) {
-          setMessage("User already exists");
+          setAlertMessage("User already exists");
         } else if (response.status === 200) {
-          setMessage("Registered successfully, please verify your email");
+          setAlertMessage("Registered successfully, please verify your email");
         }
       } catch (e) {
         console.log("volunteer registration api failed");
@@ -207,8 +234,10 @@ export default function SignUp() {
     var url = buildPath("api/organizationSignUp");
 
     if (!isValidEmail(orgEmail)) {
-      setMessage("Invalid email address");
+      // setMessage("Invalid email address");
+      setVolErrorField("email", true);
     } else {
+      setVolErrorField("email", false);
       var json = {
         name: orgName,
         password: orgPass,
@@ -241,7 +270,7 @@ export default function SignUp() {
 
 
   const handleSubmit = (userType) => {
-    setMessage("");
+    setAlertMessage("");
     if(userType == "volunteer") {
 
       handleVolunteerSignUp();
@@ -271,10 +300,11 @@ export default function SignUp() {
               <Tab label="Organization" value="2" />
             </TabList>
           </Box>
-          <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} message={message} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
+          <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} volMessage={volMessage} isVolError={isVolError} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
           <TabPanel value="2"><OrganizationForm orgName={orgName} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
-
+        {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Alert severity="error">{alertMessage}</Alert> : null}
+        {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
         <Button
           type="submit"
           fullWidth
@@ -290,8 +320,6 @@ export default function SignUp() {
         >
           Sign Up
         </Button>
-        {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Alert severity="error">{alertMessage}</Alert> : null}
-        {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
         <Grid container justifyContent="center">
           <Grid item>
             <Link href="#/login" variant="body2" sx={{ color: '#4E878C' }}>

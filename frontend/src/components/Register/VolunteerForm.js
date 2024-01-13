@@ -28,6 +28,8 @@ export default function VolunteerForm(props) {
                 required
                 fullWidth
                 label="First Name"
+                error={props.isVolError.firstName}
+                helperText={props.volMessage.firstName}
                 value={props.volName}
                 onChange={(e) => props.setName(e.target.value)}
                 autoFocus
@@ -41,6 +43,8 @@ export default function VolunteerForm(props) {
                 name="lastName"
                 autoComplete="family-name"
                 value={props.volLastName}
+                helperText={props.volMessage.lastName}
+                error={props.isVolError.lastName}
                 onChange={(e) => props.setVolLastName(e.target.value)}
               />
           </Grid>
@@ -51,8 +55,8 @@ export default function VolunteerForm(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                error={props.isEmpty}
-                helperText={props.message}
+                error={props.isVolError.email}
+                helperText={props.volMessage.email}
                 value={props.volEmail}
                 onChange={(e) => props.setVolEmail(e.target.value)}
               />
@@ -65,6 +69,8 @@ export default function VolunteerForm(props) {
                 label="Password"
                 type="password"
                 autoComplete="new-password"
+                error={props.isVolError.password}
+                helperText={props.volMessage.password}
                 value={props.volPass}
                 onChange={(e) => props.setVolPass(e.target.value)}
              />
@@ -77,6 +83,8 @@ export default function VolunteerForm(props) {
               label="Confirm Password"
               type="password"
               autoComplete="new-password"
+              error={props.isVolError.confirmPassword}
+              helperText={props.volMessage.confirmPassword}
               value={props.volConfirmPass}
               onChange={(e) => props.setVolConfirmPass(e.target.value)}
             />
