@@ -66,3 +66,9 @@
 .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
 	border-color: purple !important;
 }
+
+@media (max-width: 700px) {
+	.userInput{
+		width: 100%;
+	}
+}
