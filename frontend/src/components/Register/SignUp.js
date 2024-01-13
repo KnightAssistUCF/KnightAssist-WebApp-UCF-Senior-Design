@@ -58,6 +58,30 @@ export default function SignUp() {
       [field]: message,
     }));
   };
+  const [orgMessage, setOrgMessage] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const setOrgMessageField = (field, message) => {
+    setOrgMessage((prevState) => ({
+      ...prevState,
+      [field]: message,
+    }));
+  };
+  const [isOrgError, setIsOrgError] = useState({
+    name: false,
+    email: false,
+    password: false,
+    confirmPassword: false
+  });
+  const setOrgErrorField = (field, message) => {
+    setIsOrgError((prevState) => ({
+      ...prevState,
+      [field]: message,
+    }));
+  };
   const [isVolError, setIsVolError] = useState({
     firstName: false,
     lastName: false,
@@ -182,7 +206,13 @@ export default function SignUp() {
         }
       }
     } if(user.includes("organization")) {
-      console.log("validating org")
+      if(volFirstName.trim() === '') {
+        setOrgMessageField("name", "name empty");
+        setOrgErrorField("name", true);
+      } else {
+        setOrgMessageField("name", "");
+        setOrgErrorField("name", false);
+      }
     }
   }
   useEffect(() => {
