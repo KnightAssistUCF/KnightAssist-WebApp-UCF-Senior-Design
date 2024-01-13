@@ -218,7 +218,14 @@ export default function SignUp() {
           setOrgErrorField("email", true);
         } else {
           setOrgMessageField("email", "");
-          setOrgErrorField("email", false);
+          if (!isValidEmail(orgEmail)) {
+            setOrgMessageField("email", "Invalid email");
+            setOrgErrorField("email", true);
+          } else {
+            setOrgErrorField("email", false);
+            setOrgMessageField("email", "");
+          }
+          // setOrgErrorField("email", false);
         }
         if(orgPass.trim() === '') {
           setOrgMessageField("password", "password empty");
@@ -258,7 +265,7 @@ export default function SignUp() {
       };
 
       console.log(json);
-
+      console.log("attempting volunteer sign up");
       try {
         const response = await fetch(url, {
           method: "POST",
@@ -296,7 +303,7 @@ export default function SignUp() {
       };
 
       console.log(json);
-
+      console.log("attempting org sign up");
       try {
         const response = await fetch(url, {
           method: "POST",
