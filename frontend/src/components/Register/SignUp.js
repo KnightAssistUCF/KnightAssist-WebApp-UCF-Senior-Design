@@ -206,13 +206,34 @@ export default function SignUp() {
         }
       }
     } if(user.includes("organization")) {
-      if(volFirstName.trim() === '') {
-        setOrgMessageField("name", "name empty");
-        setOrgErrorField("name", true);
-      } else {
-        setOrgMessageField("name", "");
-        setOrgErrorField("name", false);
-      }
+        if(orgName.trim() === '') {
+          setOrgMessageField("name", "name empty");
+          setOrgErrorField("name", true);
+        } else {
+          setOrgMessageField("name", "");
+          setOrgErrorField("name", false);
+        }
+        if(orgEmail.trim() === '') {
+          setOrgMessageField("email", "email empty");
+          setOrgErrorField("email", true);
+        } else {
+          setOrgMessageField("email", "");
+          setOrgErrorField("email", false);
+        }
+        if(orgPass.trim() === '') {
+          setOrgMessageField("password", "password empty");
+          setOrgErrorField("password", true);
+        } else {
+          setOrgMessageField("password", "");
+          setOrgErrorField("password", false);
+        }
+        if(orgConfirmPassword.trim() === '') {
+          setOrgMessageField("confirmPassword", "confirm password empty");
+          setOrgErrorField("confirmPassword", true);
+        } else {
+          setOrgMessageField("confirmPassword", "");
+          setOrgErrorField("confirmPassword", false);
+        }
     }
   }
   useEffect(() => {
@@ -331,7 +352,7 @@ export default function SignUp() {
             </TabList>
           </Box>
           <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} volMessage={volMessage} isVolError={isVolError} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
-          <TabPanel value="2"><OrganizationForm orgName={orgName} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
+          <TabPanel value="2"><OrganizationForm orgName={orgName} orgMessage={orgMessage} isOrgError={isOrgError} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
         {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Alert severity="error">{alertMessage}</Alert> : null}
         {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}

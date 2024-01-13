@@ -35,6 +35,8 @@ export default function OrganizationForm(props) {
             fullWidth
             id="orgName"
             label="Organization Name"
+            error={props.isOrgError.name}
+            helperText={props.orgMessage.name}
             value={props.orgName}
             onChange={(e) => props.setOrgName(e.target.value)}
             autoFocus
@@ -48,6 +50,8 @@ export default function OrganizationForm(props) {
             label="Email Address"
             name="email"
             autoComplete="email"
+            error={props.isOrgError.email}
+            helperText={props.orgMessage.email}
             value={props.orgEmail}
             onChange={(e) => props.setOrgEmail(e.target.value)}
           />
@@ -61,6 +65,8 @@ export default function OrganizationForm(props) {
             type="password"
             id="password"
             autoComplete="new-password"
+            error={props.isOrgError.password}
+            helperText={props.orgMessage.password}
             value={props.orgPass}
             onChange={(e) => props.setOrgPass(e.target.value)}
           />
@@ -74,6 +80,8 @@ export default function OrganizationForm(props) {
             type="password"
             id="password"
             autoComplete="new-password"
+            error={props.isOrgError.confirmPassword}
+            helperText={props.orgMessage.confirmPassword}
             value={props.orgConfirmPassword}
             onChange={(e) => props.setOrgConfirmPassword(e.target.value)}
           />
