@@ -27,7 +27,7 @@ export default function Register() {
         <PreLoginNavBar />
         <Box sx={{ flexGrow: 1, paddingTop: 6, justifyContent: 'center'}}>
           <Container component="main" maxWidth="sm" sx={{ mb: 4, justifyContent: 'center', alignItems: 'center' }}>
-             <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+             <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)' }}>
                 <SignUp />
              </Paper>
           </Container>

@@ -207,10 +207,10 @@ export default function SignUp() {
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Typography component="h1" variant="h5" sx={{ paddingBottom: 2 }}>
-          Create an Account
+          Create An Account
         </Typography>
         <TabContext value={value}>
-          <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+          <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
             <TabList onChange={handleChange} centered indicatorColor="secondary" textColor="secondary">
               <Tab label="Volunteer" value="1" />
               <Tab label="Organization" value="2" />

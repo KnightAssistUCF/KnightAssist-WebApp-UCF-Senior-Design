@@ -137,3 +137,12 @@ html, body {
 	background-color: white;
 	color: black;
 } 
+
+.registerPage {
+  background-image: url('./components/Register/filler-temp-background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+	/* background-color: rgb(53, 78, 98); */
+	color: black;
+}
