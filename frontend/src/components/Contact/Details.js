@@ -6,13 +6,14 @@ import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import useStyles from '../../PreLogin/PreLoginStyles';
 import Footer from '../Footer';
 import './Contact.css';
+import AIGeneratedImage from './AIGeneratedImage';
 
 function Details() {
   const classes = useStyles();
 
   return (
 	<div>
-		
+		<AIGeneratedImage/>
 	</div>
   );
 }

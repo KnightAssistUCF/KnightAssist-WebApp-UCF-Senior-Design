@@ -5,11 +5,13 @@
 
 .userInput{
 	width: 50%;
+	margin-left: 10px;
 	float: left;
 }
 
 .contactCard{
 	margin-left: 13%;
+	border-radius: 15px !important;
 	width: 75% !important;
 	height: 75% !important;
 }
@@ -31,4 +33,15 @@
 .welcomeText{
 	font-size: 20px;
 	margin-bottom: 20px;
+}
+
+.successText{
+	margin-left: 10%;
+	width: 75%;
+	font-size: 17px;
+}
+
+.aiImage{
+	width: 50%;
+	height: 50%;
 }
