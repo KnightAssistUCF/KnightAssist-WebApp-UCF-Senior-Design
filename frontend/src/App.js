@@ -19,6 +19,7 @@ import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage
 import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
+import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import StudentSettingsPage from './pages/StudentSettingsPage';
@@ -80,6 +81,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
+			</Routes>
+		  <Routes>
+				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 		</Router>
 		</header>

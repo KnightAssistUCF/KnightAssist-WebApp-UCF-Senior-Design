@@ -48,7 +48,7 @@ function LoginComponents(props){
 
             console.log(res);
 
-            if(res.user.role == "organization") {
+            if(res.user?.role == "organization") {
 
 				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
 
@@ -74,7 +74,7 @@ function LoginComponents(props){
 				}else{
 					setIsInvalid("is-invalid");
 				}
-            }else if(res.user.role == "student") {
+            }else if(res.user?.role == "student") {
 				url = buildPath(`api/checkIfEmailWasVerified_Volunteer?email=${res.user.email}`);
 
 				response = await fetch(url, {
@@ -100,6 +100,17 @@ function LoginComponents(props){
 				}
             }else{
 				// user is an admin
+                sessionStorage.setItem("token", res.token);
+                sessionStorage.setItem("ID", res.adminUser._id);
+                sessionStorage.setItem("role", "admin");
+          
+                props.setRole("admin");
+                console.log(res.adminUser);
+                setFirstLogin(res.adminUser.firstTimeLogin);
+                setChangeURL((prevChangeURL) => prevChangeURL * -1);
+                setLoginClicked(true);
+          
+                setIsInvalid("");
 			}
             
         } catch (e) {
@@ -170,7 +181,7 @@ function LoginComponents(props){
 					window.location.href="/#/studenthomepage";
 				}
 			}else{
-	
+				window.location.href="/#/adminhome"
 			}
 		}
 		

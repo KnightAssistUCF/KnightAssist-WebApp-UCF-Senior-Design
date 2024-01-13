@@ -1,0 +1,49 @@
+.adminPage {
+    margin-left: 15%;
+    color: black;
+    text-align: left;
+    margin-top: 1%;
+}
+
+.adminHomeTitle {
+    font-size: 30px;
+}
+
+.topFeatures {
+    display: flex;
+    margin-top: 30px;
+}
+.toggleTables {
+    display: block;
+}
+
+.tableContainer {
+    margin-top: 18px;
+    width: 97%;
+}
+.total {
+    margin-top: 5px;
+    font-size: 17px;
+}
+
+
+
+  /* .tableContainer .MuiTablePagination-root {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  } */
+  
+
+/* const useStyles = makeStyles((theme) => ({
+    tableContainer: {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      minHeight: '100vh',
+    },
+    table: {
+      minWidth: 650,
+      textAlign: 'center', // Center text within cells
+    },
+  })); */
