@@ -51,7 +51,7 @@ function PreLoginNavBar() {
   };
 
   return (
-    <AppBar position="fixed" sx={{ bgcolor: 'rgba(0, 0, 0, 0.2)' }}>
+    <AppBar position="fixed" sx={{ bgcolor: '#00241B' }}> {/* bgcolor: 'rgba(0, 0, 0, 0.2)' */}
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* desktop view logo settings */}
