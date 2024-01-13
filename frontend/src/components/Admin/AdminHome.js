@@ -122,6 +122,11 @@ function AdminHome()
                 searchTerm = {searchTerm}
                 setSearchTerm = {setSearchTerm}
                 searchUsers={searchUsers}
+                selectedToggle={selectedToggle}
+                allStudents={allStudents}
+                allOrgs={allOrgs}
+                setStudents={setStudents}
+                setOrgs={setOrgs}
               />
               <ToggleButton onToggleChange={handleToggleChange}/>
             </div>

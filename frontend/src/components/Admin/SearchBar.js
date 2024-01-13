@@ -8,6 +8,11 @@ function SearchBar(props) {
 
   const handleClear = () => {
     props.setSearchTerm("");
+    if(props.selectedToggle == "student") {
+      props.setStudents(props.allStudents);
+    } else if(props.selectedToggle == "organization") {
+      props.setOrgs(props.allOrgs);
+    }
   };
   
   const showAllUpdates = () => {
