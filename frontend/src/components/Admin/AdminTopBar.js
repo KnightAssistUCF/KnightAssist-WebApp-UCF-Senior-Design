@@ -18,7 +18,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 function AdminTopBar()
 {
-    const settings = ['Profile', 'Logout'];
+    const settings = ['Settings', 'Logout'];
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 

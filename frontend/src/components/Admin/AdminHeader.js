@@ -82,8 +82,8 @@ function AdminHeader()
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
                         <a href="#/">
-                            <CgProfile className='homeIcon'/>
-                            <span class="links_name">Profile</span>
+                            <BiCog className='homeIcon'/>
+                            <span class="links_name">Settings</span>
                         </a>
                     </LightTooltip>
                 </li>
