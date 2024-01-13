@@ -23,6 +23,7 @@ import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import StudentSettingsPage from './pages/StudentSettingsPage';
+import ContactPage from './pages/ContactPage';
 
 function App() 
 {
@@ -82,7 +83,10 @@ function App()
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>
-		  <Routes>
+			<Routes>
+				<Route path="/contact" element={<ContactPage/>}></Route>
+			</Routes>
+		  	<Routes>
 				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 		</Router>

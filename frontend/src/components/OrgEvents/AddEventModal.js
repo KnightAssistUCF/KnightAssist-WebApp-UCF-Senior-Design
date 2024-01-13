@@ -142,7 +142,7 @@ function AddEventModal(props)
             name: name,
             description: description,
             location: location,
-            organizationID: "6530608eae2eedf04961794e",
+            organizationID: sessionStorage.getItem("ID"),
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -342,7 +342,7 @@ function AddEventModal(props)
     }
 
     const getOrgTags = async () => {
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
         const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
 
         try {
