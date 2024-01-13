@@ -290,6 +290,7 @@ export default function SignUp() {
   const handleOrgSignUp = async () => {
     var isValid = validateFields("organization");
     var url = buildPath("api/organizationSignUp");
+    var isPasswordWeak = passwordStrengthChecker(orgPass);
 
     if (!isValidEmail(orgEmail)) {
       // setMessage("Invalid email address");
@@ -298,7 +299,9 @@ export default function SignUp() {
       setAlertMessage("Passwords do not match")
     }else if(!isValid) {
       setAlertMessage("Please fill out the empty fields")
-    } else {
+    }else if(!isPasswordWeak) {
+      setAlertMessage("Weak password. Password must:\n\n- Be at least 8 characters long\n- Include at least one uppercase letter\n- Include at least one lowercase letter\n- Include at least one number\n- Include at least one symbol");
+    }  else {
       setVolErrorField("email", false);
       var json = {
         name: orgName,
@@ -365,19 +368,8 @@ export default function SignUp() {
           <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} volMessage={volMessage} isVolError={isVolError} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
           <TabPanel value="2"><OrganizationForm orgName={orgName} orgMessage={orgMessage} isOrgError={isOrgError} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
-        {/* {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? (
-  <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}>
-    <Alert severity="error">{alertMessage}</Alert>
-  </Box>
-) : null}
-{((message !== undefined) && (message.includes("successfully"))) ? (
-  <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}>
-    <Alert severity="success">{message}</Alert>
-  </Box>
-) : null} */}
-       {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}><Alert severity="error">{alertMessage}</Alert></Box> : null}
-        {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
-
+          {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}><Alert severity="error">{alertMessage}</Alert></Box> : null}
+          {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
         <Button
           type="submit"
           fullWidth
