@@ -14,6 +14,7 @@ function AdminHome()
 
   const [selectedToggle, setSelectedToggle] = useState('student');
   const [allStudents, setAllStudents] = useState([]);
+  const [allOrgs, setAllOrgs] = useState([]);
   const [students, setStudents] = useState([]);
   const [orgs, setOrgs] = useState([]);
   const [numOrgs, setNumOrgs] = useState(0);
@@ -59,6 +60,7 @@ function AdminHome()
       },
       });
       let res = await response.json();
+      setAllOrgs(res);
       setOrgs(res);
       setNumOrgs(res.length);
     } catch(e) {
@@ -68,21 +70,33 @@ function AdminHome()
 
   const searchUsers = (term) => {
     const lowerCaseSearchTerm = term.toLowerCase();
-  
+
     if (term.trim() !== "") {
-      const filteredStudents = students.filter((student) => {
-        const studentFirstName = student.firstName ? student.firstName.toLowerCase() : "";
-        const studentLastName = student.lastName ? student.lastName.toLowerCase() : "";
-  
-        return (
-          studentFirstName.includes(lowerCaseSearchTerm) ||
-          studentLastName.includes(lowerCaseSearchTerm)
-        );
-      });
-  
-      setStudents(filteredStudents);
+      if (selectedToggle === 'student') {
+        const filteredStudents = allStudents.filter((student) => {
+          const studentFirstName = student.firstName ? student.firstName.toLowerCase() : "";
+          const studentLastName = student.lastName ? student.lastName.toLowerCase() : "";
+
+          return (
+            studentFirstName.includes(lowerCaseSearchTerm) ||
+            studentLastName.includes(lowerCaseSearchTerm)
+          );
+        });
+
+        setStudents(filteredStudents);
+      } else if (selectedToggle === 'organization') {
+        console.log("heree");
+        const filteredOrgs = allOrgs.filter((org) => {
+          const orgName = org.name ? org.name.toLowerCase() : "";
+
+          return orgName.includes(lowerCaseSearchTerm);
+        });
+
+        setOrgs(filteredOrgs);
+      }
     } else {
       setStudents(allStudents);
+      setOrgs(allOrgs);
     }
   };
   
