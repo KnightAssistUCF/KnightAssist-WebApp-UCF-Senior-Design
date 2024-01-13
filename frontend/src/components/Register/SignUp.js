@@ -6,7 +6,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import VolunteerForm from './VolunteerForm';
 import OrganizationForm from './OrganizationForm';
 import Tab from "@mui/material/Tab";
@@ -45,6 +45,23 @@ export default function SignUp() {
   const [message, setMessage] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [isEmpty, setIsEmpty] = useState(false);
+  const [volMessage, setVolMessage] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const setVolMessageField = (field, message) => {
+    setVolMessage((prevState) => ({
+      ...prevState,
+      [field]: message,
+    }));
+  };
+  const [isVolError, setIsVolError] = useState({
+    firstName: true,
+    lastName: true,
+  });
 
 
   const [OrgformData, setOrgFormData] = React.useState({
@@ -105,21 +122,61 @@ export default function SignUp() {
     return emailRegex.test(email);
   }
 
-  const handleVolunteerSignUp = async () => {
-    var url = buildPath("api/userSignUp");
+  function validateFields(user) {
+    if(user.includes("volunteer")) {
+      if(volFirstName.trim() === '') {
+        setVolMessageField("firstName", "first name empty");
+      } else {
+        setVolMessageField("firstName", "");
+      }
+      if(volLastName.trim() === '') {
+        setVolMessageField("lastName", "last name empty");
+      } else {
+        setVolMessageField("lastName", "");
+      }
+      if(volEmail.trim() === '') {
+        setVolMessageField("email", "email empty");
+      } else {
+        setVolMessageField("email", "");
+        console.log("validating email");
+      }
+      if(volPass.trim() === '') {
+        setVolMessageField("password", "password empty");
+      } else {
+        setVolMessageField("password", "");
+      }
+      if(volConfirmPass.trim() === '') {
+        setVolMessageField("confirmPassword", "confirm password empty");
+      } else {
+        setVolMessageField("confirmPassword", "");
+      }
+      if(volConfirmPass.trim() != '' && volPass.trim() != '') {
+        if(volPass != volConfirmPass) {
+          console.log("passwords don't match");
+        }
+      }
+    } if(user.includes("organization")) {
+      console.log("validating org")
+    }
+  }
+  useEffect(() => {
+    console.log(volMessage);
+  }, [volMessage]);
 
+  const handleVolunteerSignUp = async () => {
+    validateFields("volunteer");
+    var url = buildPath("api/userSignUp");
+  
     if (!isValidEmail(volEmail)) {
       setMessage("Invalid email address");
-    } else if(volFirstName.trim().length == 0) {
-      setMessage("First name is required");
-      setIsEmpty(true);
-    }else {
+    } else {
+  
       var json = {
         firstName: volFirstName,
         lastName: volLastName,
         email: volEmail,
         password: volPass,
-        totalVolunteerHours: 0
+        totalVolunteerHours: 0,
       };
 
       console.log(json);
@@ -128,23 +185,25 @@ export default function SignUp() {
         const response = await fetch(url, {
           method: "POST",
           body: JSON.stringify(json),
-          headers: {"Content-Type": "application/json"},
+          headers: { "Content-Type": "application/json" },
         });
-          // let res = JSON.parse(await response.text());
-          // console.log(res);
-          console.log(response.status);
-          if(response.status === 409 ) {
-            setMessage("User already exists");
-          } else if(response.status === 200) {
-            setMessage("Registered successfully, please verify your email")
-          }
-      } catch(e) {
+
+        console.log(response.status);
+        if (response.status === 409) {
+          setMessage("User already exists");
+        } else if (response.status === 200) {
+          setMessage("Registered successfully, please verify your email");
+        }
+      } catch (e) {
         console.log("volunteer registration api failed");
       }
-    }
+      
+    };
   };
+  
 
   const handleOrgSignUp = async () => {
+    validateFields("organization");
     var url = buildPath("api/organizationSignUp");
 
     if (!isValidEmail(orgEmail)) {
@@ -183,22 +242,12 @@ export default function SignUp() {
 
   const handleSubmit = (userType) => {
     setMessage("");
-    console.log(userType)
     if(userType == "volunteer") {
-      console.log(volFirstName);
-      console.log(volLastName);
-      console.log(volEmail);
-      console.log(volPass);
-      console.log(volConfirmPass);
 
       handleVolunteerSignUp();
 
 
     } else if(userType == "organization") {
-      console.log(orgName);
-      console.log(orgEmail);
-      console.log(orgPass);
-      console.log(orgConfirmPassword);
 
       handleOrgSignUp();
     }
