@@ -228,7 +228,7 @@ function SearchResults(props)
     }
 
     useEffect(()=>{
-		if(props.searchMode === "events")
+		if(props.searchType === "events")
 			getEvents();
 		else
 			getOrgs();
@@ -236,7 +236,7 @@ function SearchResults(props)
     },[])
 
     useEffect(()=>{
-		if(props.searchMode === "events")
+		if(props.searchType === "events")
 			getEvents();
 		else
 			getOrgs();		// eslint-disable-next-line react-hooks/exhaustive-deps
