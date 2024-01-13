@@ -103,7 +103,6 @@ export default function SignUp() {
   }
 
   const handleVolunteerSignUp = async () => {
-    console.log("here in this function");
     var url = buildPath("api/userSignUp");
 
     if (!isValidEmail(volEmail)) {
@@ -137,6 +136,40 @@ export default function SignUp() {
         console.log("volunteer registration api failed");
       }
     }
+  };
+
+  const handleOrgSignUp = async () => {
+    var url = buildPath("api/organizationSignUp");
+
+    if (!isValidEmail(orgEmail)) {
+      setMessage("Invalid email address");
+    } else {
+      var json = {
+        name: orgName,
+        password: orgPass,
+        email: orgEmail,
+      };
+
+      console.log(json);
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(json),
+          headers: {"Content-Type": "application/json"},
+        });
+          // let res = JSON.parse(await response.text());
+          // console.log(res);
+          console.log(response.status);
+          if(response.status === 409 ) {
+            setMessage("Organization already exists");
+          } else if(response.status === 200) {
+            setMessage("Registered successfully, please verify your email")
+          }
+      } catch(e) {
+        console.log("org registration api failed");
+      }
+    }
 
 
   };
@@ -160,6 +193,8 @@ export default function SignUp() {
       console.log(orgEmail);
       console.log(orgPass);
       console.log(orgConfirmPassword);
+
+      handleOrgSignUp();
     }
     // console.log(formData); // Access the form data directly
     // console.log(OrgformData.name);
