@@ -91,9 +91,13 @@ function Search(props) {
         if(props.searchType === "events"){
           setLabel("Search For Events");
           setOptions(events);
+		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
