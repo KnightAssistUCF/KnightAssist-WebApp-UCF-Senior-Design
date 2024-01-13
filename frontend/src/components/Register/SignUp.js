@@ -239,7 +239,7 @@ export default function SignUp() {
         {((message != undefined) && (message.includes("successfully"))) ? <Alert severity="success">{message}</Alert> : null}
         <Grid container justifyContent="center">
           <Grid item>
-            <Link href="#" variant="body2" sx={{ color: '#4E878C' }}>
+            <Link href="#/login" variant="body2" sx={{ color: '#4E878C' }}>
               Already have an account? Sign in
             </Link>
           </Grid>
