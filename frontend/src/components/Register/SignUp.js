@@ -13,6 +13,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from '@mui/lab/TabPanel';
+import { buildPath } from '../../path';
 
 const defaultTheme = createTheme({
   palette: {
@@ -58,6 +59,70 @@ export default function SignUp() {
     setFormData(data);
   };
 
+  // async function doStudentRegister() {
+
+  //   var url = buildPath("api/userSignUp");
+
+  //   const json = {
+  //       organizationEmail: email,
+  //       tokenEnteredByOrg: verificationCode
+  //   };
+
+  //   console.log(json);
+
+  //   try {
+  //       const response = await fetch(url, {
+  //       method: "POST",
+  //       body: JSON.stringify(json),
+  //       headers: {"Content-Type": "application/json"},
+  //     });
+
+  //     let res = JSON.parse(await response.text());
+  //     console.log(res);
+  //     console.log(response);
+  //     if(res.success) {
+  //       setMessage("Correct code, please login");
+  //     } else if(!res.success) {
+  //       setMessage("*Incorrect verification code, please enter again");
+  //     } else {
+  //       setMessage("*Error occured");
+  //     }
+
+  //   } catch(e) {
+  //     console.log("oopsies");
+  //     setMessage("*Error occured, email not found");
+  //   }
+
+  // }
+
+  const handleVolunteerSignUp = async () => {
+    console.log("here in this function");
+    var url = buildPath("api/userSignUp");
+
+    var json = {
+        firstName: volFirstName,
+        lastName: volLastName,
+        email: volEmail,
+        password: volPass,
+        totalVolunteerHours: 0
+    };
+
+    console.log(json);
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(json),
+        headers: {"Content-Type": "application/json"},
+      });
+        let res = JSON.parse(await response.text());
+        console.log(res);
+    } catch(e) {
+      console.log("volunteer registration api failed");
+    }
+  };
+
+
   const handleSubmit = (userType) => {
     console.log(userType)
     if(userType == "volunteer") {
@@ -66,6 +131,10 @@ export default function SignUp() {
       console.log(volEmail);
       console.log(volPass);
       console.log(volConfirmPass);
+
+      handleVolunteerSignUp();
+
+
     } else if(userType == "organization") {
       console.log(orgName);
       console.log(orgEmail);
