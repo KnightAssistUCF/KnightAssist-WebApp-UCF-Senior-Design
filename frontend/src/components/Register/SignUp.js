@@ -158,10 +158,12 @@ export default function SignUp() {
   }
 
   function validateFields(user) {
+    var isValid = true;
     if(user.includes("volunteer")) {
-      if(volFirstName.trim() === '') {
+      if(volFirstName == '') {
         setVolMessageField("firstName", "first name empty");
         setVolErrorField("firstName", true);
+        isValid = false;
       } else {
         setVolMessageField("firstName", "");
         setVolErrorField("firstName", false);
@@ -169,6 +171,7 @@ export default function SignUp() {
       if(volLastName.trim() === '') {
         setVolMessageField("lastName", "last name empty");
         setVolErrorField("lastName", true);
+        isValid = false;
       } else {
         setVolMessageField("lastName", "");
         setVolErrorField("lastName", false);
@@ -176,11 +179,13 @@ export default function SignUp() {
       if(volEmail.trim() === '') {
         setVolMessageField("email", "email empty");
         setVolErrorField("email", true);
+        isValid = false;
       } else {
         setVolMessageField("email", "");
         if (!isValidEmail(volEmail)) {
           setVolMessageField("email", "Invalid email");
           setVolErrorField("email", true);
+          isValid = false;
         } else {
           setVolErrorField("email", false);
           setVolMessageField("email", "");
@@ -189,6 +194,7 @@ export default function SignUp() {
       if(volPass.trim() === '') {
         setVolMessageField("password", "password empty");
         setVolErrorField("password", true);
+        isValid = false;
       } else {
         setVolMessageField("password", "");
         setVolErrorField("password", false);
@@ -196,19 +202,16 @@ export default function SignUp() {
       if(volConfirmPass.trim() === '') {
         setVolMessageField("confirmPassword", "confirm password empty");
         setVolErrorField("confirmPassword", true);
+        isValid = false;
       } else {
         setVolMessageField("confirmPassword", "");
         setVolErrorField("confirmPassword", false);
-      }
-      if(volConfirmPass.trim() != '' && volPass.trim() != '') {
-        if(volPass != volConfirmPass) {
-          console.log("passwords don't match");
-        }
       }
     } if(user.includes("organization")) {
         if(orgName.trim() === '') {
           setOrgMessageField("name", "name empty");
           setOrgErrorField("name", true);
+          isValid = false;
         } else {
           setOrgMessageField("name", "");
           setOrgErrorField("name", false);
@@ -216,20 +219,22 @@ export default function SignUp() {
         if(orgEmail.trim() === '') {
           setOrgMessageField("email", "email empty");
           setOrgErrorField("email", true);
+          isValid = false;
         } else {
           setOrgMessageField("email", "");
           if (!isValidEmail(orgEmail)) {
             setOrgMessageField("email", "Invalid email");
             setOrgErrorField("email", true);
+            isValid = false;
           } else {
             setOrgErrorField("email", false);
             setOrgMessageField("email", "");
           }
-          // setOrgErrorField("email", false);
         }
         if(orgPass.trim() === '') {
           setOrgMessageField("password", "password empty");
           setOrgErrorField("password", true);
+          isValid = false;
         } else {
           setOrgMessageField("password", "");
           setOrgErrorField("password", false);
@@ -237,23 +242,29 @@ export default function SignUp() {
         if(orgConfirmPassword.trim() === '') {
           setOrgMessageField("confirmPassword", "confirm password empty");
           setOrgErrorField("confirmPassword", true);
+          isValid = false;
         } else {
           setOrgMessageField("confirmPassword", "");
           setOrgErrorField("confirmPassword", false);
         }
     }
+    return isValid;
   }
   useEffect(() => {
     console.log(volMessage);
   }, [volMessage]);
 
   const handleVolunteerSignUp = async () => {
-    validateFields("volunteer");
+    var isValid = validateFields("volunteer");
     var url = buildPath("api/userSignUp");
   
     if (!isValidEmail(volEmail)) {
       // setMessage("Invalid email address");
       setVolErrorField("email", true);
+    } else if(volPass != volConfirmPass) {
+      setAlertMessage("Passwords do not match")
+    } else if(!isValid) {
+      setAlertMessage("Please fill out the empty fields")
     } else {
   
       var json = {
@@ -294,6 +305,8 @@ export default function SignUp() {
     if (!isValidEmail(orgEmail)) {
       // setMessage("Invalid email address");
       setVolErrorField("email", true);
+    } else if(orgPass != orgConfirmPassword) {
+      setAlertMessage("Passwords do not match")
     } else {
       setVolErrorField("email", false);
       var json = {
@@ -317,7 +330,9 @@ export default function SignUp() {
             setAlertMessage("Organization already exists");
           } else if(response.status === 200) {
             setAlertMessage("Registered successfully, please verify your email")
-          }
+          } else if(response.status === 503) {
+            setAlertMessage("Failed to create organization")
+          } 
       } catch(e) {
         console.log("org registration api failed");
       }
