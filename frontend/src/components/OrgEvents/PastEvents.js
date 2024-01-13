@@ -51,7 +51,7 @@ function PastEvents(props)
 	}
 
     async function getPastEvents(){
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -169,6 +169,7 @@ function PastEvents(props)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.reset])
 
+
 	useEffect(()=>{
 		const adjustForSize = () => {
 			const width = window.innerWidth;
@@ -198,7 +199,7 @@ function PastEvents(props)
 	},[initiateListener])
 
     return(
-     <div>
+     <div className='centerCards'>
         <EventHeader/>
         <div>
             <Events/>

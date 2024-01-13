@@ -51,7 +51,7 @@ function UpcomingEvents(props)
 	}
 
     async function getUpcomingEvents(){
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -198,7 +198,7 @@ function UpcomingEvents(props)
     return(
      <div className='upcomingEventsSpace'>
         <EventHeader/>
-        <div>
+        <div className='centerCards'>
             <Events/>
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
         </div>

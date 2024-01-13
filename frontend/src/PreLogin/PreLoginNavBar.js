@@ -32,7 +32,9 @@ function PreLoginNavBar() {
       window.location.href = '/#';
     } else if(page === 'About') {
       window.location.href = '#/about';
-    }
+    }else if(page === 'Contact'){
+		window.location.href = '#/contact';
+	}
     handleCloseNavMenu();
   };
   const handleOpenMenuItemClick = (page) => {
@@ -43,7 +45,9 @@ function PreLoginNavBar() {
       window.location.href = '/#';
     } else if(page === 'About') {
       window.location.href = '#/about';
-    }
+    }else if(page === 'Contact'){
+		window.location.href = '#/contact';
+	}
   };
 
   const handleClick = () => {

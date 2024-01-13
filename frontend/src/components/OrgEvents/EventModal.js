@@ -261,7 +261,7 @@ function EventModal(props)
     }
 
     async function deleteEvent(){
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
 
         const json = {
             eventID: props.eventID,

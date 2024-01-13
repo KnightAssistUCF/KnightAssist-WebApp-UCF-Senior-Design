@@ -13,6 +13,8 @@ function Search(props) {
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
+	const [searchTerm, setSearchTerm] = useState("");
+
     // Gets org name from organizationID
     async function getOrgName(id){
         let url = buildPath(`api/organizationSearch?organizationID=${id}`);
@@ -21,8 +23,6 @@ function Search(props) {
           method: "GET",
           headers: {"Content-Type": "application/json"},
         });
-
-        console.log(id);
 
       try{
           let res = JSON.parse(await response.text());
@@ -56,11 +56,13 @@ function Search(props) {
 
         // Due to bug and since this function is only called
         // upon initialization
-        if(flag === 1)
+        if(flag === 1){
           setOptions(tmp);
-        else
+		  props.results.current = tmp;
+		}else{
           if(props.searchType !== "organizations")
             setOptions(tmp);
+		}
     }
 
     async function getAllOrganization(){
@@ -106,9 +108,13 @@ function Search(props) {
         if(props.searchType === "events"){
           setLabel("Search For Events");
           setOptions(events);
+		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
@@ -119,16 +125,22 @@ function Search(props) {
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.resetEventSearch]);
 
+	useEffect(() => {
+		const filtered = options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		console.log(filtered);
+		props.results.current = filtered;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchTerm]);
+	
     return (
       <div>
         <Stack className="exploreSearch" spacing={2} sx={{ width: 300 }}>
-          <Autocomplete 
+		<Autocomplete 
             freeSolo
+			autoHighlight={true}
             disableClearable
             onChange={(e, value) => {handleClick(value.id)}}
             options={options}
-            value={null}
-            clearOnBlur={true}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -137,6 +149,7 @@ function Search(props) {
                   ...params.InputProps,
                   type: 'search',
                 }}
+				onChange={(e) => setSearchTerm(e.target.value)}
               />
             )}
           />

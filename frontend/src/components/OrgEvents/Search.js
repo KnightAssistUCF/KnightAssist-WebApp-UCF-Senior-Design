@@ -13,12 +13,14 @@ function Search(props) {
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
 
+	const [searchTerm, setSearchTerm] = useState("");
+
     function openOrgPage(email){
         console.log(email);
     }
 
     async function getAllEvents(flag){
-        let organizationID = "6530608eae2eedf04961794e";
+        let organizationID = sessionStorage.getItem("ID");
         let url = buildPath(`api/searchEvent?organizationID=${organizationID}`);
 
         let response = await fetch(url, {
@@ -38,11 +40,16 @@ function Search(props) {
 
         // Due to bug and since this function is only called
         // upon initialization
-        if(flag === 1)
+        if(flag === 1){
           setOptions(tmp);
-        else
-          if(props.searchType !== "organizations")
+		  props.results.current = tmp;
+		}else{
+          if(props.searchType !== "organizations"){
             setOptions(tmp);
+			props.results.current = tmp;
+			console.log(props.results.current);
+		  }
+		}
     }
 
     async function getAllOrganization(){
@@ -87,24 +94,38 @@ function Search(props) {
         if(props.searchType === "events"){
           setLabel("Search For Events");
           setOptions(events);
+		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		  props.results.current = filtered;
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
 
     useEffect(()=>{
-      getAllEvents(0);
-      console.log(events);
-	  // eslint-disable-next-line react-hooks/exhaustive-deps
+		getAllEvents(0);
+		if(props.searchMode)
+			props.setResetSearchCards(props.resetSearchCards * -1);
+		console.log(events);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.resetEventSearch])
+
+	useEffect(() => {
+		const filtered = options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
+		console.log(filtered);
+		props.results.current = filtered;
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchTerm])
 
     return (
       <div>
         <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
           <Autocomplete 
             freeSolo
+			autoHighlight={true}
             disableClearable
             onChange={(e, value) => {handleClick(value.id)}}
             options={options}
@@ -116,6 +137,7 @@ function Search(props) {
                   ...params.InputProps,
                   type: 'search',
                 }}
+				onChange={(e) => setSearchTerm(e.target.value)}
               />
             )}
           />

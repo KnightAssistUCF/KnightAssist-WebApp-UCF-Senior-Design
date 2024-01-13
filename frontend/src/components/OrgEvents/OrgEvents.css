@@ -3,8 +3,12 @@
 }
  
 .orgSearch{
-    width: 50% !important;
+	width: 400px !important;
     margin-bottom: 5%;
+}
+
+.theTop{
+	width: 100%;
 }
 
 .moveSearch{
@@ -17,12 +21,19 @@
 	text-align: center;
 }
 
+.searchCards{
+	overflow-y: scroll;
+    display: inline !important;
+    max-height: 750px;
+}
+
 .pagination{
     margin-top: 15px;
 }
 
 .cardWhite{
     background-color: white;
+	overflow-y: scroll;
     width: 100%;
 }
 
@@ -36,6 +47,10 @@
     text-align: left;
     font-size: 30px;
     margin-bottom: 30px;
+}
+
+.centerCards{
+	text-align: center !important;
 }
 
 .event{
@@ -52,7 +67,7 @@
 }
 
 .eventsCard{
-    width: 95%;
+    width: 98%;
 }
   
 .yourEvents{
@@ -61,7 +76,7 @@
     font-size: 20px;
     margin-bottom: 50px;
 	color: black !important;
-    float: left;
+    float: left !important;
 }
 
 .spartan{
@@ -85,8 +100,6 @@
 }
 
 .addEventBtn{
-    margin-right: 500px;
-    margin-top: 30px;
     background-color: #5f5395;
     border: none;
 }
@@ -217,8 +230,7 @@
 }
 
 .searchSwitch{
-    float: left;
-    margin-left: 150px;
+    margin-left: 100px;
 }
 
 .volunteersBtn{
@@ -304,7 +316,7 @@
 	
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1290px) {
 	.event{
 		margin-right: 10%;
 	}
@@ -319,7 +331,7 @@
 }
 
 
-@media (max-width: 925px) {
+@media (max-width: 1045px) {
 	.event{
 		margin-right: 10%;
 	}
