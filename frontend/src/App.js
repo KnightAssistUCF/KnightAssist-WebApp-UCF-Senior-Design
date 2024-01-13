@@ -82,9 +82,9 @@ function App()
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>
-          <Routes>
-            <Route path="/adminhome" element={<AdminHomePage/>}></Route>
-          </Routes>
+		  <Routes>
+				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
+			</Routes>
 		</Router>
 		</header>
 		</div>
