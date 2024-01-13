@@ -25,7 +25,7 @@ export default function Register() {
     <CssBaseline />
     <ThemeProvider theme={defaultTheme}>
         <PreLoginNavBar />
-        <Box sx={{ flexGrow: 1, padding: 20, justifyContent: 'center'}}>
+        <Box sx={{ flexGrow: 1, paddingTop: 6, justifyContent: 'center'}}>
           <Container component="main" maxWidth="sm" sx={{ mb: 4, justifyContent: 'center', alignItems: 'center' }}>
              <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
                 <SignUp />

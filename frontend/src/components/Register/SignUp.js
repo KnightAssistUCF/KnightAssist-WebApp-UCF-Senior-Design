@@ -14,6 +14,7 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from '@mui/lab/TabPanel';
 import { buildPath } from '../../path';
+import Alert from '@mui/material/Alert';
 
 const defaultTheme = createTheme({
   palette: {
@@ -129,6 +130,8 @@ export default function SignUp() {
           console.log(response.status);
           if(response.status === 409 ) {
             setMessage("User already exists");
+          } else if(response.status === 200) {
+            setMessage("Registered successfully, please verify your email")
           }
       } catch(e) {
         console.log("volunteer registration api failed");
@@ -197,7 +200,8 @@ export default function SignUp() {
         >
           Sign Up
         </Button>
-        {message}
+        {(!(message.trim().length === 0) && (!message.includes("successfully"))) ? <Alert severity="error">{message}</Alert> : null}
+        {((message != undefined) && (message.includes("successfully"))) ? <Alert severity="success">{message}</Alert> : null}
         <Grid container justifyContent="center">
           <Grid item>
             <Link href="#" variant="body2" sx={{ color: '#4E878C' }}>
