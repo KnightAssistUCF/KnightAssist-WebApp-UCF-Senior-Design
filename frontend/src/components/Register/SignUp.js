@@ -41,6 +41,7 @@ export default function SignUp() {
   const [orgEmail, setOrgEmail] = useState("");
   const [orgPass, setOrgPass] = useState("");
   const [orgConfirmPassword, setOrgConfirmPassword] = useState("");
+  const [message, setMessage] = useState("");
 
   const [OrgformData, setOrgFormData] = React.useState({
     name: "",
@@ -95,35 +96,51 @@ export default function SignUp() {
 
   // }
 
+  function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
   const handleVolunteerSignUp = async () => {
     console.log("here in this function");
     var url = buildPath("api/userSignUp");
 
-    var json = {
+    if (!isValidEmail(volEmail)) {
+      setMessage("Invalid email address");
+    } else {
+      var json = {
         firstName: volFirstName,
         lastName: volLastName,
         email: volEmail,
         password: volPass,
         totalVolunteerHours: 0
-    };
+      };
 
-    console.log(json);
+      console.log(json);
 
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        body: JSON.stringify(json),
-        headers: {"Content-Type": "application/json"},
-      });
-        let res = JSON.parse(await response.text());
-        console.log(res);
-    } catch(e) {
-      console.log("volunteer registration api failed");
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          body: JSON.stringify(json),
+          headers: {"Content-Type": "application/json"},
+        });
+          // let res = JSON.parse(await response.text());
+          // console.log(res);
+          console.log(response.status);
+          if(response.status === 409 ) {
+            setMessage("User already exists");
+          }
+      } catch(e) {
+        console.log("volunteer registration api failed");
+      }
     }
+
+
   };
 
 
   const handleSubmit = (userType) => {
+    setMessage("");
     console.log(userType)
     if(userType == "volunteer") {
       console.log(volFirstName);
@@ -180,7 +197,7 @@ export default function SignUp() {
         >
           Sign Up
         </Button>
-
+        {message}
         <Grid container justifyContent="center">
           <Grid item>
             <Link href="#" variant="body2" sx={{ color: '#4E878C' }}>
