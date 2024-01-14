@@ -143,7 +143,7 @@ export default function SignUp() {
     var isValid = true;
     if(user.includes("volunteer")) {
       if(volFirstName == '') {
-        setVolMessageField("firstName", "first name empty");
+        setVolMessageField("firstName", "First name field is empty");
         setVolErrorField("firstName", true);
         isValid = false;
       } else {
@@ -151,7 +151,7 @@ export default function SignUp() {
         setVolErrorField("firstName", false);
       }
       if(volLastName.trim() === '') {
-        setVolMessageField("lastName", "last name empty");
+        setVolMessageField("lastName", "Last name field is empty");
         setVolErrorField("lastName", true);
         isValid = false;
       } else {
@@ -159,7 +159,7 @@ export default function SignUp() {
         setVolErrorField("lastName", false);
       }
       if(volEmail.trim() === '') {
-        setVolMessageField("email", "email empty");
+        setVolMessageField("email", "Email field is empty");
         setVolErrorField("email", true);
         isValid = false;
       } else {
@@ -174,7 +174,7 @@ export default function SignUp() {
         }
       }
       if(volPass.trim() === '') {
-        setVolMessageField("password", "password empty");
+        setVolMessageField("password", "Password field is empty");
         setVolErrorField("password", true);
         isValid = false;
       } else {
@@ -184,7 +184,7 @@ export default function SignUp() {
         
       }
       if(volConfirmPass.trim() === '') {
-        setVolMessageField("confirmPassword", "confirm password empty");
+        setVolMessageField("confirmPassword", "Confirm password field is empty");
         setVolErrorField("confirmPassword", true);
         isValid = false;
       } else {
@@ -193,7 +193,7 @@ export default function SignUp() {
       }
     } if(user.includes("organization")) {
         if(orgName.trim() === '') {
-          setOrgMessageField("name", "name empty");
+          setOrgMessageField("name", "Name field is empty");
           setOrgErrorField("name", true);
           isValid = false;
         } else {
@@ -201,7 +201,7 @@ export default function SignUp() {
           setOrgErrorField("name", false);
         }
         if(orgEmail.trim() === '') {
-          setOrgMessageField("email", "email empty");
+          setOrgMessageField("email", "Email field is empty");
           setOrgErrorField("email", true);
           isValid = false;
         } else {
@@ -216,7 +216,7 @@ export default function SignUp() {
           }
         }
         if(orgPass.trim() === '') {
-          setOrgMessageField("password", "password empty");
+          setOrgMessageField("password", "Password field is empty");
           setOrgErrorField("password", true);
           isValid = false;
         } else {
@@ -224,7 +224,7 @@ export default function SignUp() {
           setOrgErrorField("password", false);
         }
         if(orgConfirmPassword.trim() === '') {
-          setOrgMessageField("confirmPassword", "confirm password empty");
+          setOrgMessageField("confirmPassword", "Confirm password field is empty");
           setOrgErrorField("confirmPassword", true);
           isValid = false;
         } else {
