@@ -120,8 +120,7 @@ function LoginComponents(props){
     }
 
     function onRegister(){
-        // Perhaps modal appears asking if you want to 
-        // register as a volunteer or org
+        window.location.href="/#/register"
     }
 
     function Copyright(){

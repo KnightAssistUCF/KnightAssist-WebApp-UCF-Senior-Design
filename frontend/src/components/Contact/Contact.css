@@ -63,9 +63,9 @@
 	font-size: 20px;
 }
 
-.MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
+/* .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline {
 	border-color: purple !important;
-}
+} */
 
 @media (max-width: 700px) {
 	.userInput{

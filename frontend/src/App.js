@@ -15,6 +15,7 @@ import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import RegisterPage from './pages/RegisterPage';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
@@ -82,6 +83,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
+			</Routes>
+      <Routes>
+				<Route path="/register" element={<RegisterPage/>}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/contact" element={<ContactPage/>}></Route>
