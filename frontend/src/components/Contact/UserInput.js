@@ -23,8 +23,7 @@ function UserInput() {
 	const [hasSent, setHasSent] = useState(false);
 	const [checkedOnce, setCheckedOnce] = useState(false);
 
-	// To allow only letters for first and last name
-	const regex = /[^a-z -]/gi;
+	const regex = /[^a-z -]/gi; // allow only letters for the first name and last name and also allow space and dash
 
 	async function submit() {
 		setCheckedOnce(true);
