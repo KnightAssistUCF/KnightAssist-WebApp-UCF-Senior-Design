@@ -15,13 +15,14 @@ import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import RegisterPage from './pages/RegisterPage';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
 import StudentHistory from './components/StudentHistory/StudentHistory';
 import NewAnnPage from './pages/NewAnnPage';
+import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
-import OrgProfile from './pages/OrgProfilePage';
 
 function App() 
 {
@@ -76,7 +77,19 @@ function App()
 				<Route path="/studentannouncements" element={(role === "volunteer") ? <NewAnnPage/> : <Navigate from='/studentannouncements' to='/login' />}></Route>
 			</Routes>
 			<Routes>
+				<Route path="/studentsettings" element={(role === "volunteer") ? <StudentSettingsPage/> : <Navigate from='/studentsettings' to='/login' />}></Route>
+			</Routes>
+			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
+			</Routes>
+      <Routes>
+				<Route path="/register" element={<RegisterPage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/contact" element={<ContactPage/>}></Route>
+			</Routes>
+		  	<Routes>
+				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/orgprofile" element={<OrgProfile/>}></Route>

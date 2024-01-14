@@ -49,6 +49,7 @@ function EventModal(props)
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
+	const [showTags, setShowTags] = useState(false);
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -132,6 +133,7 @@ function EventModal(props)
                 setCurVolunteers(event.attendees.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
+				setShowTags(event.eventTags.length > 0);
 
 				const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
 				const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
@@ -259,7 +261,7 @@ function EventModal(props)
     }
 
     async function deleteEvent(){
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
 
         const json = {
             eventID: props.eventID,
@@ -372,7 +374,7 @@ function EventModal(props)
 
                                 {Volunteers()}
 
-								{(tags.length > 0) ? <Tags/> : null}
+								{(showTags) ? <Tags/> : null}
 
 								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
 									<Grid item xs={4}>

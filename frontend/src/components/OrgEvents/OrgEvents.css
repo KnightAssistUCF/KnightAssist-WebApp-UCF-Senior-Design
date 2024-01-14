@@ -3,33 +3,42 @@
 }
  
 .orgSearch{
-    width: 500px !important;
+	width: 400px !important;
     margin-bottom: 5%;
+}
+
+.theTop{
+	width: 100%;
 }
 
 .moveSearch{
     margin-top: 10px;
-    margin-left: 500px;
 }
 
 .cards{
-    margin-left: 5px;
+    margin-left: 8px;
     margin-top: 10px;
+	text-align: center;
+}
+
+.searchCards{
+	overflow-y: scroll;
+    display: inline !important;
+    max-height: 750px;
 }
 
 .pagination{
     margin-top: 15px;
-    margin-left: 500px;
 }
 
 .cardWhite{
     background-color: white;
+	overflow-y: scroll;
     width: 100%;
 }
 
 .card-body{
     width: 99%;
-    margin-left: 10px;
 }
 
 .upcomingEvents{
@@ -40,10 +49,14 @@
     margin-bottom: 30px;
 }
 
+.centerCards{
+	text-align: center !important;
+}
+
 .event{
-    min-width: 22%;
-    max-width: 22%;
-    margin-left: 25px;
+    min-width: 275px;
+    max-width: 275px;
+    margin-right: 2%;
     margin-bottom: 20px;
     float: left;
 }
@@ -54,7 +67,7 @@
 }
 
 .eventsCard{
-    width: 1200px;
+    width: 98%;
 }
   
 .yourEvents{
@@ -62,7 +75,8 @@
     margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
-    float: left;
+	color: black !important;
+    float: left !important;
 }
 
 .spartan{
@@ -75,7 +89,7 @@
 }
 
 .eventName{
-    font-size: 75% !important;
+    font-size: 20px !important;
 }
 
 .eventDate{
@@ -86,8 +100,6 @@
 }
 
 .addEventBtn{
-    margin-right: 500px;
-    margin-top: 30px;
     background-color: #5f5395;
     border: none;
 }
@@ -218,8 +230,7 @@
 }
 
 .searchSwitch{
-    float: left;
-    margin-left: 150px;
+    margin-left: 100px;
 }
 
 .volunteersBtn{
@@ -292,4 +303,44 @@
 .qrLogo{
 	width: 75px;
 	height: 75px;
+}
+
+@media (max-width: 1500px) {
+	.event{
+		margin-right: 5%;
+	}
+
+	.eventsCard{
+		width: 95%;
+	}
+	
+}
+
+@media (max-width: 1290px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 85%;
+	}
+}
+
+
+@media (max-width: 1045px) {
+	.event{
+		margin-right: 10%;
+	}
+
+	.cards{
+		margin-left: 0px;
+	}
+
+	.eventsCard{
+		width: 315px;
+	}
 }

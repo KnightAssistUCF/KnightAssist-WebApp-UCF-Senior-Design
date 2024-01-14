@@ -11,6 +11,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import Rating from '@mui/material/Rating';
+import { CiUnread } from "react-icons/ci";
+import { CiRead } from "react-icons/ci";
 import { buildPath } from '../../path';
 
 const truncateText = (text, maxLength) => {
@@ -57,6 +59,8 @@ const Feedbacks = (props) => {
 	});
 
 	let res = await response.text();
+
+	props.setMarkRead(feedback._id);
 
 	console.log(res);
   };
@@ -106,13 +110,14 @@ const Feedbacks = (props) => {
                       component="p"
                       style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
                     >
-                      {formatDate(feedback.timeFeedbackSubmitted)}
+					  {(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
+					  {formatDate(feedback.timeFeedbackSubmitted)}
                     </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
                       component="p"
-                      style={{ marginTop: '6px' }}
+                      style={{ marginTop: '6px'}}
                     >
                       <i>{truncateText(feedback.feedbackText, 320)}</i>
                     </Typography>

@@ -10,6 +10,10 @@ import Footer from '../Footer';
 function Landing() {
   const classes = useStyles();
 
+  const handleButtonClick = () => {
+    window.location.href = '#/register';
+  };
+
   return (
     <>
       <CssBaseline />
@@ -35,7 +39,7 @@ function Landing() {
             </Typography>
 
             <Button
-              variant="contained" sx={{ bgcolor: '#F5D6BA', color: 'black', width: '200px', fontSize: '16px', fontWeight: '600', ":hover": {bgcolor: '#65B891'} }}
+              variant="contained" onClick={handleButtonClick} sx={{ bgcolor: '#F5D6BA', color: 'black', width: '200px', fontSize: '16px', fontWeight: '600', ":hover": {bgcolor: '#65B891'} }}
             >
               Sign Up!
             </Button>

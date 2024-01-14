@@ -62,7 +62,6 @@ const userStudentSchema = new mongoose.Schema({
     },
     semesterVolunteerHourGoal: {
         type: Number,
-        required: true,
         default: 0
     },
     userStudentSemesters: [{

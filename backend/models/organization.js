@@ -28,7 +28,6 @@ const organizationSchema = new Schema({
     },
     description: {
         type: String,
-        required: true
     },
     logoUrl: String,
     categoryTags: [String], // store tags for org
@@ -137,7 +136,7 @@ const organizationSchema = new Schema({
         // required: true,
         default: false
     }, 
-    role : {
+    role: {
         type: String,
         default: 'organization',
         required: true

@@ -85,7 +85,7 @@ function AddEventModal(props)
             name: name,
             description: description,
             location: location,
-            sponsoringOrganization: "6530608eae2eedf04961794e", //ID of organization Y, will be changed to local storage
+            sponsoringOrganization: sessionStorage.getItem("ID"),
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -142,7 +142,7 @@ function AddEventModal(props)
             name: name,
             description: description,
             location: location,
-            organizationID: "6530608eae2eedf04961794e",
+            organizationID: sessionStorage.getItem("ID"),
             attendees: [],
             registeredVolunteers: [],
             startTime: startTime,
@@ -186,10 +186,8 @@ function AddEventModal(props)
             
             props.setEditMode(0);
 
-            //if(eventIsUpcoming(date.toISOString()))
-                props.setReset(props.reset * -1);
-            //else
-                props.setResetPast(props.resetPast * -1);
+			props.setReset(props.reset * -1);
+			props.setResetPast(props.resetPast * -1);
             
             props.setResetSearch(props.resetSearch * -1);
             
@@ -344,7 +342,7 @@ function AddEventModal(props)
     }
 
     const getOrgTags = async () => {
-        const organizationID = "6530608eae2eedf04961794e";
+        const organizationID = sessionStorage.getItem("ID");
         const url = buildPath(`api/returnSingleOrgTags?organizationID=${organizationID}`);
 
         try {

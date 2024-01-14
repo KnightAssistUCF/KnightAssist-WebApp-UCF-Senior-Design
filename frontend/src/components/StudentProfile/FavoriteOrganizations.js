@@ -16,12 +16,31 @@ function FavoriteOrganizations(props)
     const [orgCards, setOrgCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
+	const [orgsPerPage, setOrgsPerPage] = useState(getInitialPerPage());
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
 
-    function changePage(e, value){
-        setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(4 * (value - 1), 4 * (value - 1) + 4)}</div>
-        setOrgCards(content);
-    }
+	function getInitialPerPage(){
+		const width = window.innerWidth;
+
+		if(width > 1500){
+			return 4;
+		}else if(width > 1200){
+			return 3;
+		}else if(width > 925){
+			return 2;
+		}else{
+			return 1;
+		}
+	}
+
+	function changePage(e, value, perPage = orgsPerPage){
+		setPage(value);
+		let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setOrgCards(content);
+	}
+
 
     // Will open the organization's page
     function openOrgPage(id){
@@ -66,6 +85,8 @@ function FavoriteOrganizations(props)
 
         setNumPages(Math.ceil(orgs.length / 4))
         setOrgs(orgs);
+
+		setInitiateListener(initiateListener * -1);
 
         let extraBack = 0;
         
@@ -127,6 +148,34 @@ function FavoriteOrganizations(props)
         getOrgs();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
+
+	useEffect(()=>{
+		const adjustForSize = () => {
+			const width = window.innerWidth;
+			
+			const oldOrgsPerPage = orgsPerPage;
+
+			if(width > 1500){
+				setOrgsPerPage(4);
+				setNumPages(Math.ceil(orgs.length / 4))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 4), 4);
+			}else if(width > 1200){
+				setOrgsPerPage(3);
+				setNumPages(Math.ceil(orgs.length / 3))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 3), 3);
+			}else if(width > 925){
+				setOrgsPerPage(2);
+				setNumPages(Math.ceil(orgs.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 2), 2);
+			}else{
+				setOrgsPerPage(1);
+				setNumPages(orgs.length)
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+	},[initiateListener])
 
     return(
      <div className='upcomingEventsSpace'>

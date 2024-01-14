@@ -9,6 +9,7 @@ function LoginComponents(props){
     const [password, setPassword] = useState("");
     const [isInvalid, setIsInvalid] = useState("");
 	const [changeURL, setChangeURL] = useState(-1);
+	const [firstLogin, setFirstLogin] = useState(undefined);
 
 	// For bug fixing purposes so the user is sent to
 	// the right route always
@@ -19,7 +20,6 @@ function LoginComponents(props){
     function buildPath(route) {
 		if (process.env.NODE_ENV === 'production') {
 			return 'https://knightassist-43ab3aeaada9.herokuapp.com/' + route;
-            
 		}
 		else {        
 			return 'http://localhost:8000/' + route;
@@ -48,7 +48,7 @@ function LoginComponents(props){
 
             console.log(res);
 
-            if(res.user.role == "organization") {
+            if(res.user?.role == "organization") {
 
 				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
 
@@ -65,6 +65,8 @@ function LoginComponents(props){
 					sessionStorage.setItem("role", "organization");
 					
 					props.setRole("organization");
+					console.log(res.user);
+					setFirstLogin(res.user.firstTimeLogin);
 					setChangeURL(changeURL * -1);
 					setLoginClicked(true);
 
@@ -72,7 +74,7 @@ function LoginComponents(props){
 				}else{
 					setIsInvalid("is-invalid");
 				}
-            }else if(res.user.role == "student") {
+            }else if(res.user?.role == "student") {
 				url = buildPath(`api/checkIfEmailWasVerified_Volunteer?email=${res.user.email}`);
 
 				response = await fetch(url, {
@@ -88,6 +90,7 @@ function LoginComponents(props){
 					sessionStorage.setItem("role", "volunteer");
 					
 					props.setRole("volunteer");
+					setFirstLogin(res.user.firstTimeLogin);
 					setChangeURL(changeURL * -1);
 					setLoginClicked(true);
 
@@ -97,6 +100,17 @@ function LoginComponents(props){
 				}
             }else{
 				// user is an admin
+                sessionStorage.setItem("token", res.token);
+                sessionStorage.setItem("ID", res.adminUser._id);
+                sessionStorage.setItem("role", "admin");
+          
+                props.setRole("admin");
+                console.log(res.adminUser);
+                setFirstLogin(res.adminUser.firstTimeLogin);
+                setChangeURL((prevChangeURL) => prevChangeURL * -1);
+                setLoginClicked(true);
+          
+                setIsInvalid("");
 			}
             
         } catch (e) {
@@ -106,8 +120,7 @@ function LoginComponents(props){
     }
 
     function onRegister(){
-        // Perhaps modal appears asking if you want to 
-        // register as a volunteer or org
+        window.location.href="/#/register"
     }
 
     function Copyright(){
@@ -155,11 +168,19 @@ function LoginComponents(props){
 	useEffect(() => {
 		if(loginClicked){
 			if(sessionStorage.getItem("role") === "organization"){
-				window.location.href="/#/orghome"
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/orghome"
+				}
 			}else if(sessionStorage.getItem("role") === "volunteer"){
-				window.location.href="/#/studenthomepage";
+				if(firstLogin){
+					window.location.href="/#/postverifyquestions"
+				}else{
+					window.location.href="/#/studenthomepage";
+				}
 			}else{
-	
+				window.location.href="/#/adminhome"
 			}
 		}
 		
