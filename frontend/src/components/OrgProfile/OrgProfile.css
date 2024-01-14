@@ -87,9 +87,69 @@
 
 .items{
 	width: 100%;
+	margin-top: 20px;
+	margin-left: 40%;
 }
 
 .orgName{
-	margin-left: 40%;
-	font-size: 30px;
+	font-size: 25px;
+	max-width: 100px !important;
+	text-align: center;
+	word-wrap: break-word;
+	margin-left: -12%;
+}
+
+.editBtn{
+	width: 125px;
+    height: 40px;
+    margin-top: 3%;
+    background-color: #5f5395;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+}
+
+.profileSocials{
+	margin-left: -16%;
+}
+
+.social{
+	float: left;
+	margin-right: 7px;
+}
+
+.interests{
+	margin-top: 60px !important;
+	padding-bottom: 100px !important;
+	margin-left: -3%;
+}
+
+.interestsName{
+	font-size: 20px;
+	margin-left: -5%;
+}
+
+.tags{
+	width: 85%;
+	margin-left: -25%;
+}
+
+.tag{
+    background-color: #bc70c8 !important;
+    min-width: 10%;
+	max-width: 70% !important;
+    width: auto !important;
+	height: auto !important;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 15px;
+    float: left;
+    font-family: "League Spartan";
+    margin-bottom: 5px;
+}
+
+.addSpace{
+	margin-left: 5px;
+	margin-right: 5px;
 }

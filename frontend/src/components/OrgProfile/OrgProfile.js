@@ -9,7 +9,7 @@ import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
 
 function OrgProfile() {
-	const [org, setOrg] = useState("");
+	const [org, setOrg] = useState(null);
 
 	async function getOrgInfo(){
         const organizationID = sessionStorage.getItem("ID");

@@ -7,12 +7,12 @@ import Avatar from '@mui/material/Avatar';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
-import { Facebook, Instagram, LinkedIn, Phone, PhoneAndroid, X } from '@mui/icons-material';
+import { Facebook, Instagram, LinkedIn, PhoneAndroid, X } from '@mui/icons-material';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { RiTwitterXFill } from 'react-icons/ri';
-import { BiGlobeAlt, BiWorld } from 'react-icons/bi';
+import { BiWorld } from 'react-icons/bi';
 import { CardMedia } from '@mui/material';
 
 function PostVerifiedQuestions()
@@ -123,7 +123,7 @@ function PostVerifiedQuestions()
 			if(picFile !== null && typeof picFile.name === "string"){
 				let formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'organization');
+				formData.append('entityType', 'volunteer');
 				formData.append('id', sessionStorage.getItem("ID"));
 				formData.append('profilePicOrBackGround', '0');
 
@@ -164,22 +164,24 @@ function PostVerifiedQuestions()
 
 	async function submitOrganization(){
 		try{
+
 			// Store pictures
+
+			let formData = new FormData();
+			formData.append('profilePic', picFile); 
+			formData.append('entityType', 'organization');
+			formData.append('id', sessionStorage.getItem("ID"));
+			formData.append('profilePicOrBackGround', '0');
+
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
+
 			if(bgFile !== null && typeof bgFile.name === "string"){
-				let formData = new FormData();
-				formData.append('profilePic', bgFile); 
-				formData.append('entityType', 'organization');
-				formData.append('id', sessionStorage.getItem("ID"));
-				formData.append('profilePicOrBackGround', '0');
-
-				await fetch(buildPath(`api/storeImage`), {
-					method: 'POST',
-					body: formData
-				})
-				.then(response => response.json())
-				.then(data => console.log(data))
-				.catch(error => console.error('Error:', error));
-
 				formData = new FormData();
 				formData.append('profilePic', bgFile); 
 				formData.append('entityType', 'organization');
@@ -403,7 +405,7 @@ function PostVerifiedQuestions()
 		let defaultBG = await response.blob();
 
 		setBGName(defaultBG);
-		setBGFile(defaultBG)
+		setBGFile(defaultBG);
 	}
 
     useEffect(()=>{
