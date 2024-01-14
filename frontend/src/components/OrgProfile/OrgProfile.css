@@ -87,7 +87,7 @@
 
 .items{
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 30px;
 	margin-left: 40%;
 }
 
@@ -97,6 +97,7 @@
 	text-align: center;
 	word-wrap: break-word;
 	margin-left: -12%;
+	margin-bottom: 10px;
 }
 
 .editBtn{

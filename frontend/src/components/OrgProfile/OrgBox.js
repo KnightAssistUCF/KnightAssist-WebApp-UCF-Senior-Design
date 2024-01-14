@@ -28,7 +28,7 @@ function OrgBox(props) {
 
 	useEffect(() => {
 		getProfilePic();
-	});
+	}, []);
 
 	function ProfilePic(){
 		return (
