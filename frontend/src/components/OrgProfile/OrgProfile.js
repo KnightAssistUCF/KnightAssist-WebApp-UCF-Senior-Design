@@ -9,23 +9,46 @@ import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
 
 function OrgProfile() {
-  
+	const [org, setOrg] = useState("");
 
-  return (
-    <div>
-        {/* <OrgTopBar /> */}
-            <Header />
-        <div className='orgProfilePage'>
-            {/* <div className='orgProfileTitle'>Organization Profile</div> */}
-            <div className='orgBannerFiller'></div>
-            <div className='navTabs'>
-                <OrgBox/>
-                <NavTabs/>
-            </div>
-        </div>
-      
-    </div>
-  );
+	async function getOrgInfo(){
+        const organizationID = sessionStorage.getItem("ID");
+        
+        let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+		console.log(res);
+		
+		setOrg(res);
+	}
+
+	useEffect(() => {
+		getOrgInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return (
+		<div>
+			{/* <OrgTopBar /> */}
+				<Header />
+			<div className='orgProfilePage spartan'>
+				{/* <div className='orgProfileTitle'>Organization Profile</div> */}
+				<div className='orgBannerFiller'></div>
+				<OrgBox org={org}/>
+				<div className='navTabs'>
+					<NavTabs/>
+				</div>
+			</div>
+		
+		</div>
+	);
 }
 
 export default OrgProfile;

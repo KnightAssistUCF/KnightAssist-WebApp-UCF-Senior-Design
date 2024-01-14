@@ -7,17 +7,52 @@ import { Button, Typography, CardContent, Avatar } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 
-function OrgBox() {
-  
+function OrgBox(props) {
 
-  return (
-    <div>
-        <div className='orgBox'>
-            <Avatar alt="User Avatar" src="/path/to/avatar-image.jpg" sx={{ width: 150, height: 150, marginTop: '20px' }} />
-        </div>
-      
-    </div>
-  );
+	const [picName, setPicName] = useState(null);
+
+  
+	async function getProfilePic(){
+		const url = buildPath(`api/retrieveImage?entityType=organization&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=0`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let pic = await response.blob();
+
+		setPicName(pic);
+	}
+
+	useEffect(() => {
+		getProfilePic();
+	});
+
+	function ProfilePic(){
+		return (
+			<Avatar
+				src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+				sx={{ width: 150, height: 150}} 
+			/>
+		)
+	}
+
+	function OrgName(){
+		return (
+			<div className='orgName'>{props.org.name}</div>
+		)
+	}
+
+	return (
+		<div className='orgBox'>
+			<div className='items'>
+				{ProfilePic()}
+				
+				<OrgName/>
+			</div>
+		</div>
+	);
 }
 
 export default OrgBox;

@@ -31,13 +31,13 @@
     /* height: 320%; */
     height: calc(100vh - 35%);
     border-radius: 14px;
-    position: absolute; /* overlay */
-    top: 14%; 
-    left: 2%; 
+    position: static; /* overlay */
+	margin-top: -125px;
+    margin-left: 2%; 
     /* bottom: 10%;  */
     border: 1px solid #eaeaea;
-    display: flex;
     justify-content: center;
+	float: left;
 }
 
 .navSubTitle {
@@ -83,4 +83,13 @@
 
 .ratingtopcol {
     display: flex;
+}
+
+.items{
+	width: 100%;
+}
+
+.orgName{
+	margin-left: 40%;
+	font-size: 30px;
 }
