@@ -111,6 +111,33 @@
 	margin-bottom: 25px;
 }
 
+.favBtn{
+	background: none;
+    border: none;
+	margin-left: -10%;
+	margin-top: -10px;
+}
+
+.favorited{
+	color: yellow;
+	width: 75px !important;
+	height: 100px !important;
+	border: 1px black;
+}
+
+.favorited:hover{
+	color: rgb(254, 254, 102);
+}
+
+.notFavorited{
+	width: 75px !important;
+	height: 100px !important;
+}
+
+.notFavorited:hover{
+	color: rgb(254, 254, 102);
+}
+
 .profileSocials{
 	margin-left: -16%;
 }

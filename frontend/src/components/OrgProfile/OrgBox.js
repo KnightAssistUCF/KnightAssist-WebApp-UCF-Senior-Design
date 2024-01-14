@@ -6,12 +6,15 @@ import Card from '@mui/material/Card';
 import { Button, Typography, CardContent, Avatar } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
-import { Facebook, Instagram, LinkedIn } from '@mui/icons-material';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { Facebook, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
 import { RiTwitterXFill } from 'react-icons/ri';
 
 function OrgBox(props) {
 
 	const [picName, setPicName] = useState(null);
+	const [role, setRole] = useState(null);
+	const [favorited, setFavorited] = useState(false);
 	
 	async function getProfilePic(){
 		const url = buildPath(`api/retrieveImage?entityType=organization&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=0`);
@@ -26,7 +29,13 @@ function OrgBox(props) {
 		setPicName(pic);
 	}
 
+	// Will add API call
+	async function favoriteOrg(){
+		setFavorited(!favorited);
+	}
+
 	useEffect(() => {
+		setRole(sessionStorage.getItem("role"));
 		getProfilePic();
 	}, []);
 
@@ -50,6 +59,14 @@ function OrgBox(props) {
 		   <div>
 			  <button className='editBtn btn btn-primary' onClick={null}>Edit Profile</button>
 		   </div>
+		)
+	}
+	
+	function Favorite(){
+		return (
+			<div>
+				<button className="favBtn" onClick={() => favoriteOrg()}>{(favorited) ? <Star className='favorited'/> : <StarOutline className='notFavorited'/>}</button>
+			</div>
 		)
 	}
 
@@ -93,7 +110,11 @@ function OrgBox(props) {
 						<div>
 							{ProfilePic()}
 							<OrgName/>
-							{EditProfileBtn()}
+							
+							{(role === "organization" && props.org._id === sessionStorage.getItem("ID")) 
+								? EditProfileBtn() 
+								: ((role === "volunteer") ? Favorite() : "")
+							}
 							{SocialMedia()}	
 							{(props.org.categoryTags.length > 0)
 								?

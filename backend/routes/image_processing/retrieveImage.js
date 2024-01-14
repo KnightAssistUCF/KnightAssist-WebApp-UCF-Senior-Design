@@ -32,10 +32,11 @@ router.get('/', async (req, res) => {
                 switch (entityType) {
                         case 'event':
                                 user = await Event.findById(id);
+								defaultPath_ProfilePic = 'backend/images/orgdefaultbackground.png'
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
-				defaultPath_Background = 'backend/images/orgdefaultbackground.png'
+								defaultPath_Background = 'backend/images/orgdefaultbackground.png'
                                 defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png'
                                 break;
                         case 'student':
@@ -68,8 +69,6 @@ router.get('/', async (req, res) => {
                 }
 
                 
-                console.log(filePath);
-
                 // converts the path to be a neutral format 
                /* const normalizedPath = user.profilePicPath.replace(/\\/g, '/');
                 const baseDir = path.join(__dirname, '..', '..', 'backend');
@@ -81,7 +80,7 @@ router.get('/', async (req, res) => {
                         res.send(fs.readFileSync(filePath));
                 } else if (entityType !== 'organization' && user.profilePicPath === defaultPath_ProfilePic){
                         res.send(fs.readFileSync(filePath));
-                } else{
+                } else {
                         // Decrypt the file
                         const decryptedImage = decryptFile(filePath);
 
