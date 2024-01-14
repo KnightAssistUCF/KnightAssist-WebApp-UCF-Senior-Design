@@ -213,7 +213,7 @@ function SearchResults(props)
                                 {props.name}
                             </Typography>
                             <Typography>
-                                {(props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description}
+                                {(props.description !== undefined) ? ((props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description) : ""}
                             </Typography>
                         </CardContent>
                     </Card>

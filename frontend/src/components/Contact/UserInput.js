@@ -24,7 +24,7 @@ function UserInput() {
 	const [checkedOnce, setCheckedOnce] = useState(false);
 
 	// To allow only letters for first and last name
-	const regex = /[^a-z]/gi;
+	const regex = /[^a-z -]/gi;
 
 	async function submit(){
 		setCheckedOnce(true);
@@ -57,6 +57,12 @@ function UserInput() {
             console.log(res);
 
 			setHasSent(true);
+			setCheckedOnce(false);
+			setMessage("");
+			setFirstName("");
+			setLastName("");
+			setEmail("");
+			setPhone("");
 			setTimeout(() => {
 				setHasSent(false);
 			}, 3000);

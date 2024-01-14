@@ -23,6 +23,9 @@ import NewAnnPage from './pages/NewAnnPage';
 import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
+import OrgProfilePage from './pages/OrgProfilePage';
+import StudentSettingsPage from './pages/StudentSettingsPage';
+import ContactPage from './pages/ContactPage';
 
 function App() 
 {
@@ -82,7 +85,7 @@ function App()
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>
-      <Routes>
+      		<Routes>
 				<Route path="/register" element={<RegisterPage/>}></Route>
 			</Routes>
 			<Routes>
@@ -92,7 +95,7 @@ function App()
 				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/orgprofile" element={<OrgProfile/>}></Route>
+				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
 			</Routes>
 		</Router>
 		</header>
