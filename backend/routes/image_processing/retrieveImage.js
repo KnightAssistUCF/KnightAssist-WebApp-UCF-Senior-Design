@@ -35,7 +35,7 @@ router.get('/', async (req, res) => {
                                 break;
                         case 'organization':
                                 user = await Organization.findById(id);
-								defaultPath_Background = 'backend/images/orgdefaultbackground.png'
+				defaultPath_Background = 'backend/images/orgdefaultbackground.png'
                                 defaultPath_ProfilePic = 'backend/images/defaultProfilePic.png'
                                 break;
                         case 'student':
