@@ -50,8 +50,13 @@ function PreLoginNavBar() {
 	}
   };
 
-  const handleClick = () => {
-    window.location.href = '#/login';
+  const handleClick = (num) => {
+    if(num === 1) {
+      window.location.href = '#/register';
+    } else if(num === 2) {
+      window.location.href = '#/login';
+    }
+    
   };
 
   return (
@@ -165,9 +170,9 @@ function PreLoginNavBar() {
               </Button>
             ))}
           </Box>
-
+          <Button variant="contained" sx={{ marginRight: '10px', bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={() => handleClick(1)}>Register</Button>
           {/* login button*/}
-          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={handleClick}>Login</Button>
+          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={() => handleClick(2)}>Login</Button>
         </Toolbar>
       </Container>
     </AppBar>
