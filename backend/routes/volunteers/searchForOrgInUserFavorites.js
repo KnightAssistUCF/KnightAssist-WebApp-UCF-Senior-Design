@@ -21,9 +21,9 @@ router.get('/', async (req, res) => {
 				    let orgIdx = organization.favorites.indexOf(user._id);
 
 				    if(userIdx != -1 && orgIdx != -1){
-					return res.status(200).json({ status: "Org is a favorite", favoriteStatus: 0 }).send();
+					return res.status(200).json({ status: "Org is a favorite", favoriteStatus: 0 });
 				    }else{
-					return res.status(200).json({ status: "Org is not a favorite", favoriteStatus: 1 }).send();
+					return res.status(200).json({ status: "Org is not a favorite", favoriteStatus: 1 });
 				    }
 				} else {
 				    res.status(404).send("User not found");

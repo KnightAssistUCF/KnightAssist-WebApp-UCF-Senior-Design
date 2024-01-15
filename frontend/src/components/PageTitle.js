@@ -5,7 +5,7 @@ import './Header.css';
 function PageTitle(props)
 {
    return(
-      <div className={props.mainStyle}>
+      <div onClick={(props.onClick) ? props.onClick : null} className={props.mainStyle}>
         <Logo theStyle={props.logoStyle}/>
         <h1 id="title" className={props.titleStyle + ' title center'}>Knight Assist</h1>
       </div>

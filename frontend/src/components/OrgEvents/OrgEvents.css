@@ -229,6 +229,10 @@
     border: none;
 }
 
+.logoBtn:hover{
+	cursor: pointer;
+}
+
 .searchSwitch{
     margin-left: 100px;
 }
