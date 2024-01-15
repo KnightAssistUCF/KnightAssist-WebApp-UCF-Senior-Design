@@ -31,10 +31,11 @@ const organizationSchema = new Schema({
     },
     logoUrl: String,
     categoryTags: [String], // store tags for org
-    followers: [{
-        type: Schema.Types.ObjectId, // people that follow this organization
-        ref: 'userStudent',
-    }],
+    // [Removed this for now as we do not use it]
+    // followers: [{
+    //     type: Schema.Types.ObjectId, // people that follow this organization
+    //     ref: 'userStudent',
+    // }],
     favorites: [{
         type: Schema.Types.ObjectId, // people that liked and favorited this organization
         ref: 'userStudent',
