@@ -7,6 +7,7 @@ import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import SignUp from './SignUp';
 import Footer from '../Footer';
+import BackgroundImage from './filler-temp-background.jpg';
 
 const defaultTheme = createTheme();
 
@@ -25,7 +26,14 @@ export default function Register() {
     <CssBaseline />
     <ThemeProvider theme={defaultTheme}>
         <PreLoginNavBar />
-        <Box sx={{ flexGrow: 1, paddingTop: 6, justifyContent: 'center'}}>
+        <Box sx={{
+          flexGrow: 1,
+          paddingTop: 6,
+          justifyContent: 'center',
+          backgroundImage: `url(${BackgroundImage})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'}}>
           <Container component="main" maxWidth="sm" sx={{ mb: 4, justifyContent: 'center', alignItems: 'center' }}>
              <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)' }}>
                 <SignUp />
