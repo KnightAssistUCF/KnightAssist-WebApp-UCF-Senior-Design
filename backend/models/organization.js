@@ -82,11 +82,11 @@ const organizationSchema = new Schema({
     }],
     // added a component for the organization's location which can be either a string address, or  google maps link
     location: String,
-    organizationSemesters: [{
-        type: Schema.Types.ObjectId,
-        ref: 'organizationSemester',
-    }],
-    // create a somponent to store the working hours of the organization per day per week
+    // [Removed this for now as we do not use it]
+    // organizationSemesters: [{
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'organizationSemester',
+    // }],
     workingHoursPerWeek: {
         sunday: {
             start: String,

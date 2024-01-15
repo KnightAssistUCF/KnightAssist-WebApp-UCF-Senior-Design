@@ -64,10 +64,11 @@ const userStudentSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    userStudentSemesters: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'studentSemester',
-    }],
+    // [Removed this for now since we are not using it]
+    // userStudentSemesters: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'studentSemester',
+    // }],
     categoryTags: [String], // stores interest tags
     recoveryToken: {
         type: String,
