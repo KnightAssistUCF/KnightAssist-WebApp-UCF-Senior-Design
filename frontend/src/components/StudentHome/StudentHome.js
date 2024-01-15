@@ -24,8 +24,6 @@ function StudentHome()
 
     const [open, setModalOpen] = useState(false);
 
-
-
     async function getStudentInfo() {
       const email = '';
       const url = buildPath(`api/searchUser?email=${email}`);
