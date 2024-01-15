@@ -248,6 +248,10 @@ app.use('/api/retrieveAllFeedback_ForAnOrg', retrieveAllFeedback_ForAnOrg);
 const generateDummyCheckedInStudents = require('./backend/routes/MockDataGenerators/generatorCheckIn');
 app.use('/api/generateDummyCheckedInStudents', generateDummyCheckedInStudents);
 
+/* Generate dummy events for a certain organization */
+const generateDummyEvents = require('./backend/routes/MockDataGenerators/generateEvents');
+app.use('/api/generateDummyEvents', generateDummyEvents);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
