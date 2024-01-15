@@ -45,6 +45,11 @@ function SearchResults(props)
         props.setOpenEvent(true);
     }
 
+	function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";
+	}
+
 	async function getOrgs(){
 		const orgs = [];
 
@@ -194,7 +199,7 @@ function SearchResults(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={null}>
+                    <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
 						<div className='logoandbg'>
 							<CardMedia
 								component="img"

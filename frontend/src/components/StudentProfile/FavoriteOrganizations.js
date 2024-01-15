@@ -44,7 +44,8 @@ function FavoriteOrganizations(props)
 
     // Will open the organization's page
     function openOrgPage(id){
-        
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";
     }
 
     async function getOrgs(){

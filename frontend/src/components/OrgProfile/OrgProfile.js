@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from '../OrgEvents/Header';
+import StudentHeader from '../StudentHome/StudentHeader'
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
@@ -12,7 +13,14 @@ function OrgProfile() {
 	const [org, setOrg] = useState(null);
 
 	async function getOrgInfo(){
-        const organizationID = sessionStorage.getItem("ID");
+        let organizationID;
+		
+		if("viewingPageID" in sessionStorage && 
+		   sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingPageID")){
+			organizationID = sessionStorage.getItem("viewingPageID");
+		}else{
+			organizationID = sessionStorage.getItem("ID");
+		}
         
         let url = buildPath(`api/organizationSearch?organizationID=${organizationID}`);
 
@@ -37,7 +45,7 @@ function OrgProfile() {
 	return (
 		<div>
 			{/* <OrgTopBar /> */}
-				<Header />
+			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
 			<div className='orgProfilePage spartan'>
 				{/* <div className='orgProfileTitle'>Organization Profile</div> */}
 				<div className='orgBannerFiller'></div>

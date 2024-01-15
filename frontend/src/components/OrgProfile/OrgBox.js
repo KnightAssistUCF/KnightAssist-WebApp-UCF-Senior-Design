@@ -17,7 +17,16 @@ function OrgBox(props) {
 	const [favorited, setFavorited] = useState(false);
 	
 	async function getProfilePic(){
-		const url = buildPath(`api/retrieveImage?entityType=organization&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=0`);
+		let id;
+
+		if("viewingPageID" in sessionStorage && 
+		    sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingPageID")){
+			id = sessionStorage.getItem("viewingPageID");
+		}else{
+			id = sessionStorage.getItem("ID");
+		}
+
+		const url = buildPath(`api/retrieveImage?entityType=organization&id=${id}&profilePicOrBackGround=0`);
 
 		const response = await fetch(url, {
 			method: "GET",
@@ -71,13 +80,17 @@ function OrgBox(props) {
 	}
 
 	function SocialMedia(){
+		const socials = props.org.socialMedia;
 		return (
-			<div className='profileSocials'>
-				<a className='social' href={props.org.contact.socialMedia.facebook}><Facebook/></a>
-				<a className='social' href={props.org.contact.socialMedia.twitter}><RiTwitterXFill/></a>
-				<a className='social' href={props.org.contact.socialMedia.instagram}><Instagram/></a>
-				<a className='social' href={props.org.contact.socialMedia.linkedin}><LinkedIn/></a>
-			</div> 
+			(socials) ?
+				<div className='profileSocials'>
+					{(socials.facebook) ? <a className='social' href={props.org.contact.socialMedia.facebook}><Facebook/></a> : ""}
+					{(socials.twitter) ? <a className='social' href={props.org.contact.socialMedia.twitter}><RiTwitterXFill/></a> : ""}
+					{(socials.instagram) ? <a className='social' href={props.org.contact.socialMedia.instagram}><Instagram/></a> : ""}
+					{(socials.linkedin) ? <a className='social' href={props.org.contact.socialMedia.linkedin}><LinkedIn/></a> : ""}
+				</div> 
+
+				: ""
 		)
 	} 
 
