@@ -7,11 +7,9 @@ const organization = require('../../models/organization');
 router.get('/', async (req, res) => {
     try {
         const org = await organization.findOne({ _id: req.query.organizationID })
-            .populate('followers')
             .populate('favorites');
         if (org) {
             res.status(200).json({
-                followers: org.followers,
                 favorites: org.favorites
             });
         } else {
