@@ -4,11 +4,11 @@ import './Team.css';
 
 const Team = () => {
   const teamMembers = [
-    { name: 'Anisha Ranjan', role: 'Project Manager, Frontend', image: require('../Login/loginPic.png') },
-    { name: 'Melanie Ehrlich', role: 'Project Manager, Backend, Artist, Mobile', image: require('../Login/loginPic.png') },
-    { name: 'Yohan Hmaiti', role: 'Backend, Database', image: require('../Login/loginPic.png') },
-    { name: 'Noah Seligson', role: 'Frontend/Backend, Web', image: require('../Login/loginPic.png') },
-    { name: 'Rebecca Baker', role: 'Mobile', image: require('../Login/loginPic.png') },
+    { name: 'Anisha Ranjan', role: 'Project Manager, Frontend', image: require('./TeamPics/Anisha.png') },
+    { name: 'Melanie Ehrlich', role: 'Project Manager, Backend, Artist, Mobile', image: require('./TeamPics/Melanie.webp') },
+    { name: 'Yohan Hmaiti', role: 'Backend, Database', image: require('./TeamPics/Yohan.webp') },
+    { name: 'Noah Seligson', role: 'Frontend/Backend, Web', image: require('./TeamPics/Noah.webp') },
+    { name: 'Rebecca Baker', role: 'Mobile', image: require('./TeamPics/Rebecca.webp') },
     { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('../Login/loginPic.png') },
   ];
 
@@ -23,8 +23,8 @@ const Team = () => {
                     <CardMedia
                         component="img"
                         sx={{
-                        width: 100,
-                        height: 100,
+                        width: 120,
+                        height: 120,
                         borderRadius: '50%',
                         display: 'flex',
                         justifyContent: 'center',

@@ -27,7 +27,7 @@ function AboutUs()
             </div>
             <div className="aboutParagraph">
               KnightAssist is on a mission to improve how universities manage volunteering processes, offering a secure and user-centric digital platform to simplify authentication, 
-              legitimacy verification, and the collection of volunteer hours, eliminating tedious administrative tasks and paperwork. KnigtAssist is made by students and for students,
+              legitimacy verification, and the collection of volunteer hours, eliminating tedious administrative tasks and paperwork. KnightAssist is made by students and for students,
               our vision is to enhance the university experience by fostering community, civic engagement, skill development, and well-being among students, while also connecting them
               with campus organizations seeking volunteers. KnightAssist streamlines the volunteering experience for students, organizations, and university administrators, powered by new approaches and
               a robust technology stack. With KnightAssist we hope to create a more connected and engaged university community.
