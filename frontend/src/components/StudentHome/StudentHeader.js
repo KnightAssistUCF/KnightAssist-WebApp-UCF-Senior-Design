@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import { BsExclamation } from "react-icons/bs";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -8,7 +9,9 @@ import { purple } from '@mui/material/colors';
 import IconButton from '@mui/material/IconButton';
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from 'react-router-dom'; 
+import './StudentHome.css';
 import Logo from '../Logo';
+import { RiFeedbackLine } from 'react-icons/ri';
 
 function Header()
 {
@@ -95,6 +98,14 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
+                    <LightTooltip title={!isSidebarActive ? "Announcements" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/studentannouncements">
+							<RiFeedbackLine className='searchIcon'></RiFeedbackLine>
+                            <span class="links_name">Updates</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
                     <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
                         <a href="#/studenthistory">
                             <BiHistory className='historyIcon'></BiHistory>

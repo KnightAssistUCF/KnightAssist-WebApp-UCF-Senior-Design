@@ -221,6 +221,9 @@ min-height: 100vh;
 	cursor: pointer;
 }
 
+.smallName{
+	font-size: 15px !important;
+}
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
