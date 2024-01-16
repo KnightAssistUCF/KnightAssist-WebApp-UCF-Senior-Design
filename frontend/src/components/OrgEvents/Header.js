@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom'; 
 import './OrgEvents.css';
 import Logo from '../Logo';
+import { CgProfile } from 'react-icons/cg';
 
 function Header()
 {
@@ -79,6 +80,14 @@ function Header()
                         </a>
                     </LightTooltip>
                 </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/orgprofile">
+                            <CgProfile className='homeIcon'/>
+                            <span class="links_name">Profile</span>
+                        </a>
+                    </LightTooltip>
+                </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
                         <a href="#/orgevents">
@@ -92,14 +101,6 @@ function Header()
                         <a href="#/orgfeedback">
                             <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
                             <span class="links_name">Feedback</span>
-                        </a>
-                    </LightTooltip>
-                </li>
-                <li>
-                    <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href='#/orghistory'>
-                            <BiHistory className='historyIcon'></BiHistory>
-                            <span class="links_name">History</span>
                         </a>
                     </LightTooltip>
                 </li>
