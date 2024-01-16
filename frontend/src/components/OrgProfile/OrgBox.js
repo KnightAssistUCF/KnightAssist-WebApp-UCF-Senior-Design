@@ -81,7 +81,7 @@ function OrgBox(props) {
 					
 				response = await fetch(url, {
 					body: JSON.stringify(json),
-					method: "POST",
+					method: "DELETE",
 					headers: {"Content-Type": "application/json"},
 				});
 				
