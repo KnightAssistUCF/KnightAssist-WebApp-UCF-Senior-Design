@@ -1,10 +1,13 @@
 .wholePage{
-	background-color: #5f5395 !important;
+	background-color: #F5D6BA !important;
 	color: black;
 	height: 100% !important;
-	padding-bottom: 10% !important;
+	padding-bottom: 8% !important;
 }
 
+.details{
+	margin-bottom: 30px;
+}
 
 .userInput{
 	width: 50%;
@@ -18,7 +21,7 @@
 	border-radius: 15px !important;
 	width: 90% !important;
 	height: 70% !important;
-	margin-bottom: -8%;
+	margin-bottom: -3%;
 }
 
 .cardTitleLogo{
@@ -42,14 +45,15 @@
 .successText{
 	margin-left: 10%;
 	width: 75%;
-	font-size: 17px;
+	font-size: 16px;
 }
 
 .imageContactUs{
-	margin-top: 3%;
-	margin-bottom: 15px;
+	margin-bottom: 0px;
 	width: 40%;
 	height: 40%;
+	margin-left: 58% !important;
+	overflow: hidden !important;
 }
 
 .contactUsInfo{
@@ -70,5 +74,11 @@
 @media (max-width: 700px) {
 	.userInput{
 		width: 100%;
+	}
+}
+
+@media (max-width: 700px) {
+	.imageContactUs{
+		margin-left: 33% !important;
 	}
 }

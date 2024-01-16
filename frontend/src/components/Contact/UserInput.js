@@ -87,14 +87,6 @@ function UserInput() {
 		return (
 			<Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
 				<TextField
-					sx={{
-						"& label": {
-							color: 'purple',
-							"&.Mui-focused": {
-								color: 'purple'
-							}
-						}
-					}}
 					name={props.name}
 					fullWidth
 					required={props.required}

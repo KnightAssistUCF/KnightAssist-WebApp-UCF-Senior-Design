@@ -3,7 +3,6 @@ import { Grid, Typography, Button, Box, Link} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CssBaseline from '@mui/material/CssBaseline';
-import Lottie from "lottie-react";
 import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import useStyles from '../../PreLogin/PreLoginStyles';
 import './Contact.css';
