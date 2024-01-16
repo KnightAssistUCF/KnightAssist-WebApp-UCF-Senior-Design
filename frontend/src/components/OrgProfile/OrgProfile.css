@@ -31,7 +31,8 @@
     /* height: 320%; */
     height: calc(100vh - 35%);
     border-radius: 14px;
-    position: static; /* overlay */
+    position: relative; /* overlay */
+	z-index: 200 !important;
 	margin-top: -125px;
     margin-left: 2%; 
     /* bottom: 10%;  */
