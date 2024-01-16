@@ -23,11 +23,11 @@ const generateRandomEventData = (organizationId) => {
         },
         checkedInStudents: [],
         feedback: [],
-        eventTags: {
-            tag1: 'computer science',
-            tag2: 'engineering',
-            tag3: 'mathematics'
-        },
+        eventTags: [
+            'computer science', 
+            'engineering', 
+            'mathematics'
+        ],
         semeter: 'Fall 2023',
         maxAttendees: Math.floor(Math.random() * 500) + 1, 
     });
