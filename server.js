@@ -245,8 +245,12 @@ const retrieveAllFeedback_ForAnOrg = require('./backend/routes/FeedbackAndReview
 app.use('/api/retrieveAllFeedback_ForAnOrg', retrieveAllFeedback_ForAnOrg);
 
 /* Generate dummy checked in students to a certain set of events */
-const generateDummyCheckedInStudents = require('./backend/routes/DummyChecIn_OutDataGeneartor/generatorCheckIn');
+const generateDummyCheckedInStudents = require('./backend/routes/MockDataGenerators/generatorCheckIn');
 app.use('/api/generateDummyCheckedInStudents', generateDummyCheckedInStudents);
+
+/* Generate dummy events for a certain organization */
+const generateDummyEvents = require('./backend/routes/MockDataGenerators/generateEvents');
+app.use('/api/generateDummyEvents', generateDummyEvents);
 
 
 /*
