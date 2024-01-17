@@ -70,11 +70,17 @@ function OrgProfile() {
 			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
 			<div className='orgProfilePage spartan'>
 				{/* <div className='orgProfileTitle'>Organization Profile</div> */}
-				<BackgroundBanner/>
-				<OrgBox org={org}/>
-				<div className='navTabs'>
-					<NavTabs/>
-				</div>
+				{(org !== null)
+					?	
+					<div>
+						<BackgroundBanner/>
+						<OrgBox org={org}/>
+						<div className='navTabs'>
+							<NavTabs org={org}/>
+						</div>
+					</div>
+					: ""
+				}
 			</div>
 		
 		</div>

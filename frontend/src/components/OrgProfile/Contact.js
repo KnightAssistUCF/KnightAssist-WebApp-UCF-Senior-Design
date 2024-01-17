@@ -9,8 +9,9 @@ import NavTabs from './NavTabs';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import { BiGlobe } from 'react-icons/bi';
 
-function Contact() {
+function Contact(props) {
   
 
   return (
@@ -20,15 +21,15 @@ function Contact() {
             <div className='profileEmail'>
                 <MailOutlineIcon/>
                 <div className='navContactText'>
-                    <a href='mailto:organizationemail@email.org'>OrganizationEmail@email.org</a></div>
+                    <a href='mailto:organizationemail@email.org'>{props.org.email}</a></div>
             </div>
             <div className='profileEmail'>
                 <PhoneIcon/>
-                <div className='navContactText'>555-555-5555</div>
+                <div className='navContactText'>{props.org.contact.phone}</div>
             </div>
             <div className='profileEmail'>
-                <LocationOnIcon/>
-                <div className='navContactText'>4000 Central Florida Blvd</div>
+                <BiGlobe/>
+                <div className='navContactText'>{props.org.contact.website}</div>
             </div>
         </div>
       

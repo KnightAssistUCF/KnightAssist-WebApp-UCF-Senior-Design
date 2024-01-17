@@ -7,16 +7,12 @@ import { Button, Typography, CardContent, Box } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 
-function Bio() {
-    const [expanded, setExpanded] = useState(false);
+function Bio(props) {
+    const [expanded, setExpanded] = useState(props.org.description.length <= 600);
 
     const toggleExpanded = () => {
         setExpanded(!expanded);
     };
-
-    const loremIpsumText =
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Justo donec enim diam vulputate. Adipiscing elit ut aliquam purus sit amet luctus venenatis. Enim tortor at auctor urna nunc. Tellus id interdum velit laoreet id donec ultrices tincidunt. Egestas congue quisque egestas diam in. Eu lobortis elementum nibh tellus. Ullamcorper a lacus vestibulum sed arcu non odio. Cras pulvinar mattis nunc sed blandit libero. Gravida cum sociis natoque penatibus et magnis. Velit sed ullamcorper morbi tincidunt ornare. Sapien et ligula ullamcorper malesuada proin libero nunc. Enim eu turpis egestas pretium aenean.is. Velit sed ullamcorper morbi tincidunt ornare. Sapien et ligula ullamcorper malesuada proin libero nunc. Enim eu turpis egestas pretium aenean.is. Velit sed ullamcorper morbi tincidunt ornare. Sapien et ligula ullamcorper malesuada proin libero nunc. Enim eu turpis egestas pretium aenean.is. Velit sed ullamcorper morbi tincidunt ornare. Sapien et ligula ullamcorper malesuada proin libero nunc. Enim eu turpis egestas pretium aenean.is. Velit sed ullamcorper morbi tincidunt ornare. Sapien et ligula ullamcorper malesuada proin libero nunc. Enim eu turpis egestas pretium aenean.'; // Your long text here
-
 
   return (
     <div>
@@ -24,17 +20,25 @@ function Bio() {
             <div className='about'>
                 {/* <div className='navSubTitle'>About</div> */}
                 <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-                    <div className='navParagraphText'>{expanded ? loremIpsumText : `${loremIpsumText.slice(0, 600)}...`}</div>
-                    {!expanded && (
-                        <Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', textTransform: 'none', marginTop: '2px' }}>
-                            See More
-                        </Button>
-                    )}
-                    {expanded && (
-                        <Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', textTransform: 'none', marginTop: '2px' }} >
-                            See Less
-                        </Button>
-                    )}
+                    <div className='navParagraphText'>{expanded ? props.org.description : `${props.org.description.slice(0, 600)}...`}</div>
+                    {(props.org.description.length > 600)
+						?
+							!expanded && (
+								<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', textTransform: 'none', marginTop: '2px' }}>
+									See More
+								</Button>
+							)
+						: ""
+					}
+					{(props.org.description.length > 600)
+						?
+							expanded && (
+								<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', textTransform: 'none', marginTop: '2px' }} >
+									See Less
+								</Button>
+							)
+						: ""
+					}
                 </Box>
             </div>
         </div>

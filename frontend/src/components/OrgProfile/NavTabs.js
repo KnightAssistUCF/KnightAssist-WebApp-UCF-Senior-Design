@@ -50,11 +50,11 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
   },
 }));
 
-const BioTabContent = () => (
+const BioTabContent = (props) => (
   <div>
     {/* Content for Bio tab */}
-    <Bio/>
-    <Contact/>
+    <Bio org={props.org}/>
+    <Contact org={props.org}/>
   </div>
 );
 
@@ -65,14 +65,14 @@ const UpcomingEventsTabContent = () => (
   </div>
 );
 
-const RatingsTabContent = () => (
+const RatingsTabContent = (props) => (
   <div>
     {/* Content for Ratings tab */}
-    <Ratings/>
+    <Ratings org={props.org}/>
   </div>
 );
 
-export default function CustomizedTabs() {
+export default function CustomizedTabs(props) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -82,11 +82,11 @@ export default function CustomizedTabs() {
   const getTabContent = (tabValue) => {
     switch (tabValue) {
       case 0:
-        return <BioTabContent />;
+        return <BioTabContent org={props.org}/>;
       case 1:
-        return <UpcomingEventsTabContent />;
+        return <UpcomingEventsTabContent org={props.org}/>;
       case 2:
-        return <RatingsTabContent />;
+        return <RatingsTabContent org={props.org}/>;
       default:
         return null;
     }
