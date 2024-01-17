@@ -58,10 +58,10 @@ const BioTabContent = (props) => (
   </div>
 );
 
-const UpcomingEventsTabContent = () => (
+const UpcomingEventsTabContent = (props) => (
   <div>
     {/* Content for Upcoming Events tab */}
-    <Calendar/>
+    <Calendar org={props.org}/>
   </div>
 );
 
