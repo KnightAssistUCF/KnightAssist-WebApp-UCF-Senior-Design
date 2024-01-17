@@ -115,7 +115,6 @@ function EventModal(props)
 
     async function doRSVP(){
         if(isRSVP){
-            console.log("its happening here");
             const json = {
                 eventID: id,
                 eventName: name,
@@ -133,6 +132,8 @@ function EventModal(props)
             const res = await response.text();
 
             console.log(res);
+			
+			setVolunteers(curVolunteers - 1);
         }else{
             const json = {
                 eventID: id,
@@ -152,6 +153,8 @@ function EventModal(props)
             const res = JSON.parse(await response.text());
 
             console.log("Result: ", res);
+
+			setVolunteers(curVolunteers + 1);
         }
 
         setIsRSVP(!isRSVP);
@@ -213,7 +216,7 @@ function EventModal(props)
     function Tag(props){
         return (
             <Grid item>
-                <Card className='tag'>
+                <Card className='eventTag'>
                     {props.tag}
                 </Card>
             </Grid>
