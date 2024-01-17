@@ -43,6 +43,35 @@
 	float: left;
 }
 
+.feedbackEvent{
+	width: 100%;
+}
+
+.hideScroll{
+	overflow: hidden !important;
+}
+
+.feedbackModal{
+	height: 100% !important;
+	width: 500px !important;
+}
+
+.feedbackTitle{
+	margin-left: -20px !important;
+}
+
+.feedbackTxt{
+	overflow-y: none !important; 
+	max-width: 500px;
+	max-height: 400px;	
+	word-wrap: break-word;
+}
+
+.theContent{
+	max-width: 100%;
+    word-wrap: break-word;
+}
+
 .navSubTitle {
     font-size: 20px;
     color: #7a7a7a;
