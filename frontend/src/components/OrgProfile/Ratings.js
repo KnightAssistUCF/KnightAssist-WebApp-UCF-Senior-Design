@@ -24,6 +24,14 @@ function RatingBox(props) {
 	const [feedback, setFeedback] = useState(null);
 	const [selectedFeedback, setSelectedFeedback] = useState(null);
 
+	const [averageRating, setAverageRating] = useState(0);
+	const [num5s, setNum5s] = useState(0);
+	const [num4s, setNum4s] = useState(0);
+	const [num3s, setNum3s] = useState(0);
+	const [num2s, setNum2s] = useState(0);
+	const [num1s, setNum1s] = useState(0);
+
+
     const handleCardClick = (feedback) => {
       setModalOpen(true);
 	  setSelectedFeedback(feedback)
@@ -44,7 +52,22 @@ function RatingBox(props) {
     
         let res = JSON.parse(await response.text());
 
+		let sum = 0;
+		const freq = [0, 0, 0, 0, 0];
+
+		for(let f of res){
+			sum += f.rating;
+			freq[f.rating - 1]++;
+		}
+
 		setFeedback(res);
+
+		setAverageRating((sum / res.length).toFixed(1));
+		setNum5s(freq[4]);
+		setNum4s(freq[3]);
+		setNum3s(freq[2]);
+		setNum2s(freq[1]);
+		setNum1s(freq[0]);
 	}
 
 	useEffect(() => {
@@ -58,18 +81,18 @@ function RatingBox(props) {
 			<div className='ratingsTopRow'>
 			<Box display="flex" justifyContent="space-between" alignItems="flex-start" width="100%">
 				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-				<div className='ratingNum'>
-					4.3
-				</div>
-				<Rating value={4.3} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
+					<div className='ratingNum'>
+						{averageRating}
+					</div>
+					<Rating value={averageRating} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
 				</Card>
 	
 				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-				<RatingLinear variant="determinate" value={70} sx={{ width: '60%', margin: '8px 0' }} />
-				<RatingLinear variant="determinate" value={20} sx={{ width: '60%', margin: '8px 0' }} />
-				<RatingLinear variant="determinate" value={4} sx={{ width: '60%', margin: '8px 0' }} />
-				<RatingLinear variant="determinate" value={4} sx={{ width: '60%', margin: '8px 0' }} />
-				<RatingLinear variant="determinate" value={0} sx={{ width: '60%', margin: '8px 0' }} />
+					<RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+					<RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+					<RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+					<RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+					<RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
 				</Card>
 			</Box>
 			</div>
