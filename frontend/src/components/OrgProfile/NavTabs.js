@@ -97,8 +97,8 @@ export default function CustomizedTabs(props) {
       <Box sx={{ bgcolor: '#fff' }}>
         <AntTabs value={value} onChange={handleChange} aria-label="ant example">
 		  <AntTab label="Bio" />
-		  <AntTab label="Upcoming Events" />
-          <AntTab label="Ratings" />
+		  {(props.org._id !== sessionStorage.getItem("ID")) ? <AntTab label="Upcoming Events" /> : ""}
+		  {(props.org._id !== sessionStorage.getItem("ID")) ? <AntTab label="Ratings" /> : ""}
         </AntTabs>
         <Box sx={{ p: 3 }}>
           {getTabContent(value)}
