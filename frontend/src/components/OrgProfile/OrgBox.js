@@ -134,9 +134,9 @@ function OrgBox(props) {
 	}
 
 	function SocialMedia(){
-		const socials = props.org.contact.socialMedia;
+		const socials = props.org.contact;
 		return (
-			(socials) ?
+			(socials && socials.socialMedia) ?
 				<div className='profileSocials'>
 					{(socials.facebook) ? <a className='social' href={props.org.contact.socialMedia.facebook}><Facebook/></a> : ""}
 					{(socials.twitter) ? <a className='social' href={props.org.contact.socialMedia.twitter}><RiTwitterXFill/></a> : ""}

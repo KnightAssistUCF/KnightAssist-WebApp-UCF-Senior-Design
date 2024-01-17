@@ -18,19 +18,28 @@ function Contact(props) {
     <div>
         <div className='contactBox'>
             <div className='navSubTitle'>Contact</div>
-            <div className='profileEmail'>
-                <MailOutlineIcon/>
-                <div className='navContactText'>
-                    <a href='mailto:organizationemail@email.org'>{props.org.email}</a></div>
-            </div>
-            <div className='profileEmail'>
-                <PhoneIcon/>
-                <div className='navContactText'>{props.org.contact.phone}</div>
-            </div>
-            <div className='profileEmail'>
-                <BiGlobe/>
-                <div className='navContactText'>{props.org.contact.website}</div>
-            </div>
+			{(props.org.email) ? 
+				<div className='profileEmail'>
+					<MailOutlineIcon/>
+					<div className='navContactText'>
+					<a href='mailto:organizationemail@email.org'>{props.org.email}</a></div>
+				</div>
+				: ""
+			}
+			{props.org.contact && props.org.contact.phone ?
+				<div className='profileEmail'>
+					<PhoneIcon/>
+					<div className='navContactText'>{props.org.contact.phone}</div>
+				</div>
+				: ""
+			}
+			{props.org.contact && props.org.contact.website ?
+				<div className='profileEmail'>
+					<BiGlobe/>
+					<div className='navContactText'>{props.org.contact.website}</div>
+				</div>
+				: ""
+			}
         </div>
       
     </div>
