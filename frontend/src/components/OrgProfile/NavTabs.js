@@ -93,11 +93,11 @@ export default function CustomizedTabs(props) {
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box >
       <Box sx={{ bgcolor: '#fff' }}>
         <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-          <AntTab label="Bio" />
-          <AntTab label="Upcoming Events" />
+		  <AntTab label="Bio" />
+		  <AntTab label="Upcoming Events" />
           <AntTab label="Ratings" />
         </AntTabs>
         <Box sx={{ p: 3 }}>

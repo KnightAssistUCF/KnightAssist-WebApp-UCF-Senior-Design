@@ -16,6 +16,8 @@
     width: calc(82% - 80px);
     /* width: 76%; */
     margin-right: 20px;
+	z-index: 300 !important;
+	position: relative;
 }
 
 .orgBannerFiller {
