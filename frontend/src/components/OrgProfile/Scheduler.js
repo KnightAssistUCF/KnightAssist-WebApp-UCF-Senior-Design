@@ -55,20 +55,16 @@ function Calendar(props) {
       });
 
       var res = JSON.parse(await response.text());
-      console.log(res);
 
       const events = [];
       for (let event of res) {
         if (eventIsUpcoming(event.endTime)) {
           var hasRSVP = "undefined value";
-          console.log(event.maxAttendees, event.checkedInStudents.length);
           if(event.maxAttendees === event.checkedInStudents.length) {
             hasRSVP = "Full Capacity";
           } else {
             var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
-            console.log(booleanHasRSVP);
             if(booleanHasRSVP === false) {
-              console.log("it is false");
               hasRSVP = "RSVP";
             } else {
               hasRSVP = "Undo RSVP";
@@ -93,8 +89,8 @@ function Calendar(props) {
 		  }
         }
       }
-      console.log(events);
       setUpcomingEvents(events);
+      console.log(events);
       
     }
 
