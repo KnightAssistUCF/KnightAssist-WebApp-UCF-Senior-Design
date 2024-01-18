@@ -120,6 +120,29 @@ const customViewer = (event, close) => {
     );
   };
 
+  async function unrsvpEvent(event){
+    try {
+      var url = buildPath(`api/cancelRSVP`);
+      var studentID = sessionStorage.getItem("ID");
+      var json = {
+        eventID: event._id,
+        eventName: event.title,
+        userID: studentID
+      }
+      console.log(json);
+      var response = await fetch(url, {
+        body: JSON.stringify(json),
+        method: "DELETE",
+        headers: {"Content-Type": "application/json"},
+      });
+      
+      var res = await response.text();
+      console.log(res);
+    } catch(e) {
+      console.log("unrsvp failed");
+    }
+  }
+
   async function rsvpEvent(event){
     console.log(event);
     try {
@@ -155,6 +178,7 @@ const customViewer = (event, close) => {
       rsvpEvent(event);
       console.log("RSVP");
     } else if (event.rsvpStatus === "Undo RSVP") {
+      unrsvpEvent(event);
       console.log("Undo");
     }
 
