@@ -46,51 +46,63 @@ function Calendar(props) {
     }
     
 
-    async function getUpcomingEvents(org){
-
-      var url = buildPath(`api/searchEvent?organizationID=${org._id}`);
-
-      var response = await fetch(url, {
+    async function getUpcomingEvents(org) {
+      try {
+        var url = buildPath(`api/searchEvent?organizationID=${org._id}`);
+        var response = await fetch(url, {
           method: "GET",
           headers: {"Content-Type": "application/json"},
-      });
-
-      var res = JSON.parse(await response.text());
-
-      const events = [];
-      for (let event of res) {
-        if (eventIsUpcoming(event.endTime)) {
-          var hasRSVP = "undefined value";
-          if(event.maxAttendees === event.checkedInStudents.length) {
-            hasRSVP = "Full Capacity";
-          } else {
-            var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
-            if(booleanHasRSVP === false) {
-              hasRSVP = "RSVP";
+        });
+        var res = JSON.parse(await response.text());
+    
+        const updatedEvents = res.map(event => {
+          if (eventIsUpcoming(event.endTime)) {
+            if (event.maxAttendees === event.checkedInStudents.length) {
+              return {
+                _id: event._id,
+                title: event.name,
+                start: new Date(event.startTime),
+                end: new Date(event.endTime),
+                editable: false,
+                deletable: false,
+                draggable: false,
+                description: event.description,
+                location: event.location,
+                maxAttendees: event.maxAttendees,
+                numRegistered: event.checkedInStudents.length,
+                rsvpStatus: "Full Capacity",
+              };
             } else {
-              hasRSVP = "Undo RSVP";
+              const booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
+              
+              const rsvpStatus = booleanHasRSVP ? "Undo RSVP" : "RSVP";
+    
+              return {
+                _id: event._id,
+                title: event.name,
+                start: new Date(event.startTime),
+                end: new Date(event.endTime),
+                editable: false,
+                deletable: false,
+                draggable: false,
+                description: event.description,
+                location: event.location,
+                maxAttendees: event.maxAttendees,
+                numRegistered: event.checkedInStudents.length,
+                rsvpStatus: rsvpStatus,
+              };
             }
           }
-          events.push({
-            _id: event._id,
-            title: event.name,
-            start: new Date(event.startTime),
-            end: new Date(event.endTime),
-            editable: false,
-            deletable: false,
-            draggable: false,
-            description: event.description,
-            location: event.location,
-            maxAttendees: event.maxAttendees,
-            numRegistered: event.checkedInStudents.length,
-            rsvpStatus: hasRSVP, // 0 - no RSVP, 1 - RSVP, 2 - Full capacity
-          });
-        }
+          return null;
+        }).filter(Boolean);
+    
+        setUpcomingEvents(updatedEvents);
+        console.log(updatedEvents);
+      } catch (e) {
+        console.log("getUpcomingEvents API call failed:", e.message);
       }
-      setUpcomingEvents(events);
-      console.log(events);
-      
     }
+    
 
 const customViewer = (event, close) => {
   const formatDateTimeRange = (start, end) => {
@@ -138,6 +150,7 @@ const customViewer = (event, close) => {
       
       var res = await response.text();
       console.log(res);
+      setRSVPEvents(prevRSVPEvents => prevRSVPEvents.filter(e => e._id !== event._id));
     } catch(e) {
       console.log("unrsvp failed");
     }
@@ -166,6 +179,7 @@ const customViewer = (event, close) => {
       var res = await response.text();
 
       console.log(res);
+      setRSVPEvents(prevRSVPEvents => [...prevRSVPEvents, event]);
     } catch(e) {
       console.log("rsvp API call failed: " + e);
     }
