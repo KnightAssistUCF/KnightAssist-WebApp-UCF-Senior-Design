@@ -49,6 +49,7 @@ function AddEventModal(props)
 
     const [redoTags, setRedoTags] = useState(1);
     const [showError, setShowError] = useState(false);
+	const [errors, setErrors] = useState([]);
 
     // Will eventually be an API call to get the tags of an org
     const [definedTags, setDefinedTags] = useState([]);
@@ -56,6 +57,11 @@ function AddEventModal(props)
 	// Event has not happened yet or is not over
     function eventIsUpcoming(endTime){
         return new Date().toISOString().localeCompare(endTime) < 0;
+	}
+
+	// Event ends after it starts
+	function validTime(startTime, endTime){
+		return new Date(startTime) < new Date(endTime);
 	}
 
     async function resetValues(){
@@ -201,14 +207,23 @@ function AddEventModal(props)
     }
 
     function validInput(){
-        // The errors are set automatically, this just
-        // checks that at least one of them would be set
-        if(name === "" || description === "" || location === "" || maxVolunteers === ""){
-            setShowError(true);
-            return false;
-        }
+		const errs = [];
 
-        return true;
+        if(name === "" || description === "" || location === "" || maxVolunteers === "")
+            errs.push("Some field(s) are empty!");
+
+		if(!validTime(startTime, endTime))
+			errs.push("Start date must be before end date");
+
+		if(tagNames.length < 1)
+			errs.push("At least one tag must be selected");
+
+		if(errs.length == 0) return true;
+		
+		setShowError(true);
+		setErrors(errs);
+
+        return false;
     }
 
     function buttonEvent(){
@@ -303,7 +318,9 @@ function AddEventModal(props)
                 {(showError) === true
                     ?
                         <div>
-                            <Alert severity="error">Several fields are empty!</Alert>
+							{errors.map((err) => (
+                            	<Alert severity="error">{err}</Alert>					
+							))}
                         </div>
                     :
                         null

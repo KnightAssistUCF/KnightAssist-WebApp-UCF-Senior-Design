@@ -3,6 +3,7 @@ import './OrgProfile.css';
 import { Dialog, Box, Button, Typography, CardContent } from '@mui/material';
 import { Scheduler } from "@aldabil/react-scheduler";
 import { buildPath } from '../../path';
+import dayjs from 'dayjs';
 
 
 function Calendar(props) {
@@ -16,9 +17,7 @@ function Calendar(props) {
     async function getRSVPEvents() {
       if (sessionStorage.getItem("role") === "volunteer") {
         try {
-          // replace with user email
-          var email = "anisharanjan55@gmail.com"
-          var url = buildPath(`api/searchUserRSVPedEvents?email=${email}`);
+          var url = buildPath(`api/searchUserRSVPedEvents?studentID=${sessionStorage.getItem("ID")}`);
     
           var response = await fetch(url, {
             method: "GET",
@@ -75,20 +74,23 @@ function Calendar(props) {
               hasRSVP = "Undo RSVP";
             }
           }
-          events.push({
-            event_id: event._id,
-            title: event.name,
-            start: new Date(event.startTime),
-            end: new Date(event.endTime),
-            editable: false,
-            deletable: false,
-            draggable: false,
-            description: event.description,
-            location: event.location,
-            maxAttendees: event.maxAttendees,
-            numRegistered: event.checkedInStudents.length,
-            rsvpStatus: hasRSVP, // 0 - no RSVP, 1 - RSVP, 2 - Full capacity
-          });
+
+		  if(new Date(event.startTime).toISOString().localeCompare(event.endTime) < 0){
+				events.push({
+					event_id: event._id,
+					title: event.name,
+					start: new Date(event.startTime),
+					end: new Date(event.endTime),
+					editable: false,
+					deletable: false,
+					draggable: false,
+					description: event.description,
+					location: event.location,
+					maxAttendees: event.maxAttendees,
+					numRegistered: event.checkedInStudents.length,
+					rsvpStatus: hasRSVP, // 0 - no RSVP, 1 - RSVP, 2 - Full capacity
+				});
+		  }
         }
       }
       console.log(events);
@@ -96,74 +98,78 @@ function Calendar(props) {
       
     }
 
-const customViewer = (event, close) => {
-  const formatDateTimeRange = (start, end) => {
-    const optionsDate = {
-      month: 'numeric',
-      day: 'numeric',
-      year: '2-digit',
-    };
+	const customViewer = (event, close) => {
+		const formatDateTimeRange = (start, end) => {
+			const optionsDate = {
+			month: 'numeric',
+			day: 'numeric',
+			year: '2-digit',
+			};
 
-    const optionsTime = {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
-    };
+			const optionsTime = {
+			hour: 'numeric',
+			minute: 'numeric',
+			hour12: true,
+			};
 
-    const formattedDate = start.toLocaleString(undefined, optionsDate);
-    const formattedStartTime = start.toLocaleString(undefined, optionsTime);
-    const formattedEndTime = end.toLocaleString(undefined, optionsTime);
+			const formattedDate = start.toLocaleString(undefined, optionsDate);
+			const formattedStartTime = start.toLocaleString(undefined, optionsTime);
+			const formattedEndTime = end.toLocaleString(undefined, optionsTime);
 
-    return (
-      <div>
-        <p style={{ margin: '0', lineHeight: '0.7' }}>{formattedDate}</p>
-        <p style={{ marginTop: '8px' }}>
-          {formattedStartTime} - {formattedEndTime}
-        </p>
-      </div>
-    );
-  };
+			return (
+			<div>
+				<p style={{ margin: '0', lineHeight: '0.7' }}>{formattedDate}</p>
+				<p style={{ marginTop: '8px' }}>
+				{formattedStartTime} - {formattedEndTime}
+				</p>
+			</div>
+			);
+		};
+
+		return (
+			<Box sx={{maxWidth: '500px'}}>
+			<Box sx={{ margin: "20px" }}>
+				<div>
+				<h3>{event.title}</h3>
+				<p>{formatDateTimeRange(event.start, event.end)}</p>
+				<p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: " + event.numRegistered + '/' + event.maxAttendees}</p>
+				<p style={{marginTop: '8px'}}>{"Location: "+event.location}</p>
+				<p>{`${event.rsvpStatus}`}</p>
+				<p>{`${event.description}`}</p>
+				</div>
+				<div>
+				<Box sx={{display: "flex", justifyContent: "flex-end" }}>
+				<Button onClick={close} variant="outlined" sx={{marginRight: "5px" }}>
+					Close
+				</Button>
+				<Button onClick={close} variant="contained">
+					{event.rsvpStatus}
+				</Button>
+				</Box>
+				</div>
+			</Box>
+			</Box>
+		);
+	};
+
+
+	useEffect(() => {
+	const fetchData = async () => {
+		await getRSVPEvents();
+	};
+
+	fetchData();
+	}, []);
+
+	useEffect(() => {
+	if(props.org)
+		getUpcomingEvents(props.org);
+	}, [props.org, rsvpEvents]);
+
+
   return (
-    <Box sx={{maxWidth: '500px'}}>
-      <Box sx={{ margin: "20px" }}>
-        <div>
-          <h3>{event.title}</h3>
-          <p>{formatDateTimeRange(event.start, event.end)}</p>
-          <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: " + event.numRegistered + '/' + event.maxAttendees}</p>
-          <p style={{marginTop: '8px'}}>{"Location: "+event.location}</p>
-          <p>{`${event.rsvpStatus}`}</p>
-          <p>{`${event.description}`}</p>
-        </div>
-        <div>
-          <Box sx={{display: "flex", justifyContent: "flex-end" }}>
-          <Button onClick={close} variant="outlined" sx={{marginRight: "5px" }}>
-            Close
-          </Button>
-          <Button onClick={close} variant="contained">
-            {event.rsvpStatus}
-          </Button>
-          </Box>
-        </div>
-      </Box>
-    </Box>
-  );
-};
-
-
-useEffect(() => {
-  const fetchData = async () => {
-    await getRSVPEvents();
-  };
-
-  fetchData();
-}, []);
-
-useEffect(() => {
-  getUpcomingEvents(props.org);
-}, [props.org, rsvpEvents]);
-
-
-  return (
+	(props.org)
+	?
     <div>
       <div className='sch'>
         <Scheduler
@@ -175,8 +181,8 @@ useEffect(() => {
           customViewer={customViewer}
         />
       </div>
-    
     </div>
+	: ""
   );
 }
 
