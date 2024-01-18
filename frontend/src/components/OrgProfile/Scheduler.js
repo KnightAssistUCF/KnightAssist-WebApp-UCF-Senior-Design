@@ -61,18 +61,18 @@ function Calendar(props) {
       const events = [];
       for (let event of res) {
         if (eventIsUpcoming(event.endTime)) {
-          var hasRSVP = -1;
+          var hasRSVP = "undefined value";
           console.log(event.maxAttendees, event.checkedInStudents.length);
           if(event.maxAttendees === event.checkedInStudents.length) {
-            hasRSVP = 2;
+            hasRSVP = "Full Capacity";
           } else {
             var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
             console.log(booleanHasRSVP);
             if(booleanHasRSVP === false) {
               console.log("it is false");
-              hasRSVP = 0;
+              hasRSVP = "RSVP";
             } else {
-              hasRSVP = 1;
+              hasRSVP = "Undo RSVP";
             }
           }
           events.push({
@@ -129,7 +129,7 @@ const customViewer = (event, close) => {
         <div>
           <h3>{event.title}</h3>
           <p>{formatDateTimeRange(event.start, event.end)}</p>
-          <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: "+event.numRegistered + '/' + event.maxAttendees}</p>
+          <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: " + event.numRegistered + '/' + event.maxAttendees}</p>
           <p style={{marginTop: '8px'}}>{"Location: "+event.location}</p>
           <p>{`${event.rsvpStatus}`}</p>
           <p>{`${event.description}`}</p>
@@ -140,7 +140,7 @@ const customViewer = (event, close) => {
             Close
           </Button>
           <Button onClick={close} variant="contained">
-            RSVP
+            {event.rsvpStatus}
           </Button>
           </Box>
         </div>
