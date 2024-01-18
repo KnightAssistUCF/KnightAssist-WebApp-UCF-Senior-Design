@@ -56,27 +56,23 @@ function Calendar(props) {
       });
 
       var res = JSON.parse(await response.text());
-      console.log(res);
 
       const events = [];
       for (let event of res) {
         if (eventIsUpcoming(event.endTime)) {
           var hasRSVP = "undefined value";
-          console.log(event.maxAttendees, event.checkedInStudents.length);
           if(event.maxAttendees === event.checkedInStudents.length) {
             hasRSVP = "Full Capacity";
           } else {
             var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
-            console.log(booleanHasRSVP);
             if(booleanHasRSVP === false) {
-              console.log("it is false");
               hasRSVP = "RSVP";
             } else {
               hasRSVP = "Undo RSVP";
             }
           }
           events.push({
-            event_id: event._id,
+            _id: event._id,
             title: event.name,
             start: new Date(event.startTime),
             end: new Date(event.endTime),
@@ -91,8 +87,8 @@ function Calendar(props) {
           });
         }
       }
-      console.log(events);
       setUpcomingEvents(events);
+      console.log(events);
       
     }
 
@@ -123,10 +119,52 @@ const customViewer = (event, close) => {
       </div>
     );
   };
+
+  async function rsvpEvent(event){
+    console.log(event);
+    try {
+      var url = buildPath(`api/RSVPForEvent`);
+
+      var studentID = sessionStorage.getItem("ID");
+      console.log("rsvp Event try");
+      var json = {
+        eventID: event._id,
+        eventName: event.title,
+        userID: studentID,
+        check: 0
+      }
+      console.log(json);
+      var response = await fetch(url, {
+        body: JSON.stringify(json),
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+      });
+      
+      var res = await response.text();
+
+      console.log(res);
+    } catch(e) {
+      console.log("rsvp API call failed: " + e);
+    }
+  }
+
+  const handleButtonClick = (event) => {
+    if (event.rsvpStatus === "Full Capacity") {
+      console.log("Full");
+    } else if (event.rsvpStatus === "RSVP") {
+      rsvpEvent(event);
+      console.log("RSVP");
+    } else if (event.rsvpStatus === "Undo RSVP") {
+      console.log("Undo");
+    }
+
+    close();
+  };
   return (
     <Box sx={{maxWidth: '500px'}}>
       <Box sx={{ margin: "20px" }}>
         <div>
+        <p>{`${event._id}`}</p>
           <h3>{event.title}</h3>
           <p>{formatDateTimeRange(event.start, event.end)}</p>
           <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: " + event.numRegistered + '/' + event.maxAttendees}</p>
@@ -139,8 +177,8 @@ const customViewer = (event, close) => {
           <Button onClick={close} variant="outlined" sx={{marginRight: "5px" }}>
             Close
           </Button>
-          <Button onClick={close} variant="contained">
-            {event.rsvpStatus}
+          <Button onClick={() => handleButtonClick(event)} disabled={event.rsvpStatus === "Full Capacity"} variant="contained">
+            {event.rsvpStatus === "Full Capacity" ? "Full Capacity" : event.rsvpStatus}
           </Button>
           </Box>
         </div>

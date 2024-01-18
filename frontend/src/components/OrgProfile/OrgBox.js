@@ -44,54 +44,60 @@ function OrgBox(props) {
 		const userID = sessionStorage.getItem("ID");
 		let url = buildPath(`api/searchForOrgInUserFavorites?userID=${userID}&organizationID=${organizationID}`);
 
-		let response = await fetch(url, {
-			method: "GET",
-			headers: {"Content-Type": "application/json"},
-		});
+		try {
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let res = JSON.parse(await response.text());
+
+			const json = {
+				organizationID: organizationID,
+				userID: userID
+			};
+
+			console.log(res);
 		
-		let res = JSON.parse(await response.text());
-
-		const json = {
-			organizationID: organizationID,
-			userID: userID
-		};
-
-		console.log(res);
-		
-		setFavorited(res.favoriteStatus === 0);
-
-		if(set){
-			// Org is not a favorite of the user, add it
-			if(res.favoriteStatus === 1){
-				url = buildPath(`api/addFavoriteOrg`);
+			setFavorited(res.favoriteStatus === 0);
+	
+			if(set){
+				// Org is not a favorite of the user, add it
+				if(res.favoriteStatus === 1){
+					url = buildPath(`api/addFavoriteOrg`);
+						
+					response = await fetch(url, {
+						body: JSON.stringify(json),
+						method: "POST",
+						headers: {"Content-Type": "application/json"},
+					});
 					
-				response = await fetch(url, {
-					body: JSON.stringify(json),
-					method: "POST",
-					headers: {"Content-Type": "application/json"},
-				});
-				
-				res = await response.text();
-
-				console.log(res);
-		
-				setFavorited(true);
-			}else{// Remove as favorite
-				url = buildPath(`api/removeFavoriteOrg`);
+					res = await response.text();
+	
+					console.log(res);
+			
+					setFavorited(true);
+				}else{// Remove as favorite
+					url = buildPath(`api/removeFavoriteOrg`);
+						
+					response = await fetch(url, {
+						body: JSON.stringify(json),
+						method: "DELETE",
+						headers: {"Content-Type": "application/json"},
+					});
 					
-				response = await fetch(url, {
-					body: JSON.stringify(json),
-					method: "DELETE",
-					headers: {"Content-Type": "application/json"},
-				});
-				
-				res = await response.text();
-
-				console.log(res);
-		
-				setFavorited(false);
+					res = await response.text();
+	
+					console.log(res);
+			
+					setFavorited(false);
+				}
 			}
+
+		} catch(e) {
+			console.log("error");
 		}
+
 
 	}
 
