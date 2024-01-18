@@ -7,20 +7,47 @@ import { buildPath } from '../../path';
 
 function Calendar(props) {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [customFields, setCustomFields] = useState([]);
-
-  const handleEventClick = (event) => {
-    // Show your custom modal for editing the event
-    // You can pass the customFields array to your modal
-    console.log("Clicked event:", event);
-  };
+  const [rsvpEvents, setRSVPEvents] = useState([]);
 
     function eventIsUpcoming(endTime){
       return new Date().toISOString().localeCompare(endTime) < 0;
-   }
+    }
+
+    async function getRSVPEvents() {
+      if (sessionStorage.getItem("role") === "volunteer") {
+        try {
+          // replace with user email
+          var email = "anisharanjan55@gmail.com"
+          var url = buildPath(`api/searchUserRSVPedEvents?email=${email}`);
+    
+          var response = await fetch(url, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+    
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+    
+          var res = JSON.parse(await response.text());
+          // setRSVPEvents(res);
+          console.log(res);
+          const rsvpUpcomingEvents = [];
+          for(let event of res) {
+            if (eventIsUpcoming(event.startTime)) {
+              rsvpUpcomingEvents.push(event);
+            }
+          }
+          setRSVPEvents(rsvpUpcomingEvents);
+        } catch (e) {
+          console.log("get RSVP events API call failed:", e.message);
+        }
+      }
+    }
+    
 
     async function getUpcomingEvents(org){
-      console.log(org);
+      getRSVPEvents();
 
       var url = buildPath(`api/searchEvent?organizationID=${org._id}`);
 
@@ -47,6 +74,7 @@ function Calendar(props) {
             location: event.location,
             maxAttendees: event.maxAttendees,
             numRegistered: event.checkedInStudents.length,
+            rsvpStatus: 0,
           });
         }
       }
@@ -108,16 +136,16 @@ const customViewer = (event, close) => {
 };
 
 
-    useEffect(() => {
-      getUpcomingEvents(props.org);
-    }, []);
+useEffect(() => {
+  getUpcomingEvents(props.org);
+}, []);
 
   return (
     <div>
       <div className='sch'>
         <Scheduler
           view="month"
-          height={430}
+          height={450}
           //width={400}
           editable={false}
           events={upcomingEvents}
