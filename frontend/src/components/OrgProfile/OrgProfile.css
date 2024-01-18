@@ -213,3 +213,18 @@
 	margin-left: 5px;
 	margin-right: 5px;
 }
+
+/* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+    fill: red;  
+} */
+
+  .css-nl6has .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+    background-image: url('./plus-icon.svg');  /* Replace 'path/to/plus-icon.svg' with the actual path to your plus icon SVG file */
+    background-size: contain;
+    background-repeat: no-repeat;
+    fill: transparent;  /* To make sure the original fill color is not applied */
+  }
+
+  .css-llvhl4-MuiTypography-root {
+    font-family: "Roboto";
+  }
