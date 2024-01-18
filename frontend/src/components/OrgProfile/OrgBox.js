@@ -144,10 +144,10 @@ function OrgBox(props) {
 		return (
 			(socials && socials.socialMedia) ?
 				<div className='profileSocials'>
-					{(socials.facebook) ? <a className='social' href={props.org.contact.socialMedia.facebook}><Facebook/></a> : ""}
-					{(socials.twitter) ? <a className='social' href={props.org.contact.socialMedia.twitter}><RiTwitterXFill/></a> : ""}
-					{(socials.instagram) ? <a className='social' href={props.org.contact.socialMedia.instagram}><Instagram/></a> : ""}
-					{(socials.linkedin) ? <a className='social' href={props.org.contact.socialMedia.linkedin}><LinkedIn/></a> : ""}
+					{(socials.socialMedia.facebook) ? <a className='social' href={socials.socialMedia.facebook} target='_blank'><Facebook/></a> : ""}
+					{(socials.socialMedia.twitter) ? <a className='social' href={socials.socialMedia.twitter} target='_blank'><RiTwitterXFill/></a> : ""}
+					{(socials.socialMedia.instagram) ? <a className='social' href={socials.socialMedia.instagram} target='_blank'><Instagram/></a> : ""}
+					{(socials.socialMedia.linkedin) ? <a className='social' href={socials.socialMedia.linkedin} target='_blank'><LinkedIn/></a> : ""}
 				</div> 
 
 				: ""
