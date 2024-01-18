@@ -47,7 +47,6 @@ function Calendar(props) {
     
 
     async function getUpcomingEvents(org){
-      getRSVPEvents();
 
       var url = buildPath(`api/searchEvent?organizationID=${org._id}`);
 
@@ -62,6 +61,20 @@ function Calendar(props) {
       const events = [];
       for (let event of res) {
         if (eventIsUpcoming(event.endTime)) {
+          var hasRSVP = -1;
+          console.log(event.maxAttendees, event.checkedInStudents.length);
+          if(event.maxAttendees === event.checkedInStudents.length) {
+            hasRSVP = 2;
+          } else {
+            var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
+            console.log(booleanHasRSVP);
+            if(booleanHasRSVP === false) {
+              console.log("it is false");
+              hasRSVP = 0;
+            } else {
+              hasRSVP = 1;
+            }
+          }
           events.push({
             event_id: event._id,
             title: event.name,
@@ -74,7 +87,7 @@ function Calendar(props) {
             location: event.location,
             maxAttendees: event.maxAttendees,
             numRegistered: event.checkedInStudents.length,
-            rsvpStatus: 0,
+            rsvpStatus: hasRSVP, // 0 - no RSVP, 1 - RSVP, 2 - Full capacity
           });
         }
       }
@@ -118,6 +131,7 @@ const customViewer = (event, close) => {
           <p>{formatDateTimeRange(event.start, event.end)}</p>
           <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: "+event.numRegistered + '/' + event.maxAttendees}</p>
           <p style={{marginTop: '8px'}}>{"Location: "+event.location}</p>
+          <p>{`${event.rsvpStatus}`}</p>
           <p>{`${event.description}`}</p>
         </div>
         <div>
@@ -137,8 +151,17 @@ const customViewer = (event, close) => {
 
 
 useEffect(() => {
-  getUpcomingEvents(props.org);
+  const fetchData = async () => {
+    await getRSVPEvents();
+  };
+
+  fetchData();
 }, []);
+
+useEffect(() => {
+  getUpcomingEvents(props.org);
+}, [props.org, rsvpEvents]);
+
 
   return (
     <div>
