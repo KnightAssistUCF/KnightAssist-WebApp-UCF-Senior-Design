@@ -29,8 +29,8 @@ function OrgHome() {
 
  async function fetchEventData() {
   const organizationID = sessionStorage.getItem("ID");
-   // get the data from the backend [ANISHA TODO]
-   let eventsList = buildPath(`TODO`); 
+   // get the data from the backend
+   let eventsList = buildPath(`api/searchEvent?organizationID=${organizationID}`);
    try {
      let response = await fetch(eventsList);
      let events = await response.json();
