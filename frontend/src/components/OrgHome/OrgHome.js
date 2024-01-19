@@ -145,9 +145,29 @@ function OrgHome() {
                 y: {
                   beginAtZero: true,
                   title: 'Number of Attendees',
+                  grid: {
+                    color: '#666', // fix this grid color
+                  },
+                  ticks: {
+                    color: '#666', // fix the tick color
+                    font: {
+                      family: 'Arial',
+                      size: 16,
+                    },
+                  },
                 },
                 x: {
                   title: 'Event Names',
+                  grid: {
+                    color: '#666', 
+                  },
+                  ticks: {
+                    color: '#666', 
+                    font: {
+                      family: 'Arial',
+                      size: 16,
+                    },
+                  },
                 }
               },
               responsive: true,
@@ -155,12 +175,37 @@ function OrgHome() {
               title: {
                 display: true,
                 text: 'Event Attendance Analysis',
+                font : {
+                  family: 'Arial',
+                  size: 24, // was 16 in the backend I believe but I increased it 
+                },
               },
+              plugins: {
+                tooltip: {
+                  mode: 'index',
+                  intersect: false,
+                  bodyFont: {
+                    family: 'Arial',
+                    size: 16,
+                  },
+                  titleFont: {
+                    family: 'Arial',
+                    size: 16,
+                  },
+                },
               legend: {
                 display: true,
-                position: 'bottom',
+                position: 'top',
+                labels: {
+                  color: '#666',
+                  font: {
+                    family: 'Arial',
+                    size: 16,
+                  },
+                },
               }
             }}
+          }
           />
         </div>
         <Analytics />
