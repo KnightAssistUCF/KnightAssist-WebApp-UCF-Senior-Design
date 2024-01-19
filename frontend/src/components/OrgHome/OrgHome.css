@@ -47,6 +47,7 @@
 }
 .orgHomeBottomRow {
     display: flex;
+    justify-content: space-between;
 }
 
 .unreadIcon {
@@ -62,12 +63,6 @@
 	margin-right: 100px !important;
 }
 
-.imageContainer {
-    width: 50%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    overflow: hidden;
-    margin: auto;
-}
+/* .analytics {
+    margin-left: 20px;
+} */
