@@ -54,38 +54,38 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!! */
-        // const { orgId } = req.query;
-        // const organization = await Organization.findById(orgId);
+        const { orgId } = req.query;
+        const organization = await Organization.findById(orgId);
 
-        // if (!organization) {
-        //     return res.status(404).send('Organization not found in the database');
-        // }
+        if (!organization) {
+            return res.status(404).send('Organization not found in the database');
+        }
 
-        // // Find all events by this org
-        // const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
+        // Find all events by this org
+        const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
 
-        // /*
-        //     @labels: event names
-        //     @rsvpCountData: RSVP count
-        //     @checkedInCountData: checked-in count
-        // */
-        // const labels = []; 
-        // const rsvpCountData = []; 
-        // const checkedInCountData = []; 
+        /*
+            @labels: event names
+            @rsvpCountData: RSVP count
+            @checkedInCountData: checked-in count
+        */
+        const labels = []; 
+        const rsvpCountData = []; 
+        const checkedInCountData = []; 
 
-        // // go over each event that this org has and we collect the data
-        // for (const event of events) {
-        //     labels.push(event.name);
-        //     rsvpCountData.push(event.attendees.length);
-        //     checkedInCountData.push(event.checkedInStudents.length);
-        // }
+        // go over each event that this org has and we collect the data
+        for (const event of events) {
+            labels.push(event.name);
+            rsvpCountData.push(event.attendees.length);
+            checkedInCountData.push(event.checkedInStudents.length);
+        }
 
         /* DUMMY DATA !!!!!!!!!!!!!!!!!!!!!*/
-        const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
+        // const orgEvents = mockEvents.filter(event => event.sponsoringOrganization === 'someOrgId1');
 
-        const labels = orgEvents.map(event => event.name);
-        const rsvpCountData = orgEvents.map(event => event.attendees.length);
-        const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
+        // const labels = orgEvents.map(event => event.name);
+        // const rsvpCountData = orgEvents.map(event => event.attendees.length);
+        // const checkedInCountData = orgEvents.map(event => event.checkedInStudents.length);
         /* DUMMY DATA */
 
         // we get the no show data 
