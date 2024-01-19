@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import './OrgProfile.css';
-import { Dialog, Box, Button, Typography, CardContent } from '@mui/material';
+import { Alert, Dialog, Box, Button, Typography, CardContent } from '@mui/material';
 import { Scheduler } from "@aldabil/react-scheduler";
 import { buildPath } from '../../path';
+import Snackbar from '@mui/joy/Snackbar';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
 function Calendar(props) {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [rsvpEvents, setRSVPEvents] = useState([]);
+  const [message, setMessage] = useState("");
+  const [open, setOpen] = useState(false);
 
     function eventIsUpcoming(endTime){
       return new Date().toISOString().localeCompare(endTime) < 0;
@@ -180,10 +184,12 @@ const customViewer = (event, close) => {
       console.log("Full");
     } else if (event.rsvpStatus === "RSVP") {
       rsvpEvent(event);
-      console.log("RSVP");
+      setMessage("RSVP Successful")
+      setOpen(true);
     } else if (event.rsvpStatus === "Undo RSVP") {
       unrsvpEvent(event);
-      console.log("Undo");
+      setMessage("Cancelled RSVP")
+      setOpen(true);
     }
 
     close();
@@ -241,7 +247,21 @@ useEffect(() => {
           customViewer={customViewer}
         />
       </div>
-    
+      <Snackbar
+        autoHideDuration={2000}
+        open={open}
+        variant="outlined"
+        color="primary"
+        onClose={(event, reason) => {
+          if (reason === 'clickaway') {
+            return;
+          }
+          setOpen(false);
+        }}
+        startDecorator={<CheckCircleOutlineIcon />}
+      >
+        {message}
+      </Snackbar>
     </div>
   );
 }
