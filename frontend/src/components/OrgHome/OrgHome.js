@@ -16,16 +16,41 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [eventData, setEventData] = userState([
+  const [eventData, setEventData] = useState({
     labels: [],
     rsvpCountData: [],
     checkedInCountData: [],
     noShowData: [],
-  ]);
-  
+  });
+
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
  }
+
+ async function fetchEventData() {
+  const organizationID = sessionStorage.getItem("ID");
+   // Fetch event data similar to your backend logic
+   let eventsUrl = buildPath(`TODO`); // [ANISHA TODO]
+   try {
+     let response = await fetch(eventsUrl);
+     let events = await response.json();
+
+     const labels = events.map(event => event.name);
+     const rsvpCountData = events.map(event => event.attendees.length);
+     const checkedInCountData = events.map(event => event.checkedInStudents.length);
+     const noShowData = rsvpCountData.map((rsvp, index) => Math.max(0, rsvp - checkedInCountData[index]));
+
+     setEventData({
+       labels,
+       rsvpCountData,
+       checkedInCountData,
+       noShowData,
+     });
+
+   } catch (error) {
+     console.error("Error getting the events data:", error);
+   }
+  }
 
   async function getUpcomingEvents() {
     const organizationID = sessionStorage.getItem("ID");
@@ -53,6 +78,7 @@ function OrgHome() {
 
   useEffect(() => {
     getUpcomingEvents();
+    fetchEventData();
   }, []);
 
   return (
