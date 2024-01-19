@@ -31,7 +31,7 @@ const mockEvents = [
     },
     {
         _id: mockObjectId(),
-        name: 'reatrd',
+        name: 'newEvent',
         attendees: Array.from({ length: 58 }, mockObjectId),
         checkedInStudents: Array.from({ length: 22 }, mockObjectId),
         sponsoringOrganization: 'someOrgId1',
@@ -45,7 +45,7 @@ const mockEvents = [
     },
     {
         _id: mockObjectId(),
-        name: 'ahhh',
+        name: 'newEvent2',
         attendees: Array.from({ length: 20 }, mockObjectId),
         checkedInStudents: Array.from({ length: 20 }, mockObjectId),
         sponsoringOrganization: 'someOrgId1',
