@@ -110,9 +110,8 @@ function OrgHome() {
         <div className="orgHomeBottomRow">
           <StatCards />
           {eventDataURL && <img src={eventDataURL} alt="Event Data Chart" />}
+          <Analytics className="analytics" />
         </div>
-
-        <Analytics />
       </div>
     </div>
   );

@@ -47,6 +47,7 @@
 }
 .orgHomeBottomRow {
     display: flex;
+    justify-content: space-between;
 }
 
 .unreadIcon {
@@ -61,3 +62,7 @@
 .moveAxis{
 	margin-right: 100px !important;
 }
+
+/* .analytics {
+    margin-left: 20px;
+} */
