@@ -21,8 +21,7 @@ function Calendar(props) {
       if (sessionStorage.getItem("role") === "volunteer") {
         try {
           // replace with user email
-          var email = "anisharanjan55@gmail.com"
-          var url = buildPath(`api/searchUserRSVPedEvents?email=${email}`);
+          var url = buildPath(`api/searchUserRSVPedEvents?studentID=${sessionStorage.getItem("ID")}`);
     
           var response = await fetch(url, {
             method: "GET",
@@ -89,7 +88,7 @@ function Calendar(props) {
             location: event.location,
             maxAttendees: event.maxAttendees,
             numRegistered: event.attendees.length,
-            rsvpStatus: hasRSVP, // 0 - no RSVP, 1 - RSVP, 2 - Full capacity
+            rsvpStatus: hasRSVP,
           });
         }
       }
