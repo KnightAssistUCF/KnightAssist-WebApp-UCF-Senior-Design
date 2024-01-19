@@ -16,7 +16,13 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-
+  const [eventData, setEventData] = userState([
+    labels: [],
+    rsvpCountData: [],
+    checkedInCountData: [],
+    noShowData: [],
+  ]);
+  
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
  }
