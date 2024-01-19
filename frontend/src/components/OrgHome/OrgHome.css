@@ -17,8 +17,6 @@
     margin: 0;
 }
   
-
-
 .orgHomeTopRow {
     display: flex;
     justify-content: space-between;
@@ -58,4 +56,8 @@
     background-color: lightskyblue;
     margin-right: 10px;
     margin-bottom: 20px;
+}
+
+.moveAxis{
+	margin-right: 100px !important;
 }

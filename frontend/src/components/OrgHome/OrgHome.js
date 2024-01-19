@@ -7,7 +7,6 @@ import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
 import Analytics from './Analytics';
-import { BarChart } from '@mui/x-charts';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
@@ -16,12 +15,7 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [eventData, setEventData] = useState({
-    labels: [],
-    rsvpCountData: [],
-    checkedInCountData: [],
-    noShowData: [],
-  });
+  const [eventData, setEventData] = useState(undefined);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
@@ -30,23 +24,19 @@ function OrgHome() {
  async function fetchEventData() {
   const organizationID = sessionStorage.getItem("ID");
    // get the data from the backend
-   let eventsList = buildPath(`api/searchEvent?organizationID=${organizationID}`);
    try {
-     let response = await fetch(eventsList);
-     let events = await response.json();
+		let url = buildPath(`api/searchEvent?attendanceAnalytics?orgId=${organizationID}`);
+		
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
 
-     const labels = events.map(event => event.name);
-     const rsvpCountData = events.map(event => event.attendees.length);
-     const checkedInCountData = events.map(event => event.checkedInStudents.length);
-     const noShowData = rsvpCountData.map((rsvp, index) => Math.max(0, rsvp - checkedInCountData[index]));
+		let pic = await response.blob();
 
-     setEventData({
-       labels,
-       rsvpCountData,
-       checkedInCountData,
-       noShowData,
-     });
+		console.log(pic);
 
+		setEventData(pic);
    } catch (error) {
      console.error("Error getting the events data:", error);
    }
@@ -109,104 +99,11 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
           <StatCards />
-          <BarChart
-            sx={{ rx: 15 }}
-            series={[
-              {
-                name: 'RSVPed',
-                type: 'bar',
-                data: eventData.rsvpCountData.map(value => ({ value })),
-                color: 'rgba(0, 158, 115, 0.5)',
-              },
-              {
-                name: 'Attended',
-                type: 'bar',
-                data: eventData.checkedInCountData.map(value => ({ value })),
-                color: 'rgba(0, 115, 179, 0.5)',
-              },
-              {
-                name: 'No Show',
-                type: 'bar',
-                data: eventData.noShowData.map(value => ({ value })),
-                color: 'rgba(213, 94, 0, 0.5)',
-              },
-              {
-                name: 'No Show Trend',
-                type: 'line',
-                data: eventData.noShowData.map(value => ({ value })),
-                color: 'rgba(213, 94, 0, 1)',
-              },
-            ]}
-            labels={eventData.labels}
-            width={1000}
-            height={310}
-            options={{
-              scales: {
-                y: {
-                  beginAtZero: true,
-                  title: 'Number of Attendees',
-                  grid: {
-                    color: '#666', // fix this grid color
-                  },
-                  ticks: {
-                    color: '#666', // fix the tick color
-                    font: {
-                      family: 'Arial',
-                      size: 16,
-                    },
-                  },
-                },
-                x: {
-                  title: 'Event Names',
-                  grid: {
-                    color: '#666', 
-                  },
-                  ticks: {
-                    color: '#666', 
-                    font: {
-                      family: 'Arial',
-                      size: 16,
-                    },
-                  },
-                }
-              },
-              responsive: true,
-              maintainAspectRatio: false,
-              title: {
-                display: true,
-                text: 'Event Attendance Analysis',
-                font : {
-                  family: 'Arial',
-                  size: 24, // was 16 in the backend I believe but I increased it 
-                },
-              },
-              plugins: {
-                tooltip: {
-                  mode: 'index',
-                  intersect: false,
-                  bodyFont: {
-                    family: 'Arial',
-                    size: 16,
-                  },
-                  titleFont: {
-                    family: 'Arial',
-                    size: 16,
-                  },
-                },
-              legend: {
-                display: true,
-                position: 'top',
-                labels: {
-                  color: '#666',
-                  font: {
-                    family: 'Arial',
-                    size: 16,
-                  },
-                },
-              }
-            }}
-          }
-          />
+		  { (eventData)
+		  	? 
+				<img src={URL.createObjectURL(eventData)}/>
+			: ""
+		  }
         </div>
         <Analytics />
       </div>
