@@ -132,11 +132,37 @@
 	margin-bottom: 10px;
 }
 
+.orgNameEdit{
+	margin-left: -30% !important;
+	width: 75%;
+	margin-bottom: 20px !important;
+}
+
 .editBtn{
 	width: 125px;
     height: 40px;
     margin-top: 3%;
     background-color: #5f5395;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+}
+
+.editSocialsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #00785A;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+}
+
+.editInterestsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #afff24;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;
@@ -212,6 +238,10 @@
 .addSpace{
 	margin-left: 5px;
 	margin-right: 5px;
+}
+
+.hoverImage:hover{
+	cursor: pointer;
 }
 
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {

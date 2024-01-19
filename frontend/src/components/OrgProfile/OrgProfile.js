@@ -12,6 +12,7 @@ import OrgBox from './OrgBox';
 function OrgProfile() {
 	const [org, setOrg] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
+	const [editMode, setEditMode] = useState(false);
 
 	async function getOrgInfo(){
         let organizationID;
@@ -73,10 +74,10 @@ function OrgProfile() {
 				{(org !== null)
 					?	
 					<div>
-						<BackgroundBanner/>
-						<OrgBox org={org}/>
+						<BackgroundBanner editMode={editMode}/>
+						<OrgBox org={org} editMode={editMode} setEditMode={setEditMode}/>
 						<div className='navTabs'>
-							<NavTabs org={org}/>
+							<NavTabs org={org} editMode={editMode}/>
 						</div>
 					</div>
 					: ""

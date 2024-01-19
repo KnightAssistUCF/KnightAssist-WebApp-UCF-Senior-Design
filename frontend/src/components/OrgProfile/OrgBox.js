@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -15,6 +15,17 @@ function OrgBox(props) {
 	const [picName, setPicName] = useState(null);
 	const [role, setRole] = useState(null);
 	const [favorited, setFavorited] = useState(false);
+
+	const [newOrgName, setNewOrgName] = useState("");
+	const [newFB, setNewFB] = useState("");
+	const [newX, setNewX] = useState("");
+	const [newIG, setNewIG] = useState("");
+	const [newLIn, setNewLIn] = useState("");
+	
+	const [openSocialsModal, setOpenSocialsModa] = useState(false);
+	const [openInterestsModal, setOpenInterestsModal] = useState(false);
+
+	const profilePicSelect = useRef(null);
 	
 	async function getProfilePic(){
 		let id;
@@ -100,33 +111,52 @@ function OrgBox(props) {
 
 
 	}
+	
+	function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length === 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
 
-	useEffect(() => {
-		setRole(sessionStorage.getItem("role"));
-		getProfilePic();
-		if(sessionStorage.getItem("role") === "volunteer")
-			favoriteOrg(false);
-	}, []);
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
+	}
 
 	function ProfilePic(){
 		return (
-			<Avatar
-				src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-				sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
-			/>
+			<div>
+				<Avatar
+					src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
+					className={(props.editMode) ? "hoverImage" : ""}
+					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
+				/>
+				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]);}}}/>
+			</div>
 		)
 	}
 
 	function OrgName(){
 		return (
-			<div className='orgName'>{props.org.name}</div>
+			(props.editMode === false)
+				?
+					<div className='orgName'>{props.org.name}</div>
+				:
+					<TextField className='orgNameEdit' variant="standard" label={"Organization Name"} required={false} value={newOrgName} onChange={(e) => setNewOrgName(e.target.value)}/>
 		)
 	}
 
-	function EditProfileBtn(){
+	function EditSaveProfileBtn(){
 		return (
 		   <div>
-			  <button className='editBtn btn btn-primary' onClick={null}>Edit Profile</button>
+			  {(props.editMode === false)
+			  	?
+					<button className='editBtn btn btn-primary' onClick={() => props.setEditMode(true)}>Edit Profile</button>
+				:
+					<button className='editBtn btn btn-primary' onClick={() => props.setEditMode(false)}>Save Profile</button>
+			  }
 		   </div>
 		)
 	}
@@ -154,6 +184,22 @@ function OrgBox(props) {
 		)
 	} 
 
+	function EditSocials(){
+		return (
+		   <div>
+				<button className='editSocialsBtn btn btn-primary' onClick={() => setOpenSocialsModa(true)}>Edit Socials</button>
+		   </div>
+		)
+	}
+
+	function EditInterests(){
+		return (
+		   <div>
+				<button className='editInterestsBtn btn btn-primary' onClick={() => setOpenSocialsModa(true)}>Edit Socials</button>
+		   </div>
+		)
+	}
+
 	function Tag(props){
         return (
 			<Card className='tag'>
@@ -175,6 +221,16 @@ function OrgBox(props) {
 		)
 	}
 
+	useEffect(() => {
+		setRole(sessionStorage.getItem("role"));
+		if(props.org !== null){
+			setNewOrgName(props.org.name);
+		}
+		getProfilePic();
+		if(sessionStorage.getItem("role") === "volunteer")
+			favoriteOrg(false);
+	}, []);
+
 	return (
 		<div className='orgBox'>
 			<div className='items'>
@@ -182,16 +238,16 @@ function OrgBox(props) {
 					?
 						<div>
 							{ProfilePic()}
-							<OrgName/>
+							{OrgName()}
 							
 							{(role === "organization" && props.org._id === sessionStorage.getItem("ID")) 
-								? EditProfileBtn() 
+								? EditSaveProfileBtn() 
 								: ((role === "volunteer") ? Favorite() : "")
 							}
-							{SocialMedia()}	
+							{(!props.editMode) ? SocialMedia() : EditSocials()}	
 							{(props.org.categoryTags.length > 0)
 								?
-									Interests()
+									((!props.editMode) ? Interests() : EditInterests())
 								: 
 									""
 							}
