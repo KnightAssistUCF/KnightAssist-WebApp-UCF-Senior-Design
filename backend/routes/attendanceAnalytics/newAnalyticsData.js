@@ -68,6 +68,7 @@ const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback }
 
 router.get('/', async (req, res) => {
     try {
+        const { orgId } = req.query;
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!! */
         // const { orgId } = req.query;

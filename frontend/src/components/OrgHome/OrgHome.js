@@ -15,28 +15,31 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [eventData, setEventData] = useState(undefined);
+  const [eventDataURL, setEventDataURL] = useState(null);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
  }
 
  async function fetchEventData() {
-  const organizationID = sessionStorage.getItem("ID");
-   // get the data from the backend
+   const organizationID = sessionStorage.getItem("ID");
    try {
-		let url = buildPath(`api/searchEvent?attendanceAnalytics?orgId=${organizationID}`);
-		
-		const response = await fetch(url, {
-			method: "GET",
-			headers: {"Content-Type": "application/json"},
-		});
+     let url = buildPath(`api/attendanceAnalytics?orgId=${organizationID}`);
 
-		let pic = await response.blob();
+     const response = await fetch(url, {
+       method: "GET",
+       headers: { "Accept": "image/png" },
+     });
 
-		console.log(pic);
+     if (!response.ok) {
+       throw new Error('Network response was not ok');
+     }
 
-		setEventData(pic);
+     let pic = await response.blob();
+
+     // Create a local URL for the image
+     const objectURL = URL.createObjectURL(pic);
+     setEventDataURL(objectURL);
    } catch (error) {
      console.error("Error getting the events data:", error);
    }
@@ -69,7 +72,14 @@ function OrgHome() {
   useEffect(() => {
     getUpcomingEvents();
     fetchEventData();
+
+    return () => {
+      if (eventDataURL) {
+        URL.revokeObjectURL(eventDataURL);
+      }
+    };
   }, []);
+
 
   return (
     <div>
@@ -99,12 +109,9 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
           <StatCards />
-		  { (eventData)
-		  	? 
-				<img src={URL.createObjectURL(eventData)}/>
-			: ""
-		  }
+          {eventDataURL && <img src={eventDataURL} alt="Event Data Chart" />}
         </div>
+
         <Analytics />
       </div>
     </div>
