@@ -162,11 +162,12 @@
 .editInterestsBtn{
 	width: 125px;
     height: 40px;
-    background-color: #afff24;
+    background-color: #F5D6BA;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
+	color: black;
 }
 
 .favBtn{

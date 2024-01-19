@@ -3,7 +3,7 @@ import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -21,8 +21,14 @@ function OrgBox(props) {
 	const [newX, setNewX] = useState("");
 	const [newIG, setNewIG] = useState("");
 	const [newLIn, setNewLIn] = useState("");
+
+	// For modal purposes if they cancel
+	const [tempFB, setTempFB] = useState("");
+	const [tempX, setTempX] = useState("");
+	const [tempIG, setTempIG] = useState("");
+	const [tempLIn, setTempLIn] = useState("");
 	
-	const [openSocialsModal, setOpenSocialsModa] = useState(false);
+	const [openSocialsModal, setOpenSocialsModal] = useState(false);
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
 
 	const profilePicSelect = useRef(null);
@@ -47,6 +53,23 @@ function OrgBox(props) {
 		let pic = await response.blob();
 
 		setPicName(pic);
+	}
+
+	// If user closes edit social modal without saving
+	function resetSocials(){
+		setTempFB(newFB);
+		setTempX(newX);
+		setTempIG(newIG);
+		setTempLIn(newLIn);
+		setOpenSocialsModal(false);
+	}
+
+	function saveSocials(){
+		setNewFB(tempFB);
+		setNewX(tempX);
+		setNewIG(tempIG);
+		setNewLIn(tempLIn);
+		setOpenSocialsModal(false);
 	}
 
 	// Will add API call
@@ -187,7 +210,7 @@ function OrgBox(props) {
 	function EditSocials(){
 		return (
 		   <div>
-				<button className='editSocialsBtn btn btn-primary' onClick={() => setOpenSocialsModa(true)}>Edit Socials</button>
+				<button className='editSocialsBtn btn btn-primary' onClick={() => setOpenSocialsModal(true)}>Edit Socials</button>
 		   </div>
 		)
 	}
@@ -195,7 +218,7 @@ function OrgBox(props) {
 	function EditInterests(){
 		return (
 		   <div>
-				<button className='editInterestsBtn btn btn-primary' onClick={() => setOpenSocialsModa(true)}>Edit Socials</button>
+				<button className='editInterestsBtn btn btn-primary' onClick={() => setOpenSocialsModal(true)}>Edit Tags</button>
 		   </div>
 		)
 	}
@@ -254,7 +277,34 @@ function OrgBox(props) {
 						</div>
 					: 
 						""
-				}	
+				}
+
+				<Dialog open={openSocialsModal} onClose={() => {resetSocials(); setOpenSocialsModal(false)}}>
+					<DialogContent className='feedbackModal'>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+							<Grid item>
+								<DialogTitle>Edit Social Links</DialogTitle>
+							</Grid>
+						</Grid>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
+							<Grid item sx={{marginRight: "50px"}}>
+								<TextField variant="standard" label={<Facebook/>} required={false} value={tempFB} onChange={(e) => setTempFB(e.target.value)}/>
+							</Grid>
+							<Grid item>
+									<TextField variant="standard" label={<RiTwitterXFill/>} required={false} value={tempX} onChange={(e) => setTempX(e.target.value)}/>
+							</Grid>
+						</Grid>
+						<Grid container justifyContent="center" alignItems="center" marginBottom={"50px"} layout={'row'}>
+							<Grid item sx={{marginRight: "50px"}}>
+								<TextField variant="standard" label={<Instagram/>} required={false} value={tempIG} onChange={(e) => setTempIG(e.target.value)}/>
+							</Grid>
+							<Grid item>
+								<TextField variant="standard" label={<LinkedIn/>} required={false} value={tempLIn} onChange={(e) => setTempLIn(e.target.value)}/>
+							</Grid>
+							<Button sx={{ mt: 8, mb: -2, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => saveSocials()}>Save</Button>
+						</Grid>
+					</DialogContent>
+				</Dialog>
 			</div>
 		</div>
 	);
