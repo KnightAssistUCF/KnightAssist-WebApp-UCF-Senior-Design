@@ -111,9 +111,56 @@ function OrgHome() {
           <StatCards />
           <BarChart
             sx={{ rx: 15 }}
-            series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+            series={[
+              {
+                name: 'RSVPed',
+                type: 'bar',
+                data: eventData.rsvpCountData.map(value => ({ value })),
+                color: 'rgba(0, 158, 115, 0.5)',
+              },
+              {
+                name: 'Attended',
+                type: 'bar',
+                data: eventData.checkedInCountData.map(value => ({ value })),
+                color: 'rgba(0, 115, 179, 0.5)',
+              },
+              {
+                name: 'No Show',
+                type: 'bar',
+                data: eventData.noShowData.map(value => ({ value })),
+                color: 'rgba(213, 94, 0, 0.5)',
+              },
+              {
+                name: 'No Show Trend',
+                type: 'line',
+                data: eventData.noShowData.map(value => ({ value })),
+                color: 'rgba(213, 94, 0, 1)',
+              },
+            ]}
+            labels={eventData.labels}
             width={1000}
             height={310}
+            options={{
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  title: 'Number of Attendees',
+                },
+                x: {
+                  title: 'Event Names',
+                }
+              },
+              responsive: true,
+              maintainAspectRatio: false,
+              title: {
+                display: true,
+                text: 'Event Attendance Analysis',
+              },
+              legend: {
+                display: true,
+                position: 'bottom',
+              }
+            }}
           />
         </div>
         <Analytics />
