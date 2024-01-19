@@ -231,7 +231,8 @@ const forgotPassword = require('./backend/routes/Password_Reset/forgotPassword')
 app.use('/api/forgotPassword', forgotPassword);
 
 /* DATA ANALYTICS FOR EVENT ATTENDANCE FOR AN ORG */
-const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/attendanceAnalytics');
+// const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/attendanceAnalytics');
+const attendanceAnalytics = require('./backend/routes/attendanceAnalytics/newAnalyticsData');
 app.use('/api/attendanceAnalytics', attendanceAnalytics);
 
 /* ORG Feedback Endpoints */
