@@ -1,12 +1,8 @@
 import * as React from 'react';
-import { Grid, Typography, Button, Box } from '@mui/material';
-import CssBaseline from '@mui/material/CssBaseline';
 import Lottie from "lottie-react";
-import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
+import animationData from './contactPageAnimation';
 import useStyles from '../../PreLogin/PreLoginStyles';
-import Footer from '../Footer';
 import './Contact.css';
-import ImageContactUs from './ImageContactUs';
 import { CiLocationOn, CiMail, CiPhone } from 'react-icons/ci';
 
 function Details() {
@@ -38,7 +34,7 @@ function Details() {
 
 	return (
 		<div className='details'>
-			<ImageContactUs/>
+			<Lottie className="imageContactUs" style={{ position: 'relative' }} animationData={animationData} />
 			<div className='infos'>
 				<Location/>
 				<Phone/>

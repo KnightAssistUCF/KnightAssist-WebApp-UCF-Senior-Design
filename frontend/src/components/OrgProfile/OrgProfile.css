@@ -1,0 +1,230 @@
+.orgProfilePage {
+    margin-left: 14vw;
+    margin-right: 2vw;
+    color: black;
+    text-align: left;
+    margin-top: 1%;
+    position: relative;
+}
+
+.orgProfileTitle {
+    font-size: 30px;
+}
+
+.navTabs {
+    float: right;
+    width: calc(82% - 80px);
+    /* width: 76%; */
+    margin-right: 20px;
+	z-index: 300 !important;
+	position: relative;
+}
+
+.orgBannerFiller {
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+    height: 200px;
+    border-radius: 25px;
+}
+
+.orgBox {
+    background-color: rgb(250, 250, 250);
+    width: 230px;
+    /* height: 320%; */
+    height: calc(100vh - 35%);
+    border-radius: 14px;
+    position: relative; /* overlay */
+	z-index: 200 !important;
+	margin-top: -125px;
+    margin-left: 2%; 
+    /* bottom: 10%;  */
+    border: 1px solid #eaeaea;
+    justify-content: center;
+	float: left;
+}
+
+.feedbackEvent{
+	width: 100%;
+}
+
+.hideScroll{
+	overflow: hidden !important;
+}
+
+.feedbackModal{
+	height: 100% !important;
+	width: 500px !important;
+}
+
+.feedbackTitle{
+	margin-left: -20px !important;
+}
+
+.feedbackTxt{
+	overflow-y: none !important; 
+	max-width: 500px;
+	max-height: 400px;	
+	word-wrap: break-word;
+}
+
+.theContent{
+	max-width: 100%;
+    word-wrap: break-word;
+}
+
+.navSubTitle {
+    font-size: 20px;
+    color: #7a7a7a;
+}
+
+.navParagraphText {
+    font-size: 17px;
+    font-weight: 370;
+}
+
+.profileEmail {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.navContactText {
+    font-size: 17px;
+    font-weight: 350;
+    padding-left: 12px;
+}
+
+.contactBox {
+    margin-top: 10px;
+}
+
+.sch {
+    width: 95%;
+    /* height: 700px; */
+    
+}
+
+.ratingNum {
+    font-size: 60px;
+    font-weight: 340;
+}
+
+/* .ratingAvg {
+    display: flex;
+} */
+
+.ratingtopcol {
+    display: flex;
+}
+
+.items{
+	width: 100%;
+	margin-top: 30px;
+	margin-left: 40%;
+}
+
+.orgName{
+	font-size: 25px;
+	max-width: 100px !important;
+	text-align: center;
+	word-wrap: break-word;
+	margin-left: -12%;
+	margin-bottom: 10px;
+}
+
+.editBtn{
+	width: 125px;
+    height: 40px;
+    margin-top: 3%;
+    background-color: #5f5395;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+}
+
+.favBtn{
+	background: none;
+    border: none;
+	margin-left: -10%;
+	margin-top: -10px;
+}
+
+.favorited{
+	color: yellow;
+	width: 75px !important;
+	height: 100px !important;
+	border: 1px black;
+}
+
+.favorited:hover{
+	color: rgb(254, 254, 102);
+}
+
+.notFavorited{
+	width: 75px !important;
+	height: 100px !important;
+}
+
+.notFavorited:hover{
+	color: rgb(254, 254, 102);
+}
+
+.profileSocials{
+	margin-left: -16%;
+}
+
+.social{
+	float: left;
+	margin-right: 7px;
+}
+
+.interests{
+	margin-top: 60px !important;
+	padding-bottom: 100px !important;
+	margin-left: -3%;
+}
+
+.interestsName{
+	font-size: 20px;
+	margin-left: -5%;
+}
+
+.tags{
+	width: 85%;
+	margin-left: -25%;
+}
+
+.tag{
+    background-color: #bc70c8 !important;
+    min-width: 10%;
+	max-width: 70% !important;
+    width: auto !important;
+	height: auto !important;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 15px;
+    float: left;
+    font-family: "League Spartan";
+    margin-bottom: 5px;
+}
+
+.addSpace{
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+/* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+    fill: red;  
+} */
+
+  .css-nl6has .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+    background-image: url('./plus-icon.svg');  /* Replace 'path/to/plus-icon.svg' with the actual path to your plus icon SVG file */
+    background-size: contain;
+    background-repeat: no-repeat;
+    fill: transparent;  /* To make sure the original fill color is not applied */
+  }
+
+  .css-llvhl4-MuiTypography-root {
+    font-family: "Roboto";
+  }

@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom'; 
 import './OrgEvents.css';
 import Logo from '../Logo';
+import { CgProfile } from 'react-icons/cg';
 
 function Header()
 {
@@ -63,8 +64,8 @@ function Header()
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
-                <div className="logo">
-                    <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
+                <div className="logo logoBtn">
+                    <PageTitle onClick={() => window.location.href="/#/"} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
                 <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
@@ -76,6 +77,14 @@ function Header()
                         <a href="#/orghome">
                             <BiHome className='homeIcon'></BiHome>
                             <span class="links_name">Home</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/orgprofile">
+                            <CgProfile className='homeIcon'/>
+                            <span class="links_name">Profile</span>
                         </a>
                     </LightTooltip>
                 </li>
@@ -92,14 +101,6 @@ function Header()
                         <a href="#/orgfeedback">
                             <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
                             <span class="links_name">Feedback</span>
-                        </a>
-                    </LightTooltip>
-                </li>
-                <li>
-                    <LightTooltip title={!isSidebarActive ? "History" : ""} placement="right" className="custom-tooltip">
-                        <a href='#/orghistory'>
-                            <BiHistory className='historyIcon'></BiHistory>
-                            <span class="links_name">History</span>
                         </a>
                     </LightTooltip>
                 </li>

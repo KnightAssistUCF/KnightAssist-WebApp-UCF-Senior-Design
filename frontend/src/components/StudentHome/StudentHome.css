@@ -212,12 +212,18 @@ min-height: 100vh;
   font-size: 20px;
 }
 
+.logoBtn{
+	background: none !important;
+    border: none !important;
+}
 
+.logoBtn:hover{
+	cursor: pointer;
+}
 
-
-
-
-
+.smallName{
+	font-size: 15px !important;
+}
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {

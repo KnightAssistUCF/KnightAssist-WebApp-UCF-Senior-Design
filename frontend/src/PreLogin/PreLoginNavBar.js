@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import KA_Logo from './../KA_Logo.png';
+import './PreLoginNavBarButton.css';
 
 const pages = ['Home', 'About', 'Contact'];
 
@@ -66,6 +67,7 @@ function PreLoginNavBar() {
           {/* desktop view logo settings */}
           <Box
             component="img"
+			onClick={() => window.location.href="/#/"}
             sx={{
               maxHeight: 50,
               display: { xs: 'none', md: 'flex' },
@@ -73,11 +75,14 @@ function PreLoginNavBar() {
             }}
             alt="KnightAssist Logo"
             src={KA_Logo}
+			className='navBarLogoBtn'
           />
           <Typography
             variant="h6"
             noWrap
             component="a"
+			onClick={() => window.location.href="/#/"}
+			className='navBarLogoBtn'
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -86,7 +91,7 @@ function PreLoginNavBar() {
               color: 'inherit',
               textDecoration: 'none',
               ":hover": {color: '#F5D6BA'}
-            }} >
+            }}>
             KnightAssist
           </Typography>
 

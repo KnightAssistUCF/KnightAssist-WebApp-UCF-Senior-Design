@@ -236,7 +236,7 @@ function EventModal(props)
     function Tag(props){
         return (
             <Grid item>
-                <Card className='tag'>
+                <Card className='eventTag'>
                     {props.tag}
                 </Card>
             </Grid>

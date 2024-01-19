@@ -129,19 +129,19 @@ const Feedbacks = (props) => {
       </Grid>
 
       {/* Modal */}
-	  	{(selectedFeedback != null) ?
+	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
-				<DialogTitle>{selectedFeedback.eventName}</DialogTitle>
-				<DialogContent>
-					<DialogContentText style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{ color: 'black'}}>
-						{selectedFeedback.studentName} 				
-						<Rating
-							value={selectedFeedback.rating}
-							readOnly
-							className='cardRatingModal'
-						/>
-					</DialogContentText>
+				<DialogContent className='feedbackModal'>
+					<DialogTitle>{selectedFeedback.eventName}</DialogTitle>
+						<DialogContentText style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+						<DialogContentText style={{ color: 'black'}}>
+							{selectedFeedback.studentName} 				
+							<Rating
+								value={selectedFeedback.rating}
+								readOnly
+								className='cardRatingModal'
+							/>
+						</DialogContentText>
 					<DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 				<DialogActions>

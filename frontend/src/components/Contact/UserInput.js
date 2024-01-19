@@ -23,7 +23,8 @@ function UserInput() {
 	const [hasSent, setHasSent] = useState(false);
 	const [checkedOnce, setCheckedOnce] = useState(false);
 
-	const regex = /[^a-z -]/gi; // allow only letters for the first name and last name and also allow space and dash
+	// To allow only letters for first and last name
+	const regex = /[^a-z -]/gi;
 
 	async function submit() {
 		setCheckedOnce(true);
@@ -86,14 +87,6 @@ function UserInput() {
 		return (
 			<Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
 				<TextField
-					sx={{
-						"& label": {
-							color: 'purple',
-							"&.Mui-focused": {
-								color: 'purple'
-							}
-						}
-					}}
 					name={props.name}
 					fullWidth
 					required={props.required}

@@ -24,8 +24,7 @@ function OrgFeedback() {
 
 	const fetchAllFeedback = async () => {
 		try {
-			// Will be changed to local storage
-			const url = buildPath(`api/retrieveAllFeedback_ForAnOrg?orgId=${"6530608eae2eedf04961794e"}`);
+			const url = buildPath(`api/retrieveAllFeedback_ForAnOrg?orgId=${sessionStorage.getItem("ID")}`);
 
 			let response = await fetch(url, {
 				method: "GET",

@@ -91,7 +91,8 @@ function Search(props) {
             props.setEventID(id);
             props.setOpenEvent(true);
         }else{
-
+			sessionStorage.setItem("viewingPageID", id);
+			window.location.href="/#/orgprofile";    
         }
     }
 

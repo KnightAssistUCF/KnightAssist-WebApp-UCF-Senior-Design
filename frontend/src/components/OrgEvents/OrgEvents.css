@@ -181,7 +181,7 @@
     margin-bottom: -8px; 
 }
 
-.tag{
+.eventTag{
     background-color: #bc70c8 !important;
     min-width: 100px;
     width: auto !important;
@@ -227,6 +227,10 @@
 .deleteEventBtn{
     background: none;
     border: none;
+}
+
+.logoBtn:hover{
+	cursor: pointer;
 }
 
 .searchSwitch{

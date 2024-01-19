@@ -15,9 +15,10 @@ function Search(props) {
 
 	const [searchTerm, setSearchTerm] = useState("");
 
-    function openOrgPage(email){
-        console.log(email);
-    }
+    function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";    
+	}
 
     async function getAllEvents(flag){
         let organizationID = sessionStorage.getItem("ID");
@@ -78,7 +79,7 @@ function Search(props) {
             props.setEventID(id);
             props.setOpenEvent(true);
         }else{
-			openOrgPage();
+			openOrgPage(id);
         }
     }
 
