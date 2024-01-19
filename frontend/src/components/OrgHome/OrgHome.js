@@ -7,6 +7,7 @@ import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
 import Analytics from './Analytics';
+import { BarChart } from '@mui/x-charts';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
@@ -15,35 +16,10 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [eventDataURL, setEventDataURL] = useState(null);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
  }
-
- async function fetchEventData() {
-   const organizationID = sessionStorage.getItem("ID");
-   try {
-     let url = buildPath(`api/attendanceAnalytics?orgId=${organizationID}`);
-
-     const response = await fetch(url, {
-       method: "GET",
-       headers: { "Accept": "image/png" },
-     });
-
-     if (!response.ok) {
-       throw new Error('Network response was not ok');
-     }
-
-     let pic = await response.blob();
-
-     // Create a local URL for the image
-     const objectURL = URL.createObjectURL(pic);
-     setEventDataURL(objectURL);
-   } catch (error) {
-     console.error("Error getting the events data:", error);
-   }
-  }
 
   async function getUpcomingEvents() {
     const organizationID = sessionStorage.getItem("ID");
@@ -71,15 +47,7 @@ function OrgHome() {
 
   useEffect(() => {
     getUpcomingEvents();
-    fetchEventData();
-
-    return () => {
-      if (eventDataURL) {
-        URL.revokeObjectURL(eventDataURL);
-      }
-    };
   }, []);
-
 
   return (
     <div>
@@ -109,15 +77,14 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
           <StatCards />
-<<<<<<< HEAD
-          <div classNam="imageContainer">
-            {eventDataURL && <img src={eventDataURL} alt="Event Data Chart" />}
-          </div>
-=======
-          {eventDataURL && <img src={eventDataURL} alt="Event Data Chart" />}
-          <Analytics className="analytics" />
->>>>>>> ddb9768e5289a4d19020cd45230a62ffac560708
+          <BarChart
+            sx={{ rx: 15 }}
+            series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
+            width={1000}
+            height={310}
+          />
         </div>
+        <Analytics />
       </div>
     </div>
   );
