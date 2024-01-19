@@ -26,6 +26,7 @@ import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
 import StudentSettingsPage from './pages/StudentSettingsPage';
 import ContactPage from './pages/ContactPage';
+import StudentDetailsPage from './pages/StudentDetailsPage';
 
 function App() 
 {
@@ -96,6 +97,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+			</Routes>
+      <Routes>
+				<Route path="/adminhome/students/:studentID" element={(role === "admin") ? <StudentDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 		</Router>
 		</header>
