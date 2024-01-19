@@ -3,7 +3,7 @@ import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -21,15 +21,24 @@ function OrgBox(props) {
 	const [newX, setNewX] = useState("");
 	const [newIG, setNewIG] = useState("");
 	const [newLIn, setNewLIn] = useState("");
+	const [newSelectedTags, setNewSelectedTags] = useState([]);
 
 	// For modal purposes if they cancel
 	const [tempFB, setTempFB] = useState("");
 	const [tempX, setTempX] = useState("");
 	const [tempIG, setTempIG] = useState("");
 	const [tempLIn, setTempLIn] = useState("");
+	const [tempSelectedTags, setTempSelectedTags] = useState([]);
 	
 	const [openSocialsModal, setOpenSocialsModal] = useState(false);
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
+
+	// State needed due to bug where tag names where undefined
+	const [makeTags, setMakeTags] = useState([]);
+
+	const [tags, setTags] = useState([]);
+	const [tagNames, setTagNames] = useState([]);
+	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
 	
@@ -55,22 +64,52 @@ function OrgBox(props) {
 		setPicName(pic);
 	}
 
-	// If user closes edit social modal without saving
-	function resetSocials(){
-		setTempFB(newFB);
-		setTempX(newX);
-		setTempIG(newIG);
-		setTempLIn(newLIn);
-		setOpenSocialsModal(false);
-	}
+	function handleClick(idx){
+		if(colors[idx] !== "default"){
+			tempSelectedTags.splice(tempSelectedTags.indexOf(tagNames[idx]), 1);
+			colors[idx] = "default"; 
+		}else{
+			if(tempSelectedTags.length < 10){
+				tempSelectedTags.push(tagNames[idx]);
+				console.log(tempSelectedTags);
+				colors[idx] = "#5f5395";
+			}
+		}
 
-	function saveSocials(){
-		setNewFB(tempFB);
-		setNewX(tempX);
-		setNewIG(tempIG);
-		setNewLIn(tempLIn);
-		setOpenSocialsModal(false);
-	}
+		setTempSelectedTags(tempSelectedTags);
+
+		getAllTags();
+    }
+
+	async function getAllTags(){
+		let url = buildPath(`api/getAllAvailableTags`);
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let res = JSON.parse(await response.text());
+
+		console.log(tempSelectedTags);
+
+		setTags(
+			res.map((name, idx) => {
+				const isSelected = tempSelectedTags.includes(name);
+				return (
+					<Chip
+						label={name}
+						className='tagChip'
+						onClick={() => handleClick(idx)}
+						sx={{backgroundColor: colors[idx], 
+							"&:hover": {
+							backgroundColor: (colors[idx] === "default") ? "default" : "purple"
+						}}}
+					/>
+				);
+			})
+		)
+    }
 
 	// Will add API call
 	async function favoriteOrg(set){
@@ -134,7 +173,28 @@ function OrgBox(props) {
 
 
 	}
-	
+
+	function saveTags(){
+
+	}
+
+	// If user closes edit social modal without saving
+	function resetSocials(){
+		setTempFB(newFB);
+		setTempX(newX);
+		setTempIG(newIG);
+		setTempLIn(newLIn);
+		setOpenSocialsModal(false);
+	}
+
+	function saveSocials(){
+		setNewFB(tempFB);
+		setNewX(tempX);
+		setNewIG(tempIG);
+		setNewLIn(tempLIn);
+		setOpenSocialsModal(false);
+	}
+
 	function validateImgSelection(fileSelect){
 		// No files selected
 		if(fileSelect.current.files.length === 0) return false;
@@ -218,7 +278,7 @@ function OrgBox(props) {
 	function EditInterests(){
 		return (
 		   <div>
-				<button className='editInterestsBtn btn btn-primary' onClick={() => setOpenSocialsModal(true)}>Edit Tags</button>
+				<button className='editInterestsBtn btn btn-primary' onClick={() => setOpenInterestsModal(true)}>Edit Tags</button>
 		   </div>
 		)
 	}
@@ -244,15 +304,59 @@ function OrgBox(props) {
 		)
 	}
 
+	async function getColors(){
+		let url = buildPath(`api/getAllAvailableTags`);
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let allTags = JSON.parse(await response.text());
+
+		const tagColors = [];
+
+		for(let i = 0; i < 50; i++){
+			if(!props.org.categoryTags.includes(allTags[i])){
+				tagColors.push("default"); 
+			}else{
+				tagColors.push("#5f5395");
+			}
+		}
+
+		setNewSelectedTags(props.org.categoryTags);
+		setTempSelectedTags(props.org.categoryTags);
+
+		console.log(props.org.categoryTags);
+
+		return tagColors;
+	}
+
 	useEffect(() => {
 		setRole(sessionStorage.getItem("role"));
-		if(props.org !== null){
-			setNewOrgName(props.org.name);
-		}
 		getProfilePic();
 		if(sessionStorage.getItem("role") === "volunteer")
 			favoriteOrg(false);
 	}, []);
+
+	useEffect(() => {
+		async function colorsAndTags(){
+			setColors(await getColors());
+			setMakeTags(true);
+		}
+
+		if(props.editMode){
+			setNewOrgName(props.org.name);
+			colorsAndTags();
+		}
+
+	}, [props.editMode])
+
+	useEffect(() => {
+		if(props.editMode){
+			getAllTags();
+		}
+	}, [makeTags])
 
 	return (
 		<div className='orgBox'>
@@ -302,6 +406,17 @@ function OrgBox(props) {
 								<TextField variant="standard" label={<LinkedIn/>} required={false} value={tempLIn} onChange={(e) => setTempLIn(e.target.value)}/>
 							</Grid>
 							<Button sx={{ mt: 8, mb: -2, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => saveSocials()}>Save</Button>
+						</Grid>
+					</DialogContent>
+				</Dialog>
+
+				<Dialog open={openInterestsModal} onClose={() => {setOpenInterestsModal(false)}}>
+					<DialogContent className='feedbackModal'>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+							<div className='allTags'>
+								{tags}
+							</div>
+							<Button sx={{ mt: 8, mb: -2, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => saveTags()}>Save</Button>
 						</Grid>
 					</DialogContent>
 				</Dialog>
