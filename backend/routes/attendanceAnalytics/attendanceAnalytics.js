@@ -29,14 +29,14 @@ const mockEvents = [
     },
     {
         _id: mockObjectId(),
-        name: 'reatrd',
+        name: 'random event',
         attendees: Array.from({ length: 58 }, mockObjectId),
         checkedInStudents: Array.from({ length: 22 }, mockObjectId),
         sponsoringOrganization: 'someOrgId1',
     },
     {
         _id: mockObjectId(),
-        name: 'ucf jhwl',
+        name: 'random event 2',
         attendees: Array.from({ length: 69 }, mockObjectId),
         checkedInStudents: Array.from({ length: 53 }, mockObjectId),
         sponsoringOrganization: 'someOrgId1',
@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
 
 
-        const chartData = events.map(event => {
+        const chartData = events.concat(events).map(event => {
             return {
                 name: event.name,
                 RSVPed: event.attendees.length,
