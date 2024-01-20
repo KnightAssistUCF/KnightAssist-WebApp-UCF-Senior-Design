@@ -56,8 +56,17 @@
 	width: 500px !important;
 }
 
+.tagModal{
+	height: 1000px !important;
+	width: 100% !important;
+}
+
 .feedbackTitle{
 	margin-left: -20px !important;
+}
+
+.dialogTitle{
+	font-size: 25px !important;
 }
 
 .feedbackTxt{
@@ -205,6 +214,21 @@
 	float: left;
 	margin-right: 7px;
 }
+
+.tagSection{
+    margin-left: 7%;
+    margin-right: 7%;
+	width: 600px;
+	height: 90%;
+    border: 1px solid #ededed; /* Border color */
+    padding: 10px; /* Padding around the tags */
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 
 .interests{
 	margin-top: 60px !important;

@@ -66,7 +66,7 @@ function OrgProfile() {
 	}, []);
 
 	return (
-		<div>
+		<div className='spartan'>
 			{/* <OrgTopBar /> */}
 			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
 			<div className='orgProfilePage spartan'>

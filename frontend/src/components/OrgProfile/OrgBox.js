@@ -91,11 +91,8 @@ function OrgBox(props) {
 	
 		let res = JSON.parse(await response.text());
 
-		console.log(tempSelectedTags);
-
 		setTags(
 			res.map((name, idx) => {
-				const isSelected = tempSelectedTags.includes(name);
 				return (
 					<Chip
 						label={name}
@@ -171,10 +168,6 @@ function OrgBox(props) {
 			console.log("error");
 		}
 
-
-	}
-
-	function saveTags(){
 
 	}
 
@@ -303,6 +296,24 @@ function OrgBox(props) {
 			</div>
 		)
 	}
+	
+	function resetInterests(){
+		setTempSelectedTags(newSelectedTags.slice(0)); 
+
+
+		for(let i = 0; i < 50; i++){
+			if(!newSelectedTags.includes(tagNames[i])){
+				colors[i] = "default"; 
+			}else{
+				colors[i] = "#5f5395";
+			}
+		}
+
+		setColors(colors);
+
+		setOpenInterestsModal(false);
+		console.log(colors);
+	}
 
 	async function getColors(){
 		let url = buildPath(`api/getAllAvailableTags`);
@@ -314,6 +325,8 @@ function OrgBox(props) {
 	
 		let allTags = JSON.parse(await response.text());
 
+		setTagNames(allTags);
+
 		const tagColors = [];
 
 		for(let i = 0; i < 50; i++){
@@ -324,10 +337,8 @@ function OrgBox(props) {
 			}
 		}
 
-		setNewSelectedTags(props.org.categoryTags);
-		setTempSelectedTags(props.org.categoryTags);
-
-		console.log(props.org.categoryTags);
+		setNewSelectedTags(props.org.categoryTags.slice());
+		setTempSelectedTags(props.org.categoryTags.slice());
 
 		return tagColors;
 	}
@@ -353,13 +364,17 @@ function OrgBox(props) {
 	}, [props.editMode])
 
 	useEffect(() => {
+		getAllTags();
+	}, [openInterestsModal])
+
+	useEffect(() => {
 		if(props.editMode){
 			getAllTags();
 		}
 	}, [makeTags])
 
 	return (
-		<div className='orgBox'>
+		<div className='spartan orgBox'>
 			<div className='items'>
 				{(props.org !== null)
 					?
@@ -384,10 +399,10 @@ function OrgBox(props) {
 				}
 
 				<Dialog open={openSocialsModal} onClose={() => {resetSocials(); setOpenSocialsModal(false)}}>
-					<DialogContent className='feedbackModal'>
+					<DialogContent className='spartan feedbackModal'>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 							<Grid item>
-								<DialogTitle>Edit Social Links</DialogTitle>
+								<DialogTitle className='dialogTitle'>Edit Social Links</DialogTitle>
 							</Grid>
 						</Grid>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
@@ -410,13 +425,14 @@ function OrgBox(props) {
 					</DialogContent>
 				</Dialog>
 
-				<Dialog open={openInterestsModal} onClose={() => {setOpenInterestsModal(false)}}>
-					<DialogContent className='feedbackModal'>
+				<Dialog open={openInterestsModal} onClose={() => {resetInterests();}}>
+					<DialogContent className='spartan tagModal'>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
-							<div className='allTags'>
+							<DialogTitle className='dialogTitle'>Edit Tags</DialogTitle>
+							<div className='tagSection'>
 								{tags}
 							</div>
-							<Button sx={{ mt: 8, mb: -2, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => saveTags()}>Save</Button>
+							<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setNewSelectedTags(tempSelectedTags.slice(0)); setOpenInterestsModal(false);}}>Save</Button>
 						</Grid>
 					</DialogContent>
 				</Dialog>
