@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
 import StudentHeader from '../StudentHome/StudentHeader'
 import './OrgProfile.css';
@@ -13,6 +13,8 @@ function OrgProfile() {
 	const [org, setOrg] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
 	const [editMode, setEditMode] = useState(false);
+
+	const backgroundSelect = useRef(null);
 
 	async function getOrgInfo(){
         let organizationID;
@@ -49,13 +51,29 @@ function OrgProfile() {
 		setBGFile(background);
 	}
 
+	function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length === 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
+
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
+	}
+
 	function BackgroundBanner(){
 		return (
+			<div>
 				<CardMedia
-					className='orgBannerFiller'
 					component="img"
 					image={(bgFile !== null) ? URL.createObjectURL(bgFile) : ""}
+					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
+					onClick={(editMode) ? () => document.getElementById("background").click() : null}
 				/>				
+				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(backgroundSelect.current.files[0]);}}}/>
+			</div>
 		)
 	}
 
