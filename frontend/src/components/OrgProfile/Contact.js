@@ -20,9 +20,12 @@ function Contact(props) {
 	useEffect(() => {
 		if(props.editMode){
 			setNewEmail(props.org.email);
+			props.editInfo.current.email = props.org.email;
 			if(props.org.contact){
 				setNewPhone(props.org.contact.phone);
+				props.editInfo.current.phone = props.org.contact.phone;
 				setNewWebsite(props.org.contact.website);
+				props.editInfo.current.website = props.org.contact.website;
 			}
 		}
 	}, [props.editMode])
@@ -37,7 +40,7 @@ function Contact(props) {
 						<div className='navContactText'>
 							{(props.editMode) 
 								?
-									<TextField variant="standard" label="Email" required={false} value={newEmail} onChange={(e) => setNewEmail(e.target.value)}/>
+									<TextField variant="standard" label="Email" required={false} value={newEmail} onChange={(e) => {setNewEmail(e.target.value); props.editInfo.current.email = e.target.value;}}/>
 								:
 									<a href='mailto:organizationemail@email.org'>{props.org.email}</a>
 							}
@@ -51,7 +54,7 @@ function Contact(props) {
 						<div className='navContactText'>
 							{(props.editMode) 
 								?
-									<TextField variant="standard" label="Phone Number" required={false} value={newPhone} onChange={(e) => setNewPhone(e.target.value)}/>
+									<TextField variant="standard" label="Phone Number" required={false} value={newPhone} onChange={(e) => {setNewPhone(e.target.value); props.editInfo.current.phone = e.target.value;}}/>
 								:
 									props.org.contact.phone
 							}
@@ -65,7 +68,7 @@ function Contact(props) {
 						<div className='navContactText'>
 							{(props.editMode)
 								?
-									<TextField variant="standard" label="Website" required={false} value={newWebsite} onChange={(e) => setNewWebsite(e.target.value)}/>
+									<TextField variant="standard" label="Website" required={false} value={newWebsite} onChange={(e) => {setNewWebsite(e.target.value); props.editInfo.current.website = e.target.value;}}/>
 								:
 									props.org.contact.website
 							}

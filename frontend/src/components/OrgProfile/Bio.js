@@ -19,6 +19,7 @@ function Bio(props) {
 	useEffect(() => {
 		if(props.editMode){
 			setNewDescription(props.org.description);
+			props.editInfo.current.description = props.org.description;
 		}
 	}, [props.editMode])
 
@@ -51,7 +52,7 @@ function Bio(props) {
 								}
 							</div>
 							: 
-								<TextField className='editDescription' label="Description" required={false} value={newDescription} multiline minRows={5} onChange={(e) => setNewDescription(e.target.value)}/>
+								<TextField className='editDescription' label="Description" required={false} value={newDescription} multiline minRows={5} onChange={(e) => {setNewDescription(e.target.value); props.editInfo.current.description = e.target.value;}}/>
 							}
 					</Box>
 				</div>

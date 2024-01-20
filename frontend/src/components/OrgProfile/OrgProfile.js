@@ -8,12 +8,15 @@ import { Button, Typography, CardContent, CardMedia } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
+import SearchResults from '../OrgEvents/SearchResults';
 
 function OrgProfile() {
 	const [org, setOrg] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
 	const [editMode, setEditMode] = useState(false);
+	const [reset, setReset] = useState(false);
 
+	const editInfo = useRef({});
 	const backgroundSelect = useRef(null);
 
 	async function getOrgInfo(){
@@ -49,6 +52,7 @@ function OrgProfile() {
 		let background = await response.blob();
 
 		setBGFile(background);
+		editInfo.current.bgFile = background;
 	}
 
 	function validateImgSelection(fileSelect){
@@ -72,7 +76,7 @@ function OrgProfile() {
 					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
 					onClick={(editMode) ? () => document.getElementById("background").click() : null}
 				/>				
-				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(backgroundSelect.current.files[0]);}}}/>
+				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(backgroundSelect.current.files[0]); editInfo.current.background = backgroundSelect.current.files[0];}}}/>
 			</div>
 		)
 	}
@@ -82,6 +86,12 @@ function OrgProfile() {
 	
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		getOrgInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [reset]);
 
 	return (
 		<div className='spartan'>
@@ -93,9 +103,9 @@ function OrgProfile() {
 					?	
 					<div>
 						<BackgroundBanner editMode={editMode}/>
-						<OrgBox org={org} editMode={editMode} setEditMode={setEditMode}/>
+						<OrgBox org={org} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='navTabs'>
-							<NavTabs org={org} editMode={editMode}/>
+							<NavTabs org={org} editMode={editMode} editInfo={editInfo}/>
 						</div>
 					</div>
 					: ""

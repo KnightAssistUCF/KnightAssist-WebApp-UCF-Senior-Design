@@ -16,18 +16,18 @@ function OrgBox(props) {
 	const [role, setRole] = useState(null);
 	const [favorited, setFavorited] = useState(false);
 
-	const [newOrgName, setNewOrgName] = useState("");
-	const [newFB, setNewFB] = useState("");
-	const [newX, setNewX] = useState("");
-	const [newIG, setNewIG] = useState("");
-	const [newLIn, setNewLIn] = useState("");
+	const [newOrgName, setNewOrgName] = useState(undefined);
+	const [newFB, setNewFB] = useState(undefined);
+	const [newX, setNewX] = useState(undefined);
+	const [newIG, setNewIG] = useState(undefined);
+	const [newLIn, setNewLIn] = useState(undefined);
 	const [newSelectedTags, setNewSelectedTags] = useState([]);
 
 	// For modal purposes if they cancel
-	const [tempFB, setTempFB] = useState("");
-	const [tempX, setTempX] = useState("");
-	const [tempIG, setTempIG] = useState("");
-	const [tempLIn, setTempLIn] = useState("");
+	const [tempFB, setTempFB] = useState(undefined);
+	const [tempX, setTempX] = useState(undefined);
+	const [tempIG, setTempIG] = useState(undefined);
+	const [tempLIn, setTempLIn] = useState(undefined);
 	const [tempSelectedTags, setTempSelectedTags] = useState([]);
 	
 	const [openSocialsModal, setOpenSocialsModal] = useState(false);
@@ -41,6 +41,88 @@ function OrgBox(props) {
 	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
+
+	async function submitEdits(){
+
+		/*
+			user.name = (req.body.name) ? req.body.name : user.name;
+            user.email = (req.body.email) ? req.body.email : user.email;
+            user.logoUrl = (req.body.logoUrl) ? req.body.logoUrl : user.logoUrl;
+            user.contact = (req.body.contact) ? req.body.contact : user.contact;
+            user.isActive = (req.body.isActive) ? req.body.isActive : user.isActive;
+            user.backgroundURL = (req.body.backgroundURL) ? req.body.backgroundURL : user.backgroundURL;
+            user.location = (req.body.location) ? req.body.location : user.location;
+            user.categoryTags 
+		*/
+
+		const editInfo = props.editInfo.current;
+
+        const json = {
+            name: newOrgName,
+			email: editInfo.email,
+            description: editInfo.description,
+            contact: {
+				email: editInfo.email,
+				phone: editInfo.phone,
+				website: editInfo.website,
+				socialMedia: {
+					facebook: newFB,
+					twitter: newX,
+					instagram: newIG,
+					linkedin: newLIn
+				}
+			},
+			categoryTags: newSelectedTags
+        };
+
+        console.log(json);
+
+        const url = buildPath("api/editOrganizationProfile");
+
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+			});
+
+            let res = JSON.parse(await response.text());
+            console.log(res);
+
+			let formData = new FormData();
+			formData.append('profilePic', picName); 
+			formData.append('entityType', 'organization');
+			formData.append('id', sessionStorage.getItem("ID"));
+			formData.append('profilePicOrBackGround', '0');
+
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
+
+			formData = new FormData();
+			formData.append('profilePic', editInfo.background); 
+			formData.append('entityType', 'organization');
+			formData.append('id', sessionStorage.getItem("ID"));
+			formData.append('profilePicOrBackGround', '1');
+			
+			await fetch(buildPath(`api/storeImage`), {
+				method: 'POST',
+				body: formData
+			})
+			.then(response => response.json())
+			.then(data => console.log(data))
+			.catch(error => console.error('Error:', error));
+
+			props.setReset(!props.reset);
+        }catch(err){
+            console.log("An error has occurred: ", err);
+        }
+	}
 	
 	async function getProfilePic(){
 		let id;
@@ -231,7 +313,7 @@ function OrgBox(props) {
 			  	?
 					<button className='editBtn btn btn-primary' onClick={() => props.setEditMode(true)}>Edit Profile</button>
 				:
-					<button className='editBtn btn btn-primary' onClick={() => props.setEditMode(false)}>Save Profile</button>
+					<button className='editBtn btn btn-primary' onClick={() => {submitEdits(); props.setEditMode(false);}}>Save Profile</button>
 			  }
 		   </div>
 		)
