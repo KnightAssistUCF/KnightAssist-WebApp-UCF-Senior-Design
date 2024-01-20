@@ -44,17 +44,6 @@ function OrgBox(props) {
 
 	async function submitEdits(){
 
-		/*
-			user.name = (req.body.name) ? req.body.name : user.name;
-            user.email = (req.body.email) ? req.body.email : user.email;
-            user.logoUrl = (req.body.logoUrl) ? req.body.logoUrl : user.logoUrl;
-            user.contact = (req.body.contact) ? req.body.contact : user.contact;
-            user.isActive = (req.body.isActive) ? req.body.isActive : user.isActive;
-            user.backgroundURL = (req.body.backgroundURL) ? req.body.backgroundURL : user.backgroundURL;
-            user.location = (req.body.location) ? req.body.location : user.location;
-            user.categoryTags 
-		*/
-
 		const editInfo = props.editInfo.current;
 
         const json = {
@@ -87,7 +76,7 @@ function OrgBox(props) {
 				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
 			});
 
-            let res = JSON.parse(await response.text());
+            let res = await response.text();
             console.log(res);
 
 			let formData = new FormData();
