@@ -91,6 +91,12 @@
     font-weight: 370;
 }
 
+.editDescription {
+    font-size: 17px;
+    font-weight: 370;
+	width: 70%;
+}
+
 .profileEmail {
     display: flex;
     align-items: center;

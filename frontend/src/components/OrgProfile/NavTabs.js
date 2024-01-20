@@ -53,8 +53,8 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 const BioTabContent = (props) => (
   <div>
     {/* Content for Bio tab */}
-    <Bio org={props.org}/>
-    <Contact org={props.org}/>
+    <Bio org={props.org} editMode={props.editMode}/>
+    <Contact org={props.org} editMode={props.editMode}/>
   </div>
 );
 
@@ -82,7 +82,7 @@ export default function CustomizedTabs(props) {
   const getTabContent = (tabValue) => {
     switch (tabValue) {
       case 0:
-        return <BioTabContent org={props.org}/>;
+        return <BioTabContent org={props.org} editMode={props.editMode}/>;
       case 1:
         return <UpcomingEventsTabContent org={props.org}/>;
       case 2:
