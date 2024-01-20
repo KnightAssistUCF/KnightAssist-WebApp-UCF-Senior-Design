@@ -10,9 +10,10 @@ import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import './AdminHome.css';
-import StudentDetailsPage from './ViewStudent';
+import { useNavigate } from 'react-router';
 
 function OrgTable(props) {
+  const navigate = useNavigate();
 
   const [orderBy, setOrderBy] = useState('createdAt');
   const [order, setOrder] = useState('desc');
@@ -23,9 +24,9 @@ function OrgTable(props) {
     setOrderBy(property);
   };
 
-  const handleViewClick = (orgID) => {
-    // console.log(`Clicked student View for ID: ${studentID}`);
-    // navigate(`/adminhome/students/${studentID}`);
+  const handleViewClick = (organizationID) => {
+    console.log(`Clicked organization View for ID: ${organizationID}`);
+    navigate(`/adminhome/organizations/${organizationID}`);
   };
 
   const stableSort = (array, comparator) => {
