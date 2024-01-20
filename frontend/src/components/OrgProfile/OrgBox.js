@@ -47,6 +47,7 @@ function OrgBox(props) {
 		const editInfo = props.editInfo.current;
 
         const json = {
+			id: sessionStorage.getItem("ID"),
             name: newOrgName,
 			email: editInfo.email,
             description: editInfo.description,
