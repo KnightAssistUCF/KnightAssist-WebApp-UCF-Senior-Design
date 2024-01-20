@@ -358,6 +358,17 @@ function OrgBox(props) {
 
 		if(props.editMode){
 			setNewOrgName(props.org.name);
+			if(props.org.contact && props.org.contact.socialMedia){
+				const socials = props.org.contact.socialMedia;
+				setNewFB(socials.facebook);
+				setNewX(socials.twitter);
+				setNewIG(socials.instagram);
+				setNewLIn(socials.linkedin);
+				setTempFB(socials.facebook);
+				setTempX(socials.twitter);
+				setTempIG(socials.instagram);
+				setTempLIn(socials.linkedin);
+			}
 			colorsAndTags();
 		}
 
