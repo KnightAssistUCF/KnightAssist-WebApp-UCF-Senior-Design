@@ -80,19 +80,24 @@ function OrgBox(props) {
             let res = await response.text();
             console.log(res);
 
-			let formData = new FormData();
-			formData.append('profilePic', picName); 
-			formData.append('entityType', 'organization');
-			formData.append('id', sessionStorage.getItem("ID"));
-			formData.append('profilePicOrBackGround', '0');
+			console.log(picName);
 
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
+			let formData = new FormData();
+
+			if(picName !== null && typeof picName.name === "string"){
+				formData.append('profilePic', picName); 
+				formData.append('entityType', 'organization');
+				formData.append('id', sessionStorage.getItem("ID"));
+				formData.append('profilePicOrBackGround', '0');
+
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
 
 			formData = new FormData();
 			formData.append('profilePic', editInfo.background); 
