@@ -90,7 +90,6 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
                         throw new Error('User not found');
                 }
 
-                console.log('user: ', user);
                 res.json({ message: 'picture uploaded and user updated successfully' });
         } catch (error) {
                 console.error(error);

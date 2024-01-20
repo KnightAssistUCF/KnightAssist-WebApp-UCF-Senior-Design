@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
 import StudentHeader from '../StudentHome/StudentHeader'
 import './OrgProfile.css';
@@ -8,10 +8,16 @@ import { Button, Typography, CardContent, CardMedia } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
+import SearchResults from '../OrgEvents/SearchResults';
 
 function OrgProfile() {
 	const [org, setOrg] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
+	const [editMode, setEditMode] = useState(false);
+	const [reset, setReset] = useState(false);
+
+	const editInfo = useRef({});
+	const backgroundSelect = useRef(null);
 
 	async function getOrgInfo(){
         let organizationID;
@@ -46,15 +52,32 @@ function OrgProfile() {
 		let background = await response.blob();
 
 		setBGFile(background);
+		editInfo.current.bgFile = background;
+	}
+
+	function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length === 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
+
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
 	}
 
 	function BackgroundBanner(){
 		return (
+			<div>
 				<CardMedia
-					className='orgBannerFiller'
 					component="img"
 					image={(bgFile !== null) ? URL.createObjectURL(bgFile) : ""}
+					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
+					onClick={(editMode) ? () => document.getElementById("background").click() : null}
 				/>				
+				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(backgroundSelect.current.files[0]); editInfo.current.background = backgroundSelect.current.files[0];}}}/>
+			</div>
 		)
 	}
 
@@ -64,8 +87,14 @@ function OrgProfile() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	useEffect(() => {
+		getOrgInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [reset]);
+
 	return (
-		<div>
+		<div className='spartan'>
 			{/* <OrgTopBar /> */}
 			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
 			<div className='orgProfilePage spartan'>
@@ -73,10 +102,10 @@ function OrgProfile() {
 				{(org !== null)
 					?	
 					<div>
-						<BackgroundBanner/>
-						<OrgBox org={org}/>
+						<BackgroundBanner editMode={editMode}/>
+						<OrgBox org={org} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='navTabs'>
-							<NavTabs org={org}/>
+							<NavTabs org={org} editMode={editMode} editInfo={editInfo}/>
 						</div>
 					</div>
 					: ""

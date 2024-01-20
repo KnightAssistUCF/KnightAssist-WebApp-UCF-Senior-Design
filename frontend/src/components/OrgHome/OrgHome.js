@@ -10,7 +10,7 @@ import Analytics from './Analytics';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+// import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
 
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
@@ -87,19 +87,24 @@ function OrgHome() {
           </div>
         </div>
         <div className="orgHomeBottomRow">
-          <StatCards />
-          <Card variant='outlined' sx={{ width: '100%', p: 3 }}>
-            <BarChart width={800} height={500} data={chartData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-              <Bar dataKey="RSVPed" fill="#8884d8" />
-              <Bar dataKey="Attended" fill="#82ca9d" />
-              <Bar dataKey="NoShow" fill="#ffc658" />
-            </BarChart>
-          </Card>
+            <StatCards />
+			{/* <BarChart className="eventChart" width={900} height={475} data={chartData} >
+				<CartesianGrid  strokeDasharray="3 3"/>
+				<XAxis dataKey="name" fontSize={15} dy={10}/>
+				<YAxis className='moveY' fontSize={10}>
+					<Label
+						angle={270} 
+						value="Number of Attendees"
+						fontSize={25}
+						dx={-20}
+					/>
+	  			</YAxis>
+				<Tooltip />
+				<Legend />
+				<Bar dataKey="RSVPed" fill="#8884d8" />
+				<Bar dataKey="Attended" fill="#82ca9d" />
+				<Bar dataKey="NoShow" fill="#ffc658" />
+			</BarChart> */}
         </div>
         <Analytics />
       </div>
