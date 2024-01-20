@@ -7,15 +7,16 @@ import OrgTopBar from './OrgTopBar';
 import Feedback from './Feedback';
 import StatCards from './StatCards';
 import Analytics from './Analytics';
-import { BarChart } from '@mui/x-charts';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent } from '@mui/material';
 import { buildPath } from '../../path';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 
 function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
+  const [chartData, setChartData] = useState([]);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
@@ -23,30 +24,40 @@ function OrgHome() {
 
   async function getUpcomingEvents() {
     const organizationID = sessionStorage.getItem("ID");
-  
+
     try {
       let eventsUrl = buildPath(`api/searchEvent?organizationID=${organizationID}`);
       let eventsResponse = await fetch(eventsUrl, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
-  
+
       let eventsData = JSON.parse(await eventsResponse.text());
-  
+
       const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
-  
+
       console.log("Upcoming Events:", upcomingEvents);
       setUpcomingEvents(upcomingEvents);
       setNumUpcomingEvents(upcomingEvents.length);
-  
+
     } catch (error) {
       console.error("Error fetching upcoming events:", error);
     }
   }
 
-
+  async function getChartData() {
+    const chartUrl = buildPath('api/attendanceAnalytics?orgId=' + sessionStorage.getItem('ID'));
+    try {
+      const response = await fetch(chartUrl);
+      const jsonData = await response.json();
+      setChartData(jsonData);
+    } catch (error) {
+      console.error('Error fetching chart data:', error);
+    }
+  }
   useEffect(() => {
     getUpcomingEvents();
+    getChartData();
   }, []);
 
   return (
@@ -77,12 +88,18 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
           <StatCards />
-          <BarChart
-            sx={{ rx: 15 }}
-            series={[{ data: [4, 3, 5] }, { data: [1, 6, 3] }, { data: [2, 5, 6] }]}
-            width={1000}
-            height={310}
-          />
+          <Card variant='outlined' sx={{ width: '100%', p: 3 }}>
+            <BarChart width={800} height={500} data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="RSVPed" fill="#8884d8" />
+              <Bar dataKey="Attended" fill="#82ca9d" />
+              <Bar dataKey="NoShow" fill="#ffc658" />
+            </BarChart>
+          </Card>
         </div>
         <Analytics />
       </div>
