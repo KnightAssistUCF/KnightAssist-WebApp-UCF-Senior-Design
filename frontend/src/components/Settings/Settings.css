@@ -7,3 +7,26 @@
 	background-color: #d3d3d3;
 	height: 100vh !important;
 }
+
+.headerTxt{
+	font-weight: bold;
+	font-size: 25px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+	text-align: left;
+}
+
+.subHeaderTxt{
+	font-size: 20px;
+	margin-left: 10px;
+	text-align: left;
+	float: left;
+}
+
+.settingsItem{
+	float: right;
+}
+
+.settingsSubSection{
+	margin-bottom: 125px;
+}

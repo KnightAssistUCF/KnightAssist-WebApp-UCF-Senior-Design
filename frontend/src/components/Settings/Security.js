@@ -9,9 +9,17 @@ import { Card } from 'react-bootstrap';
 
 function Security(props){
 
+	function Header(){
+		return (
+			<div className='headerTxt'>
+				Customization
+			</div>
+		)
+	}
+
 	return(
 		<div>
-			
+			<Header/>
 		</div>
 	);
 };
