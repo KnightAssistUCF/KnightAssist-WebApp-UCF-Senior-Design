@@ -116,7 +116,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Settings" : ""} placement="right" className="custom-tooltip">
-                        <a href='#/orgsettings'>
+                        <a href='#/settings'>
                             <BiCog className='settingsIcon'></BiCog>
                             <span class="links_name">Settings</span>
                         </a>
