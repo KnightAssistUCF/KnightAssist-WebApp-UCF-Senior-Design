@@ -309,6 +309,10 @@
 	height: 75px;
 }
 
+.addHover:hover{
+	cursor: pointer;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;
