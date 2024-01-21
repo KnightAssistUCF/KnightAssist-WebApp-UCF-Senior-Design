@@ -5,7 +5,17 @@
 
 .grayBG{
 	background-color: #d3d3d3;
-	height: 100vh !important;
+	height: 100% !important;
+	margin-bottom: -20% !important;
+}
+
+.settingsCard{
+	margin-left: 5%;
+	border-radius: 15px !important;
+	width: 90% !important;
+	height: 100% !important;
+	margin-bottom: 30px;
+	text-align: center;
 }
 
 .headerTxt{
@@ -13,7 +23,6 @@
 	font-size: 25px;
 	margin-left: 10px;
 	margin-bottom: 20px;
-	text-align: left;
 }
 
 .subHeaderTxt{
@@ -27,6 +36,26 @@
 	float: right;
 }
 
+.diffSpace{
+	margin-top: 200px !important;
+}
+
+.visbilitySpace{
+	margin-top: 300px !important;
+}
+
 .settingsSubSection{
 	margin-bottom: 125px;
+}
+
+.customizationSection{
+	margin-bottom: 50px;
+}
+
+.securitySection{
+	margin-top: 15px;
+}
+
+.curPWDSection{
+	margin-bottom: 10px;
 }

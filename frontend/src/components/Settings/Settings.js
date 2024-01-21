@@ -4,8 +4,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Settings.css'
 import Header from '../OrgEvents/Header';
 import OrgTopBar from '../OrgHome/OrgTopBar';
-import { Box, CardContent, Divider } from '@mui/material';
-import { Card } from 'react-bootstrap';
+import { Box, Card, CardContent, Divider, Grid } from '@mui/material';
+import {Button} from '@mui/material';
 import Customization from './Customization';
 import Security from './Security';
 import { buildPath } from '../../path.js';
@@ -18,7 +18,7 @@ function Settings(){
 	const [curPassword, setCurPassword] = useState(undefined);
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
-	const [visibility, setVisibility] = useState(false);
+	const [visible, setVisible] = useState(false);
 
 	async function getPassword(){
 		let url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
@@ -31,6 +31,10 @@ function Settings(){
         let res = JSON.parse(await response.text());
 
 		setCurPassword(res.password);
+	}
+
+	async function submit(){
+
 	}
 
 	useEffect(() => {
@@ -56,11 +60,15 @@ function Settings(){
 			<OrgTopBar/>
 			{(role === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
-				<Card className='contactCard'>
+				<Card className='settingsCard'>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
 						<Divider sx={{background: "black"}}/>
-						<Security curPassword={curPassword} setCurPassword={setCurPassword} newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck}/>
+						<Security curPassword={curPassword} setCurPassword={setCurPassword} newPassword={newPassword} setNewPassword={setNewPassword} 
+								  passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} visible={visible} setVisible={setVisible}/>
+                        <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
+							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
+						</Grid>
 					</CardContent>   
 				</Card>
 			</div>

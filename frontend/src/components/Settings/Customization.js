@@ -60,7 +60,7 @@ function Customization(props){
 	}
 
 	return(
-		<div>
+		<div className='customizationSection'>
 			<Header/>
 			<div className='settingsSubSection'>
 				<Appearence/>
@@ -68,6 +68,7 @@ function Customization(props){
 			<div className='settingsSubSection'>
 				<FontChoice/>
 			</div>
+			<div>&nbsp;</div>
 		</div>
 	);
 };
