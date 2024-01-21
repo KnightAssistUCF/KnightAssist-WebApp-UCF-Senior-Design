@@ -31,7 +31,7 @@ function Customization(props){
 	function Appearence(){
 		return (
 			<div>
-				<div className='subHeaderTxt'>Appearence</div>
+				<div className='subHeaderTxt'>appearance</div>
 				<FormControl className='spartan settingsItem'>
 					<RadioGroup defaultValue={props.appearenceMode}>
 						<FormControlLabel value="light" control={<Radio />} label="Light" onClick={() => {props.setAppearenceMode("light")}}/>
