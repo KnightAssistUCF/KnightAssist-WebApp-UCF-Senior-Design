@@ -60,6 +60,16 @@ function Header()
     setSidebarActive(!isSidebarActive);
     };
 
+	// For the case that a user is viewing another org profile
+	// and then clicks the profile button
+	function loadOrgProfile(){
+		sessionStorage.removeItem("viewingPageID"); 
+		if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/orgprofile")
+			window.location.reload();
+		else		
+			window.location.href = "#/orgprofile";
+	}
+
     return(
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
@@ -82,7 +92,7 @@ function Header()
                 </li>
 				<li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/orgprofile">
+                        <a className="addHover" onClick={() => loadOrgProfile()}>
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
                         </a>
@@ -90,7 +100,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/orgevents">
+                        <a href="#/orgevents"> 
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Events</span>
                         </a>

@@ -64,7 +64,7 @@ router.get('/', async (req, res) => {
         const events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
 
 
-        const chartData = events.concat(events).map(event => {
+        const chartData = events.map(event => {
             return {
                 name: event.name,
                 RSVPed: event.attendees.length,
