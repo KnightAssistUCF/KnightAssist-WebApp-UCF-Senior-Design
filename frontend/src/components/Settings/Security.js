@@ -80,14 +80,14 @@ function Security(props){
 		)
 	}
 
-	function Visibility(){
+	function AccountVisibility(){
 		return (
 			<div>
 				<div className='subHeaderTxt'>Account Visibility</div>
 				<FormControl className='spartan settingsItem'>
-					<RadioGroup defaultValue={props.appearenceMode}>
-						<FormControlLabel value="public" control={<Radio />} label="Public" onClick={() => {props.setVisible(true)}}/>
-						<FormControlLabel value="private" control={<Radio />} label="Private"  onClick={() => {props.setVisible(false)}}/>
+					<RadioGroup defaultValue={props.visible}>
+						<FormControlLabel value="public" control={<Radio />} label="Public" onClick={() => {props.setVisible("public")}}/>
+						<FormControlLabel value="private" control={<Radio />} label="Private"  onClick={() => {props.setVisible("private")}}/>
 					</RadioGroup>
 				</FormControl>
 			</div>
@@ -97,17 +97,14 @@ function Security(props){
 	return(
 		<div className='securitySection'>
 			<Header/>
-			<div className='settingsSubSection'>
-				{CurrentPassword()}
-			</div>
-			<div className='settingsSubSection'>
+			<div className='securitySubSection'>
 				{NewPassword()}
 			</div>
-			<div className='settingsSubSection diffSpace'> 
+			<div className='securitySubSection'> 
 				{CheckPassword()}
 			</div>
-			<div className='settingsSubSection visbilitySpace'>
-				{Visibility()}
+			<div className='visibilitySpace'>
+				<AccountVisibility/>
 			</div>
 		</div>
 	);

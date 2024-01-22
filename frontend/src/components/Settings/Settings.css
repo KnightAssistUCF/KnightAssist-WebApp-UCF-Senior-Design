@@ -40,8 +40,8 @@
 	margin-top: 200px !important;
 }
 
-.visbilitySpace{
-	margin-top: 300px !important;
+.visibilitySpace{
+	margin-top: 200px !important;
 }
 
 .settingsSubSection{
@@ -56,6 +56,20 @@
 	margin-top: 15px;
 }
 
+.securitySubSection{
+	margin-bottom: 90px;
+}
+
 .curPWDSection{
 	margin-bottom: 10px;
+}
+
+.dividerSpace{
+	margin-top: 0% !important;
+}
+
+@media (max-width: 600px) {
+	.dividerSpace{
+		margin-top: 50% !important;
+	}
 }

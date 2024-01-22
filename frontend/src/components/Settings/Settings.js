@@ -18,17 +18,23 @@ function Settings(){
 	const [curPassword, setCurPassword] = useState(undefined);
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
-	const [visible, setVisible] = useState(false);
+	const [visible, setVisible] = useState(undefined);
 
 	async function getPassword(){
-		let url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
+		let url;
 
-        let response = await fetch(url, {
-            method: "GET",
-            headers: {"Content-Type": "application/json"},
-        });
-    
-        let res = JSON.parse(await response.text());
+		if(sessionStorage.getItem("role") === "organization"){
+			url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
+		}else{
+			url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
+		}
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let res = JSON.parse(await response.text());
 
 		setCurPassword(res.password);
 	}
@@ -52,6 +58,14 @@ function Settings(){
 			setFontType(sessionStorage.getItem("fontType"));
 		}
 
+		// Should be changed as a field for the org
+		// if we implement private accounts
+		if(!("visibility" in sessionStorage)){
+			setVisible("public");
+		}else{
+			setVisible(sessionStorage.getItem("visibility"));
+		}
+
 		getPassword();
 	}, []);
 
@@ -63,7 +77,7 @@ function Settings(){
 				<Card className='settingsCard'>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
-						<Divider sx={{background: "black"}}/>
+						<Divider className='dividerSpace' sx={{background: "black"}}/>
 						<Security curPassword={curPassword} setCurPassword={setCurPassword} newPassword={newPassword} setNewPassword={setNewPassword} 
 								  passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} visible={visible} setVisible={setVisible}/>
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
