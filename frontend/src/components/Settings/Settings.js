@@ -15,32 +15,41 @@ function Settings(){
 
 	const [appearenceMode, setAppearenceMode] = useState(undefined);
 	const [fontType, setFontType] = useState(undefined);
-	const [curPassword, setCurPassword] = useState(undefined);
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
 	const [visible, setVisible] = useState(undefined);
 
-	async function getPassword(){
-		let url;
-
-		if(sessionStorage.getItem("role") === "organization"){
-			url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
-		}else{
-			url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
-		}
-
-		let response = await fetch(url, {
-			method: "GET",
-			headers: {"Content-Type": "application/json"},
-		});
-	
-		let res = JSON.parse(await response.text());
-
-		setCurPassword(res.password);
-	}
-
 	async function submit(){
 
+		let url;
+		
+		if(role === "volunteer"){
+			url = buildPath("api/editUserProfile");
+		}else{
+			url = buildPath("api/editOrganizationProfile");
+		}
+
+		const json = 
+		{
+			id: sessionStorage.getItem("ID"),
+			password: newPassword
+		}
+
+		console.log(json);
+
+		try{
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+			});
+	
+			let res = await response.text();
+			console.log(res);
+		}catch(e){
+			console.log(e);
+		}
 	}
 
 	useEffect(() => {
@@ -65,8 +74,6 @@ function Settings(){
 		}else{
 			setVisible(sessionStorage.getItem("visibility"));
 		}
-
-		getPassword();
 	}, []);
 
 	return(
@@ -78,8 +85,8 @@ function Settings(){
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
 						<Divider className='dividerSpace' sx={{background: "black"}}/>
-						<Security curPassword={curPassword} setCurPassword={setCurPassword} newPassword={newPassword} setNewPassword={setNewPassword} 
-								  passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} visible={visible} setVisible={setVisible}/>
+						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
+								  visible={visible} setVisible={setVisible}/>
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
 						</Grid>

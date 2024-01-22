@@ -1,25 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import StudentHeader from '../StudentHome/StudentHeader';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Settings.css'
-import Header from '../OrgEvents/Header';
-import OrgTopBar from '../OrgHome/OrgTopBar';
 import { Box, CardContent, FormControl, FormControlLabel, IconButton, Input, InputAdornment, Radio, RadioGroup, TextField } from '@mui/material';
 import { Card } from 'react-bootstrap';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import clsx from 'clsx';
 
 function Security(props){
-	const [newPassword, setNewPassword] = useState("");
-	const [checkPassword, setCheckPassword] = useState("");
-
-	const [showCurPWD, setShowCurPWD] = useState(false);
 	const [showNewPWD, setShowNewPWD] = useState(false);
 	const [showCheckPWD, setShowCheckPWD] = useState(false);
 
 	function iconClick(type){
-		if(type === 0) setShowCurPWD(!showCurPWD);
-		else if(type === 1) setShowNewPWD(!showNewPWD);
+		if(type === 1) setShowNewPWD(!showNewPWD);
 		else setShowCheckPWD(!showCheckPWD);
 	}
 
@@ -52,20 +43,11 @@ function Security(props){
 		)
 	}
 
-	function CurrentPassword(){
-		return (
-			<div>
-				<div className='subHeaderTxt'>Current Password</div>
-				{PasswordForm({show: showCurPWD, password: props.curPassword, disabled: true, type: 0})}
-			</div>
-		)
-	}
-
 	function NewPassword(){
 		return (
 			<div>
 				<div className='subHeaderTxt'>New Password</div>
-				{PasswordForm({show: showNewPWD, password: newPassword, disabled: false, type: 1, onChange: (e) => setNewPassword(e.target.value)})}
+				{PasswordForm({show: showNewPWD, password: props.newPassword, disabled: false, type: 1, onChange: (e) => props.setNewPassword(e.target.value)})}
 			</div>
 		)
 	}
@@ -75,7 +57,7 @@ function Security(props){
 		return (
 			<div>
 				<div className='subHeaderTxt'>Confirm New Password</div>
-				{PasswordForm({show: showCheckPWD, password: checkPassword, disabled: false, type: 2, onChange: (e) => setCheckPassword(e.target.value)})}
+				{PasswordForm({show: showCheckPWD, password: props.passwordCheck, disabled: false, type: 2, onChange: (e) => props.setPasswordCheck(e.target.value)})}
 			</div>
 		)
 	}

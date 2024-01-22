@@ -67,7 +67,7 @@ function QRCodeModal(props)
     }, [props.checkType]);
 
     return(
-        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center', overflow:'scroll'}} open={props.open} onClose={handleClose}>
+        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center', overflowY:'scroll', overflowX: 'hidden'}} open={props.open} onClose={handleClose}>
             <div className='center'>
                 <Card className='qrCodeCard spartan'>
                     <CardContent className='qrTop'>
