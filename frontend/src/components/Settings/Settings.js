@@ -6,6 +6,7 @@ import Header from '../OrgEvents/Header';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import { Box, Card, CardContent, Divider, Grid } from '@mui/material';
 import {Button} from '@mui/material';
+import Alert from '@mui/material/Alert';
 import Customization from './Customization';
 import Security from './Security';
 import { buildPath } from '../../path.js';
@@ -18,8 +19,15 @@ function Settings(){
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
 	const [visible, setVisible] = useState(undefined);
+	
+	const [showError, setShowError] = useState(false);
+	const [errors, setErrors] = useState([]);
 
 	async function submit(){
+		if(!validInput()) return;
+
+		setErrors(false);
+		setShowError(false);
 
 		let url;
 		
@@ -51,6 +59,40 @@ function Settings(){
 			console.log(e);
 		}
 	}
+
+	function validInput(){
+		const errs = [];
+
+        if(newPassword.length < 8)
+            errs.push("Password must be at least 8 characters");
+
+		if(newPassword !== passwordCheck)
+			errs.push("Passwords do not match");
+
+		if(errs.length == 0) return true;
+		
+		setShowError(true);
+		setErrors(errs);
+
+        return false;
+    }
+
+	function ErrorMessage(){
+        return (
+            <div>
+                {(showError) === true
+                    ?
+                        <div>
+							{errors.map((err) => (
+                            	<Alert severity="error">{err}</Alert>					
+							))}
+                        </div>
+                    :
+                        null
+                }
+            </div>
+        )
+    }
 
 	useEffect(() => {
 		setRole(sessionStorage.getItem("role"));
@@ -90,6 +132,7 @@ function Settings(){
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
 						</Grid>
+						<ErrorMessage/>
 					</CardContent>   
 				</Card>
 			</div>
