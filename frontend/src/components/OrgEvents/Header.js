@@ -75,7 +75,7 @@ function Header()
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
                 <div className="logo logoBtn">
-                    <PageTitle onClick={() => window.location.href="/#/"} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
+                    <PageTitle onClick={() => loadOrgProfile()} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
                 <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
