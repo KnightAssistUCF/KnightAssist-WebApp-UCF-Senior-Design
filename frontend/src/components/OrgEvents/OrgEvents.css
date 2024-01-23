@@ -157,7 +157,8 @@
 .qrCodeCard{
 	height: 75vh;
     width: 75vh;
-    overflow: scroll !important;
+    overflow-y: scroll !important;
+	overflow-x: hidden !important;
 }
 
 .boxStyle{

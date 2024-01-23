@@ -1,0 +1,75 @@
+.moveEverything{
+    margin-left: 15%;
+    margin-top: 2%;
+}
+
+.grayBG{
+	background-color: #d3d3d3;
+	height: 100% !important;
+	margin-bottom: -20% !important;
+}
+
+.settingsCard{
+	margin-left: 23%;
+	border-radius: 15px !important;
+	width: 50% !important;
+	height: 100% !important;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.headerTxt{
+	font-weight: bold;
+	font-size: 25px;
+	margin-left: 10px;
+	margin-bottom: 20px;
+}
+
+.subHeaderTxt{
+	font-size: 20px;
+	margin-left: 10px;
+	text-align: left;
+	float: left;
+}
+
+.settingsItem{
+	float: right;
+}
+
+.diffSpace{
+	margin-top: 200px !important;
+}
+
+.visibilitySpace{
+	margin-top: 200px !important;
+}
+
+.settingsSubSection{
+	margin-bottom: 125px;
+}
+
+.customizationSection{
+	margin-bottom: 50px;
+}
+
+.securitySection{
+	margin-top: 15px;
+}
+
+.securitySubSection{
+	margin-bottom: 90px;
+}
+
+.curPWDSection{
+	margin-bottom: 10px;
+}
+
+.dividerSpace{
+	margin-top: 0% !important;
+}
+
+@media (max-width: 600px) {
+	.dividerSpace{
+		margin-top: 50% !important;
+	}
+}

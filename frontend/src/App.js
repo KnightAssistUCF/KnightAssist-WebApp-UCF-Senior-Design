@@ -24,12 +24,12 @@ import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
-import StudentSettingsPage from './pages/StudentSettingsPage';
 import ContactPage from './pages/ContactPage';
+import SettingsPage from './pages/SettingsPage';
 
 function App() 
 {
-	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : "");
+	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : undefined);
 
 	useEffect(() => {
 		if(sessionStorage.getItem("token") === null)
@@ -71,16 +71,16 @@ function App()
 				<Route path="/studentemailverified" element={<StudentEmailVerified/>}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
-			</Routes>
-			<Routes>
-				<Route path="/postverifyquestions" element={(role !== "") ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
-			</Routes>
-			<Routes>
 				<Route path="/studentannouncements" element={(role === "volunteer") ? <NewAnnPage/> : <Navigate from='/studentannouncements' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/studentsettings" element={(role === "volunteer") ? <StudentSettingsPage/> : <Navigate from='/studentsettings' to='/login' />}></Route>
+				<Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/postverifyquestions" element={(role) ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/settings" element={(role) ? <SettingsPage/> : <Navigate from='/settings' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
