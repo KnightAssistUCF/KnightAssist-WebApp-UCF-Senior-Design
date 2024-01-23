@@ -76,10 +76,12 @@ function AdminHome()
         const filteredStudents = allStudents.filter((student) => {
           const studentFirstName = student.firstName ? student.firstName.toLowerCase() : "";
           const studentLastName = student.lastName ? student.lastName.toLowerCase() : "";
+          const studentEmail = student.email ? student.email.toLowerCase() : "";
 
           return (
             studentFirstName.includes(lowerCaseSearchTerm) ||
-            studentLastName.includes(lowerCaseSearchTerm)
+            studentLastName.includes(lowerCaseSearchTerm) ||
+            studentEmail.includes(lowerCaseSearchTerm)
           );
         });
 
@@ -88,8 +90,12 @@ function AdminHome()
         console.log("heree");
         const filteredOrgs = allOrgs.filter((org) => {
           const orgName = org.name ? org.name.toLowerCase() : "";
+          const orgEmail = org.email ? org.email.toLowerCase() : "";
 
-          return orgName.includes(lowerCaseSearchTerm);
+          return (
+            orgName.includes(lowerCaseSearchTerm) ||
+            orgEmail.includes(lowerCaseSearchTerm)
+          );
         });
 
         setOrgs(filteredOrgs);
