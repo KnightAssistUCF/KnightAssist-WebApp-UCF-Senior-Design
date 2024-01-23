@@ -6,6 +6,9 @@ export default function ColorToggleButton({ onToggleChange }) {
     const [alignment, setAlignment] = React.useState('student');
 
     const handleChange = (event, newAlignment) => {
+        if (newAlignment === null) {
+          return;
+        }
         setAlignment(newAlignment);
         onToggleChange(newAlignment);
     };
