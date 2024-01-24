@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import './Login.css';
 import ForgotPasswordModal from "./ForgotPasswordModal";
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 function LoginComponents(props){
-
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -132,7 +137,18 @@ function LoginComponents(props){
     function Email(){
         return (
             <div className="input-group mb-3">
-                <input type="text" className={"emailBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>
+                <TextField
+                    required
+                    fullWidth
+                    id="email"
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    error={isInvalid}
+                    value={email}
+                    onChange={(d) => setEmail(d.target.value)}
+                />
+                {/*<input type="text" className={"emailBox form-control " + isInvalid} placeholder="Email" onChange={(d) => setEmail(d.target.value)} value={email}></input>*/}
             </div>
         )
     }
@@ -140,7 +156,18 @@ function LoginComponents(props){
     function Password(){
         return (
             <div className="input-group mb-3">
-                <input type="password" className={"passwordBox form-control " + isInvalid} placeholder="Password" onChange={(d) => setPassword(d.target.value)} value={password}></input>
+                <TextField
+                    required
+                    fullWidth
+                    id="password"
+                    label="Password"
+                    name="password"
+                    autoComplete="password"
+                    error={isInvalid}
+                    value={password}
+                    onChange={(d) => setPassword(d.target.value)}
+                />
+                {/*<input type="password" className={"passwordBox form-control " + isInvalid} placeholder="Password" onChange={(d) => setPassword(d.target.value)} value={password}></input>*/}
             </div>
         )
     }
@@ -148,14 +175,32 @@ function LoginComponents(props){
     function Login(){
         return (
             <div className="center">
-                <button type="button" className="loginButton btn btn-info" onClick={() => doLogin()}>Login</button>
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    sx={{
+                        mt: 3,
+                        mb: 2,
+                        bgcolor: '#3E283E',
+                        textColor: '#FFFFFF',
+                        ":hover": { bgcolor: '#593959' },
+                    }}
+                    onClick={() => doLogin()}
+                    >
+                    Login
+                </Button>
+                {/* <button type="button" className="loginButton btn btn-info" onClick={() => doLogin()}>Login</button> */}
             </div>
         )
     }
 
     function ForgotPassword(){
-        return (
-            <button className="forgotPWD" onClick={() => setOpenForgotPwd(true)}>forgot password</button>
+        return (   
+        <>
+            <Link variant="body2" sx={{ color: '#4E878C' }} onClick={() => setOpenForgotPwd(true)}> Forgot password? </Link>
+            {/* <button className="forgotPWD" onClick={() => setOpenForgotPwd(true)}>forgot password</button> */}
+        </>
         )
     }
 
@@ -196,9 +241,24 @@ function LoginComponents(props){
             <Login/>
             <div className="center">
                 {ForgotPassword()}
-                {Register()}
+                {/* {Register()} */}
             </div>
-            <Copyright/>
+            {/*<Modal
+                open={openForgotPwd}
+                setOpen={setOpenForgotPwd}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description">
+                close={handleClose}
+                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400,
+                    bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4,}}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Text in a modal
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+                    </Typography>
+                </Box>
+            </Modal>*/}
 			<ForgotPasswordModal open={openForgotPwd} setOpen={setOpenForgotPwd}/>
         </div>
     )

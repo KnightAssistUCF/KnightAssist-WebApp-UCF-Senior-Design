@@ -6,7 +6,7 @@ import { Box } from "@mui/material";
 
 export default function Footer() {
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100%', bgcolor:'#EAEAEB'}}>
+    <Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100%', bgcolor:'#EAEAEB', marginTop: 'auto'}}>
       <Container maxWidth="xl" sx={{p: 3}}>
         <Typography variant="body2" color="#3C3C3E" align="center">
           {"Copyright © "}

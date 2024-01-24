@@ -33,13 +33,15 @@ function ForgotPassswordModal(props)
 					input: {
 					  background: "white",
 					  borderRadius: "4px"
-					}
+					},
+					marginLeft: 3
 				  }}
-				fullWidth
 				required
 				multiline={false}
 				onChange={(e) => setEmail(e.target.value)}
 				value={email}
+				size="small"
+				placeholder='Email'
 			/>
 		)
 	}
@@ -80,11 +82,10 @@ function ForgotPassswordModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleClose()}/>
                         </button>
-                        <Logo theStyle="forgotPWDLogo"/>
-                        <div className='forgotPWDName'> Forgot Password</div>
-						<div className='forgotPWDInstructions'>{(!submitted) ? "Please enter your email to recieve your new password" : "Success! Check your email to collect your new password"}</div>
+                        <div className='forgotPWDName'>Forgot your password?</div>
+						<div className='forgotPWDInstructions'>{(!submitted) ? "No worries, just enter your email to receive a new password!" : "Success! Check your email to collect your new password"}</div>
 						{(!submitted) ? Email() : null}
-						<Button sx={{ mt: 3, width: 175, backgroundColor: "#463e6c", "&:hover": {backgroundColor: "#5f5395"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
+						<Button size="med" sx={{ marginRight: 3, mt: 2.75, width: 100, backgroundColor: "#463e6c", "&:hover": {backgroundColor: "#5f5395"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
 						{(error != undefined) ? <Alert className="forgetPWDAlert" severity="error">{error}</Alert> : null}
 	                </CardContent>   
                 </Card>
