@@ -60,7 +60,7 @@ function StudentHome()
 
    return(
     
-      <div id='homePage'>
+      <div className='spartan' id='homePage'>
         <StudentHeader/>
         <div className="studHomePage">
           <div class="StudentHomePage-title">Welcome, First Last</div>

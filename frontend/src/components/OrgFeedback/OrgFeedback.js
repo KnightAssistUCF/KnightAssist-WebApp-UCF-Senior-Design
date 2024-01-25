@@ -112,7 +112,7 @@ function OrgFeedback() {
 	}, [markRead]);
 
 	return (
-		<div>
+		<div className='spartan'>
 			<Header/>
 			<div className='moveEverything'>
 				<Title/>

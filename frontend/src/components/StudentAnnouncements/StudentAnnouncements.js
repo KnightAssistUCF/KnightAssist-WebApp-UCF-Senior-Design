@@ -203,7 +203,7 @@ function NewAnn() {
   }, []);
 
   return (
-    <div id="studentAnnouncements">
+    <div className='spartan' id="studentAnnouncements">
       <div className="studAnnouncementsPage">
       <div class="StudentAnnouncements-title">Updates</div>
         <div className="testing">

@@ -25,7 +25,7 @@ function StudentExplore()
 	const results = useRef([]);
 
     return(
-      <div id='homePage'>
+      <div className='spartan' id='homePage'>
 		<Header/>
 		<div className='moveEverything'>
 			<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>

@@ -167,7 +167,7 @@ function StudentHistory()
 	}, []);
 
     return(
-      <div id='homePage'>
+      <div className='spartan'>
 		<Header/>
 		<div className='moveEverything'>
 			<Title/>
