@@ -128,7 +128,7 @@ function StudentProfile(props)
       },[])
 
       return(
-         <div id='homePage'>
+         <div className='spartan'>
          <StudentHeader/>
          <div className='moveEverything'>
                <div className='topInfo'>

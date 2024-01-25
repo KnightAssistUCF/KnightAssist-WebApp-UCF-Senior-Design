@@ -61,7 +61,7 @@ function OrgHome() {
   }, []);
 
   return (
-    <div>
+    <div className='spartan'>
       <OrgTopBar />
       <Header />
       <div className='move'>

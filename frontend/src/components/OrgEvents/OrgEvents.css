@@ -41,6 +41,10 @@
     width: 99%;
 }
 
+.titleHeader{
+	font-size: 21px !important;
+}
+
 .upcomingEvents{
     width: 100%;
     height: 25%;
