@@ -99,18 +99,28 @@ function StudentBox(props) {
      },[])
 
 	return (
-		<div className='studentBoxe'>
-            <div className='studentBox'>
-                <Avatar
-                    src={pic}
-                    className="avatarPic"
-                    style={{ width: '170px', height: '170px' }}
-                />
-                <DateJoined/>
-                <Button variant='outlined' color="error" disableElevation startIcon={<EditIcon />} sx={{margin: '10px'}}>Edit Profile</Button>
+        <div className='studentProfilePageContent'>
+            <div className='studentBoxe'>
+                <div className='studentBox'>
+                    <Avatar
+                        src={pic}
+                        className="avatarPic"
+                        style={{ width: '200px', height: '200px' }}
+                    />
+                    <DateJoined/>
+                    <Button variant='outlined' color="error" size="large" disableElevation startIcon={<EditIcon />} sx={{margin: '10px'}}>Edit Profile</Button>
+                </div>
+                <Interests/>
             </div>
-            <Interests/>
-		</div>
+            <div className='studentProfileFields'>
+                <div className='studentFirst'>
+                    First Name
+                </div>
+                <div className='studentLast'>
+                    Last Name
+                </div>
+            </div>
+        </div>
 	);
 }
 

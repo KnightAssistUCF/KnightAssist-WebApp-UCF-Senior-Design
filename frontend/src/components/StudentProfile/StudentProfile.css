@@ -1,6 +1,7 @@
 .moveEverything{
     margin-left: 15%;
     margin-top: 2%;
+    margin-right: 7%;
 }
 
 .profilePic{
@@ -127,7 +128,6 @@
     border: 1px solid #a8a8a8;
     display: flex;
     flex-direction: column;
-
     padding: 30px;
 }
 
@@ -144,6 +144,20 @@
     align-items: flex-start; 
     justify-content: center;
     margin-bottom: 10px;
+    margin-top: -125px;
+}
 
+.studentProfilePageContent {
+    display: flex;
+    color: #000000;
+    justify-content: space-between;
+    margin-top: 130px;
+}
+
+.studentProfileFields {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100vh - 0%);
+    /* padding: 20px; */
 }
 
