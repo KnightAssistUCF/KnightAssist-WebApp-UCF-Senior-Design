@@ -108,16 +108,26 @@ function StudentBox(props) {
                         style={{ width: '200px', height: '200px' }}
                     />
                     <DateJoined/>
-                    <Button variant='outlined' color="error" size="large" disableElevation startIcon={<EditIcon />} sx={{margin: '10px'}}>Edit Profile</Button>
+                    <Button variant='outlined' color="error" size="large" disableElevation startIcon={<EditIcon />} sx={{marginTop: '15px'}}>Edit Profile</Button>
                 </div>
                 <Interests/>
             </div>
             <div className='studentProfileFields'>
                 <div className='studentFirst'>
-                    First Name
+                    <div className='studentFirstNameField'>First Name</div>
+                    <div className='studentFirstNameField'>{firstName}</div>
                 </div>
                 <div className='studentLast'>
-                    Last Name
+                    <div className='studentLastNameField'>Last Name</div>
+                    <div className='studentLastNameField'>{lastName}</div>
+                </div>
+                <div className='studentEmail'>
+                    <div className='studentEmailField'>Email</div>
+                    <div className='studentEmailField'>{email}</div>
+                </div>
+                <div className='studentVolGoal'>
+                    <div className='studentVolGoalField'>Volunteer Goal</div>
+                    <div className='studentVolGoalField'>{hourGoal}</div>
                 </div>
             </div>
         </div>

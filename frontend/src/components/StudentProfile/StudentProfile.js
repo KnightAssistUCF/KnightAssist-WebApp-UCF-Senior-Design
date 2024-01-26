@@ -133,36 +133,7 @@ function StudentProfile(props)
          <StudentHeader/>
          <div className='moveEverything'>
                <StudentBox />
-               <div className='topInfo'>
-                  <Container className='profileContainer'>
-                     <Box marginTop={"40px"}>
-                        <Grid>
-                           <Avatar
-                              src={pic}
-                              className="profilePic"
-                           />
-                           <Grid item xs={12} sm={12}>
-                              <Name/>
-                           </Grid>  
-                           <Grid item xs={12} sm={12}>
-                              <DateJoined/>
-                           </Grid>  
-                           <Grid item xs={12} sm={12} marginTop={"40px"}>
-                              <VolunteerHours/>
-                           </Grid> 
-                           <Grid item xs={12} sm={12} marginTop={"20px"}>
-                              <Email/>
-                           </Grid>   
-                           <Grid item xs={12} sm={12} marginTop={"20px"}>
-                              {EditProfileBtn()}
-                           </Grid>   
-                        </Grid>                           
-                     </Box>
-                  </Container>
-               </div>
-               <div className='interests'>
-                  <Interests/>
-               </div>
+
                <div className='cardSections'>
                   <FavoriteOrganizations/>
                   <RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>

@@ -155,9 +155,28 @@
 }
 
 .studentProfileFields {
-    display: flex;
     justify-content: space-between;
     width: calc(100vh - 0%);
-    /* padding: 20px; */
+}
+
+.studentFirst {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.studentLast {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.studentEmail {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+}
+.studentVolGoal {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
 }
 
