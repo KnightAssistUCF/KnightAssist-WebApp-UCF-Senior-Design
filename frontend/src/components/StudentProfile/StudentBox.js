@@ -108,7 +108,7 @@ function StudentBox(props) {
                         style={{ width: '200px', height: '200px' }}
                     />
                     <DateJoined/>
-                    <Button variant='outlined' color="error" size="large" disableElevation startIcon={<EditIcon />} sx={{marginTop: '15px'}}>Edit Profile</Button>
+                    <Button variant='outlined' color="error" size="medium" disableElevation startIcon={<EditIcon />} sx={{marginTop: '15px', width: '100%'}}>Edit Profile</Button>
                 </div>
                 <Interests/>
             </div>
