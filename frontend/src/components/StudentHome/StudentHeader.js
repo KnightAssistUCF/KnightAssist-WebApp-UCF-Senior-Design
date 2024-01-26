@@ -89,7 +89,7 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
+                    <LightTooltip title={!isSidebarActive ? "Profile" : ""} placement="right" className="custom-tooltip">
                         <a href="#/studentprofile">
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
