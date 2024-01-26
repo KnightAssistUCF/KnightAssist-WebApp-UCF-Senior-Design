@@ -131,8 +131,8 @@ function StudentProfile(props)
       return(
          <div className='spartan'>
          <StudentHeader/>
-         <StudentBox />
          <div className='moveEverything'>
+               <StudentBox />
                <div className='topInfo'>
                   <Container className='profileContainer'>
                      <Box marginTop={"40px"}>
