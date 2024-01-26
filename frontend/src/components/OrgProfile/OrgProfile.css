@@ -253,7 +253,8 @@
 }
 
 .tag{
-    background-color: #bc70c8 !important;
+    background-color: rgb(76, 62, 135) !important;
+    color: rgb(240, 240, 240) !important;
     min-width: 10%;
 	max-width: 70% !important;
     width: auto !important;

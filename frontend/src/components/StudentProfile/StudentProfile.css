@@ -50,28 +50,30 @@
 }
 
 .interestsTitle{
-    font-size: 25px;
-    color: black;
+    font-size: 20px;
+    color: rgb(152, 152, 152);
     font-family: "system-ui";
     word-wrap: break-word;
+    text-align: left;
 }
 
 .interestsBorder{
-    border: 2px solid black;
-    border-radius: 12px;
-    float: left;
+    padding: 10px;
 }
 
-.interests{
+/* .interests{
     margin-top: 125px;
     margin-left: 25%;
     margin-bottom: 30% !important;
-}
+} */
 
 .tagBox{
-    margin-left: 3%;
-    min-width: 500px !important;
-
+    /* min-width: 500px !important; */
+    display: flex;
+    flex-wrap: wrap;
+    /* justify-content: center; */
+    max-width: calc(100vh - 33%);
+    text-align: left;
 }
 
 .tag{
@@ -116,19 +118,25 @@
 	left: 30%;
 }
 
-.studentBox {
-    background-color: rgb(238, 238, 238);
+.studentBoxe {
+    background-color: rgb(249, 249, 249);
     width: calc(100vh - 33%);
     color: black;
     height: calc(100vh - 35%);
     border-radius: 14px;
     border: 1px solid #a8a8a8;
-    justify-content: center;
+    display: flex;
+    flex-direction: column;
+
+    padding: 30px;
+}
+
+.studentBox {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 30px;
+
 }
 
 .avatarPic {

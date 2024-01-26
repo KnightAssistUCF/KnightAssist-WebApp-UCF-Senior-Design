@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../StudentHome/StudentHeader';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
+import {Box, Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
 import { buildPath } from '../../path';
 import { Facebook, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
 import { RiTwitterXFill } from 'react-icons/ri';
 import './StudentProfile.css'
+import EditIcon from '@mui/icons-material/Edit';
 
 function StudentBox(props) {
     const [firstName, setFirstName] = useState("");
@@ -56,6 +57,39 @@ function StudentBox(props) {
           <div className='volunteerSince'>Volunteering since {formattedDate}</div>
         );
       }
+
+      function Tag(props){
+        return (
+           <Grid item>
+              <Card variant='outlined' className='tag' sx={{padding: '3px', backgroundColor: '#5f5395'}}>
+                    {props.tag}
+              </Card>
+           </Grid>
+        )
+  }
+
+     function Tags(){
+        return (
+              <div>
+                    <Grid>
+                       {tags.map(t => <Tag tag={t}/>)}
+                    </Grid>
+              </div>
+        )
+  }
+
+     function Interests(){
+        return (
+           <div className='interestsBorder'>
+              <div className='interestsTitle'>
+                 Interests
+              </div>
+              <Box className="tagBox">
+                 <Tags/>
+              </Box>
+           </div>
+        )
+     }
       
 
 	
@@ -65,13 +99,17 @@ function StudentBox(props) {
      },[])
 
 	return (
-		<div className='studentBox'>
-            <Avatar
-                src={pic}
-                className="avatarPic"
-                style={{ width: '150px', height: '150px' }}
-            />
-            <DateJoined/>
+		<div className='studentBoxe'>
+            <div className='studentBox'>
+                <Avatar
+                    src={pic}
+                    className="avatarPic"
+                    style={{ width: '170px', height: '170px' }}
+                />
+                <DateJoined/>
+                <Button variant='outlined' color="error" disableElevation startIcon={<EditIcon />} sx={{margin: '10px'}}>Edit Profile</Button>
+            </div>
+            <Interests/>
 		</div>
 	);
 }
