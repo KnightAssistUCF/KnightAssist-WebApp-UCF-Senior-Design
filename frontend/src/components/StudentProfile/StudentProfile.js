@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import EventModal from '../StudentHistory/EventModal';
 import './StudentProfile.css'
 import StudentBox from './StudentBox'
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 const pic = require("./DefaultPic.png");
 
@@ -131,6 +132,7 @@ function StudentProfile(props)
       return(
          <div className='spartan'>
          <StudentHeader/>
+         <StudentTopBar/>
          <div className='moveEverything'>
                <StudentBox />
 
