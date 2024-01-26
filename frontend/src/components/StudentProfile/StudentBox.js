@@ -66,9 +66,9 @@ function StudentBox(props) {
               </Card>
            </Grid>
         )
-  }
+   }
 
-     function Tags(){
+    function Tags(){
         return (
               <div>
                     <Grid>
@@ -76,9 +76,9 @@ function StudentBox(props) {
                     </Grid>
               </div>
         )
-  }
+ 	}
 
-     function Interests(){
+    function Interests(){
         return (
            <div className='interestsBorder'>
               <div className='interestsTitle'>
@@ -86,17 +86,15 @@ function StudentBox(props) {
               </div>
               <Box className="tagBox">
                  <Tags/>
-              </Box>
+              </Box>	
            </div>
         )
-     }
-      
-
-	
-     useEffect(()=>{
-        getFields();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-     },[])
+    }
+      	
+	useEffect(()=>{
+		getFields();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[])
 
 	return (
         <div className='studentProfilePageContent'>
@@ -111,24 +109,6 @@ function StudentBox(props) {
                     <Button variant='outlined' color="error" size="medium" disableElevation startIcon={<EditIcon />} sx={{marginTop: '15px', width: '100%'}}>Edit Profile</Button>
                 </div>
                 <Interests/>
-            </div>
-            <div className='studentProfileFields'>
-                <div className='studentFirst'>
-                    <div className='studentFirstNameField'>First Name</div>
-                    <div className='studentFirstNameField'>{firstName}</div>
-                </div>
-                <div className='studentLast'>
-                    <div className='studentLastNameField'>Last Name</div>
-                    <div className='studentLastNameField'>{lastName}</div>
-                </div>
-                <div className='studentEmail'>
-                    <div className='studentEmailField'>Email</div>
-                    <div className='studentEmailField'>{email}</div>
-                </div>
-                <div className='studentVolGoal'>
-                    <div className='studentVolGoalField'>Volunteer Goal</div>
-                    <div className='studentVolGoalField'>{hourGoal}</div>
-                </div>
             </div>
         </div>
 	);

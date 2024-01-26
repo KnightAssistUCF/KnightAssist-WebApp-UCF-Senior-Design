@@ -92,7 +92,8 @@
 }
 
 .cardSections{
-    margin-top: 50px;
+    margin-top: 20px;
+	float: left;
 }
 
 .editProfileBtn{
@@ -131,12 +132,16 @@
     padding: 30px;
 }
 
+.boxContainer{
+	float: left;
+	margin-right: 50px;
+}
+
 .studentBox {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-
 }
 
 .avatarPic {
@@ -155,28 +160,17 @@
 }
 
 .studentProfileFields {
-    justify-content: space-between;
-    width: calc(100vh - 0%);
+	white-space: 'no wrap' !important;
+	margin-left: 10px !important;
+	max-width: 1000px !important;
+	padding-top: 160px;
+	color: black !important;
 }
 
-.studentFirst {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
-}
-.studentLast {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
-}
-.studentEmail {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
-}
-.studentVolGoal {
-    display: flex;
-    justify-content: space-between;
-    padding-bottom: 20px;
+.studentField{
+	padding-bottom: 25px;
 }
 
+.fieldName{
+	float: left;
+}

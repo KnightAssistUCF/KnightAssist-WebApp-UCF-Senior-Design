@@ -130,19 +130,38 @@ function StudentProfile(props)
       },[])
 
       return(
-         <div className='spartan'>
-         <StudentHeader/>
-         <StudentTopBar/>
-         <div className='moveEverything'>
-               <StudentBox />
-
-               <div className='cardSections'>
-                  <FavoriteOrganizations/>
-                  <RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>
-               </div>
-			   <EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
-            </div>
-         </div>
+        <div className='spartan'>
+			<StudentHeader/>
+			<StudentTopBar/>
+			<div className='moveEverything'>
+				<div className='boxContainer'>
+					<StudentBox />
+				</div>
+				<div className='studentProfileFields'>
+					<div className='studentField'>
+						<div className='fieldName'>First Name</div>
+						<div className='fieldResult'>{firstName}</div>
+					</div>
+					<div className='studentField'>
+						<div className='fieldName'>Last Name</div>
+						<div className='fieldResult'>{lastName}</div>
+					</div>
+					<div className='studentField'>
+						<div className='fieldName'>Email</div>
+						<div className='fieldResult'>{email + "dsfdsfdsfdsf"}</div>
+					</div>
+					<div className='studentField'>
+						<div className='fieldName'>Volunteer Goal</div>
+						<div className='fieldResult'>{hourGoal}</div>
+					</div>
+				</div>
+				<div className='cardSections'>
+					<FavoriteOrganizations/>
+					<RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>
+				</div>
+				<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
+			</div>
+     </div>
       );
 };
 
