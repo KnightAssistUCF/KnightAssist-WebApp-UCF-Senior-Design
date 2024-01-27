@@ -280,13 +280,27 @@
     fill: red;  
 } */
 
-  .css-nl6has .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
-    background-image: url('./plus-icon.svg');  /* Replace 'path/to/plus-icon.svg' with the actual path to your plus icon SVG file */
-    background-size: contain;
-    background-repeat: no-repeat;
-    fill: transparent;  /* To make sure the original fill color is not applied */
-  }
+.css-nl6has .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+background-image: url('./plus-icon.svg');  /* Replace 'path/to/plus-icon.svg' with the actual path to your plus icon SVG file */
+background-size: contain;
+background-repeat: no-repeat;
+fill: transparent;  /* To make sure the original fill color is not applied */
+}
 
-  .css-llvhl4-MuiTypography-root {
-    font-family: "Roboto";
-  }
+.css-llvhl4-MuiTypography-root {
+font-family: "Roboto";
+}
+
+.cardSections{
+	float: left;
+	width: 100% !important;
+}
+
+.favHeader{
+	width: 100%;
+	height: 25%;
+	text-align: left;
+	font-size: 30px;
+	margin-bottom: 30px;
+	color: black;
+}

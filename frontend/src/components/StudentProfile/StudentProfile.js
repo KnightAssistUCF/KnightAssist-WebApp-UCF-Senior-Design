@@ -9,6 +9,8 @@ import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
 import SearchResults from '../OrgEvents/SearchResults';
+import FavoriteOrganizations from './FavoriteOrganizations';
+import RecentEvents from './RecentEvents';
 
 function StudentProfile() {
 	const [firstName, setFirstName] = useState("");
@@ -110,6 +112,10 @@ function StudentProfile() {
 						<OrgBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='navTabs'>
 							<NavTabs user={user} editMode={editMode} editInfo={editInfo}/>
+						</div>
+						<div className='cardSections'>
+							<FavoriteOrganizations/>
+							<RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>					
 						</div>
 					</div>
 					: ""
