@@ -6,6 +6,7 @@ import { buildPath } from '../../../path.js';
 import AdminHeader from '../AdminHeader';
 import './StudentDetails.css';
 import AdminTopBar from '../AdminTopBar';
+import EditIcon from '@mui/icons-material/Edit';
 
 function StudentDetails({ studentID })
 {
@@ -13,6 +14,8 @@ function StudentDetails({ studentID })
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [tags, setTags] = useState('');
+    const [totalHours, setTotalHours] = useState('');
+    const [goal, setGoal] = useState('');
 
     const fetchStudentInfo = async () => {
         console.log(studentID);
@@ -33,7 +36,8 @@ function StudentDetails({ studentID })
             setLastName(res.lastName);
             setEmail(res.email);
             setTags(res.categoryTags);
-            console.log(tags);
+            setTotalHours(res.semesterVolunteerHourGoal);
+            setGoal(res.totalVolunteerHours);
 
             // get profile pic
 
@@ -41,6 +45,8 @@ function StudentDetails({ studentID })
             console.log("failed to fetch student info: "+ e);
         }
     }
+
+    
 
     // function Tag(props){
     //   return (
@@ -97,6 +103,14 @@ function StudentDetails({ studentID })
             <div className='studentDetailsInterests'>
               <div className='studentDetailsInterestsText'>Interests</div>
               <div className='studentDetailsInterestsText'>{tags}</div>
+            </div>
+            <div className='studentDetailsTotal'>
+              <div className='studentDetailsTotalText'>Total Volunteer Hours</div>
+              <div className='studentDetailsTotalText'>{totalHours}</div>
+            </div>
+            <div className='studentDetailsGoal'>
+              <div className='studentDetailsGoalText'>Hour Goal</div>
+              <div className='studentDetailsGoalText'>{goal}</div>
             </div>
           </div>
         </div>

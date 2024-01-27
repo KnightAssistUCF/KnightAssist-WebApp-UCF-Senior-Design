@@ -27,3 +27,11 @@
     display: flex;
     justify-content: space-between;
 }
+.studentDetailsTotal {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsGoal {
+    display: flex;
+    justify-content: space-between;
+}
