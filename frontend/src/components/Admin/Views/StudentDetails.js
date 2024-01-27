@@ -17,6 +17,7 @@ function StudentDetails({ studentID }) {
   const [tags, setTags] = useState([]);
   const [totalHours, setTotalHours] = useState('');
   const [goal, setGoal] = useState('');
+  const [id, setId] = useState('');
   const [editMode, setEditMode] = useState(false);
 
   const fetchStudentInfo = async () => {
@@ -39,8 +40,9 @@ function StudentDetails({ studentID }) {
       setLastName(res.lastName);
       setEmail(res.email);
       setTags(res.categoryTags);
-      setTotalHours(res.semesterVolunteerHourGoal);
-      setGoal(res.totalVolunteerHours);
+      setTotalHours(res.totalVolunteerHours);
+      setGoal(res.semesterVolunteerHourGoal);
+      setId(res._id);
 
       // get profile pic
     } catch (e) {
@@ -48,11 +50,65 @@ function StudentDetails({ studentID }) {
     }
   };
 
+  async function submitVolunteer(){
+		try{
+			// Store picture
+			// if(picFile !== null && typeof picFile.name === "string"){
+			// 	let formData = new FormData();
+			// 	formData.append('profilePic', picFile); 
+			// 	formData.append('entityType', 'volunteer');
+			// 	formData.append('id', sessionStorage.getItem("ID"));
+			// 	formData.append('profilePicOrBackGround', '0');
+
+			// 	// Store the picture selected to be associated with the event
+			// 	await fetch(buildPath(`api/storeImage`), {
+			// 		method: 'POST',
+			// 		body: formData
+			// 	})
+			// 	.then(response => response.json())
+			// 	.then(data => console.log(data))
+			// 	.catch(error => console.error('Error:', error));
+			// }
+
+			const json = 
+			{
+        _id: id,
+				//email: email, // use old email to find correct student
+				semesterVolunteerHourGoal: goal,
+        totalVolunteerHours: totalHours,
+        firstName: firstName,
+        lastName: lastName,
+
+				// categoryTags: selectedTags
+			}
+      // saving semesterVolHourGoal + totalVolHours are switched
+
+			const url = buildPath(`api/editUserProfile`);
+      //buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+                headers: {"Content-Type": "application/json",         
+				        "Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+            });
+
+            let res = await response.text();
+            console.log(res);
+
+		}catch(e){
+			console.log(e);
+		}
+	}
+
   useEffect(() => {
     fetchStudentInfo();
   }, []);
 
   const handleEditModeToggle = () => {
+    if (editMode) {
+      submitVolunteer();
+    }
     setEditMode((prevEditMode) => !prevEditMode);
   };
 
