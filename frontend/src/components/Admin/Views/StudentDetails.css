@@ -8,8 +8,14 @@
     text-align: center;
 }
 .studentDetailsFields {
-    padding-right: 10vw;
+    margin-top: 30px;
+    padding-top: 3vh;
+    padding-right: 8vw;
     padding-left: 5vw;
+    background-color: white;
+    border-radius: 5px 5px 0 0;
+    height: 100vh;
+    font-size: 25px;
 }
 .studentDetailsFirst {
     display: flex;

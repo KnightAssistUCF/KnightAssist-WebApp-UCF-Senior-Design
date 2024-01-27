@@ -139,7 +139,7 @@ function StudentDetails({ studentID }) {
       </div>
       <div className='studentDetailsContent'>
         <Breadcrumbs aria-label='breadcrumb'>
-          <Link underline='hover' color='inherit' href='/'>
+          <Link underline='hover' color='inherit' href='/#/adminhome'>
             Home
           </Link>
           <Typography color='text.primary'>{firstName + ' ' + lastName}</Typography>
