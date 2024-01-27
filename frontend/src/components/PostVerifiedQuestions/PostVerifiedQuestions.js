@@ -123,7 +123,7 @@ function PostVerifiedQuestions()
 			if(picFile !== null && typeof picFile.name === "string"){
 				let formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'volunteer');
+				formData.append('entityType', 'student');
 				formData.append('id', sessionStorage.getItem("ID"));
 				formData.append('profilePicOrBackGround', '0');
 
