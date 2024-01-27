@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Alert, Snackbar } from '@mui/material';
 import { buildPath } from '../../../path.js';
 import AdminHeader from '../AdminHeader';
 import './StudentDetails.css';
@@ -20,6 +20,7 @@ function StudentDetails({ studentID }) {
   const [id, setId] = useState('');
   const [editMode, setEditMode] = useState(false);
   const [message, setMessage] = useState('')
+  const [openAlert, setOpenAlert] = useState(true);
 
   const fetchStudentInfo = async () => {
     console.log(studentID);
@@ -44,7 +45,6 @@ function StudentDetails({ studentID }) {
       setTotalHours(res.totalVolunteerHours);
       setGoal(res.semesterVolunteerHourGoal);
       setId(res._id);
-
       // get profile pic
     } catch (e) {
       console.log('failed to fetch student info: ' + e);
@@ -93,7 +93,12 @@ function StudentDetails({ studentID }) {
                 headers: {"Content-Type": "application/json",         
 				        "Authorization": `Bearer ${sessionStorage.getItem("token")}`}
             });
+            if (response.status == 404) {
+              setMessage("Error occured, could not save information");
 
+            } else {
+              setMessage("Information saved successfully");
+            }
             let res = await response.text();
             console.log(res);
 
@@ -101,6 +106,11 @@ function StudentDetails({ studentID }) {
 			console.log(e);
 		}
 	}
+
+  const handleCloseAlert = () => {
+    console.log("closing alert");
+    setOpenAlert(false);
+  };
 
   useEffect(() => {
     fetchStudentInfo();
@@ -116,6 +126,7 @@ function StudentDetails({ studentID }) {
     if (editMode) {
       submitVolunteer();
     }
+    setMessage('');
     setEditMode((prevEditMode) => !prevEditMode);
   };
 
@@ -219,6 +230,19 @@ function StudentDetails({ studentID }) {
             </Button>
           )}
           <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
+          {message.length !== 0 && (
+            <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+              {message.includes("Error") ? (
+                <Alert severity="error" onClose={handleCloseAlert}>
+                  {message}
+                </Alert>
+              ) : (
+                <Alert severity="success" onClose={handleCloseAlert}>
+                  {message}
+                </Alert>
+              )}
+            </Snackbar>
+          )}
         </div>
       </div>
     </div>
