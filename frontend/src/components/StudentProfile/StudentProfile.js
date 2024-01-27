@@ -45,8 +45,6 @@ function StudentProfile() {
 
 		let res = JSON.parse(await response.text());
 
-		console.log(sessionStorage.getItem("ID"))
-
 		setUser(res);
 		
 		setFirstName(res.firstName);
@@ -106,7 +104,7 @@ function StudentProfile() {
 		<div className='spartan'>
 			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
 			<div className='orgProfilePage spartan'>
-				{(user !== null)
+				{(user)
 					?	
 					<div>
 						<BackgroundBanner/>

@@ -62,6 +62,8 @@ function Header()
     };
 
 	function loadStudentProfile(){
+		sessionStorage.removeItem("viewingPageID");
+
 		if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentprofile")
 			window.location.reload();
 		else		
@@ -90,7 +92,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Profile" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/studentprofile">
+                        <a onClick={() => loadStudentProfile()} className='addHover'>
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
                         </a>
@@ -98,7 +100,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Explore" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/explore">
+                        <a href='#/explore'>
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Explore</span>
                         </a>

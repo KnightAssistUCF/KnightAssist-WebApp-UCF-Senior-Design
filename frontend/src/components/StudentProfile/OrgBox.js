@@ -12,12 +12,10 @@ import { RiTwitterXFill } from 'react-icons/ri';
 
 function OrgBox(props) {
 
-	const [picName, setPicName] = useState(null);
+	const [picName, setPicName] = useState(undefined);
 	const [role, setRole] = useState(null);
-	const [favorited, setFavorited] = useState(false);
 	const [newSelectedTags, setNewSelectedTags] = useState([]);
 
-	const [openSocialsModal, setOpenSocialsModal] = useState(false);
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
 
 	const [tempSelectedTags, setTempSelectedTags] = useState([]);
@@ -190,7 +188,7 @@ function OrgBox(props) {
 		return (
 			<div>
 				<Avatar
-					src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					src={(picName) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
 					className={(props.editMode) ? "hoverImage" : ""}
 					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
@@ -310,6 +308,12 @@ function OrgBox(props) {
 	}, []);
 
 	useEffect(() => {
+		if(props.user){
+			getProfilePic();
+		}
+	}, [props.user]);
+
+	useEffect(() => {
 		async function colorsAndTags(){
 			setColors(await getColors());
 			setMakeTags(true);
@@ -337,7 +341,7 @@ function OrgBox(props) {
 				{(props.user)
 					?
 						<div>
-							{ProfilePic()}
+							<ProfilePic/>
 							{OrgName()}
 							
 							{(role === "volunteer" && props.user._id === sessionStorage.getItem("ID")) 
