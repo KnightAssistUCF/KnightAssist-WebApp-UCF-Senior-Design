@@ -41,3 +41,13 @@
     display: flex;
     justify-content: space-between;
 }
+.studentDetailsInterestsField {
+    display: flex;
+    align-items: top;
+    max-width: 40%;
+}
+
+/* .studentDetailsInterestsText {
+    flex-grow: 1;
+    margin-right: 8px;
+} */

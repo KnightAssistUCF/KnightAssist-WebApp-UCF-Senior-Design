@@ -4,11 +4,12 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField, Button, Alert, Snackbar } from '@mui/material';
-import { buildPath } from '../../../path.js';
-import AdminHeader from '../AdminHeader';
+import { TextField, Button, Alert, Snackbar, Dialog } from '@mui/material';
+import { buildPath } from '../../../../path.js';
+import AdminHeader from '../../AdminHeader.js';
 import './StudentDetails.css';
-import AdminTopBar from '../AdminTopBar';
+import AdminTopBar from '../../AdminTopBar.js';
+import StudentDetailsTable from './StudentDetailsTable.js';
 
 function StudentDetails({ studentID }) {
   const [firstName, setFirstName] = useState('');
@@ -21,6 +22,8 @@ function StudentDetails({ studentID }) {
   const [editMode, setEditMode] = useState(false);
   const [message, setMessage] = useState('')
   const [openAlert, setOpenAlert] = useState(true);
+  const [upcomingEvents, setUpcomingEvents] = useState([]);
+  const [openModal, setOpenModal] = useState(false);
 
   const fetchStudentInfo = async () => {
     console.log(studentID);
@@ -45,6 +48,7 @@ function StudentDetails({ studentID }) {
       setTotalHours(res.totalVolunteerHours);
       setGoal(res.semesterVolunteerHourGoal);
       setId(res._id);
+      setUpcomingEvents(res.eventsRSVP);
       // get profile pic
     } catch (e) {
       console.log('failed to fetch student info: ' + e);
@@ -108,8 +112,29 @@ function StudentDetails({ studentID }) {
 		}
 	}
 
+  async function handleEditTags() {
+    setOpenModal(true);
+    let url = buildPath(`api/getAllAvailableTags`);
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let res = JSON.parse(await response.text());
+    console.log(res);
+  }
+
   const handleCloseAlert = () => {
     setOpenAlert(false);
+  };
+
+  // const handleClickOpenModal = () => {
+  //   setOpenModal(true);
+  // };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   useEffect(() => {
@@ -145,10 +170,11 @@ function StudentDetails({ studentID }) {
           <Typography color='text.primary'>{firstName + ' ' + lastName}</Typography>
         </Breadcrumbs>
         <div className='studentDetailsFields'>
-          <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>First Name</div>
             {editMode ? (
               <TextField
+              size='small'
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               variant='outlined'
@@ -157,10 +183,11 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsFirstText'>{firstName}</div>
             )}
           </div>
-          <div className='studentDetailsLast' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsLast' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsLastText'>Last Name</div>
             {editMode ? (
               <TextField
+              size='small'
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               variant='outlined'
@@ -169,10 +196,11 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsLastText'>{lastName}</div>
             )}
           </div>
-          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsEmailText'>Email</div>
             {editMode ? (
               <TextField
+              size='small'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               variant='outlined'
@@ -181,23 +209,28 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsEmailText'>{email}</div>
             )}
           </div>
-          <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsInterestsText'>Interests</div>
-            <div className='studentDetailsInterestsText'>
-              {tags.map((tag, index) => (
-                <Chip
-                  key={index}
-                  label={tag}
-                  sx={{ margin: '4px', fontSize: '16px', padding: '10px', color: 'white', backgroundColor: '#5f5395' }}
-                />
-              ))}
-              {editMode && <EditIcon sx={{ marginLeft: '8px', cursor: 'pointer' }} />}
-            </div>
+            {tags.length > 0 && (
+              <div className='studentDetailsInterestsField'>
+                <div className='studentDetailsInterestsTags'>
+                  {tags.map((tag, index) => (
+                    <Chip
+                      key={index}
+                      label={tag}
+                      sx={{ margin: '4px', fontSize: '16px', padding: '10px', color: 'white', backgroundColor: '#5f5395' }}
+                    />
+                  ))}
+                </div>
+                {editMode && <EditIcon sx={{ marginLeft: '8px', cursor: 'pointer' }} onClick={handleEditTags} />}
+              </div>
+            )}
           </div>
-          <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsTotalText'>Total Volunteer Hours</div>
             {editMode ? (
               <TextField
+              size='small'
               value={totalHours}
               onChange={(e) => setTotalHours(e.target.value)}
               variant='outlined'
@@ -206,10 +239,11 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsTotalText'>{totalHours}</div>
             )}
           </div>
-          <div className='studentDetailsGoal' style={{ marginBottom: editMode ? '4px' : '15px' }}>
+          <div className='studentDetailsGoal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsGoalText'>Hour Goal</div>
             {editMode ? (
               <TextField
+              size='small'
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
               variant='outlined'
@@ -245,6 +279,15 @@ function StudentDetails({ studentID }) {
             </Snackbar>
           )}
         </div>
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          fsd;f
+        </Dialog>
+        <StudentDetailsTable upcomingEvents={upcomingEvents} />
       </div>
     </div>
   );

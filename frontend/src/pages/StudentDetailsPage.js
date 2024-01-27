@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import StudentDetails from '../components/Admin/Views/StudentDetails';
+import StudentDetails from '../components/Admin/Views/StudentDetails/StudentDetails';
 import { useParams } from 'react-router-dom';
 
 const StudentDetailsPage = () => {
