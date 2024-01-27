@@ -1,8 +1,29 @@
 .studentDetailsContent {
     margin-left: 15%;
+    margin-right: 3%;
     text-align: left;
     margin-top: 1%;
 }
 .studentDetailsOutline {
     text-align: center;
+}
+.studentDetailsFields {
+    padding-right: 10vw;
+    padding-left: 5vw;
+}
+.studentDetailsFirst {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsLast {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsEmail {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsInterests {
+    display: flex;
+    justify-content: space-between;
 }
