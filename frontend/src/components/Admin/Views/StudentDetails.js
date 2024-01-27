@@ -70,7 +70,7 @@ function StudentDetails({ studentID }) {
           <Typography color='text.primary'>{firstName + ' ' + lastName}</Typography>
         </Breadcrumbs>
         <div className='studentDetailsFields'>
-          <div className='studentDetailsFirst' style={{ marginTop: editMode ? '16px' : '0' }}>
+          <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsFirstText'>First Name</div>
             {editMode ? (
               <TextField
@@ -82,7 +82,7 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsFirstText'>{firstName}</div>
             )}
           </div>
-          <div className='studentDetailsLast' style={{ marginTop: editMode ? '4px' : '0' }}>
+          <div className='studentDetailsLast' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsLastText'>Last Name</div>
             {editMode ? (
               <TextField
@@ -94,7 +94,7 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsLastText'>{lastName}</div>
             )}
           </div>
-          <div className='studentDetailsEmail' style={{ marginTop: editMode ? '4px' : '0' }}>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsEmailText'>Email</div>
             {editMode ? (
               <TextField
@@ -106,7 +106,7 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsEmailText'>{email}</div>
             )}
           </div>
-          <div className='studentDetailsInterests' style={{ marginTop: editMode ? '4px' : '0' }}>
+          <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsInterestsText'>Interests</div>
             <div className='studentDetailsInterestsText'>
               {tags.map((tag, index) => (
@@ -119,7 +119,7 @@ function StudentDetails({ studentID }) {
               {editMode && <EditIcon sx={{ marginLeft: '8px', cursor: 'pointer' }} />}
             </div>
           </div>
-          <div className='studentDetailsTotal' style={{ marginTop: editMode ? '4px' : '0' }}>
+          <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsTotalText'>Total Volunteer Hours</div>
             {editMode ? (
               <TextField
@@ -131,7 +131,7 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsTotalText'>{totalHours}</div>
             )}
           </div>
-          <div className='studentDetailsGoal' style={{ marginTop: editMode ? '4px' : '0' }}>
+          <div className='studentDetailsGoal' style={{ marginBottom: editMode ? '4px' : '15px' }}>
             <div className='studentDetailsGoalText'>Hour Goal</div>
             {editMode ? (
               <TextField
@@ -143,8 +143,8 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsGoalText'>{goal}</div>
             )}
           </div>
+          <Button variant='contained' disableElevation onClick={handleEditModeToggle}>{editMode ? 'Save' : 'Edit'}</Button>
         </div>
-        <Button variant='contained' disableElevation onClick={handleEditModeToggle}>{editMode ? 'Save' : 'Edit'}</Button>
       </div>
     </div>
   );
