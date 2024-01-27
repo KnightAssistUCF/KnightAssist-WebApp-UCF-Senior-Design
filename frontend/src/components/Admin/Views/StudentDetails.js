@@ -19,6 +19,7 @@ function StudentDetails({ studentID }) {
   const [goal, setGoal] = useState('');
   const [id, setId] = useState('');
   const [editMode, setEditMode] = useState(false);
+  const [message, setMessage] = useState('')
 
   const fetchStudentInfo = async () => {
     console.log(studentID);
@@ -73,7 +74,7 @@ function StudentDetails({ studentID }) {
 			const json = 
 			{
         _id: id,
-				//email: email, // use old email to find correct student
+				email: email, // use old email to find correct student
 				semesterVolunteerHourGoal: goal,
         totalVolunteerHours: totalHours,
         firstName: firstName,
@@ -104,6 +105,12 @@ function StudentDetails({ studentID }) {
   useEffect(() => {
     fetchStudentInfo();
   }, []);
+
+  const handleCancel = () => {
+    // Reset form values to their initial state
+    fetchStudentInfo();
+    setEditMode(false);
+  };
 
   const handleEditModeToggle = () => {
     if (editMode) {
@@ -199,7 +206,19 @@ function StudentDetails({ studentID }) {
               <div className='studentDetailsGoalText'>{goal}</div>
             )}
           </div>
-          <Button variant='contained' disableElevation onClick={handleEditModeToggle}>{editMode ? 'Save' : 'Edit'}</Button>
+          {editMode && (
+            <Button variant='contained' disableElevation   sx={{
+              backgroundColor: editMode ? '#808080' : '',
+              color: editMode ? 'white' : '',
+              '&:hover': {
+                backgroundColor: editMode ? '#666666' : '',
+              },
+              marginRight: '10px',
+            }} onClick={handleCancel}>
+              Cancel
+            </Button>
+          )}
+          <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
         </div>
       </div>
     </div>
