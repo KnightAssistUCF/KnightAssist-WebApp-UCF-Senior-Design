@@ -109,6 +109,7 @@ function StudentProfile() {
 						<BackgroundBanner/>
 						<OrgBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='navTabs'>
+							<NavTabs user={user} editMode={editMode} editInfo={editInfo}/>
 						</div>
 					</div>
 					: ""

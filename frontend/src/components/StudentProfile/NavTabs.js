@@ -3,10 +3,7 @@ import { styled } from '@mui/material/styles';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
-import Bio from './Bio';
 import Contact from './Contact';
-import Calendar from './Scheduler';
-import Ratings from './Ratings';
 
 const AntTabs = styled(Tabs)({
 //   borderBottom: '1px solid #e8e8e8',
@@ -53,22 +50,7 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 const BioTabContent = (props) => (
   <div>
     {/* Content for Bio tab */}
-    <Bio org={props.org} editMode={props.editMode} editInfo={props.editInfo}/>
-    <Contact org={props.org} editMode={props.editMode} editInfo={props.editInfo}/>
-  </div>
-);
-
-const UpcomingEventsTabContent = (props) => (
-  <div>
-    {/* Content for Upcoming Events tab */}
-    <Calendar org={props.org}/>
-  </div>
-);
-
-const RatingsTabContent = (props) => (
-  <div>
-    {/* Content for Ratings tab */}
-    <Ratings org={props.org}/>
+    <Contact user={props.user} editMode={props.editMode} editInfo={props.editInfo}/>
   </div>
 );
 
@@ -82,11 +64,7 @@ export default function CustomizedTabs(props) {
   const getTabContent = (tabValue) => {
     switch (tabValue) {
       case 0:
-        return <BioTabContent org={props.org} editMode={props.editMode} editInfo={props.editInfo}/>;
-      case 1:
-        return <UpcomingEventsTabContent org={props.org}/>;
-      case 2:
-        return <RatingsTabContent org={props.org}/>;
+        return <BioTabContent user={props.user} editMode={props.editMode} editInfo={props.editInfo}/>;
       default:
         return null;
     }
@@ -96,9 +74,7 @@ export default function CustomizedTabs(props) {
     <Box >
       <Box sx={{ bgcolor: '#fff' }}>
         <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-		  <AntTab label="Bio" />
-		  {(props.org._id !== sessionStorage.getItem("ID")) ? <AntTab label="Upcoming Events" /> : ""}
-		  {(props.org._id !== sessionStorage.getItem("ID")) ? <AntTab label="Ratings" /> : ""}
+		  <AntTab label="Info" />
         </AntTabs>
         <Box sx={{ p: 3 }}>
           {getTabContent(value)}

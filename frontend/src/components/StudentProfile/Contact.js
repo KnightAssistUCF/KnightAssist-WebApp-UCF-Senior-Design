@@ -13,72 +13,83 @@ import { BiGlobe } from 'react-icons/bi';
 
 function Contact(props) {
   
+	const [newFirstName, setNewFirstName] = useState("");
+	const [newLastName, setNewLastName] = useState("");
 	const [newEmail, setNewEmail] = useState("");
-	const [newPhone, setNewPhone] = useState("");
-	const [newWebsite, setNewWebsite] = useState("");
+	const [newGoal, setNewGoal] = useState("");
 
 	useEffect(() => {
 		if(props.editMode){
-			setNewEmail(props.org.email);
-			props.editInfo.current.email = props.org.email;
-			if(props.org.contact){
-				setNewPhone(props.org.contact.phone);
-				props.editInfo.current.phone = props.org.contact.phone;
-				setNewWebsite(props.org.contact.website);
-				props.editInfo.current.website = props.org.contact.website;
-			}
+			setNewFirstName(props.user.firstName);
+			setNewLastName(props.user.lastName);
+			setNewEmail(props.user.email);
+			setNewGoal(props.user.semesterVolunteerHourGoal);
 		}
 	}, [props.editMode])
 
+
 	return (
-		<div>
-			<div className='contactBox'>
-				<div className='navSubTitle'>Contact</div>
-				{(props.org.email) ? 
-					<div className='profileEmail'>
-						<MailOutlineIcon/>
-						<div className='navContactText'>
-							{(props.editMode) 
-								?
-									<TextField variant="standard" label="Email" required={false} value={newEmail} onChange={(e) => {setNewEmail(e.target.value); props.editInfo.current.email = e.target.value;}}/>
-								:
-									<a href='mailto:organizationemail@email.org'>{props.org.email}</a>
-							}
+			(props.user) ?
+
+			<div>
+				<div className='contactBox'>
+					{(props.user.firstName) ? 
+						<div className='profileEmail'>
+							<div className='navContactText'>
+								{(props.editMode) 
+									?
+										<TextField variant="standard" label="First Name" required={false} value={newFirstName} onChange={(e) => {setNewFirstName(e.target.value); props.editInfo.current.firstName = e.target.value;}}/>
+									:
+										<div>First Name: {props.user.firstName}</div>
+								}
+							</div>
 						</div>
-					</div>
-					: ""
-				}
-				{props.org.contact && props.org.contact.phone ?
-					<div className='profileEmail'>
-						<PhoneIcon/>
-						<div className='navContactText'>
-							{(props.editMode) 
-								?
-									<TextField variant="standard" label="Phone Number" required={false} value={newPhone} onChange={(e) => {setNewPhone(e.target.value); props.editInfo.current.phone = e.target.value;}}/>
-								:
-									props.org.contact.phone
-							}
+						: ""
+					}
+					{(props.user.lastName) ? 
+						<div className='profileEmail'>
+							<div className='navContactText'>
+								{(props.editMode) 
+									?
+										<TextField variant="standard" label="Last Name" required={false} value={newLastName} onChange={(e) => {setNewLastName(e.target.value); props.editInfo.current.lastName = e.target.value;}}/>
+									:
+										<div>Last Name: {props.user.lastName}</div>
+								}
+							</div>
 						</div>
-					</div>
-					: ""
-				}
-				{props.org.contact && props.org.contact.website ?
-					<div className='profileEmail'>
-						<BiGlobe/>
-						<div className='navContactText'>
-							{(props.editMode)
-								?
-									<TextField variant="standard" label="Website" required={false} value={newWebsite} onChange={(e) => {setNewWebsite(e.target.value); props.editInfo.current.website = e.target.value;}}/>
-								:
-									props.org.contact.website
-							}
+						: ""
+					}
+					{(props.user.email) ? 
+						<div className='profileEmail'>
+							<div className='navContactText'>
+								{(props.editMode) 
+									?
+										<TextField variant="standard" label="Email" required={false} value={newEmail} onChange={(e) => {setNewEmail(e.target.value); props.editInfo.current.email = e.target.value;}}/>
+									:
+										<div>Email: {props.user.email}</div>
+								}
+							</div>
 						</div>
-					</div>
-					: ""
-				}
+						: ""
+					}
+					{(props.user.semesterVolunteerHourGoal) ? 
+						<div className='profileEmail'>
+							<div className='navContactText'>
+								{(props.editMode) 
+									?
+										<TextField variant="standard" label="Semester Hourly Goal" required={false} value={newGoal} onChange={(e) => {setNewGoal(e.target.value); props.editInfo.current.goal = e.target.value;}}/>
+									:
+										<div>Volunteer Hours: {props.user.totalVolunteerHours.toFixed(2)}/{props.user.semesterVolunteerHourGoal}</div>
+								}
+							</div>
+						</div>
+						: ""
+					}
+				</div>
+			
 			</div>
-		
-		</div>
+
+			: ""
 	);
 }
 
