@@ -95,6 +95,7 @@ function StudentDetails({ studentID }) {
             });
             if (response.status == 404) {
               setMessage("Error occured, could not save information");
+              fetchStudentInfo();
 
             } else {
               setMessage("Information saved successfully");
@@ -108,7 +109,6 @@ function StudentDetails({ studentID }) {
 	}
 
   const handleCloseAlert = () => {
-    console.log("closing alert");
     setOpenAlert(false);
   };
 
@@ -124,9 +124,10 @@ function StudentDetails({ studentID }) {
 
   const handleEditModeToggle = () => {
     if (editMode) {
+      setMessage('');
+      setOpenAlert(true);
       submitVolunteer();
     }
-    setMessage('');
     setEditMode((prevEditMode) => !prevEditMode);
   };
 
