@@ -11,6 +11,7 @@ import OrgBox from './OrgBox';
 import SearchResults from '../OrgEvents/SearchResults';
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
+import EventModal from '../StudentHistory/EventModal';
 
 function StudentProfile() {
 	const [firstName, setFirstName] = useState("");
@@ -117,6 +118,7 @@ function StudentProfile() {
 							<FavoriteOrganizations/>
 							<RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>					
 						</div>
+						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
 					</div>
 					: ""
 				}

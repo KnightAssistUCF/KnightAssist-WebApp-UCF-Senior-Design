@@ -73,9 +73,6 @@ export default function CustomizedTabs(props) {
   return (
     <Box >
       <Box sx={{ bgcolor: '#fff' }}>
-        <AntTabs value={value} onChange={handleChange} aria-label="ant example">
-		  <AntTab label="Info" />
-        </AntTabs>
         <Box sx={{ p: 3 }}>
           {getTabContent(value)}
         </Box>
