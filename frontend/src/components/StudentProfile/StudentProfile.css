@@ -11,12 +11,11 @@
     font-size: 30px;
 }
 
-.navTabs {
+.studentTabs {
     float: right;
-    width: calc(82% - 80px);
     /* width: 76%; */
-    margin-right: 20px;
 	z-index: 300 !important;
+	margin-right: 40%;
 	position: relative;
 }
 
@@ -27,7 +26,7 @@
     border-radius: 25px;
 }
 
-.orgBox {
+.studentBox {
     background-color: rgb(250, 250, 250);
     width: 230px;
     /* height: 320%; */
@@ -35,8 +34,7 @@
     border-radius: 14px;
     position: relative; /* overlay */
 	z-index: 200 !important;
-	margin-top: -125px;
-    margin-left: 2%; 
+    margin-left: 10%; 
     /* bottom: 10%;  */
     border: 1px solid #eaeaea;
     justify-content: center;
@@ -104,7 +102,7 @@
 }
 
 .navContactText {
-    font-size: 17px;
+    font-size: 20px !important;
     font-weight: 350;
     padding-left: 12px;
 }

@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
-import './OrgProfile.css';
+import './StudentProfile';
+import './StudentProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
@@ -31,30 +32,20 @@ function OrgBox(props) {
 
 	async function submitEdits(){
 
-		/*const editInfo = props.editInfo.current;
+		const editInfo = props.editInfo.current;
 
         const json = {
 			id: sessionStorage.getItem("ID"),
-            name: newOrgName,
+            firstName: editInfo.firstName,
+			lastName: editInfo.lastName,
 			email: editInfo.email,
-            description: editInfo.description,
-            contact: {
-				email: editInfo.email,
-				phone: editInfo.phone,
-				website: editInfo.website,
-				socialMedia: {
-					facebook: newFB,
-					twitter: newX,
-					instagram: newIG,
-					linkedin: newLIn
-				}
-			},
+			semesterVolunteerHourGoal: editInfo.goal,
 			categoryTags: newSelectedTags
         };
 
         console.log(json);
 
-        const url = buildPath("api/editOrganizationProfile");
+        const url = buildPath("api/editUserProfile");
 
         try {
             const response = await fetch(url, {
@@ -67,13 +58,11 @@ function OrgBox(props) {
             let res = await response.text();
             console.log(res);
 
-			console.log(picName);
-
 			let formData = new FormData();
 
 			if(picName !== null && typeof picName.name === "string"){
 				formData.append('profilePic', picName); 
-				formData.append('entityType', 'organization');
+				formData.append('entityType', 'student');
 				formData.append('id', sessionStorage.getItem("ID"));
 				formData.append('profilePicOrBackGround', '0');
 
@@ -86,24 +75,10 @@ function OrgBox(props) {
 				.catch(error => console.error('Error:', error));
 			}
 
-			formData = new FormData();
-			formData.append('profilePic', editInfo.background); 
-			formData.append('entityType', 'organization');
-			formData.append('id', sessionStorage.getItem("ID"));
-			formData.append('profilePicOrBackGround', '1');
-			
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
-
 			props.setReset(!props.reset);
         }catch(err){
             console.log("An error has occurred: ", err);
-        }*/
+        }
 	}
 	
 	async function getProfilePic(){
@@ -313,6 +288,7 @@ function OrgBox(props) {
 		}
 	}, [props.user]);
 
+
 	useEffect(() => {
 		async function colorsAndTags(){
 			setColors(await getColors());
@@ -336,7 +312,7 @@ function OrgBox(props) {
 	}, [makeTags])
 
 	return (
-		<div className='spartan orgBox'>
+		<div className='spartan studentBox'>
 			<div className='items'>
 				{(props.user)
 					?

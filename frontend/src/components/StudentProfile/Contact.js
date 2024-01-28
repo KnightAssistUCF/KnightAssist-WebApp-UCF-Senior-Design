@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import Header from '../OrgEvents/Header';
-import './OrgProfile.css';
+import './StudentProfile';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent, TextField } from '@mui/material';
@@ -21,9 +21,13 @@ function Contact(props) {
 	useEffect(() => {
 		if(props.editMode){
 			setNewFirstName(props.user.firstName);
+			props.editInfo.current.firstName = props.user.firstName;
 			setNewLastName(props.user.lastName);
+			props.editInfo.current.lastName = props.user.lastName;
 			setNewEmail(props.user.email);
+			props.editInfo.current.email = props.user.email;
 			setNewGoal(props.user.semesterVolunteerHourGoal);
+			props.editInfo.current.goal = props.user.semesterVolunteerHourGoal;
 		}
 	}, [props.editMode])
 

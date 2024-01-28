@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
 import StudentHeader from '../StudentHome/StudentHeader'
-import './OrgProfile.css';
+import './StudentProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
 import { Button, Typography, CardContent, CardMedia } from '@mui/material';
@@ -14,13 +14,6 @@ import RecentEvents from './RecentEvents';
 import EventModal from '../StudentHistory/EventModal';
 
 function StudentProfile() {
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [joinDate, setJoinDate] = useState("");
-	const [currentHours, setCurrentHours] = useState(0);
-	const [hourGoal, setHourGoal] = useState(0);
-	const [email, setEmail] = useState("");
-	const [tags, setTags] = useState([]);
 	const [bgFile, setBGFile] = useState(null);
 	const [editMode, setEditMode] = useState(false);
 	const [reset, setReset] = useState(false);
@@ -46,14 +39,6 @@ function StudentProfile() {
 		let res = JSON.parse(await response.text());
 
 		setUser(res);
-		
-		setFirstName(res.firstName);
-		setLastName(res.lastName);
-		setJoinDate(res.updatedAt);
-		setCurrentHours(res.totalVolunteerHours);
-		setHourGoal(res.semesterVolunteerHourGoal);
-		setEmail(res.email);
-		setTags(res.categoryTags);
 
 		url = buildPath(`api/retrieveImage?entityType=student&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=0`);
 
@@ -66,12 +51,6 @@ function StudentProfile() {
 
 		setBGFile(background);
 	}
-
-	useEffect(() => {
-		getOrgInfo();
-	
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
 
 	function validateImgSelection(fileSelect){
 		// No files selected
@@ -89,16 +68,21 @@ function StudentProfile() {
 	function BackgroundBanner(){
 		return (
 			<div>
-				<CardMedia
-					component="img"
-					image={(bgFile !== null) ? URL.createObjectURL(bgFile) : ""}
-					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
-					onClick={(editMode) ? () => document.getElementById("background").click() : null}
-				/>				
-				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(backgroundSelect.current.files[0]); editInfo.current.background = backgroundSelect.current.files[0];}}}/>
 			</div>
 		)
 	}
+
+	useEffect(() => {
+		getOrgInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		getOrgInfo();
+	
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [reset]);
 
 	return (
 		<div className='spartan'>
@@ -107,9 +91,8 @@ function StudentProfile() {
 				{(user)
 					?	
 					<div>
-						<BackgroundBanner/>
 						<OrgBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
-						<div className='navTabs'>
+						<div className='studentTabs'>
 							<NavTabs user={user} editMode={editMode} editInfo={editInfo}/>
 						</div>
 						<div className='cardSections'>
