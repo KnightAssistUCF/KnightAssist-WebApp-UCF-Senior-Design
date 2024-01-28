@@ -1,82 +1,301 @@
-.moveEverything{
-    margin-left: 15%;
-    margin-top: 2%;
-}
-
-.profilePic{
-    width: 250px !important;
-    height: 250px !important;
-    margin-left: 75px;
-    margin-right: -300px;
-    float: left;
-}
-
-.name{
-    font-size: 40px;
-    font-family: "League Spartan";
+.orgProfilePage {
+    margin-left: 14vw;
+    margin-right: 2vw;
     color: black;
+    text-align: left;
+    margin-top: 1%;
+    position: relative;
 }
 
-.topInfo{
-    margin-left: 10%;
+.orgProfileTitle {
+    font-size: 30px;
 }
 
-.profileContainer{
+.studentTabs {
+    float: right;
+    /* width: 76%; */
+	z-index: 300 !important;
+	margin-right: 40%;
+	position: relative;
+}
+
+.orgBannerFiller {
+    background-color: rgb(199, 199, 199);
+    width: 100%;
+    height: 200px;
+    border-radius: 25px;
+}
+
+.studentBox {
+    background-color: rgb(250, 250, 250);
+    width: 230px;
+    /* height: 320%; */
+    height: calc(100vh - 35%);
+    border-radius: 14px;
+    position: relative; /* overlay */
+	z-index: 200 !important;
+    margin-left: 10%; 
+    /* bottom: 10%;  */
+    border: 1px solid #eaeaea;
+    justify-content: center;
+	float: left;
+}
+
+.feedbackEvent{
+	width: 100%;
+}
+
+.hideScroll{
+	overflow: hidden !important;
+}
+
+.feedbackModal{
+	height: 100% !important;
+	width: 500px !important;
+}
+
+.tagModal{
+	height: 1000px !important;
+	width: 100% !important;
+}
+
+.feedbackTitle{
+	margin-left: -20px !important;
+}
+
+.dialogTitle{
+	font-size: 25px !important;
+}
+
+.feedbackTxt{
+	overflow-y: none !important; 
+	max-width: 500px;
+	max-height: 400px;	
+	word-wrap: break-word;
+}
+
+.theContent{
+	max-width: 100%;
+    word-wrap: break-word;
+}
+
+.navSubTitle {
+    font-size: 20px;
+    color: #7a7a7a;
+}
+
+.navParagraphText {
+    font-size: 17px;
+    font-weight: 370;
+}
+
+.editDescription {
+    font-size: 17px;
+    font-weight: 370;
+	width: 70%;
+}
+
+.profileEmail {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.navContactText {
+    font-size: 20px !important;
+    font-weight: 350;
+    padding-left: 12px;
+}
+
+.contactBox {
+    margin-top: 10px;
+}
+
+.sch {
+    width: 95%;
+    /* height: 700px; */
+    
+}
+
+.ratingNum {
+    font-size: 60px;
+    font-weight: 340;
+}
+
+/* .ratingAvg {
+    display: flex;
+} */
+
+.ratingtopcol {
+    display: flex;
+}
+
+.items{
+	width: 100%;
+	margin-top: 30px;
+	margin-left: 40%;
 }
 
 .volunteerSince{
-    font-size: 20px;
-    color: black;
-    font-family: "League Spartan";
+	font-size: 15px;
+	max-width: 100px !important;
+	text-align: center;
+	word-wrap: break-word;
+	margin-left: -12%;
+	margin-bottom: 10px;
 }
 
-.volunteerHours{
-    font-size: 25px;
-    color: black;
-    font-family: "League Spartan";	
-    text-decoration-line: underline;
+.orgNameEdit{
+	margin-left: -30% !important;
+	width: 75%;
+	margin-bottom: 20px !important;
 }
 
-.email{
-    font-size: 25px;
-    color: black;
-    font-family: "League Spartan";
-    word-wrap: break-word;
+.editBtn{
+	width: 125px;
+    height: 40px;
+    margin-top: 3%;
+    background-color: #5f5395;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
 }
 
-.mailIcon{
-    font-size: 40px;
-    margin-right: 20px;
+.editSocialsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #00785A;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
 }
 
-.interestsTitle{
-    font-size: 25px;
-    color: black;
-    font-family: "League Spartan";
-    word-wrap: break-word;
+.editInterestsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #F5D6BA;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+	color: black;
 }
 
-.interestsBorder{
-    border: 2px solid black;
-    border-radius: 12px;
+.favBtn{
+	background: none;
+    border: none;
+	margin-left: -10%;
+	margin-top: -10px;
+}
+
+.favorited{
+	color: yellow;
+	width: 75px !important;
+	height: 100px !important;
+	border: 1px black;
+}
+
+.favorited:hover{
+	color: rgb(254, 254, 102);
+}
+
+.notFavorited{
+	width: 75px !important;
+	height: 100px !important;
+}
+
+.notFavorited:hover{
+	color: rgb(254, 254, 102);
+}
+
+.profileSocials{
+	margin-left: -16%;
+}
+
+.social{
+	float: left;
+	margin-right: 7px;
+}
+
+.tagSection{
+    margin-left: 7%;
+    margin-right: 7%;
+	width: 600px;
+	height: 90%;
+    border: 1px solid #ededed; /* Border color */
+    padding: 10px; /* Padding around the tags */
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
+.studentInterests{
+	padding-bottom: 50px !important;
+}
+
+.interestsName{
+	font-size: 20px;
+	margin-left: -5%;
+}
+
+.studentTags{
+	width: 85%;
+	padding-bottom: 20px !important;
+	margin-left: -25%;
+	float: left;
+}
+
+.studentTag{
+    background-color: rgb(89, 80, 130) !important;
+    color: rgb(240, 240, 240) !important;
+    min-width: 10%;
+	max-width: 70% !important;
+    width: auto !important;
+	height: auto !important;
+    margin-top: 0px;
+    margin-right: 10px;
+    font-size: 15px;
     float: left;
+    font-family: "system-ui";
+    margin-bottom: 5px;
 }
 
-.interests{
-    margin-top: 125px;
-    margin-left: 25%;
-    margin-bottom: 30% !important;
+.postTagSpace{
+	margin-bottom: 20px !important;
 }
 
-.tagBox{
-    margin-left: 3%;
-    min-width: 500px !important;
-
+.addSpace{
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
-.tag{
-    margin-right: 20px;
-    margin-bottom: 10px;
+.hoverImage:hover{
+	cursor: pointer;
+}
+
+/* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+    fill: red;  
+} */
+
+.css-nl6has .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
+background-image: url('./plus-icon.svg');  /* Replace 'path/to/plus-icon.svg' with the actual path to your plus icon SVG file */
+background-size: contain;
+background-repeat: no-repeat;
+fill: transparent;  /* To make sure the original fill color is not applied */
+}
+
+.css-llvhl4-MuiTypography-root {
+font-family: "Roboto";
+}
+
+.cardSections{
+	float: left;
+	width: 100% !important;
 }
 
 .favHeader{
@@ -86,32 +305,4 @@
 	font-size: 30px;
 	margin-bottom: 30px;
 	color: black;
-}
-
-.cardSections{
-    margin-top: 50px;
-}
-
-.editProfileBtn{
-    width: 150px;
-    height: 50px;
-    margin-top: 3%;
-    background-color: #5f5395;
-    border: none;
-}
-
-.logoandbg{
-	position: relative;
-	margin-bottom: 25px;
-}
-
-.cardBg{
-	position: relative;
-	z-index: 1;
-}
-
-.cardLogo{
-	z-index: 2;
-	width: 100px !important;
-	left: 30%;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import StudentProfile from '../components/StudentProfile/StudentProfile';
 
-function StudentExplorePage()
+function StudentProfilePage()
 {
     return(
       <div className="studentProfilePage">
@@ -11,4 +11,4 @@ function StudentExplorePage()
     );
 }
 
-export default StudentExplorePage;
+export default StudentProfilePage;

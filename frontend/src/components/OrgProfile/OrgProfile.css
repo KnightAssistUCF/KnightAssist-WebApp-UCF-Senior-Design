@@ -250,10 +250,13 @@
 .tags{
 	width: 85%;
 	margin-left: -25%;
+	padding-bottom: 20px !important;
+	float: left;
 }
 
 .tag{
-    background-color: #bc70c8 !important;
+    background-color: rgb(89, 80, 130) !important;
+    color: rgb(240, 240, 240) !important;
     min-width: 10%;
 	max-width: 70% !important;
     width: auto !important;
@@ -262,7 +265,7 @@
     margin-right: 10px;
     font-size: 15px;
     float: left;
-    font-family: "League Spartan";
+    font-family: "system-ui";
     margin-bottom: 5px;
 }
 

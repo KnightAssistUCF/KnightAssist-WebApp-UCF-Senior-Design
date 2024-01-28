@@ -14,7 +14,7 @@ import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
-import StudentProfile from './components/StudentProfile/StudentProfile';
+import StudentProfilePage from './pages/StudentProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
@@ -62,7 +62,7 @@ function App()
 				<Route path="/explore" element={(role === "volunteer") ? <StudentExplorePage/> : <Navigate from='/explore' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/studentprofile" element={(role === "volunteer") ? <StudentProfile/> : <Navigate from='/studentprofile' to='/login' />}></Route>
+				<Route path="/studentprofile" element={(role === "volunteer") ? <StudentProfilePage/> : <Navigate from='/studentprofile' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/studenthistory" element={(role === "volunteer") ? <StudentHistory/> : <Navigate from='/studenthistory' to='/login' />}></Route>

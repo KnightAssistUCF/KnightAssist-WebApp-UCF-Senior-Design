@@ -9,6 +9,7 @@ import StudentHeader from './StudentHeader';
 import { buildPath } from '../../path';
 import CircularProgress from '@mui/joy/CircularProgress';
 import ListItem from '@mui/material/ListItem';
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 function StudentHome()
 {
@@ -62,6 +63,7 @@ function StudentHome()
     
       <div className='spartan' id='homePage'>
         <StudentHeader/>
+        <StudentTopBar/>
         <div className="studHomePage">
           <div class="StudentHomePage-title">Welcome, First Last</div>
           <div class="StudentHomePage-subtitle">Fall 2023</div>
