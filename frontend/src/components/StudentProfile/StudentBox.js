@@ -1,17 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
-import Header from '../OrgEvents/Header';
 import './StudentProfile';
 import './StudentProfile.css';
-import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
+import { Button, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip } from '@mui/material';
 import { buildPath } from '../../path';
-import NavTabs from './NavTabs';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { Facebook, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
-import { RiTwitterXFill } from 'react-icons/ri';
 
-function OrgBox(props) {
+function StudentBox(props) {
 
 	const [picName, setPicName] = useState(undefined);
 	const [role, setRole] = useState(null);
@@ -173,7 +167,7 @@ function OrgBox(props) {
 		)
 	}
 
-	function OrgName(){
+	function JoinDate(){
 		// Parse the ISO date string
 		const joinedDate = new Date(props.user.updatedAt);
 
@@ -212,7 +206,7 @@ function OrgBox(props) {
 
 	function Tag(props){
         return (
-			<Card className='tag'>
+			<Card className='studentTag'>
 				<div className='addSpace'>
 					{props.tag}
 				</div>
@@ -222,9 +216,9 @@ function OrgBox(props) {
 
 	function Interests(){
 		return (
-			<div className='interests'>
+			<div className='studentInterests'>
 				<div className='interestsName'>Interests</div>
-				<div className='tags'>
+				<div className='studentTags'>
 					{props.user.categoryTags.map(t => <Tag tag={t}/>)}
 				</div>
 			</div>
@@ -318,7 +312,7 @@ function OrgBox(props) {
 					?
 						<div>
 							<ProfilePic/>
-							{OrgName()}
+							{JoinDate()}
 							
 							{(role === "volunteer" && props.user._id === sessionStorage.getItem("ID")) 
 								? EditSaveProfileBtn() 
@@ -351,4 +345,4 @@ function OrgBox(props) {
 	);
 }
 
-export default OrgBox;
+export default StudentBox;

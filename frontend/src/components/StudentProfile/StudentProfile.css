@@ -234,10 +234,8 @@
 }
 
 
-.interests{
-	margin-top: 60px !important;
-	padding-bottom: 100px !important;
-	margin-left: -3%;
+.studentInterests{
+	padding-bottom: 50px !important;
 }
 
 .interestsName{
@@ -245,12 +243,14 @@
 	margin-left: -5%;
 }
 
-.tags{
+.studentTags{
 	width: 85%;
+	padding-bottom: 20px !important;
 	margin-left: -25%;
+	float: left;
 }
 
-.tag{
+.studentTag{
     background-color: rgb(89, 80, 130) !important;
     color: rgb(240, 240, 240) !important;
     min-width: 10%;
@@ -263,6 +263,10 @@
     float: left;
     font-family: "system-ui";
     margin-bottom: 5px;
+}
+
+.postTagSpace{
+	margin-bottom: 20px !important;
 }
 
 .addSpace{

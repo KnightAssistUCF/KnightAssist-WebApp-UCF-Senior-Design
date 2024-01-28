@@ -2,19 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import Header from '../OrgEvents/Header';
 import StudentHeader from '../StudentHome/StudentHeader'
 import './StudentProfile.css';
-import OrgTopBar from '../OrgHome/OrgTopBar';
-import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, CardMedia } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
-import OrgBox from './OrgBox';
-import SearchResults from '../OrgEvents/SearchResults';
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
 import EventModal from '../StudentHistory/EventModal';
+import StudentBox from './StudentBox';
 
 function StudentProfile() {
-	const [bgFile, setBGFile] = useState(null);
 	const [editMode, setEditMode] = useState(false);
 	const [reset, setReset] = useState(false);
 
@@ -24,9 +19,8 @@ function StudentProfile() {
 	const [openModal, setOpenModal] = useState(false);
 
 	const editInfo = useRef({});
-	const backgroundSelect = useRef(null);
 
-	async function getOrgInfo(){
+	async function getStudentInfo(){
 		let url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
 
 		let response = await fetch(url, {
@@ -39,47 +33,16 @@ function StudentProfile() {
 		let res = JSON.parse(await response.text());
 
 		setUser(res);
-
-		url = buildPath(`api/retrieveImage?entityType=student&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=0`);
-
-		response = await fetch(url, {
-			method: "GET",
-			headers: {"Content-Type": "application/json"},
-		});
-
-		let background = await response.blob();
-
-		setBGFile(background);
-	}
-
-	function validateImgSelection(fileSelect){
-		// No files selected
-		if(fileSelect.current.files.length === 0) return false;
-		
-		const file = fileSelect.current.files[0].name;
-		console.log(file)
-
-		const fileType = file.substring(file.lastIndexOf(".") + 1);
-
-		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
-	}
-
-
-	function BackgroundBanner(){
-		return (
-			<div>
-			</div>
-		)
 	}
 
 	useEffect(() => {
-		getOrgInfo();
+		getStudentInfo();
 	
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	useEffect(() => {
-		getOrgInfo();
+		getStudentInfo();
 	
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [reset]);
@@ -91,7 +54,7 @@ function StudentProfile() {
 				{(user)
 					?	
 					<div>
-						<OrgBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
+						<StudentBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='studentTabs'>
 							<NavTabs user={user} editMode={editMode} editInfo={editInfo}/>
 						</div>

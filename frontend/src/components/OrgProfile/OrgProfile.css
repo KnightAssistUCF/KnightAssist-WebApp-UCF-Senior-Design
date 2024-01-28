@@ -250,6 +250,8 @@
 .tags{
 	width: 85%;
 	margin-left: -25%;
+	padding-bottom: 20px !important;
+	float: left;
 }
 
 .tag{

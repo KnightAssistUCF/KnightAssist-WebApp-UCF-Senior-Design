@@ -1,17 +1,8 @@
 import { useState, useEffect } from 'react';
-import Header from '../OrgEvents/Header';
+import { TextField } from '@mui/material';
 import './StudentProfile';
-import OrgTopBar from '../OrgHome/OrgTopBar';
-import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, TextField } from '@mui/material';
-import { buildPath } from '../../path';
-import NavTabs from './NavTabs';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import PhoneIcon from '@mui/icons-material/Phone';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
-import { BiGlobe } from 'react-icons/bi';
 
-function Contact(props) {
+function StudentInfo(props) {
   
 	const [newFirstName, setNewFirstName] = useState("");
 	const [newLastName, setNewLastName] = useState("");
@@ -97,4 +88,4 @@ function Contact(props) {
 	);
 }
 
-export default Contact;
+export default StudentInfo;
