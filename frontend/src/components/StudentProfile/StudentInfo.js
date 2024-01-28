@@ -74,7 +74,7 @@ function StudentInfo(props) {
 									?
 										<TextField variant="standard" label="Semester Hourly Goal" required={false} value={newGoal} onChange={(e) => {setNewGoal(e.target.value); props.editInfo.current.goal = e.target.value;}}/>
 									:
-										<div>Volunteer Hours: {props.user.totalVolunteerHours.toFixed(2)}/{props.user.semesterVolunteerHourGoal}</div>
+										<div>Volunteer Hours: {props.user.totalVolunteerHours.toFixed(1)}/{props.user.semesterVolunteerHourGoal}</div>
 								}
 							</div>
 						</div>
