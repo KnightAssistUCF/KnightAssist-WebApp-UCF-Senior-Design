@@ -33,7 +33,7 @@ function StudentBox(props) {
             firstName: editInfo.firstName,
 			lastName: editInfo.lastName,
 			email: editInfo.email,
-			semesterVolunteerHourGoal: editInfo.goal,
+			semesterVolunteerHourGoal: Math.round(Number(editInfo.goal)),
 			categoryTags: newSelectedTags
         };
 
