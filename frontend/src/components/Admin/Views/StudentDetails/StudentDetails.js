@@ -4,12 +4,13 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField, Button, Alert, Snackbar, Dialog } from '@mui/material';
+import { TextField, Button, Alert, Snackbar, Dialog, IconButton } from '@mui/material';
 import { buildPath } from '../../../../path.js';
 import AdminHeader from '../../AdminHeader.js';
 import './StudentDetails.css';
 import AdminTopBar from '../../AdminTopBar.js';
 import StudentDetailsTable from './StudentDetailsTable.js';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 function StudentDetails({ studentID }) {
   const [firstName, setFirstName] = useState('');
@@ -24,6 +25,10 @@ function StudentDetails({ studentID }) {
   const [openAlert, setOpenAlert] = useState(true);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [openModal, setOpenModal] = useState(false);
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [allTags, setAllTags] = useState([]);
+  const [prevSelectedTags, setPrevSelectedTags] = useState([]);
+
 
   const fetchStudentInfo = async () => {
     console.log(studentID);
@@ -49,6 +54,8 @@ function StudentDetails({ studentID }) {
       setGoal(res.semesterVolunteerHourGoal);
       setId(res._id);
       setUpcomingEvents(res.eventsRSVP);
+      setPrevSelectedTags(res.categoryTags);
+
       // get profile pic
     } catch (e) {
       console.log('failed to fetch student info: ' + e);
@@ -112,22 +119,123 @@ function StudentDetails({ studentID }) {
 		}
 	}
 
-  async function handleEditTags() {
-    setOpenModal(true);
+// ...
+
+async function handleEditTags() {
+  setOpenModal(true);
+
+  try {
     let url = buildPath(`api/getAllAvailableTags`);
 
-		let response = await fetch(url, {
-			method: "GET",
-			headers: {"Content-Type": "application/json"},
-		});
-	
-		let res = JSON.parse(await response.text());
+    let response = await fetch(url, {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    });
+
+    let res = JSON.parse(await response.text());
     console.log(res);
+
+    setAllTags(res);
+  } catch (e) {
+    console.log('failed to fetch available tags: ' + e);
   }
+}
+
+
+
+
+
+
+function AllTags({ tags }) {
+  return (
+    <div>
+      <p className='tagQuestion'></p>
+      <div className='allTagsBox'>
+        {tags.map((name, idx) => (
+          <Chip
+            key={idx}
+            label={name}
+            className='tagChip'
+            onClick={() => handleTagSelect(name)}
+            sx={{
+              backgroundColor: prevSelectedTags.includes(name) ? '#5f5395' : 'default',
+              color: prevSelectedTags.includes(name) ? 'white' : 'black',
+              '&:hover': {
+                backgroundColor: prevSelectedTags.includes(name) ? '#5f5395' : 'default',
+                color: prevSelectedTags.includes(name) ? 'white' : 'black',
+              },
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+// ...
+
+
+  
+  
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
   };
+
+  const handleTagSelect = (tag) => {
+    if (prevSelectedTags.includes(tag)) {
+      setPrevSelectedTags((prevSelectedTags) => {
+        // Remove the tag from the array
+        return prevSelectedTags.filter((selectedTag) => selectedTag !== tag);
+      });
+    } else if (selectedTags.includes(tag)) {
+      // Check if the tag is already selected in selectedTags
+      setSelectedTags((prevSelectedTags) => {
+        // Remove the tag from the array
+        return prevSelectedTags.filter((selectedTag) => selectedTag !== tag);
+      });
+    } else {
+      // If the tag is not selected, check the total count
+      const totalSelectedCount = prevSelectedTags.length + selectedTags.length;
+      console.log(totalSelectedCount);
+      console.log(prevSelectedTags);
+      console.log(selectedTags);
+  
+      if (totalSelectedCount <= 10) {
+        // If the total count is less than 10, add the tag to the arrays
+        setPrevSelectedTags((prevSelectedTags) => [...prevSelectedTags, tag]);
+        setSelectedTags((prevSelectedTags) => [...prevSelectedTags, tag]);
+      } else {
+        // Otherwise, do not add more tags
+        // You can also show a message or handle this case as needed
+      }
+    }
+  };
+  
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
 
   // const handleClickOpenModal = () => {
   //   setOpenModal(true);
@@ -155,6 +263,38 @@ function StudentDetails({ studentID }) {
     }
     setEditMode((prevEditMode) => !prevEditMode);
   };
+
+  const handleSaveTags = async () => {
+    try {
+      // Implement logic to save selected tags
+      const json = {
+        _id: id,
+        categoryTags: selectedTags,
+      };
+  
+      const url = buildPath(`api/editUserProfileTags`);
+  
+      const response = await fetch(url, {
+        method: "POST",
+        body: JSON.stringify(json),
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+        },
+      });
+  
+      if (response.status === 404) {
+        setMessage("Error occurred, could not save tags");
+      } else {
+        setMessage("Tags saved successfully");
+      }
+  
+      setOpenModal(false);
+    } catch (e) {
+      console.log("Error saving tags: ", e);
+    }
+  };
+  
 
   return (
     <div>
@@ -253,11 +393,13 @@ function StudentDetails({ studentID }) {
             )}
           </div>
           {editMode && (
-            <Button variant='contained' disableElevation   sx={{
-              backgroundColor: editMode ? '#808080' : '',
-              color: editMode ? 'white' : '',
+            <Button variant='outlined' disableElevation   sx={{
+              borderColor: editMode ? '#808080' : '',
+              color: editMode ? '#666666' : '',
               '&:hover': {
-                backgroundColor: editMode ? '#666666' : '',
+                borderColor: editMode ? '#777777' : '',
+                backgroundColor: editMode ? '#f0f0f0' : '',
+                // color: editMode ? '#ffffff' : '',
               },
               marginRight: '10px',
             }} onClick={handleCancel}>
@@ -285,7 +427,22 @@ function StudentDetails({ studentID }) {
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          fsd;f
+                  <IconButton
+          aria-label="close"
+          onClick={handleCloseModal}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            fontSize: 20,
+          }}
+        >
+          <CancelIcon />
+        </IconButton>
+                  <div className='modalContent'>
+          <AllTags tags={allTags} />
+          <Button variant='contained' disableElevation color='success' onClick={handleSaveTags} sx={{marginBottom: '10px', backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}}>Save</Button>
+        </div>
         </Dialog>
         <StudentDetailsTable upcomingEvents={upcomingEvents} />
       </div>
