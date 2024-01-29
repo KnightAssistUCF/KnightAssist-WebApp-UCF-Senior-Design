@@ -41,6 +41,10 @@
     width: 99%;
 }
 
+.titleHeader{
+	font-size: 18px !important;
+}
+
 .upcomingEvents{
     width: 100%;
     height: 25%;
@@ -80,7 +84,7 @@
 }
 
 .spartan{
-    font-family: "League Spartan";
+    font-family: "system-ui";
 }
 
 .eventHeight{
@@ -157,7 +161,8 @@
 .qrCodeCard{
 	height: 75vh;
     width: 75vh;
-    overflow: scroll !important;
+    overflow-y: scroll !important;
+	overflow-x: hidden !important;
 }
 
 .boxStyle{
@@ -190,7 +195,7 @@
     margin-right: 10px;
     font-size: 20px;
     float: left;
-    font-family: "League Spartan";
+    font-family: "system-ui";
     margin-bottom: 5px;
 }
 
@@ -307,6 +312,10 @@
 .qrLogo{
 	width: 75px;
 	height: 75px;
+}
+
+.addHover:hover{
+	cursor: pointer;
 }
 
 @media (max-width: 1500px) {

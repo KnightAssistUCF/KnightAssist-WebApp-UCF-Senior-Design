@@ -14,7 +14,7 @@ import StudentHomePage from './pages/StudentHomePage';
 import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
-import StudentProfile from './components/StudentProfile/StudentProfile';
+import StudentProfilePage from './pages/StudentProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
@@ -24,14 +24,14 @@ import AdminHomePage from './pages/AdminHomePage';
 import AboutUsPage from './pages/AboutUsPage';
 import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
-import StudentSettingsPage from './pages/StudentSettingsPage';
 import ContactPage from './pages/ContactPage';
+import SettingsPage from './pages/SettingsPage';
 import StudentDetailsPage from './pages/StudentDetailsPage';
 import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 
 function App() 
 {
-	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : "");
+	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : undefined);
 
 	useEffect(() => {
 		if(sessionStorage.getItem("token") === null)
@@ -64,7 +64,7 @@ function App()
 				<Route path="/explore" element={(role === "volunteer") ? <StudentExplorePage/> : <Navigate from='/explore' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/studentprofile" element={(role === "volunteer") ? <StudentProfile/> : <Navigate from='/studentprofile' to='/login' />}></Route>
+				<Route path="/studentprofile" element={(role === "volunteer") ? <StudentProfilePage/> : <Navigate from='/studentprofile' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/studenthistory" element={(role === "volunteer") ? <StudentHistory/> : <Navigate from='/studenthistory' to='/login' />}></Route>
@@ -73,16 +73,16 @@ function App()
 				<Route path="/studentemailverified" element={<StudentEmailVerified/>}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
-			</Routes>
-			<Routes>
-				<Route path="/postverifyquestions" element={(role !== "") ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
-			</Routes>
-			<Routes>
 				<Route path="/studentannouncements" element={(role === "volunteer") ? <NewAnnPage/> : <Navigate from='/studentannouncements' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/studentsettings" element={(role === "volunteer") ? <StudentSettingsPage/> : <Navigate from='/studentsettings' to='/login' />}></Route>
+				<Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/postverifyquestions" element={(role) ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/settings" element={(role) ? <SettingsPage/> : <Navigate from='/settings' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>

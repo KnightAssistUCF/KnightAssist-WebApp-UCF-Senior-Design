@@ -36,7 +36,7 @@ function OrgPortal()
     }
 
     return(
-     	<div>
+     	<div className='spartan'>
 			<Header/>
 			<div className='move'>
 				<div>

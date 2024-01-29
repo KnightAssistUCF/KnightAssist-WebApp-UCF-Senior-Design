@@ -5,6 +5,7 @@ import Filter from "./Filter.js";
 import Announcements from "./Announcements.js";
 import './Announcements.css';
 import { buildPath } from '../../path.js';
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 
 
@@ -203,7 +204,8 @@ function NewAnn() {
   }, []);
 
   return (
-    <div id="studentAnnouncements">
+    <div className='spartan' id="studentAnnouncements">
+      <StudentTopBar/>
       <div className="studAnnouncementsPage">
       <div class="StudentAnnouncements-title">Updates</div>
         <div className="testing">

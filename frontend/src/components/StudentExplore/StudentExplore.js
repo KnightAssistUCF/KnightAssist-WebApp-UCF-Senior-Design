@@ -11,6 +11,7 @@ import './StudentExplore.css'
 import '../StudentHome/StudentHome.css';
 import { Grid } from '@mui/material';
 import SearchResults from '../OrgEvents/SearchResults';
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 function StudentExplore()
 {
@@ -25,8 +26,9 @@ function StudentExplore()
 	const results = useRef([]);
 
     return(
-      <div id='homePage'>
+      <div className='spartan' id='homePage'>
 		<Header/>
+		<StudentTopBar/>
 		<div className='moveEverything'>
 			<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
 				<Grid item>

@@ -56,8 +56,17 @@
 	width: 500px !important;
 }
 
+.tagModal{
+	height: 1000px !important;
+	width: 100% !important;
+}
+
 .feedbackTitle{
 	margin-left: -20px !important;
+}
+
+.dialogTitle{
+	font-size: 25px !important;
 }
 
 .feedbackTxt{
@@ -80,6 +89,12 @@
 .navParagraphText {
     font-size: 17px;
     font-weight: 370;
+}
+
+.editDescription {
+    font-size: 17px;
+    font-weight: 370;
+	width: 70%;
 }
 
 .profileEmail {
@@ -132,6 +147,12 @@
 	margin-bottom: 10px;
 }
 
+.orgNameEdit{
+	margin-left: -30% !important;
+	width: 75%;
+	margin-bottom: 20px !important;
+}
+
 .editBtn{
 	width: 125px;
     height: 40px;
@@ -141,6 +162,27 @@
 	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
+}
+
+.editSocialsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #00785A;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+}
+
+.editInterestsBtn{
+	width: 125px;
+    height: 40px;
+    background-color: #F5D6BA;
+    border: none;
+	border-radius: 10px;
+	margin-left: -18% !important;
+	margin-bottom: 25px;
+	color: black;
 }
 
 .favBtn{
@@ -179,6 +221,21 @@
 	margin-right: 7px;
 }
 
+.tagSection{
+    margin-left: 7%;
+    margin-right: 7%;
+	width: 600px;
+	height: 90%;
+    border: 1px solid #ededed; /* Border color */
+    padding: 10px; /* Padding around the tags */
+    border-radius: 5px; /* Optional: Rounded corners */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+
 .interests{
 	margin-top: 60px !important;
 	padding-bottom: 100px !important;
@@ -193,10 +250,13 @@
 .tags{
 	width: 85%;
 	margin-left: -25%;
+	padding-bottom: 20px !important;
+	float: left;
 }
 
 .tag{
-    background-color: #bc70c8 !important;
+    background-color: rgb(89, 80, 130) !important;
+    color: rgb(240, 240, 240) !important;
     min-width: 10%;
 	max-width: 70% !important;
     width: auto !important;
@@ -205,13 +265,17 @@
     margin-right: 10px;
     font-size: 15px;
     float: left;
-    font-family: "League Spartan";
+    font-family: "system-ui";
     margin-bottom: 5px;
 }
 
 .addSpace{
 	margin-left: 5px;
 	margin-right: 5px;
+}
+
+.hoverImage:hover{
+	cursor: pointer;
 }
 
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {

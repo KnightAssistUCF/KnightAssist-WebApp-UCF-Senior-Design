@@ -16,7 +16,7 @@
     float: left;
     margin-right: -30px;
     font-size: 30px;
-    font-family: "League Spartan";
+    font-family: "system-ui";
 }
 
 .eventTag{
@@ -27,7 +27,7 @@
     margin-right: 10px;
     font-size: 20px;
     float: left;
-    font-family: "League Spartan";
+    font-family: "system-ui";
     margin-bottom: 5px;
 }
 

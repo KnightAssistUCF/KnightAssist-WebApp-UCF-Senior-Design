@@ -10,6 +10,7 @@ import {Button} from '@mui/material';
 import EventModal from './EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './StudentHistory.css'
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 function StudentHistory()
 {
@@ -167,8 +168,9 @@ function StudentHistory()
 	}, []);
 
     return(
-      <div id='homePage'>
+      <div className='spartan'>
 		<Header/>
+		<StudentTopBar/>
 		<div className='moveEverything'>
 			<Title/>
 			<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">

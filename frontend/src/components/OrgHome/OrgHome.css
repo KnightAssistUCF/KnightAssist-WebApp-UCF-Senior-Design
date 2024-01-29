@@ -59,3 +59,16 @@
     margin-right: 10px;
     margin-bottom: 20px;
 }
+
+.eventChart{
+	margin-top: 10px;
+	margin-left: 5%;
+}
+
+.moveCards{
+	margin-top: 30px;
+}
+
+.moveY{
+	margin-right: 20px !important;
+}

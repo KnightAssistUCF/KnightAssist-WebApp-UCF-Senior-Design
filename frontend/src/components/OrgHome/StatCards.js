@@ -40,7 +40,7 @@ useEffect(() => {
 }, []);
 
   return (
-      <div>
+      <div className='moveCards'>
         <div className='statCards'>
             <Card variant='contained' sx={{ borderRadius: '14px', maxWidth: 255,  display: 'flex', marginBottom: '0',marginTop: '10px', paddingLeft: '6px', minHeight: 120, textAlign: 'left',  background: 'linear-gradient( 109.6deg,  #65B891 11.2%, #65B891 91.1% )', color: 'white' }}>
                 <div className="stat">

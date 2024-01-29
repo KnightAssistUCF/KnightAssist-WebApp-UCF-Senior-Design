@@ -15,6 +15,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { useNavigate } from 'react-router-dom';
 
 function OrgTopBar()
 {
@@ -22,20 +23,33 @@ function OrgTopBar()
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
+	const navigate = useNavigate();
+
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
-      };
-      const handleOpenUserMenu = (event) => {
-        setAnchorElUser(event.currentTarget);
-      };
+    };
+
+	const handleOpenUserMenu = (event) => {
+		setAnchorElUser(event.currentTarget);
+	};
     
-      const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-      };
-    
-      const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-      };
+	const handleCloseUserMenu = () => {
+		setAnchorElUser(null);
+	};
+
+	function handleButtonClick(setting){
+		if(setting === "Profile"){
+			sessionStorage.removeItem("viewingPageID"); 
+			if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/orgprofile"){
+				window.location.reload();
+			}else{		
+				window.location.href = "#/orgprofile";
+			}
+		}else{
+			sessionStorage.clear();
+			navigate('/'); 
+		}
+	}
 
    return(
       <div className="StudentTopBar">
@@ -82,7 +96,7 @@ function OrgTopBar()
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem key={setting} onClick={() => handleButtonClick(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

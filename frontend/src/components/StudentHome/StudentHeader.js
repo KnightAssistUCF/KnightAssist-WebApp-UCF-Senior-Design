@@ -61,12 +61,21 @@ function Header()
     setSidebarActive(!isSidebarActive);
     };
 
+	function loadStudentProfile(){
+		sessionStorage.removeItem("viewingPageID");
+
+		if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentprofile")
+			window.location.reload();
+		else		
+			window.location.href = "#/studentprofile";
+	}
+
     return(
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
                 <div className="logo logoBtn">
-					<PageTitle onClick={() => window.location.href="/#/"} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
+					<PageTitle onClick={() => loadStudentProfile()} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
                 <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
@@ -82,8 +91,8 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/studentprofile">
+                    <LightTooltip title={!isSidebarActive ? "Profile" : ""} placement="right" className="custom-tooltip">
+                        <a onClick={() => loadStudentProfile()} className='addHover'>
                             <CgProfile className='homeIcon'/>
                             <span class="links_name">Profile</span>
                         </a>
@@ -91,7 +100,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Explore" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/explore">
+                        <a href='#/explore'>
                             <BiSearch className='searchIcon'></BiSearch>
                             <span class="links_name">Explore</span>
                         </a>
@@ -115,7 +124,7 @@ function Header()
                 </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Settings" : ""} placement="right" className="custom-tooltip">
-                        <a href="#/studentsettings">
+                        <a href="#/settings">
                             <BiCog className='settingsIcon'></BiCog>
                             <span class="links_name">Settings</span>
                         </a>
