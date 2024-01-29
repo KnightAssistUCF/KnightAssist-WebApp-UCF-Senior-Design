@@ -85,16 +85,17 @@ router.delete('/', authenticateToken_User, async (req, res) => {
                 subject: 'Account Deletion! [KnightAssist | email: ' + user_obj.email + ']',
                 html: mail
             }
-
-            transporterForLogin.sendMail(message, (err, info) => {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).send("Failed to send email confirmation for deletion of user account");
-                } else {
-                    console.log(info);
-                    return res.status(200).send("Email confirmation request sent for deletion of user account");
-                }
-            });
+            
+            if (user_obj.receiveEmails === true)
+                transporterForLogin.sendMail(message, (err, info) => {
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).send("Failed to send email confirmation for deletion of user account");
+                    } else {
+                        console.log(info);
+                        return res.status(200).send("Email confirmation request sent for deletion of user account");
+                    }
+                });
             await userStudent.deleteOne({ email: req.body.email }).then((user) => {
                 res.status(200).send("User deleted successfully" + user);
             }).catch((err) => { res.status(400).send("Internal server error: " + err); })
