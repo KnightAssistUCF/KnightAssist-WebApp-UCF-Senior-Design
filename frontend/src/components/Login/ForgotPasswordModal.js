@@ -85,7 +85,7 @@ function ForgotPassswordModal(props)
                         <div className='forgotPWDName'>Forgot your password?</div>
 						<div className='forgotPWDInstructions'>{(!submitted) ? "No worries, just enter your email to receive a new password!" : "Success! Check your email to collect your new password"}</div>
 						{(!submitted) ? Email() : null}
-						<Button size="med" sx={{ marginRight: 3, mt: 2.75, width: 100, backgroundColor: "#463e6c", "&:hover": {backgroundColor: "#5f5395"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
+						<Button size="med" sx={{ marginRight: 3, mt: 2.75, width: 100, backgroundColor: "#593959", "&:hover": {backgroundColor: "#5f5395"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
 						{(error != undefined) ? <Alert className="forgetPWDAlert" severity="error">{error}</Alert> : null}
 	                </CardContent>   
                 </Card>
