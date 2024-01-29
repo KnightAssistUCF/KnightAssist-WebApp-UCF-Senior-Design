@@ -41,7 +41,6 @@ function FavoriteOrganizations(props)
 		setOrgCards(content);
 	}
 
-
     // Will open the organization's page
     function openOrgPage(id){
 		sessionStorage.setItem("viewingPageID", id);
@@ -49,7 +48,16 @@ function FavoriteOrganizations(props)
     }
 
     async function getOrgs(){
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
+		let studentID;
+		
+		if("viewingStudentPageID" in sessionStorage && 
+		   sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingStudentPageID")){
+			studentID = sessionStorage.getItem("viewingStudentPageID");
+		}else{
+			studentID = sessionStorage.getItem("ID");
+		}
+
+        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${studentID}`);
 
         let response = await fetch(url, {
             method: "GET",

@@ -64,7 +64,16 @@ function RecentEvents(props)
     }
 
     async function getEvents(){
-        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${sessionStorage.getItem("ID")}`);
+		let studentID;
+		
+		if("viewingStudentPageID" in sessionStorage && 
+		   sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingStudentPageID")){
+			studentID = sessionStorage.getItem("viewingStudentPageID");
+		}else{
+			studentID = sessionStorage.getItem("ID");
+		}
+
+        let url = buildPath(`api/searchUserRSVPedEvents?studentID=${studentID}`);
 
         let response = await fetch(url, {
             method: "GET",

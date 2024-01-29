@@ -91,6 +91,11 @@ function EventModal(props)
 		setOpenQRModal(true);
 	}
 
+	function openStudentPage(id){
+		sessionStorage.setItem("viewingStudentPageID", id);
+		window.location.href="/#/studentprofile";
+	}
+
     async function getVolunteerInfo(id){
 
         console.log(sessionStorage.getItem("token"))
@@ -203,10 +208,9 @@ function EventModal(props)
     }
 
     function VolunteerItem(props){
-        console.log(props.info);
         return (
 			<div>
-			    <ListItemButton className='volunteerItem'>
+			    <ListItemButton className='volunteerItem' onClick={() => openStudentPage(props.info.userID)}>
 					<Avatar
 						src={avatarPic}
 						className="volunteerPic"
