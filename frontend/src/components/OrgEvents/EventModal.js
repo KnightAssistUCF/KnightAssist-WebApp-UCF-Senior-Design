@@ -213,7 +213,7 @@ function EventModal(props)
 
     function VolunteerItem(props){
         return (
-			<div>
+			<div className='addFL'>
 			    <ListItemButton className='volunteerItem' onClick={() => openStudentPage(props.info.userID)}>
 					<Avatar
 						src={avatarPic}
@@ -237,7 +237,7 @@ function EventModal(props)
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className="volunteerList" component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mb: 1, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Edit Hours</Button> : null}
+							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
                 </Collapse>

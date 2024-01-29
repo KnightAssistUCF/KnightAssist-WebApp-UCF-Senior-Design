@@ -266,6 +266,10 @@
     cursor: context-menu;
 }
 
+.addFL{
+	float: left;
+}
+
 .volunteerItem{
     width: 200px;
 	display: none;
