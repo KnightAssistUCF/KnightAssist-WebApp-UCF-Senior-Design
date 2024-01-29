@@ -12,13 +12,17 @@ const organization = require('../../models/organization');
 const admin = require('../../models/admin');
 
 const sendEmail = (role, user) => {
+
+    if (user.receiveEmails === false)
+        return;
+
     const config = {
         service: 'gmail',
         auth: {
             user: process.env.EMAIL,
             pass: process.env.EMAIL_PASSWORD
         }
-    }
+    };
 
     const transporterForLogin = nodemailer.createTransport(config);
 
