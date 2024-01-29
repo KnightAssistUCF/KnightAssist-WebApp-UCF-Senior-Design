@@ -21,7 +21,16 @@ function StudentProfile() {
 	const editInfo = useRef({});
 
 	async function getStudentInfo(){
-		let url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
+		let studentID;
+		
+		if("viewingStudentPageID" in sessionStorage && 
+		   sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingStudentPageID")){
+			studentID = sessionStorage.getItem("viewingStudentPageID");
+		}else{
+			studentID = sessionStorage.getItem("ID");
+		}
+        
+		let url = buildPath(`api/userSearch?userID=${studentID}`);
 
 		let response = await fetch(url, {
 			  method: "GET",

@@ -256,12 +256,15 @@
 }
 
 .volunteerList{
-    left: 35%;
     margin-bottom: 50px !important;
+	border-radius: 10px;
+	background-color: rgb(241, 240, 240);
+	border-color: gray;
 }
 
 .volunteerItem{
     width: 200px;
+	display: none;
 }
 
 .volunteerName{

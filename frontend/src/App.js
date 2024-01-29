@@ -26,6 +26,7 @@ import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
 import ContactPage from './pages/ContactPage';
 import SettingsPage from './pages/SettingsPage';
+import StudentProfile from './components/StudentProfile/StudentProfile';
 
 function App() 
 {
@@ -62,9 +63,6 @@ function App()
 				<Route path="/explore" element={(role === "volunteer") ? <StudentExplorePage/> : <Navigate from='/explore' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/studentprofile" element={(role === "volunteer") ? <StudentProfilePage/> : <Navigate from='/studentprofile' to='/login' />}></Route>
-			</Routes>
-			<Routes>
 				<Route path="/studenthistory" element={(role === "volunteer") ? <StudentHistory/> : <Navigate from='/studenthistory' to='/login' />}></Route>
 			</Routes>
 			<Routes>
@@ -96,6 +94,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
 		</Router>
 		</header>
