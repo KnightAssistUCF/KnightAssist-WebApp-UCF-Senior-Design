@@ -167,7 +167,7 @@ function EventModal(props)
                 for(let id of event.attendees)
                     volunteers.push(await getVolunteerInfo(id));
 
-                setVolunteerInfo(volunteers.concat(volunteers).concat(volunteers));
+                setVolunteerInfo(volunteers);
 
 				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
 				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
