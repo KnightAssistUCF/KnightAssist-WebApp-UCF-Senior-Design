@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '../Logo';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -16,12 +16,14 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom';
+import { buildPath } from '../../path';
 
 function OrgTopBar()
 {
     const settings = ['Profile', 'Logout'];
-    const [anchorElNav, setAnchorElNav] = React.useState(null);
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElNav, setAnchorElNav] = useState(null);
+    const [anchorElUser, setAnchorElUser] = useState(null);
+	const [picName, setPicName] = useState(null);
 
 	const navigate = useNavigate();
 
@@ -37,6 +39,21 @@ function OrgTopBar()
 		setAnchorElUser(null);
 	};
 
+	async function getProfilePic(){
+		let id = sessionStorage.getItem("ID");
+
+		const url = buildPath(`api/retrieveImage?entityType=organization&id=${id}&profilePicOrBackGround=0`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let pic = await response.blob();
+
+		setPicName(pic);
+	}
+
 	function handleButtonClick(setting){
 		if(setting === "Profile"){
 			sessionStorage.removeItem("viewingPageID"); 
@@ -51,13 +68,15 @@ function OrgTopBar()
 		}
 	}
 
+	useEffect(() => {
+		getProfilePic();
+	}, [])
+
    return(
       <div className="StudentTopBar">
-    <AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
-      <Container maxWidth="xl">
-        <Toolbar disableGutters sx={{ justifyContent: 'right' }}>
-
-
+    	<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
+			<Container maxWidth="xl">
+				<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
 
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -76,7 +95,7 @@ function OrgTopBar()
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={"First" + " " +"Last"} src="/static/images/avatar/2.jpg" />
+                <Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}/>
               </IconButton>
             </Tooltip>
             <Menu
