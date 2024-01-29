@@ -258,8 +258,12 @@
 .volunteerList{
     margin-bottom: 50px !important;
 	border-radius: 10px;
-	background-color: rgb(241, 240, 240);
+	background-color: white;
 	border-color: gray;
+}
+
+.volunteerList:hover{
+    cursor: context-menu;
 }
 
 .volunteerItem{

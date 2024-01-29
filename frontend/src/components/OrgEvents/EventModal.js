@@ -53,6 +53,8 @@ function EventModal(props)
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
+	const [isPast, setIsPast] = useState(false);
+
 	// If the event has started, you can generateACode
 	const [generateCheckIn, setGenerateCheckIn] = useState(false);
 	const [generateCheckOut, setGenerateCheckOut] = useState(false);
@@ -165,10 +167,12 @@ function EventModal(props)
                 for(let id of event.attendees)
                     volunteers.push(await getVolunteerInfo(id));
 
-                setVolunteerInfo(volunteers);
+                setVolunteerInfo(volunteers.concat(volunteers).concat(volunteers));
 
 				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
 				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
+
+				setIsPast(!eventIsUpcoming(event.endTime));
         } else {
             console.log("Event undefined or not found");
         }
@@ -217,7 +221,6 @@ function EventModal(props)
 					/>
 					<ListItemText className="volunteerName" primary={props.info.name} />
           	   </ListItemButton>
-			   {(props.i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}	
 			</div>
         )
     }
@@ -233,7 +236,9 @@ function EventModal(props)
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className="volunteerList" component="button" disablePadding>
-                        {volunteerInfo.map((info, i) => <VolunteerItem info={info} i={i}/>)}
+                        {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
+							{(isPast) ? <Button sx={{ mt: 1, mb: 1, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Edit Hours</Button> : null}
+							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
                 </Collapse>
            </div>
@@ -379,7 +384,7 @@ function EventModal(props)
                                     </Grid>
                                 </Grid>
 
-                                {Volunteers()}
+                                <Volunteers/>
 
 								{(showTags) ? <Tags/> : null}
 
