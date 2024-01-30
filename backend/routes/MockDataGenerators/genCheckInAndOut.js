@@ -6,6 +6,12 @@ const Event = require('../../models/events');
 const generateRandomTimes = (start, end) => {
     const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     const checkOutTime = new Date(checkInTime.getTime() + Math.random() * (2 * 60 * 60 * 1000));
+
+    // if the checkout time is before the checkin time, we just set it to be 2hrs post checkin
+    if (checkOutTime.getTime() <= checkInTime.getTime()) {
+        checkOutTime.setTime(checkInTime.getTime() + 2 * 60 * 60 * 1000);
+    }
+
     return { checkInTime, checkOutTime };
 };
 
