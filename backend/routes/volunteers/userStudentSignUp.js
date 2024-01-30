@@ -93,7 +93,7 @@ router.post('/', async (req, res) => {
                 subject: 'Welcome to KnightAssist!',
                 html: mail
             }
-
+            
             transporterForLogin.sendMail(message, (err, info) => {
                 if (err) {
                     console.log(err);
