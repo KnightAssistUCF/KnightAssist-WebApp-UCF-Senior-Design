@@ -39,21 +39,63 @@ const sendEmail = (role, user, org, ancmt) => {
     else if (role === 'student') name = user.firstName + ' ' + user.lastName;
     else name = user.name;
 
+    let introText = `Dear ${name},<br><br>A new announcement titled "<strong>${ancmt.title}</strong>" has been posted by <strong>${org.name}</strong>. Here's a brief overview of the announcement:<br><br>`;
+
+    // [OLD template]
+    // let response = {
+    //     body: {
+    //         name: 'Hello' + name + '!',
+    //         intro: 'A new announcement has been posted by ' + org.name + '!' + '[Date: ' + ancmt.date + ']',
+    //         action: {
+    //             instructions: 'Announcement Title: ' + ancmt.title + '\n' + 'Announcement Content: ' + ancmt.content,
+    //             button: {
+    //                 color: '#22BC66', 
+    //                 text: 'View Announcement',
+    //                 link: '' // TODO to be filled
+    //             }
+
+    //         },            
+    //     }
+    // }
+
     let response = {
         body: {
-            name: 'Hello' + name + '!',
-            intro: 'A new announcement has been posted by ' + org.name + '!' + '[Date: ' + ancmt.date + ']',
+            name: name,
+            intro: introText,
+            table: {
+                data: [
+                    {
+                        'Date Posted': ancmt.date.toDateString(),
+                        'Title': ancmt.title,
+                        'Summary': ancmt.content.slice(0, 100) + '...' // A brief summary of the content
+                    }
+                ],
+                columns: {
+                    customWidth: {
+                        'Date Posted': '15%',
+                        'Title': '25%',
+                        'Summary': '60%'
+                    },
+                    customAlignment: {
+                        'Date Posted': 'left',
+                        'Title': 'left',
+                        'Summary': 'left'
+                    }
+                }
+            },
             action: {
-                instructions: 'Announcement Title: ' + ancmt.title + '\n' + 'Announcement Content: ' + ancmt.content,
+                instructions: 'To read the full announcement, please click the button below:',
                 button: {
-                    color: '#22BC66', 
-                    text: 'View Announcement',
+                    color: '#22BC66',
+                    text: 'View Full Announcement',
+                    // link: `https://your-organization-website.com/announcement/${ancmt._id}` // Link to the announcement
                     link: '' // TODO to be filled
                 }
-
-            },            
+            },
+            // Optionally include organization's details
+            signature: 'Best regards,<br>' + org.name
         }
-    }
+    };
 
     let mail = mailGenerator.generate(response);
 
