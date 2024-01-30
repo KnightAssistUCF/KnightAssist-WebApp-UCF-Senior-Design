@@ -36,7 +36,7 @@ router.get("/", async (req, res) => {
 			const checkOut = [checkInRecord.checkOutTime.toLocaleDateString(), checkInRecord.checkOutTime.toLocaleTimeString()]
 
 			const totalHours = ((checkInRecord.checkOutTime - checkInRecord.checkInTime) / 3600000).toFixed(2);
-			eventHistory.push({"ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours});
+            eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "wasAdjusted": checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent});
 		}
 
         res.status(200).send(eventHistory);
