@@ -13,11 +13,41 @@ import Button from '@mui/material/Button';
 
 
 
-
-function StudentDetailsTable(props)
+function StudentDetailsTable({upcomingEvents})
 {
-  const [orderBy, setOrderBy] = useState('createdAt');
+  const [orderBy, setOrderBy] = useState('name');
   const [order, setOrder] = useState('desc');
+  const [allEvents, setAllEvents] = useState([]);
+
+
+  async function fetchEventInfo() {
+    let tempAllEvents = [];
+    console.log(upcomingEvents);
+    for(let eventIDStudent of upcomingEvents) {
+      console.log(eventIDStudent);
+      let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
+
+      try {
+
+        let response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
+
+        let res = JSON.parse(await response.text());
+        console.log(res);
+        if(res.length > 0) {
+         tempAllEvents.push(...res); 
+        }
+        
+      } catch(e) {
+        console.log("oopsies");
+      }
+    }
+    setAllEvents([...tempAllEvents]);
+    console.log(allEvents);
+  }
+  
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -58,10 +88,10 @@ function StudentDetailsTable(props)
 
 
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(6);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
-    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(props.upcomingEvents.length / rowsPerPage) - 1);
+    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(allEvents.length / rowsPerPage) - 1);
     setPage(newPageClamped);
   };
   
@@ -71,95 +101,62 @@ function StudentDetailsTable(props)
     setPage(0);
   };
 
+  useEffect(() => {
+    fetchEventInfo();
+  }, []);
 
+  useEffect(() => {
+    console.log(allEvents);
+  }, [allEvents]);
 
 
     return(
       <div>
+        {allEvents.length > 0 && (
         <Paper variant='outlined' className='tableContainer'>
           <TableContainer >
-            <Table className="studentTable">
-              {/* <TableHead>
+            <Table className="studentEventsTable">
+               <TableHead>
                 <TableRow>
                 <TableCell>
                     
                   </TableCell>
                   <TableCell>
                     <TableSortLabel
-                      active={orderBy === 'firstName'}
-                      direction={orderBy === 'firstName' ? order : 'asc'}
-                      onClick={() => handleRequestSort('firstName')}
+                      active={orderBy === 'name'}
+                      direction={orderBy === 'name' ? order : 'asc'}
+                      onClick={() => handleRequestSort('name')}
                     >
-                      <strong>First Name</strong>
+                      <strong>Name</strong>
                     </TableSortLabel>
                   </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={orderBy === 'lastName'}
-                      direction={orderBy === 'lastName' ? order : 'asc'}
-                      onClick={() => handleRequestSort('lastName')}
-                    >
-                      <strong>Last Name</strong>
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={orderBy === 'createdAt'}
-                      direction={orderBy === 'createdAt' ? order : 'asc'}
-                      onClick={() => handleRequestSort('createdAt')}
-                    >
-                      <strong>Created</strong>
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={orderBy === 'email'}
-                      direction={orderBy === 'email' ? order : 'asc'}
-                      onClick={() => handleRequestSort('email')}
-                    >
-                      <strong>Email</strong>
-                    </TableSortLabel>
-                  </TableCell>
-                  <TableCell>
-                    <TableSortLabel
-                      active={orderBy === 'totalVolunteerHours'}
-                      direction={
-                        orderBy === 'totalVolunteerHours' ? order : 'asc'
-                      }
-                      onClick={() => handleRequestSort('totalVolunteerHours')}
-                    >
-                      <strong>Total Hours</strong>
-                    </TableSortLabel>
-                  </TableCell>
+
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSort(props.students, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {stableSort(allEvents, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(
-                  (student) => (
-                    <TableRow key={student._id}>
-                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(student._id)}>View</Button></TableCell>
-                      <TableCell>{student.firstName}</TableCell>
-                      <TableCell>{student.lastName}</TableCell>
-                      <TableCell>{student.createdAt}</TableCell>
-                      <TableCell>{student.email}</TableCell>
-                      <TableCell>{student.totalVolunteerHours}</TableCell>
+                  (allEvents) => (
+                    <TableRow key={allEvents._id}>
+                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(allEvents._id)}>View</Button></TableCell>
+                      <TableCell>{allEvents.name}</TableCell>
                     </TableRow>
                   )
                 )}
-              </TableBody> */}
+              </TableBody>
             </Table>
           </TableContainer>
-          {/* <TablePagination
-            rowsPerPageOptions={[6, 10, 20]}
+          <TablePagination
+            rowsPerPageOptions={[5, 10, 20]}
             component="div"
-            count={props.students.length}
+            count={allEvents.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
-          /> */}
+          />
         </Paper>
+        )}
       </div>
     );
 };

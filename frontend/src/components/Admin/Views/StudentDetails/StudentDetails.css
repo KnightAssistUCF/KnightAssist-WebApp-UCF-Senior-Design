@@ -14,7 +14,7 @@
     padding-left: 5vw;
     background-color: white;
     border-radius: 5px 5px 0 0;
-    height: 100vh;
+    min-height: 100vh;
     font-size: 25px;
 }
 .studentDetailsFirst {

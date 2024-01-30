@@ -461,6 +461,9 @@ const AllTags = ({ tags }) => {
               )}
             </Snackbar>
           )}
+          {upcomingEvents.length > 0 && (
+            <StudentDetailsTable upcomingEvents={upcomingEvents} />
+          )}
         </div>
         <Dialog
           open={openModal}
@@ -497,7 +500,6 @@ const AllTags = ({ tags }) => {
           </div>
         </div>
         </Dialog>
-        <StudentDetailsTable upcomingEvents={upcomingEvents} />
       </div>
     </div>
   );
