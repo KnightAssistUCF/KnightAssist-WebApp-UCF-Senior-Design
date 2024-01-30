@@ -68,7 +68,7 @@ export default function CustomizedTabs(props) {
       case 0:
         return <BioTabContent user={props.user} editMode={props.editMode} editInfo={props.editInfo}/>;
       case 1:
-		return 	<RecentEvents setOpen={props.setOpenModal} setEventID={props.setEventID}/>					
+		return 	<RecentEvents setOpen={props.setOpen} setEventID={props.setEventID}/>					
 	  case 2:
 		return <FavoriteOrganizations/>
 	  default:
