@@ -5,10 +5,13 @@ const Event = require('../../models/events');
 const userStudent = require('../../models/userStudent');
 
 const generateRandomTimes = (start, end) => {
+    // const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+    // const checkOutTime = new Date(checkInTime.getTime() + Math.random() * (2 * 60 * 60 * 1000));
+
     let checkInTime;
     let checkOutTime;
-
-	do{
+    // if the checkout time is before or equal to check in time we add 2 hours to it
+    do{
 		checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 		checkOutTime = new Date(end.getTime() + Math.random() * (2 * 60 * 60 * 1000));
 	}while(checkInTime.getTime() >= checkOutTime.getTime());
