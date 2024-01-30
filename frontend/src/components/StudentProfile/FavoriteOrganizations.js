@@ -26,7 +26,7 @@ function FavoriteOrganizations(props)
 
 		if(width > 1500){
 			return 3;
-		}else if(width > 1200){
+		}else if(width > 900){
 			return 2;
 		}else{
 			return 1;
@@ -162,7 +162,7 @@ function FavoriteOrganizations(props)
 				setOrgsPerPage(3);
 				setNumPages(Math.ceil(orgs.length / 3))
 				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 3), 3);
-			}else if(width > 1200){
+			}else if(width > 900){
 				setOrgsPerPage(2);
 				setNumPages(Math.ceil(orgs.length / 2))
 				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 2), 2);

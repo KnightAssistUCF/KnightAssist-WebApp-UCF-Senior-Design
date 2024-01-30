@@ -25,7 +25,7 @@ function RecentEvents(props)
 
 		if(width > 1500){
 			return 3;
-		}else if(width > 1200){
+		}else if(width > 900){
 			return 2;
 		}else{
 			return 1;
@@ -169,7 +169,7 @@ function RecentEvents(props)
 				setEventsPerPage(3);
 				setNumPages(Math.ceil(events.length / 3))
 				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 3), 3);
-			}else if(width > 1200){
+			}else if(width > 900){
 				setEventsPerPage(2);
 				setNumPages(Math.ceil(events.length / 2))
 				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
