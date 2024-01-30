@@ -36,15 +36,15 @@ router.post('/', async (req, res) => {
                 if (selectedEvent.attendees.includes(userID)
                 || selectedEvent.registeredVolunteers.includes(userID)) 
                 {
-                        return res.status(200).json({ status: "User already registered for event", RSVPStatus: 1 }).send();
+                        return res.status(201).json({ status: "User already registered for event", RSVPStatus: 1 }).send();
                 }else if(check == 1){
-                        return res.status(200).json({ status: "No RSVP Yet", RSVPStatus: 2 }).send();
+                        return res.status(202).json({ status: "No RSVP Yet", RSVPStatus: 2 }).send();
                 }
 
                 // check if the event is already at max length
                 // if it has a max num of attendees (which is not always the case)
                 if (selectedEvent.maxAttendees && selectedEvent.attendees.length >= selectedEvent.maxAttendees) {
-                        return res.status(200).json({ status: "Event at max capacity", RSVPStatus: 2 }).send();
+                        return res.status(202).json({ status: "Event at max capacity", RSVPStatus: 2 }).send();
                 }
 
                 // register the user to the event
