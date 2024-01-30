@@ -252,6 +252,12 @@ app.use('/api/generateDummyCheckedInStudents', generateDummyCheckedInStudents);
 const generateDummyEvents = require('./backend/routes/MockDataGenerators/generateEvents');
 app.use('/api/generateDummyEvents', generateDummyEvents);
 
+/* Getting the organiaztion working hours and address*/
+const getOrganizationWorkingHours = require('./backend/routes/organizations/getOrgWorkingHours');
+app.use('/api/getOrgWorkingHours', getOrganizationWorkingHours);
+
+const getOrganizationAddress = require('./backend/routes/organizations/getOrgLocation');
+app.use('/api/getOrgAddress', getOrganizationAddress);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
