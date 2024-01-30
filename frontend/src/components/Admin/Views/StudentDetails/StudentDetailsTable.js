@@ -61,7 +61,7 @@ function StudentDetailsTable(props)
   const [rowsPerPage, setRowsPerPage] = React.useState(6);
 
   const handleChangePage = (event, newPage) => {
-    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(props.students.length / rowsPerPage) - 1);
+    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(props.upcomingEvents.length / rowsPerPage) - 1);
     setPage(newPageClamped);
   };
   
