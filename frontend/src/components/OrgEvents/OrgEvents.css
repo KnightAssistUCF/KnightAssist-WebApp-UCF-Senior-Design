@@ -33,7 +33,7 @@
 
 .cardWhite{
     background-color: white;
-	overflow-y: scroll;
+	overflow-y: none;
     width: 100%;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .eventsCard{
-    width: 98%;
+    width: 100%;
 }
   
 .yourEvents{
