@@ -82,7 +82,13 @@ const eventSchema = new Schema({
             ref: 'userStudent',
         },
         checkInTime: Date,
-        checkOutTime: Date
+        checkOutTime: Date,
+        // this will store if the hours were adjusted for this student for a specific event 
+        // and if it is false that means it was determined based on the automatic default calculation only
+        wereHoursAdjusted_ForSudent_ForThisEvent: {
+            type: Boolean,
+            default: false
+        }
     }],
     feedback: [feedbackSchema],
     eventTags: [String],
