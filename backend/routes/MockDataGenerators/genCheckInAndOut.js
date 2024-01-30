@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Event = require('../../models/events');
+const userStudent = require('../../models/userStudent');
 
 const generateRandomTimes = (start, end) => {
     const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
@@ -19,6 +20,12 @@ router.post('/', async (req, res) => {
             // change this with the id of the student that we want to check in and out
             // across some events
             const studentId = new mongoose.Types.ObjectId('65616a1011a2035f14571238');
+
+			const student = await userStudent.findById(studentId);
+
+			student.eventsHistory.push(event._id);
+
+			await student.save();
 
             // Check if the user has already checked in
             const checkedInIndex = event.checkedInStudents.findIndex(checkIn => checkIn.studentId.equals(studentId));

@@ -62,14 +62,14 @@ function Security(props){
 		)
 	}
 
-	function AccountVisibility(){
+	function EmailSetting(){
 		return (
 			<div>
-				<div className='subHeaderTxt'>Account Visibility</div>
+				<div className='subHeaderTxt'>Receive Email Notifications</div>
 				<FormControl className='spartan settingsItem'>
-					<RadioGroup defaultValue={props.visible}>
-						<FormControlLabel value="public" control={<Radio />} label="Public" onClick={() => {props.setVisible("public")}}/>
-						<FormControlLabel value="private" control={<Radio />} label="Private"  onClick={() => {props.setVisible("private")}}/>
+					<RadioGroup defaultValue={(props.getEmails === true) ? "Yes" : "No"}>
+						<FormControlLabel value="Yes" control={<Radio />} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
+						<FormControlLabel value="No" control={<Radio />} label="No"  onClick={() => {props.setGetEmails(false)}}/>
 					</RadioGroup>
 				</FormControl>
 			</div>
@@ -85,8 +85,8 @@ function Security(props){
 			<div className='securitySubSection'> 
 				{CheckPassword()}
 			</div>
-			<div className='visibilitySpace'>
-				<AccountVisibility/>
+			<div className='getEmailSpace'>
+				<EmailSetting/>
 			</div>
 		</div>
 	);
