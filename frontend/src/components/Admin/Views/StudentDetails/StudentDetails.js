@@ -201,7 +201,7 @@ const AllTags = ({ tags }) => {
           label={tag}
           onClick={() => handleChipClick(tag)}
           color={prevSelectedTags.includes(tag) ? 'secondary' : 'default'}
-          style={{ backgroundColor: prevSelectedTags.includes(tag) ? '#5f5395' : '' }}
+          style={{ margin: '3px', backgroundColor: prevSelectedTags.includes(tag) ? '#5f5395' : '' }}
         />
       ))}
     </div>
@@ -286,10 +286,14 @@ const AllTags = ({ tags }) => {
     fetchStudentInfo();
   }, []);
 
-  const handleCancel = () => {
-    // Reset form values to their initial state
-    fetchStudentInfo();
-    setEditMode(false);
+  const handleCancel = (modalType) => {
+    if(modalType == "tags") {
+      fetchStudentInfo();
+      setOpenModal(false);
+    } else {
+      fetchStudentInfo();
+      setEditMode(false);
+    }
   };
 
   const handleEditModeToggle = () => {
@@ -388,10 +392,10 @@ const AllTags = ({ tags }) => {
           </div>
           <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsInterestsText'>Interests</div>
-            {tags.length > 0 && (
+            {prevSelectedTags.length > 0 && (
               <div className='studentDetailsInterestsField'>
                 <div className='studentDetailsInterestsTags'>
-                  {tags.map((tag, index) => (
+                  {prevSelectedTags.map((tag, index) => (
                     <Chip
                       key={index}
                       label={tag}
@@ -478,7 +482,19 @@ const AllTags = ({ tags }) => {
         </IconButton>
                   <div className='modalContent'>
           <AllTags tags={allTags} />
-          <Button variant='contained' disableElevation color='success' onClick={handleSaveTags} sx={{marginBottom: '10px', backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}}>Save</Button>
+          <div className='buttonMiddle'>
+            <Button variant='outlined' disableElevation sx={{
+                borderColor: '#808080',
+                color: '#666666',
+                '&:hover': {
+                  borderColor: '#777777',
+                  backgroundColor: '#f0f0f0',
+                },
+                marginRight: '10px',
+                marginBottom: '10px',
+              }} onClick={() => handleCancel('tags')} >Cancel</Button>
+            <Button variant='contained' disableElevation color='success' onClick={handleSaveTags} sx={{marginBottom: '10px', backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}}>Save</Button>
+          </div>
         </div>
         </Dialog>
         <StudentDetailsTable upcomingEvents={upcomingEvents} />
