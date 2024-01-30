@@ -87,6 +87,11 @@ const eventSchema = new Schema({
         // and if it is false that means it was determined based on the automatic default calculation only
         wereHoursAdjusted_ForSudent_ForThisEvent: {
             type: Boolean,
+            // store the adjuster that can be either an admin or an organization
+            adjuster: {
+                type: Schema.Types.ObjectId,
+                ref: 'userAdmin' || 'organization',
+            },
             default: false
         }
     }],
