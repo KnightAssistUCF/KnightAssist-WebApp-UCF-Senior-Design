@@ -37,8 +37,16 @@ router.get("/", async (req, res) => {
 
 			const totalHours = ((checkInRecord.checkOutTime - checkInRecord.checkInTime) / 3600000).toFixed(2);
             const wasAdjusted = checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent;
-            const whoAdjusted = checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent.adjuster;
-            eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "wasAdjusted": wasAdjusted, "whoAdjusted": whoAdjusted});
+            const whoAdjusted_ID = checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent.adjuster;
+            let whoAdjusted_Name = "";
+            // find the organization that adjusted the hours for the student volunteer
+            const org_adjuster = await organization.findById(whoAdjusted_ID);
+            if (!org_adjuster) {
+                whoAdjusted_Name = "Admin";
+            } else {
+                whoAdjusted_Name = org_adjuster.name + " (Org)";
+            }
+            eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "wasAdjusted": wasAdjusted, "whoAdjusted": whoAdjusted_Name});
 		}
 
         res.status(200).send(eventHistory);
