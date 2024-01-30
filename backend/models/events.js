@@ -91,7 +91,9 @@ const eventSchema = new Schema({
             adjuster: {
                 type: Schema.Types.ObjectId,
                 ref: 'userAdmin' || 'organization',
+                default: null
             },
+            howMuchAdjusted: Number,
             default: false
         }
     }],
