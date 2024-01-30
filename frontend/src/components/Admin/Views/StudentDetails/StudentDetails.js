@@ -28,6 +28,8 @@ function StudentDetails({ studentID }) {
   const [selectedTags, setSelectedTags] = useState([]);
   const [allTags, setAllTags] = useState([]);
   const [prevSelectedTags, setPrevSelectedTags] = useState([]);
+  const [userInputTags, setUserInputTags] = useState([]);
+  const [fetchAllTags, setFetchAllTags] = useState([]);
 
 
   const fetchStudentInfo = async () => {
@@ -142,35 +144,70 @@ async function handleEditTags() {
 }
 
 
+// function handleTagClick(idx){
+//   if(colors[idx] !== "default"){
+//     tempSelectedTags.splice(tempSelectedTags.indexOf(tagNames[idx]), 1);
+//     colors[idx] = "default"; 
+//   }else{
+//     if(tempSelectedTags.length < 10){
+//       tempSelectedTags.push(tagNames[idx]);
+//       console.log(tempSelectedTags);
+//       colors[idx] = "#5f5395";
+//     }
+//   }
+
+//   setTempSelectedTags(tempSelectedTags);
+
+//   getAllTags();
+//   }
 
 
 
+// function AllTags({ tags }) {
+//   return (
+//     <div>
+//       <p className='tagQuestion'></p>
+//       <div className='allTagsBox'>
+//         {tags.map((name, idx) => (
+//           <Chip
+//             key={idx}
+//             label={name}
+//             className='tagChip'
+//             onClick={() => handleTagClick(idx)}
 
-function AllTags({ tags }) {
+//           />
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+const AllTags = ({ tags }) => {
+  const handleChipClick = (tag) => {
+    const isSelected = prevSelectedTags.includes(tag);
+    console.log(tag);
+    if (isSelected) {
+      setPrevSelectedTags(prevSelectedTags.filter((selectedTag) => selectedTag !== tag));
+    } else if(!isSelected && prevSelectedTags.length < 10) {
+      setPrevSelectedTags([...prevSelectedTags, tag]);
+    }
+  };
+
   return (
-    <div>
-      <p className='tagQuestion'></p>
-      <div className='allTagsBox'>
-        {tags.map((name, idx) => (
-          <Chip
-            key={idx}
-            label={name}
-            className='tagChip'
-            onClick={() => handleTagSelect(name)}
-            sx={{
-              backgroundColor: prevSelectedTags.includes(name) ? '#5f5395' : 'default',
-              color: prevSelectedTags.includes(name) ? 'white' : 'black',
-              '&:hover': {
-                backgroundColor: prevSelectedTags.includes(name) ? '#5f5395' : 'default',
-                color: prevSelectedTags.includes(name) ? 'white' : 'black',
-              },
-            }}
-          />
-        ))}
-      </div>
+    <div className='allTagsBox'>
+      {tags.map((tag) => (
+        <Chip
+          key={tag}
+          label={tag}
+          onClick={() => handleChipClick(tag)}
+          color={prevSelectedTags.includes(tag) ? 'secondary' : 'default'}
+          style={{ backgroundColor: prevSelectedTags.includes(tag) ? '#5f5395' : '' }}
+        />
+      ))}
     </div>
   );
-}
+};
+
 
 
   
@@ -268,25 +305,25 @@ function AllTags({ tags }) {
     try {
       // Implement logic to save selected tags
       const json = {
-        _id: id,
-        categoryTags: selectedTags,
+        id: id,
+        categoryTags: prevSelectedTags,
       };
+      console.log(json);
   
-      const url = buildPath(`api/editUserProfileTags`);
+      var url = buildPath(`api/editUserProfile`);
   
-      const response = await fetch(url, {
+      var response = await fetch(url, {
         method: "POST",
         body: JSON.stringify(json),
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
   
-      if (response.status === 404) {
-        setMessage("Error occurred, could not save tags");
-      } else {
+      if (response.status === 200) {
         setMessage("Tags saved successfully");
+      } else {
+        setMessage("Error occurred, could not save tags");
       }
   
       setOpenModal(false);
