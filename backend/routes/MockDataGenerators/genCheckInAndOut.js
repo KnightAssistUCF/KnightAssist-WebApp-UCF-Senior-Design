@@ -2,14 +2,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const Event = require('../../models/events');
+const userStudent = require('../../models/userStudent');
 
 const generateRandomTimes = (start, end) => {
     const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     const checkOutTime = new Date(checkInTime.getTime() + Math.random() * (2 * 60 * 60 * 1000));
 
-    // if the checkout time is before the checkin time, we just set it to be 2hrs post checkin
-    if (checkOutTime.getTime() <= checkInTime.getTime()) {
-        checkOutTime.setTime(checkInTime.getTime() + 2 * 60 * 60 * 1000);
+    // if the checkout time is before or equal to check in time we add 2 hours to it
+    if (checkOutTime <= checkInTime) {
+        checkOutTime.setTime(checkOutTime.getTime() + 2 * 60 * 60 * 1000);
     }
 
     return { checkInTime, checkOutTime };
@@ -25,6 +26,12 @@ router.post('/', async (req, res) => {
             // change this with the id of the student that we want to check in and out
             // across some events
             const studentId = new mongoose.Types.ObjectId('65616a1011a2035f14571238');
+
+            const student = await userStudent.findById(studentId);
+
+            student.eventsHistory.push(event._id);
+
+            await student.save();
 
             // Check if the user has already checked in
             const checkedInIndex = event.checkedInStudents.findIndex(checkIn => checkIn.studentId.equals(studentId));
