@@ -7,6 +7,12 @@ const userStudent = require('../../models/userStudent');
 const generateRandomTimes = (start, end) => {
     const checkInTime = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     const checkOutTime = new Date(checkInTime.getTime() + Math.random() * (2 * 60 * 60 * 1000));
+
+    // if the checkout time is before or equal to check in time we add 2 hours to it
+    if (checkOutTime <= checkInTime) {
+        checkOutTime.setTime(checkOutTime.getTime() + 2 * 60 * 60 * 1000);
+    }
+
     return { checkInTime, checkOutTime };
 };
 
@@ -21,11 +27,11 @@ router.post('/', async (req, res) => {
             // across some events
             const studentId = new mongoose.Types.ObjectId('65616a1011a2035f14571238');
 
-			const student = await userStudent.findById(studentId);
+            const student = await userStudent.findById(studentId);
 
-			student.eventsHistory.push(event._id);
+            student.eventsHistory.push(event._id);
 
-			await student.save();
+            await student.save();
 
             // Check if the user has already checked in
             const checkedInIndex = event.checkedInStudents.findIndex(checkIn => checkIn.studentId.equals(studentId));
