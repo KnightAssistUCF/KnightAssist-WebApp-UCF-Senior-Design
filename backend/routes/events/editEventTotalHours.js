@@ -26,8 +26,8 @@ router.post("/", async (req, res) => {
             return res.status(404).send("Student not found in the list of checked in students for event named " + event_obj.name);
         }
         let adjusterEntity = null;
-        if(!whoAdjustedTime === "admin")
-            adjusterEntity = await organization.findById(event.sponsoringOrganization);
+        if(whoAdjustedTime !== "admin")
+            adjusterEntity = await organization.findById(event_obj.sponsoringOrganization);
 
 
         const oldCheckin = checkInRecord.checkInTime;
@@ -41,13 +41,15 @@ router.post("/", async (req, res) => {
         checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent.adjuster = adjusterEntity._id;
         const newTotalHours = ((newCheckOut - newCheckIn) / 3600000).toFixed(2);
         checkInRecord.wereHoursAdjusted_ForSudent_ForThisEvent.howMuchAdjusted = oldCalculatedTime - newTotalHours;
+        await event_obj.save();
+
 
 
         // update the actual record of the student 
         student_obj.totalVolunteerHours -= oldCalculatedTime;
         student_obj.totalVolunteerHours += newTotalHours;
 
-        res.status(200).send(eventHistory);
+        res.status(200).send(event_obj.checkedInStudents);
     } catch (err) {
         res.status(500).send(err.message);
     }
