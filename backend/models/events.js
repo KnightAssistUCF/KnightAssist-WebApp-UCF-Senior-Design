@@ -93,7 +93,7 @@ const eventSchema = new Schema({
                 ref: 'userAdmin' || 'organization',
                 default: null
             },
-            howMuchAdjusted: Number,
+            howMuchAdjusted: Number, // manula input edited version - autmated checkin and out to see by how much this was adjusted
             default: false
         }
     }],
