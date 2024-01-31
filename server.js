@@ -85,6 +85,9 @@ app.use('/api/addEvent', addEvent);
 const historyOfEvents_User = require('./backend/routes/volunteers/historyOfEvents_User');
 app.use('/api/historyOfEvents_User', historyOfEvents_User);
 
+const historyOfSingleEvent_User = require('./backend/routes/volunteers/historyOfSingleEvent_User');
+app.use('/api/historyOfSingleEvent_User', historyOfSingleEvent_User);
+
 const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 

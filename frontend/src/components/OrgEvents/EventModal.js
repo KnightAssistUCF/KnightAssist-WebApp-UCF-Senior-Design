@@ -35,8 +35,10 @@ function EventModal(props)
 {
     const handleCloseModal = () => {props.setOpen(false);}
     const handleCloseAlert = () => {setOpenAlert(false);}
+	const handleCloseHours = () => {setOpenEditHours(false)};
 
     const [openAlert, setOpenAlert] = useState(false);
+	const [openEditHours, setOpenEditHours] = useState(false);
     const [openVolunteers, setOpenVolunteers] = useState(false);
 
     const [name, setName] = useState("");
@@ -50,6 +52,9 @@ function EventModal(props)
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
 	const [showTags, setShowTags] = useState(false);
+
+	// For editing a volunteer's hours for an event
+	const [curVolunteerID, setCurVolunteerID] = useState(undefined);
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -173,11 +178,38 @@ function EventModal(props)
 				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
 
 				setIsPast(!eventIsUpcoming(event.endTime));
+
+				setOpenVolunteers(false);
         } else {
             console.log("Event undefined or not found");
-        }
-	    
+        }   
     }
+
+	async function getStudentTimes(info){
+		console.log(info);
+
+		try {
+		   
+			let url = buildPath(`api/historyOfSingleEvent_User?studentId=${info.userID}&eventId=${props.eventID}`);
+
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let res = JSON.parse(await response.text());
+
+			console.log(res);
+
+			
+		} catch (e) {
+			console.log(e);
+		}  
+	}
+
+	async function saveHours(){
+
+	}
 
     function EventName(){
         return (
@@ -237,7 +269,8 @@ function EventModal(props)
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className="volunteerList" component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Edit Hours</Button> : null}
+							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
                 </Collapse>
@@ -430,6 +463,17 @@ function EventModal(props)
                                         <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
                                         </DialogActions>
                                 </Dialog> 
+
+								<Dialog open={openEditHours} onClose={handleCloseHours}>
+									<DialogContent className='spartan tagModal'>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+											<DialogTitle className='dialogTitle'>Edit Volunteer's Hours</DialogTitle>
+											<div className='tagSection'>
+											</div>
+											<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
+										</Grid>
+									</DialogContent>
+								</Dialog>
                             </Box>
                         </Container>
                     </CardContent>   
