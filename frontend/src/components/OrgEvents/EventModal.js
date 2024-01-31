@@ -58,7 +58,7 @@ function EventModal(props)
 	// For editing a volunteer's hours for an event
 	const [curVolunteerID, setCurVolunteerID] = useState(undefined);
 	const [newCheckInTime, setNewCheckInTime] = useState(undefined);
-	const [newCheckOutTime, setNewCheckOutTIme] = useState(undefined);
+	const [newCheckOutTime, setNewCheckOutTime] = useState(undefined);
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -207,7 +207,10 @@ function EventModal(props)
 
 			setCurVolunteerID(info.userID);
 			setNewCheckInTime(info.checkInTime);
-			setNewCheckOutTIme(info.checkOutTime);
+			setNewCheckOutTime(info.checkOutTime);
+
+			
+			
 
 			
 		} catch (e) {
@@ -216,7 +219,32 @@ function EventModal(props)
 	}
 
 	async function saveHours(){
+		try{
+			const json = {
+				eventID: props.eventID,
+				studentID: curVolunteerID,
+				newCheckIn: newCheckInTime,
+				newCheckOut: newCheckOutTime,
+				whoAdjustedTime: "organization"
+			};
+	
+			console.log(json);
+	
+			let url = buildPath("api/editEventTotalHours");
+	
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let res = JSON.parse(await response.text());
+			console.log(res);
 
+			handleCloseHours();
+		}catch(e){
+			console.log(e);
+		}
 	}
 
     function EventName(){
@@ -490,8 +518,8 @@ function EventModal(props)
 										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
 											{TimeSelector({label:"Check In", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
 										</Grid>
-										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
-											{TimeSelector({label:"Check Out", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+											{TimeSelector({label:"Check Out", value:newCheckOutTime, onChange:(e) => setNewCheckOutTime(e)})}  
 										</Grid>
 										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 											<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
