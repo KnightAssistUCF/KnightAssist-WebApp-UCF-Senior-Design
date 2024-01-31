@@ -65,7 +65,7 @@ const sendEmail = (role, user, org, ancmt) => {
             table: {
                 data: [
                     {
-                        'Date Posted': ancmt.date.toDateString(),
+                        'Date Posted': new Date(),
                         'Title': ancmt.title,
                         'Summary': ancmt.content.slice(0, 100) + '...' // A brief summary of the content
                     }
