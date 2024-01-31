@@ -46,10 +46,11 @@ function OrgHome() {
   }
 
   async function getChartData() {
-    const chartUrl = buildPath('api/attendanceAnalytics?orgId=' + sessionStorage.getItem('ID'));
+    const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem('ID')}&numEvents=5`);
     try {
       const response = await fetch(chartUrl);
       const jsonData = await response.json();
+	  console.log(jsonData);
       setChartData(jsonData);
     } catch (error) {
       console.error('Error fetching chart data:', error);
