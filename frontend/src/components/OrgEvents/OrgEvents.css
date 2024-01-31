@@ -329,6 +329,12 @@
 	cursor: pointer;
 }
 
+.hourModal{
+	height: 400px !important;
+	width: 450px !important;
+	overflow: none !important;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;
@@ -337,7 +343,6 @@
 	.eventsCard{
 		width: 95%;
 	}
-	
 }
 
 @media (max-width: 1290px) {

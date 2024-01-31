@@ -28,6 +28,8 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import QRCodeModal from './QRCodeModal';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const avatarPic = require("./DefaultPic.png");
 
@@ -55,6 +57,8 @@ function EventModal(props)
 
 	// For editing a volunteer's hours for an event
 	const [curVolunteerID, setCurVolunteerID] = useState(undefined);
+	const [newCheckInTime, setNewCheckInTime] = useState(undefined);
+	const [newCheckOutTime, setNewCheckOutTIme] = useState(undefined);
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -197,9 +201,13 @@ function EventModal(props)
 				headers: {"Content-Type": "application/json"},
 			});
 		
-			let res = JSON.parse(await response.text());
+			let hoursInfo = JSON.parse(await response.text());
 
-			console.log(res);
+			console.log(hoursInfo);
+
+			setCurVolunteerID(info.userID);
+			setNewCheckInTime(info.checkInTime);
+			setNewCheckOutTIme(info.checkOutTime);
 
 			
 		} catch (e) {
@@ -241,6 +249,16 @@ function EventModal(props)
                 {props.info}                             
             </Grid>   
         ) 
+    }
+
+	function TimeSelector(props){
+        return (
+            <Grid>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DateTimePicker label={props.label} onChange={props.onChange}/>
+                </LocalizationProvider>                                      
+            </Grid>      
+        )
     }
 
     function VolunteerItem(props){
@@ -465,11 +483,17 @@ function EventModal(props)
                                 </Dialog> 
 
 								<Dialog open={openEditHours} onClose={handleCloseHours}>
-									<DialogContent className='spartan tagModal'>
+									<DialogContent className='spartan hourModal'>
 										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 											<DialogTitle className='dialogTitle'>Edit Volunteer's Hours</DialogTitle>
-											<div className='tagSection'>
-											</div>
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
+											{TimeSelector({label:"Check In", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
+											{TimeSelector({label:"Check Out", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 											<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
 										</Grid>
 									</DialogContent>
