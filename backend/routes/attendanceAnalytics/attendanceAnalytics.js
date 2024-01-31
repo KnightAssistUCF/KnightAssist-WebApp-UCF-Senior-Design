@@ -2,6 +2,7 @@ const express = require('express');
 const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const Organization = require('../../models/organization');
 const Event = require('../../models/events');
+const { default: mongoose } = require('mongoose');
 const router = express.Router();
 // GRAPH Dimensions
 const width = 800;
@@ -58,7 +59,7 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-        const { orgId, numEvents } = req.params; 
+        const { orgId, numEvents } = req.query; 
         // numEvents stores up to 5 for regular display or more than 5 would trigger a pop up [Front end]
         // on abckend this will just control how many events to be plotted [Backend]
         
@@ -69,11 +70,11 @@ router.get('/', async (req, res) => {
         }
 
         // Find all events by this org
-        const events = null;
+        let events = null;
         if (numEvents <= 5) {
-            events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) }).limit(numEvents);
+            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(numEvents);
         } else {
-            events = await Event.find({ sponsoringOrganization: mongoose.Types.ObjectId(orgId) });
+            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
         }
 
         if (!events) {
