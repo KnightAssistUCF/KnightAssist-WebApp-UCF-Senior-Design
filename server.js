@@ -248,10 +248,20 @@ app.use('/api/retrieveAllFeedback_ForAnOrg', retrieveAllFeedback_ForAnOrg);
 const generateDummyCheckedInStudents = require('./backend/routes/MockDataGenerators/generatorCheckIn');
 app.use('/api/generateDummyCheckedInStudents', generateDummyCheckedInStudents);
 
+/* Generate dummy check in and out for a student across a couple events */
+const genCheckInAndOut = require('./backend/routes/MockDataGenerators/genCheckInAndOut');
+app.use('/api/genCheckInAndOut', genCheckInAndOut);
+
 /* Generate dummy events for a certain organization */
 const generateDummyEvents = require('./backend/routes/MockDataGenerators/generateEvents');
 app.use('/api/generateDummyEvents', generateDummyEvents);
 
+/* Getting the organiaztion working hours and address*/
+const getOrganizationWorkingHours = require('./backend/routes/organizations/getOrgWorkingHours');
+app.use('/api/getOrgWorkingHours', getOrganizationWorkingHours);
+
+const getOrganizationAddress = require('./backend/routes/organizations/getOrgLocation');
+app.use('/api/getOrgAddress', getOrganizationAddress);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

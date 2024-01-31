@@ -93,6 +93,11 @@ const userStudentSchema = new mongoose.Schema({
         required: true,
         default: true
     },
+    receiveEmails: { // this is a new field to see if the student wants to receive emails
+        type: Boolean,
+        required: true,
+        default: true
+    },
     __v: {
         type: String,
         required: true,

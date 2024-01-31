@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { Divider, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -89,6 +89,11 @@ function EventModal(props)
 	function QROnClick(type){
 		setCheckType(type);
 		setOpenQRModal(true);
+	}
+
+	function openStudentPage(id){
+		sessionStorage.setItem("viewingStudentPageID", id);
+		window.location.href="/#/studentprofile";
 	}
 
     async function getVolunteerInfo(id){
@@ -203,15 +208,17 @@ function EventModal(props)
     }
 
     function VolunteerItem(props){
-        console.log(props.info);
         return (
-            <ListItemButton className='volunteerItem'>
-                <Avatar
-                    src={avatarPic}
-                    className="volunteerPic"
-                />
-                <ListItemText className="volunteerName" primary={props.info.name} />
-            </ListItemButton>
+			<div>
+			    <ListItemButton className='volunteerItem' onClick={() => openStudentPage(props.info.userID)}>
+					<Avatar
+						src={avatarPic}
+						className="volunteerPic"
+					/>
+					<ListItemText className="volunteerName" primary={props.info.name} />
+          	   </ListItemButton>
+			   {(props.i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}	
+			</div>
         )
     }
 
@@ -225,8 +232,8 @@ function EventModal(props)
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
-                    <List className="volunteerList" component="div" disablePadding>
-                        {volunteerInfo.map(info => <VolunteerItem info={info}/>)}
+                    <List className="volunteerList" component="button" disablePadding>
+                        {volunteerInfo.map((info, i) => <VolunteerItem info={info} i={i}/>)}
                     </List>
                 </Collapse>
            </div>
