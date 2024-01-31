@@ -208,8 +208,8 @@ function EventModal(props)
 			console.log(hoursInfo);
 
 			setCurVolunteerID(info.userID);
-			setNewCheckInTime(info.checkInTime);
-			setNewCheckOutTime(info.checkOutTime);
+			setNewCheckInTime(hoursInfo.checkInTime);
+			setNewCheckOutTime(hoursInfo.checkOutTime);
 		} catch (e) {
 			console.log(e);
 		}  
@@ -296,7 +296,7 @@ function EventModal(props)
         return (
             <Grid>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DateTimePicker label={props.label} onChange={props.onChange}/>
+					<DateTimePicker label={props.label} value={dayjs(props.value)} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
