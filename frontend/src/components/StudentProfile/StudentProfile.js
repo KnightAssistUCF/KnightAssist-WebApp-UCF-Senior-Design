@@ -65,11 +65,7 @@ function StudentProfile() {
 					<div>
 						<StudentBox user={user} editMode={editMode} setEditMode={setEditMode} editInfo={editInfo} reset={reset} setReset={setReset}/>
 						<div className='studentTabs'>
-							<NavTabs user={user} editMode={editMode} editInfo={editInfo}/>
-						</div>
-						<div className='cardSections'>
-							<FavoriteOrganizations/>
-							<RecentEvents setOpen={setOpenModal} setEventID={setEventID}/>					
+							<NavTabs user={user} editMode={editMode} editInfo={editInfo} setOpen={setOpenModal} setEventID={setEventID}/>
 						</div>
 						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
 					</div>

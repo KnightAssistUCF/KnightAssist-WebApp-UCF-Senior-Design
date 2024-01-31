@@ -49,8 +49,9 @@ router.get("/", async (req, res) => {
                     whoAdjusted_Name = org_adjuster.name + " (Org)";
                 }
                 eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "adjustedTotal": howMuchAdjusted,"wasAdjusted": wasAdjusted, "whoAdjusted": whoAdjusted_Name });
-            }
-            eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "wasAdjusted": wasAdjusted});
+            }else{
+				eventHistory.push({ "ID": event._id, "name": event.name, "org": org.name, "checkIn": checkIn, "checkOut": checkOut, "hours": totalHours, "wasAdjusted": wasAdjusted});
+			}
 		}
 
         res.status(200).send(eventHistory);

@@ -78,9 +78,9 @@ function StudentBox(props) {
 	async function getProfilePic(){
 		let id;
 
-		if("viewingPageID" in sessionStorage && 
-		    sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingPageID")){
-			id = sessionStorage.getItem("viewingPageID");
+		if("viewingStudentPageID" in sessionStorage && 
+		    sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingStudentPageID")){
+			id = sessionStorage.getItem("viewingStudentPageID");
 		}else{
 			id = sessionStorage.getItem("ID");
 		}
