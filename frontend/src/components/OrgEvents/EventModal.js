@@ -31,8 +31,6 @@ import QRCodeModal from './QRCodeModal';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-const avatarPic = require("./DefaultPic.png");
-
 function EventModal(props)
 {
     const handleCloseModal = () => {props.setOpen(false);}
@@ -50,6 +48,10 @@ function EventModal(props)
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [curVolunteers, setCurVolunteers] = useState(0);
+	const [studentPics, setStudentPics] = useState([]);
+	
+	// For volunteers that checkedin/out of the event
+	const [attendedVolunteers, setAttendedVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
@@ -175,10 +177,26 @@ function EventModal(props)
 
                 const volunteers = [];
 
-                for(let id of event.attendees)
-                    volunteers.push(await getVolunteerInfo(id));
+				const pics = [];
 
+				if(!eventIsUpcoming(event.endTime)){
+					for(let student of event.checkedInStudents){
+                   		volunteers.push(await getVolunteerInfo(student.studentId));
+						pics.push(await getStudentPic(student.studentId))
+					}
+				}else{
+					for(let id of event.attendees){
+                    	volunteers.push(await getVolunteerInfo(id));
+						pics.push(await getStudentPic(id));
+					}
+				}
+
+				setAttendedVolunteers(event.checkedInStudents.length);
                 setVolunteerInfo(volunteers);
+
+				setStudentPics(pics);
+
+				console.log(pics);
 
 				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
 				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
@@ -213,6 +231,23 @@ function EventModal(props)
 		} catch (e) {
 			console.log(e);
 		}  
+	}
+
+	async function getStudentPic(id){
+		try{
+			const url = buildPath(`api/retrieveImage?id=${id}&entityType=student&profilePicOrBackGround=0`);
+
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+			return URL.createObjectURL(pic);
+		}catch(e){
+			console.log(e);
+		}
 	}
 
 	// Check in isn't after check out
@@ -307,7 +342,7 @@ function EventModal(props)
 			<div className='addFL'>
 			    <ListItemButton className='volunteerItem' onClick={() => openStudentPage(props.info.userID)}>
 					<Avatar
-						src={avatarPic}
+						src={studentPics[props.i]}
 						className="volunteerPic"
 					/>
 					<ListItemText className="volunteerName" primary={props.info.name} />
@@ -320,9 +355,9 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <button className="volunteersBtn" onClick={() => {if(curVolunteers > 0) setOpenVolunteers(!openVolunteers)}}>
-                    <p className='lessSpace'>Registered Volunteers:</p>
-                    <p>{curVolunteers}/{maxVolunteers}</p>
+                <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
+                    <p className={(!isPast) ? 'lessSpace' : ''}>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"}</p>
+                    {(!isPast) ? <p>{curVolunteers + "/" + maxVolunteers} </p> : null}
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
