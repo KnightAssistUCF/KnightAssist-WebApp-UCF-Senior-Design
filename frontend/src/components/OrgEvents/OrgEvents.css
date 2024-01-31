@@ -335,6 +335,10 @@
 	overflow: none !important;
 }
 
+.addAlertSpace{
+	margin-top: 15px;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;

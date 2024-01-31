@@ -1,4 +1,4 @@
-import { Divider, Modal } from '@mui/material';
+import { Alert, Divider, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -37,7 +37,7 @@ function EventModal(props)
 {
     const handleCloseModal = () => {props.setOpen(false);}
     const handleCloseAlert = () => {setOpenAlert(false);}
-	const handleCloseHours = () => {setOpenEditHours(false)};
+	const handleCloseHours = () => {setOpenEditHours(false); setShowError(false)};
 
     const [openAlert, setOpenAlert] = useState(false);
 	const [openEditHours, setOpenEditHours] = useState(false);
@@ -59,6 +59,8 @@ function EventModal(props)
 	const [curVolunteerID, setCurVolunteerID] = useState(undefined);
 	const [newCheckInTime, setNewCheckInTime] = useState(undefined);
 	const [newCheckOutTime, setNewCheckOutTime] = useState(undefined);
+	const [showError, setShowError] = useState(false);
+
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -208,17 +210,28 @@ function EventModal(props)
 			setCurVolunteerID(info.userID);
 			setNewCheckInTime(info.checkInTime);
 			setNewCheckOutTime(info.checkOutTime);
-
-			
-			
-
-			
 		} catch (e) {
 			console.log(e);
 		}  
 	}
 
+	// Check in isn't after check out
+	function validTime(startTime, endTime){
+		return new Date(startTime) < new Date(endTime);
+	}
+
+    function validInput(){
+		if(!validTime(newCheckInTime, newCheckOutTime)){
+			setShowError(true);
+			return false;
+		}
+		
+        return true;
+    }
+
 	async function saveHours(){
+		if(!validInput()) return;
+
 		try{
 			const json = {
 				eventID: props.eventID,
@@ -342,6 +355,21 @@ function EventModal(props)
                         {tags.map(t => <Tag tag={t}/>)}
                     </Grid>
                 </div>
+        )
+    }
+
+	function ErrorMessage(){
+        return (
+            <div>
+                {(showError) === true
+                    ?
+                        <div className='addAlertSpace'>
+                            <Alert severity="error">Check-in after check-out</Alert>					
+                        </div>
+                    :
+                        null
+                }
+            </div>
         )
     }
 
@@ -522,8 +550,9 @@ function EventModal(props)
 											{TimeSelector({label:"Check Out", value:newCheckOutTime, onChange:(e) => setNewCheckOutTime(e)})}  
 										</Grid>
 										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
-											<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
+											<Button sx={{ mt: 5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
 										</Grid>
+										<ErrorMessage/>
 									</DialogContent>
 								</Dialog>
                             </Box>
