@@ -37,7 +37,7 @@ function StudentDetailsTable({upcomingEvents})
         let res = JSON.parse(await response.text());
         console.log(res);
         if(res.length > 0) {
-         tempAllEvents.push(...res); 
+          tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
         }
         
       } catch(e) {
@@ -118,10 +118,10 @@ function StudentDetailsTable({upcomingEvents})
             <Table className="studentEventsTable">
                <TableHead>
                 <TableRow>
-                <TableCell>
+                <TableCell style={{ width: '10%' }}>
                     
                   </TableCell>
-                  <TableCell>
+                  <TableCell style={{ width: '50%' }}>
                     <TableSortLabel
                       active={orderBy === 'name'}
                       direction={orderBy === 'name' ? order : 'asc'}
@@ -136,10 +136,10 @@ function StudentDetailsTable({upcomingEvents})
               <TableBody>
                 {stableSort(allEvents, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(
-                  (allEvents) => (
-                    <TableRow key={allEvents._id}>
-                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(allEvents._id)}>View</Button></TableCell>
-                      <TableCell>{allEvents.name}</TableCell>
+                  (singleEvent) => (
+                    <TableRow key = {singleEvent._id}>
+                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
+                      <TableCell>{singleEvent.name}</TableCell>
                     </TableRow>
                   )
                 )}
