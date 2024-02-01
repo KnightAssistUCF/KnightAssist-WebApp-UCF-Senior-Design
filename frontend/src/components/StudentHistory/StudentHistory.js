@@ -132,7 +132,7 @@ function StudentHistory()
 																</span>} 						
 														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 															{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours + ((history.wasAdjusted) ? " (Adjusted)" : "")}
 																</span>}
 											/>
 										</Grid>
