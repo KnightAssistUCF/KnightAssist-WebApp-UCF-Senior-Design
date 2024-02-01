@@ -9,7 +9,7 @@
     "@radix-ui/react-tabs": "^1.0.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
-    "chart.js": "^4.4.1",
+    "chart.js": "^3.5.1",
     "chartjs": "^0.3.24",
     "chartjs-node-canvas": "^4.1.6",
     "class-variance-authority": "^0.7.0",
