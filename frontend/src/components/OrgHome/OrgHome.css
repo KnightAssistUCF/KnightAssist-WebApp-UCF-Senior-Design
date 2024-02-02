@@ -72,3 +72,11 @@
 .moveY{
 	margin-right: 20px !important;
 }
+
+.chartImage{
+	margin-left: 13%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	width: 650px;
+	height: 400px;
+}
