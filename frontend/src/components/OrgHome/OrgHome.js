@@ -16,7 +16,7 @@ function OrgHome() {
   const [openAnnouncement, setOpenAnnouncement] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [chartData, setChartData] = useState([]);
+  const [chartData, setChartData] = useState(undefined);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
@@ -46,10 +46,10 @@ function OrgHome() {
   }
 
   async function getChartData() {
-    const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem('ID')}&numEvents=5`);
+    const chartUrl = buildPath(`api/attendanceAnalytics`);
     try {
       const response = await fetch(chartUrl);
-      const jsonData = await response.json();
+      const jsonData = await response.blob();
 	  console.log(jsonData);
       setChartData(jsonData);
     } catch (error) {
@@ -89,23 +89,7 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
             <StatCards />
-			<BarChart className="eventChart" width={900} height={475} data={chartData} >
-				<CartesianGrid  strokeDasharray="3 3"/>
-				<XAxis dataKey="name" fontSize={15} dy={10}/>
-				<YAxis className='moveY' fontSize={10}>
-					<Label
-						angle={270} 
-						value="Number of Attendees"
-						fontSize={25}
-						dx={-20}
-					/>
-	  			</YAxis>
-				<Tooltip />
-				<Legend />
-				<Bar dataKey="RSVPed" fill="#8884d8" />
-				<Bar dataKey="Attended" fill="#82ca9d" />
-				<Bar dataKey="NoShow" fill="#ffc658" />
-			</BarChart>
+			{(chartData) ? <img className='chartImage' src={URL.createObjectURL(chartData)}></img>: null}
         </div>
         <Analytics />
       </div>
