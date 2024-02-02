@@ -5,8 +5,8 @@ const Event = require('../../models/events');
 const { default: mongoose } = require('mongoose');
 const router = express.Router();
 // GRAPH Dimensions
-const width = 1000;
-const height = 500;
+const width = 1100;
+const height = 400;
 
 // Mock ObjectId generator
 const mockObjectId = () => Math.random().toString(16).substring(2, 14) + Math.random().toString(16).substring(2, 14);
