@@ -90,6 +90,7 @@ function OrgHome() {
         <div className="orgHomeBottomRow">
             <StatCards />
 			{(chartData) ? <img className='chartImage' src={URL.createObjectURL(chartData)}></img>: null}
+			<Button sx={{ mt: "14%", mb: 4, ml: 3.5, width: 175, height: 50, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Chart All Events</Button>
         </div>
         <Analytics />
       </div>
