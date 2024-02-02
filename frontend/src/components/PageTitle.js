@@ -7,7 +7,7 @@ function PageTitle(props)
    return(
       <div onClick={(props.onClick) ? props.onClick : null} className={props.mainStyle}>
         <Logo theStyle={props.logoStyle}/>
-        <h1 id="title" className={props.titleStyle + ' title center'}>Knight Assist</h1>
+        <h1 id="title" className={props.titleStyle + ' title center'}>KnightAssist</h1>
       </div>
    );
 };
