@@ -181,7 +181,7 @@ router.get('/', async (req, res) => {
                             display: true,
                             text: 'Number of Attendees',
                             font: {
-                                weight: 'bold'
+								size: 20
                             }
                         }
                     },
@@ -190,7 +190,7 @@ router.get('/', async (req, res) => {
                             display: true,
                             text: 'Event Names',
                             font: {
-                                weight: 'bold'
+								size: 20
                             }
                         }
                     }
@@ -200,10 +200,13 @@ router.get('/', async (req, res) => {
                 plugins: {
                     title: {
                         display: true,
-                        text: 'Event Attendance Analysis'
-                    }
-                }
-            }
+                        text: 'Event Attendance Analysis',
+						font: {
+							size: 25
+                    	}
+                	}
+           		}
+			}
         };
 
 
