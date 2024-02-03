@@ -59,9 +59,7 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-         const { orgId, numEvents } = req.query; 
-        // numEvents stores up to 5 for regular display or more than 5 would trigger a pop up [Front end]
-        // // on abckend this will just control how many events to be plotted [Backend]
+        const { orgId, limit } = req.query; 
         
         const organization = await Organization.findById(orgId);
 
@@ -71,10 +69,11 @@ router.get('/', async (req, res) => {
 
         // Find all events by this org
         let events = null;
-        if (numEvents <= 10) {
+        if (limit) {
             events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
     	} else {
-             events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
+            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
+			events = events.concat(events).concat(events);
         }
 
         if (!events) {

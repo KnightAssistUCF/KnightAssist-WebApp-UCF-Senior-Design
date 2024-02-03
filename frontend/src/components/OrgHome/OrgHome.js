@@ -53,7 +53,7 @@ function OrgHome() {
 	}
 
 	async function getChartData() {
-		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=5`);
+		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&limit=true`);
 		try {
 			const response = await fetch(chartUrl);
 			const jsonData = await response.blob();
@@ -65,7 +65,7 @@ function OrgHome() {
 	}
 
   	async function openPopup(){
-		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=100`);
+		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}`);
 		try {
 			const response = await fetch(chartUrl);
 			const jsonData = await response.blob();
