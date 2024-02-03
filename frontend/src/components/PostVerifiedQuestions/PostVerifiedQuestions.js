@@ -462,7 +462,7 @@ function PostVerifiedQuestions()
 
 	function TimeSelector(props){
         return (
-            <Grid sx={{marginLeft: 1, marginRight: 1, width: 150}}>
+            <Grid sx={{marginLeft: 1, marginRight: 1, marginBottom: 1, width: 150}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
 					<TimePicker label={props.label} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
@@ -475,33 +475,42 @@ function PostVerifiedQuestions()
 			<div>
 				<p className='tagQuestion'>When are your Office Hours?</p>
 				<p className='smallText'>{"(Leave Blank if Unapplicable)"}</p>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setSundayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setSundayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setMondayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setMondayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setTuesdayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setTuesdayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setWednesdayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setWednesdayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setThursdayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setThursdayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setFridayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setFridayEnd(e)})}
-				</Grid>
-				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
-					{TimeSelector({label: "Start", onChange:(e) => setSaturdayStart(e)})}
-					{TimeSelector({label: "End", onChange:(e) => setSaturdayEnd(e)})}
+				<Grid className='allDays'>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Sunday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setSundayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setSundayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Monday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setMondayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setMondayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Tuesday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setTuesdayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setTuesdayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Wednesday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setWednesdayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setWednesdayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Thursday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setThursdayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setThursdayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Friday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setFridayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setFridayEnd(e)})}
+					</Grid>
+					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
+						<p className='dayText'>Saturday:</p>
+						{TimeSelector({label: "Start", onChange:(e) => setSaturdayStart(e)})}
+						{TimeSelector({label: "End", onChange:(e) => setSaturdayEnd(e)})}
+					</Grid>
 				</Grid>
 			</div>
 		)
