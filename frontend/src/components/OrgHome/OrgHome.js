@@ -8,59 +8,75 @@ import Feedback from './Feedback';
 import StatCards from './StatCards';
 import Analytics from './Analytics';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle } from '@mui/material';
 import { buildPath } from '../../path';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
 
 function OrgHome() {
-  const [openAnnouncement, setOpenAnnouncement] = useState(false);
-  const [upcomingEvents, setUpcomingEvents] = useState([]);
-  const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
-  const [chartData, setChartData] = useState(undefined);
-  const [hoverImage, setHoverImage] = useState(false);
+	const [openAnnouncement, setOpenAnnouncement] = useState(false);
+	const [upcomingEvents, setUpcomingEvents] = useState([]);
+	const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
+	const [chartData, setChartData] = useState(undefined);
+	const [fullChartData, setFullChartData] = useState(undefined);
+	const [hoverImage, setHoverImage] = useState(false);
 
-  function eventIsUpcoming(endTime){
-    return new Date().toISOString().localeCompare(endTime) < 0;
- }
+	const [openChartModal, setOpenChartModal] = useState(false);
 
-  async function getUpcomingEvents() {
-    const organizationID = sessionStorage.getItem("ID");
+	const closeChartModal = () => {setOpenChartModal(false)};
 
-    try {
-      let eventsUrl = buildPath(`api/searchEvent?organizationID=${organizationID}`);
-      let eventsResponse = await fetch(eventsUrl, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+	function eventIsUpcoming(endTime){
+		return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
-      let eventsData = JSON.parse(await eventsResponse.text());
+	async function getUpcomingEvents() {
+		const organizationID = sessionStorage.getItem("ID");
 
-      const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
+		try {
+		let eventsUrl = buildPath(`api/searchEvent?organizationID=${organizationID}`);
+		let eventsResponse = await fetch(eventsUrl, {
+			method: "GET",
+			headers: { "Content-Type": "application/json" },
+		});
 
-      console.log("Upcoming Events:", upcomingEvents);
-      setUpcomingEvents(upcomingEvents);
-      setNumUpcomingEvents(upcomingEvents.length);
+		let eventsData = JSON.parse(await eventsResponse.text());
 
-    } catch (error) {
-      console.error("Error fetching upcoming events:", error);
-    }
-  }
+		const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
 
-  async function openPopup(){
+		console.log("Upcoming Events:", upcomingEvents);
+		setUpcomingEvents(upcomingEvents);
+		setNumUpcomingEvents(upcomingEvents.length);
 
-  }
+		} catch (error) {
+		console.error("Error fetching upcoming events:", error);
+		}
+	}
 
-  async function getChartData() {
-    const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=5`);
-    try {
-      const response = await fetch(chartUrl);
-      const jsonData = await response.blob();
-	  console.log(jsonData);
-      setChartData(jsonData);
-    } catch (error) {
-      console.error('Error fetching chart data:', error);
-    }
-  }
+	async function getChartData() {
+		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=5`);
+		try {
+			const response = await fetch(chartUrl);
+			const jsonData = await response.blob();
+			console.log(jsonData);
+			setChartData(jsonData);
+		} catch (error) {
+			console.error('Error fetching chart data:', error);
+		}
+	}
+
+  	async function openPopup(){
+		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=100`);
+		try {
+			const response = await fetch(chartUrl);
+			const jsonData = await response.blob();
+			console.log(jsonData);
+			setFullChartData(jsonData);
+			setOpenChartModal(true)
+		} catch (error) {
+			console.error('Error fetching chart data:', error);
+		}
+	}	
+
   useEffect(() => {
     getUpcomingEvents();
     getChartData();
@@ -101,6 +117,15 @@ function OrgHome() {
 				</div> 
 			: null}
         </div>
+
+		<Dialog maxWidth={"xl"} sx={{marginLeft: 10}} open={openChartModal} onClose={() => closeChartModal()}>
+			<DialogContent className='spartan chartModal'>
+				<button className='closeAddEvent'>
+					<CloseIcon onClick={() => closeChartModal()}/>
+				</button>
+				{(fullChartData) ? <img className='fullChartImage' src={URL.createObjectURL(fullChartData)}></img> : null}				
+			</DialogContent>
+		</Dialog>
       </div>
     </div>
   );

@@ -71,8 +71,8 @@ router.get('/', async (req, res) => {
 
         // Find all events by this org
         let events = null;
-        if (numEvents <= 5) {
-            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(numEvents);
+        if (numEvents <= 10) {
+            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
     	} else {
              events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
         }

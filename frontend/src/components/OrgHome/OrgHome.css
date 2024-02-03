@@ -74,6 +74,12 @@
 	margin-right: 20px !important;
 }
 
+.chartModal{
+	height: 500px !important;
+	width: 100% !important;
+	overflow: none !important;
+}
+
 .chartImage{
 	margin-left: 20%;
 	margin-top: 2%;
@@ -87,6 +93,13 @@
 .chartImage:hover{
 	cursor: pointer;
 	filter: blur(1.5px);
+}
+
+.fullChartImage{
+	margin-left: 3%;
+	margin-top: 1%;
+	width: 95%;
+	height: 85%;
 }
 
 .txtOverImg{
@@ -107,4 +120,9 @@
 
 .centerImgTxt:hover{
 	cursor: pointer;
+}
+
+.chartDialogTitle{
+	font-size: 25px !important;
+	margin-top: -30px !important;
 }
