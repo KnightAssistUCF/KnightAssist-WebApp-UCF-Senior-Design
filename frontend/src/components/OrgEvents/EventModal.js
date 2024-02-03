@@ -150,7 +150,7 @@ function EventModal(props)
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
-                setCurVolunteers(event.attendees.length)
+                setCurVolunteers(event.registeredVolunteers.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
 				setShowTags(event.eventTags.length > 0);
@@ -185,7 +185,7 @@ function EventModal(props)
 						pics.push(await getStudentPic(student.studentId))
 					}
 				}else{
-					for(let id of event.attendees){
+					for(let id of event.registeredVolunteers){
                     	volunteers.push(await getVolunteerInfo(id));
 						pics.push(await getStudentPic(id));
 					}

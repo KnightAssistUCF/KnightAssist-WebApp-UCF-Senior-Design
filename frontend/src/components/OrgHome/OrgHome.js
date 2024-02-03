@@ -51,7 +51,7 @@ function OrgHome() {
   }
 
   async function getChartData() {
-    const chartUrl = buildPath(`api/attendanceAnalytics`);
+    const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&numEvents=5`);
     try {
       const response = await fetch(chartUrl);
       const jsonData = await response.blob();
