@@ -17,6 +17,7 @@ function OrgHome() {
   const [upcomingEvents, setUpcomingEvents] = useState([]);
   const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
   const [chartData, setChartData] = useState(undefined);
+  const [hoverImage, setHoverImage] = useState(false);
 
   function eventIsUpcoming(endTime){
     return new Date().toISOString().localeCompare(endTime) < 0;
@@ -43,6 +44,10 @@ function OrgHome() {
     } catch (error) {
       console.error("Error fetching upcoming events:", error);
     }
+  }
+
+  async function openPopup(){
+
   }
 
   async function getChartData() {
@@ -89,10 +94,13 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
             <StatCards />
-			{(chartData) ? <img className='chartImage' src={URL.createObjectURL(chartData)}></img>: null}
-			<Button sx={{ mt: "14%", mb: 4, ml: 3.5, width: 175, height: 50, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={null}>Chart All Events</Button>
+			{(chartData) ? 
+				<div className='txtOverImg'>
+					<img className='chartImage' src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
+					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)}>View All Event Data</div> : null}
+				</div> 
+			: null}
         </div>
-        <Analytics />
       </div>
     </div>
   );
