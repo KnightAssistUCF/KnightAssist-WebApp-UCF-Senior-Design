@@ -92,6 +92,9 @@
 
 .chartImage:hover{
 	cursor: pointer;
+}
+
+.blurChart{
 	filter: blur(1.5px);
 }
 

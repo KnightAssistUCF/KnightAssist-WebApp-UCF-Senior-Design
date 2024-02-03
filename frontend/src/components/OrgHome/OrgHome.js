@@ -112,8 +112,8 @@ function OrgHome() {
             <StatCards />
 			{(chartData) ? 
 				<div className='txtOverImg'>
-					<img className='chartImage' src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
-					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)}>View All Event Data</div> : null}
+					<img className={'chartImage' + ((hoverImage) ? ' blurChart' : '')} src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
+					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)} onClick={() => openPopup()}>View All Event Data</div> : null}
 				</div> 
 			: null}
         </div>
