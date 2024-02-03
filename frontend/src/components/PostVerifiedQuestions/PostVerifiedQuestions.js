@@ -7,13 +7,17 @@ import Avatar from '@mui/material/Avatar';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
-import { Facebook, Instagram, LinkedIn, PhoneAndroid, X } from '@mui/icons-material';
+import { Facebook, Instagram, LinkedIn, LocationCityOutlined, PhoneAndroid, Pin, PinDrop, PinDropOutlined, X } from '@mui/icons-material';
+import PlaceIcon from '@mui/icons-material/Place';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { BiWorld } from 'react-icons/bi';
 import { CardMedia } from '@mui/material';
+import { testReset } from '@mui/joy/Tooltip/Tooltip';
+import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function PostVerifiedQuestions()
 {
@@ -32,16 +36,37 @@ function PostVerifiedQuestions()
     const [colors, setColors] = useState(makeColorsArray());
     const [selectedTags, setSelectedTags] = useState([]);
 	const [description, setDescription] = useState("");
+
 	const [picName, setPicName] = useState(null);
 	const [picFile, setPicFile] = useState(null);
 	const [bgName, setBGName] = useState(null);
 	const [bgFile, setBGFile] = useState(null);
+
 	const [phone, setPhone] = useState("");
 	const [website, setWebsite] = useState("");
+
 	const [fb, setFB] = useState("");
 	const [x, setX] = useState("");
 	const [ig, setIG] = useState("");
 	const [lIn, setlIn] = useState("");
+
+	const [location, setLocation] = useState("");
+
+	const [mondayStart, setMondayStart] = useState(undefined);
+	const [tuesdayStart, setTuesdayStart] = useState(undefined);
+	const [wednesdayStart, setWednesdayStart] = useState(undefined);
+	const [thursdayStart, setThursdayStart] = useState(undefined);
+	const [fridayStart, setFridayStart] = useState(undefined);
+	const [saturdayStart, setSaturdayStart] = useState(undefined);
+	const [sundayStart, setSundayStart] = useState(undefined);
+	const [mondayEnd, setMondayEnd] = useState(undefined);
+	const [tuesdayEnd, setTuesdayEnd] = useState(undefined);
+	const [wednesdayEnd, setWednesdayEnd] = useState(undefined);
+	const [thursdayEnd, setThursdayEnd] = useState(undefined);
+	const [fridayEnd, setFridayEnd] = useState(undefined);
+	const [saturdayEnd, setSaturdayEnd] = useState(undefined);
+	const [sundayEnd, setSundayEnd] = useState(undefined);
+
 	const [role, setRole] = useState(undefined);
 
     // State needed due to bug where tag names where undefined
@@ -201,9 +226,40 @@ function PostVerifiedQuestions()
 			{
 				id: sessionStorage.getItem("ID"),
 				description: description,
+				location: location,
 				contact: {
 					phone: phone,
 					website: website,
+					/*workingHoursPerWeek: {
+						sunday: {
+							start: String,
+							end: String
+						},
+						monday: {
+							start: String,
+							end: String
+						},
+						tuesday: {
+							start: String,
+							end: String
+						},
+						wednesday: {
+							start: String,
+							end: String
+						},
+						thursday: {
+							start: String,
+							end: String
+						},
+						friday: {
+							start: String,
+							end: String
+						},
+						saturday: {
+							start: String,
+							end: String
+						}
+					},*/
 					socialMedia:{
 						facebook: fb,
 						twitter: x,
@@ -234,11 +290,23 @@ function PostVerifiedQuestions()
 		}
 	}
 
-    async function handleStepBtn(){
+    async function handleStepBtnVolunteer(){
 		if(currentStep == 0){
 			setCurrentStep(1);
 		}else{ 
 			setCurrentStep(0);
+		}
+    }
+
+	async function handleBackBtn(){
+		setCurrentStep(currentStep - 1);
+    }
+
+	async function handleRightBtn(){
+		if(currentStep < 2){
+			setCurrentStep(currentStep + 1);
+		}else{ // It is on the last step
+			submit();
 		}
     }
 
@@ -379,6 +447,66 @@ function PostVerifiedQuestions()
 		)
 	}
 
+	function Location(){
+		return (
+			<div>
+				<p className='tagQuestion'>Where Are You Located:</p>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
+					<Grid item>
+						<TextField variant="standard" label={<PlaceIcon/>} sx={{width: 300}}required={false} value={location} onChange={(e) => setLocation(e.target.value)}/>
+					</Grid>
+				</Grid>
+			</div>
+		)
+	}
+
+	function TimeSelector(props){
+        return (
+            <Grid sx={{marginLeft: 1, marginRight: 1, width: 150}}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+					<TimePicker label={props.label} onChange={props.onChange}/>
+                </LocalizationProvider>                                      
+            </Grid>      
+        )
+    }
+
+	function Calendar(){
+		return (
+			<div>
+				<p className='tagQuestion'>When are your Office Hours?</p>
+				<p className='smallText'>{"(Leave Blank if Unapplicable)"}</p>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setSundayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setSundayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setMondayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setMondayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setTuesdayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setTuesdayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setWednesdayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setWednesdayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setThursdayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setThursdayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setFridayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setFridayEnd(e)})}
+				</Grid>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='times'>
+					{TimeSelector({label: "Start", onChange:(e) => setSaturdayStart(e)})}
+					{TimeSelector({label: "End", onChange:(e) => setSaturdayEnd(e)})}
+				</Grid>
+			</div>
+		)
+	}
+
     function AllTags(){
 		return (
 			<div>
@@ -414,7 +542,7 @@ function PostVerifiedQuestions()
 			setSteps(["Account Information", "User Interests"]);
 		}else{
 			getDefaultPic();
-			setSteps(["Account Information", "Organization Tags"]);
+			setSteps(["Account Information", "Office Hours", "Organization Tags"]);
 			setRole("organization");
 		}
 
@@ -434,12 +562,12 @@ function PostVerifiedQuestions()
 		<Header/>
 		<Stepper activeStep={currentStep} alternativeLabel className='stepper'>
 			{steps.map((label, i) => (
-				<Step key={label} completed={currentStep > 0  && i == 0}>
+				<Step key={label} completed={currentStep > i}>
 					<StepLabel>{label}</StepLabel>
 				</Step>
 			))}
 		</Stepper>
-		{(currentStep == 0) 
+		{(currentStep === 0) 
 			? 
 				<div>
 					<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
@@ -451,10 +579,33 @@ function PostVerifiedQuestions()
 				</div>
 
 			:		
-				<AllTags/>
+				null
 		}
-		<button type="button" class="stepBtn btn btn-primary" onClick={() => handleStepBtn()}>{(currentStep == 0) ? "Next" : "Back"}</button>
-		{(currentStep == 1) ? <button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button> : ""}
+		{(role === "volunteer" && currentStep === 1)
+			?
+				<AllTags/>
+			:
+				null		
+		}
+		{(role === "organization" && currentStep === 1)
+			?
+				<div>
+					{Location()}
+					{Calendar()}
+				</div>
+			:
+				null
+		}
+		{(currentStep === 2)
+			?
+				<AllTags/>
+			:
+				null
+		}
+		{(role === "volunteer") ? <button type="button" class="stepBtn btn btn-primary" onClick={() => handleStepBtnVolunteer()}>{(currentStep == 0) ? "Next" : "Back"}</button> : null}
+		{(role === "volunteer" && currentStep === 1) ? <button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button> : ""}
+		{(role === "organization" && currentStep > 0) ? <button type="button" class="stepBtn btn btn-primary" onClick={() => handleBackBtn()}>Back</button> : null}
+		{(role === "organization") ? <button type="button" class="submitBtn btn btn-primary" onClick={() => handleRightBtn()}>{(currentStep < 2) ? "Next" : "Submit"}</button> : ""}
       </div>
     );
 };
