@@ -70,7 +70,7 @@ router.get('/', async (req, res) => {
         // Find all events by this org
         let events = null;
 
-        events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
+        events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
         events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
 
         // For debuggint to test with many events, will remove
