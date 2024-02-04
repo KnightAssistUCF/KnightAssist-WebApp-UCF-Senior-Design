@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         const organization = await Organization.findById(orgId)
         .populate({
             path: 'favorites', model: 'userStudent',
-            select: 'firstName lastName totalVolunteerHours -_id', 
+            select: 'firstName lastName totalVolunteerHours', 
             options: { sort: { 'totalVolunteerHours': -1 } } // follow a descending order from highest vol person to least
         });
 
@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         const result = organization.favorites;
         res.json(result);
 
-    } catch {
+    } catch(error) {
         console.error('Internal error: ', error);
         res.status(500).send('Internal server error while making the per org leaderboard.');
     }
