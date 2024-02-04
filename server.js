@@ -270,6 +270,11 @@ app.use('/api/getOrgAddress', getOrganizationAddress);
 const editEventTotalHours = require('./backend/routes/events/editEventTotalHours');
 app.use('/api/editEventTotalHours', editEventTotalHours);
 
+
+/* attendance rate and future events to be shown in an org home page */
+const attRateAndFutureEvents = require('./backend/routes/attendanceAnalytics/attRateAndFutureEvents');
+app.use('/api/attRateAndFutureEvents', attRateAndFutureEvents);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
