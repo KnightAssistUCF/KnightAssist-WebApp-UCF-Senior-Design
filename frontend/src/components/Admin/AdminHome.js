@@ -2,11 +2,11 @@ import {useState, useEffect} from 'react';
 
 import AdminHeader from './AdminHeader';
 import './AdminHome.css';
-import ToggleButton from './Toggle';
-import SearchBar from './SearchBar';
-import StudentTable from './StudentTable';
+import ToggleButton from './AdminTables/Toggle';
+import SearchBar from './AdminTables/SearchBar';
+import StudentTable from './AdminTables/StudentTable';
 import AdminTopBar from './AdminTopBar';
-import OrganizationTable from './OrgTable';
+import OrganizationTable from './AdminTables/OrgTable';
 import { buildPath } from '../../path.js';
 
 function AdminHome()

@@ -9,9 +9,9 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import './AdminHome.css';
+import '../AdminHome.css';
 import { useNavigate } from 'react-router';
-import StudentDetailsPage from './ViewStudent';
+import StudentDetailsPage from '../Views/StudentDetails/ViewStudent';
 
 function StudentTable(props) {
   const navigate = useNavigate();

@@ -9,7 +9,7 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
-import './AdminHome.css';
+import '../AdminHome.css';
 import { useNavigate } from 'react-router';
 
 function OrgTable(props) {

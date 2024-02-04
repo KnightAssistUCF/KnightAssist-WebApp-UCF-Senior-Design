@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 
-import { buildPath } from '../../../path.js';
+import { buildPath } from '../../../../path.js';
 
 function OrganizationDetails({ organizationID })
 {

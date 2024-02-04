@@ -11,6 +11,8 @@ import './StudentDetails.css';
 import AdminTopBar from '../../AdminTopBar.js';
 import StudentDetailsTable from './StudentDetailsTable.js';
 import CancelIcon from '@mui/icons-material/Cancel';
+import StudentSearchBar from './StudentSearchBar.js';
+import StudentToggle from './StudentToggle.js';
 
 function StudentDetails({ studentID }) {
   const [firstName, setFirstName] = useState('');
@@ -30,7 +32,13 @@ function StudentDetails({ studentID }) {
   const [prevSelectedTags, setPrevSelectedTags] = useState([]);
   const [userInputTags, setUserInputTags] = useState([]);
   const [fetchAllTags, setFetchAllTags] = useState([]);
+  const [selectedToggle, setSelectedToggle] = useState('past');
+  const [searchTerm, setSearchTerm] = useState('');
 
+  const handleToggleChange = (newToggleValue) => {
+    setSelectedToggle(newToggleValue);
+    console.log(newToggleValue);
+  };
 
   const fetchStudentInfo = async () => {
     console.log(studentID);
@@ -121,7 +129,6 @@ function StudentDetails({ studentID }) {
 		}
 	}
 
-// ...
 
 async function handleEditTags() {
   setOpenModal(true);
@@ -143,44 +150,6 @@ async function handleEditTags() {
   }
 }
 
-
-// function handleTagClick(idx){
-//   if(colors[idx] !== "default"){
-//     tempSelectedTags.splice(tempSelectedTags.indexOf(tagNames[idx]), 1);
-//     colors[idx] = "default"; 
-//   }else{
-//     if(tempSelectedTags.length < 10){
-//       tempSelectedTags.push(tagNames[idx]);
-//       console.log(tempSelectedTags);
-//       colors[idx] = "#5f5395";
-//     }
-//   }
-
-//   setTempSelectedTags(tempSelectedTags);
-
-//   getAllTags();
-//   }
-
-
-
-// function AllTags({ tags }) {
-//   return (
-//     <div>
-//       <p className='tagQuestion'></p>
-//       <div className='allTagsBox'>
-//         {tags.map((name, idx) => (
-//           <Chip
-//             key={idx}
-//             label={name}
-//             className='tagChip'
-//             onClick={() => handleTagClick(idx)}
-
-//           />
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 const AllTags = ({ tags }) => {
   const handleChipClick = (tag) => {
@@ -207,27 +176,6 @@ const AllTags = ({ tags }) => {
     </div>
   );
 };
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-// ...
-
-
-  
-  
 
   const handleCloseAlert = () => {
     setOpenAlert(false);
@@ -264,16 +212,6 @@ const AllTags = ({ tags }) => {
   };
   
   
-  
-  
-  
-
-  
-  
-  
-  
-  
-
   // const handleClickOpenModal = () => {
   //   setOpenModal(true);
   // };
@@ -462,7 +400,36 @@ const AllTags = ({ tags }) => {
             </Snackbar>
           )}
           {upcomingEvents.length > 0 && (
-            <StudentDetailsTable upcomingEvents={upcomingEvents} />
+            <div>
+              <StudentSearchBar
+                // searchTerm = {searchTerm}
+                // setSearchTerm = {setSearchTerm}
+                // searchUsers={searchUsers}
+                // selectedToggle={selectedToggle}
+                // allStudents={allStudents}
+                // allOrgs={allOrgs}
+                // setStudents={setStudents}
+                // setOrgs={setOrgs} 
+                />
+              <StudentToggle onToggleChange={handleToggleChange}/>
+              <div className='toggleTables'>
+              {selectedToggle === 'past' && (
+                <>
+                  <div className='total'>Past</div>
+                  <StudentDetailsTable upcomingEvents={upcomingEvents} />
+                </>
+              )}
+              {selectedToggle === 'upcoming' && (
+                <>
+                  <div className='total'>Upcoming</div>
+                  <StudentDetailsTable upcomingEvents={upcomingEvents} />
+                </>
+              )}
+            </div>
+            </div>
+          )}
+          {upcomingEvents.length === 0 && (
+            <div>No available events</div>
           )}
         </div>
         <Dialog
