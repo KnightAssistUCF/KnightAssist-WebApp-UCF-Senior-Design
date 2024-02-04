@@ -46,11 +46,14 @@ function OrgBox(props) {
 
 		const editInfo = props.editInfo.current;
 
+		console.log(editInfo)
+
         const json = {
 			id: sessionStorage.getItem("ID"),
             name: newOrgName,
 			email: editInfo.email,
             description: editInfo.description,
+			location: editInfo.location,
             contact: {
 				email: editInfo.email,
 				phone: editInfo.phone,
@@ -61,6 +64,15 @@ function OrgBox(props) {
 					instagram: newIG,
 					linkedin: newLIn
 				}
+			},
+			workingHoursPerWeek:{
+				sunday: editInfo.hours.sunday,
+				monday: editInfo.hours.monday,
+				tuesday: editInfo.hours.tuesday,
+				wednesday: editInfo.hours.wednesday,
+				thursday: editInfo.hours.thursday,
+				friday: editInfo.hours.friday,
+				saturday: editInfo.hours.saturday
 			},
 			categoryTags: newSelectedTags
         };
