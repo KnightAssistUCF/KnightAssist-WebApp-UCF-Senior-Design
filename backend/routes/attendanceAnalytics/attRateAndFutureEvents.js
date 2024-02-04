@@ -3,7 +3,7 @@ const router = express.Router();
 const Event = require('../../models/events');
 
 router.get('/', async (req, res) => {
-    const orgId = req.query;
+    const orgId = req.query.orgId;
 
     if (!orgId) {
         return res.status(400).send('Organization ID is required for this endpoint.');
