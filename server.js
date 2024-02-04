@@ -279,6 +279,9 @@ app.use('/api/attRateAndFutureEvents', attRateAndFutureEvents);
 const allStudentsRanking = require('./backend/routes/leaderBoard/allStudentsRanking');
 app.use('/api/allStudentsRanking', allStudentsRanking);
 
+const perOrgLeaderboard = require('./backend/routes/leaderBoard/perOrgLeaderBoard');
+app.use('/api/perOrgLeaderboard', perOrgLeaderboard);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
