@@ -96,6 +96,7 @@ function Contact(props) {
 					</div>
 					: ""
 				}
+				<div className='navSubTitleOH'>Office Hours</div>
 				{props.org.location ?
 					<div className='profileEmail'>
 						<PlaceIcon/>
@@ -118,7 +119,7 @@ function Contact(props) {
 									null
 								:
 									
-									daysArr.map(day => <div>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1)) + ": " + new Date(day[1]).toLocaleTimeString() + "-" + new Date(day[2]).toLocaleTimeString()}</div>)
+									daysArr.map(day => <div>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1)) + ": " + new Date(day[1]).toLocaleTimeString([], {timeStyle: 'short'}) + "-" + new Date(day[2]).toLocaleTimeString([], {timeStyle: 'short'})}</div>)
 									
 							}
 						</div>
