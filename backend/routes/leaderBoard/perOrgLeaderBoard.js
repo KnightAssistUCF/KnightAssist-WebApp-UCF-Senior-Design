@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         .populate({
             path: 'favorites', model: 'userStudent',
             select: 'firstName lastName totalVolunteerHours -_id', 
-            options: { sort: { 'totalVolunteerHours': -1 } } 
+            options: { sort: { 'totalVolunteerHours': -1 } } // follow a descending order from highest vol person to least
         });
 
         if (!organiztion) {
