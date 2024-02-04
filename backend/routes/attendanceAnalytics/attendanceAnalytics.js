@@ -59,28 +59,30 @@ router.get('/', async (req, res) => {
     try {
         // TO USE DUMMY DATA COMMENT THIS SECTION OUT AND UNCOMMENT THE DUMMY DATA ONE
         /* UNCOMMENT THIS TO USE ACTUAL DATABASE DATA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
-        const { orgId, limit } = req.query; 
-        
+        const { orgId, limit } = req.query;
+
         const organization = await Organization.findById(orgId);
 
         if (!organization) {
-             return res.status(404).send('Organization not found in the database');
+            return res.status(404).send('Organization not found in the database');
         }
 
         // Find all events by this org
         let events = null;
-        if (limit) {
-            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
-    	} else {
-            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
-			events = events.concat(events).concat(events);
-        }
+
+        events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
+        events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
+
+        // For debuggint to test with many events, will remove
+        events = events.concat(events);
+        events = events.concat(events);
+
+        if (limit)
+            events = events.splice(0, 10);
 
         if (!events) {
-             return res.status(404).send('No events found for this organization');
+            return res.status(404).send('No events found for this organization');
         }
-
-		events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
 
         // /*
         //     @labels: event names
@@ -181,7 +183,7 @@ router.get('/', async (req, res) => {
                             display: true,
                             text: 'Number of Attendees',
                             font: {
-								size: 20
+                                size: 20
                             }
                         }
                     },
@@ -190,7 +192,7 @@ router.get('/', async (req, res) => {
                             display: true,
                             text: 'Event Names',
                             font: {
-								size: 20
+                                size: 20
                             }
                         }
                     }
@@ -201,12 +203,12 @@ router.get('/', async (req, res) => {
                     title: {
                         display: true,
                         text: 'Event Attendance Analysis',
-						font: {
-							size: 25
-                    	}
-                	}
-           		}
-			}
+                        font: {
+                            size: 25
+                        }
+                    }
+                }
+            }
         };
 
 
