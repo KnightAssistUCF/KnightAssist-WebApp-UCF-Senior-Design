@@ -17,8 +17,13 @@ router.get('/', async (req, res) => {
             startTime: { $gte: new Date() } // I only keep the events that haven't started yet, gte -> greater than or equal to btw
         });
 
+        const pastEvents = await Event.find({
+            sponsoringOrganization: orgId,
+            endTime: { $lt: new Date() } 
+        });
+
         // get avg attendance rate of events for this org
-        const attendanceRates = await Promise.all(upcomingEvents.map(async (event) => {
+        const attendanceRates = await Promise.all(pastEvents.map(async (event) => {
             const registeredCount = event.registeredVolunteers.length;
             const checkedInCount = event.checkedInStudents.length;
             const attendanceRate = registeredCount > 0 ? (checkedInCount / registeredCount) * 100 : 0;
