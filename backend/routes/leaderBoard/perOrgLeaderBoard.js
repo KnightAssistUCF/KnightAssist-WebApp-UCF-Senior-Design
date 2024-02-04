@@ -9,14 +9,14 @@ router.get('/', async (req, res) => {
         
         const orgId = req.query.orgId;
 
-        const organiztion = await Organiaztion.findById(orgId)
+        const organization = await Organization.findById(orgId)
         .populate({
             path: 'favorites', model: 'userStudent',
             select: 'firstName lastName totalVolunteerHours -_id', 
             options: { sort: { 'totalVolunteerHours': -1 } } // follow a descending order from highest vol person to least
         });
 
-        if (!organiztion) {
+        if (!organization) {
             return res.status(404).send('Organization not found in the database.');
         }
 
