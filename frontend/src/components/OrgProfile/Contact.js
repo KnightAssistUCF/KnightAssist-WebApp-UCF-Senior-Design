@@ -92,9 +92,16 @@ function Contact(props) {
 
 	useEffect(() => {
 		if(props.org){
+			const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 			const days = [];
-			for(let day in props.org.workingHoursPerWeek)
-				days.push([day, props.org.workingHoursPerWeek[day].start, props.org.workingHoursPerWeek[day].end]);
+
+			for(let name of dayNames){
+				if(name in props.org.workingHoursPerWeek){
+					days.push([name, props.org.workingHoursPerWeek[name].start, props.org.workingHoursPerWeek[name].end]);
+				}else{
+					days.push([name, "No Office Hours"]);
+				}
+			}
 	
 			console.log(days);
 			setDaysArr(days);
@@ -215,7 +222,7 @@ function Contact(props) {
 										</Grid>
 									</Grid>
 								:
-									daysArr.map(day => <div>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1)) + ": " + new Date(day[1]).toLocaleTimeString([], {timeStyle: 'short'}) + "-" + new Date(day[2]).toLocaleTimeString([], {timeStyle: 'short'})}</div>)	
+									daysArr.map(day => (day[1] !== "No Office Hours") ? <div><b>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1) + ": ")}</b> {new Date(day[1]).toLocaleTimeString([], {timeStyle: 'short'}) + "-" + new Date(day[2]).toLocaleTimeString([], {timeStyle: 'short'})}</div> : <div><b>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1) + ": ")}</b>No Office Hours</div>)	
 							}
 						</div>
 					</div>

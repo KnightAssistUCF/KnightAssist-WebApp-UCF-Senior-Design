@@ -69,18 +69,20 @@ router.get('/', async (req, res) => {
 
         // Find all events by this org
         let events = null;
-        if (limit) {
-            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
-    	} else {
-            events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) });
-			events = events.concat(events).concat(events);
-        }
+
+        events = await Event.find({ sponsoringOrganization: new mongoose.Types.ObjectId(orgId) }).limit(10);
+		events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
+
+		// For debuggint to test with many events, will remove
+		events = events.concat(events);
+		events = events.concat(events);
+
+		if(limit)
+			events = events.splice(0, 10);
 
         if (!events) {
              return res.status(404).send('No events found for this organization');
         }
-
-		events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
 
         // /*
         //     @labels: event names
