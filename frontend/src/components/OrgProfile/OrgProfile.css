@@ -104,8 +104,7 @@
 }
 
 .navContactText {
-    font-size: 17px;
-    font-weight: 350;
+    font-size: 18px !important;
     padding-left: 12px;
 }
 

@@ -66,17 +66,66 @@
 }
 
 .moveCards{
-	margin-top: 30px;
+	margin-left: 2%;
+	margin-top: 4.5% !important;
 }
 
 .moveY{
 	margin-right: 20px !important;
 }
 
+.chartModal{
+	height: 500px !important;
+	width: 100% !important;
+	overflow: none !important;
+}
+
 .chartImage{
-	margin-left: 13%;
-	margin-top: 1%;
-	margin-bottom: 1%;
-	width: 650px;
+	margin-left: 25%;
+	margin-top: 2%;
+	margin-bottom: 2%;
+	width: 700px;
 	height: 400px;
+	border: 1px solid black;
+	border-radius: 7px;
+}
+
+.chartImage:hover{
+	cursor: pointer;
+}
+
+.blurChart{
+	filter: blur(1.5px);
+}
+
+.fullChartImage{
+	margin-left: 3%;
+	margin-top: 1%;
+	width: 95%;
+	height: 85%;
+}
+
+.txtOverImg{
+	position: relative;
+	text-align: center;
+}
+
+.centerImgTxt{
+	position: absolute;
+	top: 45%;
+	left: 61%;
+	border: 1px solid black;
+	background-color: lightgreen;
+	padding: 3px;
+	border-radius: 5px;
+	width: 150px;
+}
+
+.centerImgTxt:hover{
+	cursor: pointer;
+}
+
+.chartDialogTitle{
+	font-size: 25px !important;
+	margin-top: -30px !important;
 }

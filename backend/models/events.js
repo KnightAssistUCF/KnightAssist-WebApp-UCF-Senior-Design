@@ -56,10 +56,6 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    attendees: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
-    }],
     registeredVolunteers: [{
         type: Schema.Types.ObjectId,
         ref: 'userStudent',

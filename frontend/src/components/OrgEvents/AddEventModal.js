@@ -149,8 +149,6 @@ function AddEventModal(props)
             description: description,
             location: location,
             organizationID: sessionStorage.getItem("ID"),
-            attendees: [],
-            registeredVolunteers: [],
             startTime: startTime,
             endTime: endTime,
             eventTags: tagNames,
@@ -246,7 +244,6 @@ function AddEventModal(props)
                     fullWidth
                     required={props.required}
                     label={props.label}
-                    autoFocus
                     multiline={props.multiline}
                     minRows={props.minRows}
                     onChange={props.onChange}

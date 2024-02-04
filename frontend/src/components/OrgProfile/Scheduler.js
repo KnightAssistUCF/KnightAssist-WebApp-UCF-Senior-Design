@@ -67,7 +67,7 @@ function Calendar(props) {
           var booleanHasRSVP = rsvpEvents.some((rsvpEvent) => rsvpEvent._id === event._id);
           console.log(event);
           if(booleanHasRSVP === false) {
-            if(event.maxAttendees == event.attendees.length) {
+            if(event.maxAttendees == event.registeredVolunteers.length) {
               hasRSVP = "Full Capacity";
             } else {
               hasRSVP = "RSVP";
@@ -87,7 +87,7 @@ function Calendar(props) {
             description: event.description,
             location: event.location,
             maxAttendees: event.maxAttendees,
-            numRegistered: event.attendees.length,
+            numRegistered: event.registeredVolunteers.length,
             rsvpStatus: hasRSVP,
           });
         }
