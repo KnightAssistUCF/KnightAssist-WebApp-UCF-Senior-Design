@@ -3,7 +3,7 @@ const router = express.Router();
 const Event = require('../../models/events');
 
 router.get('/', async (req, res) => {
-    const orgId = req.params.orgId; // expects the org ID as a string
+    const orgId = req.query;
 
     if (!orgId) {
         return res.status(400).send('Organization ID is required for this endpoint.');
@@ -12,15 +12,14 @@ router.get('/', async (req, res) => {
     }
 
     try {
-        const upcomingEvents = await Event.find({
-            sponsoringOrganization: orgId,
-            startTime: { $gte: new Date() } // I only keep the events that haven't started yet, gte -> greater than or equal to btw
+
+        let events = await Event.find({
+            sponsoringOrganization: orgId
         });
 
-        const pastEvents = await Event.find({
-            sponsoringOrganization: orgId,
-            endTime: { $lt: new Date() } 
-        });
+        FutureEvents = events.filter((event) => new Date().toISOString().localeCompare(event.endTime.toISOString()) < 0);
+
+        pastEvents = events.filter((event) => new Date().toISOString().localeCompare(event.endTime.toISOString()) >= 0);
 
         // get avg attendance rate of events for this org
         const attendanceRates = await Promise.all(pastEvents.map(async (event) => {
@@ -33,7 +32,7 @@ router.get('/', async (req, res) => {
         // overall att rate across all events for this org
         const averageAttendanceRate = attendanceRates.reduce((acc, rate) => acc + rate, 0) / (attendanceRates.length || 1);
 
-        res.json({averageAttendanceRate: averageAttendanceRate.toFixed(2) + '%', upcomingEvents: upcomingEvents});
+        res.json({averageAttendanceRate: averageAttendanceRate.toFixed(2) + '%', upcomingEvents: FutureEvents});
     } catch (error) {
         console.error('Error fetching attendance rate and upcoming events:', error);
         res.status(500).send('Server error while fetching data.');
