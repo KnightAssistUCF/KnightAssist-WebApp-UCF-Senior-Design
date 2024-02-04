@@ -23,7 +23,7 @@ router.get('/', async (req, res) => {
         const result = organization.favorites;
         res.json(result);
 
-    } catch {
+    } catch(error) {
         console.error('Internal error: ', error);
         res.status(500).send('Internal server error while making the per org leaderboard.');
     }
