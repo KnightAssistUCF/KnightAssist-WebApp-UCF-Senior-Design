@@ -230,41 +230,41 @@ function PostVerifiedQuestions()
 				contact: {
 					phone: phone,
 					website: website,
-					/*workingHoursPerWeek: {
-						sunday: {
-							start: String,
-							end: String
-						},
-						monday: {
-							start: String,
-							end: String
-						},
-						tuesday: {
-							start: String,
-							end: String
-						},
-						wednesday: {
-							start: String,
-							end: String
-						},
-						thursday: {
-							start: String,
-							end: String
-						},
-						friday: {
-							start: String,
-							end: String
-						},
-						saturday: {
-							start: String,
-							end: String
-						}
-					},*/
 					socialMedia:{
 						facebook: fb,
 						twitter: x,
 						instagram: ig,
 						linkedin: lIn
+					}
+				},
+				workingHoursPerWeek: {
+					sunday: {
+						start: sundayStart,
+						end: sundayEnd
+					},
+					monday: {
+						start: mondayStart,
+						end: mondayEnd
+					},
+					tuesday: {
+						start: tuesdayStart,
+						end: tuesdayEnd
+					},
+					wednesday: {
+						start: wednesdayStart,
+						end: wednesdayEnd
+					},
+					thursday: {
+						start: thursdayStart,
+						end: thursdayEnd
+					},
+					friday: {
+						start: fridayStart,
+						end: fridayEnd
+					},
+					saturday: {
+						start: saturdayStart,
+						end: saturdayEnd
 					}
 				},
 				categoryTags: selectedTags

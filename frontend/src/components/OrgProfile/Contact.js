@@ -7,6 +7,7 @@ import { Button, Typography, CardContent, TextField } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import PlaceIcon from '@mui/icons-material/Place';
 import PhoneIcon from '@mui/icons-material/Phone';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import { BiGlobe } from 'react-icons/bi';
@@ -16,6 +17,10 @@ function Contact(props) {
 	const [newEmail, setNewEmail] = useState("");
 	const [newPhone, setNewPhone] = useState("");
 	const [newWebsite, setNewWebsite] = useState("");
+	const [newLocation, setNewLocation] = useState("");
+	const [newHours, setNewHours] = useState(undefined);
+
+	const [daysArr, setDaysArr] = useState([]);
 
 	useEffect(() => {
 		if(props.editMode){
@@ -27,8 +32,23 @@ function Contact(props) {
 				setNewWebsite(props.org.contact.website);
 				props.editInfo.current.website = props.org.contact.website;
 			}
+			setNewLocation(props.org.location);
+			props.editInfo.current.location = props.org.location;
+			setNewHours(props.org.workingHoursPerWeek);
+			props.editInfo.current.hours = props.org.workingHoursPerWeek;
 		}
 	}, [props.editMode])
+
+	useEffect(() => {
+		if(props.org){
+			const days = [];
+			for(let day in props.org.workingHoursPerWeek)
+				days.push([day, props.org.workingHoursPerWeek[day].start, props.org.workingHoursPerWeek[day].end]);
+	
+			console.log(days);
+			setDaysArr(days);
+		}
+	}, [props.org])
 
 	return (
 		<div>
@@ -76,6 +96,36 @@ function Contact(props) {
 					</div>
 					: ""
 				}
+				{props.org.location ?
+					<div className='profileEmail'>
+						<PlaceIcon/>
+						<div className='navContactText'>
+							{(props.editMode)
+								?
+									<TextField variant="standard" label="Location" required={false} value={newLocation} onChange={(e) => {setNewLocation(e.target.value); props.editInfo.current.location = e.target.value;}}/>
+								:
+									props.org.location
+							}
+						</div>
+					</div>
+					: ""
+				}
+				{props.org.workingHoursPerWeek ?
+					<div className='profileEmail'>
+						<div className='navContactText'>
+							{(props.editMode)
+								?
+									null
+								:
+									
+									daysArr.map(day => <div>{(day[0].substring(0, 1).toUpperCase() + day[0].substring(1)) + ": " + new Date(day[1]).toLocaleTimeString() + "-" + new Date(day[2]).toLocaleTimeString()}</div>)
+									
+							}
+						</div>
+					</div>
+					: ""
+				}
+
 			</div>
 		
 		</div>
