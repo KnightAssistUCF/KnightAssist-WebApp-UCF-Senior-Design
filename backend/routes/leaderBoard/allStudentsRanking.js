@@ -6,7 +6,7 @@ router.get('/', async (req, res) => {
     try {
         const rankedStudents = await UserStudent.find({})
             .sort({ totalVolunteerHours: -1 }) // follow a descending order from highest volunteering guy to least
-            .select('firstName lastName totalVolunteerHours') // these are the fields we will show
+            .select('firstName lastName totalVolunteerHours -_id') // these are the fields we will show
             .exec();
 
         res.json({
