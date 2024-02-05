@@ -243,20 +243,19 @@
 
 .interests{
 	margin-top: 60px !important;
-	padding-bottom: 100px !important;
 	margin-left: -3%;
 }
 
 .interestsName{
 	font-size: 20px;
 	margin-left: -5%;
+	margin-bottom: 10px;
 }
 
 .tags{
-	width: 85%;
+	width: 100%;
 	margin-left: -25%;
 	padding-bottom: 20px !important;
-	float: left;
 }
 
 .tag{

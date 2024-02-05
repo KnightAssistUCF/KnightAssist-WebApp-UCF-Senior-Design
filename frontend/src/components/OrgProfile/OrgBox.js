@@ -23,6 +23,8 @@ function OrgBox(props) {
 	const [newLIn, setNewLIn] = useState(undefined);
 	const [newSelectedTags, setNewSelectedTags] = useState([]);
 
+	const [expanded, setExpanded] = useState(false);
+
 	// For modal purposes if they cancel
 	const [tempFB, setTempFB] = useState(undefined);
 	const [tempX, setTempX] = useState(undefined);
@@ -41,6 +43,10 @@ function OrgBox(props) {
 	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
+
+	const toggleExpanded = () => {
+        setExpanded(!expanded);
+    };
 
 	async function submitEdits(){
 
@@ -376,11 +382,12 @@ function OrgBox(props) {
     }
 
 	function Interests(){
+		let end = (expanded) ? props.org.categoryTags.length : 2;
 		return (
 			<div className='interests'>
 				<div className='interestsName'>Interests</div>
 				<div className='tags'>
-					{props.org.categoryTags.map(t => <Tag tag={t}/>)}
+					{props.org.categoryTags.slice(0, end).map(t => <Tag tag={t}/>)}
 				</div>
 			</div>
 		)
@@ -492,6 +499,24 @@ function OrgBox(props) {
 									((!props.editMode) ? Interests() : EditInterests())
 								: 
 									""
+							}
+							{(props.org.categoryTags.length > 2)
+								?
+									!expanded && (
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', textTransform: 'none'}}>
+											See More
+										</Button>
+									)
+								: ""
+							}
+							{(props.org.categoryTags.length > 2)
+								?
+									expanded && (
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', marginRight: '150px', textTransform: 'none', marginTop: '2px' }} >
+											See Less
+										</Button>
+									)
+								: ""
 							}
 						</div>
 					: 

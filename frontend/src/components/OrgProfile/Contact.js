@@ -91,7 +91,7 @@ function Contact(props) {
 	}, [newHours])
 
 	useEffect(() => {
-		if(props.org){
+		if(props.org && props.org.workingHoursPerWeek){
 			const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 			const days = [];
 
@@ -164,7 +164,7 @@ function Contact(props) {
 					</div>
 					: ""
 				}
-				<div className='navSubTitleOH'>Office Hours</div>
+				{props.org.location || props.org.workingHoursPerWeek ? <div className='navSubTitleOH'>Office Hours</div> : null}
 				{props.org.location ?
 					<div className='profileEmail'>
 						<PlaceIcon/>
