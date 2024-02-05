@@ -503,7 +503,7 @@ function OrgBox(props) {
 							{(props.org.categoryTags.length > 2)
 								?
 									!expanded && (
-										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', marginRight: '200px', textTransform: 'none', marginTop: '2px' }}>
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', textTransform: 'none'}}>
 											See More
 										</Button>
 									)
