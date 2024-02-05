@@ -282,6 +282,11 @@ app.use('/api/allStudentsRanking', allStudentsRanking);
 const perOrgLeaderboard = require('./backend/routes/leaderBoard/perOrgLeaderBoard');
 app.use('/api/perOrgLeaderboard', perOrgLeaderboard);
 
+/* Favorited orgs announcements only */
+const favoritedOrgsAnnouncements = require('./backend/routes/announcements/favoritedOrgsAnnouncements');
+app.use('/api/favoritedOrgsAnnouncements', favoritedOrgsAnnouncements);
+
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
