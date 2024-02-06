@@ -100,7 +100,7 @@ function NewAnn() {
           ) {
             const announcementsWithOrgName = orgUpdates.announcements.map((announcement) => ({
               ...announcement,
-              organizationName: org.name.trim(),
+              name: org.name.trim(),
             }));
 
             updatesArray.push(...announcementsWithOrgName);
@@ -124,14 +124,15 @@ function NewAnn() {
   const searchAnnouncements = (searchTerm) => {
     console.log(filterTerm);
   
-    if (filterTerm !== "") {
+    if (filterTerm === "favorited") {
       console.log("HEREE-------------------");
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
-      const filteredResults = searchAnnouncement.filter((a) => {
+	  console.log(favUpdates);
+      const filteredResults = favUpdates.filter((a) => {
         const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
+        const organizationName = a.name
+          ? a.name.toLowerCase()
           : "";
   
         const includesSearchTerm =
@@ -140,14 +141,15 @@ function NewAnn() {
   
         return includesSearchTerm;
       });
+	  console.log(filteredResults);
       setSearchAnnouncement(filteredResults);
     } else {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
       const filteredResults = announcements.filter((a) => {
         const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
+        const organizationName = a.name
+          ? a.name.toLowerCase()
           : "";
   
         const includesSearchTerm =
@@ -174,7 +176,7 @@ function NewAnn() {
 
         filteredAnnouncements = favUpdates.map(update => ({
           ...update,
-          organizationName: update.name,
+          name: update.name,
         }));
         setSearchAnnouncement(filteredAnnouncements.reverse());
       } else {

@@ -50,7 +50,7 @@ const Announcements = (props) => {
 		setPage(value);
 		console.log(props.announcements)
 		setAnnouncements(props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement) => {
-			const { updateID, title, content, date, organizationName } = announcement;
+			const { updateID, title, content, date, name } = announcement;
   
 			return (
 			  <Grid item xs={12} key={updateID}>
@@ -71,7 +71,7 @@ const Announcements = (props) => {
 						component="p"
 						style={{ color: 'black'}}
 					  >
-						{organizationName}
+						{name}
 					  </Typography>
 					  <Typography
 						variant="body2"
@@ -102,7 +102,7 @@ const Announcements = (props) => {
   };
 
   useEffect(() => {
-	if(props.announcements){		
+	if(props.announcements){	
 		setNumPages(Math.ceil(props.announcements.length / perPage));
 		changePage(null, 1);
 	}
