@@ -12,10 +12,13 @@ import StudentTopBar from '../TopBar/StudentTopBar';
 function NewAnn() {
   var [announcements, setAnnouncements] = useState([]);
   var [searchAnnouncement, setSearchAnnouncement] = useState([]);
-  var [filterTerm, setFilterTerm] = useState("");
+  var [filterTerm, setFilterTerm] = useState("favorited");
   //var [favOrgs, setFavOrgs] = useState([]);
   var [favUpdates, setFavUpdates] = useState([]);
   var [finalFavUpdates, setFinalFavUpdates] = useState([]);
+
+  // To get default as favorites
+  const [callInitialFav, setCallInitialFav] = useState(1);
 
 
   /*const reverseSearchResults = () => {
@@ -165,7 +168,7 @@ function NewAnn() {
 
     let filteredAnnouncements = [...announcements];
 
-    if (term !== "") {
+    if (term !== "all") {
       if (term === "favorited") {
         console.log("favorited!!!");
 
@@ -198,10 +201,21 @@ function NewAnn() {
 
 
   useEffect(() => {
-    fetchAllUpdates();
-    fetchFavoritedUpdates();
+	const getUpdates = async() => {
+		await fetchAllUpdates();
+		await fetchFavoritedUpdates();
+		await setCallInitialFav(callInitialFav * -1);
+	}
+
+	getUpdates();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+	if(callInitialFav === -1)
+		filterAnnouncements("favorited");
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callInitialFav])
 
   return (
     <div className='spartan' id="studentAnnouncements">
