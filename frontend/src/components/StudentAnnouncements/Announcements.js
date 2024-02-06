@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Grid } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -36,15 +36,77 @@ const formatDate = (dateString) => {
 const Announcements = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [announcements, setAnnouncements] = useState(null);
+  const [numPages, setNumPages] = useState(0);  
+  const [perPage, setPerPage] = useState(7);
+  const [page, setPage] = useState(1);
 
   const handleClick = (announcement) => {
     setSelectedAnnouncement(announcement);
     setIsModalOpen(true);
   };
 
+  function changePage(e, value){
+		setPage(value);
+		console.log(props.announcements)
+		setAnnouncements(props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement) => {
+			const { updateID, title, content, date, organizationName } = announcement;
+  
+			return (
+			  <Grid item xs={12} key={updateID}>
+				<Card variant="outlined" onClick={() => handleClick(announcement)}>
+				  <CardActionArea>
+					<CardContent className="content">
+					  <Typography
+						gutterBottom
+						variant="h5"
+						component="h2"
+						className="title"
+					  >
+						{title}
+					  </Typography>
+					  <Typography
+						variant="body2"
+						color="textSecondary"
+						component="p"
+						style={{ color: 'black'}}
+					  >
+						{organizationName}
+					  </Typography>
+					  <Typography
+						variant="body2"
+						color="textSecondary"
+						component="p"
+						style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
+					  >
+						{formatDate(date)}
+					  </Typography>
+					  <Typography
+						variant="body2"
+						color="textSecondary"
+						component="p"
+						style={{ marginTop: '6px' }}
+					  >
+						<i>{truncateText(content, 320)}</i>
+					  </Typography>
+					</CardContent>
+				  </CardActionArea>
+				</Card>
+			  </Grid>
+			);
+		  }));
+	}
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  useEffect(() => {
+	if(props.announcements){		
+		setNumPages(Math.ceil(props.announcements.length / perPage));
+		changePage(null, 1);
+	}
+  }, [props.announcements]);
 
   return (
     <div className="announcementCardList">
@@ -55,54 +117,9 @@ const Announcements = (props) => {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {props.announcements.map((announcement) => {
-          const { updateID, title, content, date, organizationName } =
-            announcement;
-
-          return (
-            <Grid item xs={12} key={updateID}>
-              <Card variant="outlined" onClick={() => handleClick(announcement)}>
-                <CardActionArea>
-                  <CardContent className="content">
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                      className="title"
-                    >
-                      {title}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ color: 'black'}}
-                    >
-                      {organizationName}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
-                    >
-                      {formatDate(date)}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ marginTop: '6px' }}
-                    >
-                      <i>{truncateText(content, 320)}</i>
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          );
-        })}
+        {announcements}
       </Grid>
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
 
       {/* Modal */}
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
