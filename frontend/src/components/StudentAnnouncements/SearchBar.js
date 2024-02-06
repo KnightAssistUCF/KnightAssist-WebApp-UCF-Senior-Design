@@ -44,7 +44,7 @@ const handleKeyPress = (event) => {
         console.log(props.finalFavUpdates);
         const allFavAnnouncements = props.finalFavUpdates.map(update => ({
           ...update,
-          organizationName: update.name,
+          name: update.name,
         }));
         
         props.setSearchAnnouncement(allFavAnnouncements.reverse());

@@ -12,10 +12,13 @@ import StudentTopBar from '../TopBar/StudentTopBar';
 function NewAnn() {
   var [announcements, setAnnouncements] = useState([]);
   var [searchAnnouncement, setSearchAnnouncement] = useState([]);
-  var [filterTerm, setFilterTerm] = useState("");
+  var [filterTerm, setFilterTerm] = useState("favorited");
   //var [favOrgs, setFavOrgs] = useState([]);
   var [favUpdates, setFavUpdates] = useState([]);
   var [finalFavUpdates, setFinalFavUpdates] = useState([]);
+
+  // To get default as favorites
+  const [callInitialFav, setCallInitialFav] = useState(1);
 
 
   /*const reverseSearchResults = () => {
@@ -97,7 +100,7 @@ function NewAnn() {
           ) {
             const announcementsWithOrgName = orgUpdates.announcements.map((announcement) => ({
               ...announcement,
-              organizationName: org.name.trim(),
+              name: org.name.trim(),
             }));
 
             updatesArray.push(...announcementsWithOrgName);
@@ -121,14 +124,15 @@ function NewAnn() {
   const searchAnnouncements = (searchTerm) => {
     console.log(filterTerm);
   
-    if (filterTerm !== "") {
+    if (filterTerm === "favorited") {
       console.log("HEREE-------------------");
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
-      const filteredResults = searchAnnouncement.filter((a) => {
+	  console.log(favUpdates);
+      const filteredResults = favUpdates.filter((a) => {
         const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
+        const organizationName = a.name
+          ? a.name.toLowerCase()
           : "";
   
         const includesSearchTerm =
@@ -137,14 +141,15 @@ function NewAnn() {
   
         return includesSearchTerm;
       });
+	  console.log(filteredResults);
       setSearchAnnouncement(filteredResults);
     } else {
       const lowerCaseSearchTerm = searchTerm.toLowerCase();
   
       const filteredResults = announcements.filter((a) => {
         const title = a.title ? a.title.toLowerCase() : "";
-        const organizationName = a.organizationName
-          ? a.organizationName.toLowerCase()
+        const organizationName = a.name
+          ? a.name.toLowerCase()
           : "";
   
         const includesSearchTerm =
@@ -165,13 +170,13 @@ function NewAnn() {
 
     let filteredAnnouncements = [...announcements];
 
-    if (term !== "") {
+    if (term !== "all") {
       if (term === "favorited") {
         console.log("favorited!!!");
 
         filteredAnnouncements = favUpdates.map(update => ({
           ...update,
-          organizationName: update.name,
+          name: update.name,
         }));
         setSearchAnnouncement(filteredAnnouncements.reverse());
       } else {
@@ -198,10 +203,21 @@ function NewAnn() {
 
 
   useEffect(() => {
-    fetchAllUpdates();
-    fetchFavoritedUpdates();
+	const getUpdates = async() => {
+		await fetchAllUpdates();
+		await fetchFavoritedUpdates();
+		await setCallInitialFav(callInitialFav * -1);
+	}
+
+	getUpdates();
 	// eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+	if(callInitialFav === -1)
+		filterAnnouncements("favorited");
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [callInitialFav])
 
   return (
     <div className='spartan' id="studentAnnouncements">
