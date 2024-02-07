@@ -50,7 +50,7 @@ function Leaderboard() {
 			data.push([student, pic])
 
 			// It is your rank
-			if(student._id === sessionStorage.getItem("ID")){
+			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
 				setYourData({rank: i + 1, data: student, pic: pic});
 			}
 
@@ -92,7 +92,7 @@ function Leaderboard() {
 							variant="body2"
 							color="textSecondary"
 							component="p"
-							className='rankItem rankEvents'
+							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
 							{student.eventsHistory.length} Events
@@ -101,7 +101,7 @@ function Leaderboard() {
 							variant="body2"
 							color="textSecondary"
 							component="p"
-							className='rankItem'
+							className='removeIfShort rankItem'
 							style={{ color: 'black'}}
 						>
 							{student.totalVolunteerHours} Hours
@@ -123,6 +123,12 @@ function Leaderboard() {
 		if(place === 2) color = " silverCard";
 		if(place === 3) color = " bronzeCard";
 
+		let name = student.firstName + " " + student.lastName + "";
+
+		if(name.length >= 30){
+			name = name.substring(0, 30) + "..."
+		}
+
 		return (
 			<Grid container justifyContent="center" alignItems="center">
 				<Card className={"rankCard" + color} variant="outlined">
@@ -136,13 +142,13 @@ function Leaderboard() {
 							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							<b>{student.firstName + " " + student.lastName}</b>
+							<b>{name}</b>
 						</Typography>
 						<Typography
 							variant="body2"
 							color="textSecondary"
 							component="p"
-							className='rankItem rankEvents'
+							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
 							{student.eventsHistory.length} Events
@@ -151,7 +157,7 @@ function Leaderboard() {
 							variant="body2"
 							color="textSecondary"
 							component="p"
-							className='rankItem'
+							className='removeIfShort rankItem'
 							style={{ color: 'black'}}
 						>
 							{student.totalVolunteerHours} Hours
@@ -174,7 +180,7 @@ function Leaderboard() {
 		  <div className='moveEverything'>
 		      <Title/>
 			  <div className='rankDisplay'>
-				{(yourData) ? <YourRank/> : null}
+				{(role === "volunteer" && yourData) ? <YourRank/> : null}
 			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : null}
 			  </div>
 		  </div>

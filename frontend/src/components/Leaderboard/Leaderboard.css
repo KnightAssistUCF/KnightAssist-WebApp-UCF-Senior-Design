@@ -45,7 +45,11 @@
 .rankNumber{
 	background-color: white !important;
 	color: black !important;
-	margin-right: 10%;
+	margin-right: 8%;
+}
+
+.rankItem{
+	width: 100px;
 }
 
 .rankPic{
@@ -53,9 +57,23 @@
 }
 
 .rankName{
-	margin-right: 5% !important;
+	margin-right: 4% !important;
+	width: 150px !important;
 }
 
 .rankEvents{
-	margin-right: 10% !important;
+	margin-right: 4% !important;
+}
+
+@media (max-width: 1350px) {
+    .removeIfShort {
+        display: none !important;
+    }
+
+}
+
+@media (max-width: 740px) {
+    .rankCard{
+		height: 80px;
+	}
 }
