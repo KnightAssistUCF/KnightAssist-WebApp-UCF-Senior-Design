@@ -69,7 +69,7 @@ router.post('/', async (req, res) => {
                 theme: 'default', // neopolitan, default, and cerberus are themes I liked
                 product: {
                     name: 'KnightAssist',
-                    link: 'https://mailgen.js/', // dummy link will change later
+                    link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login', // dummy link will change later
                     // [not working yet]
                     // logo: '../utils/logo.svg', 
                     // logoWidth: '150px', 
@@ -87,7 +87,7 @@ router.post('/', async (req, res) => {
                         button: {
                             color: '#22BC66', //[makes the button green, can change later]
                             text: 'Login and confirm your account',
-                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/organizationemailverified' // change this later with the correct redirect link
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login' // change this later with the correct redirect link
                         }
 
                     },
