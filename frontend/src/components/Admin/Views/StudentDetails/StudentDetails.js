@@ -9,7 +9,8 @@ import { buildPath } from '../../../../path.js';
 import AdminHeader from '../../AdminHeader.js';
 import './StudentDetails.css';
 import AdminTopBar from '../../AdminTopBar.js';
-import StudentDetailsTable from './StudentDetailsTable.js';
+import UpcomingEvents from './UpcomingEvents.js';
+import EventHistory from './EventHistory.js';
 import CancelIcon from '@mui/icons-material/Cancel';
 import StudentSearchBar from './StudentSearchBar.js';
 import StudentToggle from './StudentToggle.js';
@@ -34,6 +35,7 @@ function StudentDetails({ studentID }) {
   const [fetchAllTags, setFetchAllTags] = useState([]);
   const [selectedToggle, setSelectedToggle] = useState('past');
   const [searchTerm, setSearchTerm] = useState('');
+  const [eventHistory, setEventHistory] = useState([]);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -66,9 +68,35 @@ function StudentDetails({ studentID }) {
       setUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
 
+      // fetch past/upcoming events
+      fetchEventHistory(res._id);
+
       // get profile pic
     } catch (e) {
       console.log('failed to fetch student info: ' + e);
+    }
+  };
+
+  const fetchEventHistory = async (studentID) => {
+    console.log(studentID);
+    try {
+			let url = buildPath(`api/historyOfEvents_User?studentId=${studentID}`);
+
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let res = JSON.parse(await response.text());
+
+			// Sort by time if date is equal, date otherwise
+			res.sort(function(a, b) {
+				return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
+			});
+      console.log(res);
+			setEventHistory(res);
+    } catch(e) {
+      console.log("oopsies failed to fetch student event history");
     }
   };
 
@@ -122,7 +150,6 @@ function StudentDetails({ studentID }) {
               setMessage("Information saved successfully");
             }
             let res = await response.text();
-            console.log(res);
 
 		}catch(e){
 			console.log(e);
@@ -142,7 +169,6 @@ async function handleEditTags() {
     });
 
     let res = JSON.parse(await response.text());
-    console.log(res);
 
     setAllTags(res);
   } catch (e) {
@@ -154,7 +180,6 @@ async function handleEditTags() {
 const AllTags = ({ tags }) => {
   const handleChipClick = (tag) => {
     const isSelected = prevSelectedTags.includes(tag);
-    console.log(tag);
     if (isSelected) {
       setPrevSelectedTags(prevSelectedTags.filter((selectedTag) => selectedTag !== tag));
     } else if(!isSelected && prevSelectedTags.length < 10) {
@@ -196,9 +221,6 @@ const AllTags = ({ tags }) => {
     } else {
       // If the tag is not selected, check the total count
       const totalSelectedCount = prevSelectedTags.length + selectedTags.length;
-      console.log(totalSelectedCount);
-      console.log(prevSelectedTags);
-      console.log(selectedTags);
   
       if (totalSelectedCount <= 10) {
         // If the total count is less than 10, add the tag to the arrays
@@ -250,7 +272,6 @@ const AllTags = ({ tags }) => {
         id: id,
         categoryTags: prevSelectedTags,
       };
-      console.log(json);
   
       var url = buildPath(`api/editUserProfile`);
   
@@ -413,16 +434,16 @@ const AllTags = ({ tags }) => {
                 />
               <StudentToggle onToggleChange={handleToggleChange}/>
               <div className='toggleTables'>
-              {selectedToggle === 'past' && (
+              {(selectedToggle === 'past' && eventHistory.length > 0) && (
                 <>
                   <div className='total'>Past</div>
-                  <StudentDetailsTable upcomingEvents={upcomingEvents} />
+                  <EventHistory eventHistory={eventHistory} />
                 </>
               )}
               {selectedToggle === 'upcoming' && (
                 <>
                   <div className='total'>Upcoming</div>
-                  <StudentDetailsTable upcomingEvents={upcomingEvents} />
+                  <UpcomingEvents upcomingEvents={upcomingEvents} />
                 </>
               )}
             </div>

@@ -13,38 +13,36 @@ import Button from '@mui/material/Button';
 
 
 
-function StudentDetailsTable({upcomingEvents})
+function EventHistory({eventHistory})
 {
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('checkOut');
   const [order, setOrder] = useState('desc');
   const [allEvents, setAllEvents] = useState([]);
 
 
   async function fetchEventInfo() {
+    console.log(eventHistory);
     let tempAllEvents = [];
-    console.log(upcomingEvents);
-    for(let eventIDStudent of upcomingEvents) {
-      console.log(eventIDStudent);
-      let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
+    // for(let eventIDStudent of eventHistory) {
+    //   let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
 
-      try {
+    //   try {
 
-        let response = await fetch(url, {
-          method: "GET",
-          headers: {"Content-Type": "application/json"},
-        });
+    //     let response = await fetch(url, {
+    //       method: "GET",
+    //       headers: {"Content-Type": "application/json"},
+    //     });
 
-        let res = JSON.parse(await response.text());
-        console.log(res);
-        if(res.length > 0) {
-          tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
-        }
+    //     let res = JSON.parse(await response.text());
+    //     if(res.length > 0) {
+    //       tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
+    //     }
         
-      } catch(e) {
-        console.log("oopsies");
-      }
-    }
-    setAllEvents([...tempAllEvents]);
+    //   } catch(e) {
+    //     console.log("oopsies");
+    //   }
+    // }
+    setAllEvents(eventHistory);
     console.log(allEvents);
   }
   
@@ -106,7 +104,6 @@ function StudentDetailsTable({upcomingEvents})
   }, []);
 
   useEffect(() => {
-    console.log(allEvents);
   }, [allEvents]);
 
 
@@ -121,13 +118,31 @@ function StudentDetailsTable({upcomingEvents})
                 <TableCell style={{ width: '10%' }}>
                     
                   </TableCell>
-                  <TableCell style={{ width: '50%' }}>
+                  <TableCell >
                     <TableSortLabel
                       active={orderBy === 'name'}
                       direction={orderBy === 'name' ? order : 'asc'}
                       onClick={() => handleRequestSort('name')}
                     >
                       <strong>Name</strong>
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell >
+                    <TableSortLabel
+                      active={orderBy === 'checkIn'}
+                      direction={orderBy === 'checkIn' ? order : 'asc'}
+                      onClick={() => handleRequestSort('checkIn')}
+                    >
+                      <strong>Check In</strong>
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell >
+                    <TableSortLabel
+                      active={orderBy === 'checkOut'}
+                      direction={orderBy === 'checkOut' ? order : 'asc'}
+                      onClick={() => handleRequestSort('checkOut')}
+                    >
+                      <strong>Check Out</strong>
                     </TableSortLabel>
                   </TableCell>
 
@@ -137,9 +152,11 @@ function StudentDetailsTable({upcomingEvents})
                 {stableSort(allEvents, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(
                   (singleEvent) => (
-                    <TableRow key = {singleEvent._id}>
+                    <TableRow key = {singleEvent.ID}>
                       <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
+                      <TableCell>{singleEvent.checkIn}</TableCell>
+                      <TableCell>{singleEvent.checkOut}</TableCell>
                     </TableRow>
                   )
                 )}
@@ -161,4 +178,4 @@ function StudentDetailsTable({upcomingEvents})
     );
 };
 
-export default StudentDetailsTable;
+export default EventHistory;
