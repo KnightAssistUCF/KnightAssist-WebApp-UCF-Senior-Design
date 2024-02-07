@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         }
 
         const result = organization.favorites;
-        res.json(result);
+        res.json({data: result});
 
     } catch(error) {
         console.error('Internal error: ', error);
