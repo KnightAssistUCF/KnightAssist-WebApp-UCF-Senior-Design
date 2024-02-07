@@ -15,7 +15,7 @@ import Button from '@mui/material/Button';
 
 function UpcomingEvents({upcomingEvents})
 {
-  const [orderBy, setOrderBy] = useState('name');
+  const [orderBy, setOrderBy] = useState('endTime');
   const [order, setOrder] = useState('desc');
   const [allEvents, setAllEvents] = useState([]);
 
@@ -33,6 +33,7 @@ function UpcomingEvents({upcomingEvents})
         });
 
         let res = JSON.parse(await response.text());
+        console.log(res);
         if(res.length > 0) {
           tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
         }
@@ -117,13 +118,31 @@ function UpcomingEvents({upcomingEvents})
                 <TableCell style={{ width: '10%' }}>
                     
                   </TableCell>
-                  <TableCell style={{ width: '50%' }}>
+                  <TableCell style={{ width: '30%' }}>
                     <TableSortLabel
                       active={orderBy === 'name'}
                       direction={orderBy === 'name' ? order : 'asc'}
                       onClick={() => handleRequestSort('name')}
                     >
                       <strong>Name</strong>
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'startTime'}
+                      direction={orderBy === 'startTime' ? order : 'asc'}
+                      onClick={() => handleRequestSort('startTime')}
+                    >
+                      <strong>Start Time</strong>
+                    </TableSortLabel>
+                  </TableCell>
+                  <TableCell>
+                    <TableSortLabel
+                      active={orderBy === 'endTime'}
+                      direction={orderBy === 'endTime' ? order : 'asc'}
+                      onClick={() => handleRequestSort('endTime')}
+                    >
+                      <strong>End Time</strong>
                     </TableSortLabel>
                   </TableCell>
 
@@ -136,6 +155,8 @@ function UpcomingEvents({upcomingEvents})
                     <TableRow key = {singleEvent._id}>
                       <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
+                      <TableCell>{singleEvent.startTime}</TableCell>
+                      <TableCell>{singleEvent.endTime}</TableCell>
                     </TableRow>
                   )
                 )}
