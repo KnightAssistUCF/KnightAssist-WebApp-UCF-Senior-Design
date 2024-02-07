@@ -12,6 +12,7 @@ import { Card } from 'react-bootstrap';
 function Leaderboard() {
 	const [role, setRole] = useState(sessionStorage.getItem("role"));
 	const [studentData, setStudentData] = useState(undefined);
+	const [yourData, setYourData] = useState(undefined);
 
 	async function getStudentData(){
 		let url;
@@ -34,6 +35,8 @@ function Leaderboard() {
 
 		const data = [];
 
+		let i = 0;
+
 		for(let student of res.data){
 			url = buildPath(`api/retrieveImage?entityType=student&id=${student._id}&profilePicOrBackGround=0`);
 	
@@ -45,6 +48,13 @@ function Leaderboard() {
 			let pic = await response.blob();
 	
 			data.push([student, pic])
+
+			// It is your rank
+			if(student._id === sessionStorage.getItem("ID")){
+				setYourData({rank: i + 1, data: student, pic: pic});
+			}
+
+			i++;
 		}
 
 		setStudentData(data);
@@ -58,24 +68,84 @@ function Leaderboard() {
 		)
 	}
 
+	function YourRank(){
+		const student = yourData.data;
+		const place = yourData.rank;
+		const pic = yourData.pic;
+
+		return (
+			<Grid container justifyContent="center" alignItems="center">
+				<Card className={"rankCard purpleCard"} variant="outlined">
+					<CardContent>
+						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
+						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							className='rankItem rankName'
+							style={{ color: 'black'}}
+						>
+							<b>{student.firstName + " " + student.lastName}</b>
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							className='rankItem rankEvents'
+							style={{ color: 'black'}}
+						>
+							{student.eventsHistory.length} Events
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							className='rankItem'
+							style={{ color: 'black'}}
+						>
+							{student.totalVolunteerHours} Hours
+						</Typography>
+					</CardContent>
+				</Card>
+			</Grid>
+		)
+	}
+
 	function RankCard(props){
 		const student = props.student;
 		const pic = props.pic;
+		const place = props.i;
+		
+		let color = " grayCard";
+
+		if(place === 1) color = " goldCard";
+		if(place === 2) color = " silverCard";
+		if(place === 3) color = " bronzeCard";
 
 		return (
-			<Card className="grayRank" variant="outlined">
-				<CardActionArea>
-					<CardContent className="content">
-						<Avatar className='rankNumber rankItem'>{props.i}</Avatar>
-						<Avatar className='rankItem' src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+			<Grid container justifyContent="center" alignItems="center">
+				<Card className={"rankCard" + color} variant="outlined">
+					<CardContent>
+						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
+						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
 							color="textSecondary"
 							component="p"
-							className='rankItem'
+							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							{student.firstName + " " + student.lastName}
+							<b>{student.firstName + " " + student.lastName}</b>
+						</Typography>
+						<Typography
+							variant="body2"
+							color="textSecondary"
+							component="p"
+							className='rankItem rankEvents'
+							style={{ color: 'black'}}
+						>
+							{student.eventsHistory.length} Events
 						</Typography>
 						<Typography
 							variant="body2"
@@ -84,11 +154,11 @@ function Leaderboard() {
 							className='rankItem'
 							style={{ color: 'black'}}
 						>
-							{student.totalVolunteerHours}
+							{student.totalVolunteerHours} Hours
 						</Typography>
 					</CardContent>
-				</CardActionArea>
-			</Card>
+				</Card>
+			</Grid>
 		)
 	}
 
@@ -104,6 +174,7 @@ function Leaderboard() {
 		  <div className='moveEverything'>
 		      <Title/>
 			  <div className='rankDisplay'>
+				{(yourData) ? <YourRank/> : null}
 			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : null}
 			  </div>
 		  </div>

@@ -8,14 +8,54 @@
 
 .rankItem{
 	float: left;
-	margin-right: 10% !important;
 }
 
-.grayRank{
+.rankCard{
+	width: 50%;
+	margin-bottom: 10px;
+	margin-right: 25px;
+	height: 55px;
+}
+
+.grayCard{
 	background-color: #d3d3d3 !important;
+}
+
+.purpleCard{
+	background-color: #5f5395 !important;
+	margin-bottom: 100px !important;
+}
+
+.goldCard{
+	background-color: gold !important;
+}
+
+.silverCard{
+	background-color: silver !important;
+}
+
+.bronzeCard{
+	background-color: #CD7F32 !important;
+}
+
+.rankAvatar{
+	margin-top: -10px !important;
 }
 
 .rankNumber{
 	background-color: white !important;
 	color: black !important;
+	margin-right: 10%;
+}
+
+.rankPic{
+	margin-right: 3% !important;
+}
+
+.rankName{
+	margin-right: 5% !important;
+}
+
+.rankEvents{
+	margin-right: 10% !important;
 }
