@@ -406,7 +406,7 @@ const AllTags = ({ tags }) => {
               Cancel
             </Button>
           )}
-          <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
+          <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{marginBottom: '10px', backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
           {message.length !== 0 && (
             <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
               {message.includes("Error") ? (
@@ -422,6 +422,7 @@ const AllTags = ({ tags }) => {
           )}
           {upcomingEvents.length > 0 && (
             <div>
+              <div className='align' style={{display: 'flex', marginTop: '20px'}}>
               <StudentSearchBar
                 // searchTerm = {searchTerm}
                 // setSearchTerm = {setSearchTerm}
@@ -433,16 +434,17 @@ const AllTags = ({ tags }) => {
                 // setOrgs={setOrgs} 
                 />
               <StudentToggle onToggleChange={handleToggleChange}/>
+              </div>
               <div className='toggleTables'>
               {(selectedToggle === 'past' && eventHistory.length > 0) && (
                 <>
-                  <div className='total'>Past</div>
+                  <div className='total'>Past Events: {eventHistory.length}</div>
                   <EventHistory eventHistory={eventHistory} />
                 </>
               )}
               {selectedToggle === 'upcoming' && (
                 <>
-                  <div className='total'>Upcoming</div>
+                  <div className='total'>Upcoming Events: {upcomingEvents.length}</div>
                   <UpcomingEvents upcomingEvents={upcomingEvents} />
                 </>
               )}
