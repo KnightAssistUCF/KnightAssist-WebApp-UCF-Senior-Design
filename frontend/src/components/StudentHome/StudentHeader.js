@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import './StudentHome.css';
 import Logo from '../Logo';
 import { RiFeedbackLine } from 'react-icons/ri';
+import { LeaderboardOutlined } from '@mui/icons-material';
 
 function Header()
 {
@@ -119,6 +120,14 @@ function Header()
                         <a href="#/studenthistory">
                             <BiHistory className='historyIcon'></BiHistory>
                             <span class="links_name">History</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Leaderboard" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/leaderboard">
+                            <LeaderboardOutlined className='historyIcon'></LeaderboardOutlined>
+                            <span class="links_name">Leaderboard</span>
                         </a>
                     </LightTooltip>
                 </li>
