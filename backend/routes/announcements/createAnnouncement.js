@@ -25,11 +25,7 @@ const sendEmail = (role, user, org, ancmt) => {
         theme: 'default', // neopolitan, default, and cerberus are themes I liked
         product: {
             name: 'KnightAssist',
-            link: 'https://mailgen.js/', // dummy link will change later
-            // [not working yet]
-            // logo: '../utils/logo.svg', 
-            // logoWidth: '150px', 
-            // logoHeight: '50px', 
+            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login',
         },
     });
 
@@ -89,7 +85,7 @@ const sendEmail = (role, user, org, ancmt) => {
                     color: '#22BC66',
                     text: 'View Full Announcement',
                     // link: `https://your-organization-website.com/announcement/${ancmt._id}` // Link to the announcement
-                    link: '' // TODO to be filled
+                    link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login' // TODO to be filled
                 }
             },
             // Optionally include organization's details

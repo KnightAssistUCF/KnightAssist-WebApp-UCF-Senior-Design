@@ -54,7 +54,7 @@ router.post("/", async (req, res) => {
             theme: 'default', 
             product: {
                 name: 'KnightAssist',
-                link: 'https://mailgen.js/', // dummy link will change later
+                link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login', // dummy link will change later
             },
         });
 
@@ -70,7 +70,7 @@ router.post("/", async (req, res) => {
                         button: {
                             color: '#22BC66', 
                             text: 'Login Here',
-                            link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login' // change this later with the correct redirect link
                         }
 
                     },
@@ -88,7 +88,7 @@ router.post("/", async (req, res) => {
                         button: {
                             color: '#22BC66', 
                             text: 'Login Here',
-                            link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login' // change this later with the correct redirect link
                         }
 
                     },
