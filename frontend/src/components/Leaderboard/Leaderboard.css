@@ -5,3 +5,17 @@
 .lbTitle{
 	width: 100%;
 }
+
+.rankItem{
+	float: left;
+	margin-right: 10% !important;
+}
+
+.grayRank{
+	background-color: #d3d3d3 !important;
+}
+
+.rankNumber{
+	background-color: white !important;
+	color: black !important;
+}
