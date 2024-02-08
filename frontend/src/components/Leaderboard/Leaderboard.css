@@ -6,6 +6,7 @@
 	width: 100%;
 	text-align: left;
     font-size: 20px;
+	margin-bottom: 20px;
 	color: black !important;
     float: left !important;
 }
@@ -28,7 +29,7 @@
 
 .purpleCard{
 	background-color: #7062ad !important;
-	margin-bottom: 75px !important;
+	margin-bottom: 60px !important;
 }
 
 .goldCard{
@@ -75,11 +76,43 @@
 	margin-right: 25px;
 }
 
+.studentSearch{
+	margin-left: 37.5%;
+	margin-bottom: 10px;
+}
+
+.extraSearchSpace{
+	margin-bottom: 100px;
+}
+
+.searchPic{
+	float: left;
+	margin-top: -3px;
+}
+
+.ifSearched{
+	float: left;
+	margin-right: -320px;
+}
+
+
 @media (max-width: 1350px) {
     .removeIfShort {
         display: none !important;
     }
+}
 
+@media (max-width: 1450px) {
+	.ifSearched{
+		float: top;
+		margin-right: 0px;
+	}
+}
+
+@media (max-width: 850px) {
+	.undoBtn{
+		margin-bottom: 10px;
+	}
 }
 
 @media (max-width: 740px) {
