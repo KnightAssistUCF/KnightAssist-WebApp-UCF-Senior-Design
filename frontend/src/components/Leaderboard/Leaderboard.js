@@ -62,7 +62,7 @@ function Leaderboard() {
 
 	function Title(){
 		return(
-		  <div className='lbTitle yourEvents spartan'>
+		  <div className='lbTitle spartan'>
 			 <h1>Leaderboard</h1>
 		  </div>
 		)
@@ -180,7 +180,9 @@ function Leaderboard() {
 		  <div className='moveEverything'>
 		      <Title/>
 			  <div className='rankDisplay'>
+				{(role === "volunteer" && yourData) ? <div className='lbHeader'>Your Rank</div> : null}
 				{(role === "volunteer" && yourData) ? <YourRank/> : null}
+				{(role === "volunteer" && studentData) ? <div className='lbHeader'>Top 10</div> : null}
 			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : null}
 			  </div>
 		  </div>

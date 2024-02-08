@@ -4,6 +4,10 @@
 
 .lbTitle{
 	width: 100%;
+	text-align: left;
+    font-size: 20px;
+	color: black !important;
+    float: left !important;
 }
 
 .rankItem{
@@ -12,18 +16,19 @@
 
 .rankCard{
 	width: 50%;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
+	margin-top: 5px;
 	margin-right: 25px;
 	height: 55px;
 }
 
 .grayCard{
-	background-color: #d3d3d3 !important;
+	background-color: #edecec !important;
 }
 
 .purpleCard{
-	background-color: #5f5395 !important;
-	margin-bottom: 100px !important;
+	background-color: #7062ad !important;
+	margin-bottom: 75px !important;
 }
 
 .goldCard{
@@ -35,7 +40,7 @@
 }
 
 .bronzeCard{
-	background-color: #CD7F32 !important;
+	background-color: #cd853d !important;
 }
 
 .rankAvatar{
@@ -63,6 +68,11 @@
 
 .rankEvents{
 	margin-right: 4% !important;
+}
+
+.lbHeader{
+	font-size: 30px;
+	margin-right: 25px;
 }
 
 @media (max-width: 1350px) {
