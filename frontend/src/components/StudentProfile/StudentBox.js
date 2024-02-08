@@ -325,15 +325,15 @@ function StudentBox(props) {
 								? EditSaveProfileBtn() 
 								: ""
 							}
-							{(props.user.categoryTags.length > 0)
+							{(props.editMode)
 								?
-									((!props.editMode) ? Interests() : EditInterests())
+									EditInterests()
 								: 
-									""
+								 ((props.user.categoryTags.length > 0) ? Interests() : null)
 							}
 							{(props.user.categoryTags.length > 2)
 								?
-									!expanded && (
+									!expanded && !props.editMode && (
 										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', textTransform: 'none'}}>
 											See More
 										</Button>
@@ -342,7 +342,7 @@ function StudentBox(props) {
 							}
 							{(props.user.categoryTags.length > 2)
 								?
-									expanded && (
+									expanded && !props.editMode && (
 										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', marginRight: '150px', textTransform: 'none', marginTop: '2px' }} >
 											See Less
 										</Button>
