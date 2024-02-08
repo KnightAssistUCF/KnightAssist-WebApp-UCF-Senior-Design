@@ -7,6 +7,8 @@ import Link from '@mui/material/Link';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
+import Alert from '@mui/material/Alert';
+import { AppSettingsAltRounded } from "@mui/icons-material";
 
 function LoginComponents(props){
 
@@ -15,6 +17,7 @@ function LoginComponents(props){
     const [isInvalid, setIsInvalid] = useState("");
 	const [changeURL, setChangeURL] = useState(-1);
 	const [firstLogin, setFirstLogin] = useState(undefined);
+    const [showError, setShowError] = useState(false);
 
 	// For bug fixing purposes so the user is sent to
 	// the right route always
@@ -42,7 +45,6 @@ function LoginComponents(props){
         let url = buildPath("api/Login");
 
         try {
-
             let response = await fetch(url, {
                 method: "POST",
                 body: JSON.stringify(json),
@@ -117,21 +119,16 @@ function LoginComponents(props){
           
                 setIsInvalid("");
 			}
-            
         } catch (e) {
             console.log(e.toString());
             setIsInvalid("is-invalid");
         }
+
+        validInput();
     }
 
     function onRegister(){
         window.location.href="/#/register"
-    }
-
-    function Copyright(){
-        return (
-            <h5 className="center copyright">Copyright © 2023 by KnightAssist Senior Design Group.</h5>
-        )
     }
 
     function Email(){
@@ -162,6 +159,7 @@ function LoginComponents(props){
                     id="password"
                     label="Password"
                     name="password"
+                    type="password"
                     autoComplete="password"
                     error={isInvalid}
                     value={password}
@@ -198,15 +196,26 @@ function LoginComponents(props){
     function ForgotPassword(){
         return (   
         <>
-            <Link variant="body2" sx={{ color: '#4E878C' }} onClick={() => setOpenForgotPwd(true)}> Forgot password? </Link>
+            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => setOpenForgotPwd(true)}> Forgot password? </Link>
             {/* <button className="forgotPWD" onClick={() => setOpenForgotPwd(true)}>forgot password</button> */}
         </>
         )
     }
 
-    function Register(){
+    function validInput(){
+        if(email === "" || password === "" || isInvalid == "is-invalid"){
+            setShowError(true);
+            return false;
+        }
+
+        return true;
+    }
+
+    function AlertMessage(){
         return (
-            <button className="register" onClick={() => onRegister()}>register</button>
+            <div>
+                {(showError) === true ? <Alert severity="error">Incorrect username / password.</Alert> : null}
+            </div>
         )
     }
 
@@ -238,6 +247,7 @@ function LoginComponents(props){
         <div className="loginBox">
             {Email()}
             {Password()}
+            <AlertMessage />
             <Login/>
             <div className="center">
                 {ForgotPassword()}
