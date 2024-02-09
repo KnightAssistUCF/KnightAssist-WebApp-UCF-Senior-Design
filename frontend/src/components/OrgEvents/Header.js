@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PageTitle from '../PageTitle';
-import {BiMenu, BiHome, BiSearch, BiHistory, BiCog, BiLogOut} from 'react-icons/bi';
+import {BiMenu, BiHome, BiSearch, BiCog, BiLogOut} from 'react-icons/bi';
 import { RiFeedbackLine } from "react-icons/ri";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import './OrgEvents.css';
 import Logo from '../Logo';
 import { CgProfile } from 'react-icons/cg';
+import { LeaderboardOutlined } from '@mui/icons-material';
 
 function Header()
 {
@@ -111,6 +112,14 @@ function Header()
                         <a href="#/orgfeedback">
                             <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
                             <span class="links_name">Feedback</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
+                    <LightTooltip title={!isSidebarActive ? "Leaderboard" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/leaderboard">
+                            <LeaderboardOutlined className='historyIcon'></LeaderboardOutlined>
+                            <span class="links_name">Leaderboard</span>
                         </a>
                     </LightTooltip>
                 </li>

@@ -1,5 +1,5 @@
 .slideshow{
-    background-color: blue;
+    background-color: #F8E0C9;
     float: left;
     width: 50%;
     height: 100vh;
@@ -9,7 +9,7 @@
     float: right;
     width: 50%;
     height: 100vh;
-    background-color: #5f5395;
+    background-color: #ffffff;
 }
   
 .copyright{
@@ -52,7 +52,7 @@
 }
 
 .loginBox{
-    margin-top: 50px;
+    margin-top: 30px;
 }
 
 .loginPhoto{
@@ -63,7 +63,7 @@
 .forgotPasswordCard{
 	height: 75vh;
     width: 75vh;
-	background-color: #7768bc !important;
+	background-color: #F5D6BA !important;
 }
 
 .forgotPWDName{

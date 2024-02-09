@@ -1,0 +1,122 @@
+.rankDisplay{
+	color: black;
+}
+
+.lbTitle{
+	width: 100%;
+	text-align: left;
+    font-size: 20px;
+	margin-bottom: 20px;
+	color: black !important;
+    float: left !important;
+}
+
+.rankItem{
+	float: left;
+}
+
+.rankCard{
+	width: 50%;
+	margin-bottom: 5px;
+	margin-top: 5px;
+	margin-right: 25px;
+	height: 55px;
+}
+
+.grayCard{
+	background-color: #edecec !important;
+}
+
+.purpleCard{
+	background-color: #7062ad !important;
+	margin-bottom: 60px !important;
+}
+
+.goldCard{
+	background-color: gold !important;
+}
+
+.silverCard{
+	background-color: silver !important;
+}
+
+.bronzeCard{
+	background-color: #cd853d !important;
+}
+
+.rankAvatar{
+	margin-top: -10px !important;
+}
+
+.rankNumber{
+	background-color: white !important;
+	color: black !important;
+	margin-right: 8%;
+}
+
+.rankItem{
+	width: 100px;
+}
+
+.rankPic{
+	margin-right: 3% !important;
+}
+
+.rankName{
+	margin-right: 4% !important;
+	width: 150px !important;
+}
+
+.rankEvents{
+	margin-right: 4% !important;
+}
+
+.lbHeader{
+	font-size: 30px;
+	margin-right: 25px;
+}
+
+.studentSearch{
+	margin-left: 37.5%;
+	margin-bottom: 10px;
+}
+
+.extraSearchSpace{
+	margin-bottom: 100px;
+}
+
+.searchPic{
+	float: left;
+	margin-top: -3px;
+}
+
+.ifSearched{
+	float: left;
+	margin-right: -320px;
+}
+
+
+@media (max-width: 1350px) {
+    .removeIfShort {
+        display: none !important;
+    }
+}
+
+@media (max-width: 1450px) {
+	.ifSearched{
+		float: top;
+		margin-right: 0px;
+	}
+}
+
+@media (max-width: 850px) {
+	.undoBtn{
+		margin-bottom: 10px;
+	}
+}
+
+@media (max-width: 740px) {
+    .rankCard{
+		height: 80px;
+	}
+}

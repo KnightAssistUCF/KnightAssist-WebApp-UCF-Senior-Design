@@ -27,6 +27,7 @@ import OrgProfilePage from './pages/OrgProfilePage';
 import ContactPage from './pages/ContactPage';
 import SettingsPage from './pages/SettingsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() 
 {
@@ -79,6 +80,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/settings" element={(role) ? <SettingsPage/> : <Navigate from='/settings' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/leaderboard" element={(role) ? <LeaderboardPage/> : <Navigate from='/leaderboard' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>

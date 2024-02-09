@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
         const organization = await Organization.findById(orgId)
         .populate({
             path: 'favorites', model: 'userStudent',
-            select: 'firstName lastName totalVolunteerHours', 
+            select: 'firstName lastName eventsHistory totalVolunteerHours', 
             options: { sort: { 'totalVolunteerHours': -1 } } // follow a descending order from highest vol person to least
         });
 
@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         }
 
         const result = organization.favorites;
-        res.json(result);
+        res.json({data: result});
 
     } catch(error) {
         console.error('Internal error: ', error);
