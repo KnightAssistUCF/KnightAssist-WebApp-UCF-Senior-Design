@@ -63,7 +63,7 @@ function Header()
     };
 
 	function loadStudentProfile(){
-		sessionStorage.removeItem("viewingPageID");
+		sessionStorage.removeItem("viewingStudentPageID");
 
 		if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentprofile")
 			window.location.reload();
