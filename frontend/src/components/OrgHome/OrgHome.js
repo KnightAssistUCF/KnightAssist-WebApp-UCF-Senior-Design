@@ -83,13 +83,6 @@ function OrgHome() {
     getChartData();
   }, []);
 
-   /*
-     <div className='txtOverImg'>
-					<img className={'chartImage' + ((hoverImage) ? ' blurChart' : '')} src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
-					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)} onClick={() => openPopup()}>View All Event Data</div> : null}
-				</div> 
-	*/
-
   return (
     <div className='spartan'>
       <OrgTopBar />
