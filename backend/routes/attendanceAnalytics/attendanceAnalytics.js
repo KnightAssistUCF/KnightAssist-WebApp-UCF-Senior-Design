@@ -74,8 +74,8 @@ router.get('/', async (req, res) => {
         events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
 
         // For debuggint to test with many events, will remove
-        events = events.concat(events);
-        events = events.concat(events);
+        //events = events.concat(events);
+        //events = events.concat(events);
 
         if (limit)
             events = events.splice(0, 10);

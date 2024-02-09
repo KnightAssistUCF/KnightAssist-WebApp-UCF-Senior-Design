@@ -59,7 +59,6 @@ function OrgHome() {
 			const response = await fetch(chartUrl);
 			const jsonData = await response.json();
 			console.log(jsonData);
-			//setChartData(jsonData);
 			setChartData(jsonData)
 		} catch (error) {
 			console.error('Error fetching chart data:', error);
@@ -70,7 +69,7 @@ function OrgHome() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}`);
 		try {
 			const response = await fetch(chartUrl);
-			const jsonData = await response.blob();
+			const jsonData = await response.json();
 			console.log(jsonData);
 			setFullChartData(jsonData);
 			setOpenChartModal(true)
@@ -119,21 +118,30 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
             <StatCards />
-			{(chartData) ? 
-					<Bar
-					type='bar'
-					data={chartData.data}
-					options={chartData.options}
-					/>
-			: null}
+			<div className={'defaultChart' + ((hoverImage) ? " blurChart" : "")} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}>
+				{(chartData) ? 
+						<Bar
+							type='bar'
+							data={chartData.data}
+							options={chartData.options}
+						/>
+				: null}
+			</div>
         </div>
 
 		<Dialog maxWidth={"xl"} sx={{marginLeft: 10}} open={openChartModal} onClose={() => closeChartModal()}>
 			<DialogContent className='spartan chartModal'>
-				<button className='closeAddEvent'>
+				<button className='chartClose'>
 					<CloseIcon onClick={() => closeChartModal()}/>
 				</button>
-				{(fullChartData) ? <img className='fullChartImage' src={URL.createObjectURL(fullChartData)}></img> : null}				
+				{(fullChartData) ? 
+						<Bar
+							type='bar'
+							data={fullChartData.data}
+							options={fullChartData.options}
+							className='addChartSpace'
+						/> 
+					: null}				
 			</DialogContent>
 		</Dialog>
       </div>

@@ -76,8 +76,8 @@
 
 .chartModal{
 	height: 500px !important;
-	width: 100% !important;
-	overflow: none !important;
+	width: 2000px !important;
+	overflow: scroll !important;
 }
 
 .chartImage{
@@ -95,14 +95,12 @@
 }
 
 .blurChart{
-	filter: blur(1.5px);
+	cursor: pointer;
 }
 
 .fullChartImage{
-	margin-left: 3%;
-	margin-top: 1%;
-	width: 95%;
-	height: 85%;
+	width: 2000px;
+	overflow: scroll;
 }
 
 .txtOverImg{
@@ -128,4 +126,25 @@
 .chartDialogTitle{
 	font-size: 25px !important;
 	margin-top: -30px !important;
+}
+
+.defaultChart{
+	margin-left: 30px;
+	margin-top: 20px;
+	width: 75%;
+}
+
+.addChartSpace{
+	margin-top: 20px;
+}
+
+.chartClose{
+	position: fixed;
+	right: 80px;
+	background: none;
+    border: none;
+}
+
+.chartClose:hover{
+	color: red;
 }
