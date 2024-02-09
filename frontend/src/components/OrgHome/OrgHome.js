@@ -9,9 +9,10 @@ import StatCards from './StatCards';
 import Analytics from './Analytics';
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
+import Chart from 'chart.js/auto';
 import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle } from '@mui/material';
+import { Bar } from "react-chartjs-2";
 import { buildPath } from '../../path';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
 
 function OrgHome() {
 	const [openAnnouncement, setOpenAnnouncement] = useState(false);
@@ -56,9 +57,10 @@ function OrgHome() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&limit=true`);
 		try {
 			const response = await fetch(chartUrl);
-			const jsonData = await response.blob();
+			const jsonData = await response.json();
 			console.log(jsonData);
-			setChartData(jsonData);
+			//setChartData(jsonData);
+			setChartData(jsonData)
 		} catch (error) {
 			console.error('Error fetching chart data:', error);
 		}
@@ -81,6 +83,13 @@ function OrgHome() {
     getUpcomingEvents();
     getChartData();
   }, []);
+
+   /*
+     <div className='txtOverImg'>
+					<img className={'chartImage' + ((hoverImage) ? ' blurChart' : '')} src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
+					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)} onClick={() => openPopup()}>View All Event Data</div> : null}
+				</div> 
+	*/
 
   return (
     <div className='spartan'>
@@ -111,10 +120,11 @@ function OrgHome() {
         <div className="orgHomeBottomRow">
             <StatCards />
 			{(chartData) ? 
-				<div className='txtOverImg'>
-					<img className={'chartImage' + ((hoverImage) ? ' blurChart' : '')} src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
-					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)} onClick={() => openPopup()}>View All Event Data</div> : null}
-				</div> 
+					<Bar
+					type='bar'
+					data={chartData.data}
+					options={chartData.options}
+					/>
 			: null}
         </div>
 

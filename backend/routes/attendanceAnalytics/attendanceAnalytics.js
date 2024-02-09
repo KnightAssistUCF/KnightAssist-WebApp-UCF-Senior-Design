@@ -211,14 +211,7 @@ router.get('/', async (req, res) => {
             }
         };
 
-
-        const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
-
-
-        res.setHeader('Content-Type', 'image/png');
-
-
-        res.send(imageBuffer);
+        res.json({data: configuration.data, options: configuration.options});
 
     } catch (error) {
         console.error(error);
