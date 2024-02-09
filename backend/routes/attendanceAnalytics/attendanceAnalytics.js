@@ -175,43 +175,9 @@ router.get('/', async (req, res) => {
                     }
                 ]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Number of Attendees',
-                            font: {
-                                size: 20
-                            }
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Event Names',
-                            font: {
-                                size: 20
-                            }
-                        }
-                    }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Event Attendance Analysis',
-                        font: {
-                            size: 25
-                        }
-                    }
-                }
-            }
         };
 
-        res.json({data: configuration.data, options: configuration.options});
+        res.json({data: configuration.data});
 
     } catch (error) {
         console.error(error);

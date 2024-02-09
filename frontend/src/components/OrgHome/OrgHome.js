@@ -10,7 +10,7 @@ import Analytics from './Analytics';
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
 import Chart from 'chart.js/auto';
-import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle } from '@mui/material';
+import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle, Tooltip } from '@mui/material';
 import { Bar } from "react-chartjs-2";
 import { buildPath } from '../../path';
 
@@ -116,8 +116,47 @@ function OrgHome() {
 						<Bar
 							type='bar'
 							data={chartData.data}
-							options={chartData.options}
-						/>
+							options={
+								{
+									scales: {
+										y: {
+											beginAtZero: true,
+											title: {
+												display: true,
+												text: 'Number of Attendees',
+												font: {
+													size: 20
+												}
+											}
+										},
+										x: {
+											title: {
+												display: true,
+												text: 'Event Names',
+												font: {
+													size: 20
+												}
+											}
+										}
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Event Attendance Analysis',
+											font: {
+												size: 25
+											}
+										},
+										subtitle: {
+											display: true,
+											text: (hoverImage) ? '(Click anywhere to view all past event data)' : '           '
+										}
+									}
+								}
+							}						
+							/>
 				: null}
 			</div>
         </div>
@@ -131,7 +170,42 @@ function OrgHome() {
 						<Bar
 							type='bar'
 							data={fullChartData.data}
-							options={fullChartData.options}
+							options={
+								{
+									scales: {
+										y: {
+											beginAtZero: true,
+											title: {
+												display: true,
+												text: 'Number of Attendees',
+												font: {
+													size: 20
+												}
+											}
+										},
+										x: {
+											title: {
+												display: true,
+												text: 'Event Names',
+												font: {
+													size: 20
+												}
+											}
+										}
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Event Attendance Analysis',
+											font: {
+												size: 25
+											}
+										}
+									}
+								}
+							}
 							className='addChartSpace'
 						/> 
 					: null}				
