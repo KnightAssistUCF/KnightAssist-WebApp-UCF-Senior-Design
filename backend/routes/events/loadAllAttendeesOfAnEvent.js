@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
         
         try {
                 const eventToLookUp = await Event.findOne(query)
-                        .populate('attendees')
+                        .populate('registeredVolunteers')
                         .exec();
 
                 if (!eventToLookUp) {
