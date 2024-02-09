@@ -63,6 +63,11 @@ function Leaderboard() {
 		setStudentData(data);
 	}
 
+	function loadStudentProfile(id){
+		sessionStorage.setItem("viewingStudentPageID", id);
+		window.location.href="/#/studentprofile";
+	}
+
 	function Title(){
 		return(
 		  <div className='lbTitle spartan'>
@@ -77,6 +82,12 @@ function Leaderboard() {
 		const place = yourData.rank;
 		const pic = yourData.pic;
 
+		let name = student.firstName + " " + student.lastName + "";
+
+		if(name.length >= 30){
+			name = name.substring(0, 30) + "..."
+		}
+
 		return (
 			<Grid container justifyContent="center" alignItems="center">
 				<Card className={"rankCard purpleCard"} variant="outlined">
@@ -90,7 +101,9 @@ function Leaderboard() {
 							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							<b>{student.firstName + " " + student.lastName}</b>
+							<p className="addHover" onClick={() => loadStudentProfile(student._id)}>
+							 	<b>{name}</b>
+                        	</p>						
 						</Typography>
 						<Typography
 							variant="body2"
@@ -132,7 +145,12 @@ function Leaderboard() {
 
 			i++;
 		}
-		
+
+		let name = student.firstName + " " + student.lastName + "";
+
+		if(name.length >= 30){
+			name = name.substring(0, 30) + "..."
+		}
 
 		return (
 			<Grid container justifyContent="center" alignItems="center">
@@ -147,7 +165,9 @@ function Leaderboard() {
 							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							<b>{student.firstName + " " + student.lastName}</b>
+							<p className="addHover" onClick={() => loadStudentProfile(student._id)}>
+							 	<b>{name}</b>
+                        	</p>
 						</Typography>
 						<Typography
 							variant="body2"
@@ -203,7 +223,9 @@ function Leaderboard() {
 							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							<b>{name}</b>
+							<p className="addHover" onClick={() => loadStudentProfile(student._id)}>
+							 	<b>{name}</b>
+                        	</p>						
 						</Typography>
 						<Typography
 							variant="body2"
