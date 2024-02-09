@@ -121,6 +121,7 @@ function LoginComponents(props){
 			}
         } catch (e) {
             console.log(e.toString());
+			setShowError(true);
             setIsInvalid("is-invalid");
         }
 
@@ -203,7 +204,7 @@ function LoginComponents(props){
     }
 
     function validInput(){
-        if(email === "" || password === "" || isInvalid == "is-invalid"){
+        if(email === "" || password === "" || isInvalid === "is-invalid"){
             setShowError(true);
             return false;
         }
@@ -214,7 +215,7 @@ function LoginComponents(props){
     function AlertMessage(){
         return (
             <div>
-                {(showError) === true ? <Alert severity="error">Incorrect username / password.</Alert> : null}
+                {(showError) === true ? <Alert severity="error">Incorrect email/password</Alert> : null}
             </div>
         )
     }

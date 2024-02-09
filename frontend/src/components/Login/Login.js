@@ -25,14 +25,15 @@ function Login(props)
             flexDirection: 'column',
             alignItems: 'center',
             minHeight: '100vh',
-            marginTop: '-60px',
+            marginTop: '5px',
+			marginBottom: '-20px'
           }}
         >
           <Container component="main" maxWidth="xs" sx={{ mb: 4, marginTop: 2 }}>
             <Paper variant="outlined" sx={{ my: { xs: 2, md: 4 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)', width: '100%' }}>
           <Box
             sx={{
-              marginTop: 3,
+              marginTop: 1,
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
