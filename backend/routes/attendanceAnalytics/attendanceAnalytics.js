@@ -74,8 +74,8 @@ router.get('/', async (req, res) => {
         events = events.filter((event) => new Date().toISOString().localeCompare((event.endTime.toISOString())) >= 0);
 
         // For debuggint to test with many events, will remove
-        events = events.concat(events);
-        events = events.concat(events);
+        //events = events.concat(events);
+        //events = events.concat(events);
 
         if (limit)
             events = events.splice(0, 10);
@@ -175,50 +175,9 @@ router.get('/', async (req, res) => {
                     }
                 ]
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Number of Attendees',
-                            font: {
-                                size: 20
-                            }
-                        }
-                    },
-                    x: {
-                        title: {
-                            display: true,
-                            text: 'Event Names',
-                            font: {
-                                size: 20
-                            }
-                        }
-                    }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: 'Event Attendance Analysis',
-                        font: {
-                            size: 25
-                        }
-                    }
-                }
-            }
         };
 
-
-        const imageBuffer = await chartJSNodeCanvas.renderToBuffer(configuration);
-
-
-        res.setHeader('Content-Type', 'image/png');
-
-
-        res.send(imageBuffer);
+        res.json({data: configuration.data});
 
     } catch (error) {
         console.error(error);

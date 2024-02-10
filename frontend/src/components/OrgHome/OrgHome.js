@@ -9,9 +9,10 @@ import StatCards from './StatCards';
 import Analytics from './Analytics';
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle } from '@mui/material';
+import Chart from 'chart.js/auto';
+import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle, Tooltip } from '@mui/material';
+import { Bar } from "react-chartjs-2";
 import { buildPath } from '../../path';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Label } from 'recharts';
 
 function OrgHome() {
 	const [openAnnouncement, setOpenAnnouncement] = useState(false);
@@ -56,9 +57,9 @@ function OrgHome() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&limit=true`);
 		try {
 			const response = await fetch(chartUrl);
-			const jsonData = await response.blob();
+			const jsonData = await response.json();
 			console.log(jsonData);
-			setChartData(jsonData);
+			setChartData(jsonData)
 		} catch (error) {
 			console.error('Error fetching chart data:', error);
 		}
@@ -68,7 +69,7 @@ function OrgHome() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}`);
 		try {
 			const response = await fetch(chartUrl);
-			const jsonData = await response.blob();
+			const jsonData = await response.json();
 			console.log(jsonData);
 			setFullChartData(jsonData);
 			setOpenChartModal(true)
@@ -110,20 +111,104 @@ function OrgHome() {
         </div>
         <div className="orgHomeBottomRow">
             <StatCards />
-			{(chartData) ? 
-				<div className='txtOverImg'>
-					<img className={'chartImage' + ((hoverImage) ? ' blurChart' : '')} src={URL.createObjectURL(chartData)} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}></img>
-					{(hoverImage) ? <div className='centerImgTxt' onMouseOver={() => setHoverImage(true)} onClick={() => openPopup()}>View All Event Data</div> : null}
-				</div> 
-			: null}
+			<div className={'defaultChart' + ((hoverImage) ? " blurChart" : "")} onClick={() => openPopup()} onMouseOver={() => setHoverImage(true)} onMouseLeave={() => setHoverImage(false)}>
+				{(chartData) ? 
+						<Bar
+							type='bar'
+							data={chartData.data}
+							options={
+								{
+									scales: {
+										y: {
+											beginAtZero: true,
+											title: {
+												display: true,
+												text: 'Number of Attendees',
+												font: {
+													size: 20
+												}
+											}
+										},
+										x: {
+											title: {
+												display: true,
+												text: 'Event Names',
+												font: {
+													size: 20
+												}
+											}
+										}
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Event Attendance Analysis',
+											font: {
+												size: 25
+											}
+										},
+										subtitle: {
+											display: true,
+											text: (hoverImage) ? '(Click anywhere to view all past event data)' : '           '
+										}
+									}
+								}
+							}						
+							/>
+				: null}
+			</div>
         </div>
 
 		<Dialog maxWidth={"xl"} sx={{marginLeft: 10}} open={openChartModal} onClose={() => closeChartModal()}>
 			<DialogContent className='spartan chartModal'>
-				<button className='closeAddEvent'>
+				<button className='chartClose'>
 					<CloseIcon onClick={() => closeChartModal()}/>
 				</button>
-				{(fullChartData) ? <img className='fullChartImage' src={URL.createObjectURL(fullChartData)}></img> : null}				
+				{(fullChartData) ? 
+						<Bar
+							type='bar'
+							data={fullChartData.data}
+							options={
+								{
+									scales: {
+										y: {
+											beginAtZero: true,
+											title: {
+												display: true,
+												text: 'Number of Attendees',
+												font: {
+													size: 20
+												}
+											}
+										},
+										x: {
+											title: {
+												display: true,
+												text: 'Event Names',
+												font: {
+													size: 20
+												}
+											}
+										}
+									},
+									responsive: true,
+									maintainAspectRatio: false,
+									plugins: {
+										title: {
+											display: true,
+											text: 'Event Attendance Analysis',
+											font: {
+												size: 25
+											}
+										}
+									}
+								}
+							}
+							className='addChartSpace'
+						/> 
+					: null}				
 			</DialogContent>
 		</Dialog>
       </div>
