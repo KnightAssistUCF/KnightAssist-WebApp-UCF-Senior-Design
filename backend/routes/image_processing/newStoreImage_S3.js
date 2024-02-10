@@ -32,16 +32,19 @@ const UserStudent = require('../../models/userStudent');
 const upload = multer({ storage: storage });
 const storage = multer.memoryStorage();
 
+const randomImageName = (bytes = 32) => {
+    return crypto.randomBytes(16).toString('hex');
+};
+
 
 router.post('/', upload.single('profilePic'), async (req, res) => {
 
     console.log('req.body: ', req.body);
     console.log('req.file: ', req.file);
-    req.file.buffer
 
     const params = {
         Bucket: S3_BUCKET_NAME,
-        Key: req.file.originalname, // whatever the file name was on the user's computer before they uploaded it 
+        Key: randomImageName(), // doing this so it doesn't overwrite the existing images if they have the same name 
         Body: req.file.buffer,
         ContentType: req.file.mimetype,
     };
