@@ -1,5 +1,4 @@
 const express = require('express');
-const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
 const Organization = require('../../models/organization');
 const Event = require('../../models/events');
 const { default: mongoose } = require('mongoose');
@@ -128,7 +127,6 @@ router.get('/', async (req, res) => {
             'rgba(204, 121, 167, 0.5)'   // Orange-Pink
         ];
 
-        const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, chartCallback });
         const configuration = {
             type: 'bar',
             data: {
