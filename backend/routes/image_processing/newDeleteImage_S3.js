@@ -10,7 +10,7 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 require('dotenv').config();
-import { S3CLIENT, GetObjectCommand, PutObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
+import { S3CLIENT, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
 // declaring variables to store the S3 bucket name and the region, access ky and secret access key from the .env file
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 const S3_REGION = process.env.S3_REGION;
@@ -41,10 +41,59 @@ import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 router.delete('/', async (req, res) => {
 
-    // event picture: typeOfImage = 1
-    // organization profilepicture: typeOfImage = 2
-    // user profile picture: typeOfImage = 3
-    // organization background picture: typeOfImage = 4
+    const typeOfImage = req.body.typeOfImage;
+    const idOfEntity = req.body.id;
+    let entity;
+    if (typeOfImage === 1) {
+        entity = await Event.findById(idOfEntity);
+    } else if (typeOfImage === 2) {
+        entity = await Organization.findById(idOfEntity);
+    } else if (typeOfImage === 3) {
+        entity = await UserStudent.findById(idOfEntity);
+    } else if (typeOfImage === 4) {
+        entity = await Organization.findById(idOfEntity);
+    }
+
+    if (!entity) {
+        return res.status(404).json({ message: 'Entity not found in the database' });
+    }
+
+    let S3_ObjectOfEntity;
+    if (typeOfImage === 1) {
+        S3_ObjectOfEntity = entity.S3BucketImageDetails;
+    } else if (typeOfImage === 2) {
+        S3_ObjectOfEntity = entity.S3BucketImageDetails_ProfilePic;
+    } else if (typeOfImage === 3) {
+        S3_ObjectOfEntity = entity.profilePicPath;
+    } else if (typeOfImage === 4) {
+        S3_ObjectOfEntity = entity.S3BucketImageDetails_BackgroundPic;
+    }
+
+    const params = {
+        Bucket: S3_BUCKET_NAME,
+        Key: S3_ObjectOfEntity.imageName
+    };
+
+    const command = new DeleteObjectCommand(params);
+
+    await S3.send(command);
+
+    // wipe the name from the database and url
+    if (typeOfImage === 1) {
+        entity.S3BucketImageDetails.imageName = '';
+        entity.S3BucketImageDetails.url = '';
+    } else if (typeOfImage === 2) {
+        entity.S3BucketImageDetails_ProfilePic.imageName = '';
+        entity.S3BucketImageDetails_ProfilePic.url = '';
+    } else if (typeOfImage === 3) {
+        entity.S3BucketImageDetails.imageName = '';
+        entity.S3BucketImageDetails.url = '';
+    } else if (typeOfImage === 4) {
+        entity.S3BucketImageDetails_BackgroundPic.imageName = '';
+        entity.S3BucketImageDetails_BackgroundPic.url = '';
+    }
+
+    res.status(200).json({ message: 'Image deleted successfully' });
 
 });
 
