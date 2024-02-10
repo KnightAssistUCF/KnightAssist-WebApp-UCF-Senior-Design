@@ -102,6 +102,8 @@ const eventSchema = new Schema({
     },
     S3BucketImageDetails: {
         type: String, // would store the image name
+        url: String,
+        imageName: String,
         required: true
     },
     __v: {

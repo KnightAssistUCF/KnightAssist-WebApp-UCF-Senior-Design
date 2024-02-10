@@ -33,8 +33,8 @@ const Event = require('../../models/events');
 const Organization = require('../../models/organization');
 const UserStudent = require('../../models/userStudent');
 
-const upload = multer({ storage: storage });
 const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 const randomImageName = (bytes = 32) => {
     return crypto.randomBytes(16).toString('hex');
@@ -78,13 +78,17 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
     }
 
     if (typeOfImage === '1') {
-        await Event.findByIdAndUpdate(req.body.id, { S3BucketImageDetails: imageName });
+        const event = await Event.findById(req.body.id);
+        event.S3BucketImageDetails.imageName = imageName;
     } else if (typeOfImage === '2') {
-        await Organization.findByIdAndUpdate(req.body.id, { S3BucketImageDetails_ProfilePic: imageName });
+        const organization = await Organization.findById(req.body.id);
+        organization.S3BucketImageDetails_ProfilePic.imageName = imageName;
     } else if (typeOfImage === '3') {
-        await UserStudent.findByIdAndUpdate(req.body.id, { S3BucketImageDetails: imageName });
+        const user = await UserStudent.findById(req.body.id);
+        user.S3BucketImageDetails.imageName = imageName;
     } else if (typeOfImage === '4') {
-        await Organization.findByIdAndUpdate(req.body.id, { S3BucketImageDetails_Background: imageName });
+        const organization = await Organization.findById(req.body.id);
+        organization.S3BucketImageDetails_Background.imageName = imageName;
     }
 
     console.log('Image name: ', imageName);
