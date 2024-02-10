@@ -41,7 +41,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // specific presigned imorts and global declarations
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 
 router.get('/', async (req, res) => {
 

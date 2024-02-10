@@ -23,7 +23,7 @@ const S3_SECRET_ACCESS_KEY = process.env.S3_SECRET_ACCESS_KEY;
 
 
 // importing sharp, which will allow us to store images after reshaping them to a certain size
-const sharp = require('sharp');
+// const sharp = require('sharp');
 
 const S3 = new S3CLIENT({
     region: S3_REGION,
