@@ -10,7 +10,11 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 require('dotenv').config();
-import { S3CLIENT, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
+// import { S3CLIENT, GetObjectCommand, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
+const S3CLIENT = require('@aws-sdk/client-s3').S3Client;
+const { GetObjectCommand } = require('@aws-sdk/client-s3');
+const { DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { PutObjectCommand } = require('@aws-sdk/client-s3');
 // declaring variables to store the S3 bucket name and the region, access ky and secret access key from the .env file
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 const S3_REGION = process.env.S3_REGION;
@@ -36,8 +40,8 @@ const UserStudent = require('../../models/userStudent');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// specific presigned imorts and global declarations
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
+// // specific presigned imorts and global declarations
+// import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 router.delete('/', async (req, res) => {
 
