@@ -147,6 +147,10 @@ const organizationSchema = new Schema({
         required: true,
         default: true
     },
+    S3BucketImageDetails: {
+        type: String, // would store the image name
+        required: true
+    },
     __v: {
         type: String,
         required: true,

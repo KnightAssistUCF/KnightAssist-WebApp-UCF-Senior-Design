@@ -100,6 +100,10 @@ const eventSchema = new Schema({
         type: Number,
         required: true
     },
+    S3BucketImageDetails: {
+        type: String, // would store the image name
+        required: true
+    },
     __v: {
         type: String,
         required: true,
