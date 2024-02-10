@@ -17,6 +17,10 @@ const S3_REGION = process.env.S3_REGION;
 const S3_ACCESS_KEY = process.env.S3_ACCESS_KEY;
 const S3_SECRET_ACCESS_KEY = process.env.S3_SECRET_ACCESS_KEY;
 
+
+// importing sharp, which will allow us to store images after reshaping them to a certain size
+const sharp = require('sharp');
+
 const S3 = new S3CLIENT({
     region: S3_REGION,
     credentials: {
@@ -42,10 +46,15 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
     console.log('req.body: ', req.body);
     console.log('req.file: ', req.file);
 
+    // ressize the image so that it fits withint the dimensions of a small block
+    const resizedImage = await sharp(req.file.buffer)
+        .resize({heigh: 200, width: 200, fit:"contain"})
+        .toBuffer(); // [feel free to modify the dimensions within the .resize()]
+
     const params = {
         Bucket: S3_BUCKET_NAME,
         Key: randomImageName(), // doing this so it doesn't overwrite the existing images if they have the same name 
-        Body: req.file.buffer,
+        Body: resizedImage,
         ContentType: req.file.mimetype,
     };
 

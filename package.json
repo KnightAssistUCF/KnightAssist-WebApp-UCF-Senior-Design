@@ -38,6 +38,7 @@
     "react-router-dom": "^6.21.3",
     "recharts": "^2.10.4",
     "redux": "^5.0.1",
+    "sharp": "^0.33.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "tailwind-merge": "^2.2.0",
