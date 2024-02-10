@@ -10,7 +10,9 @@ const fs = require('fs');
 const path = require('path');
 const router = express.Router();
 require('dotenv').config();
-import { S3CLIENT, PutObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
+//import { S3CLIENT, PutObjectCommand } from "@aws-sdk/client-s3"; // what we use to interact with the S3 client
+const S3CLIENT = require('@aws-sdk/client-s3').S3Client;
+const { PutObjectCommand } = require('@aws-sdk/client-s3');
 // declaring variables to store the S3 bucket name and the region, access ky and secret access key from the .env file
 const S3_BUCKET_NAME = process.env.S3_BUCKET_NAME;
 const S3_REGION = process.env.S3_REGION;
@@ -19,7 +21,7 @@ const S3_SECRET_ACCESS_KEY = process.env.S3_SECRET_ACCESS_KEY;
 
 
 // importing sharp, which will allow us to store images after reshaping them to a certain size
-const sharp = require('sharp');
+// const sharp = require('sharp');
 
 const S3 = new S3CLIENT({
     region: S3_REGION,
@@ -55,15 +57,15 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
     console.log('req.file: ', req.file);
 
     // ressize the image so that it fits withint the dimensions of a small block
-    const resizedImage = await sharp(req.file.buffer)
-        .resize({heigh: 200, width: 200, fit:"contain"})
-        .toBuffer(); // [feel free to modify the dimensions within the .resize()]
+    // const resizedImage = await sharp(req.file.buffer)
+    //     .resize({heigh: 200, width: 200, fit:"contain"})
+    //     .toBuffer(); // [feel free to modify the dimensions within the .resize()]
 
     const imageName = randomImageName();
     const params = {
         Bucket: S3_BUCKET_NAME,
         Key: imageName, // doing this so it doesn't overwrite the existing images if they have the same name 
-        Body: resizedImage,
+        Body: req.file.buffer,
         ContentType: req.file.mimetype,
     };
 
