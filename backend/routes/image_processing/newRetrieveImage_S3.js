@@ -77,10 +77,12 @@ router.get('/', async (req, res) => {
             Key: imageName.imageName
         };
         const command = new GetObjectCommand({ getObjectParams }); // to creat the URL
-        const url = await getSignedUrl(S3, command, { expiresIn: 10000 });
+        const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
         console.log('url: ', url);
         imageName.url = url;
     }
+
+    res.status(200).send("Retrieved the image names and their URLs from S3 bucket after generation");
 
 });
 
