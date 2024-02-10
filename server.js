@@ -286,6 +286,16 @@ app.use('/api/perOrgLeaderboard', perOrgLeaderboard);
 const favoritedOrgsAnnouncements = require('./backend/routes/announcements/favoritedOrgsAnnouncements');
 app.use('/api/favoritedOrgsAnnouncements', favoritedOrgsAnnouncements);
 
+/* S3 Bucket new image endpoints */
+const storeImage_S3 = require('./backend/routes/image_processing/newStoreImage_S3');
+app.use('/api/storeImage_S3', storeImage_S3);
+
+const retrieveImage_S3 = require('./backend/routes/image_processing/newRetrieveImage_S3');
+app.use('/api/retrieveImage_S3', retrieveImage_S3);
+
+const deleteImage_S3 = require('./backend/routes/image_processing/newDeleteImage_S3');
+app.use('/api/deleteImage_S3', deleteImage_S3);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
