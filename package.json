@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "@aldabil/react-scheduler": "^2.8.1",
+    "@aws-sdk/client-s3": "^3.511.0",
+    "@aws-sdk/s3-request-presigner": "^3.511.0",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.17",
@@ -37,6 +39,7 @@
     "react-router-dom": "^6.21.3",
     "recharts": "^2.10.4",
     "redux": "^5.0.1",
+    "sharp": "^0.33.2",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "tailwind-merge": "^2.2.0",
