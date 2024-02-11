@@ -53,6 +53,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
 
     const typeOfImage = req.body.typeOfImage;
 
+    // todo remove theese later if needed [NOAH]
     console.log('req.body: ', req.body);
     console.log('req.file: ', req.file);
 
