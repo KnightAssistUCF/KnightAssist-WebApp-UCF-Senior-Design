@@ -50,7 +50,7 @@ router.post('/', async (req, res) => {
                 theme: 'default', 
                 product: {
                     name: 'KnightAssist',
-                    link: 'https://mailgen.js/', // dummy link will change later 
+                    link: 'https://knightassist-43ab3aeaada9.herokuapp.com/',  
                 },
             });
 
@@ -63,9 +63,9 @@ router.post('/', async (req, res) => {
                         instructions: 'As an admin, to get started with KnightAssist, please use the following credentials to access the admin tools and privileges of our app: '
                         + 'Email: ' + req.body.email + ' Password: ' + tempPassword,
                         button: {
-                            color: '#22BC66', //[makes the button green, can change later]
+                            color: '#22BC66', 
                             text: 'Login and confirm your account',
-                            link: 'https://nodejs.org/en/' // change this later with the correct redirect link
+                            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/' 
                         }
 
                     },

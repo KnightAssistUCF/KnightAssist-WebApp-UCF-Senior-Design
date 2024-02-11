@@ -66,9 +66,51 @@
 }
 
 .moveCards{
-	margin-top: 30px;
+	margin-left: 2%;
+	margin-top: 4.5% !important;
 }
 
 .moveY{
 	margin-right: 20px !important;
+}
+
+.chartModal{
+	height: 500px !important;
+	width: 2000px !important;
+	overflow: scroll !important;
+}
+
+.blurChart{
+	cursor: pointer;
+}
+
+.fullChartImage{
+	width: 2000px;
+	overflow: scroll;
+}
+
+.chartDialogTitle{
+	font-size: 25px !important;
+	margin-top: -30px !important;
+}
+
+.defaultChart{
+	margin-left: 30px;
+	margin-top: 20px;
+	width: 75%;
+}
+
+.addChartSpace{
+	margin-top: 20px;
+}
+
+.chartClose{
+	position: fixed;
+	right: 80px;
+	background: none;
+    border: none;
+}
+
+.chartClose:hover{
+	color: red;
 }

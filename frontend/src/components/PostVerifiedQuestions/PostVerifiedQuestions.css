@@ -124,6 +124,15 @@
 	margin-bottom: 50px;
 }
 
+.times{
+	margin-bottom: 10px;
+	left: 50% !important;
+}
+
+.allDays{
+	margin-right: 37%;
+}
+
 .pvq{
 	overflow-x: hidden;
 }
@@ -140,6 +149,12 @@
 	font-size: 18px;
 	font-family: "system-ui";
 	color:rgb(105, 105, 105);
+}
+
+.dayText{
+	font-size: 18px;
+	font-family: "system-ui";
+	padding-right: 10px;
 }
 
 .stepper{

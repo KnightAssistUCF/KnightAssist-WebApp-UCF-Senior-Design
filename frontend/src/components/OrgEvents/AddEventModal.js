@@ -149,8 +149,6 @@ function AddEventModal(props)
             description: description,
             location: location,
             organizationID: sessionStorage.getItem("ID"),
-            attendees: [],
-            registeredVolunteers: [],
             startTime: startTime,
             endTime: endTime,
             eventTags: tagNames,
@@ -246,7 +244,6 @@ function AddEventModal(props)
                     fullWidth
                     required={props.required}
                     label={props.label}
-                    autoFocus
                     multiline={props.multiline}
                     minRows={props.minRows}
                     onChange={props.onChange}
@@ -295,7 +292,7 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DateTimePicker label={props.label} onChange={props.onChange}/>
+					<DateTimePicker label={props.label} value={dayjs(props.value)} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
@@ -466,8 +463,6 @@ function AddEventModal(props)
         setTagNames(updatedTagNames);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     }, [redoTags])
-
-	//{DateSelector({xm:12, sm:6, label:"Date", value:date, onChange:(e) => setDate(e)})}
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>

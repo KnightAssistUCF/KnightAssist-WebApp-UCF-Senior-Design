@@ -1,4 +1,4 @@
-import { Divider, Modal } from '@mui/material';
+import { Alert, Divider, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import {Button} from '@mui/material';
@@ -28,15 +28,17 @@ import Collapse from '@mui/material/Collapse';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import QRCodeModal from './QRCodeModal';
-
-const avatarPic = require("./DefaultPic.png");
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function EventModal(props)
 {
     const handleCloseModal = () => {props.setOpen(false);}
     const handleCloseAlert = () => {setOpenAlert(false);}
+	const handleCloseHours = () => {setOpenEditHours(false); setShowError(false)};
 
     const [openAlert, setOpenAlert] = useState(false);
+	const [openEditHours, setOpenEditHours] = useState(false);
     const [openVolunteers, setOpenVolunteers] = useState(false);
 
     const [name, setName] = useState("");
@@ -46,12 +48,25 @@ function EventModal(props)
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const [curVolunteers, setCurVolunteers] = useState(0);
+	const [studentPics, setStudentPics] = useState([]);
+	
+	// For volunteers that checkedin/out of the event
+	const [attendedVolunteers, setAttendedVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
     const [volunteerInfo, setVolunteerInfo] = useState([]);
     const [tags, setTags] = useState([]);
 	const [showTags, setShowTags] = useState(false);
 
+	// For editing a volunteer's hours for an event
+	const [curVolunteerID, setCurVolunteerID] = useState(undefined);
+	const [newCheckInTime, setNewCheckInTime] = useState(undefined);
+	const [newCheckOutTime, setNewCheckOutTime] = useState(undefined);
+	const [showError, setShowError] = useState(false);
+
+
 	const [hasEndDate, sethasEndDate] = useState(false);
+
+	const [isPast, setIsPast] = useState(false);
 
 	// If the event has started, you can generateACode
 	const [generateCheckIn, setGenerateCheckIn] = useState(false);
@@ -135,7 +150,7 @@ function EventModal(props)
                 setLocation(event.location);
                 setStartTime(event.startTime);
                 setEndTime(event.endTime);
-                setCurVolunteers(event.attendees.length)
+                setCurVolunteers(event.registeredVolunteers.length)
                 setMaxVolunteers(event.maxAttendees);
                 setTags(event.eventTags);
 				setShowTags(event.eventTags.length > 0);
@@ -162,18 +177,123 @@ function EventModal(props)
 
                 const volunteers = [];
 
-                for(let id of event.attendees)
-                    volunteers.push(await getVolunteerInfo(id));
+				const pics = [];
 
+				if(!eventIsUpcoming(event.endTime)){
+					for(let student of event.checkedInStudents){
+                   		volunteers.push(await getVolunteerInfo(student.studentId));
+						pics.push(await getStudentPic(student.studentId))
+					}
+				}else{
+					for(let id of event.registeredVolunteers){
+                    	volunteers.push(await getVolunteerInfo(id));
+						pics.push(await getStudentPic(id));
+					}
+				}
+
+				setAttendedVolunteers(event.checkedInStudents.length);
                 setVolunteerInfo(volunteers);
+
+				setStudentPics(pics);
+
+				console.log(pics);
 
 				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
 				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
+
+				setIsPast(!eventIsUpcoming(event.endTime));
+
+				setOpenVolunteers(false);
         } else {
             console.log("Event undefined or not found");
-        }
-	    
+        }   
     }
+
+	async function getStudentTimes(info){
+		console.log(info);
+
+		try {
+		   
+			let url = buildPath(`api/historyOfSingleEvent_User?studentId=${info.userID}&eventId=${props.eventID}`);
+
+			let response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let hoursInfo = JSON.parse(await response.text());
+
+			console.log(hoursInfo);
+
+			setCurVolunteerID(info.userID);
+			setNewCheckInTime(hoursInfo.checkInTime);
+			setNewCheckOutTime(hoursInfo.checkOutTime);
+		} catch (e) {
+			console.log(e);
+		}  
+	}
+
+	async function getStudentPic(id){
+		try{
+			const url = buildPath(`api/retrieveImage?id=${id}&entityType=student&profilePicOrBackGround=0`);
+
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let pic = await response.blob();
+
+			return URL.createObjectURL(pic);
+		}catch(e){
+			console.log(e);
+		}
+	}
+
+	// Check in isn't after check out
+	function validTime(startTime, endTime){
+		return new Date(startTime) < new Date(endTime);
+	}
+
+    function validInput(){
+		if(!validTime(newCheckInTime, newCheckOutTime)){
+			setShowError(true);
+			return false;
+		}
+		
+        return true;
+    }
+
+	async function saveHours(){
+		if(!validInput()) return;
+
+		try{
+			const json = {
+				eventID: props.eventID,
+				studentID: curVolunteerID,
+				newCheckIn: newCheckInTime,
+				newCheckOut: newCheckOutTime,
+				whoAdjustedTime: "organization"
+			};
+	
+			console.log(json);
+	
+			let url = buildPath("api/editEventTotalHours");
+	
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let res = JSON.parse(await response.text());
+			console.log(res);
+
+			handleCloseHours();
+		}catch(e){
+			console.log(e);
+		}
+	}
 
     function EventName(){
         return (
@@ -207,17 +327,26 @@ function EventModal(props)
         ) 
     }
 
+	function TimeSelector(props){
+        return (
+            <Grid>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+					<DateTimePicker label={props.label} value={dayjs(props.value)} onChange={props.onChange}/>
+                </LocalizationProvider>                                      
+            </Grid>      
+        )
+    }
+
     function VolunteerItem(props){
         return (
-			<div>
+			<div className='addFL'>
 			    <ListItemButton className='volunteerItem' onClick={() => openStudentPage(props.info.userID)}>
 					<Avatar
-						src={avatarPic}
+						src={studentPics[props.i]}
 						className="volunteerPic"
 					/>
 					<ListItemText className="volunteerName" primary={props.info.name} />
           	   </ListItemButton>
-			   {(props.i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}	
 			</div>
         )
     }
@@ -226,14 +355,17 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <button className="volunteersBtn" onClick={() => {if(curVolunteers > 0) setOpenVolunteers(!openVolunteers)}}>
-                    <p className='lessSpace'>Registered Volunteers:</p>
-                    <p>{curVolunteers}/{maxVolunteers}</p>
+                <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
+                    <p className={(!isPast) ? 'lessSpace' : ''}>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"}</p>
+                    {(!isPast) ? <p>{curVolunteers + "/" + maxVolunteers} </p> : null}
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className="volunteerList" component="button" disablePadding>
-                        {volunteerInfo.map((info, i) => <VolunteerItem info={info} i={i}/>)}
+                        {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
+							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
+							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
                 </Collapse>
            </div>
@@ -258,6 +390,21 @@ function EventModal(props)
                         {tags.map(t => <Tag tag={t}/>)}
                     </Grid>
                 </div>
+        )
+    }
+
+	function ErrorMessage(){
+        return (
+            <div>
+                {(showError) === true
+                    ?
+                        <div className='addAlertSpace'>
+                            <Alert severity="error">Check-in after check-out</Alert>					
+                        </div>
+                    :
+                        null
+                }
+            </div>
         )
     }
 
@@ -379,7 +526,7 @@ function EventModal(props)
                                     </Grid>
                                 </Grid>
 
-                                {Volunteers()}
+                                <Volunteers/>
 
 								{(showTags) ? <Tags/> : null}
 
@@ -425,6 +572,24 @@ function EventModal(props)
                                         <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
                                         </DialogActions>
                                 </Dialog> 
+
+								<Dialog open={openEditHours} onClose={handleCloseHours}>
+									<DialogContent className='spartan hourModal'>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+											<DialogTitle className='dialogTitle'>Edit Volunteer's Hours</DialogTitle>
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
+											{TimeSelector({label:"Check In", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+											{TimeSelector({label:"Check Out", value:newCheckOutTime, onChange:(e) => setNewCheckOutTime(e)})}  
+										</Grid>
+										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+											<Button sx={{ mt: 5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
+										</Grid>
+										<ErrorMessage/>
+									</DialogContent>
+								</Dialog>
                             </Box>
                         </Container>
                     </CardContent>   

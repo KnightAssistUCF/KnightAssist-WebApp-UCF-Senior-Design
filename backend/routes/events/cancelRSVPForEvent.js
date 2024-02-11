@@ -24,11 +24,11 @@ router.delete('/', async (req, res) => {
                 }
 
                 // delete the user student from the attendees list if found
-                const attendeeIndex = selectedEvent.attendees.indexOf(userID);
+                const attendeeIndex = selectedEvent.registeredVolunteers.indexOf(userID);
                 console.log("ID", userID);
-                console.log("ATTENDEES", selectedEvent.attendees);
+                console.log("ATTENDEES", selectedEvent.registeredVolunteers);
                 if (attendeeIndex != -1) {
-                        selectedEvent.attendees.splice(attendeeIndex, 1);
+                        selectedEvent.registeredVolunteers.splice(attendeeIndex, 1);
                         await selectedEvent.save();
                 } else {
                         return res.status(404).send("User not found in the event's attendees list");

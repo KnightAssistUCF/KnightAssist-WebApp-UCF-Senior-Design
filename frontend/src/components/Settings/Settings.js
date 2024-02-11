@@ -10,6 +10,7 @@ import Alert from '@mui/material/Alert';
 import Customization from './Customization';
 import Security from './Security';
 import { buildPath } from '../../path.js';
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 function Settings(){
 	const [role, setRole] = useState(undefined);
@@ -18,7 +19,7 @@ function Settings(){
 	const [fontType, setFontType] = useState(undefined);
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
-	const [visible, setVisible] = useState(undefined);
+	const [getEmails, setGetEmails] = useState(undefined);
 	
 	const [showError, setShowError] = useState(false);
 	const [errors, setErrors] = useState([]);
@@ -111,16 +112,16 @@ function Settings(){
 
 		// Should be changed as a field for the org
 		// if we implement private accounts
-		if(!("visibility" in sessionStorage)){
-			setVisible("public");
+		if(!("getEmails" in sessionStorage)){
+			setGetEmails(true);
 		}else{
-			setVisible(sessionStorage.getItem("visibility"));
+			setGetEmails(sessionStorage.getItem("getEmails"));
 		}
 	}, []);
 
 	return(
 		<div className='spartan grayBG'>
-			<OrgTopBar/>
+			{(role === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
 			{(role === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
 				<Card className='settingsCard'>
@@ -128,7 +129,7 @@ function Settings(){
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
 						<Divider className='dividerSpace' sx={{background: "black"}}/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
-								  visible={visible} setVisible={setVisible}/>
+								  getEmails={getEmails} setGetEmails={setGetEmails}/>
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
 						</Grid>

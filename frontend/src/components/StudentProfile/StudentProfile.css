@@ -3,7 +3,7 @@
     margin-right: 2vw;
     color: black;
     text-align: left;
-    margin-top: 1%;
+    margin-top: 5% !important;
     position: relative;
 }
 
@@ -12,10 +12,10 @@
 }
 
 .studentTabs {
-    float: right;
     /* width: 76%; */
 	z-index: 300 !important;
-	margin-right: 40%;
+	float: left;
+	margin-left: 1.5%;
 	position: relative;
 }
 
@@ -27,14 +27,14 @@
 }
 
 .studentBox {
-    background-color: rgb(250, 250, 250);
+	background-color: rgb(250, 250, 250);
     width: 230px;
     /* height: 320%; */
     height: calc(100vh - 35%);
     border-radius: 14px;
     position: relative; /* overlay */
 	z-index: 200 !important;
-    margin-left: 10%; 
+    margin-left: 2%; 
     /* bottom: 10%;  */
     border: 1px solid #eaeaea;
     justify-content: center;
@@ -245,7 +245,6 @@
 
 .studentTags{
 	width: 85%;
-	padding-bottom: 20px !important;
 	margin-left: -25%;
 	float: left;
 }
@@ -253,12 +252,9 @@
 .studentTag{
     background-color: rgb(89, 80, 130) !important;
     color: rgb(240, 240, 240) !important;
-    min-width: 10%;
-	max-width: 70% !important;
     width: auto !important;
 	height: auto !important;
     margin-top: 0px;
-    margin-right: 10px;
     font-size: 15px;
     float: left;
     font-family: "system-ui";
@@ -278,6 +274,11 @@
 	cursor: pointer;
 }
 
+.card-body-profile{
+	width: 950px;
+	overflow: none !important;
+}
+
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
     fill: red;  
 } */
@@ -295,7 +296,7 @@ font-family: "Roboto";
 
 .cardSections{
 	float: left;
-	width: 100% !important;
+	width: 98% !important;
 }
 
 .favHeader{

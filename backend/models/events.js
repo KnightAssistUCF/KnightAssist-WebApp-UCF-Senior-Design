@@ -56,10 +56,6 @@ const eventSchema = new Schema({
         type: String,
         required: true
     },
-    attendees: [{
-        type: Schema.Types.ObjectId,
-        ref: 'userStudent',
-    }],
     registeredVolunteers: [{
         type: Schema.Types.ObjectId,
         ref: 'userStudent',
@@ -82,7 +78,20 @@ const eventSchema = new Schema({
             ref: 'userStudent',
         },
         checkInTime: Date,
-        checkOutTime: Date
+        checkOutTime: Date,
+        // this will store if the hours were adjusted for this student for a specific event 
+        // and if it is false that means it was determined based on the automatic default calculation only
+        wereHoursAdjusted_ForSudent_ForThisEvent: {
+            type: Boolean,
+            // store the adjuster that can be either an admin or an organization
+            adjuster: {
+                type: Schema.Types.ObjectId,
+                ref: 'userAdmin' || 'organization',
+                default: null
+            },
+            howMuchAdjusted: Number, // manula input edited version - autmated checkin and out to see by how much this was adjusted
+            default: false
+        }
     }],
     feedback: [feedbackSchema],
     eventTags: [String],

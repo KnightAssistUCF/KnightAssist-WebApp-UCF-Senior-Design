@@ -57,7 +57,7 @@ function EventModal(props)
             setPicLink(event.picLink);
             setStartTime(event.startTime);
             setEndTime(event.endTime);
-            setVolunteers(event.attendees.length);
+            setVolunteers(event.registeredVolunteers.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
 

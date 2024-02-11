@@ -25,10 +25,8 @@ function FavoriteOrganizations(props)
 		const width = window.innerWidth;
 
 		if(width > 1500){
-			return 4;
-		}else if(width > 1200){
 			return 3;
-		}else if(width > 925){
+		}else if(width > 900){
 			return 2;
 		}else{
 			return 1;
@@ -37,7 +35,7 @@ function FavoriteOrganizations(props)
 
 	function changePage(e, value, perPage = orgsPerPage){
 		setPage(value);
-		let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		let content = <div className="cards d-flex flex-row cardWhite card-body-profile">{orgs.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
 		setOrgCards(content);
 	}
 
@@ -92,7 +90,7 @@ function FavoriteOrganizations(props)
             orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
 		}
 
-        setNumPages(Math.ceil(orgs.length / 4))
+        setNumPages(Math.ceil(orgs.length / orgsPerPage))
         setOrgs(orgs);
 
 		setInitiateListener(initiateListener * -1);
@@ -100,17 +98,13 @@ function FavoriteOrganizations(props)
         let extraBack = 0;
         
         // Need to go a page back due to deletion
-        if(((page - 1) * 4) >= orgs.length){
+        if(((page - 1) * orgsPerPage) >= orgs.length){
             setPage(page - 1);
             extraBack = 1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
+        let content = <div className="cards d-flex flex-row cardWhite card-body-profile">{orgs.slice((page - 1 - extraBack) * orgsPerPage, (page - 1 - extraBack) * orgsPerPage + orgsPerPage)}</div>
         setOrgCards(content);
-    }
-
-    function FavoriteHeader(){
-        return <h1 className='favHeader spartan'>Favorite Organizations</h1>
     }
 
     function Org(props) {      
@@ -165,14 +159,10 @@ function FavoriteOrganizations(props)
 			const oldOrgsPerPage = orgsPerPage;
 
 			if(width > 1500){
-				setOrgsPerPage(4);
-				setNumPages(Math.ceil(orgs.length / 4))
-				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 4), 4);
-			}else if(width > 1200){
 				setOrgsPerPage(3);
 				setNumPages(Math.ceil(orgs.length / 3))
 				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 3), 3);
-			}else if(width > 925){
+			}else if(width > 900){
 				setOrgsPerPage(2);
 				setNumPages(Math.ceil(orgs.length / 2))
 				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 2), 2);
@@ -184,11 +174,11 @@ function FavoriteOrganizations(props)
 		}
 
 		window.addEventListener("resize", adjustForSize);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[initiateListener])
 
     return(
-     <div className='upcomingEventsSpace'>
-        <FavoriteHeader/>
+     <div>
         <div>
             <Orgs/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />

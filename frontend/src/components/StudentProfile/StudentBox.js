@@ -13,6 +13,7 @@ function StudentBox(props) {
 
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
 
+	const [expanded, setExpanded] = useState(false);
 	const [tempSelectedTags, setTempSelectedTags] = useState([]);
 
 	// State needed due to bug where tag names where undefined
@@ -23,6 +24,10 @@ function StudentBox(props) {
 	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
+
+	const toggleExpanded = () => {
+        setExpanded(!expanded);
+    };
 
 	async function submitEdits(){
 
@@ -78,9 +83,9 @@ function StudentBox(props) {
 	async function getProfilePic(){
 		let id;
 
-		if("viewingPageID" in sessionStorage && 
-		    sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingPageID")){
-			id = sessionStorage.getItem("viewingPageID");
+		if("viewingStudentPageID" in sessionStorage && 
+		    sessionStorage.getItem("ID") !== sessionStorage.getItem("viewingStudentPageID")){
+			id = sessionStorage.getItem("viewingStudentPageID");
 		}else{
 			id = sessionStorage.getItem("ID");
 		}
@@ -215,11 +220,13 @@ function StudentBox(props) {
     }
 
 	function Interests(){
+		const end = (expanded) ? props.user.categoryTags.length : 2;
+
 		return (
 			<div className='studentInterests'>
 				<div className='interestsName'>Interests</div>
 				<div className='studentTags'>
-					{props.user.categoryTags.map(t => <Tag tag={t}/>)}
+					{props.user.categoryTags.slice(0, end).map(t => <Tag tag={t}/>)}
 				</div>
 			</div>
 		)
@@ -318,11 +325,29 @@ function StudentBox(props) {
 								? EditSaveProfileBtn() 
 								: ""
 							}
-							{(props.user.categoryTags.length > 0)
+							{(props.editMode)
 								?
-									((!props.editMode) ? Interests() : EditInterests())
+									EditInterests()
 								: 
-									""
+								 ((props.user.categoryTags.length > 0) ? Interests() : null)
+							}
+							{(props.user.categoryTags.length > 2)
+								?
+									!expanded && !props.editMode && (
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', textTransform: 'none'}}>
+											See More
+										</Button>
+									)
+								: ""
+							}
+							{(props.user.categoryTags.length > 2)
+								?
+									expanded && !props.editMode && (
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginTop: '8px', marginRight: '150px', textTransform: 'none', marginTop: '2px' }} >
+											See Less
+										</Button>
+									)
+								: ""
 							}
 						</div>
 					: 

@@ -85,6 +85,9 @@ app.use('/api/addEvent', addEvent);
 const historyOfEvents_User = require('./backend/routes/volunteers/historyOfEvents_User');
 app.use('/api/historyOfEvents_User', historyOfEvents_User);
 
+const historyOfSingleEvent_User = require('./backend/routes/volunteers/historyOfSingleEvent_User');
+app.use('/api/historyOfSingleEvent_User', historyOfSingleEvent_User);
+
 const searchAllEventsOfAnOrg = require('./backend/routes/events/searchEventsForOrg');
 app.use('/api/searchEvent', searchAllEventsOfAnOrg);
 
@@ -262,6 +265,27 @@ app.use('/api/getOrgWorkingHours', getOrganizationWorkingHours);
 
 const getOrganizationAddress = require('./backend/routes/organizations/getOrgLocation');
 app.use('/api/getOrgAddress', getOrganizationAddress);
+
+/* Edit the total hours for a checked in student at an event */
+const editEventTotalHours = require('./backend/routes/events/editEventTotalHours');
+app.use('/api/editEventTotalHours', editEventTotalHours);
+
+
+/* attendance rate and future events to be shown in an org home page */
+const attRateAndFutureEvents = require('./backend/routes/attendanceAnalytics/attRateAndFutureEvents');
+app.use('/api/attRateAndFutureEvents', attRateAndFutureEvents);
+
+/* Leaderboard apis */
+const allStudentsRanking = require('./backend/routes/leaderBoard/allStudentsRanking');
+app.use('/api/allStudentsRanking', allStudentsRanking);
+
+const perOrgLeaderboard = require('./backend/routes/leaderBoard/perOrgLeaderBoard');
+app.use('/api/perOrgLeaderboard', perOrgLeaderboard);
+
+/* Favorited orgs announcements only */
+const favoritedOrgsAnnouncements = require('./backend/routes/announcements/favoritedOrgsAnnouncements');
+app.use('/api/favoritedOrgsAnnouncements', favoritedOrgsAnnouncements);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

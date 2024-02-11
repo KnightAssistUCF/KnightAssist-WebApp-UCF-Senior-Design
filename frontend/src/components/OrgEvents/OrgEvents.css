@@ -33,7 +33,7 @@
 
 .cardWhite{
     background-color: white;
-	overflow-y: scroll;
+	overflow-y: none;
     width: 100%;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .eventsCard{
-    width: 98%;
+    width: 100%;
 }
   
 .yourEvents{
@@ -258,8 +258,16 @@
 .volunteerList{
     margin-bottom: 50px !important;
 	border-radius: 10px;
-	background-color: rgb(241, 240, 240);
+	background-color: white;
 	border-color: gray;
+}
+
+.volunteerList:hover{
+    cursor: context-menu;
+}
+
+.addFL{
+	float: left;
 }
 
 .volunteerItem{
@@ -321,6 +329,16 @@
 	cursor: pointer;
 }
 
+.hourModal{
+	height: 350px !important;
+	width: 450px !important;
+	overflow: none !important;
+}
+
+.addAlertSpace{
+	margin-top: 15px;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;
@@ -329,7 +347,6 @@
 	.eventsCard{
 		width: 95%;
 	}
-	
 }
 
 @media (max-width: 1290px) {

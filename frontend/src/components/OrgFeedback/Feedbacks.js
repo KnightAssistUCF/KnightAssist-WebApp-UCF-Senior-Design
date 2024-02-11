@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Grid } from "@mui/material";
+import { Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -40,6 +40,65 @@ const formatDate = (dateString) => {
 const Feedbacks = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [numPages, setNumPages] = useState(0);  
+  const [perPage, setPerPage] = useState(7);
+  const [page, setPage] = useState(1);
+  const [theFeedbacks, setTheFeedbacks] = useState([]);
+
+  function changePage(e, value){
+	setPage(value);
+	console.log(props.feedback)
+	setTheFeedbacks(props.feedback.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((feedback) => {
+		return (
+			<Grid item xs={12}>
+			<Card variant="outlined" onClick={() => handleClick(feedback)}>
+			  <CardActionArea>
+				<CardContent className="content">
+				  <Typography
+					gutterBottom
+					variant="h5"
+					component="h2"
+					className="title"
+				  >
+					{feedback.eventName}
+				  </Typography>
+				  <Typography
+					variant="body2"
+					color="textSecondary"
+					component="p"
+					style={{ color: 'black'}}
+				  >
+					{feedback.studentName}
+					<Rating
+					  value={feedback.rating}
+					  readOnly
+					  className='cardRating'
+				  />
+				  </Typography>
+				  <Typography
+					variant="body2"
+					color="textSecondary"
+					component="p"
+					style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
+				  >
+					{(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
+					{formatDate(feedback.timeFeedbackSubmitted)}
+				  </Typography>
+				  <Typography
+					variant="body2"
+					color="textSecondary"
+					component="p"
+					style={{ marginTop: '6px'}}
+				  >
+					<i>{truncateText(feedback.feedbackText, 320)}</i>
+				  </Typography>
+				</CardContent>
+			  </CardActionArea>
+			</Card>
+		  </Grid>
+		);
+	  }));
+}
 
   const handleClick = async (feedback) => {
     setSelectedFeedback(feedback);
@@ -69,6 +128,13 @@ const Feedbacks = (props) => {
     setIsModalOpen(false);
   };
 
+  useEffect(() => {
+	if(props.feedback){	
+		setNumPages(Math.ceil(props.feedback.length / perPage));
+		changePage(null, 1);
+	}
+  }, [props.feedback]);
+
   return (
     <div className="announcementCardList">
       <Grid
@@ -78,55 +144,10 @@ const Feedbacks = (props) => {
         justify="flex-start"
         alignItems="flex-start"
       >
-        {props.feedback.map(feedback => 
-            <Grid item xs={12}>
-              <Card variant="outlined" onClick={() => handleClick(feedback)}>
-                <CardActionArea>
-                  <CardContent className="content">
-                    <Typography
-                      gutterBottom
-                      variant="h5"
-                      component="h2"
-                      className="title"
-                    >
-                      {feedback.eventName}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ color: 'black'}}
-                    >
-                      {feedback.studentName}
-					  <Rating
-						value={feedback.rating}
-						readOnly
-						className='cardRating'
-					/>
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
-                    >
-					  {(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
-					  {formatDate(feedback.timeFeedbackSubmitted)}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      color="textSecondary"
-                      component="p"
-                      style={{ marginTop: '6px'}}
-                    >
-                      <i>{truncateText(feedback.feedbackText, 320)}</i>
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-        )}
+        {theFeedbacks}
       </Grid>
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+
 
       {/* Modal */}
 	  	{(selectedFeedback !== null) ?

@@ -24,10 +24,8 @@ function RecentEvents(props)
 		const width = window.innerWidth;
 
 		if(width > 1500){
-			return 4;
-		}else if(width > 1200){
 			return 3;
-		}else if(width > 925){
+		}else if(width > 900){
 			return 2;
 		}else{
 			return 1;
@@ -36,7 +34,7 @@ function RecentEvents(props)
 
 	function changePage(e, value, perPage = eventsPerPage){
 		setPage(value);
-		let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		let content = <div className="cards d-flex flex-row cardWhite card-body-profile">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
 		setEventCards(content);
 	}
 	
@@ -107,7 +105,7 @@ function RecentEvents(props)
             return a.props.date.localeCompare(b.props.date)
         });
 
-        setNumPages(Math.ceil(events.length / 4))
+        setNumPages(Math.ceil(events.length / eventsPerPage))
         setEvents(events);
 
 		setInitiateListener(initiateListener * -1);
@@ -115,17 +113,13 @@ function RecentEvents(props)
         let extraBack = 0;
         
         // Need to go a page back due to deletion
-        if(((page - 1) * 4) >= events.length){
+        if(((page - 1) * eventsPerPage) >= events.length){
             setPage(page - 1);
             extraBack = 1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
+        let content = <div className="cards d-flex flex-row cardWhite card-body-profile">{events.slice((page - 1 - extraBack) * eventsPerPage, (page - 1 - extraBack) * eventsPerPage + eventsPerPage)}</div>
         setEventCards(content);
-    }
-
-    function EventHeader(){
-        return <h1 className='favHeader spartan'>Recent Events</h1>
     }
 
     function Event(props) {      
@@ -172,14 +166,10 @@ function RecentEvents(props)
 			const oldEventsPerPage = eventsPerPage;
 
 			if(width > 1500){
-				setEventsPerPage(4);
-				setNumPages(Math.ceil(events.length / 4))
-				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 4), 4);
-			}else if(width > 1200){
 				setEventsPerPage(3);
 				setNumPages(Math.ceil(events.length / 3))
 				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 3), 3);
-			}else if(width > 925){
+			}else if(width > 900){
 				setEventsPerPage(2);
 				setNumPages(Math.ceil(events.length / 2))
 				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
@@ -191,11 +181,11 @@ function RecentEvents(props)
 		}
 
 		window.addEventListener("resize", adjustForSize);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[initiateListener])
 
     return(
-     <div className='upcomingEventsSpace'>
-        <EventHeader/>
+     <div>
         <div>
             <Events/>            
             <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />

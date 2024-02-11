@@ -11,3 +11,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: "PeaceSans";
+  src: local("PeaceSans"),
+   url("./fonts/PeaceSans.otf") format("opentype");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Mosk_Bold";
+  src: local("Mosk"),
+   url("./fonts/Mosk_Bold.ttf") format("truetype");
+  font-weight: bold;
+}

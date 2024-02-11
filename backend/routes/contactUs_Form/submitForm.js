@@ -45,7 +45,7 @@ router.post('/', async (req, res) => {
         theme: 'default',
         product: {
             name: 'KnightAssist',
-            link: 'https://mailgen.js/' // TODO update this link later
+            link: 'https://knightassist-43ab3aeaada9.herokuapp.com/#/login'
         }
     });
 
