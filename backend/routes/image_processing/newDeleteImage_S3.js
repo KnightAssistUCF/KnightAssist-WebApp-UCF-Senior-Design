@@ -48,13 +48,13 @@ router.delete('/', async (req, res) => {
     const typeOfImage = req.body.typeOfImage;
     const idOfEntity = req.body.id;
     let entity;
-    if (typeOfImage === 1) {
+    if (typeOfImage === '1') {
         entity = await Event.findById(idOfEntity);
-    } else if (typeOfImage === 2) {
+    } else if (typeOfImage === '2') {
         entity = await Organization.findById(idOfEntity);
-    } else if (typeOfImage === 3) {
+    } else if (typeOfImage === '3') {
         entity = await UserStudent.findById(idOfEntity);
-    } else if (typeOfImage === 4) {
+    } else if (typeOfImage === '4') {
         entity = await Organization.findById(idOfEntity);
     }
 
@@ -63,13 +63,13 @@ router.delete('/', async (req, res) => {
     }
 
     let S3_ObjectOfEntity;
-    if (typeOfImage === 1) {
+    if (typeOfImage === '1') {
         S3_ObjectOfEntity = entity.S3BucketImageDetails;
-    } else if (typeOfImage === 2) {
+    } else if (typeOfImage === '2') {
         S3_ObjectOfEntity = entity.S3BucketImageDetails_ProfilePic;
-    } else if (typeOfImage === 3) {
+    } else if (typeOfImage === '3') {
         S3_ObjectOfEntity = entity.profilePicPath;
-    } else if (typeOfImage === 4) {
+    } else if (typeOfImage === '4') {
         S3_ObjectOfEntity = entity.S3BucketImageDetails_BackgroundPic;
     }
 
@@ -83,16 +83,16 @@ router.delete('/', async (req, res) => {
     await S3.send(command);
 
     // wipe the name from the database and url
-    if (typeOfImage === 1) {
+    if (typeOfImage === '1') {
         entity.S3BucketImageDetails.imageName = '';
         entity.S3BucketImageDetails.url = '';
-    } else if (typeOfImage === 2) {
+    } else if (typeOfImage === '2') {
         entity.S3BucketImageDetails_ProfilePic.imageName = '';
         entity.S3BucketImageDetails_ProfilePic.url = '';
-    } else if (typeOfImage === 3) {
+    } else if (typeOfImage === '3') {
         entity.S3BucketImageDetails.imageName = '';
         entity.S3BucketImageDetails.url = '';
-    } else if (typeOfImage === 4) {
+    } else if (typeOfImage === '4') {
         entity.S3BucketImageDetails_BackgroundPic.imageName = '';
         entity.S3BucketImageDetails_BackgroundPic.url = '';
     }

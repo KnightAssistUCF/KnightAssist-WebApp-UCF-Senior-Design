@@ -74,7 +74,7 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
 
     try {
         await S3.send(command);
-        res.status(200).send('Uploaded to S3 the image names + ' + req.file.originalname);
+        console.log('Uploaded to S3 the image names + ' + req.file.originalname);
     } catch (err) {
         console.log('Error: ', err);
         res.status(500).send('Failed to upload to S3');
@@ -83,15 +83,19 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
     if (typeOfImage === '1') {
         const event = await Event.findById(req.body.id);
         event.S3BucketImageDetails.imageName = imageName;
+		await event.save();
     } else if (typeOfImage === '2') {
         const organization = await Organization.findById(req.body.id);
         organization.S3BucketImageDetails_ProfilePic.imageName = imageName;
+		await organization.save();
     } else if (typeOfImage === '3') {
         const user = await UserStudent.findById(req.body.id);
         user.S3BucketImageDetails.imageName = imageName;
+		await user.save();
     } else if (typeOfImage === '4') {
         const organization = await Organization.findById(req.body.id);
         organization.S3BucketImageDetails_Background.imageName = imageName;
+		await organization.save();
     }
 
     console.log('Image name: ', imageName);

@@ -104,7 +104,6 @@ const eventSchema = new Schema({
         type: String, // would store the image name
         url: String,
         imageName: String,
-        required: true
     },
     __v: {
         type: String,

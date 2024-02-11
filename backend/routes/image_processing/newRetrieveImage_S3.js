@@ -55,25 +55,25 @@ router.get('/', async (req, res) => {
 
     // get all the image S3 bucket names and store them in a list
     const S3_imageNames = [];
-    if (typeOfImage === 1) {
+    if (typeOfImage === '1') {
         const events = await Event.findById(idOfEntity);
         S3_imageNames.push(events.S3BucketImageDetails);
-    } else if (typeOfImage === 2) {
+    } else if (typeOfImage === '2') {
         const organizations = await Organization.findById(idOfEntity);
-        S3_imageNames.push(organizations.S3BucketImageDetails);
-    } else if (typeOfImage === 3) {
+        S3_imageNames.push(organizations.S3BucketImageDetails_ProfilePic);
+    } else if (typeOfImage === '3') {
         const users = await UserStudent.findById(idOfEntity);
         S3_imageNames.push(users.S3BucketImageDetails);
-    } else if (typeOfImage === 4) {
+    } else if (typeOfImage === '4') {
         const organizations = await Organization.findById(idOfEntity);
-        S3_imageNames.push(organizations.S3BucketImageDetails);
+        S3_imageNames.push(organizations.S3BucketImageDetails_Background);
     }
 
     const getObjectParams = {
         Bucket: S3_BUCKET_NAME,
         Key: S3_imageNames[0]
     };
-    const command = new GetObjectCommand({ getObjectParams }); // to creat the URL
+    const command = new GetObjectCommand(getObjectParams); // to creat the URL
     const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
     console.log('url: ', url);
     const urlToReturn = url;

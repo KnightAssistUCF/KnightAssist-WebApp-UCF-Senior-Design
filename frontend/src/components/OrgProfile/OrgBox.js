@@ -119,9 +119,8 @@ function OrgBox(props) {
 
 			formData = new FormData();
 			formData.append('profilePic', editInfo.background); 
-			formData.append('entityType', 'organization');
+			formData.append('typeOfImage', '4');
 			formData.append('id', sessionStorage.getItem("ID"));
-			formData.append('profilePicOrBackGround', '1');
 			
 			await fetch(buildPath(`api/storeImage`), {
 				method: 'POST',
