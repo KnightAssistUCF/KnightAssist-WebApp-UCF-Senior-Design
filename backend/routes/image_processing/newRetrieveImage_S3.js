@@ -92,6 +92,7 @@ router.get('/', async (req, res) => {
             console.log('url: ', url);
             const urlToReturn = url;
             return res.status(200).json({ url: urlToReturn });
+        }
     }
 
     const getObjectParams = {
