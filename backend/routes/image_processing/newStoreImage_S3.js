@@ -82,19 +82,19 @@ router.post('/', upload.single('profilePic'), async (req, res) => {
 
     if (typeOfImage === '1') {
         const event = await Event.findById(req.body.id);
-        event.S3BucketImageDetails.imageName = imageName;
+        event.S3BucketImageDetails = imageName;
 		await event.save();
     } else if (typeOfImage === '2') {
         const organization = await Organization.findById(req.body.id);
-        organization.S3BucketImageDetails_ProfilePic.imageName = imageName;
+        organization.S3BucketImageDetails_ProfilePic = imageName;
 		await organization.save();
     } else if (typeOfImage === '3') {
         const user = await UserStudent.findById(req.body.id);
-        user.S3BucketImageDetails.imageName = imageName;
+        user.S3BucketImageDetails = imageName;
 		await user.save();
     } else if (typeOfImage === '4') {
         const organization = await Organization.findById(req.body.id);
-        organization.S3BucketImageDetails_Background.imageName = imageName;
+        organization.S3BucketImageDetails_Background = imageName;
 		await organization.save();
     }
 

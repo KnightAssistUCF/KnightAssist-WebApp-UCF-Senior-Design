@@ -51,8 +51,7 @@ function OrgProfile() {
 
 		let background = JSON.parse(await response.text());
 
-		setBGFile(background);
-		editInfo.current.bgFile = background;
+		setBGFile(background.url);
 	}
 
 	function validateImgSelection(fileSelect){
@@ -76,7 +75,7 @@ function OrgProfile() {
 					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
 					onClick={(editMode) ? () => document.getElementById("background").click() : null}
 				/>				
-				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(URL.createObjectURL(backgroundSelect.current.files[0])); editInfo.current.background = URL.createObjectURL(backgroundSelect.current.files[0]);}}}/>
+				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(URL.createObjectURL(backgroundSelect.current.files[0])); editInfo.current.background = backgroundSelect.current.files[0];}}}/>
 			</div>
 		)
 	}
