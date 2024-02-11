@@ -69,11 +69,36 @@ router.get('/', async (req, res) => {
         S3_imageNames.push(organizations.S3BucketImageDetails);
     }
 
+    if (S3_imageNames.length === 0 || S3_imageNames[0] === '') {
+        // if it is status 4 then we chose from aws orgdefaultbackground.png
+        if (typeOfImage === 4) {
+            const getObjectParams = {
+                Bucket: S3_BUCKET_NAME,
+                Key: 'orgdefaultbackground.png'
+            };
+            const command = new GetObjectCommand(getObjectParams); // to creat the URL
+            const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
+            console.log('url: ', url);
+            const urlToReturn = url;
+            return res.status(200).json({ url: urlToReturn });
+        } else {
+            // we chose the defaultProfilePic.png
+            const getObjectParams = {
+                Bucket: S3_BUCKET_NAME,
+                Key: 'defaultProfilePic.png'
+            };
+            const command = new GetObjectCommand(getObjectParams); // to creat the URL
+            const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
+            console.log('url: ', url);
+            const urlToReturn = url;
+            return res.status(200).json({ url: urlToReturn });
+    }
+
     const getObjectParams = {
         Bucket: S3_BUCKET_NAME,
         Key: S3_imageNames[0]
     };
-    const command = new GetObjectCommand({ getObjectParams }); // to creat the URL
+    const command = new GetObjectCommand(getObjectParams); // to creat the URL
     const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
     console.log('url: ', url);
     const urlToReturn = url;
