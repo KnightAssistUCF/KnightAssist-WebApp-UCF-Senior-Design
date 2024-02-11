@@ -70,8 +70,8 @@ router.get('/', async (req, res) => {
     }
 
     if (S3_imageNames.length === 0 || S3_imageNames[0] === '') {
-        // if it is status 4 then we chose from aws orgdefaultbackground.png
-        if (typeOfImage === 4) {
+        // if it is status 4 or 2then we chose from aws orgdefaultbackground.png
+        if (typeOfImage === '4' || typeOfImage === '1') {
             const getObjectParams = {
                 Bucket: S3_BUCKET_NAME,
                 Key: 'orgdefaultbackground.png'

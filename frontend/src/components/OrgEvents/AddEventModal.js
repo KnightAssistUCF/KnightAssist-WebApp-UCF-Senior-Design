@@ -171,12 +171,11 @@ function AddEventModal(props)
             console.log(res);
 
 			// For issue where images are blobs
-			if(typeof picFile.name === "string"){
+			if(picFile != null && typeof picFile.name === "string"){
 				const formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'event');
+				formData.append('typeOfImage', '1');
 				formData.append('id', res.ID);
-				formData.append('profilePicOrBackGround', '0');
 
 				// Store the picture selected to be associated with the event
 				await fetch(buildPath(`api/storeImage`), {
@@ -281,9 +280,9 @@ function AddEventModal(props)
             <Grid item xs={props.xs} sm={props.sm}>
 				<label for="upload" className="picBtn btn btn-primary">Select Pic</label>
 				<div className='imgDemo'>
-					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)} alt=''/> : ""}
+					{(picName != null) ? <img className="imgDemo" src={picName} alt=''/> : ""}
 				</div>
-                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
+                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(URL.createObjectURL(fileSelect.current.files[0])); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
         )
     }
@@ -410,17 +409,16 @@ function AddEventModal(props)
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
 			
-			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 
-			setPicName(pic);
-			setPicFile(pic);
+			setPicName(pic.url);
 
             const taggy = [];
             const taggyNames = [];

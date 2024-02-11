@@ -68,24 +68,24 @@ function FavoriteOrganizations(props)
 
         for(let org of res){
 			// Gets profile pic of org
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let profilePic = await response.blob();
+			let profilePic = JSON.parse(await response.text());
 
 			// Gets background pic of org
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+			url = buildPath(`api/retrieveImage?typeOfImage=4&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let background = await response.blob();
+			let background = JSON.parse(await response.text());
 
             orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
 		}
@@ -117,11 +117,11 @@ function FavoriteOrganizations(props)
 								component="img"
 								className='cardBg'
 								height="125"
-								image={URL.createObjectURL(props.background)}
+								image={props.background.url}
 							/>
 							<Avatar
 								className='cardLogo'
-                              	src={URL.createObjectURL(props.profilePic)}
+                              	src={props.profilePic.url}
 								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
                            />
 						</div>

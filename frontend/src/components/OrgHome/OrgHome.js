@@ -9,6 +9,7 @@ import StatCards from './StatCards';
 import Analytics from './Analytics';
 import Card from '@mui/material/Card';
 import CloseIcon from '@mui/icons-material/Close';
+import Chart from 'chart.js/auto';
 import { Button, Typography, CardContent, Dialog, DialogContent, Grid, DialogTitle, Tooltip } from '@mui/material';
 import { Bar } from "react-chartjs-2";
 import { buildPath } from '../../path';

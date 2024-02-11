@@ -41,16 +41,16 @@ function Leaderboard() {
 		let i = 0;
 
 		for(let student of res.data){
-			url = buildPath(`api/retrieveImage?entityType=student&id=${student._id}&profilePicOrBackGround=0`);
+			url = buildPath(`api/retrieveImage?typeOfImage=3&id=${student._id}`);
 	
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 	
-			data.push([student, pic])
+			data.push([student, pic.url])
 
 			// It is your rank
 			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
@@ -93,7 +93,7 @@ function Leaderboard() {
 				<Card className={"rankCard purpleCard"} variant="outlined">
 					<CardContent>
 						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
-						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
 							color="textSecondary"
@@ -157,7 +157,7 @@ function Leaderboard() {
 				<Card className={"rankCard purpleCard"} variant="outlined">
 					<CardContent>
 						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
-						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
 							color="textSecondary"
@@ -215,7 +215,7 @@ function Leaderboard() {
 				<Card className={"rankCard" + color} variant="outlined">
 					<CardContent>
 						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
-						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? URL.createObjectURL(pic) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
 							color="textSecondary"

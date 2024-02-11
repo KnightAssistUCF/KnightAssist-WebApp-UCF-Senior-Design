@@ -63,24 +63,24 @@ function SearchResults(props)
 
 			let org = JSON.parse(await response.text());
 
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let profilePic = await response.blob();
+			let profilePic = JSON.parse(await response.text());
 
 			// Gets background pic of org
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+			url = buildPath(`api/retrieveImage?typeOfImage=4&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let background = await response.blob();
+			let background = JSON.parse(await response.text());
 
             orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
         }    
@@ -126,14 +126,14 @@ function SearchResults(props)
 
 			event = event[0];
 
-			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 	
 			events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
         }       
@@ -179,7 +179,7 @@ function SearchResults(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={URL.createObjectURL(props.pic)}
+                            image={props.pic.url}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -205,11 +205,11 @@ function SearchResults(props)
 								component="img"
 								className='cardBg'
 								height="125"
-								image={URL.createObjectURL(props.background)}
+								image={props.background.url}
 							/>
 							<Avatar
 								className='cardLogo'
-                              	src={URL.createObjectURL(props.profilePic)}
+                              	src={props.profilePic.url}
 								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
                            />
 						</div>

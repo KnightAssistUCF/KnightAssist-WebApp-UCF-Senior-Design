@@ -5,6 +5,7 @@ import Feedbacks from "./Feedbacks.js";
 import './OrgFeedback.css';
 import { buildPath } from '../../path.js';
 import Filter from './Filter.js';
+import OrgTopBar from '../OrgHome/OrgTopBar';
 
 function OrgFeedback() {
 	var [feedback, setFeedback] = useState([]);
@@ -114,6 +115,7 @@ function OrgFeedback() {
 	return (
 		<div className='spartan'>
 			<Header/>
+			<OrgTopBar/>
 			<div className='moveEverything'>
 				<Title/>
 				<div className="announcementSection">

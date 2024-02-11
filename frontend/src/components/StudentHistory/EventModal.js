@@ -61,16 +61,16 @@ function EventModal(props)
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
 
-			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 
-			setPicLink(URL.createObjectURL(pic));
+			setPicLink(pic.url);
 
             console.log(event);
         } else {

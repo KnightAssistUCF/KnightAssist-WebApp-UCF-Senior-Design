@@ -148,9 +148,8 @@ function PostVerifiedQuestions()
 			if(picFile !== null && typeof picFile.name === "string"){
 				let formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'student');
+				formData.append('typeOfImage', '3');
 				formData.append('id', sessionStorage.getItem("ID"));
-				formData.append('profilePicOrBackGround', '0');
 
 				// Store the picture selected to be associated with the event
 				await fetch(buildPath(`api/storeImage`), {
@@ -194,9 +193,8 @@ function PostVerifiedQuestions()
 
 			let formData = new FormData();
 			formData.append('profilePic', picFile); 
-			formData.append('entityType', 'organization');
+			formData.append('typeOfImage', '2');
 			formData.append('id', sessionStorage.getItem("ID"));
-			formData.append('profilePicOrBackGround', '0');
 
 			await fetch(buildPath(`api/storeImage`), {
 				method: 'POST',
@@ -209,9 +207,8 @@ function PostVerifiedQuestions()
 			if(bgFile !== null && typeof bgFile.name === "string"){
 				formData = new FormData();
 				formData.append('profilePic', bgFile); 
-				formData.append('entityType', 'organization');
+				formData.append('typeOfImage', '4');
 				formData.append('id', sessionStorage.getItem("ID"));
-				formData.append('profilePicOrBackGround', '1');
 				
 				await fetch(buildPath(`api/storeImage`), {
 					method: 'POST',
@@ -366,23 +363,23 @@ function PostVerifiedQuestions()
 						<CardMedia
 							component="img"
 							className='bgStyle'
-							image={(bgName !== null) ? URL.createObjectURL(bgName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+							image={(bgName !== null) ? bgName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
 							onClick={() => document.getElementById("background").click()}
 						/>
 						: ""
 					}
 					<Avatar
-						src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+						src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
 						className={"picStyle " + ((role === "organization") ? "orgPicStyle" : "")}
 						sx={{borderStyle: "solid", borderColor: "white"}}
 						onClick={() => document.getElementById("profilePic").click()}
 					/>
 					<label for="profilePic" className="selectPPic btn btn-primary">Select Profile Picture</label>
-					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]); setPicFile(profilePicSelect.current.files[0])}}}/>
+					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0])}}}/>
 					{(role === "organization") ? 
 						<div>
 							<label for="background" className="selectPPic btn btn-primary">Select Background</label>
-							<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGName(backgroundSelect.current.files[0]); setBGFile(backgroundSelect.current.files[0])}}}/>
+							<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGName(URL.createObjectURL(backgroundSelect.current.files[0])); setBGFile(backgroundSelect.current.files[0])}}}/>
 						</div>
 						: ""
 					}
@@ -532,17 +529,17 @@ function PostVerifiedQuestions()
     }
 
 	async function getDefaultPic(){
-		const url = buildPath(`api/retrieveImage?entityType=organization&id=${sessionStorage.getItem("ID")}&profilePicOrBackGround=1`);
+		const url = buildPath(`api/retrieveImage?typeOfImage=4&id=${sessionStorage.getItem("ID")}`);
 
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {"Content-Type": "application/json"},
 		});
 
-		let defaultBG = await response.blob();
+		let defaultBG = JSON.parse(await response.text());
 
-		setBGName(defaultBG);
-		setBGFile(defaultBG);
+		setBGName(defaultBG.url);
+		setBGFile(defaultBG.url);
 	}
 
     useEffect(()=>{
