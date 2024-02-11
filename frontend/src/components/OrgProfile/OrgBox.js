@@ -13,6 +13,7 @@ import { RiTwitterXFill } from 'react-icons/ri';
 function OrgBox(props) {
 
 	const [picName, setPicName] = useState(null);
+	const [pic, setPic] = useState(null);
 	const [role, setRole] = useState(null);
 	const [favorited, setFavorited] = useState(false);
 
@@ -102,11 +103,10 @@ function OrgBox(props) {
 
 			let formData = new FormData();
 
-			if(picName !== null && typeof picName.name === "string"){
-				formData.append('profilePic', picName); 
-				formData.append('entityType', 'organization');
+			if(pic !== null){
+				formData.append('profilePic', pic); 
+				formData.append('typeOfImage', '2');
 				formData.append('id', sessionStorage.getItem("ID"));
-				formData.append('profilePicOrBackGround', '0');
 
 				await fetch(buildPath(`api/storeImage`), {
 					method: 'POST',
@@ -117,19 +117,20 @@ function OrgBox(props) {
 				.catch(error => console.error('Error:', error));
 			}
 
-			formData = new FormData();
-			formData.append('profilePic', editInfo.background); 
-			formData.append('entityType', 'organization');
-			formData.append('id', sessionStorage.getItem("ID"));
-			formData.append('profilePicOrBackGround', '1');
-			
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
+			if(editInfo.background){
+				formData = new FormData();
+				formData.append('profilePic', editInfo.background); 
+				formData.append('typeOfImage', '4');
+				formData.append('id', sessionStorage.getItem("ID"));
+				
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
 
 			props.setReset(!props.reset);
         }catch(err){
@@ -147,16 +148,16 @@ function OrgBox(props) {
 			id = sessionStorage.getItem("ID");
 		}
 
-		const url = buildPath(`api/retrieveImage?entityType=organization&id=${id}&profilePicOrBackGround=0`);
+		const url = buildPath(`api/retrieveImage?typeOfImage=2&id=${id}`);
 
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {"Content-Type": "application/json"},
 		});
 
-		let pic = await response.blob();
+		let pic = JSON.parse(await response.text());
 
-		setPicName(pic);
+		setPicName(pic.url);
 	}
 
 	function handleClick(idx){
@@ -299,12 +300,12 @@ function OrgBox(props) {
 		return (
 			<div>
 				<Avatar
-					src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
 					className={(props.editMode) ? "hoverImage" : ""}
 					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
 				/>
-				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]);}}}/>
+				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPic(profilePicSelect.current.files[0]);}}}/>
 			</div>
 		)
 	}

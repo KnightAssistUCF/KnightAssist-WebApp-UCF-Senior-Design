@@ -39,14 +39,14 @@ function StudentHistory()
 		for(let i = 0; i < histories.length; i++){
 			const history = histories[i];
 
-			const url = buildPath(`api/retrieveImage?entityType=event&id=${history.ID}`);
+			const url = buildPath(`api/retrieveImage?typeOfImage=1&id=${history.ID}`);
 
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic =  await response.blob();
+			let pic =  JSON.parse(await response.text());
 
 			histories[i] =  <div>
 							{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
@@ -54,7 +54,7 @@ function StudentHistory()
 								<Grid container layout={'row'} className='listsItems'>
 									<Grid item>
 										<Avatar
-											src={URL.createObjectURL(pic)}
+											src={pic.url}
 											className="eventPic"
 										/>
 									</Grid>
@@ -107,14 +107,14 @@ function StudentHistory()
 			for(let i = 0; i < histories.length; i++){
 				const history = histories[i];
 
-				url = buildPath(`api/retrieveImage?entityType=event&id=${history.ID}`);
+				url = buildPath(`api/retrieveImage?typeOfImage=1&id=${history.ID}`);
 
 				response = await fetch(url, {
 					method: "GET",
 					headers: {"Content-Type": "application/json"},
 				});
 		
-				let pic =  await response.blob();
+				let pic =  JSON.parse(await response.text());
 
 				histories[i] =  <div>
 								{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
@@ -122,7 +122,7 @@ function StudentHistory()
 									<Grid container layout={'row'} className='listsItems'>
 										<Grid item sm={1}>
 											<Avatar
-												src={URL.createObjectURL(pic)}
+												src={pic.url}
 												className="eventPic"
 											/>
 										</Grid>

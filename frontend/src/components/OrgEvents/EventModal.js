@@ -164,16 +164,16 @@ function EventModal(props)
 				else
 					sethasEndDate(false);
 
-				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+				url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 				response = await fetch(url, {
 					method: "GET",
 					headers: {"Content-Type": "application/json"},
 				});
 		
-				let pic = await response.blob();
+				let pic = JSON.parse(await response.text());
 
-				setPicLink(URL.createObjectURL(pic));
+				setPicLink(pic.url);
 
                 const volunteers = [];
 
@@ -235,16 +235,16 @@ function EventModal(props)
 
 	async function getStudentPic(id){
 		try{
-			const url = buildPath(`api/retrieveImage?id=${id}&entityType=student&profilePicOrBackGround=0`);
+			const url = buildPath(`api/retrieveImage?id=${id}&typeOfImage=3`);
 
 			const response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 
-			return URL.createObjectURL(pic);
+			return pic.url;
 		}catch(e){
 			console.log(e);
 		}

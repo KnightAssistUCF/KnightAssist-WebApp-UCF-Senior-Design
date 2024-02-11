@@ -10,6 +10,7 @@ import Header from './Header';
 import './OrgEvents.css';
 import SearchResults from './SearchResults';
 import { Grid } from '@mui/material';
+import OrgTopBar from '../OrgHome/OrgTopBar';
 
 function OrgPortal()
 {
@@ -38,6 +39,7 @@ function OrgPortal()
     return(
      	<div className='spartan'>
 			<Header/>
+			<OrgTopBar/>
 			<div className='move'>
 				<div>
 					<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>

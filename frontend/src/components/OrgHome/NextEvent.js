@@ -45,7 +45,7 @@ function NextEvent({upcomingEvents})
 
     async function getUpcomingEventPic() {
       try {
-        let url = buildPath(`api/retrieveImage?entityType=event&id=${upcomingEvents._id}`);
+        let url = buildPath(`api/retrieveImage?typeofImage=1&id=${upcomingEvents._id}`);
         let response = await fetch(url, {
           method: 'GET',
           headers: { 'Content-Type': 'application/json' },
@@ -55,8 +55,8 @@ function NextEvent({upcomingEvents})
           throw new Error(`Failed to fetch image: ${response.statusText}`);
         }
     
-        let picBlob = await response.blob();
-        let picUrl = URL.createObjectURL(picBlob);
+        let pic = JSON.parse(await response.text());
+        let picUrl = pic.url;
         console.log(picUrl);
         setEventPic(picUrl);
       } catch (error) {
