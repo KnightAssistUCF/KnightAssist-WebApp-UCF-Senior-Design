@@ -50,44 +50,35 @@ router.get('/', async (req, res) => {
     // organization profilepicture: typeOfImage = 2
     // user profile picture: typeOfImage = 3
     // organization background picture: typeOfImage = 4
-    const typeOfImage = req.body.typeOfImage;
+    const typeOfImage = req.query.typeOfImage;
+    const idOfEntity = req.query.id;
 
     // get all the image S3 bucket names and store them in a list
     const S3_imageNames = [];
     if (typeOfImage === 1) {
-        const events = await Event.find();
-        events.forEach(event => {
-            S3_imageNames.push(event.S3BucketImageDetails);
-        });
+        const events = await Event.findById(idOfEntity);
+        S3_imageNames.push(events.S3BucketImageDetails);
     } else if (typeOfImage === 2) {
-        const organizations = await Organization.find();
-        organizations.forEach(organization => {
-            S3_imageNames.push(organization.S3BucketImageDetails_ProfilePic);
-        });
+        const organizations = await Organization.findById(idOfEntity);
+        S3_imageNames.push(organizations.S3BucketImageDetails);
     } else if (typeOfImage === 3) {
-        const users = await UserStudent.find();
-        users.forEach(user => {
-            S3_imageNames.push(user.S3BucketImageDetails);
-        });
+        const users = await UserStudent.findById(idOfEntity);
+        S3_imageNames.push(users.S3BucketImageDetails);
     } else if (typeOfImage === 4) {
-        const organizations = await Organization.find();
-        organizations.forEach(organization => {
-            S3_imageNames.push(organization.S3BucketImageDetails_Background);
-        });
+        const organizations = await Organization.findById(idOfEntity);
+        S3_imageNames.push(organizations.S3BucketImageDetails);
     }
 
-    for(const imageName of S3_imageNames) {
-        const getObjectParams = {
-            Bucket: S3_BUCKET_NAME,
-            Key: imageName.imageName
-        };
-        const command = new GetObjectCommand({ getObjectParams }); // to creat the URL
-        const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
-        console.log('url: ', url);
-        imageName.url = url;
-    }
-
-    res.status(200).send("Retrieved the image names and their URLs from S3 bucket after generation");
+    const getObjectParams = {
+        Bucket: S3_BUCKET_NAME,
+        Key: S3_imageNames[0]
+    };
+    const command = new GetObjectCommand({ getObjectParams }); // to creat the URL
+    const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
+    console.log('url: ', url);
+    const urlToReturn = url;
+    
+    res.status(200).json({ url: urlToReturn });
 
 });
 
