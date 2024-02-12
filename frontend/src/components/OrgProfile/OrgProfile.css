@@ -240,7 +240,6 @@
     justify-content: center;
 }
 
-
 .interests{
 	margin-top: 60px !important;
 	margin-left: -3%;
@@ -280,6 +279,11 @@
 
 .hoverImage:hover{
 	cursor: pointer;
+}
+
+.starNum{
+	font-size: 17px;
+	margin-right: 10px;
 }
 
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {

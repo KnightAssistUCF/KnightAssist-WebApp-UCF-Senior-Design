@@ -11,7 +11,7 @@ import { buildPath } from '../../path';
 const RatingLinear = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 3,
-  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 400 : 800],
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 3,
     backgroundColor: theme.palette.mode === 'light' ? '#ffd700' : '#308fe8',
@@ -93,11 +93,11 @@ function RatingBox(props) {
 					</Card>
 		
 					<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-						<RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-						<RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-						<RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-						<RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-						<RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>5/5</div> <RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>4/5</div> <RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>3/5</div> <RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>2/5</div> <RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>1/5</div> <RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
 					</Card>
 				</Box>
 			</div>
