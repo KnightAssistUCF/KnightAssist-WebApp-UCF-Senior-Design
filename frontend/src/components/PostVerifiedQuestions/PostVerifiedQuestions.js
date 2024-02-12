@@ -364,7 +364,6 @@ function PostVerifiedQuestions()
 							component="img"
 							className='bgStyle'
 							image={(bgName !== null) ? bgName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-							onClick={() => document.getElementById("background").click()}
 						/>
 						: ""
 					}
@@ -372,7 +371,6 @@ function PostVerifiedQuestions()
 						src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
 						className={"picStyle " + ((role === "organization") ? "orgPicStyle" : "")}
 						sx={{borderStyle: "solid", borderColor: "white"}}
-						onClick={() => document.getElementById("profilePic").click()}
 					/>
 					<label for="profilePic" className="selectPPic btn btn-primary">Select Profile Picture</label>
 					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0])}}}/>

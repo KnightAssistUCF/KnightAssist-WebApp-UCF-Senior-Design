@@ -7,8 +7,9 @@ import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogConte
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import {TbEditCircle } from "react-icons/tb";
 import { Facebook, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
-import { RiTwitterXFill } from 'react-icons/ri';
+import { RiEditCircleFill, RiTwitterXFill } from 'react-icons/ri';
 
 function OrgBox(props) {
 
@@ -298,13 +299,13 @@ function OrgBox(props) {
 
 	function ProfilePic(){
 		return (
-			<div>
+			<div className='picContainer'>
 				<Avatar
 					src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					className='picAvatar'
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
-					className={(props.editMode) ? "hoverImage" : ""}
-					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
 				/>
+				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={() => document.getElementById("profilepic").click()}/> : null}
 				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPic(profilePicSelect.current.files[0]);}}}/>
 			</div>
 		)
