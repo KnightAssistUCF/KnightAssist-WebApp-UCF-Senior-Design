@@ -62,7 +62,12 @@ function RatingBox(props) {
 
 		setFeedback(res);
 
-		setAverageRating((sum / res.length).toFixed(1));
+		if(res.length === 0){
+			setAverageRating("No Ratings Found");
+		}else{
+			setAverageRating((sum / res.length).toFixed(1));
+		}
+
 		setNum5s(freq[4]);
 		setNum4s(freq[3]);
 		setNum3s(freq[2]);
@@ -79,22 +84,22 @@ function RatingBox(props) {
 		?
 		<div>
 			<div className='ratingsTopRow'>
-			<Box display="flex" justifyContent="space-between" alignItems="flex-start" width="100%">
-				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-					<div className='ratingNum'>
-						{averageRating}
-					</div>
-					<Rating value={averageRating} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
-				</Card>
-	
-				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-					<RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-				</Card>
-			</Box>
+				<Box display="flex" justifyContent="space-between" alignItems="flex-start" width="100%">
+					<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+						<div className='ratingNum'>
+							{averageRating}
+						</div>
+						<Rating value={averageRating} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
+					</Card>
+		
+					<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+						<RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+						<RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+						<RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+						<RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+						<RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
+					</Card>
+				</Box>
 			</div>
 			<div className='ratingsBottomRow' style={{ height: '50%' }}>
 			<Box display="flex" justifyContent="space-between" alignItems="stretch" height="100%">
