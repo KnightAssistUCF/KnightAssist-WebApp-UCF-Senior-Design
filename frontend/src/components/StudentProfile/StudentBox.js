@@ -4,6 +4,7 @@ import './StudentProfile.css';
 import Card from '@mui/material/Card';
 import { Button, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip } from '@mui/material';
 import { buildPath } from '../../path';
+import { TbEditCircle } from 'react-icons/tb';
 
 function StudentBox(props) {
 
@@ -160,13 +161,13 @@ function StudentBox(props) {
 
 	function ProfilePic(){
 		return (
-			<div>
+			<div className='picContainer'>
 				<Avatar
 					src={(picName) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					className='picAvatar'
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
-					className={(props.editMode) ? "hoverImage" : ""}
-					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
 				/>
+				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={() => document.getElementById("profilepic").click()}/> : null}
 				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0]);}}}/>
 			</div>
 		)

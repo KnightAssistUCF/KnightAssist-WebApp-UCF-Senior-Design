@@ -54,7 +54,7 @@ function Leaderboard() {
 
 			// It is your rank
 			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
-				setYourData({rank: i + 1, data: student, pic: pic});
+				setYourData({rank: i + 1, data: student, pic: pic.url});
 			}
 
 			i++;
@@ -223,7 +223,7 @@ function Leaderboard() {
 							className='rankItem rankName'
 							style={{ color: 'black'}}
 						>
-							<p className="addHover" onClick={() => loadStudentProfile(student._id)}>
+							<p className={role === "organization" ? "addHover" : ""} onClick={() => ((role === "organization") ? loadStudentProfile(student._id) : null)}>
 							 	<b>{name}</b>
                         	</p>						
 						</Typography>

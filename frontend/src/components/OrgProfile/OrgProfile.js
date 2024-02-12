@@ -3,12 +3,12 @@ import Header from '../OrgEvents/Header';
 import StudentHeader from '../StudentHome/StudentHeader'
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
-import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, CardMedia } from '@mui/material';
+import { CardMedia } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
 import SearchResults from '../OrgEvents/SearchResults';
+import { TbEditCircle } from 'react-icons/tb';
 
 function OrgProfile() {
 	const [org, setOrg] = useState(null);
@@ -68,13 +68,13 @@ function OrgProfile() {
 
 	function BackgroundBanner(){
 		return (
-			<div>
+			<div className='picContainer'>
 				<CardMedia
 					component="img"
 					image={(bgFile !== null) ? bgFile : ""}
-					className={'orgBannerFiller' + ((editMode) ? " hoverImage" : "")}
-					onClick={(editMode) ? () => document.getElementById("background").click() : null}
-				/>				
+					className={'orgBannerFiller picAvatar' + ((editMode) ? " blurBanner": "")}
+				/>	
+				{(editMode) ? <TbEditCircle className="editIconBanner" onClick={() => document.getElementById("background").click()}/> : null}
 				<input ref={backgroundSelect} id="background" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(backgroundSelect)){setBGFile(URL.createObjectURL(backgroundSelect.current.files[0])); editInfo.current.background = backgroundSelect.current.files[0];}}}/>
 			</div>
 		)

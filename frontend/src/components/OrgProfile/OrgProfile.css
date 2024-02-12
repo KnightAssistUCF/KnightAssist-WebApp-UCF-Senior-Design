@@ -286,6 +286,48 @@
 	margin-right: 10px;
 }
 
+.picContainer{
+	position: relative;
+}
+
+.picAvatar{
+	display: block;
+}
+
+.editIcon{
+	position: absolute; 
+	bottom: 0px; 
+	left: 40px;
+	border: 2px solid black;
+	background-color: white;
+	border-radius: 15px;
+}
+
+.editIcon:hover{
+	cursor: pointer;
+	color: red;
+}
+
+.editIconBanner{
+	position: absolute; 
+	bottom: 37%; 
+	right: 50%;
+	border: 2px solid black;
+	background-color: white;
+	border-radius: 15px;
+	height: 50px;
+	width: 50px;
+}
+
+.editIconBanner:hover{
+	cursor: pointer;
+	color: red;
+}
+
+.blurBanner{
+	filter: blur(3px);
+}
+
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
     fill: red;  
 } */
