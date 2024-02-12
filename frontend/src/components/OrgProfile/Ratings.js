@@ -103,42 +103,39 @@ function RatingBox(props) {
 			</div>
 			<div className='ratingsBottomRow' style={{ height: '50%' }}>
 			<Box display="flex" justifyContent="space-between" alignItems="stretch" height="100%">
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
 				{(feedback.length > 0) 
 					?
-					<CardContent>
-						<div className='feedbackEvent'>{feedback[0].eventName.slice(0, 20)}{(feedback[0].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[0].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[0].feedbackText.slice(0, 120)}{(feedback[0].feedbackText.length > 120) ? "..." : ""}</div>
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
+						<CardContent>
+							<div className='feedbackEvent'>{feedback[0].eventName.slice(0, 20)}{(feedback[0].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[0].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[0].feedbackText.slice(0, 120)}{(feedback[0].feedbackText.length > 120) ? "..." : ""}</div>
 						</CardContent>
-					:
-					""
+					</Card>
+					: ""
 				}
-				</Card>
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
 				{(feedback.length > 1) 
 					?
-					<CardContent className='theContent'>
-						<div className='feedbackEvent'>{feedback[1].eventName.slice(0, 20)}{(feedback[1].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[1].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[1].feedbackText.slice(0, 120)}{(feedback[1].feedbackText.length > 120) ? "..." : ""}</div>
-					</CardContent>
-					:
-					""
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
+						<CardContent className='theContent'>
+							<div className='feedbackEvent'>{feedback[1].eventName.slice(0, 20)}{(feedback[1].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[1].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[1].feedbackText.slice(0, 120)}{(feedback[1].feedbackText.length > 120) ? "..." : ""}</div>
+						</CardContent>
+					</Card>
+					: ""
 				}
-				</Card>
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
 				{(feedback.length > 2) 
 					?
-					<CardContent>
-						<div className='feedbackEvent'>{feedback[2].eventName.slice(0, 20)}{(feedback[2].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[2].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[2].feedbackText.slice(0, 120)}{(feedback[2].feedbackText.length > 120) ? "..." : ""}</div>
-					</CardContent>
-					:
-					""
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
+						<CardContent>
+							<div className='feedbackEvent'>{feedback[2].eventName.slice(0, 20)}{(feedback[2].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[2].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[2].feedbackText.slice(0, 120)}{(feedback[2].feedbackText.length > 120) ? "..." : ""}</div>
+						</CardContent>
+					</Card>
+					:	""
 				}
-				</Card>
 			</Box>
 			</div>
 			{(selectedFeedback !== null)

@@ -90,7 +90,7 @@ function Search(props) {
     },[]);
 
     useEffect(()=>{
-        if(props.searchType === undefined) return;
+        if(props.searchType === undefined || events === undefined || orgs === undefined) return;
 
         if(props.searchType === "events"){
           setLabel("Search For Events");
