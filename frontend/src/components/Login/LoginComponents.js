@@ -34,6 +34,12 @@ function LoginComponents(props){
 		}
 	}
 
+	const handleKeyPress = async (event) => {
+		if(event.key === 'Enter'){
+			await doLogin();
+		}
+	}
+
     async function doLogin(){
         let json = {
                         email: email,
@@ -245,7 +251,7 @@ function LoginComponents(props){
 	}, [changeURL])
 
     return (
-        <div className="loginBox">
+        <div className="loginBox" onKeyPress={handleKeyPress}>
             {Email()}
             {Password()}
             <AlertMessage />
