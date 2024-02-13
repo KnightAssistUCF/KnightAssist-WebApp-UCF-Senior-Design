@@ -121,8 +121,8 @@ function Settings(){
 
 	return(
 		<div className='spartan grayBG'>
-			{(role === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
-			{(role === "volunteer") ? <StudentHeader/> : <Header/>}
+			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
+			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
 				<Card className='settingsCard'>
 					<CardContent>

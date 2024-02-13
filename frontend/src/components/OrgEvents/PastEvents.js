@@ -5,13 +5,13 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import Pagination from '@mui/material/Pagination';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CircularProgress } from '@mui/material';
 import './OrgEvents';
 
 function PastEvents(props)
 {
 
-    const [events, setEvents] = useState([]);
+    const [events, setEvents] = useState();
     const [eventCards, setEventCards] = useState();
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
@@ -172,6 +172,7 @@ function PastEvents(props)
 
 	useEffect(()=>{
 		const adjustForSize = () => {
+			if(!eventCards) return;
 			const width = window.innerWidth;
 			
 			const oldEventsPerPage = eventsPerPage;
@@ -201,10 +202,13 @@ function PastEvents(props)
     return(
      <div className='centerCards'>
         <EventHeader/>
-        <div>
-            <Events/>
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		{(eventCards) ?
+			<div>
+				<Events/>
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			</div>
+			: <CircularProgress/>
+		}
      </div>
     );
 };

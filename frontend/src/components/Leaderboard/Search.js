@@ -41,6 +41,7 @@ function Search(props) {
 				freeSolo
 				autoHighlight={true}
 				disableClearable
+				disabled={!props.studentData}
 				onChange={(e, value) => {handleClick(value.id)}}
 				options={options}
 				renderInput={(params) => (
