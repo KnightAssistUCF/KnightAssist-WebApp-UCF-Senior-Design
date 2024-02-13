@@ -234,7 +234,6 @@
     border: 1px solid #ededed; /* Border color */
     padding: 10px; /* Padding around the tags */
     border-radius: 5px; /* Optional: Rounded corners */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); /* Optional: Box shadow */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -252,24 +251,26 @@
 }
 
 .tags{
-	width: 100%;
-	margin-left: -25%;
+	width: 90%;
+	margin-left: -30%;
 	padding-bottom: 20px !important;
 }
 
 .tag{
     background-color: rgb(89, 80, 130) !important;
     color: rgb(240, 240, 240) !important;
-    min-width: 10%;
-	max-width: 70% !important;
     width: auto !important;
 	height: auto !important;
     margin-top: 0px;
-    margin-right: 10px;
     font-size: 15px;
     float: left;
     font-family: "system-ui";
     margin-bottom: 5px;
+	margin-right: 5px;
+	border-radius: 10px !important;
+	padding-left: 5px;
+	padding-right: 5px;
+	box-shadow: none !important;
 }
 
 .addSpace{
