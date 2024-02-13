@@ -6,7 +6,7 @@ import { buildPath } from '../../path';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import StudentTopBar from '../TopBar/StudentTopBar';
 import { CoPresentOutlined } from '@mui/icons-material';
-import { Avatar, CardActionArea, CardContent, Grid, Typography } from '@mui/material';
+import { Avatar, CardActionArea, CardContent, CircularProgress, Grid, Typography } from '@mui/material';
 import { Card } from 'react-bootstrap';
 import { BsSearch } from 'react-icons/bs';
 import Search from './Search';
@@ -264,11 +264,11 @@ function Leaderboard() {
 		      <Title/>
 			  <div className='rankDisplay'>
 				{(role === "volunteer" && yourData) ? <div className='lbHeader'>Your Rank</div> : null}
-				{(role === "volunteer" && yourData) ? <YourRank/> : null}
-				{(role === "organization" && studentData) ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
+				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}
+				{(role === "organization") ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
 				{(role === "organization" && searchID) ? <SearchRank/> : null}
 				{(studentData) ? <div className='lbHeader'>Top 10</div> : null}
-			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : null}
+			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
 			  </div>
 		  </div>
 		</div>

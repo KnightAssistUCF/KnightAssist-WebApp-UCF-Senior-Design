@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
@@ -154,6 +154,7 @@ function FavoriteOrganizations(props)
 
 	useEffect(()=>{
 		const adjustForSize = () => {
+			if(!orgCards) return;
 			const width = window.innerWidth;
 			
 			const oldOrgsPerPage = orgsPerPage;
@@ -178,11 +179,14 @@ function FavoriteOrganizations(props)
 	},[initiateListener])
 
     return(
-     <div>
-        <div>
-            <Orgs/>            
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+     <div className='centerCards'>
+		{(orgCards) ? 
+		    <div>
+				<Orgs/>
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			</div>
+			: <CircularProgress/>
+		}
      </div>
     );
 };

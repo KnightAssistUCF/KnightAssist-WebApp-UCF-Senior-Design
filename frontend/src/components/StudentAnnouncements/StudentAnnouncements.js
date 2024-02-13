@@ -6,12 +6,13 @@ import Announcements from "./Announcements.js";
 import './Announcements.css';
 import { buildPath } from '../../path.js';
 import StudentTopBar from '../TopBar/StudentTopBar';
+import { CircularProgress } from '@mui/material';
 
 
 
 function NewAnn() {
   var [announcements, setAnnouncements] = useState([]);
-  var [searchAnnouncement, setSearchAnnouncement] = useState([]);
+  var [searchAnnouncement, setSearchAnnouncement] = useState(undefined);
   var [filterTerm, setFilterTerm] = useState("favorited");
   //var [favOrgs, setFavOrgs] = useState([]);
   var [favUpdates, setFavUpdates] = useState([]);
@@ -241,7 +242,7 @@ function NewAnn() {
               />
               <Filter filterAnnouncements={filterAnnouncements} />
             </div>
-            <Announcements announcements={searchAnnouncement} />
+            {(searchAnnouncement) ? <Announcements announcements={searchAnnouncement} /> : <div className='centerProgress'><CircularProgress/></div>}
           </div>
         </div>
       </div>

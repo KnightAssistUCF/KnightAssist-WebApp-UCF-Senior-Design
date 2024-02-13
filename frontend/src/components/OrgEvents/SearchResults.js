@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea } from '@mui/material';
+import { Avatar, CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
 
@@ -253,6 +253,7 @@ function SearchResults(props)
 
 	useEffect(()=>{
 		const adjustForSize = () => {
+			if(!eventCards) return;
 			const width = window.innerWidth;
 			
 			const oldEventsPerPage = eventsPerPage;
@@ -280,12 +281,15 @@ function SearchResults(props)
 	},[initiateListener])
 
     return(
-     <div className='upcomingEventsSpace'>
+     <div className='upcomingEventsSpace centerCards'>
         <EventHeader/>
-        <div className='centerCards'>
-            <Events/>
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		{(eventCards) ?
+		    <div>
+				<Events/>
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			</div>
+			: <CircularProgress/>
+		}
      </div>
     );
 };
