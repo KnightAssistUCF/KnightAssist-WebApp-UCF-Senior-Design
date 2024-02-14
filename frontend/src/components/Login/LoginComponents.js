@@ -42,7 +42,7 @@ function LoginComponents(props){
 
     async function doLogin(){
         let json = {
-                        email: email,
+                        email: email.toLowerCase(),
                         password: password
                      };
 
