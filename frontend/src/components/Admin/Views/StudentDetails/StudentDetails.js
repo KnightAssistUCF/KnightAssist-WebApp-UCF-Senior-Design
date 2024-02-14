@@ -36,6 +36,7 @@ function StudentDetails({ studentID }) {
   const [selectedToggle, setSelectedToggle] = useState('past');
   const [searchTerm, setSearchTerm] = useState('');
   const [eventHistory, setEventHistory] = useState([]);
+  const [picName, setPicName] = useState(undefined);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -318,6 +319,7 @@ const AllTags = ({ tags }) => {
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsFirstText'>{firstName}</div>
@@ -331,6 +333,7 @@ const AllTags = ({ tags }) => {
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsLastText'>{lastName}</div>
@@ -344,6 +347,7 @@ const AllTags = ({ tags }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{email}</div>
@@ -374,6 +378,7 @@ const AllTags = ({ tags }) => {
               value={totalHours}
               onChange={(e) => setTotalHours(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsTotalText'>{totalHours}</div>
@@ -387,6 +392,7 @@ const AllTags = ({ tags }) => {
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsGoalText'>{goal}</div>
@@ -394,6 +400,7 @@ const AllTags = ({ tags }) => {
           </div>
           {editMode && (
             <Button variant='outlined' disableElevation   sx={{
+              marginBottom: '10px',
               borderColor: editMode ? '#808080' : '',
               color: editMode ? '#666666' : '',
               '&:hover': {
@@ -441,6 +448,9 @@ const AllTags = ({ tags }) => {
                   <div className='total'>Past Events: {eventHistory.length}</div>
                   <EventHistory eventHistory={eventHistory} />
                 </>
+              )}
+              {(selectedToggle === 'past' && eventHistory.length == 0) && (
+                  <div className='total'>Past Events: 0</div>
               )}
               {selectedToggle === 'upcoming' && (
                 <>

@@ -134,7 +134,8 @@ function OrgTable(props) {
             .map(
               (org) => (
                 <TableRow key={org._id}>
-                  <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(org._id)}>View</Button></TableCell>
+                  <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
+                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(org._id)}>View</Button></TableCell>
                   <TableCell>{org.name}</TableCell>
                   <TableCell>{org.email}</TableCell>
                   <TableCell>{org.createdAt}</TableCell>

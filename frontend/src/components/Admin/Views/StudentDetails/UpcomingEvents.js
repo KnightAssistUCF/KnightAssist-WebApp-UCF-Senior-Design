@@ -153,7 +153,8 @@ function UpcomingEvents({upcomingEvents})
                 .map(
                   (singleEvent) => (
                     <TableRow key = {singleEvent._id}>
-                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
+                      <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
+                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
                       <TableCell>{singleEvent.startTime}</TableCell>
                       <TableCell>{singleEvent.endTime}</TableCell>

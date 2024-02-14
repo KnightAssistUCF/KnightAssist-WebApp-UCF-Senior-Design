@@ -153,7 +153,8 @@ function EventHistory({eventHistory})
                 .map(
                   (singleEvent) => (
                     <TableRow key = {singleEvent.ID}>
-                      <TableCell><Button size='small' variant='outlined' onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
+                      <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
+                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
                       <TableCell>{singleEvent.checkIn}</TableCell>
                       <TableCell>{singleEvent.checkOut}</TableCell>
