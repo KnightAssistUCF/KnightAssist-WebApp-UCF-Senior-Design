@@ -4,8 +4,8 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 
-function TabsOrg() {
-    const [value, setValue] = useState("");
+function TabsOrg( {onTabChange} ) {
+    const [value, setValue] = useState("About");
 
     const AntTabs = styled(Tabs)({
     //   borderBottom: '1px solid #e8e8e8',
@@ -57,7 +57,8 @@ function TabsOrg() {
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
-        console.log(newValue);
+        onTabChange(newValue);
+
     };
 
     // const getTabContent = (tabValue) => {

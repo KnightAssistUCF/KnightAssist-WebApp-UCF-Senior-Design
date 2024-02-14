@@ -68,3 +68,13 @@
     display: flex;
     justify-content: center;
 }
+.heading {
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.orgDetailsDescriptionText {
+    max-width: 60%;
+    font-size: 20px;
+}

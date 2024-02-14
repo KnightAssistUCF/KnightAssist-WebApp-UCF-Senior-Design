@@ -19,6 +19,7 @@ import Tabs from './Tabs.js';
 function OrganizationDetails({ organizationID }) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
   const [tags, setTags] = useState([]);
   const [totalHours, setTotalHours] = useState('');
   const [id, setId] = useState('');
@@ -35,6 +36,7 @@ function OrganizationDetails({ organizationID }) {
   const [selectedToggle, setSelectedToggle] = useState('past');
   const [searchTerm, setSearchTerm] = useState('');
   // const [eventHistory, setEventHistory] = useState([]);
+  const [tabSelected, setTabSelected] = useState('');
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -66,6 +68,7 @@ function OrganizationDetails({ organizationID }) {
       setId(res._id);
       // setUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
+      setDescription(res.description);
 
       // fetch past/upcoming events
       // fetchEventHistory(res._id);
@@ -128,6 +131,7 @@ function OrganizationDetails({ organizationID }) {
         // firstName: firstName,
         // lastName: lastName,
         name: name,
+        description: description,
 
 				// categoryTags: selectedTags
 			}
@@ -294,6 +298,13 @@ const AllTags = ({ tags }) => {
       console.log("Error saving tags: ", e);
     }
   };
+
+  const handleTabChange = (newValue) => {
+    // Do something with the new value received from TabsOrg
+    console.log(newValue);
+    // You can update the state or perform any other actions here
+    setTabSelected(newValue);
+  };
   
 
   return (
@@ -309,8 +320,9 @@ const AllTags = ({ tags }) => {
           </Link>
           <Typography color='text.primary'>{name}</Typography>
         </Breadcrumbs>
-        <Tabs/>
+        <Tabs  onTabChange={handleTabChange}/>
         <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
+          <div className='heading'>About</div>
           <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>Name</div>
             {editMode ? (
@@ -338,16 +350,18 @@ const AllTags = ({ tags }) => {
             )}
           </div> */}
           <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
-            <div className='studentDetailsEmailText'>Email</div>
+            <div className='studentDetailsEmailText'>Description</div>
             {editMode ? (
               <TextField
               size='small'
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
               variant='outlined'
+              multiline
+              sx={{ m: 1, width: '45ch' }}
               />
             ) : (
-              <div className='studentDetailsEmailText'>{email}</div>
+              <div className='orgDetailsDescriptionText'>{description}</div>
             )}
           </div>
           <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '10px' : '15px' }}>
@@ -365,6 +379,20 @@ const AllTags = ({ tags }) => {
                 </div>
                 {editMode && <EditIcon sx={{ marginLeft: '8px', cursor: 'pointer' }} onClick={handleEditTags} />}
               </div>
+            )}
+          </div>
+          <div className='heading'>Contact</div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Email</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{email}</div>
             )}
           </div>
           {/* <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
