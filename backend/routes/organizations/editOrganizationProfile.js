@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken_Organization } = require('../../utils/jwtUtils');
 
 const organization = require('../../models/organization');
 
@@ -9,7 +8,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("In the editOrganizationProfile Route API");
 });
 
-router.post('/', authenticateToken_Organization, async (req, res) => {
+router.post('/', async (req, res) => {
 
     const query = {
         $or: [
