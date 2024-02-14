@@ -50,11 +50,7 @@ router.post('/', async (req, res) => {
                 location: req.body.location,
                 // rest of the components can be added later here if needed
             });
-            newOrganization.save().then((organization) => {
-                res.status(200).send("Organization created - please confirm new organization's email address");
-            }).catch((err) => {
-                res.status(503).send("Failed to create organization: " + err);
-            });
+            newOrganization.save();
             const config = {
                 service: 'gmail',
                 auth: {

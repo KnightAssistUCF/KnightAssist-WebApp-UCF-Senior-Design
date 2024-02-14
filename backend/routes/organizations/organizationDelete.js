@@ -84,13 +84,12 @@ router.delete('/', authenticateToken_Organization, async (req, res) => {
             transporterForLogin.sendMail(message, (err, info) => {
                 if (err) {
                     console.log(err);
-                    return res.status(500).send("Failed to send email confirmation for deletion of organization account");
                 } else {
                     console.log(info);
-                    return res.status(200).send("Email confirmation request sent for deletion of organization account");
                 }
             });
-            await organization.deleteOne({ email: req.body.email }).then((organization) => {
+
+            await organization.deleteOne({ email: user.email }).then((organization) => {
                 res.status(200).send("Organization deleted successfully" + organization);
             }).catch((err) => { res.status(400).send("Internal server error: " + err); })
         }

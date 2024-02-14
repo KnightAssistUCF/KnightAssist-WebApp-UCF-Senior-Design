@@ -40,11 +40,7 @@ router.post('/', async (req, res) => {
                 // EmailToken: crypto.randomBytes(64).toString('hex') [not in use]
                 // we can add more here as we wish for the sign up 
             });
-            newUser.save().then((user) => {
-                res.status(200).send("User created - please confirm new user's email address");
-            }).catch((err) => {
-                res.status(503).send("Failed to create user: " + err);
-            });
+            newUser.save();
             const config = {
                 service: 'gmail',
                 auth: {
