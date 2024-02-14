@@ -14,6 +14,7 @@ import AdminTopBar from '../../AdminTopBar.js';
 import CancelIcon from '@mui/icons-material/Cancel';
 // import StudentSearchBar from './StudentSearchBar.js';
 // import StudentToggle from './StudentToggle.js';
+import Tabs from './Tabs.js';
 
 function OrganizationDetails({ organizationID }) {
   const [name, setName] = useState('');
@@ -308,7 +309,8 @@ const AllTags = ({ tags }) => {
           </Link>
           <Typography color='text.primary'>{name}</Typography>
         </Breadcrumbs>
-        <div className='studentDetailsFields'>
+        <Tabs/>
+        <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
           <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>Name</div>
             {editMode ? (
