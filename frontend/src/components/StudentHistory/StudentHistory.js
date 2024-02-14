@@ -5,7 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader.js';
 import '../Header.css';
 import Avatar from '@mui/material/Avatar';
-import { List, ListItem, ListItemText, Divider } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, CircularProgress } from '@mui/material';
 import {Button} from '@mui/material';
 import EventModal from './EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,8 +15,8 @@ import StudentTopBar from '../TopBar/StudentTopBar';
 function StudentHistory()
 {
 
-	const [eventHistories, setEventHistories] = useState([]);
-	const [shownHistories, setShownHistories] = useState();
+	const [eventHistories, setEventHistories] = useState(undefined);
+	const [shownHistories, setShownHistories] = useState(undefined);
     const [numPages, setNumPages] = useState(0);  
     const [page, setPage] = useState(1);
 
@@ -155,7 +155,7 @@ function StudentHistory()
 
     function Title(){
 		return(
-		  <div className='yourEvents spartan'>
+		  <div className={'yourEvents spartan' + ((!eventHistories) ? " topTitle" : "")}>
 			 <h1>Your History</h1>
 		  </div>
 		)
@@ -173,11 +173,16 @@ function StudentHistory()
 		<StudentTopBar/>
 		<div className='moveEverything'>
 			<Title/>
-			<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">
-				{shownHistories}
-			</List>
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-			<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
+			{(eventHistories) ?
+					<div>
+						<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">
+							{shownHistories}
+						</List>
+						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
+					</div>
+				: <div className='historyProgress'><CircularProgress/></div>
+			}
 		</div>
       </div>
     );

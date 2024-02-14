@@ -265,7 +265,7 @@ export default function SignUp() {
       var json = {
         firstName: volFirstName,
         lastName: volLastName,
-        email: volEmail,
+        email: volEmail.toLowerCase(),
         password: volPass,
         totalVolunteerHours: 0,
       };
@@ -312,7 +312,7 @@ export default function SignUp() {
       var json = {
         name: orgName,
         password: orgPass,
-        email: orgEmail,
+        email: orgEmail.toLowerCase(),
       };
 
       console.log(json);
