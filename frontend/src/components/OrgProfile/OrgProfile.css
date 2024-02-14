@@ -309,6 +309,12 @@
 	color: red;
 }
 
+.pfpFormatSelect{
+	position: absolute !important; 
+	top: 0px !important; 
+	left: 400px !important;
+}
+
 .editIconBanner{
 	position: absolute; 
 	bottom: 37%; 
