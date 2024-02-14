@@ -37,6 +37,13 @@ function OrganizationDetails({ organizationID }) {
   const [searchTerm, setSearchTerm] = useState('');
   // const [eventHistory, setEventHistory] = useState([]);
   const [tabSelected, setTabSelected] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [location, setLocation] = useState('');
+  const [website, setWebsite] = useState('');
+  const [facebook, setFacebook] = useState('');
+  const [twitter, setTwitter] = useState('');
+  const [instagram, setInstagram] = useState('');
+  const [linkedin, setLinkedin] = useState('');
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -69,6 +76,13 @@ function OrganizationDetails({ organizationID }) {
       // setUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
       setDescription(res.description);
+      setPhoneNumber(res.contact.phone);
+      setLocation(res.location);
+      setWebsite(res.contact.website);
+      setFacebook(res.contact.socialMedia.facebook);
+      setTwitter(res.contact.socialMedia.twitter);
+      setInstagram(res.contact.socialMedia.instagram);
+      setLinkedin(res.contact.socialMedia.linkedin);
 
       // fetch past/upcoming events
       // fetchEventHistory(res._id);
@@ -132,6 +146,21 @@ function OrganizationDetails({ organizationID }) {
         // lastName: lastName,
         name: name,
         description: description,
+        phone: phoneNumber,
+        location: location,
+        website: website,
+        contact: {
+          email: email,
+          phone: phoneNumber,
+          website: website,
+          socialMedia: {
+            facebook: facebook,
+            twitter: twitter,
+            instagram: instagram,
+            linkedin: linkedin
+          }
+        },
+
 
 				// categoryTags: selectedTags
 			}
@@ -393,6 +422,98 @@ const AllTags = ({ tags }) => {
               />
             ) : (
               <div className='studentDetailsEmailText'>{email}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Phone Number</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{phoneNumber}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Location</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{location}</div>
+            )}
+          </div>
+          <div className='heading'>Social Media</div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Website</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={website}
+              onChange={(e) => setWebsite(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{website}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Facebook</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={facebook}
+              onChange={(e) => setFacebook(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{facebook}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Instagram</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={instagram}
+              onChange={(e) => setInstagram(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{instagram}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>Twitter</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={twitter}
+              onChange={(e) => setTwitter(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{twitter}</div>
+            )}
+          </div>
+          <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+            <div className='studentDetailsEmailText'>LinkedIn</div>
+            {editMode ? (
+              <TextField
+              size='small'
+              value={linkedin}
+              onChange={(e) => setLinkedin(e.target.value)}
+              variant='outlined'
+              />
+            ) : (
+              <div className='studentDetailsEmailText'>{linkedin}</div>
             )}
           </div>
           {/* <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
