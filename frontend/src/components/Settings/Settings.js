@@ -65,7 +65,32 @@ function Settings(){
 	}
 
 	async function deleteAccount(){
+		let url;
+		if(role === "volunteer"){
+			url = buildPath("api/userDelete");
+		}else{
+			url = buildPath("api/organizationDelete");
+		}
 
+		const json = 
+		{
+			id: sessionStorage.getItem("ID"),
+		}
+
+		try{
+			const response = await fetch(url, {
+				method: "DELETE",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+			});
+	
+			let res = await response.text();
+			
+			window.location.href = '#/';
+		}catch(e){
+			console.log(e);
+		}
 	}
 
 	function validInput(){
