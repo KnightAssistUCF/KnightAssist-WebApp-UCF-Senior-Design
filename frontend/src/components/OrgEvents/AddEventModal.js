@@ -36,8 +36,8 @@ function AddEventModal(props)
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
-    const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
-    const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
+    const [startTime, setStartTime] = useState(undefined);
+    const [endTime, setEndTime] = useState(undefined);
     const semester = "Fall 2023" //This will be implemented some other way later
     const [maxVolunteers, setMaxVolunteers] = useState();
     const [currentTag, setCurrentTag] = useState("");
@@ -73,8 +73,8 @@ function AddEventModal(props)
         setLocation("");
 		setPicName(null);
         setPicFile(null);
-        setStartTime(dayjs('2022-04-17T15:30'));
-        setEndTime(dayjs('2022-04-17T15:30'));
+        setStartTime(undefined);
+        setEndTime(undefined);
         setMaxVolunteers();
         setCurrentTag("");
         setTags([]);
@@ -115,19 +115,21 @@ function AddEventModal(props)
             let res = JSON.parse(await response.text());
             console.log(res);
 
-			const formData = new FormData();
-			formData.append('profilePic', picFile); 
-			formData.append('entityType', 'event');
-			formData.append('id', res.ID);
-
-			// Store the picture selected to be associated with the event
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
+			if(picFile != null){
+				const formData = new FormData();
+				formData.append('profilePic', picFile); 
+				formData.append('entityType', 'event');
+				formData.append('id', res.ID);
+	
+				// Store the picture selected to be associated with the event
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
 
             if(eventIsUpcoming(endTime))
                 props.setReset(props.reset * -1);
@@ -291,7 +293,7 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DateTimePicker label={props.label} value={dayjs(props.value)} onChange={props.onChange}/>
+					<DateTimePicker label={props.label} value={props.value} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
