@@ -15,3 +15,13 @@
 .listsItems{
 	margin-left: 20% !important;
 }
+
+.historyProgress{
+	margin-top: 25%;
+	margin-right: 30%;
+}
+
+.topTitle{
+	position: absolute;
+	top: 110px;
+}
