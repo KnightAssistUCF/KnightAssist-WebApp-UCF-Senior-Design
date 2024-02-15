@@ -113,6 +113,8 @@ function OrgBox(props) {
 
 			let formData = new FormData();
 
+			console.log(pic);
+
 			if(pic !== null){
 				formData.append('profilePic', pic); 
 				formData.append('typeOfImage', '2');
@@ -170,15 +172,26 @@ function OrgBox(props) {
 		setPicName(pic.url);
 	}
 
-	function getDefaultPFPs(){
+	async function getDefaultPFPs(){
 		// All default pfps
 		const pfps = [];
 
 		for(let i = 1; i <= 11; i++){
+			// Note: Link cannot be saved as variable, causes error
 			pfps.push(
 				<Avatar
 					src={require('./DefaultPFPs/pfp' + i + '.png')}
-					className='picAvatar'
+					className='defaultPFP addHover'
+					onClick={async() => {
+								setPicName(require('./DefaultPFPs/pfp' + i + '.png')); 
+								const response = await fetch(require('./DefaultPFPs/pfp' + i + '.png'));
+								const blob = await response.blob();
+								const file = new File([blob], "profileImage.png", {
+									type: blob.type,
+								});
+								setPic(file);
+								setOpenDefaultPFPModal(false);
+							}}
 				/>
 			)
 		}
@@ -336,8 +349,8 @@ function OrgBox(props) {
 					anchorEl={openPicSelectChoice}
 					onClose={() => setOpenPicSelectChoice(null)}
 				>
-					<MenuItem onClick={() => document.getElementById("profilepic").click()}>Upload</MenuItem>
-					<MenuItem onClick={setOpenDefaultPFPModal}>Select Default PFP</MenuItem>
+					<MenuItem onClick={() => {document.getElementById("profilepic").click(); setOpenPicSelectChoice(null);}}>Upload</MenuItem>
+					<MenuItem onClick={() => {setOpenDefaultPFPModal(true); setOpenPicSelectChoice(null);}}>Select Default PFP</MenuItem>
 				</Menu>
 				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPic(profilePicSelect.current.files[0]);}}}/>
 			</div>
@@ -599,7 +612,7 @@ function OrgBox(props) {
 				</Dialog>
 
 				<Dialog open={openDefaultPFPModal} onClose={() => {setOpenDefaultPFPModal(false);}}>
-					<DialogContent className='spartan tagModal'>
+					<DialogContent className='spartan pfpModal'>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 							<DialogTitle className='dialogTitle'>Select a Profile Picture</DialogTitle>
 							<div className='tagSection'>

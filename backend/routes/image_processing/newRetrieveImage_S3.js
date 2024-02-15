@@ -69,6 +69,8 @@ router.get('/', async (req, res) => {
         S3_imageNames.push(organizations.S3BucketImageDetails_Background);
     }
 
+	console.log("IMAGE NAMES", S3_imageNames);
+
     if (S3_imageNames.length === 0 || S3_imageNames[0] === '') {
         // if it is status 4 or 2then we chose from aws orgdefaultbackground.png
         if (typeOfImage === '4' || typeOfImage === '1') {

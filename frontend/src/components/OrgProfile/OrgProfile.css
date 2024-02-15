@@ -61,6 +61,11 @@
 	width: 100% !important;
 }
 
+.pfpModal{
+	height: 630px !important;
+	width: 100% !important;
+}
+
 .feedbackTitle{
 	margin-left: -20px !important;
 }
@@ -231,9 +236,8 @@
     margin-right: 7%;
 	width: 600px;
 	height: 90%;
-    border: 1px solid #ededed; /* Border color */
+    border: none;
     padding: 10px; /* Padding around the tags */
-    border-radius: 5px; /* Optional: Rounded corners */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -293,6 +297,13 @@
 
 .picAvatar{
 	display: block;
+}
+
+.defaultPFP{
+	width: 100px !important;
+	height: 100px !important;
+	margin-right: 20px;
+	margin-bottom: 20px;
 }
 
 .editIcon{
