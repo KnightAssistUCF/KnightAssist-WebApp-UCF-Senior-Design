@@ -14,7 +14,7 @@ import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { BiWorld } from 'react-icons/bi';
-import { CardMedia } from '@mui/material';
+import { CardMedia, Dialog, DialogContent, DialogTitle, Menu, MenuItem } from '@mui/material';
 import { testReset } from '@mui/joy/Tooltip/Tooltip';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -75,8 +75,17 @@ function PostVerifiedQuestions()
 	const [currentStep, setCurrentStep] = useState(0);
 	const [steps, setSteps] = useState([]);
 
+	const [openDefaultPFPModal, setOpenDefaultPFPModal] = useState(false);
+
 	const backgroundSelect = useRef(null);
 	const profilePicSelect = useRef(null);
+
+	const [openPicSelectChoice, setOpenPicSelectChoice] = useState(null);
+	const [defaultPFPs, setDefaultPFPs] = useState(undefined);
+    
+	const openPicSelectMenu = (event) => {
+	  setOpenPicSelectChoice(event.currentTarget);
+	};
 
 	function handleClick(idx){
 		if(colors[idx] !== "default"){
@@ -94,8 +103,6 @@ function PostVerifiedQuestions()
 
 		getAllTags();
     }
-
-
 
     async function getTagNames(){
 		let url = buildPath(`api/getAllAvailableTags`);
@@ -141,6 +148,33 @@ function PostVerifiedQuestions()
 			})
 		)
     }
+
+	async function getDefaultPFPs(){
+		// All default pfps
+		const pfps = [];
+
+		for(let i = 1; i <= 11; i++){
+			// Note: Link cannot be saved as variable, causes error
+			pfps.push(
+				<Avatar
+					src={require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')}
+					className='defaultPFP addHover'
+					onClick={async() => {
+								setPicName(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')); 
+								const response = await fetch(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png'));
+								const blob = await response.blob();
+								const file = new File([blob], "profileImage.png", {
+									type: blob.type,
+								});
+								setPicFile(file);
+								setOpenDefaultPFPModal(false);
+							}}
+				/>
+			)
+		}
+
+		setDefaultPFPs(pfps);
+	}
 
 	async function submitVolunteer(){
 		try{
@@ -372,7 +406,15 @@ function PostVerifiedQuestions()
 						className={"picStyle " + ((role === "organization") ? "orgPicStyle" : "")}
 						sx={{borderStyle: "solid", borderColor: "white"}}
 					/>
-					<label for="profilePic" className="selectPPic btn btn-primary">Select Profile Picture</label>
+					<button className="selectPPic btn btn-primary" onClick={openPicSelectMenu}>Select Profile Picture</button>
+					<Menu
+						open={Boolean(openPicSelectChoice)}
+						anchorEl={openPicSelectChoice}
+						onClose={() => setOpenPicSelectChoice(null)}
+					>
+						<MenuItem onClick={() => {document.getElementById("profilePic").click(); setOpenPicSelectChoice(null);}}>Upload</MenuItem>
+						<MenuItem onClick={() => {setOpenDefaultPFPModal(true); setOpenPicSelectChoice(null);}}>Select Default PFP</MenuItem>
+					</Menu>
 					<input ref={profilePicSelect} id="profilePic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0])}}}/>
 					{(role === "organization") ? 
 						<div>
@@ -551,6 +593,7 @@ function PostVerifiedQuestions()
 		}
 
 		getTagNames();
+		getDefaultPFPs();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
@@ -610,7 +653,17 @@ function PostVerifiedQuestions()
 		{(role === "volunteer" && currentStep === 1) ? <button type="button" class="submitBtn btn btn-primary" onClick={() => submit()}>Submit</button> : ""}
 		{(role === "organization" && currentStep > 0) ? <button type="button" class="stepBtn btn btn-primary" onClick={() => handleBackBtn()}>Back</button> : null}
 		{(role === "organization") ? <button type="button" class="submitBtn btn btn-primary" onClick={() => handleRightBtn()}>{(currentStep < 2) ? "Next" : "Submit"}</button> : ""}
-      </div>
+		<Dialog open={openDefaultPFPModal} onClose={() => {setOpenDefaultPFPModal(false);}}>
+			<DialogContent className='spartan pfpModal'>
+				<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+					<DialogTitle className='dialogTitle'>Select a Profile Picture</DialogTitle>
+					<div className='tagSection'>
+						{defaultPFPs}
+					</div>
+				</Grid>
+			</DialogContent>
+		</Dialog>
+	  </div>
     );
 };
 
