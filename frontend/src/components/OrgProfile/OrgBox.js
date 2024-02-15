@@ -3,7 +3,7 @@ import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip, Menu, MenuItem } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -33,9 +33,18 @@ function OrgBox(props) {
 	const [tempIG, setTempIG] = useState(undefined);
 	const [tempLIn, setTempLIn] = useState(undefined);
 	const [tempSelectedTags, setTempSelectedTags] = useState([]);
+
+	const [defaultPFPs, setDefaultPFPs] = useState(undefined);
+
+	const [openPicSelectChoice, setOpenPicSelectChoice] = useState(null);
 	
 	const [openSocialsModal, setOpenSocialsModal] = useState(false);
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
+	const [openDefaultPFPModal, setOpenDefaultPFPModal] = useState(false);
+    
+	const openPicSelectMenu = (event) => {
+	  setOpenPicSelectChoice(event.currentTarget);
+	};
 
 	// State needed due to bug where tag names where undefined
 	const [makeTags, setMakeTags] = useState([]);
@@ -104,6 +113,8 @@ function OrgBox(props) {
 
 			let formData = new FormData();
 
+			console.log(pic);
+
 			if(pic !== null){
 				formData.append('profilePic', pic); 
 				formData.append('typeOfImage', '2');
@@ -159,6 +170,33 @@ function OrgBox(props) {
 		let pic = JSON.parse(await response.text());
 
 		setPicName(pic.url);
+	}
+
+	async function getDefaultPFPs(){
+		// All default pfps
+		const pfps = [];
+
+		for(let i = 1; i <= 11; i++){
+			// Note: Link cannot be saved as variable, causes error
+			pfps.push(
+				<Avatar
+					src={require('./DefaultPFPs/pfp' + i + '.png')}
+					className='defaultPFP addHover'
+					onClick={async() => {
+								setPicName(require('./DefaultPFPs/pfp' + i + '.png')); 
+								const response = await fetch(require('./DefaultPFPs/pfp' + i + '.png'));
+								const blob = await response.blob();
+								const file = new File([blob], "profileImage.png", {
+									type: blob.type,
+								});
+								setPic(file);
+								setOpenDefaultPFPModal(false);
+							}}
+				/>
+			)
+		}
+
+		setDefaultPFPs(pfps);
 	}
 
 	function handleClick(idx){
@@ -305,7 +343,15 @@ function OrgBox(props) {
 					className='picAvatar'
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
 				/>
-				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={() => document.getElementById("profilepic").click()}/> : null}
+				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={openPicSelectMenu}/> : null}
+				<Menu
+					open={Boolean(openPicSelectChoice)}
+					anchorEl={openPicSelectChoice}
+					onClose={() => setOpenPicSelectChoice(null)}
+				>
+					<MenuItem onClick={() => {document.getElementById("profilepic").click(); setOpenPicSelectChoice(null);}}>Upload</MenuItem>
+					<MenuItem onClick={() => {setOpenDefaultPFPModal(true); setOpenPicSelectChoice(null);}}>Select Default PFP</MenuItem>
+				</Menu>
 				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPic(profilePicSelect.current.files[0]);}}}/>
 			</div>
 		)
@@ -444,6 +490,7 @@ function OrgBox(props) {
 	useEffect(() => {
 		setRole(sessionStorage.getItem("role"));
 		getProfilePic();
+		getDefaultPFPs();
 		if(sessionStorage.getItem("role") === "volunteer")
 			favoriteOrg(false);
 	}, []);
@@ -560,6 +607,17 @@ function OrgBox(props) {
 								{tags}
 							</div>
 							<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setNewSelectedTags(tempSelectedTags.slice(0)); setOpenInterestsModal(false);}}>Save</Button>
+						</Grid>
+					</DialogContent>
+				</Dialog>
+
+				<Dialog open={openDefaultPFPModal} onClose={() => {setOpenDefaultPFPModal(false);}}>
+					<DialogContent className='spartan pfpModal'>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+							<DialogTitle className='dialogTitle'>Select a Profile Picture</DialogTitle>
+							<div className='tagSection'>
+								{defaultPFPs}
+							</div>
 						</Grid>
 					</DialogContent>
 				</Dialog>
