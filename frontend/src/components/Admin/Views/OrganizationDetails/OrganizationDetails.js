@@ -351,7 +351,7 @@ const AllTags = ({ tags }) => {
         </Breadcrumbs>
         <Tabs  onTabChange={handleTabChange}/>
         <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
-          <div className='heading'>About</div>
+          <div className='heading'>Bio</div>
           <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>Name</div>
             {editMode ? (
@@ -360,6 +360,7 @@ const AllTags = ({ tags }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsFirstText'>{name}</div>
@@ -387,7 +388,7 @@ const AllTags = ({ tags }) => {
               onChange={(e) => setDescription(e.target.value)}
               variant='outlined'
               multiline
-              sx={{ m: 1, width: '45ch' }}
+              sx={{ m: 1, width: '45ch', backgroundColor: '#F1F1F1' }}
               />
             ) : (
               <div className='orgDetailsDescriptionText'>{description}</div>
@@ -419,6 +420,7 @@ const AllTags = ({ tags }) => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{email}</div>
@@ -432,6 +434,7 @@ const AllTags = ({ tags }) => {
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{phoneNumber}</div>
@@ -445,6 +448,7 @@ const AllTags = ({ tags }) => {
               value={location}
               onChange={(e) => setLocation(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{location}</div>
@@ -459,6 +463,7 @@ const AllTags = ({ tags }) => {
               value={website}
               onChange={(e) => setWebsite(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{website}</div>
@@ -472,6 +477,7 @@ const AllTags = ({ tags }) => {
               value={facebook}
               onChange={(e) => setFacebook(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{facebook}</div>
@@ -485,6 +491,7 @@ const AllTags = ({ tags }) => {
               value={instagram}
               onChange={(e) => setInstagram(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{instagram}</div>
@@ -498,6 +505,7 @@ const AllTags = ({ tags }) => {
               value={twitter}
               onChange={(e) => setTwitter(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{twitter}</div>
@@ -511,6 +519,7 @@ const AllTags = ({ tags }) => {
               value={linkedin}
               onChange={(e) => setLinkedin(e.target.value)}
               variant='outlined'
+              sx={{backgroundColor: '#F1F1F1'}}
               />
             ) : (
               <div className='studentDetailsEmailText'>{linkedin}</div>
