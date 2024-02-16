@@ -296,6 +296,10 @@ app.use('/api/retrieveImage', retrieveImage_S3);
 const deleteImage_S3 = require('./backend/routes/image_processing/newDeleteImage_S3');
 app.use('/api/deleteImage', deleteImage_S3);
 
+/* Google maps api to retrieve the latitude and longitude of a location based on the address */
+const mapsAPI = require('./backend/routes/GMapsAPI/mapsAPI');
+app.use('/api/mapsAPI', mapsAPI);
+
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
