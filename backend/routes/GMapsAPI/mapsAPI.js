@@ -1,5 +1,10 @@
 const express = require('express');
-const fetch = (await import('node-fetch')).default;
+let fetch;
+
+import('node-fetch').then(module => {
+    fetch = module.default;
+}).catch(err => console.error('Failed to load node-fetch', err));
+
 require('dotenv').config();
 const router = express.Router();
 
