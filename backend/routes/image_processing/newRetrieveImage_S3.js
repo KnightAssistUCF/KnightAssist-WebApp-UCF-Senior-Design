@@ -57,16 +57,32 @@ router.get('/', async (req, res) => {
     const S3_imageNames = [];
     if (typeOfImage === '1') {
         const events = await Event.findById(idOfEntity);
-        S3_imageNames.push(events.S3BucketImageDetails);
+        if(events !== null) {
+            S3_imageNames.push(events.S3BucketImageDetails);
+        } else {
+            return res.status(404).json({ error: 'Event not found' });
+        }
     } else if (typeOfImage === '2') {
         const organizations = await Organization.findById(idOfEntity);
-        S3_imageNames.push(organizations.S3BucketImageDetails_ProfilePic);
+        if(organizations !== null) {
+            S3_imageNames.push(organizations.S3BucketImageDetails_ProfilePic); 
+        } else {
+            return res.status(404).json({ error: 'Organization not found' });
+        }
     } else if (typeOfImage === '3') {
         const users = await UserStudent.findById(idOfEntity);
-        S3_imageNames.push(users.S3BucketImageDetails);
+        if(users !== null) {
+            S3_imageNames.push(users.S3BucketImageDetails);
+        } else {
+            return res.status(404).json({ error: 'User not found' });
+        }
     } else if (typeOfImage === '4') {
         const organizations = await Organization.findById(idOfEntity);
-        S3_imageNames.push(organizations.S3BucketImageDetails_Background);
+        if(organizations !== null) {
+            S3_imageNames.push(organizations.S3BucketImageDetails_Background);
+        } else {
+            return res.status(404).json({ error: 'Organization not found' });
+        }
     }
 
 	console.log("IMAGE NAMES", S3_imageNames);
