@@ -6,7 +6,7 @@ const router = express.Router();
 const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
 
 router.get('/', async (req, res) => {
-    const { address } = req.body;
+    const { address } = req.query;
     if (!address) {
         return res.status(400).send({ error: 'Address for using the google maps API is required' });
     }
