@@ -1,5 +1,5 @@
 const express = require('express');
-const fetch = require('node-fetch');
+const fetch = (await import('node-fetch')).default;
 require('dotenv').config();
 const router = express.Router();
 
