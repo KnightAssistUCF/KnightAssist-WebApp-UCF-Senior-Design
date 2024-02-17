@@ -14,6 +14,7 @@ import { BiGlobe } from 'react-icons/bi';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
+import MapContainer from '../MapContainer/MapContainer';
 
 function Contact(props) {
   
@@ -22,6 +23,8 @@ function Contact(props) {
 	const [newWebsite, setNewWebsite] = useState("");
 	const [newLocation, setNewLocation] = useState("");
 	const [newHours, setNewHours] = useState(undefined);
+
+	const [map, setMap] = useState(undefined);
 
 	const [mondayStart, setMondayStart] = useState(undefined);
 	const [tuesdayStart, setTuesdayStart] = useState(undefined);
@@ -40,8 +43,33 @@ function Contact(props) {
 
 	const [daysArr, setDaysArr] = useState([]);
 
+	async function getMap(address){
+		try{
+			const url = buildPath(`api/mapsAPI?address=${address}`);
+
+			const response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let res = JSON.parse(await response.text());
+	
+			if(res['lat'] && res['lng']){
+				setMap(<MapContainer title={address} lat={res['lat']} lng={res['lng']}/>)
+			}else{
+				setMap(undefined);
+			}
+		}catch(e){
+			console.log(e);
+		}
+	}
+
 	useEffect(() => {
 		if(props.editMode){
+			// So it refreshes to the right location
+			// once set
+			setMap(undefined);
+			
 			setNewEmail(props.org.email);
 			props.editInfo.current.email = props.org.email;
 			if(props.org.contact){
@@ -50,8 +78,10 @@ function Contact(props) {
 				setNewWebsite(props.org.contact.website);
 				props.editInfo.current.website = props.org.contact.website;
 			}
+
 			setNewLocation(props.org.location);
 			props.editInfo.current.location = props.org.location;
+
 			setNewHours(props.org.workingHoursPerWeek);
 			props.editInfo.current.hours = props.org.workingHoursPerWeek;
 		}
@@ -91,20 +121,24 @@ function Contact(props) {
 	}, [newHours])
 
 	useEffect(() => {
-		if(props.org && props.org.workingHoursPerWeek){
-			const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
-			const days = [];
+		if(props.org){
+			getMap(props.org.location);
 
-			for(let name of dayNames){
-				if(name in props.org.workingHoursPerWeek){
-					days.push([name, props.org.workingHoursPerWeek[name].start, props.org.workingHoursPerWeek[name].end]);
-				}else{
-					days.push([name, "No Office Hours"]);
-				}
-			}
+			if(props.org.workingHoursPerWeek){
+				const dayNames = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+				const days = [];
 	
-			console.log(days);
-			setDaysArr(days);
+				for(let name of dayNames){
+					if(name in props.org.workingHoursPerWeek){
+						days.push([name, props.org.workingHoursPerWeek[name].start, props.org.workingHoursPerWeek[name].end]);
+					}else{
+						days.push([name, "No Office Hours"]);
+					}
+				}
+		
+				console.log(days);
+				setDaysArr(days);
+			}
 		}
 	}, [props.org])
 
@@ -164,6 +198,7 @@ function Contact(props) {
 					</div>
 					: ""
 				}
+				
 				{props.org.location || props.org.workingHoursPerWeek ? <div className='navSubTitleOH'>Office Hours</div> : null}
 				{props.org.location ?
 					<div className='profileEmail'>
@@ -179,6 +214,15 @@ function Contact(props) {
 					</div>
 					: ""
 				}
+
+				{(map && !props.editMode) ? 
+					<Grid container marginLeft={"50px"} marginTop={"10px"} marginBottom={"235px"}>
+						{map}
+					</Grid>
+					: null
+				}
+
+
 				{props.org.workingHoursPerWeek ?
 					<div className='profileEmail'>
 						<div className='navContactText'>
