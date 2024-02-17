@@ -2,10 +2,9 @@ import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import './MapContainer.css';
 import { Component } from "react";
 
-console.log(process.env)
 const mapStyles = {
 	width: '300px',
-	height: '300px',
+	height: '225px',
 };
 
 class MapContainer extends Component {
@@ -15,10 +14,10 @@ class MapContainer extends Component {
   
 	render() {
 	  return (
-		<div className="mapSize">
+		<div className="mapPosition">
 			<Map
 				google={this.props.google}
-				zoom={8}
+				zoom={15}
 				style={mapStyles}
 				initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
 			>
@@ -33,7 +32,7 @@ class MapContainer extends Component {
 	}
   }
 
-
+//process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 export default GoogleApiWrapper({
 	apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 })(MapContainer);
