@@ -552,7 +552,7 @@ function OrgBox(props) {
 							{(props.org.categoryTags.length > 2)
 								?
 									!expanded && !props.editMode && (
-										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', marginTop: '30px', textTransform: 'none'}}>
+										<Button onClick={toggleExpanded} color='primary' sx={{ alignSelf: 'flex-end', marginRight: '100px', textTransform: 'none'}}>
 											See More
 										</Button>
 									)
