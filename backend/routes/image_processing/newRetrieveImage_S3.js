@@ -96,7 +96,6 @@ router.get('/', async (req, res) => {
             };
             const command = new GetObjectCommand(getObjectParams); // to creat the URL
             const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
-            console.log('url: ', url);
             const urlToReturn = url;
             return res.status(200).json({ url: urlToReturn });
         } else {
@@ -107,7 +106,6 @@ router.get('/', async (req, res) => {
             };
             const command = new GetObjectCommand(getObjectParams); // to creat the URL
             const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
-            console.log('url: ', url);
             const urlToReturn = url;
             return res.status(200).json({ url: urlToReturn });
         }
