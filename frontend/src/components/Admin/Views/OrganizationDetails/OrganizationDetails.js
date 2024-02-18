@@ -15,6 +15,11 @@ import CancelIcon from '@mui/icons-material/Cancel';
 // import StudentSearchBar from './StudentSearchBar.js';
 // import StudentToggle from './StudentToggle.js';
 import Tabs from './Tabs.js';
+import OrgSearchBar from './OrgSearchBar.js';
+import OrgToggle from './OrgToggle.js';
+import PastEvents from './PastEvents.js';
+import UpcomingEvents from './UpcomingEvents.js';
+
 
 function OrganizationDetails({ organizationID }) {
   const [name, setName] = useState('');
@@ -44,11 +49,17 @@ function OrganizationDetails({ organizationID }) {
   const [twitter, setTwitter] = useState('');
   const [instagram, setInstagram] = useState('');
   const [linkedin, setLinkedin] = useState('');
+  const [selectedOrgToggle, setSelectedOrgToggle] = useState('past');
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
     console.log(newToggleValue);
     setTabSelected(newToggleValue);
+  };
+
+  const handleOrgToggleChange = (newToggleValue) => {
+    setSelectedOrgToggle(newToggleValue);
+    console.log(newToggleValue);
   };
 
   const fetchOrganizationInfo = async () => {
@@ -528,32 +539,7 @@ const AllTags = ({ tags }) => {
               <div className='studentDetailsEmailText'>{linkedin}</div>
             )}
           </div>
-          {/* <div className='studentDetailsTotal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
-            <div className='studentDetailsTotalText'>Total Volunteer Hours</div>
-            {editMode ? (
-              <TextField
-              size='small'
-              value={totalHours}
-              onChange={(e) => setTotalHours(e.target.value)}
-              variant='outlined'
-              />
-            ) : (
-              <div className='studentDetailsTotalText'>{totalHours}</div>
-            )}
-          </div> */}
-          {/* <div className='studentDetailsGoal' style={{ marginBottom: editMode ? '10px' : '15px' }}>
-            <div className='studentDetailsGoalText'>Hour Goal</div>
-            {editMode ? (
-              <TextField
-              size='small'
-              value={goal}
-              onChange={(e) => setGoal(e.target.value)}
-              variant='outlined'
-              />
-            ) : (
-              <div className='studentDetailsGoalText'>{goal}</div>
-            )}
-          </div> */}
+
           <div>
             {editMode && (
               <Button variant='outlined' disableElevation   sx={{
@@ -587,33 +573,20 @@ const AllTags = ({ tags }) => {
               )}
             </Snackbar>
           )}
-          {/* {upcomingEvents.length > 0 && (
-            <div>
-              <div className='align' style={{display: 'flex', marginTop: '20px'}}>
-              <StudentSearchBar
-          
-                />
-              <StudentToggle onToggleChange={handleToggleChange}/>
-              </div>
-              <div className='toggleTables'>
-              {(selectedToggle === 'past' && eventHistory.length > 0) && (
-                <>
-                  <div className='total'>Past Events: {eventHistory.length}</div>
-                  <EventHistory eventHistory={eventHistory} />
-                </>
-              )}
-              {selectedToggle === 'upcoming' && (
-                <>
-                  <div className='total'>Upcoming Events: {upcomingEvents.length}</div>
-                  <UpcomingEvents upcomingEvents={upcomingEvents} />
-                </>
-              )}
+        {tabSelected === 'Events' && (
+          <>
+            <div style={{display: 'flex'}}>
+              <OrgSearchBar/>
+              <OrgToggle onToggleChange={handleOrgToggleChange}/>
             </div>
-            </div>
-          )}
-          {upcomingEvents.length === 0 && (
-            <div>No available events</div>
-          )} */}
+            {selectedOrgToggle === 'past' && (
+              <PastEvents events={[]}/>
+            )}
+            {selectedOrgToggle === 'upcoming' && (
+              <UpcomingEvents events={[]}/>
+            )}
+          </>
+        )}
         </div>
         <Dialog
           open={openModal}
