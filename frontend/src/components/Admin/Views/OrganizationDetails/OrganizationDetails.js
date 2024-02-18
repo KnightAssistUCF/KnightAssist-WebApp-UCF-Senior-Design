@@ -36,7 +36,7 @@ function OrganizationDetails({ organizationID }) {
   const [selectedToggle, setSelectedToggle] = useState('past');
   const [searchTerm, setSearchTerm] = useState('');
   // const [eventHistory, setEventHistory] = useState([]);
-  const [tabSelected, setTabSelected] = useState('');
+  const [tabSelected, setTabSelected] = useState('About');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [location, setLocation] = useState('');
   const [website, setWebsite] = useState('');
@@ -48,6 +48,7 @@ function OrganizationDetails({ organizationID }) {
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
     console.log(newToggleValue);
+    setTabSelected(newToggleValue);
   };
 
   const fetchOrganizationInfo = async () => {
@@ -351,6 +352,8 @@ const AllTags = ({ tags }) => {
         </Breadcrumbs>
         <Tabs  onTabChange={handleTabChange}/>
         <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
+        {tabSelected === 'About' && (
+          <>
           <div className='heading'>Bio</div>
           <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>Name</div>
@@ -569,6 +572,8 @@ const AllTags = ({ tags }) => {
             )}
             <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{marginBottom: '10px', backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
             </div>
+            </>
+        )}
           {message.length !== 0 && (
             <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
               {message.includes("Error") ? (
