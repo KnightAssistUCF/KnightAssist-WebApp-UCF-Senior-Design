@@ -15,10 +15,11 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
 import Alert from '@mui/material/Alert';
 import Tooltip from '@mui/material/Tooltip';
+import MapContainer from '../MapContainer/MapContainer';
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); props.setEventID(undefined); props.setOpen(false);}
+    const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); setMap(undefined); props.setEventID(undefined); props.setOpen(false);}
 
     const [name, setName] = useState("");
     const [id, setID] = useState("");
@@ -33,6 +34,8 @@ function EventModal(props)
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
     const [disabled, setDisabled] = useState(false);
+	
+	const [map, setMap] = useState(undefined);
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -69,7 +72,6 @@ function EventModal(props)
 
 			// If the event goes on for more than a day,
 			if(startDay !== endDay) sethasEndDate(true);
-			
 
 			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
@@ -82,7 +84,21 @@ function EventModal(props)
 
 			setPicLink(pic.url);
 
-            
+			url = buildPath(`api/mapsAPI?address=${event.location}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let res = JSON.parse(await response.text());
+
+			if(res['lat'] && res['lng']){
+				setMap(<MapContainer title={event.location} lat={res['lat']} lng={res['lng']}/>)
+			}else{
+				setMap(undefined);
+			}
+
             const json = {
                 eventID: event._id,
                 eventName: event.name,
@@ -326,6 +342,13 @@ function EventModal(props)
                                         <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
                                     </Grid>
                                 </Grid>
+
+								{(map) ? 
+									<Grid container sx={{justifyContent:'center'}} marginBottom={"250px"}>
+										{map}
+									</Grid>
+									: null
+								}
 
                                 <Volunteers/>
                                 

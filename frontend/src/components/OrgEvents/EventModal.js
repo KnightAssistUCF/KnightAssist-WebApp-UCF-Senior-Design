@@ -30,10 +30,11 @@ import Tooltip from '@mui/material/Tooltip';
 import QRCodeModal from './QRCodeModal';
 import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import MapContainer from '../MapContainer/MapContainer';
 
 function EventModal(props)
 {
-    const handleCloseModal = () => {props.setOpen(false);}
+    const handleCloseModal = () => {props.setOpen(false); setMap(undefined)}
     const handleCloseAlert = () => {setOpenAlert(false);}
 	const handleCloseHours = () => {setOpenEditHours(false); setShowError(false)};
 
@@ -49,7 +50,8 @@ function EventModal(props)
     const [endTime, setEndTime] = useState("");
     const [curVolunteers, setCurVolunteers] = useState(0);
 	const [studentPics, setStudentPics] = useState([]);
-	
+	const [map, setMap] = useState(undefined);
+
 	// For volunteers that checkedin/out of the event
 	const [attendedVolunteers, setAttendedVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
@@ -62,7 +64,6 @@ function EventModal(props)
 	const [newCheckInTime, setNewCheckInTime] = useState(undefined);
 	const [newCheckOutTime, setNewCheckOutTime] = useState(undefined);
 	const [showError, setShowError] = useState(false);
-
 
 	const [hasEndDate, sethasEndDate] = useState(false);
 
@@ -145,65 +146,80 @@ function EventModal(props)
         console.log(event);
 
         if(event) {
-                setName(event.name);
-                setDescription(event.description);
-                setLocation(event.location);
-                setStartTime(event.startTime);
-                setEndTime(event.endTime);
-                setCurVolunteers(event.registeredVolunteers.length)
-                setMaxVolunteers(event.maxAttendees);
-                setTags(event.eventTags);
-				setShowTags(event.eventTags.length > 0);
+			setName(event.name);
+			setDescription(event.description);
+			setLocation(event.location);
+			setStartTime(event.startTime);
+			setEndTime(event.endTime);
+			setCurVolunteers(event.registeredVolunteers.length)
+			setMaxVolunteers(event.maxAttendees);
+			setTags(event.eventTags);
+			setShowTags(event.eventTags.length > 0);
 
-				const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-				const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
+			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+
+			// If the event goes on for more than a day,
+			if(startDay !== endDay) 
+				sethasEndDate(true);
+			else
+				sethasEndDate(false);
+
+			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
 	
-				// If the event goes on for more than a day,
-				if(startDay !== endDay) 
-					sethasEndDate(true);
-				else
-					sethasEndDate(false);
+			let pic = JSON.parse(await response.text());
 
-				url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
+			setPicLink(pic.url);
+			
+			url = buildPath(`api/mapsAPI?address=${event.location}`);
 
-				response = await fetch(url, {
-					method: "GET",
-					headers: {"Content-Type": "application/json"},
-				});
-		
-				let pic = JSON.parse(await response.text());
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let res = JSON.parse(await response.text());
 
-				setPicLink(pic.url);
+			if(res['lat'] && res['lng']){
+				setMap(<MapContainer title={res.location} lat={res['lat']} lng={res['lng']}/>)
+			}else{
+				setMap(undefined);
+			}
 
-                const volunteers = [];
+			const volunteers = [];
 
-				const pics = [];
+			const pics = [];
 
-				if(!eventIsUpcoming(event.endTime)){
-					for(let student of event.checkedInStudents){
-                   		volunteers.push(await getVolunteerInfo(student.studentId));
-						pics.push(await getStudentPic(student.studentId))
-					}
-				}else{
-					for(let id of event.registeredVolunteers){
-                    	volunteers.push(await getVolunteerInfo(id));
-						pics.push(await getStudentPic(id));
-					}
+			if(!eventIsUpcoming(event.endTime)){
+				for(let student of event.checkedInStudents){
+					volunteers.push(await getVolunteerInfo(student.studentId));
+					pics.push(await getStudentPic(student.studentId))
 				}
+			}else{
+				for(let id of event.registeredVolunteers){
+					volunteers.push(await getVolunteerInfo(id));
+					pics.push(await getStudentPic(id));
+				}
+			}
 
-				setAttendedVolunteers(event.checkedInStudents.length);
-                setVolunteerInfo(volunteers);
+			setAttendedVolunteers(event.checkedInStudents.length);
+			setVolunteerInfo(volunteers);
 
-				setStudentPics(pics);
+			setStudentPics(pics);
 
-				console.log(pics);
+			console.log(pics);
 
-				setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
-				setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
+			setGenerateCheckIn(canShowCheckIn(event.startTime, event.endTime));
+			setGenerateCheckOut(canShowCheckOut(event.startTime, event.endTime));
 
-				setIsPast(!eventIsUpcoming(event.endTime));
+			setIsPast(!eventIsUpcoming(event.endTime));
 
-				setOpenVolunteers(false);
+			setOpenVolunteers(false);
         } else {
             console.log("Event undefined or not found");
         }   
@@ -498,7 +514,7 @@ function EventModal(props)
                                                 </div>
                                             </Tooltip>
                                         </div>
-                                        <GridInfo info={location}/>
+										<GridInfo info={location}/>
                                     </Grid>
                                 </Grid>
 
@@ -524,7 +540,15 @@ function EventModal(props)
                                         </div>
                                         <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
                                     </Grid>
+
                                 </Grid>
+
+								{(map) ? 
+									<Grid container sx={{justifyContent:'center'}} marginBottom={"250px"}>
+										{map}
+									</Grid>
+									: null
+								}
 
                                 <Volunteers/>
 
@@ -533,7 +557,6 @@ function EventModal(props)
 								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
 									<Grid item xs={4}>
 										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
-
 									</Grid>
 									<Grid item xs={4}>
 										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
