@@ -7,13 +7,14 @@
 
 .details{
 	margin-bottom: 30px;
+	width: 50%;
+	float: left;
 }
 
 .userInput{
-	width: 50%;
-	margin-left: 10px;
-	margin-right: 20px;
-	float: left;
+	width: 45%;
+	float: right;
+	margin-right: 30px;
 }
 
 .contactCard{
@@ -49,10 +50,8 @@
 }
 
 .imageContactUs{
-	margin-bottom: 0px;
-	width: 40%;
-	height: 40%;
-	margin-left: 58% !important;
+	margin-left: 10%;
+	width: 70%;
 	overflow: hidden !important;
 }
 
@@ -74,11 +73,14 @@
 @media (max-width: 700px) {
 	.userInput{
 		width: 100%;
+		margin-right: 0px;
 	}
-}
 
-@media (max-width: 700px) {
-	.imageContactUs{
-		margin-left: 33% !important;
+	.anInput{
+		margin-left: 15% !important;
+	}
+
+	.details{
+		width: 100%;
 	}
 }

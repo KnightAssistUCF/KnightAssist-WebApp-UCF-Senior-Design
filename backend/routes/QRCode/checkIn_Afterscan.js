@@ -31,7 +31,7 @@ router.post("/", async (req, res) => {
           
                 await eventObj.save();
 
-                res.status(200).send("Check-in successful and the ID of the student" + student._id + "has been added to the event" + qrCodeData_eventID + "");
+                res.status(200).send({message: "Check-in successful and the ID of the student" + student._id + "has been added to the event" + qrCodeData_eventID + "", eventObj: eventObj});
         } catch (err) {
                 res.status(500).send(err.message);
         }

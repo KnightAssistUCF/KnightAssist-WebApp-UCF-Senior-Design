@@ -1,4 +1,3 @@
-//import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import './MapContainer.css';
 
@@ -13,6 +12,8 @@ function MapContainer(props){
 		id: 'google-map-script',
 		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 	})
+
+	console.log(process.env)
 
 	return (
 		isLoaded ? (

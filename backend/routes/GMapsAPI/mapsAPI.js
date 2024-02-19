@@ -8,7 +8,7 @@ import('node-fetch').then(module => {
 require('dotenv').config();
 const router = express.Router();
 
-const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY;
+const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
 
 router.get('/', async (req, res) => {
     const { address } = req.query;

@@ -300,7 +300,6 @@ app.use('/api/deleteImage', deleteImage_S3);
 const mapsAPI = require('./backend/routes/GMapsAPI/mapsAPI');
 app.use('/api/mapsAPI', mapsAPI);
 
-
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
