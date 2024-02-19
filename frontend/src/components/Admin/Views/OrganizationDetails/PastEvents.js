@@ -68,13 +68,7 @@ function PastEvents({ events }) {
       setPage(0);
     };
 
-    function fetchPastEvents() {
-        console.log(events);
-    }
 
-    useEffect(() => {
-        fetchPastEvents();
-      }, []);
 
   return (
     <div>
@@ -97,40 +91,49 @@ function PastEvents({ events }) {
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'email'}
-                  direction={orderBy === 'email' ? order : 'asc'}
-                  onClick={() => handleRequestSort('email')}
+                  active={orderBy === 'startTime'}
+                  direction={orderBy === 'startTime' ? order : 'asc'}
+                  onClick={() => handleRequestSort('startTime')}
                 >
-                  <strong>Email</strong>
+                  <strong>Start Time</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'createdAt'}
-                  direction={orderBy === 'createdAt' ? order : 'asc'}
-                  onClick={() => handleRequestSort('createdAt')}
+                  active={orderBy === 'endTime'}
+                  direction={orderBy === 'endTime' ? order : 'asc'}
+                  onClick={() => handleRequestSort('endTime')}
                 >
-                  <strong>Created</strong>
+                  <strong>End Time</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'followers'}
-                  direction={orderBy === 'followers' ? order : 'asc'}
-                  onClick={() => handleRequestSort('followers')}
+                  active={orderBy === 'maxAttendees'}
+                  direction={orderBy === 'maxAttendees' ? order : 'asc'}
+                  onClick={() => handleRequestSort('maxAttendees')}
                 >
-                  <strong>Followers</strong>
+                  <strong>Max Attendees</strong>
                 </TableSortLabel>
               </TableCell>
               <TableCell>
                 <TableSortLabel
-                  active={orderBy === 'events'}
+                  active={orderBy === 'checkedInStudents'}
+                  direction={orderBy === 'checkedInStudents' ? order : 'asc'}
+                  onClick={() => handleRequestSort('checkedInStudents')}
+                >
+                  <strong>Checked In</strong>
+                </TableSortLabel>
+              </TableCell>
+              <TableCell>
+                <TableSortLabel
+                  active={orderBy === 'registeredVolunteers'}
                   direction={
-                    orderBy === 'events' ? order : 'asc'
+                    orderBy === 'registeredVolunteers' ? order : 'asc'
                   }
-                  onClick={() => handleRequestSort('events')}
+                  onClick={() => handleRequestSort('registeredVolunteers')}
                 >
-                  <strong>Events</strong>
+                  <strong>Registered Volunteers</strong>
                 </TableSortLabel>
               </TableCell>
             </TableRow>
@@ -142,11 +145,12 @@ function PastEvents({ events }) {
                 <TableRow key={event._id}>
                   <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
                   backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(event._id)}>View</Button></TableCell>
-                  <TableCell></TableCell>
-                  <TableCell>{}</TableCell>
-                  <TableCell>{}</TableCell>
-                  <TableCell>{}</TableCell>
-                  <TableCell>{}</TableCell>
+                  <TableCell>{event.name}</TableCell>
+                  <TableCell>{event.startTime}</TableCell>
+                  <TableCell>{event.endTime}</TableCell>
+                  <TableCell>{event.maxAttendees}</TableCell>
+                  <TableCell>{event.checkedInStudents.length}</TableCell>
+                  <TableCell>{event.registeredVolunteers.length}</TableCell>
                 </TableRow>
               )
             )}

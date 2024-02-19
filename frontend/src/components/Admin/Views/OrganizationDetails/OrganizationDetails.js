@@ -50,6 +50,8 @@ function OrganizationDetails({ organizationID }) {
   const [instagram, setInstagram] = useState('');
   const [linkedin, setLinkedin] = useState('');
   const [selectedOrgToggle, setSelectedOrgToggle] = useState('past');
+  const [pastEvents, setPastEvents] = useState([]);
+  const [futureEvents, setFutureEvents] = useState([]);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -96,8 +98,8 @@ function OrganizationDetails({ organizationID }) {
       setInstagram(res.contact?.socialMedia.instagram || "");
       setLinkedin(res.contact?.socialMedia.linkedin || "");
 
-      fetchEvents();
-
+      console.log(id)
+      console.log("finished events")
       // fetch past/upcoming events
       // fetchEventHistory(res._id);
 
@@ -267,6 +269,12 @@ const AllTags = ({ tags }) => {
   useEffect(() => {
     fetchOrganizationInfo();
   }, []);
+  useEffect(() => {
+    // Check if the id is populated, then call getPastEvents
+    if (id) {
+      getPastEvents(id);
+    }
+  }, [id]);
 
   const handleCancel = (modalType) => {
     if(modalType == "tags") {
@@ -324,26 +332,73 @@ const AllTags = ({ tags }) => {
     setTabSelected(newValue);
   };
 
-  async function fetchEvents() {
-    console.log("here")
-    let organizationID = sessionStorage.getItem("ID");
-    let url = buildPath(`api/searchEvent?organizationID=${id}`);
 
-    let response = await fetch(url, {
-      method: "GET",
-      headers: {"Content-Type": "application/json"},
+  async function getPastEvents(){
+    
+
+    const url = buildPath(`api/searchEvent?organizationID=${id}`);
+
+    const response = await fetch(url, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
     });
 
-    let res = JSON.parse(await response.text());
+    const res = JSON.parse(await response.text());
 
-    const tmp = [];
+    console.log(res);    
+
+    const pastEvents = [];
+    const futureEvents = [];
 
     for(let event of res){
-        tmp.push({label: (event.startTime.substring(0, event.startTime.indexOf("T")) + ": " + event.name), id: event._id});
-    }
+      if(!eventIsUpcoming(event.startTime)) {
+        const url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
 
-    console.log(tmp);
-  };
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
+
+        let pic = await response.blob();
+        pastEvents.push(event);
+
+      }
+      if(eventIsUpcoming(event.endTime)) {
+        const url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
+
+        let pic = await response.blob();
+        futureEvents.push(event);
+
+      } 
+    }
+            
+    // pastEvents.sort(function(a,b){ 
+    //     return b.props.startTime.localeCompare(a.props.startTime)
+    // });
+    console.log(pastEvents);
+    console.log(futureEvents);
+    setPastEvents(pastEvents);
+    setFutureEvents(futureEvents);
+
+    
+
+}
+
+function eventIsUpcoming(endTime) {
+  const today = new Date();
+  const eventEndDate = new Date(endTime);
+
+  // Set the time part of today's date to midnight
+  today.setHours(0, 0, 0, 0);
+
+  return eventEndDate.getTime() >= today.getTime();
+}
+
   
 
   return (
@@ -565,10 +620,10 @@ const AllTags = ({ tags }) => {
               <OrgToggle onToggleChange={handleOrgToggleChange}/>
             </div>
             {selectedOrgToggle === 'past' && (
-              <PastEvents events={[]}/>
+              <PastEvents events={pastEvents}/>
             )}
             {selectedOrgToggle === 'upcoming' && (
-              <UpcomingEvents events={[]}/>
+              <UpcomingEvents events={futureEvents}/>
             )}
           </>
         )}
