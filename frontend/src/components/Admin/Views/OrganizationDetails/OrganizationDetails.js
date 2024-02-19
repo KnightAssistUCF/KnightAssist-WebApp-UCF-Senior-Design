@@ -88,13 +88,15 @@ function OrganizationDetails({ organizationID }) {
       // setUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
       setDescription(res.description);
-      setPhoneNumber(res.contact.phone);
+      setPhoneNumber(res.contact?.phone || "");
       setLocation(res.location);
-      setWebsite(res.contact.website);
-      setFacebook(res.contact.socialMedia.facebook);
-      setTwitter(res.contact.socialMedia.twitter);
-      setInstagram(res.contact.socialMedia.instagram);
-      setLinkedin(res.contact.socialMedia.linkedin);
+      setWebsite(res.contact?.website || "");
+      setFacebook(res.contact?.socialMedia.facebook || "");
+      setTwitter(res.contact?.socialMedia.twitter || "");
+      setInstagram(res.contact?.socialMedia.instagram || "");
+      setLinkedin(res.contact?.socialMedia.linkedin || "");
+
+      fetchEvents();
 
       // fetch past/upcoming events
       // fetchEventHistory(res._id);
@@ -105,28 +107,6 @@ function OrganizationDetails({ organizationID }) {
     }
   };
 
-  // const fetchEventHistory = async (studentID) => {
-  //   console.log(studentID);
-  //   try {
-	// 		let url = buildPath(`api/historyOfEvents_User?studentId=${studentID}`);
-
-	// 		let response = await fetch(url, {
-	// 			method: "GET",
-	// 			headers: {"Content-Type": "application/json"},
-	// 		});
-		
-	// 		let res = JSON.parse(await response.text());
-
-	// 		// Sort by time if date is equal, date otherwise
-	// 		res.sort(function(a, b) {
-	// 			return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
-	// 		});
-  //     console.log(res);
-	// 		setEventHistory(res);
-  //   } catch(e) {
-  //     console.log("oopsies failed to fetch student event history");
-  //   }
-  // };
 
   async function submitVolunteer(){
 		try{
@@ -174,12 +154,9 @@ function OrganizationDetails({ organizationID }) {
         },
 
 
-				// categoryTags: selectedTags
 			}
-      // saving semesterVolHourGoal + totalVolHours are switched
 
 			const url = buildPath(`api/editOrganizationProfile`);
-      //buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
 
             const response = await fetch(url, {
                 method: "POST",
@@ -346,6 +323,27 @@ const AllTags = ({ tags }) => {
     // You can update the state or perform any other actions here
     setTabSelected(newValue);
   };
+
+  async function fetchEvents() {
+    console.log("here")
+    let organizationID = sessionStorage.getItem("ID");
+    let url = buildPath(`api/searchEvent?organizationID=${id}`);
+
+    let response = await fetch(url, {
+      method: "GET",
+      headers: {"Content-Type": "application/json"},
+    });
+
+    let res = JSON.parse(await response.text());
+
+    const tmp = [];
+
+    for(let event of res){
+        tmp.push({label: (event.startTime.substring(0, event.startTime.indexOf("T")) + ": " + event.name), id: event._id});
+    }
+
+    console.log(tmp);
+  };
   
 
   return (
@@ -380,19 +378,6 @@ const AllTags = ({ tags }) => {
               <div className='studentDetailsFirstText'>{name}</div>
             )}
           </div>
-          {/* <div className='studentDetailsLast' style={{ marginBottom: editMode ? '10px' : '15px' }}>
-            <div className='studentDetailsLastText'>Last Name</div>
-            {editMode ? (
-              <TextField
-              size='small'
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              variant='outlined'
-              />
-            ) : (
-              <div className='studentDetailsLastText'>{lastName}</div>
-            )}
-          </div> */}
           <div className='studentDetailsEmail' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsEmailText'>Description</div>
             {editMode ? (
