@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PageTitle from '../PageTitle';
 import {BiMenu, BiHome, BiSearch, BiCog, BiLogOut} from 'react-icons/bi';
 import { RiFeedbackLine } from "react-icons/ri";
@@ -12,12 +12,15 @@ import './OrgEvents.css';
 import Logo from '../Logo';
 import { CgProfile } from 'react-icons/cg';
 import { LeaderboardOutlined } from '@mui/icons-material';
+import { buildPath } from '../../path';
 
 function Header()
 {
     let user = JSON.parse(sessionStorage.getItem('user-info'));
     const navigate = useNavigate();
     console.warn(user);
+
+	const [numUnreads, setNumUnreads] = useState(0);
 
     function logOut() {
         // handle logout logic
@@ -71,6 +74,30 @@ function Header()
 			window.location.href = "#/orgprofile";
 	}
 
+	async function getNumUnreads(){
+		try {
+			const url = buildPath(`api/retrieveAllFeedback_ForAnOrg?orgId=${sessionStorage.getItem("ID")}`);
+
+			let response = await fetch(url, {
+				method: "GET",
+				headers: { "Content-Type": "application/json" },
+			});
+
+			let res = JSON.parse(await response.text());
+
+			if(res.length > 0)
+				setNumUnreads(res.filter((f) => !f.wasReadByUser).length)
+
+		} catch (e) {
+			console.error("API call failed:", e);
+		}
+	}
+	
+
+	useEffect(() => {
+		getNumUnreads();
+	}, []);
+
     return(
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
@@ -111,7 +138,7 @@ function Header()
                     <LightTooltip title={!isSidebarActive ? "Feedback" : ""} placement="right" className="custom-tooltip">
                         <a href="#/orgfeedback">
                             <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
-                            <span class="links_name">Feedback</span>
+                            <span class="links_name">Feedback {(numUnreads > 0) ? <div className='notoCircle'>{numUnreads}</div>: ""}</span>
                         </a>
                     </LightTooltip>
                 </li>

@@ -344,6 +344,20 @@
 	margin-top: 15px;
 }
 
+.notoCircle{
+	border-radius: 100%;
+	width: 10%; 
+	margin-bottom: 30px;
+	line-height: 15px; 
+	font-size: 10px;
+	position: absolute;
+	right: 12px;
+	top: 5px;
+	background-color: red;
+    color: white;
+    text-align: center !important;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;
