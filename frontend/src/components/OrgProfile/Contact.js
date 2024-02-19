@@ -216,7 +216,7 @@ function Contact(props) {
 				}
 
 				{(map && !props.editMode) ? 
-					<Grid container marginLeft={"50px"} marginTop={"10px"} marginBottom={"235px"}>
+					<Grid container marginLeft={"50px"} marginTop={"10px"} marginBottom={"20px"}>
 						{map}
 					</Grid>
 					: null
