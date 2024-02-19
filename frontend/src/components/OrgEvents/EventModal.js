@@ -544,7 +544,7 @@ function EventModal(props)
                                 </Grid>
 
 								{(map) ? 
-									<Grid container sx={{justifyContent:'center'}} marginBottom={"250px"}>
+									<Grid container sx={{marginLeft: "30%"}} marginBottom={"30px"}>
 										{map}
 									</Grid>
 									: null

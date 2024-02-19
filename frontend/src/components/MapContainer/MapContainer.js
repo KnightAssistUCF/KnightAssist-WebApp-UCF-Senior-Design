@@ -1,38 +1,36 @@
-import { GoogleApiWrapper, Map, Marker } from "react-google-maps/api";
+//import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import './MapContainer.css';
-import { Component } from "react";
 
 const mapStyles = {
 	width: '300px',
 	height: '225px',
 };
 
-class MapContainer extends Component {
-	constructor(props) {
-	  super(props);
-	}
-  
-	render() {
-	  return (
-		<div className="mapPosition">
-			<Map
-				google={this.props.google}
-				zoom={15}
-				style={mapStyles}
-				initialCenter={{ lat: this.props.lat, lng: this.props.lng}}
-			>
-				<Marker title={this.props.title}
-					position={{
-					lat: this.props.lat,
-					lng: this.props.lng
-				}}/>
-			</Map>
-		</div>
-	  );
-	}
-  }
+function MapContainer(props){
 
-//process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-export default GoogleApiWrapper({
-	apiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
-})(MapContainer);
+	const { isLoaded } = useJsApiLoader({
+		id: 'google-map-script',
+		googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+	})
+
+	return (
+		isLoaded ? (
+			<div className="mapPosition">
+				<GoogleMap
+					zoom={15}
+					mapContainerStyle={mapStyles}
+					center={{ lat: props.lat, lng: props.lng}}
+				>
+					<Marker title={props.title}
+						position={{
+						lat: props.lat,
+						lng: props.lng
+					}}/>
+				</GoogleMap>
+			</div>)
+		: null
+	);
+}
+
+export default MapContainer;
