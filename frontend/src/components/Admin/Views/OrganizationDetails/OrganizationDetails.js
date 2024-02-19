@@ -112,6 +112,7 @@ function OrganizationDetails({ organizationID }) {
           method: "GET",
           headers: {"Content-Type": "application/json"},
         });
+        console.log(response);
     
         let background = await response.blob();
     
@@ -417,12 +418,11 @@ function eventIsUpcoming(endTime) {
 }
 
 const backgroundImageStyle = BGFile
-? {
-    backgroundImage: `url(${URL.createObjectURL(BGFile)})`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-  }
-: {};
+  ? { backgroundSize: 'cover', backgroundPosition: 'center' }
+  : {};
+
+const backgroundImageURL = BGFile ? URL.createObjectURL(BGFile) : '';
+
 
   
 
@@ -439,7 +439,11 @@ const backgroundImageStyle = BGFile
           </Link>
           <Typography color='text.primary'>{name}</Typography>
         </Breadcrumbs>
-        <div style={backgroundImageStyle}></div>
+        <div style={{ ...backgroundImageStyle, backgroundImage: `url(${backgroundImageURL})`, width: '100%', height: '200px', position: 'relative' }}>
+  {BGFile && <img src={backgroundImageURL} alt="Background" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />}
+</div>
+
+
         <Tabs  onTabChange={handleTabChange}/>
         <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
         {tabSelected === 'About' && (
