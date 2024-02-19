@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
 
 		await student.save();
 
-        res.status(200).send("Check-out successful and the ID of the student -> " + student._id + "has been removed from the checked in ppl in the event -> " + qrCodeData_eventID_Modified + "");
+        res.status(200).send({message: "Check-out successful and the ID of the student -> " + student._id + "has been removed from the checked in ppl in the event -> " + qrCodeData_eventID_Modified + "", eventObj: eventObj});
     } catch (err) {
         res.status(500).send(err.message);
     }
