@@ -52,6 +52,7 @@ function OrganizationDetails({ organizationID }) {
   const [selectedOrgToggle, setSelectedOrgToggle] = useState('past');
   const [pastEvents, setPastEvents] = useState([]);
   const [futureEvents, setFutureEvents] = useState([]);
+  const [BGFile, setBGFile] = useState(null);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -104,6 +105,22 @@ function OrganizationDetails({ organizationID }) {
       // fetchEventHistory(res._id);
 
       // get profile pic
+      url = buildPath(`api/retrieveImage?entityType=organization&id=${organizationID}&profilePicOrBackGround=1`);
+
+      try {
+        response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
+    
+        let background = await response.blob();
+    
+        setBGFile(background);
+        console.log(background);
+      } catch(e) {
+        console.log("failed to get banner");
+      }
+
     } catch (e) {
       console.log('failed to fetch student info: ' + e);
     }
@@ -333,7 +350,7 @@ const AllTags = ({ tags }) => {
   };
 
 
-  async function getPastEvents(){
+  async function getPastEvents() {
     
 
     const url = buildPath(`api/searchEvent?organizationID=${id}`);
@@ -399,6 +416,14 @@ function eventIsUpcoming(endTime) {
   return eventEndDate.getTime() >= today.getTime();
 }
 
+const backgroundImageStyle = BGFile
+? {
+    backgroundImage: `url(${URL.createObjectURL(BGFile)})`,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+  }
+: {};
+
   
 
   return (
@@ -414,6 +439,7 @@ function eventIsUpcoming(endTime) {
           </Link>
           <Typography color='text.primary'>{name}</Typography>
         </Breadcrumbs>
+        <div style={backgroundImageStyle}></div>
         <Tabs  onTabChange={handleTabChange}/>
         <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
         {tabSelected === 'About' && (
