@@ -103,6 +103,12 @@ export default function SignUp() {
     confirmPassword: "",
   });
 
+  const handleKeyPress = async (event) => {
+	if(event.key === 'Enter'){
+		await handleSubmit(value === "1" ? "volunteer" : "organization")	
+	}
+  }
+
   const handleChange = (event, newValue) => {
     setValue(newValue);
     setAlertMessage("");
@@ -259,7 +265,7 @@ export default function SignUp() {
       var json = {
         firstName: volFirstName,
         lastName: volLastName,
-        email: volEmail,
+        email: volEmail.toLowerCase(),
         password: volPass,
         totalVolunteerHours: 0,
       };
@@ -306,7 +312,7 @@ export default function SignUp() {
       var json = {
         name: orgName,
         password: orgPass,
-        email: orgEmail,
+        email: orgEmail.toLowerCase(),
       };
 
       console.log(json);
@@ -353,7 +359,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" onKeyPress={handleKeyPress}>
         <CssBaseline />
         <Typography component="h1" variant="h5" sx={{ paddingBottom: 2 }}>
           Create An Account

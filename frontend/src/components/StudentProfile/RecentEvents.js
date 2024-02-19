@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 
@@ -87,14 +87,14 @@ function RecentEvents(props)
         for(let event of res){
             if(!eventIsUpcoming(event.endTime)){
 				console.log(event)
-				url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+				url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 				response = await fetch(url, {
 					method: "GET",
 					headers: {"Content-Type": "application/json"},
 				});
 		
-				let pic = await response.blob();
+				let pic = JSON.parse(await response.text());
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
                 events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
@@ -130,7 +130,7 @@ function RecentEvents(props)
                         <CardMedia
                             component="img"
                             height="150"
-                            image={URL.createObjectURL(props.pic)}
+                            image={props.pic.url}
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
@@ -161,6 +161,7 @@ function RecentEvents(props)
 
 	useEffect(()=>{
 		const adjustForSize = () => {
+			if(!eventCards) return;
 			const width = window.innerWidth;
 			
 			const oldEventsPerPage = eventsPerPage;
@@ -185,11 +186,14 @@ function RecentEvents(props)
 	},[initiateListener])
 
     return(
-     <div>
-        <div>
-            <Events/>            
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-		</div>
+     <div className='centerCards'>
+		{(eventCards) ? 
+		    <div>
+				<Events/>
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			</div>
+			: <CircularProgress/>
+		}
      </div>
     );
 };

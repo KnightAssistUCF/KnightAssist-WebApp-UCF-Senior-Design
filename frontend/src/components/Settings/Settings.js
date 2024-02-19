@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Settings.css'
 import Header from '../OrgEvents/Header';
 import OrgTopBar from '../OrgHome/OrgTopBar';
-import { Box, Card, CardContent, Divider, Grid } from '@mui/material';
+import { Box, Card, CardContent, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Divider, Grid } from '@mui/material';
 import {Button} from '@mui/material';
 import Alert from '@mui/material/Alert';
 import Customization from './Customization';
@@ -23,6 +23,9 @@ function Settings(){
 	
 	const [showError, setShowError] = useState(false);
 	const [errors, setErrors] = useState([]);
+
+	const handleCloseDeleteAccount = () => {setOpenDeleteAccount(false);}
+    const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
 
 	async function submit(){
 		if(!validInput()) return;
@@ -56,6 +59,35 @@ function Settings(){
 	
 			let res = await response.text();
 			console.log(res);
+		}catch(e){
+			console.log(e);
+		}
+	}
+
+	async function deleteAccount(){
+		let url;
+		if(role === "volunteer"){
+			url = buildPath("api/userDelete");
+		}else{
+			url = buildPath("api/organizationDelete");
+		}
+
+		const json = 
+		{
+			id: sessionStorage.getItem("ID"),
+		}
+
+		try{
+			const response = await fetch(url, {
+				method: "DELETE",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+			});
+	
+			let res = await response.text();
+			
+			window.location.href = '#/';
 		}catch(e){
 			console.log(e);
 		}
@@ -121,8 +153,8 @@ function Settings(){
 
 	return(
 		<div className='spartan grayBG'>
-			{(role === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
-			{(role === "volunteer") ? <StudentHeader/> : <Header/>}
+			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
+			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
 				<Card className='settingsCard'>
 					<CardContent>
@@ -130,12 +162,34 @@ function Settings(){
 						<Divider className='dividerSpace' sx={{background: "black"}}/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
 								  getEmails={getEmails} setGetEmails={setGetEmails}/>
+						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
+							<Button sx={{mt: 4.5, width: 175, backgroundColor: "#CC0202", "&:hover": {backgroundColor: "#FF2400"}}} variant="contained" onClick={() => setOpenDeleteAccount(true)}>Delete Account</Button>
+						</Grid>
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
 						</Grid>
 						<ErrorMessage/>
 					</CardContent>   
 				</Card>
+				<Dialog
+					open={openDeleteAccount}
+					onClose={handleCloseDeleteAccount}
+					aria-labelledby="alert-dialog-title"
+					aria-describedby="alert-dialog-description"
+					>
+						<DialogTitle id="alert-dialog-title">
+						{"Delete Account"}
+						</DialogTitle>
+						<DialogContent>
+						<DialogContentText id="alert-dialog-description">
+							This will permanently remove your account and volunteer history on KnightAssist. Are you sure you want to delete your account?
+						</DialogContentText>
+						</DialogContent>
+						<DialogActions>
+							<Button onClick={handleCloseDeleteAccount}>Undo</Button>
+							<Button sx={{color:"red"}} onClick={() => deleteAccount()} autoFocus>Delete</Button>
+						</DialogActions>
+				</Dialog> 
 			</div>
 		</div>
 	);

@@ -205,13 +205,13 @@ app.use('/api/generateQRCode_checkOut', generateQRCode_checkOut);
 const CheckOut_Afterscan = require('./backend/routes/QRCode/CheckOut_Afterscan');
 app.use('/api/CheckOut_Afterscan', CheckOut_Afterscan);
 
-// Image Processing Endpoints
-const deleteImage = require('./backend/routes/image_processing/deleteImage');
-app.use('/api/deleteImage', deleteImage);
-const storeImage = require('./backend/routes/image_processing/storeImage&path');
-app.use('/api/storeImage', storeImage);
-const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
-app.use('/api/retrieveImage', retrieveImage);
+// Old Image Processing Endpoints
+// const deleteImage = require('./backend/routes/image_processing/deleteImage');
+// app.use('/api/deleteImage', deleteImage);
+// const storeImage = require('./backend/routes/image_processing/storeImage&path');
+// app.use('/api/storeImage', storeImage);
+// const retrieveImage = require('./backend/routes/image_processing/retrieveImage');
+// app.use('/api/retrieveImage', retrieveImage);
 
 /* Contact form submission endpoint */
 const contactUsFormSubmission = require('./backend/routes/contactUs_Form/submitForm');
@@ -285,6 +285,20 @@ app.use('/api/perOrgLeaderboard', perOrgLeaderboard);
 /* Favorited orgs announcements only */
 const favoritedOrgsAnnouncements = require('./backend/routes/announcements/favoritedOrgsAnnouncements');
 app.use('/api/favoritedOrgsAnnouncements', favoritedOrgsAnnouncements);
+
+/* S3 Bucket new image endpoints */
+const storeImage_S3 = require('./backend/routes/image_processing/newStoreImage_S3');
+app.use('/api/storeImage', storeImage_S3);
+
+const retrieveImage_S3 = require('./backend/routes/image_processing/newRetrieveImage_S3');
+app.use('/api/retrieveImage', retrieveImage_S3);
+
+const deleteImage_S3 = require('./backend/routes/image_processing/newDeleteImage_S3');
+app.use('/api/deleteImage', deleteImage_S3);
+
+/* Google maps api to retrieve the latitude and longitude of a location based on the address */
+const mapsAPI = require('./backend/routes/GMapsAPI/mapsAPI');
+app.use('/api/mapsAPI', mapsAPI);
 
 
 /*

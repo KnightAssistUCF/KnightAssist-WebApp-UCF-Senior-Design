@@ -5,10 +5,12 @@ import Feedbacks from "./Feedbacks.js";
 import './OrgFeedback.css';
 import { buildPath } from '../../path.js';
 import Filter from './Filter.js';
+import OrgTopBar from '../OrgHome/OrgTopBar';
+import { CircularProgress } from '@mui/material';
 
 function OrgFeedback() {
 	var [feedback, setFeedback] = useState([]);
-	var [searchFeedback, setSearchFeedback] = useState([]);
+	var [searchFeedback, setSearchFeedback] = useState(undefined);
 	var [filterTerm, setFilterTerm] = useState("all");
 
 	const [markRead, setMarkRead] = useState("");
@@ -114,6 +116,7 @@ function OrgFeedback() {
 	return (
 		<div className='spartan'>
 			<Header/>
+			<OrgTopBar/>
 			<div className='moveEverything'>
 				<Title/>
 				<div className="announcementSection">
@@ -130,7 +133,7 @@ function OrgFeedback() {
 						/>
 						<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 					</div>
-				<Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/>
+				{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
 			</div>
 			</div>
 		</div>

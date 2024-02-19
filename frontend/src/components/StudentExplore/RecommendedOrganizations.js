@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea } from '@mui/material';
+import { CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
@@ -63,24 +63,24 @@ function RecommendedOrganizations(props)
 
         for(let org of res){
 			// Gets profile pic of org
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=0`);
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let profilePic = await response.blob();
+			let profilePic = JSON.parse(await response.text());
 
 			// Gets background pic of org
-			url = buildPath(`api/retrieveImage?entityType=organization&id=${org._id}&profilePicOrBackGround=1`);
+			url = buildPath(`api/retrieveImage?typeOfImage=4&id=${org._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let background = await response.blob();
+			let background = JSON.parse(await response.text());
 
             orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
 		}
@@ -116,11 +116,11 @@ function RecommendedOrganizations(props)
 								component="img"
 								className='cardBg'
 								height="125"
-								image={URL.createObjectURL(props.background)}
+								image={props.background.url}
 							/>
 							<Avatar
 								className='cardLogo'
-                              	src={URL.createObjectURL(props.profilePic)}
+                              	src={props.profilePic.url}
 								sx={{zIndex: 2, position: "absolute", width: 100, height: 100, marginTop: -7, borderStyle: "solid", borderColor: "white"}}
                            />
 						</div>
@@ -153,6 +153,8 @@ function RecommendedOrganizations(props)
 
 	useEffect(()=>{
 		const adjustForSize = () => {
+			if(!orgCards) return;
+
 			const width = window.innerWidth;
 			
 			const oldOrgsPerPage = orgsPerPage;
@@ -182,10 +184,13 @@ function RecommendedOrganizations(props)
     return(
      <div className='upcomingEventsSpace'>
         <OrgHeader/>
-        <div>
-            <Orgs/>            
-            <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-        </div>
+		{(orgCards) ? 
+		    <div>
+				<Orgs/>
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+			</div>
+			: <CircularProgress/>
+		}
      </div>
     );
 };

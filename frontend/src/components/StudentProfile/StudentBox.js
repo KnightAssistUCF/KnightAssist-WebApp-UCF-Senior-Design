@@ -2,16 +2,21 @@ import { useState, useEffect, useRef } from 'react';
 import './StudentProfile';
 import './StudentProfile.css';
 import Card from '@mui/material/Card';
-import { Button, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip } from '@mui/material';
+import { Button, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
 import { buildPath } from '../../path';
+import { TbEditCircle } from 'react-icons/tb';
 
 function StudentBox(props) {
 
 	const [picName, setPicName] = useState(undefined);
+	const [picFile, setPicFile] = useState(undefined);
 	const [role, setRole] = useState(null);
 	const [newSelectedTags, setNewSelectedTags] = useState([]);
 
 	const [openInterestsModal, setOpenInterestsModal] = useState(false);
+	const [openDefaultPFPModal, setOpenDefaultPFPModal] = useState(false);
+	
+	const [openPicSelectChoice, setOpenPicSelectChoice] = useState(null);
 
 	const [expanded, setExpanded] = useState(false);
 	const [tempSelectedTags, setTempSelectedTags] = useState([]);
@@ -24,6 +29,12 @@ function StudentBox(props) {
 	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
+
+	const [defaultPFPs, setDefaultPFPs] = useState(undefined);
+    
+	const openPicSelectMenu = (event) => {
+	  setOpenPicSelectChoice(event.currentTarget);
+	};
 
 	const toggleExpanded = () => {
         setExpanded(!expanded);
@@ -59,11 +70,10 @@ function StudentBox(props) {
 
 			let formData = new FormData();
 
-			if(picName !== null && typeof picName.name === "string"){
-				formData.append('profilePic', picName); 
-				formData.append('entityType', 'student');
+			if(picFile){
+				formData.append('profilePic', picFile); 
+				formData.append('typeOfImage', '3');
 				formData.append('id', sessionStorage.getItem("ID"));
-				formData.append('profilePicOrBackGround', '0');
 
 				await fetch(buildPath(`api/storeImage`), {
 					method: 'POST',
@@ -90,16 +100,43 @@ function StudentBox(props) {
 			id = sessionStorage.getItem("ID");
 		}
 
-		const url = buildPath(`api/retrieveImage?entityType=student&id=${id}&profilePicOrBackGround=0`);
+		const url = buildPath(`api/retrieveImage?typeOfImage=3&id=${id}`);
 
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {"Content-Type": "application/json"},
 		});
 
-		let pic = await response.blob();
+		let pic = JSON.parse(await response.text());
 
-		setPicName(pic);
+		setPicName(pic.url);
+	}
+
+	async function getDefaultPFPs(){
+		// All default pfps
+		const pfps = [];
+
+		for(let i = 1; i <= 11; i++){
+			// Note: Link cannot be saved as variable, causes error
+			pfps.push(
+				<Avatar
+					src={require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')}
+					className='defaultPFP addHover'
+					onClick={async() => {
+								setPicName(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')); 
+								const response = await fetch(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png'));
+								const blob = await response.blob();
+								const file = new File([blob], "profileImage.png", {
+									type: blob.type,
+								});
+								setPicFile(file);
+								setOpenDefaultPFPModal(false);
+							}}
+				/>
+			)
+		}
+
+		setDefaultPFPs(pfps);
 	}
 
 	function handleClick(idx){
@@ -160,14 +197,22 @@ function StudentBox(props) {
 
 	function ProfilePic(){
 		return (
-			<div>
+			<div className='picContainer'>
 				<Avatar
-					src={(picName) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					src={(picName) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					className='picAvatar'
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
-					className={(props.editMode) ? "hoverImage" : ""}
-					onClick={(props.editMode) ? () => document.getElementById("profilepic").click() : null}
 				/>
-				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(profilePicSelect.current.files[0]);}}}/>
+				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={openPicSelectMenu}/> : null}
+				<Menu
+					open={Boolean(openPicSelectChoice)}
+					anchorEl={openPicSelectChoice}
+					onClose={() => setOpenPicSelectChoice(null)}
+				>
+					<MenuItem onClick={() => {document.getElementById("profilepic").click(); setOpenPicSelectChoice(null);}}>Upload</MenuItem>
+					<MenuItem onClick={() => {setOpenDefaultPFPModal(true); setOpenPicSelectChoice(null);}}>Select Default PFP</MenuItem>
+				</Menu>
+				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0]);}}}/>
 			</div>
 		)
 	}
@@ -281,6 +326,7 @@ function StudentBox(props) {
 	useEffect(() => {
 		setRole(sessionStorage.getItem("role"));
 		getProfilePic();
+		getDefaultPFPs();
 	}, []);
 
 	useEffect(() => {
@@ -318,7 +364,7 @@ function StudentBox(props) {
 				{(props.user)
 					?
 						<div>
-							<ProfilePic/>
+							{ProfilePic()}
 							{JoinDate()}
 							
 							{(role === "volunteer" && props.user._id === sessionStorage.getItem("ID")) 
@@ -362,6 +408,17 @@ function StudentBox(props) {
 								{tags}
 							</div>
 							<Button sx={{ mt: 8, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setNewSelectedTags(tempSelectedTags.slice(0)); setOpenInterestsModal(false);}}>Save</Button>
+						</Grid>
+					</DialogContent>
+				</Dialog>
+
+				<Dialog open={openDefaultPFPModal} onClose={() => {setOpenDefaultPFPModal(false);}}>
+					<DialogContent className='spartan pfpModal'>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+							<DialogTitle className='dialogTitle'>Select a Profile Picture</DialogTitle>
+							<div className='tagSection'>
+								{defaultPFPs}
+							</div>
 						</Grid>
 					</DialogContent>
 				</Dialog>

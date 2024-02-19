@@ -11,7 +11,7 @@ import { buildPath } from '../../path';
 const RatingLinear = styled(LinearProgress)(({ theme }) => ({
   height: 10,
   borderRadius: 3,
-  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 200 : 800],
+  backgroundColor: theme.palette.grey[theme.palette.mode === 'light' ? 400 : 800],
   [`& .${linearProgressClasses.bar}`]: {
     borderRadius: 3,
     backgroundColor: theme.palette.mode === 'light' ? '#ffd700' : '#308fe8',
@@ -62,7 +62,12 @@ function RatingBox(props) {
 
 		setFeedback(res);
 
-		setAverageRating((sum / res.length).toFixed(1));
+		if(res.length === 0){
+			setAverageRating("No Ratings Found");
+		}else{
+			setAverageRating((sum / res.length).toFixed(1));
+		}
+
 		setNum5s(freq[4]);
 		setNum4s(freq[3]);
 		setNum3s(freq[2]);
@@ -79,61 +84,58 @@ function RatingBox(props) {
 		?
 		<div>
 			<div className='ratingsTopRow'>
-			<Box display="flex" justifyContent="space-between" alignItems="flex-start" width="100%">
-				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-					<div className='ratingNum'>
-						{averageRating}
-					</div>
-					<Rating value={averageRating} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
-				</Card>
-	
-				<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-					<RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-					<RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '60%', margin: '8px 0' }} />
-				</Card>
-			</Box>
+				<Box display="flex" justifyContent="space-between" alignItems="flex-start" width="100%">
+					<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+						<div className='ratingNum'>
+							{averageRating}
+						</div>
+						<Rating value={averageRating} precision={0.1} readOnly sx={{ fontSize: '1.5em' }} />
+					</Card>
+		
+					<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>5/5</div> <RatingLinear variant="determinate" value={(num5s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>4/5</div> <RatingLinear variant="determinate" value={(num4s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>3/5</div> <RatingLinear variant="determinate" value={(num3s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>2/5</div> <RatingLinear variant="determinate" value={(num2s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+						<Card variant='none' sx={{ width: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}><div className='starNum'>1/5</div> <RatingLinear variant="determinate" value={(num1s / feedback.length) * 100} sx={{ width: '80%', margin: '8px 0' }} /></Card>
+					</Card>
+				</Box>
 			</div>
 			<div className='ratingsBottomRow' style={{ height: '50%' }}>
 			<Box display="flex" justifyContent="space-between" alignItems="stretch" height="100%">
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
 				{(feedback.length > 0) 
 					?
-					<CardContent>
-						<div className='feedbackEvent'>{feedback[0].eventName.slice(0, 20)}{(feedback[0].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[0].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[0].feedbackText.slice(0, 120)}{(feedback[0].feedbackText.length > 120) ? "..." : ""}</div>
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
+						<CardContent>
+							<div className='feedbackEvent'>{feedback[0].eventName.slice(0, 20)}{(feedback[0].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[0].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[0].feedbackText.slice(0, 120)}{(feedback[0].feedbackText.length > 120) ? "..." : ""}</div>
 						</CardContent>
-					:
-					""
+					</Card>
+					: ""
 				}
-				</Card>
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
 				{(feedback.length > 1) 
 					?
-					<CardContent className='theContent'>
-						<div className='feedbackEvent'>{feedback[1].eventName.slice(0, 20)}{(feedback[1].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[1].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[1].feedbackText.slice(0, 120)}{(feedback[1].feedbackText.length > 120) ? "..." : ""}</div>
-					</CardContent>
-					:
-					""
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
+						<CardContent className='theContent'>
+							<div className='feedbackEvent'>{feedback[1].eventName.slice(0, 20)}{(feedback[1].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[1].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[1].feedbackText.slice(0, 120)}{(feedback[1].feedbackText.length > 120) ? "..." : ""}</div>
+						</CardContent>
+					</Card>
+					: ""
 				}
-				</Card>
-				<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
 				{(feedback.length > 2) 
 					?
-					<CardContent>
-						<div className='feedbackEvent'>{feedback[2].eventName.slice(0, 20)}{(feedback[2].eventName.length > 20) ? "..." : ""}</div>
-						<Rating value={feedback[2].rating} readOnly size='medium' />
-						<div className='navParagraphText'>{feedback[2].feedbackText.slice(0, 120)}{(feedback[2].feedbackText.length > 120) ? "..." : ""}</div>
-					</CardContent>
-					:
-					""
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
+						<CardContent>
+							<div className='feedbackEvent'>{feedback[2].eventName.slice(0, 20)}{(feedback[2].eventName.length > 20) ? "..." : ""}</div>
+							<Rating value={feedback[2].rating} readOnly size='medium' />
+							<div className='navParagraphText'>{feedback[2].feedbackText.slice(0, 120)}{(feedback[2].feedbackText.length > 120) ? "..." : ""}</div>
+						</CardContent>
+					</Card>
+					:	""
 				}
-				</Card>
 			</Box>
 			</div>
 			{(selectedFeedback !== null)

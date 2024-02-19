@@ -36,8 +36,8 @@ function AddEventModal(props)
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("")
-    const [startTime, setStartTime] = useState(dayjs('2022-04-17T15:30'));
-    const [endTime, setEndTime] = useState(dayjs('2022-04-17T15:30'));
+    const [startTime, setStartTime] = useState(undefined);
+    const [endTime, setEndTime] = useState(undefined);
     const semester = "Fall 2023" //This will be implemented some other way later
     const [maxVolunteers, setMaxVolunteers] = useState();
     const [currentTag, setCurrentTag] = useState("");
@@ -73,8 +73,8 @@ function AddEventModal(props)
         setLocation("");
 		setPicName(null);
         setPicFile(null);
-        setStartTime(dayjs('2022-04-17T15:30'));
-        setEndTime(dayjs('2022-04-17T15:30'));
+        setStartTime(undefined);
+        setEndTime(undefined);
         setMaxVolunteers();
         setCurrentTag("");
         setTags([]);
@@ -115,19 +115,21 @@ function AddEventModal(props)
             let res = JSON.parse(await response.text());
             console.log(res);
 
-			const formData = new FormData();
-			formData.append('profilePic', picFile); 
-			formData.append('entityType', 'event');
-			formData.append('id', res.ID);
-
-			// Store the picture selected to be associated with the event
-			await fetch(buildPath(`api/storeImage`), {
-				method: 'POST',
-				body: formData
-			})
-			.then(response => response.json())
-			.then(data => console.log(data))
-			.catch(error => console.error('Error:', error));
+			if(picFile != null){
+				const formData = new FormData();
+				formData.append('profilePic', picFile); 
+				formData.append('entityType', 'event');
+				formData.append('id', res.ID);
+	
+				// Store the picture selected to be associated with the event
+				await fetch(buildPath(`api/storeImage`), {
+					method: 'POST',
+					body: formData
+				})
+				.then(response => response.json())
+				.then(data => console.log(data))
+				.catch(error => console.error('Error:', error));
+			}
 
             if(eventIsUpcoming(endTime))
                 props.setReset(props.reset * -1);
@@ -171,12 +173,11 @@ function AddEventModal(props)
             console.log(res);
 
 			// For issue where images are blobs
-			if(typeof picFile.name === "string"){
+			if(picFile != null && typeof picFile.name === "string"){
 				const formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'event');
+				formData.append('typeOfImage', '1');
 				formData.append('id', res.ID);
-				formData.append('profilePicOrBackGround', '0');
 
 				// Store the picture selected to be associated with the event
 				await fetch(buildPath(`api/storeImage`), {
@@ -281,9 +282,9 @@ function AddEventModal(props)
             <Grid item xs={props.xs} sm={props.sm}>
 				<label for="upload" className="picBtn btn btn-primary">Select Pic</label>
 				<div className='imgDemo'>
-					{(picName != null) ? <img className="imgDemo" src={URL.createObjectURL(picName)} alt=''/> : ""}
+					{(picName != null) ? <img className="imgDemo" src={picName} alt=''/> : ""}
 				</div>
-                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(fileSelect.current.files[0]); setPicFile(fileSelect.current.files[0])}}}/>
+                <input ref={fileSelect} id="upload" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(fileSelect)){setPicName(URL.createObjectURL(fileSelect.current.files[0])); setPicFile(fileSelect.current.files[0])}}}/>
             </Grid>
         )
     }
@@ -292,7 +293,7 @@ function AddEventModal(props)
         return (
             <Grid item xs={props.xs} sm={props.sm}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
-					<DateTimePicker label={props.label} value={dayjs(props.value)} onChange={props.onChange}/>
+					<DateTimePicker label={props.label} value={props.value} onChange={props.onChange}/>
                 </LocalizationProvider>                                      
             </Grid>      
         )
@@ -301,7 +302,7 @@ function AddEventModal(props)
     function Tag(props){
         return (
             <Grid item>
-                <Card className='eventTag'>
+                <Card className='eventInterest'>
                     <CloseIcon onClick={() => deleteTag(props.tag)}/>
                     {props.tag}
                 </Card>
@@ -410,17 +411,16 @@ function AddEventModal(props)
             setEndTime(dayjs(event.endTime));
             setMaxVolunteers(event.maxAttendees);
 			
-			url = buildPath(`api/retrieveImage?entityType=event&id=${event._id}`);
+			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
 			response = await fetch(url, {
 				method: "GET",
 				headers: {"Content-Type": "application/json"},
 			});
 	
-			let pic = await response.blob();
+			let pic = JSON.parse(await response.text());
 
-			setPicName(pic);
-			setPicFile(pic);
+			setPicName(pic.url);
 
             const taggy = [];
             const taggyNames = [];

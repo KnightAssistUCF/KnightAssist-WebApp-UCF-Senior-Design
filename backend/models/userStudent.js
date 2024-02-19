@@ -98,6 +98,12 @@ const userStudentSchema = new mongoose.Schema({
         required: true,
         default: true
     },
+    S3BucketImageDetails: {
+        type: String, // would store the image name
+        url: String,
+        imageName: String,
+		default: ""
+    },
     __v: {
         type: String,
         required: true,

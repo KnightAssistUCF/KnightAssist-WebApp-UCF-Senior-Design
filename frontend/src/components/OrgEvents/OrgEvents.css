@@ -186,17 +186,22 @@
     margin-bottom: -8px; 
 }
 
-.eventTag{
-    background-color: #bc70c8 !important;
+.eventInterest{
+    background-color: rgb(89, 80, 130) !important;
+	color: rgb(240, 240, 240) !important;
     min-width: 100px;
     width: auto !important;
     height: 30px;
     margin-top: 0px;
-    margin-right: 10px;
+    margin-right: 5px;
     font-size: 20px;
     float: left;
     font-family: "system-ui";
     margin-bottom: 5px;
+	border-radius: 10px !important;
+	padding-left: 8px;
+	padding-right: 8px;
+	box-shadow: none !important;
 }
 
 .upcomingEventsSpace{

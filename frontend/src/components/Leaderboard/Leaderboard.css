@@ -59,7 +59,7 @@
 }
 
 .rankPic{
-	margin-right: 3% !important;
+	margin-right: 1% !important;
 }
 
 .rankName{
@@ -95,6 +95,9 @@
 	margin-right: -320px;
 }
 
+.progessTop10{
+	margin-top: 25%;
+}
 
 @media (max-width: 1350px) {
     .removeIfShort {

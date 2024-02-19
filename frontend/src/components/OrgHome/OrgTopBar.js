@@ -42,16 +42,16 @@ function OrgTopBar()
 	async function getProfilePic(){
 		let id = sessionStorage.getItem("ID");
 
-		const url = buildPath(`api/retrieveImage?entityType=organization&id=${id}&profilePicOrBackGround=0`);
+		const url = buildPath(`api/retrieveImage?typeOfImage=2&id=${id}`);
 
 		const response = await fetch(url, {
 			method: "GET",
 			headers: {"Content-Type": "application/json"},
 		});
 
-		let pic = await response.blob();
+		let pic = JSON.parse(await response.text());
 
-		setPicName(pic);
+		setPicName(pic.url);
 	}
 
 	function handleButtonClick(setting){
@@ -95,7 +95,7 @@ function OrgTopBar()
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? URL.createObjectURL(picName) : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}/>
+                <Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}/>
               </IconButton>
             </Tooltip>
             <Menu
