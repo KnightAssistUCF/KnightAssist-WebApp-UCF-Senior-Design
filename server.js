@@ -300,6 +300,10 @@ app.use('/api/deleteImage', deleteImage_S3);
 const mapsAPI = require('./backend/routes/GMapsAPI/mapsAPI');
 app.use('/api/mapsAPI', mapsAPI);
 
+/* Push notification every 30 min */
+const pushNotifications_30min = require('./backend/routes/PushNotifications/pushNotifications_30min');
+app.use('/api/pushNotifications_30min', pushNotifications_30min);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
