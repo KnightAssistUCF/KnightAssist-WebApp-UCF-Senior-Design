@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-
 const Organization = require('../../models/organization');
-const Event = require('../../models/event');
-const UserStudent = require('../../models/userStudent');
+const Event = require('../../models/events');
 
 router.get('/', async (req, res) => {
     try {
@@ -16,9 +14,10 @@ router.get('/', async (req, res) => {
             favorites: userId,
             'updates.date': { $gt: intervalStart }
         }, 'name updates').lean();
+		
 
         // Extract updates from favorite organizations
-        const updates = favoriteOrgsUpdates.map(org => ({
+        const updates = favoriteOrgsUpdates.filter(org => org.updates).map(org => ({
             organizationName: org.name,
             updates: org.updates.filter(update => update.date > intervalStart)
         }));
@@ -32,13 +31,19 @@ router.get('/', async (req, res) => {
             startTime: { $gt: intervalStart } 
         }).lean();
 
-        // get the new events of the orgs that hte user has favorited
-        const favoriteOrgs = await Organization.find({ favorites: userId }, 'name events').lean();
-        const newEvents = favoriteOrgs.map(org => ({
-            organizationName: org.name,
-            events: org.events.filter(event => event.startTime > intervalStart)
-        }));
 
+        // get the new events of the orgs that hte user has favorited
+        const favoriteOrgs = await Organization.find({ favorites: userId });
+
+		const newEvents = [];
+
+		for(let org of favoriteOrgs){
+			const events = await Event.find({ sponsoringOrganization: org._id, createdAt: { $gt: intervalStart }})
+			newEvents.push({
+				organizationName: org.name,
+				events: events
+			})
+		}
 
         const response = {
             orgUpdates: updates,
