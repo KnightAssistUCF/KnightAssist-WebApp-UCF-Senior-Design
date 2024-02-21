@@ -4,9 +4,11 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
+import PlaceIcon from '@mui/icons-material/Place';
 import { CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
+import { CalendarIcon } from '@mui/x-date-pickers';
 
 function UpcomingEvents(props)
 {
@@ -88,12 +90,12 @@ function UpcomingEvents(props)
 		
 				let pic = JSON.parse(await response.text());
 		
-				events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
+				events.push(<Event name={event.name} pic={pic} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
 			}
         }       
 
         events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
+            return a.props.startTime.localeCompare(b.props.startTime)
         });
 
         console.log(events);
@@ -125,7 +127,12 @@ function UpcomingEvents(props)
         return <h1 className='upcomingEvents spartan'>Your Upcoming Events</h1>
     }
 
-    function Event(props) {      
+    function Event(props) {     
+		const startDay = props.startTime.substring(0, props.startTime.indexOf("T"));
+		const endDay = props.endTime.substring(0, props.endTime.indexOf("T"));
+
+		let hasEndDate = (startDay !== endDay);
+
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -137,10 +144,11 @@ function UpcomingEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
+								{((props.name.length >= 80) ? (props.name.substring(0, 80) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                               {new Date(props.date).toISOString().split("T")[0]}
+								<CalendarIcon className='cardCalendar'/>
+								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
                             </Typography>
                         </CardContent>
                     </Card>

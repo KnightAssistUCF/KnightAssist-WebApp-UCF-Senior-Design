@@ -371,6 +371,11 @@
 	width: 100px;
 }
 
+.cardCalendar{
+	width: 20px !important;
+	margin-right: 3px;
+}
+
 @media (max-width: 1500px) {
 	.event{
 		margin-right: 5%;
