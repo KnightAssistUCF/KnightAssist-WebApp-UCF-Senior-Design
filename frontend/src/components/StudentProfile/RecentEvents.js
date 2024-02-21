@@ -155,7 +155,7 @@ function RecentEvents(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {eventCards}
             </div>
         )
