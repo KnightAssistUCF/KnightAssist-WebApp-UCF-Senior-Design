@@ -5,9 +5,7 @@ const Event = require('../../models/events');
 const Organization = require('../../models/organization');
 
 function getIntervalStart() {
-    const now = new Date();
-    now.setMinutes(now.getMinutes() - 30);
-    return now;
+    return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 }
 
 router.get('/', async (req, res) => {
