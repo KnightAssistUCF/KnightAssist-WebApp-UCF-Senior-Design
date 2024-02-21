@@ -23,9 +23,9 @@
 }
 
 .rowCards{
-	overflow-y: scroll;
+	overflow-y: none !important;
     display: inline !important;
-    max-height: 750px;
+    max-height: 1000px;
 	float: right;
 }
 
