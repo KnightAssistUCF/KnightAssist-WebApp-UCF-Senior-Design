@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CircularProgress } from '@mui/material';
+import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
 import { CalendarIcon } from '@mui/x-date-pickers';
@@ -135,8 +135,26 @@ function SearchResults(props)
 			});
 	
 			let pic = JSON.parse(await response.text());
+			
+			url = buildPath(`api/organizationSearch?organizationID=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let org = JSON.parse(await response.text());
+			
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
 	
-			events.push(<Event name={event.name} pic={pic} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
+			let orgPic = JSON.parse(await response.text());
+
+			events.push(<Event name={event.name} pic={pic} orgName={(sessionStorage.getItem("role") === "volunteer") ? org.name : undefined} orgPic={(sessionStorage.getItem("role") === "volunteer") ? orgPic.url : undefined} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
         }       
 
 		events.sort(function(a,b){ 
@@ -189,9 +207,10 @@ function SearchResults(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-								{((props.name.length >= 80) ? (props.name.substring(0, 80) + "...") : props.name)}
+                                {((props.name.length >= 50) ? (props.name.substring(0, 50) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
+								{(sessionStorage.getItem("role") === "volunteer") ? <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid> : ""}
 								<CalendarIcon className='cardCalendar'/>
 								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
                             </Typography>

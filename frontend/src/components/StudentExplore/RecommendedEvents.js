@@ -4,9 +4,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CircularProgress } from '@mui/material';
+import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
+import { CalendarIcon } from '@mui/x-date-pickers';
 
 function RecommendedEvents(props)
 {
@@ -89,12 +90,22 @@ function RecommendedEvents(props)
 				let pic = JSON.parse(await response.text());
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
+
+				url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let orgPic = JSON.parse(await response.text());
+
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
             }
         }
 
         events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
+            return a.props.startTime.localeCompare(b.props.startTime)
         });
 
         setNumPages(Math.ceil(events.length / 4))
@@ -115,7 +126,7 @@ function RecommendedEvents(props)
             setPage(1);
             extraBack = -1;
         }
-
+		
         let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * 4, (page - 1 - extraBack) * 4 + 4)}</div>
         setEventCards(content);
     }
@@ -124,7 +135,12 @@ function RecommendedEvents(props)
         return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
     }
 
-    function Event(props) {      
+    function Event(props) {     
+		const startDay = props.startTime.substring(0, props.startTime.indexOf("T"));
+		const endDay = props.endTime.substring(0, props.endTime.indexOf("T"));
+
+		let hasEndDate = (startDay !== endDay);
+
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -136,10 +152,12 @@ function RecommendedEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.eventName}
+                                {((props.name.length >= 50) ? (props.name.substring(0, 50) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {props.orgName} - {new Date(props.date).toISOString().split("T")[0]}
+								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
+								<CalendarIcon className='cardCalendar'/>
+								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
                             </Typography>
                         </CardContent>
                     </Card>
