@@ -108,6 +108,10 @@
     bottom: 0px;
 }
 
+.centerAEB{
+	text-align: center !important;
+}
+
 .addEventBtn{
     background-color: #5f5395;
     border: none;
@@ -361,6 +365,10 @@
 	background-color: red;
     color: white;
     text-align: center !important;
+}
+
+.largerChip{
+	width: 100px;
 }
 
 @media (max-width: 1500px) {

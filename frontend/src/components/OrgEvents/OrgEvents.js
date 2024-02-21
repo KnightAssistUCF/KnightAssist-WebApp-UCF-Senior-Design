@@ -53,7 +53,7 @@ function OrgPortal()
 			<div className='eventTypes'>
 				<Chip
 					label="Upcoming"
-					className='tagChip'
+					className='largerChip tagChip'
 					onClick={() => changeType(0)}
 					sx={{backgroundColor: (selectedType === "Upcoming") ? "#5f5395" : "default", 
 						color: (selectedType === "Upcoming") ? 'white' : 'black',
@@ -63,7 +63,7 @@ function OrgPortal()
 				/>
 				<Chip
 					label="Past"
-					className='tagChip'
+					className='largerChip tagChip'
 					onClick={() => changeType(1)}
 					sx={{backgroundColor: (selectedType === "Past") ? "#5f5395" : "default", 
 						color: (selectedType === "Past") ? 'white' : 'black',
@@ -99,7 +99,9 @@ function OrgPortal()
 						</Grid>
 					</Grid>
 				</div>
-				{(!searchMode) ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button> : ""}
+				<Grid justifyContent="center" alignItems="center" style={{marginLeft: "40%", marginBottom: "3%"}}>
+					{(!searchMode) ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setOpenModal(true)}>Add New Event</button> : ""}
+				</Grid>
 				{(!searchMode) ? <EventTypeSwitch/> : ""}
 				<AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
 				<EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
