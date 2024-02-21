@@ -19,12 +19,14 @@
     margin-left: 8px;
     margin-top: 10px;
 	text-align: center;
+	background: none !important;
 }
 
-.searchCards{
+.rowCards{
 	overflow-y: scroll;
     display: inline !important;
     max-height: 750px;
+	float: right;
 }
 
 .pagination{
@@ -32,13 +34,14 @@
 }
 
 .cardWhite{
-    background-color: white;
+	background-color: black;
 	overflow-y: none;
     width: 100%;
 }
 
 .card-body{
     width: 99%;
+	background-color: none !important;
 }
 
 .titleHeader{
@@ -58,6 +61,7 @@
 }
 
 .event{
+	background: none !important;
     min-width: 275px;
     max-width: 275px;
     margin-right: 2%;
@@ -72,6 +76,8 @@
 
 .eventsCard{
     width: 100%;
+	background: none !important;
+	background-color: none !important;
 }
   
 .yourEvents{
@@ -80,7 +86,6 @@
     font-size: 20px;
     margin-bottom: 50px;
 	color: black !important;
-    float: left !important;
 }
 
 .spartan{

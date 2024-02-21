@@ -24,19 +24,19 @@ function UpcomingEvents(props)
 		const width = window.innerWidth;
 
 		if(width > 1500){
-			return 4;
+			return 12;
 		}else if(width > 1200){
-			return 3;
-		}else if(width > 925){
-			return 2;
+			return 9;
+		}else if(width > 1045){
+			return 6;
 		}else{
-			return 1;
+			return 3;
 		}
 	}
 
     function changePage(e, value, perPage = eventsPerPage){
         setPage(value);
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
 		setEventCards(content);
     }
 
@@ -117,7 +117,7 @@ function UpcomingEvents(props)
             extraBack = -1;
         }
 
-        let content = <div className="cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, (page - 1 - extraBack) * eventsPerPage + eventsPerPage)}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, (page - 1 - extraBack) * eventsPerPage + eventsPerPage)}</div>
         setEventCards(content);
     }
 
@@ -151,7 +151,7 @@ function UpcomingEvents(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {eventCards}
             </div>
         )
@@ -175,30 +175,29 @@ function UpcomingEvents(props)
 			const oldEventsPerPage = eventsPerPage;
 
 			if(width > 1500){
-				setEventsPerPage(4);
-				setNumPages(Math.ceil(events.length / 4))
-				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 4), 4);
-			}else if(width > 1200){
+				setEventsPerPage(12);
+				setNumPages(Math.ceil(events.length / 12))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 12), 12);
+			}else if(width > 1290){
+				setEventsPerPage(9);
+				setNumPages(Math.ceil(events.length / 9))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 9), 9);
+			}else if(width > 1045){
+				setEventsPerPage(6);
+				setNumPages(Math.ceil(events.length / 6))
+				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 6), 6);
+			}else{
 				setEventsPerPage(3);
 				setNumPages(Math.ceil(events.length / 3))
 				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 3), 3);
-			}else if(width > 925){
-				setEventsPerPage(2);
-				setNumPages(Math.ceil(events.length / 2))
-				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 2), 2);
-			}else{
-				setEventsPerPage(1);
-				setNumPages(events.length)
-				changePage(null, Math.ceil((((page - 1) * oldEventsPerPage) + 1) / 1), 1);
 			}
 		}
 
 		window.addEventListener("resize", adjustForSize);
-	},[initiateListener])
+	},[initiateListener]);
 
     return(
      <div className='upcomingEventsSpace centerCards'>
-        <EventHeader/>
 		{(eventCards)?
 		    <div className='centerCards'>
 				<Events/>

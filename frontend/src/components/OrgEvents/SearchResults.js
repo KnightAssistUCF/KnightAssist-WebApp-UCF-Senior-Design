@@ -36,7 +36,7 @@ function SearchResults(props)
 
     function changePage(e, value, perPage = eventsPerPage){
         setPage(value);
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), (perPage * (value - 1) + perPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), (perPage * (value - 1) + perPage))}</div>
 		setEventCards(content);
     }
 
@@ -104,7 +104,7 @@ function SearchResults(props)
             extraBack = -1;
         }
 
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
         setEventCards(content);   
 	}
 
@@ -163,7 +163,7 @@ function SearchResults(props)
             extraBack = -1;
         }
 
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
         setEventCards(content);
     }
 
@@ -229,7 +229,7 @@ function SearchResults(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {eventCards}
             </div>
         )
