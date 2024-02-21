@@ -32,10 +32,18 @@ router.get('/', async (req, res) => {
             startTime: { $gt: intervalStart } 
         }).lean();
 
+        // get the new events of the orgs that hte user has favorited
+        const favoriteOrgs = await Organization.find({ favorites: userId }, 'name events').lean();
+        const newEvents = favoriteOrgs.map(org => ({
+            organizationName: org.name,
+            events: org.events.filter(event => event.startTime > intervalStart)
+        }));
+
 
         const response = {
             orgUpdates: updates,
-            events: userEvents
+            registeredAndCritiques_events: userEvents,
+            newEvents: newEvents
         };
 
         res.json(response);
