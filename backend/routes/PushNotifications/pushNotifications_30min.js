@@ -1,46 +1,47 @@
 const express = require('express');
 const router = express.Router();
 
-const Event = require('../../models/events');
-const Organization = require('../../models/organization');
 
-function getIntervalStart() {
-    return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-}
+const Organization = require('../../models/organization');
+const Event = require('../../models/event');
+const UserStudent = require('../../models/userStudent');
 
 router.get('/', async (req, res) => {
     try {
-        const intervalStart = getIntervalStart();
-        const userId = req.query.userId; 
+        const userId = req.query.userId;
+        const intervalStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
-        // Find new events since the last interval
-        const newEvents = await Event.find({
-            createdAt: { $gt: intervalStart }
-        });
-
-        // Find new announcements from organizations the user is interested in
-        const userInterestedOrgs = await Organization.find({
-            'favorites': userId, 
+        
+        const favoriteOrgsUpdates = await Organization.find({
+            favorites: userId,
             'updates.date': { $gt: intervalStart }
-        }, {
-            'name': 1,
-            'updates': 1
+        }, 'name updates').lean();
+
+        // Extract updates from favorite organizations
+        const updates = favoriteOrgsUpdates.map(org => ({
+            organizationName: org.name,
+            updates: org.updates.filter(update => update.date > intervalStart)
+        }));
+
+        // Fetch events that the user has registered for or provided feedback on
+        const userEvents = await Event.find({
+            $or: [
+                { 'registeredVolunteers': userId },
+                { 'feedback.studentId': userId }
+            ],
+            startTime: { $gt: intervalStart } 
         }).lean();
 
-        const newAnnouncements = userInterestedOrgs.map(org => ({
-            organizationName: org.name,
-            announcements: org.updates.filter(update => update.date > intervalStart)
-        })).filter(org => org.announcements.length > 0);
 
-        const notifications = {
-            newEvents,
-            newAnnouncements
+        const response = {
+            orgUpdates: updates,
+            events: userEvents
         };
 
-        res.json(notifications);
+        res.json(response);
     } catch (error) {
-        console.error("Failed to fetch for new notifications", error);
-        res.status(500).send("An error occurred while fetching for new notifications.");
+        console.error("Error fetching updates and events", error);
+        res.status(500).send("Failed to fetch updates and events.");
     }
 });
 
