@@ -44,6 +44,13 @@ function StudentTopBar()
 		setAnchorElUser(null);
 	};
 
+	const [openNotifications, setOpenNotifications] = useState(null);
+
+	const openNotificationMenu = (event) => {
+	  setOpenNotifications(event.currentTarget);
+	};
+
+
 	async function getProfilePic(){
 		let id = sessionStorage.getItem("ID");
 
@@ -57,6 +64,10 @@ function StudentTopBar()
 		let pic = JSON.parse(await response.text());
 
 		setPicName(pic.url);
+	}
+
+	async function getNotifications(){
+		
 	}
 
 
@@ -76,6 +87,7 @@ function StudentTopBar()
 
 	useEffect(() => {
 		getProfilePic();
+		getNotifcations();
 	}, [])
 
     return(
@@ -88,13 +100,18 @@ function StudentTopBar()
 
           </Box>
           <Box sx={{ flexGrow: 0, mr: 3 }}>
-                <Tooltip title="Notifications">
                 <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-                    <Badge badgeContent={3} color="error">
-                    <NotificationsIcon />
+                    <Badge onClick={openNotificationMenu} badgeContent={3} color="error">
+                    	<NotificationsIcon/>
                     </Badge>
+					<Menu
+						open={Boolean(openNotifications)}
+						anchorEl={openNotifications}
+						onClose={() => setOpenNotifications(null)}
+					>
+						<MenuItem>Test</MenuItem>
+					</Menu>
                 </IconButton>
-                </Tooltip>
             </Box>
 
           <Box sx={{ flexGrow: 0 }}>
