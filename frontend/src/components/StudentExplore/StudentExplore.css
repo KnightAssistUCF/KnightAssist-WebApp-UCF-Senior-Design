@@ -70,3 +70,9 @@
 	width: 100px !important;
 	left: 30%;
 }
+
+.orgPicCard{
+	width: 20px !important;
+	height: 20px !important;
+	margin-right: 2px;
+}

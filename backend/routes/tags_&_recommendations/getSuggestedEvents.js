@@ -27,27 +27,27 @@ router.get('/', async (req, res) => {
                 // locate all events that match the user interest tags and that the user did not RSVP for
                 let allSuggestedEvents_withoutFilter = await eventModel.find({
                         eventTags: { $in: userTags },
-                        $and: [
-                                { 'attendees': { $ne: user._id } },
-                                { 'registeredVolunteers': { $ne: user._id } }
-                        ]
+                        registeredVolunteers: { $ne: user._id }
                 });
 
+				console.log("WITHOUT FILTER", allSuggestedEvents_withoutFilter)
                 // Group events by the organization that made the event and cap it to 4 suggested events 
                 // per organization just to have enough diversity
                 let eventsPerOrganization = {};
 
-                allSuggestedEvents_withoutFilter.forEach(event => {
-                        // if the sonsoring org has less than 4 events within our list
-                        if (eventsPerOrganization[event.sponsoringOrganization]) {
-                                if (eventsPerOrganization[event.sponsoringOrganization].length < 3) {
-                                        eventsPerOrganization[event.sponsoringOrganization].push(event);
-                                }
-                        } 
-                        // if the sponsiring org has no events within our list
-                        else {
-                                eventsPerOrganization[event.sponsoringOrganization] = [event];
-                        }
+				allSuggestedEvents_withFilter = allSuggestedEvents_withoutFilter.filter((event) => new Date().toISOString().localeCompare(event.endTime.toISOString()) < 0);
+
+                allSuggestedEvents_withFilter.forEach(event => {
+					// if the sonsoring org has less than 4 events within our list
+					if (eventsPerOrganization[event.sponsoringOrganization]) {
+						if (eventsPerOrganization[event.sponsoringOrganization].length < 3) {
+								eventsPerOrganization[event.sponsoringOrganization].push(event);
+						}
+					} 
+					// if the sponsiring org has no events within our list
+					else {
+							eventsPerOrganization[event.sponsoringOrganization] = [event];
+					}
                 });
 
                 let finalSuggestedListOfEvents = [].concat(...Object.values(eventsPerOrganization));

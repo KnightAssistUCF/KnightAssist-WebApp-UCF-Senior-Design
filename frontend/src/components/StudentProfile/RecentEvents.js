@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import { CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
+import { CalendarIcon } from '@mui/x-date-pickers';
 
 function RecentEvents(props)
 {
@@ -97,12 +98,12 @@ function RecentEvents(props)
 				let pic = JSON.parse(await response.text());
 
                 const orgName = await getOrgName(event.sponsoringOrganization);
-                events.push(<Event eventName={event.name} pic={pic} orgName={orgName} date={event.startTime} id={event._id}/>)  
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
             }
         }
 
         events.sort(function(a,b){ 
-            return a.props.date.localeCompare(b.props.date)
+            return a.props.startTime.localeCompare(b.props.startTime)
         });
 
         setNumPages(Math.ceil(events.length / eventsPerPage))
@@ -122,7 +123,12 @@ function RecentEvents(props)
         setEventCards(content);
     }
 
-    function Event(props) {      
+    function Event(props) {     
+		const startDay = props.startTime.substring(0, props.startTime.indexOf("T"));
+		const endDay = props.endTime.substring(0, props.endTime.indexOf("T"));
+
+		let hasEndDate = (startDay !== endDay);
+
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -134,10 +140,11 @@ function RecentEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.eventName}
+                                {((props.name.length >= 50) ? (props.name.substring(0, 50) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {props.orgName} - {new Date(props.date).toISOString().split("T")[0]}
+								<CalendarIcon className='cardCalendar'/>
+								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -148,7 +155,7 @@ function RecentEvents(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {eventCards}
             </div>
         )
