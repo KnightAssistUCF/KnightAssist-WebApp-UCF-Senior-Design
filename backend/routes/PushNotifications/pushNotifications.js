@@ -12,18 +12,31 @@ router.get('/', async (req, res) => {
 
         const user = await UserStudent.findById(userId);
 
+		// Ensure that an existing not isn't pushed
+		const messageSet = new Set();
+
+		for(let noto of user.notifications)
+			messageSet.add(noto.message);
+
         const favoriteOrgsUpdates = await Organization.find({
             favorites: userId,
             'updates.date': { $gt: intervalStart }
         }, 'name updates').lean();
 
         // Create notifications for updates from favorite organizations
-        let newNotifications = favoriteOrgsUpdates.map(org => ({
-            message: `New update from ${org.name}: ${org.updates[0].title}`,
-            type_is: "orgAnnouncement",
-            createdAt: `${org.updates[0].date}`,
-            read: false
-        }));
+
+		let newNotifications = [];
+
+		for(let org of favoriteOrgsUpdates){
+			for(let update of org.updates){
+				newNotifications.push({
+					message: `New update from ${org.name}: ${update.title}`,
+					type_is: "orgAnnouncement",
+					createdAt: `${update.date}`,
+					read: false
+				})
+			}
+		}
 
         const favoriteOrgs = await Organization.find({ favorites: userId });
 
@@ -32,16 +45,18 @@ router.get('/', async (req, res) => {
                 sponsoringOrganization: org._id,
                 createdAt: { $gt: intervalStart }
             });
-
-            if (events.length > 0) {
+			
+			for(let event of events){
                 newNotifications.push({
-                    message: `New event from ${org.name}`,
+                    message: `New event from ${org.name}: ${event.name}`,
                     type_is: "event",
                     createdAt: new Date(), // just for simplicity
                     read: false
                 });
-            }
+			}
         }
+
+		newNotifications = newNotifications.filter((noto) => (!messageSet.has(noto.message)));
 
         // store new notifications to the user
         if (newNotifications.length > 0) {

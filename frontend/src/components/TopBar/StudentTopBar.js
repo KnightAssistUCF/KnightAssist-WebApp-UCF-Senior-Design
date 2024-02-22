@@ -26,6 +26,8 @@ function StudentTopBar()
 
 	const [picName, setPicName] = useState(null);
 
+	const [notifications, setNotifcations] = useState(undefined);
+
 	const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
@@ -67,7 +69,21 @@ function StudentTopBar()
 	}
 
 	async function getNotifications(){
-		
+		let id = sessionStorage.getItem("ID");
+
+		const url = buildPath(`api/pushNotifications?userId=${id}`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let res = JSON.parse(await response.text());
+
+		if(res && res.notifications){
+			// Only show notifications from the past week
+			setNotifcations(res.notifications.new.map((noto) => <MenuItem>{noto.message}</MenuItem>))
+		}
 	}
 
 
@@ -87,7 +103,7 @@ function StudentTopBar()
 
 	useEffect(() => {
 		getProfilePic();
-		getNotifcations();
+		getNotifications();
 	}, [])
 
     return(
@@ -109,7 +125,7 @@ function StudentTopBar()
 						anchorEl={openNotifications}
 						onClose={() => setOpenNotifications(null)}
 					>
-						<MenuItem>Test</MenuItem>
+						{notifications}
 					</Menu>
                 </IconButton>
             </Box>
