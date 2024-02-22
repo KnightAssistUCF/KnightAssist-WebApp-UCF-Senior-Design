@@ -304,6 +304,12 @@ app.use('/api/mapsAPI', mapsAPI);
 const pushNotifications = require('./backend/routes/PushNotifications/pushNotifications');
 app.use('/api/pushNotifications', pushNotifications);
 
+const readStatus = require('./backend/routes/PushNotifications/readStatus');
+app.use('/api/readStatus', readStatus);
+
+const markNotificationAsRead = require('./backend/routes/PushNotifications/markAsRead');
+app.use('/api/markNotificationAsRead', markNotificationAsRead);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
