@@ -20,6 +20,7 @@ router.get('/', async (req, res) => {
         // Create notifications for updates from favorite organizations
         let newNotifications = favoriteOrgsUpdates.map(org => ({
             message: `New update from ${org.name}: ${org.updates[0].title}`,
+            type_is: "orgAnnouncement",
             createdAt: `${org.updates[0].date}`,
             read: false
         }));
@@ -35,6 +36,7 @@ router.get('/', async (req, res) => {
             if (events.length > 0) {
                 newNotifications.push({
                     message: `New event from ${org.name}`,
+                    type_is: "event",
                     createdAt: new Date(), // just for simplicity
                     read: false
                 });
