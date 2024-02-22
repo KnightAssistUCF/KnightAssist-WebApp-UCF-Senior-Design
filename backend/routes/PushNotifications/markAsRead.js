@@ -5,7 +5,7 @@ const Event = require('../../models/events');
 const UserStudent = require('../../models/userStudent');
 
 router.post('/', async (req, res) => {
-    const { userId, message } = req.query;
+    const { userId, message } = req.body;
 
     try {
         const user = await UserStudent.findOne({ _id: userId, 'notifications.message': message });
