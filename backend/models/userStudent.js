@@ -106,6 +106,7 @@ const userStudentSchema = new mongoose.Schema({
     },
     notifications: [{
         message: String,
+        type_is: String,
         createdAt: {
             type: Date,
             default: Date.now
