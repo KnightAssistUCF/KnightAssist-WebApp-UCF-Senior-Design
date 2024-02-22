@@ -21,7 +21,7 @@ router.get('/', async (req, res) => {
         const favoriteOrgsUpdates = await Organization.find({
             favorites: userId,
             'updates.date': { $gt: intervalStart }
-        }, 'name updates').lean();
+        }, 'name updates createdAt').lean();
 
         // Create notifications for updates from favorite organizations
 
@@ -50,7 +50,7 @@ router.get('/', async (req, res) => {
                 newNotifications.push({
                     message: `New event from ${org.name}: ${event.name}`,
                     type_is: "event",
-                    createdAt: new Date(), // just for simplicity
+                    createdAt: org.createdAt, // just for simplicity
                     read: false
                 });
 			}
