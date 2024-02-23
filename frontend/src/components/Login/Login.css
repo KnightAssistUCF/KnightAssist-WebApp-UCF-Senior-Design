@@ -53,6 +53,7 @@
 
 .loginBox{
     margin-top: 30px;
+    background-color: red;
 }
 
 .loginPhoto{
@@ -63,7 +64,6 @@
 .forgotPasswordCard{
 	height: 75vh;
     width: 75vh;
-	background-color: #F5D6BA !important;
 }
 
 .forgotPWDName{
