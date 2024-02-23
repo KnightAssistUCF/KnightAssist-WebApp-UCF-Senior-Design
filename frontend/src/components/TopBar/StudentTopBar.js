@@ -27,6 +27,7 @@ function StudentTopBar()
 	const [picName, setPicName] = useState(null);
 
 	const [notifications, setNotifcations] = useState(undefined);
+	const [numUnreads, setNumUnreads] = useState(0);
 
 	const navigate = useNavigate();
 
@@ -68,6 +69,42 @@ function StudentTopBar()
 		setPicName(pic.url);
 	}
 
+	async function clickNoto(noto){
+		const json = {
+			userId: sessionStorage.getItem("ID"),
+			message: noto.message
+		};
+	
+		const url = buildPath(`api/markNotificationAsRead`);
+	
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let res = await response.text();
+			
+			console.log(res);
+
+			if(noto.type_is === "event"){
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/explore"){
+					window.location.reload();
+				}else{
+					window.location.href = "#/explore";
+				}
+			}else{ // Is an announcement
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentannouncements"){
+					window.location.reload();
+				}else{
+					window.location.href = "#/studentannouncements";
+				}			}
+		}catch(e){
+			console.log(e);
+		}
+	}
+
 	async function getNotifications(){
 		let id = sessionStorage.getItem("ID");
 
@@ -80,10 +117,19 @@ function StudentTopBar()
 
 		let res = JSON.parse(await response.text());
 
+		console.log(res);
+
 		if(res && res.notifications){
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto) => <MenuItem>{noto.message}</MenuItem>))
+			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{noto.message}</MenuItem>))
 		}
+
+		let unread = 0;
+		for(let noto of res.notifications.new)
+			if(!noto.read)
+				unread++;
+
+		setNumUnreads(unread);
 	}
 
 
@@ -117,7 +163,7 @@ function StudentTopBar()
           </Box>
           <Box sx={{ flexGrow: 0, mr: 3 }}>
                 <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-                    <Badge onClick={openNotificationMenu} badgeContent={3} color="error">
+                    <Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
                     	<NotificationsIcon/>
                     </Badge>
 					<Menu

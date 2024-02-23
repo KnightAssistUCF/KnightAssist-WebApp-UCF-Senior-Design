@@ -69,8 +69,8 @@ router.get('/', async (req, res) => {
         const updatedUser = await UserStudent.findById(userId);
 
         // split notifications into new and old based on the read status and createdAt
-        const segregatedNotifications = updatedUser.notifications.filter(notification => !notification.read && notification.createdAt > intervalStart);
-        const oldNotifications = updatedUser.notifications.filter(notification => notification.read || notification.createdAt <= intervalStart);
+        const segregatedNotifications = updatedUser.notifications.filter(notification =>notification.createdAt > intervalStart);
+        const oldNotifications = updatedUser.notifications.filter(notification =>  notification.createdAt <= intervalStart);
 
         const response = {
             notifications: {

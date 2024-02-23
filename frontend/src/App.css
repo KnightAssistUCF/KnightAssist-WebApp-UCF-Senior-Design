@@ -164,3 +164,12 @@
     /* background-color: rgb(53, 78, 98); */
     color: black;
   }
+
+  .unreadCircle{
+	border-radius: 100%;
+	width: 5px; 
+	height: 5px;
+	background-color: red;
+	margin-right: 4px;
+	float: left;
+  }
