@@ -107,6 +107,7 @@ const userStudentSchema = new mongoose.Schema({
     notifications: [{
         message: String,
         type_is: String,
+		eventId: String,
 		orgId: String,
 		orgName: String,
         createdAt: {

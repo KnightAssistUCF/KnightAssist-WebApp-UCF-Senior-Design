@@ -89,12 +89,12 @@ function StudentTopBar()
 			console.log(res);
 
 			if(noto.type_is === "event"){
-				sessionStorage.setItem("viewingPageID", noto.orgId);
+				sessionStorage.setItem("notoEventId", noto.eventId);
 				// Take them to the organizations page
-				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/orgprofile"){
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/explore"){
 					window.location.reload();
 				}else{
-					window.location.href = "#/orgprofile";
+					window.location.href = "#/explore";
 				}
 			}else{ // Is an announcement
 				sessionStorage.setItem("updateSearchTerm", noto.orgName);

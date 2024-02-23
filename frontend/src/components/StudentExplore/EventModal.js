@@ -274,8 +274,13 @@ function EventModal(props)
     }
 
     useEffect(()=>{
-		if(props.eventID !== undefined)
+		if(props.eventID !== undefined){
         	setInfo();
+			if("notoEventId" in sessionStorage){
+				props.setOpen(true);
+				sessionStorage.removeItem("notoEventId");
+			}
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.eventID])
 
