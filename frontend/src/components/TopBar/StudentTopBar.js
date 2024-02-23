@@ -26,6 +26,9 @@ function StudentTopBar()
 
 	const [picName, setPicName] = useState(null);
 
+	const [notifications, setNotifcations] = useState(undefined);
+	const [numUnreads, setNumUnreads] = useState(0);
+
 	const navigate = useNavigate();
 
     const handleOpenNavMenu = (event) => {
@@ -44,6 +47,13 @@ function StudentTopBar()
 		setAnchorElUser(null);
 	};
 
+	const [openNotifications, setOpenNotifications] = useState(null);
+
+	const openNotificationMenu = (event) => {
+	  setOpenNotifications(event.currentTarget);
+	};
+
+
 	async function getProfilePic(){
 		let id = sessionStorage.getItem("ID");
 
@@ -57,6 +67,73 @@ function StudentTopBar()
 		let pic = JSON.parse(await response.text());
 
 		setPicName(pic.url);
+	}
+
+	async function clickNoto(noto){
+		const json = {
+			userId: sessionStorage.getItem("ID"),
+			message: noto.message
+		};
+	
+		const url = buildPath(`api/markNotificationAsRead`);
+	
+		try {
+			const response = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json"},
+			});
+		
+			let res = await response.text();
+			
+			console.log(res);
+
+			if(noto.type_is === "event"){
+				sessionStorage.setItem("notoEventId", noto.eventId);
+				// Take them to the organizations page
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/explore"){
+					window.location.reload();
+				}else{
+					window.location.href = "#/explore";
+				}
+			}else{ // Is an announcement
+				sessionStorage.setItem("updateSearchTerm", noto.orgName);
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentannouncements"){
+					window.location.reload();
+				}else{
+					window.location.href = "#/studentannouncements";
+				}			
+			}
+		}catch(e){
+			console.log(e);
+		}
+	}
+
+	async function getNotifications(){
+		let id = sessionStorage.getItem("ID");
+
+		const url = buildPath(`api/pushNotifications?userId=${id}`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let res = JSON.parse(await response.text());
+
+		console.log(res);
+
+		if(res && res.notifications){
+			// Only show notifications from the past week
+			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{(noto.message.length > 50) ? (noto.message.substring(0, 51) + "...") : noto.message}</MenuItem>))
+		}
+
+		let unread = 0;
+		for(let noto of res.notifications.new)
+			if(!noto.read)
+				unread++;
+
+		setNumUnreads(unread);
 	}
 
 
@@ -76,6 +153,7 @@ function StudentTopBar()
 
 	useEffect(() => {
 		getProfilePic();
+		getNotifications();
 	}, [])
 
     return(
@@ -88,13 +166,18 @@ function StudentTopBar()
 
           </Box>
           <Box sx={{ flexGrow: 0, mr: 3 }}>
-                <Tooltip title="Notifications">
                 <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-                    <Badge badgeContent={3} color="error">
-                    <NotificationsIcon />
+                    <Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
+                    	<NotificationsIcon/>
                     </Badge>
+					<Menu
+						open={Boolean(openNotifications)}
+						anchorEl={openNotifications}
+						onClose={() => setOpenNotifications(null)}
+					>
+						{notifications}
+					</Menu>
                 </IconButton>
-                </Tooltip>
             </Box>
 
           <Box sx={{ flexGrow: 0 }}>

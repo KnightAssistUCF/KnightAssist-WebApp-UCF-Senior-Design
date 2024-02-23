@@ -104,6 +104,21 @@ const userStudentSchema = new mongoose.Schema({
         imageName: String,
 		default: ""
     },
+    notifications: [{
+        message: String,
+        type_is: String,
+		eventId: String,
+		orgId: String,
+		orgName: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        },
+        read: {
+            type: Boolean,
+            default: false
+        }
+    }],
     __v: {
         type: String,
         required: true,

@@ -28,11 +28,10 @@ function NewAnn() {
 
 
   var url2 = buildPath(`api/loadAllOrganizations`);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(("updateSearchTerm" in sessionStorage) ? sessionStorage.getItem("updateSearchTerm") : "");
 
   const fetchFavoritedUpdates = async () => {
     //sessionStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
-    console.log(sessionStorage.getItem("ID"));
     const authToken = sessionStorage.getItem("token");
     url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
     try {
@@ -60,8 +59,9 @@ function NewAnn() {
       }
       console.log(favUpdates);
       
+	  // Later updates should be shown first
       favUpdates = favUpdates.sort((a, b) => {
-        return new Date(a.date) - new Date(b.date);
+        return new Date(b.date) - new Date(a.date);
       });
       console.log(favUpdates);
       setFinalFavUpdates(favUpdates);
@@ -179,7 +179,7 @@ function NewAnn() {
           ...update,
           name: update.name,
         }));
-        setSearchAnnouncement(filteredAnnouncements.reverse());
+        setSearchAnnouncement(filteredAnnouncements);
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
           a.title && a.title.toLowerCase().includes(term)
@@ -193,10 +193,6 @@ function NewAnn() {
 
     
   };
-  
-  
-  
-  
   
   
 
@@ -215,8 +211,13 @@ function NewAnn() {
   }, []);
 
   useEffect(() => {
-	if(callInitialFav === -1)
+	if(callInitialFav === -1){
 		filterAnnouncements("favorited");
+		if("updateSearchTerm" in sessionStorage){
+			searchAnnouncements(sessionStorage.getItem("updateSearchTerm"));
+			sessionStorage.removeItem("updateSearchTerm");
+		}
+	}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callInitialFav])
 
