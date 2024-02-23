@@ -89,17 +89,21 @@ function StudentTopBar()
 			console.log(res);
 
 			if(noto.type_is === "event"){
-				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/explore"){
+				sessionStorage.setItem("viewingPageID", noto.orgId);
+				// Take them to the organizations page
+				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/orgprofile"){
 					window.location.reload();
 				}else{
-					window.location.href = "#/explore";
+					window.location.href = "#/orgprofile";
 				}
 			}else{ // Is an announcement
+				sessionStorage.setItem("updateSearchTerm", noto.orgName);
 				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentannouncements"){
 					window.location.reload();
 				}else{
 					window.location.href = "#/studentannouncements";
-				}			}
+				}			
+			}
 		}catch(e){
 			console.log(e);
 		}
@@ -121,7 +125,7 @@ function StudentTopBar()
 
 		if(res && res.notifications){
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{noto.message}</MenuItem>))
+			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{(noto.message.length > 50) ? (noto.message.substring(0, 51) + "...") : noto.message}</MenuItem>))
 		}
 
 		let unread = 0;

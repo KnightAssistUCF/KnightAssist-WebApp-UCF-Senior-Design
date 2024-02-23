@@ -33,6 +33,8 @@ router.get('/', async (req, res) => {
 					message: `New update from ${org.name}: ${update.title}`,
 					type_is: "orgAnnouncement",
 					createdAt: `${update.date}`,
+					orgId: "",
+					orgName: org.name,
 					read: false
 				})
 			}
@@ -50,7 +52,9 @@ router.get('/', async (req, res) => {
                 newNotifications.push({
                     message: `New event from ${org.name}: ${event.name}`,
                     type_is: "event",
-                    createdAt: event.createdAt, // just for simplicity
+                    createdAt: event.createdAt, 
+					orgId: org._id,
+					orgName: org.name,
                     read: false
                 });
 			}
