@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField, Button, Alert, Snackbar, Dialog, IconButton } from '@mui/material';
+import { TextField, Button, Alert, Snackbar, Dialog, IconButton, Avatar } from '@mui/material';
 import { buildPath } from '../../../../path.js';
 import AdminHeader from '../../AdminHeader.js';
 import '../StudentDetails/StudentDetails.css';
@@ -53,6 +53,7 @@ function OrganizationDetails({ organizationID }) {
   const [pastEvents, setPastEvents] = useState([]);
   const [futureEvents, setFutureEvents] = useState([]);
   const [BGFile, setBGFile] = useState(null);
+  const [PFPFile, setPFPFile] = useState(null);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -105,19 +106,41 @@ function OrganizationDetails({ organizationID }) {
       // fetchEventHistory(res._id);
 
       // get profile pic
-      url = buildPath(`api/retrieveImage?entityType=organization&id=${organizationID}&profilePicOrBackGround=1`);
+      url = buildPath(`api/retrieveImage?typeOfImage=4&id=${organizationID}`);
+      // pfp retrieveImage?entityType=organization&id=${organizationID}&profilePicOrBackGround=4
 
       try {
         response = await fetch(url, {
           method: "GET",
           headers: {"Content-Type": "application/json"},
         });
-        console.log(response);
+
     
-        let background = await response.blob();
-    
-        setBGFile(background);
+        let background = JSON.parse(await response.text());
         console.log(background);
+        console.log(background.url);
+    
+        setBGFile(background.url);
+        console.log(background);
+        // pfp
+        url = buildPath(`api/retrieveImage?entityType=organization&id=${organizationID}&profilePicOrBackGround=4`);
+  
+        try {
+          response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+          });
+  
+      
+          let pfp = JSON.parse(await response.text());
+          console.log(pfp);
+          console.log(pfp.url);
+      
+          setPFPFile(pfp.url);
+          console.log(pfp);
+        } catch(e) {
+          console.log("failed to get banner");
+        }
       } catch(e) {
         console.log("failed to get banner");
       }
@@ -418,10 +441,10 @@ function eventIsUpcoming(endTime) {
 }
 
 const backgroundImageStyle = BGFile
-  ? { backgroundSize: 'cover', backgroundPosition: 'center' }
+  ? { backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '10px', }
   : {};
 
-const backgroundImageURL = BGFile ? URL.createObjectURL(BGFile) : '';
+const backgroundImageURL = BGFile;
 
 
   
@@ -439,13 +462,28 @@ const backgroundImageURL = BGFile ? URL.createObjectURL(BGFile) : '';
           </Link>
           <Typography color='text.primary'>{name}</Typography>
         </Breadcrumbs>
-        <div style={{ ...backgroundImageStyle, backgroundImage: `url(${backgroundImageURL})`, width: '100%', height: '200px', position: 'relative' }}>
-  {BGFile && <img src={backgroundImageURL} alt="Background" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0 }} />}
-</div>
+        <div className='pictures'>
+          <div style={{ ...backgroundImageStyle, backgroundImage: `url(${backgroundImageURL})`, width: '100%', height: '250px', position: 'relative' }}>
+            {BGFile && <img src={backgroundImageURL} alt="Background" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0, borderRadius: '10px', }} />}
+          </div>
+          <Avatar
+            alt="Profile Picture"
+            className="profilePicture"
+            src={PFPFile}
+            sx={{
+              width: '150px', // Set the desired width
+              height: '150px', // Set the desired height
+              // transform: 'translate(-50%, -50%)',
+              // zIndex: 2, /* Ensure the profile picture is above the background */
+              // border: '2px solid #fff',
+            }}
+          />
+        </div>
+
 
 
         <Tabs  onTabChange={handleTabChange}/>
-        <div className='studentDetailsFields' style={{ marginTop: '10px' }} >
+        <div className='studentDetailsFields' style={{ marginTop: '3px' }} >
         {tabSelected === 'About' && (
           <>
           <div className='heading'>Bio</div>
