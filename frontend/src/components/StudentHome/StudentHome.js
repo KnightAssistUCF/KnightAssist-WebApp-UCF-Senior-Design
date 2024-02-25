@@ -18,6 +18,11 @@ import StudentHomeTabs from './StudentHomeTabs.js';
 
 function StudentHome()
 {
+  const [open, setModalOpen] = useState(false);
+  const [tabSelected, setTabSelected] = useState('Events');
+  const [goal, setGoal] = useState(0);
+  const [totalHours, setTotalHours] = useState(0);
+  const [favOrgs, setFavOrgs] = useState([]);
     
     useEffect(() => {
 	  console.log(sessionStorage)
@@ -25,12 +30,10 @@ function StudentHome()
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const [open, setModalOpen] = useState(false);
-    const [tabSelected, setTabSelected] = useState('Events');
-
     async function getStudentInfo() {
       const email = '';
-      const url = buildPath(`api/searchUser?email=${email}`);
+      console.log(sessionStorage.getItem("ID"));
+      const url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
     
       try {
         const response = await fetch(url, {
@@ -40,6 +43,9 @@ function StudentHome()
         let res = JSON.parse(await response.text());
         console.log(res);
         console.log(res.firstName);
+        setGoal(res.semesterVolunteerHourGoal);
+        setTotalHours(res.totalVolunteerHours);
+        setFavOrgs(res.favoritedOrganizations);
     
         
       } catch (error) {
@@ -47,18 +53,6 @@ function StudentHome()
       }
     }
     
-    const [items, setItems] = useState([
-      { id: 1, primary: '10-20-23 Arboretum', secondary: 'sldkfj sdlfjsdlfj sdlfjsdlfjd skfjsgfs sdf dskfhkd kdf fdgdfgjhkdfh sdfd sfdf...' },
-      { id: 2, primary: '10-20-23 Knight Hacks', secondary: 'sldkfjsd lfjsdlfjsdlfjsdl fjdskfj sgfsdf asdfsdf sfdsfsdfsfd...' },
-      { id: 3, primary: '10-20-23 Another Event', secondary: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf fdsfsdfl jdskfjsgfsdfsdf sfd...' },
-      { id: 4, primary: '10-20-23 Another Event', secondary: 'sldkfj sdlfj sdlfjsd sfdsdf fsdf jdskfjsgfsdfsdf sfd...' },
-    ]);
-    const limitedItems = items.slice(0, 3);
-  
-    const handleItemClose = (itemId) => {
-      const updatedItems = items.filter((item) => item.id !== itemId);
-      setItems(updatedItems);
-    };
 
     const handleTabChange = (newValue) => {
       console.log(newValue);
@@ -81,7 +75,7 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Goal</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>Card Title</Typography>
+                    <Typography variant="h6" style={{ textAlign: 'left' }}>{goal}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -94,7 +88,7 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Total hours</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>Card Title</Typography>
+                    <Typography variant="h6" style={{ textAlign: 'left' }}>{totalHours}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -120,13 +114,23 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Organizations</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>Card Title</Typography>
+                    <Typography variant="h6" style={{ textAlign: 'left' }}>{favOrgs.length}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
             </Card>
           </div>
           <StudentHomeTabs onTabChange={handleTabChange}/>
+          {tabSelected === 'Events' && (
+            <>
+              Hello
+            </>
+          )}
+          {tabSelected === 'FavoritedOrgs' && (
+            <>
+              sd
+            </>
+          )}
 
 
         <Dialog open={open} onClose={() => setModalOpen(false)}>
