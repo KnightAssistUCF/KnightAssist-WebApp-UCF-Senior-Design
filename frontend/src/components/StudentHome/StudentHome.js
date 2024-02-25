@@ -15,6 +15,7 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import TimelapseIcon from '@mui/icons-material/Timelapse';
 import StudentHomeTabs from './StudentHomeTabs.js';
+import Calendar from './Calendar.js';
 
 function StudentHome()
 {
@@ -123,7 +124,7 @@ function StudentHome()
           <StudentHomeTabs onTabChange={handleTabChange}/>
           {tabSelected === 'Events' && (
             <>
-              Hello
+              <Calendar/>
             </>
           )}
           {tabSelected === 'FavoritedOrgs' && (

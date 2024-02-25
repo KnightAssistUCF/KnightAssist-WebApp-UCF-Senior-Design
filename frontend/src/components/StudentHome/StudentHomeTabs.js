@@ -8,7 +8,7 @@ function StudentHomeTabs( {onTabChange} ) {
     const [value, setValue] = useState("Events");
 
     const AntTabs = styled(Tabs)({
-    //   borderBottom: '1px solid #e8e8e8',
+      // borderBottom: '1px solid #e8e8e8',
       '& .MuiTabs-indicator': {
         backgroundColor: '#00522B',
       },
@@ -42,7 +42,7 @@ function StudentHomeTabs( {onTabChange} ) {
       },
       '&.Mui-selected': {
         color: '#00522B',
-        fontWeight: theme.typography.fontWeightMedium,
+        fontWeight: theme.typography.fontWeightRegular,
       },
       '&.Mui-focusVisible': {
         backgroundColor: '#d1eaff',
