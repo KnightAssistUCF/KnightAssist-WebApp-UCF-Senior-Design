@@ -10,6 +10,11 @@ import { buildPath } from '../../path';
 import CircularProgress from '@mui/joy/CircularProgress';
 import ListItem from '@mui/material/ListItem';
 import StudentTopBar from '../TopBar/StudentTopBar';
+import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import TimelapseIcon from '@mui/icons-material/Timelapse';
+import StudentHomeTabs from './StudentHomeTabs.js';
 
 function StudentHome()
 {
@@ -21,6 +26,7 @@ function StudentHome()
     }, []);
 
     const [open, setModalOpen] = useState(false);
+    const [tabSelected, setTabSelected] = useState('Events');
 
     async function getStudentInfo() {
       const email = '';
@@ -54,21 +60,24 @@ function StudentHome()
       setItems(updatedItems);
     };
 
+    const handleTabChange = (newValue) => {
+      console.log(newValue);
+      setTabSelected(newValue);
+    };
+
    return(
     
       <div className='spartan' id='homePage'>
         <StudentHeader/>
         <StudentTopBar/>
         <div className="studHomePage">
-          <div class="StudentHomePage-title">Welcome, First Last</div>
-          <div class="StudentHomePage-subtitle">Fall 2023</div>
           
           <div className='card-row'>
           <Card variant='outlined' className='home-card'>
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
-                    <Avatar aria-label="icon">I</Avatar>
+                    <Avatar aria-label="icon" style={{ backgroundColor: '#A4C5D0' }}><TimelapseIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Goal</Typography>
@@ -81,7 +90,7 @@ function StudentHome()
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
-                    <Avatar aria-label="icon"><CloseIcon/></Avatar>
+                    <Avatar aria-label="icon" style={{ backgroundColor: '#A4D0AE' }}><TaskAltIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Total hours</Typography>
@@ -94,7 +103,7 @@ function StudentHome()
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
-                    <Avatar aria-label="icon">I</Avatar>
+                    <Avatar aria-label="icon" style={{ backgroundColor: '#B99EE6' }}><CalendarTodayIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Events</Typography>
@@ -107,7 +116,7 @@ function StudentHome()
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
-                    <Avatar aria-label="icon">I</Avatar>
+                    <Avatar aria-label="icon" style={{ backgroundColor: '#F9AFAF' }}><FavoriteBorderIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Organizations</Typography>
@@ -117,7 +126,7 @@ function StudentHome()
               </CardContent>
             </Card>
           </div>
-        
+          <StudentHomeTabs onTabChange={handleTabChange}/>
 
 
         <Dialog open={open} onClose={() => setModalOpen(false)}>
