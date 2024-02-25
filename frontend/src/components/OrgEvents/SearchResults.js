@@ -4,9 +4,10 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CircularProgress } from '@mui/material';
+import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import './OrgEvents';
+import { CalendarIcon } from '@mui/x-date-pickers';
 
 function SearchResults(props)
 {
@@ -36,7 +37,7 @@ function SearchResults(props)
 
     function changePage(e, value, perPage = eventsPerPage){
         setPage(value);
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), (perPage * (value - 1) + perPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice(perPage * (value - 1), (perPage * (value - 1) + perPage))}</div>
 		setEventCards(content);
     }
 
@@ -104,7 +105,7 @@ function SearchResults(props)
             extraBack = -1;
         }
 
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
         setEventCards(content);   
 	}
 
@@ -134,12 +135,30 @@ function SearchResults(props)
 			});
 	
 			let pic = JSON.parse(await response.text());
+			
+			url = buildPath(`api/organizationSearch?organizationID=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let org = JSON.parse(await response.text());
+			
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
 	
-			events.push(<Event name={event.name} pic={pic} date={event.startTime} id={event._id}/>)
+			let orgPic = JSON.parse(await response.text());
+
+			events.push(<Event name={event.name} pic={pic} orgName={(sessionStorage.getItem("role") === "volunteer") ? org.name : undefined} orgPic={(sessionStorage.getItem("role") === "volunteer") ? orgPic.url : undefined} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
         }       
 
 		events.sort(function(a,b){ 
-            return b.props.date.localeCompare(a.props.date)
+            return b.props.startTime.localeCompare(a.props.startTime)
         });
 
 		console.log(events);
@@ -163,15 +182,20 @@ function SearchResults(props)
             extraBack = -1;
         }
 
-        let content = <div className="searchCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
+        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
         setEventCards(content);
     }
 
     function EventHeader(){
         return <h1 className='upcomingEvents spartan'>Search Results</h1>
     }
+	
+    function Event(props) {     
+		const startDay = props.startTime.substring(0, props.startTime.indexOf("T"));
+		const endDay = props.endTime.substring(0, props.endTime.indexOf("T"));
 
-    function Event(props) {      
+		let hasEndDate = (startDay !== endDay);
+
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
@@ -183,10 +207,12 @@ function SearchResults(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {props.name}
+                                {((props.name.length >= 50) ? (props.name.substring(0, 50) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
-                                {new Date(props.date).toISOString().split("T")[0]}
+								{(sessionStorage.getItem("role") === "volunteer") ? <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid> : ""}
+								<CalendarIcon className='cardCalendar'/>
+								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
                             </Typography>
                         </CardContent>
                     </Card>
@@ -229,7 +255,7 @@ function SearchResults(props)
 
     function Events(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {eventCards}
             </div>
         )

@@ -1,11 +1,40 @@
 import {useState, useEffect} from 'react';
 import {Typography, Dialog, DialogTitle, DialogActions, Box, CardMedia, CardContent, Grid, Button, Card} from '@mui/material';
 import { buildPath } from '../../path';
+import QRCodeModal from '../OrgEvents/QRCodeModal';
 
 function NextEvent({upcomingEvents})
 {
     const [modalOpen, setModalOpen] = useState(false);
+	const [eventID, setEventID] = useState(undefined);
     const [eventPic, setEventPic] = useState(null);
+	const [openQRModal, setOpenQRModal] = useState(false);
+	const [checkType, setCheckType] = useState(undefined);
+
+	const [generateCheckIn, setGenerateCheckIn] = useState(false);
+	const [generateCheckOut, setGenerateCheckOut] = useState(false);
+
+	// Can show the check in button if the event has not
+	// ended and it is the same day or the event has started
+	function canShowCheckIn(start, end){
+		let startDay = String(start);
+        startDay = startDay.substring(0, startDay.indexOf("T"));
+
+        let today = new Date().toISOString();
+        today = today.substring(0, today.indexOf("T"));
+		
+		// It is before the day the event starts
+		if(startDay.localeCompare(today) > 0) return false;
+		
+		// It is before the event ends
+		return new Date().toISOString().localeCompare(end) < 0;
+	}
+
+	// During the period of the event
+	function canShowCheckOut(start, end){
+		const date = new Date().toISOString();
+		return date.localeCompare(start) > 0 && date.localeCompare(end) < 0;
+	}
 
     const handleClose = () => {
       setModalOpen(false);
@@ -66,9 +95,16 @@ function NextEvent({upcomingEvents})
     
   
     useEffect(() => {
-      getUpcomingEventPic();
+    	getUpcomingEventPic();
     }, []);
-    
+
+	useEffect(() => {
+		if(upcomingEvents){
+			setEventID(upcomingEvents._id);
+			setGenerateCheckIn(canShowCheckIn(upcomingEvents.startTime, upcomingEvents.endTime));
+			setGenerateCheckOut(canShowCheckOut(upcomingEvents.startTime, upcomingEvents.endTime));
+		}
+	}, [upcomingEvents]);
 
     return(
         <div>
@@ -91,8 +127,8 @@ function NextEvent({upcomingEvents})
                       <div className="card-subtitle">{truncateText(nextEvent.location, 10)}</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-                        <Button className='create-qr-code' size="medium" variant='contained' justify="flex-end" style={{ marginRight: '10px',  backgroundColor: '#5f5395', borderColor: '#968dbf', '&:hover': {
-                        borderColor: '#5f5395', color: '#7566b4'  }  }} onClick={() => setModalOpen(true)}>Generate QR Code</Button>
+						<Button disabled={!generateCheckIn} sx={{ mt: 1, mr: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("In"); setOpenQRModal(true);}}>Generate Check-In Code</Button>
+						<Button disabled={!generateCheckOut} sx={{ mt: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("Out"); setOpenQRModal(true);}}>Generate Check-Out Code</Button>
                       </Grid>
                   </CardContent>
                 </Box>
@@ -108,6 +144,7 @@ function NextEvent({upcomingEvents})
                 <Button onClick={handleClose}>Close</Button>
                 </DialogActions>
             </Dialog>
+			<QRCodeModal eventID={eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>
         </div>
 
     );

@@ -1,4 +1,3 @@
-//import { GoogleApiWrapper, Map, Marker } from "google-maps-react";
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
 import './MapContainer.css';
 

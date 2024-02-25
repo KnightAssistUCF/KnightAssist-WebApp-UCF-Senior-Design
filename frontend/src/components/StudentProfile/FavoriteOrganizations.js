@@ -141,7 +141,7 @@ function FavoriteOrganizations(props)
 
     function Orgs(){
         return (
-            <div className="eventsCard card">       
+            <div className="">       
                 {orgCards}
             </div>
         )

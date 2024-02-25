@@ -19,12 +19,14 @@
     margin-left: 8px;
     margin-top: 10px;
 	text-align: center;
+	background: none !important;
 }
 
-.searchCards{
-	overflow-y: scroll;
+.rowCards{
+	overflow-y: none !important;
     display: inline !important;
-    max-height: 750px;
+    max-height: 1000px;
+	float: right;
 }
 
 .pagination{
@@ -32,13 +34,14 @@
 }
 
 .cardWhite{
-    background-color: white;
+	background-color: black;
 	overflow-y: none;
     width: 100%;
 }
 
 .card-body{
     width: 99%;
+	background-color: none !important;
 }
 
 .titleHeader{
@@ -58,6 +61,7 @@
 }
 
 .event{
+	background: none !important;
     min-width: 275px;
     max-width: 275px;
     margin-right: 2%;
@@ -72,6 +76,8 @@
 
 .eventsCard{
     width: 100%;
+	background: none !important;
+	background-color: none !important;
 }
   
 .yourEvents{
@@ -80,7 +86,6 @@
     font-size: 20px;
     margin-bottom: 50px;
 	color: black !important;
-    float: left !important;
 }
 
 .spartan{
@@ -101,6 +106,10 @@
     right: 0;
     left: 0;
     bottom: 0px;
+}
+
+.centerAEB{
+	text-align: center !important;
 }
 
 .addEventBtn{
@@ -342,6 +351,29 @@
 
 .addAlertSpace{
 	margin-top: 15px;
+}
+
+.notoCircle{
+	border-radius: 100%;
+	width: 10%; 
+	margin-bottom: 30px;
+	line-height: 15px; 
+	font-size: 10px;
+	position: absolute;
+	right: 12px;
+	top: 5px;
+	background-color: red;
+    color: white;
+    text-align: center !important;
+}
+
+.largerChip{
+	width: 100px;
+}
+
+.cardCalendar{
+	width: 20px !important;
+	margin-right: 3px;
 }
 
 @media (max-width: 1500px) {

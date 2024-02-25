@@ -17,7 +17,7 @@ function StudentExplore()
 {
     const [searchType, setSearchType] = useState("events");
     const [openEvent, setOpenEvent] = useState(false); 
-    const [eventID, setEventID] = useState(undefined)
+    const [eventID, setEventID] = useState(("notoEventId" in sessionStorage) ? sessionStorage.getItem("notoEventId") : undefined)
     const [resetFavorite, setResetFavorite] = useState(1);
     const [resetRecEvents, setResetRecEvents] = useState(1);
 

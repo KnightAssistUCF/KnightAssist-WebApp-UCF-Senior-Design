@@ -34,9 +34,8 @@ function Contact() {
 		<Box className="wholePage" sx={{ flexGrow: 1, padding: 10, justifyContent: 'center', alignItems: 'center'}}>
 			<Card className='contactCard spartan'>
 				<CardContent>
-					<UserInput/>
 					<Details/>
-					<Footer/>
+					<UserInput/>
 				</CardContent>   
 			</Card>
 		</Box>

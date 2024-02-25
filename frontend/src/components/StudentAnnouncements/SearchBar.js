@@ -47,7 +47,7 @@ const handleKeyPress = (event) => {
           name: update.name,
         }));
         
-        props.setSearchAnnouncement(allFavAnnouncements.reverse());
+        props.setSearchAnnouncement(allFavAnnouncements);
       } else {
         console.log("here---------");
       }
