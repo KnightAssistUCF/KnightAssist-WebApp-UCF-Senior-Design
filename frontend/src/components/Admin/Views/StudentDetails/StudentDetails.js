@@ -4,7 +4,7 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import EditIcon from '@mui/icons-material/Edit';
-import { TextField, Button, Alert, Snackbar, Dialog, IconButton } from '@mui/material';
+import { TextField, Button, Alert, Snackbar, Dialog, IconButton, Avatar } from '@mui/material';
 import { buildPath } from '../../../../path.js';
 import AdminHeader from '../../AdminHeader.js';
 import './StudentDetails.css';
@@ -37,6 +37,7 @@ function StudentDetails({ studentID }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [eventHistory, setEventHistory] = useState([]);
   const [picName, setPicName] = useState(undefined);
+  const [pfpFile, setPfpFile] = useState(null);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -71,6 +72,23 @@ function StudentDetails({ studentID }) {
 
       // fetch past/upcoming events
       fetchEventHistory(res._id);
+
+      url = buildPath(`api/retrieveImage?typeOfImage=3&id=${res._id}`);
+  
+        try {
+          response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+          });
+  
+      
+          let pfp = JSON.parse(await response.text());
+          console.log(pfp.url);
+      
+          setPfpFile(pfp.url);
+        } catch(e) {
+          console.log("failed to get banner");
+        }
 
       // get profile pic
     } catch (e) {
@@ -310,6 +328,17 @@ const AllTags = ({ tags }) => {
           </Link>
           <Typography color='text.primary'>{firstName + ' ' + lastName}</Typography>
         </Breadcrumbs>
+        <Avatar
+            alt="Profile Picture"
+            className="profilePicture"
+            src={pfpFile}
+            sx={{
+              width: '150px',
+              height: '150px',
+              margin: 'auto',
+              display: 'block'
+            }}
+          />
         <div className='studentDetailsFields'>
           <div className='studentDetailsFirst' style={{ marginBottom: editMode ? '10px' : '15px' }}>
             <div className='studentDetailsFirstText'>First Name</div>
