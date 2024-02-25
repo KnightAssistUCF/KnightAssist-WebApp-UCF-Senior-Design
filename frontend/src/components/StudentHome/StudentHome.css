@@ -1,6 +1,5 @@
 .studHomePage {
   margin-left: 15%;
-  margin-top: 3%;
   margin-right: 2%;
 }
 .first-row {
@@ -223,6 +222,16 @@ min-height: 100vh;
 
 .smallName{
 	font-size: 15px !important;
+}
+
+.card-row {
+  display: flex;
+}
+.home-card {
+  width: 25%;
+  margin: 5px;
+  padding: 4px;
+
 }
 
 /* Responsive styles for smaller screens */
