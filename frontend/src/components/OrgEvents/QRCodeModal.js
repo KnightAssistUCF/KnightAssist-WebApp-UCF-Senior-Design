@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { Dialog, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Logo from '../Logo';
@@ -67,7 +67,7 @@ function QRCodeModal(props)
     }, [props.checkType]);
 
     return(
-        <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center', overflowY:'scroll', overflowX: 'hidden'}} open={props.open} onClose={handleClose}>
+        <Dialog fullWidth sx={{display:'flex', alignItems:'center', justifyContent:'center', overflowY:'scroll', overflowX: 'hidden'}} open={props.open} onClose={handleClose}>
             <div className='center'>
                 <Card className='qrCodeCard spartan'>
                     <CardContent className='qrTop'>
@@ -78,7 +78,6 @@ function QRCodeModal(props)
                         <div className='checkName'>Check {props.checkType}</div>
 	                </CardContent>   
                     <CardContent className='qrLower'>
-						<Logo theStyle="qrLogo"/>
 						<div className='qrCodeEvent'><u>Event: {eventName}</u></div>
 						<div className='qrCodeInstructions'>Scan the following code with the KnightAssist mobile app:</div>
 
@@ -86,7 +85,7 @@ function QRCodeModal(props)
 					</CardContent>
                 </Card>
             </div>
-        </Modal>
+        </Dialog>
     );
 };
 
