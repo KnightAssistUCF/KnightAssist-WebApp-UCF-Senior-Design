@@ -31,6 +31,15 @@ const feedbackSchema = new Schema({
         required: true,
         default: false
     },
+    orgResponse: { // store the response of the org
+        orgId: {
+            type: Schema.Types.ObjectId,
+            ref: 'organization',
+            default: null
+        },
+        type: String,
+        default: ''
+    },
     __v: {
         type: String,
         required: true,
