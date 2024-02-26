@@ -200,13 +200,30 @@
 	color: rgb(240, 240, 240) !important;
     min-width: 100px;
     width: auto !important;
-    height: 30px;
+    height: 25px;
     margin-top: 0px;
     margin-right: 5px;
-    font-size: 20px;
+    font-size: 17px;
     float: left;
     font-family: "system-ui";
     margin-bottom: 5px;
+	border-radius: 10px !important;
+	padding-left: 8px;
+	padding-right: 8px;
+	box-shadow: none !important;
+}
+
+.eventInterestAdd{
+    background-color: rgb(89, 80, 130) !important;
+	color: rgb(240, 240, 240) !important;
+    min-width: 100px;
+    width: auto !important;
+    height: 25px;
+    margin-top: 0px;
+    margin-right: 5px;
+    font-size: 17px;
+    float: left;
+    font-family: "system-ui";
 	border-radius: 10px !important;
 	padding-left: 8px;
 	padding-right: 8px;
@@ -219,8 +236,8 @@
 }
 
 .boxImg{
-    width: 90%;
-    height: 200px !important;
+    width: 100%;
+    height: 300px !important;
 }
 
 .bigName{

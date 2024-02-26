@@ -301,8 +301,8 @@ function AddEventModal(props)
 
     function Tag(props){
         return (
-            <Grid item>
-                <Card className='eventInterest'>
+            <Grid item marginBottom={"-5px"}>
+                <Card className='eventInterestAdd'>
                     <CloseIcon onClick={() => deleteTag(props.tag)}/>
                     {props.tag}
                 </Card>
