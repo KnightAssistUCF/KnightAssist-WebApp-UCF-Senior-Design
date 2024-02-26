@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { Button, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
@@ -34,10 +34,15 @@ function EventModal(props)
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
     const [disabled, setDisabled] = useState(false);
-	
+	const [hasEndDate, sethasEndDate] = useState(false);
+	const [isPast, setIsPast] = useState(false);
 	const [map, setMap] = useState(undefined);
 
-	const [hasEndDate, sethasEndDate] = useState(false);
+
+	// Event has not happened yet or is not over
+	function eventIsUpcoming(endTime){
+		return new Date().toISOString().localeCompare(endTime) < 0;
+	}
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -66,6 +71,8 @@ function EventModal(props)
             setVolunteers(event.registeredVolunteers.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
+
+			setIsPast(!eventIsUpcoming(event.endTime));
 
 			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
 			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
@@ -118,10 +125,18 @@ function EventModal(props)
 
             console.log("Result: ", res);
 
-            if(res.RSVPStatus === 1)
+            if(res.RSVPStatus === 1){
                 setIsRSVP(true);
-            else
-                setIsRSVP(false);
+			}else{
+				// Cannot rsvp if event is full
+				if(event.registeredVolunteers.length >= event.maxAttendees){
+					setIsRSVP(false);
+					setDisabled(true);
+					setMaxVolunteers(event.maxAttendees + " (FULL)");
+				}else{
+					setIsRSVP(false);
+				}
+			}
 
             console.log(event);
         } else {
@@ -269,12 +284,13 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <button type="button" class="RSVPbtn btn btn-primary" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
+            <Button type="button" sx={{ mt: 6, mr: 1, width: 125, borderRadius: 5, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
         )
     }
 
     useEffect(()=>{
 		if(props.eventID !== undefined){
+			setDisabled(false);
         	setInfo();
 			if("notoEventId" in sessionStorage){
 				props.setOpen(true);
@@ -359,9 +375,13 @@ function EventModal(props)
                                 
 								{(tags.length > 0) ? <Tags/> : null}
 
-                                <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
-                                    <RSVPButton/>
-                                </Grid>  
+								<Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
+									{(!isPast) 
+										? 
+											<RSVPButton/>
+										: null
+									}
+								</Grid>  
 
                                 <RSVPMessage/>
                             </Box>

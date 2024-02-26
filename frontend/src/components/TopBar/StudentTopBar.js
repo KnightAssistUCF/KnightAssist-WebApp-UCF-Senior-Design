@@ -20,7 +20,7 @@ import { useNavigate } from 'react-router-dom';
 
 function StudentTopBar()
 {
-    const settings = ['Profile', 'Logout'];
+    const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
