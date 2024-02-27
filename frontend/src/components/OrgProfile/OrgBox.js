@@ -347,7 +347,7 @@ function OrgBox(props) {
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
 				/>
 				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={openPicSelectMenu}/> : null}
-				{(role === "volunteer") ? (heartHover) ? <Tooltip title={(favorited) ? "Unfavorite" : "Favorite"} placement="right"><BsHeartFill className="heartIcon hoverHeart" onClick={() => favoriteOrg(true)} onMouseLeave={() => setHeartHover(false)}/> </Tooltip> : ((!favorited) ? <BsHeart className="heartIcon" onMouseOver={() => setHeartHover(true)}/> : <BsHeartFill className="heartIcon" onMouseOver={() => setHeartHover(true)}/>) : null}
+				{(role === "volunteer") ? <div><Tooltip title={(favorited) ? "Unfavorite" : "Favorite"} placement='right'><BsHeartFill size="28px" className="heartIconBehind"/> {((heartHover) ? <BsHeartFill className="heartIcon hoverHeart" onClick={() => favoriteOrg(true)} onMouseLeave={() => setHeartHover(false)}/> : <BsHeartFill className={"heartIcon " + ((favorited) ? "redHeart" : "whiteHeart")} onMouseOver={() => setHeartHover(true)}/>)}</Tooltip></div> : null}
 				<Menu
 					open={Boolean(openPicSelectChoice)}
 					anchorEl={openPicSelectChoice}
