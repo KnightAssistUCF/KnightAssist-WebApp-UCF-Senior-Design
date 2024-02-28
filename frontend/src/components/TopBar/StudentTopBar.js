@@ -148,7 +148,7 @@ function StudentTopBar()
 				pics.push(pic.url);
 			}
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto, i) => <div><MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><div className='notoMessage'><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
+			setNotifcations(res.notifications.new.map((noto, i) => <div><MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/><div className='notoMessage'>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
 													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem>
 													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
 		}
