@@ -151,7 +151,7 @@ const Feedbacks = (props) => {
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
 				<DialogContent className='feedbackModal'>
-					<DialogContentText style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
 					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
 					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
 						{selectedFeedback.studentName} 
@@ -161,7 +161,7 @@ const Feedbacks = (props) => {
 						value={selectedFeedback.rating}
 						readOnly
 					/>
-					<DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 				<Button onClick={handleCloseModal}>Close</Button>

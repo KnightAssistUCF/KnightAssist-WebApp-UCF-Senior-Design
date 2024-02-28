@@ -26,5 +26,6 @@
     }
 
     
-    
-    
+.contentWrap{
+	word-wrap: break-word
+}
