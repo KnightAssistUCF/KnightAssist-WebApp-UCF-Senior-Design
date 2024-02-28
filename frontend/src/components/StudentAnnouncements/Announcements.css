@@ -12,19 +12,20 @@
     margin-bottom: 12px;
     align-items: flex-start;
 }
+
 .announcementSection {
     text-align: left;
 }
     
-    .StudentAnnouncements-title {
-        font-size: 30px;
-        text-align: left;
-    }
-    .StudentAnnouncements-subtitle {
-        font-size: 25px;
-        margin-bottom: 10px;
-    }
+.StudentAnnouncements-title {
+	font-size: 30px;
+	text-align: left;
+}
 
+.StudentAnnouncements-subtitle {
+	font-size: 25px;
+	margin-bottom: 10px;
+}
     
 .contentWrap{
 	word-wrap: break-word
