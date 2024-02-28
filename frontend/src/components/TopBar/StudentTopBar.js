@@ -17,6 +17,7 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { buildPath } from '../../path';
 import { useNavigate } from 'react-router-dom';
+import { Divider } from '@mui/material';
 
 function StudentTopBar()
 {
@@ -125,7 +126,8 @@ function StudentTopBar()
 
 		if(res && res.notifications){
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{(noto.message.length > 50) ? (noto.message.substring(0, 51) + "...") : noto.message}</MenuItem>))
+			setNotifcations(res.notifications.new.map((noto, i) => <div><MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{(noto.message.length > 50) ? (noto.message.substring(0, 51) + "...") : noto.message}</MenuItem>
+														{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
 		}
 
 		let unread = 0;
