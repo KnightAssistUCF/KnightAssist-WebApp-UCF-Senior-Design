@@ -53,7 +53,7 @@ const Announcements = (props) => {
 			const { updateID, title, content, date, name } = announcement;
   
 			return (
-			  <Grid item xs={7} key={updateID} marginTop={"5px"} marginLeft={"18%"}>
+			  <Grid item xs={10} key={updateID} marginTop={"5px"}>
 				<Card variant="outlined" onClick={() => handleClick(announcement)}>
 				  <CardActionArea>
 					<CardContent className="content">
@@ -119,7 +119,7 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 
       	<Dialog open={isModalOpen} onClose={handleCloseModal}>
 			<DialogContent className='feedbackModal'>

@@ -229,6 +229,7 @@ function NewAnn() {
         <div className="testing">
           <StudentHeader/>
           <div className="announcementSection">
+          <div style={{marginLeft: '12%'}}>
             <div className="topSection">
               <SearchBar
                 searchAnnouncements={searchAnnouncements}
@@ -245,6 +246,7 @@ function NewAnn() {
             </div>
             {(searchAnnouncement) ? <Announcements announcements={searchAnnouncement} /> : <div className='centerProgress'><CircularProgress/></div>}
           </div>
+        </div>
         </div>
       </div>
     </div>

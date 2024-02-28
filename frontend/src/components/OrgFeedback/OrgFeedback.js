@@ -119,21 +119,23 @@ function OrgFeedback() {
 			<OrgTopBar/>
 			<div className='moveEverything'>
 				<Title/>
-				<div className="announcementSection">
-					<div className="topSection">
-						<SearchBar
-							searchAnnouncements={getSeachFeedback}
-							setSearchTerm={setSearchTerm}
-							searchTerm={searchTerm}
-							filterTerm={filterTerm}
-							setFilterTerm={setFilterTerm}
-							fetchAllUpdates={fetchAllFeedback}
-							setSearchAnnouncement={setSearchFeedback}
-							initialAnnouncements={feedback}
-						/>
-						<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
-					</div>
-				{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+				<div className='moveFromLeft'>
+					<div className="announcementSection">
+						<div className="topSection">
+							<SearchBar
+								searchAnnouncements={getSeachFeedback}
+								setSearchTerm={setSearchTerm}
+								searchTerm={searchTerm}
+								filterTerm={filterTerm}
+								setFilterTerm={setFilterTerm}
+								fetchAllUpdates={fetchAllFeedback}
+								setSearchAnnouncement={setSearchFeedback}
+								initialAnnouncements={feedback}
+							/>
+							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
+						</div>
+					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+				</div>
 			</div>
 			</div>
 		</div>

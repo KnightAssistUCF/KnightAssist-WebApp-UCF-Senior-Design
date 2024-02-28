@@ -43,6 +43,10 @@
 	font-size: 13px;
 }
 
+.moveFromLeft {
+	margin-left: 10%;
+}
+
 @media (max-width: 700px) {
     .showDate{
         display: none;

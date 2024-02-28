@@ -50,7 +50,7 @@ const Feedbacks = (props) => {
 	console.log(props.feedback)
 	setTheFeedbacks(props.feedback.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((feedback) => {
 		return (
-			<Grid item xs={7} marginTop={"5px"} marginLeft={"18%"}>
+			<Grid item xs={10} marginTop={"5px"}>
 				<Card variant="outlined" onClick={() => handleClick(feedback)}>
 					<CardActionArea>
 						<CardContent className="content">
@@ -146,7 +146,7 @@ const Feedbacks = (props) => {
       >
         {theFeedbacks}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape='rounded' />
 
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
