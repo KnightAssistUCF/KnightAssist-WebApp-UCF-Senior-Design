@@ -78,6 +78,7 @@ const Announcements = (props) => {
 						color="textSecondary"
 						component="p"
 						style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
+						className='showDate'
 					  >
 						{formatDate(date)}
 					  </Typography>
