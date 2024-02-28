@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         const intervalStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
         const user = await UserStudent.findById(userId);
-
+		
 		// Ensure that an existing not isn't pushed
 		const messageSet = new Set();
 
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
 		for(let org of favoriteOrgsUpdates){
 			for(let update of org.updates){
 				newNotifications.push({
-					message: `New update from ${org.name}: ${update.title}`,
+					message: `Update from ${org.name}: ${update.title}`,
 					type_is: "orgAnnouncement",
 					createdAt: `${update.date}`,
 					eventId: "",
@@ -51,7 +51,7 @@ router.get('/', async (req, res) => {
 			
 			for(let event of events){
                 newNotifications.push({
-                    message: `New event from ${org.name}: ${event.name}`,
+                    message: `Event from ${org.name}: ${event.name}`,
                     type_is: "event",
                     createdAt: event.createdAt, 
 					eventId: event._id,
