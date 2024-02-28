@@ -170,25 +170,25 @@ function NewAnn() {
     setFilterTerm(term);
 
     let filteredAnnouncements = [...announcements];
-
+	
     if (term !== "all") {
       if (term === "favorited") {
         console.log("favorited!!!");
 
         filteredAnnouncements = favUpdates.map(update => ({
           ...update,
-          name: update.name,
         }));
-        setSearchAnnouncement(filteredAnnouncements);
+		setSearchAnnouncement(filteredAnnouncements.filter(a => a.name.toLowerCase().includes(searchTerm.toLowerCase()) || (a.title && a.title.toLowerCase().includes(searchTerm.toLowerCase()))));
       } else {
         filteredAnnouncements = filteredAnnouncements.filter((a) =>
           a.title && a.title.toLowerCase().includes(term)
         );
-        setSearchAnnouncement(filteredAnnouncements);
-      }
+		setSearchAnnouncement(filteredAnnouncements.filter(a => a.name.toLowerCase().includes(searchTerm.toLowerCase()) || (a.title && a.title.toLowerCase().includes(searchTerm.toLowerCase()))));
+	}
     } else {
       console.log("All!!!");
-      setSearchAnnouncement(filteredAnnouncements);
+	  console.log(filteredAnnouncements)
+	  setSearchAnnouncement(filteredAnnouncements.filter(a => a.name.toLowerCase().includes(searchTerm.toLowerCase()) || (a.title && a.title.toLowerCase().includes(searchTerm.toLowerCase()))));
     }
 
     
@@ -241,7 +241,7 @@ function NewAnn() {
                 setSearchAnnouncement={setSearchAnnouncement}
                 initialAnnouncements={announcements}
               />
-              <Filter filterAnnouncements={filterAnnouncements} />
+              <Filter searchAnnouncements={searchAnnouncements} filterAnnouncements={filterAnnouncements} />
             </div>
             {(searchAnnouncement) ? <Announcements announcements={searchAnnouncement} /> : <div className='centerProgress'><CircularProgress/></div>}
           </div>
