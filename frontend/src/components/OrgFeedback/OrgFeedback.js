@@ -91,9 +91,9 @@ function OrgFeedback() {
 
 			console.log(unreads);
 
-			setSearchFeedback(unreads);
+			setSearchFeedback(unreads.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
 		}else{
-			setSearchFeedback(feedback)
+			setSearchFeedback(feedback.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
 		}
 	};
 
