@@ -50,52 +50,52 @@ const Feedbacks = (props) => {
 	console.log(props.feedback)
 	setTheFeedbacks(props.feedback.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((feedback) => {
 		return (
-			<Grid item xs={12}>
-			<Card variant="outlined" onClick={() => handleClick(feedback)}>
-			  <CardActionArea>
-				<CardContent className="content">
-				  <Typography
-					gutterBottom
-					variant="h5"
-					component="h2"
-					className="title"
-				  >
-					{feedback.eventName}
-				  </Typography>
-				  <Typography
-					variant="body2"
-					color="textSecondary"
-					component="p"
-					style={{ color: 'black'}}
-				  >
-					{feedback.studentName}
-					<Rating
-					  value={feedback.rating}
-					  readOnly
-					  className='cardRating'
-				  />
-				  </Typography>
-				  <Typography
-					variant="body2"
-					color="textSecondary"
-					component="p"
-					style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
-				  >
-					{(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
-					{formatDate(feedback.timeFeedbackSubmitted)}
-				  </Typography>
-				  <Typography
-					variant="body2"
-					color="textSecondary"
-					component="p"
-					style={{ marginTop: '6px'}}
-				  >
-					<i>{truncateText(feedback.feedbackText, 320)}</i>
-				  </Typography>
-				</CardContent>
-			  </CardActionArea>
-			</Card>
-		  </Grid>
+			<Grid item xs={10} marginTop={"5px"}>
+				<Card variant="outlined" onClick={() => handleClick(feedback)}>
+					<CardActionArea>
+						<CardContent className="content">
+							<Typography
+								gutterBottom
+								variant="h5"
+								component="h2"
+								className="title"
+							>
+								{truncateText(feedback.eventName, 35)}
+							</Typography>
+							<Typography
+								variant="body2"
+								color="textSecondary"
+								component="p"
+								style={{ color: 'black'}}
+							>
+								<h6>{feedback.studentName}<span className='emailSize'>{((feedback.studentEmail) ? " - " + feedback.studentEmail : "")}</span></h6>
+							</Typography>
+							<Typography
+								variant="body2"
+								color="textSecondary"
+								component="p"
+								style={{ position: 'absolute', top: 0, right: 0, margin: '12px' }}
+							>
+								{(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
+								<span className='showDate'>{formatDate(feedback.timeFeedbackSubmitted)}</span>
+							</Typography>
+							<Rating
+								value={feedback.rating}
+								readOnly
+								className='cardRating'
+							/>
+							<Typography
+								variant="body2"
+								color="textSecondary"
+								component="p"
+								style={{ marginTop: '6px'}}
+							>
+								<i>{truncateText(feedback.feedbackText, 300)}</i>
+							</Typography>
+						</CardContent>
+					</CardActionArea>
+				</Card>
+			</Grid>
 		);
 	  }));
 }
@@ -146,24 +146,22 @@ const Feedbacks = (props) => {
       >
         {theFeedbacks}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape='rounded' />
 
-
-      {/* Modal */}
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
 				<DialogContent className='feedbackModal'>
-					<DialogTitle>{selectedFeedback.eventName}</DialogTitle>
-						<DialogContentText style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-						<DialogContentText style={{ color: 'black'}}>
-							{selectedFeedback.studentName} 				
-							<Rating
-								value={selectedFeedback.rating}
-								readOnly
-								className='cardRatingModal'
-							/>
-						</DialogContentText>
-					<DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
+						{selectedFeedback.studentName} 
+						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
+					</DialogContentText>
+					<Rating
+						value={selectedFeedback.rating}
+						readOnly
+					/>
+					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 				<Button onClick={handleCloseModal}>Close</Button>

@@ -22,7 +22,7 @@
 }
 
 .cardRating{
-	padding-left: 85%;
+	margin-top: 10px;
 }
 
 .cardRatingModal{
@@ -31,9 +31,24 @@
     
 .spaceRead{
 	margin-right: 10px;
+	float: left;
 }
     
 .centerProgress{
 	margin-left: 50%;
 	margin-top: 20%;
+}
+
+.emailSize{
+	font-size: 13px;
+}
+
+.moveFromLeft {
+	margin-left: 10%;
+}
+
+@media (max-width: 700px) {
+    .showDate{
+        display: none;
+    }
 }

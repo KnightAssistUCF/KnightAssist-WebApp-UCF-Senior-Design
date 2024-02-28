@@ -53,7 +53,7 @@ const Announcements = (props) => {
 			const { updateID, title, content, date, name } = announcement;
   
 			return (
-			  <Grid item xs={12} key={updateID}>
+			  <Grid item xs={10} key={updateID} marginTop={"5px"}>
 				<Card variant="outlined" onClick={() => handleClick(announcement)}>
 				  <CardActionArea>
 					<CardContent className="content">
@@ -63,7 +63,7 @@ const Announcements = (props) => {
 						component="h2"
 						className="title"
 					  >
-						{title}
+						{truncateText(title, 35)}
 					  </Typography>
 					  <Typography
 						variant="body2"
@@ -119,20 +119,20 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 
-      {/* Modal */}
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>{selectedAnnouncement?.title}</DialogTitle>
-        <DialogContent>
-        <DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
-        <DialogContentText style={{ marginTop: '10px' }}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-        <DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      	<Dialog open={isModalOpen} onClose={handleCloseModal}>
+			<DialogContent className='feedbackModal'>
+				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
+				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
+				<DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
+				<DialogContentText style={{ color: 'black', marginBottom: 5}}>{selectedAnnouncement?.organizationName}</DialogContentText>
+				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleCloseModal}>Close</Button>
+			</DialogActions>
+		</Dialog>
     </div>
   );
 };
