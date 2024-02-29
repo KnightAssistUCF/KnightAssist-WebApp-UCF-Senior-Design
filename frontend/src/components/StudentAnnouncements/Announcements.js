@@ -46,11 +46,16 @@ const Announcements = (props) => {
     setIsModalOpen(true);
   };
 
+  function openOrgPage(id){
+	sessionStorage.setItem("viewingPageID", id);
+	window.location.href="/#/orgprofile";
+  }
+
   function changePage(e, value){
 		setPage(value);
 		console.log(props.announcements)
 		setAnnouncements(props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement) => {
-			const { updateID, title, content, date, name } = announcement;
+			const { updateID, title, content, date, name, organizationID } = announcement;
   
 			return (
 			  <Grid item xs={10} key={updateID} marginTop={"5px"}>
@@ -131,7 +136,7 @@ const Announcements = (props) => {
 			<DialogContent className='feedbackModal'>
 				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
 				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText style={{ color: 'black' }}><b>{selectedAnnouncement?.name}</b></DialogContentText>
+				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
 				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
 			<DialogActions>

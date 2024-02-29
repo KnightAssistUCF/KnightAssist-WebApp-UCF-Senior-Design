@@ -39,6 +39,7 @@ router.get('/', async (req, res) => {
 						updateID: update._id,
 						title: update.title,
 						content: update.content,
+						organizationID: org._id,
 						name: org.name
 					},
 					orgName: org.name,

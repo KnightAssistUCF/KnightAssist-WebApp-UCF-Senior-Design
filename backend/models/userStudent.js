@@ -117,6 +117,7 @@ const userStudentSchema = new mongoose.Schema({
 			title: String,
 			content: String,
 			name: String,
+			organizationID: String,
 			date: {
 				type: Date,
 				default: Date.now

@@ -102,6 +102,7 @@ function NewAnn() {
             const announcementsWithOrgName = orgUpdates.announcements.map((announcement) => ({
               ...announcement,
               name: org.name.trim(),
+			  organizationID: org._id,
             }));
 
             updatesArray.push(...announcementsWithOrgName);
