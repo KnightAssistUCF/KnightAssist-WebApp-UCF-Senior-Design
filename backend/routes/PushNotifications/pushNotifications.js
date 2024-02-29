@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
         const intervalStart = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
 
         const user = await UserStudent.findById(userId);
-		
+
 		// Ensure that an existing not isn't pushed
 		const messageSet = new Set();
 
@@ -35,6 +35,13 @@ router.get('/', async (req, res) => {
 					createdAt: `${update.date}`,
 					eventId: "",
 					orgId: org._id,
+					updateContent: {
+						updateID: update._id,
+						title: update.title,
+						content: update.content,
+						organizationID: org._id,
+						name: org.name
+					},
 					orgName: org.name,
 					read: false
 				})
@@ -56,6 +63,7 @@ router.get('/', async (req, res) => {
                     createdAt: event.createdAt, 
 					eventId: event._id,
 					orgId: org._id,
+					updateContent: null,
 					orgName: org.name,
                     read: false
                 });

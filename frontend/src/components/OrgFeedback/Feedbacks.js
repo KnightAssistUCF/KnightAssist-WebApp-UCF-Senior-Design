@@ -45,6 +45,11 @@ const Feedbacks = (props) => {
   const [page, setPage] = useState(1);
   const [theFeedbacks, setTheFeedbacks] = useState([]);
 
+  function openStudentPage(id){
+	sessionStorage.setItem("viewingStudentPageID", id);
+	window.location.href="/#/studentprofile";
+  }
+
   function changePage(e, value){
 	setPage(value);
 	console.log(props.feedback)
@@ -154,7 +159,7 @@ const Feedbacks = (props) => {
 					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
 					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
 					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
-						{selectedFeedback.studentName} 
+						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
 						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
 					</DialogContentText>
 					<Rating

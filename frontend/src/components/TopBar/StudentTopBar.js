@@ -98,7 +98,7 @@ function StudentTopBar()
 					window.location.href = "#/explore";
 				}
 			}else{ // Is an announcement
-				sessionStorage.setItem("updateSearchTerm", noto.orgName);
+				sessionStorage.setItem("notoUpdate", JSON.stringify(noto.updateContent[0]));
 				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentannouncements"){
 					window.location.reload();
 				}else{
