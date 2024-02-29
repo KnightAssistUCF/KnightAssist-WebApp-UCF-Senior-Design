@@ -107,6 +107,11 @@ const Announcements = (props) => {
 		setNumPages(Math.ceil(props.announcements.length / perPage));
 		changePage(null, 1);
 	}
+	if("notoUpdate" in sessionStorage){
+		setSelectedAnnouncement(JSON.parse(sessionStorage.getItem("notoUpdate")));
+		setIsModalOpen(true);
+		sessionStorage.removeItem("notoUpdate");
+	}
   }, [props.announcements]);
 
   return (
@@ -126,8 +131,7 @@ const Announcements = (props) => {
 			<DialogContent className='feedbackModal'>
 				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
 				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
-				<DialogContentText style={{ color: 'black', marginBottom: 5}}>{selectedAnnouncement?.organizationName}</DialogContentText>
+				<DialogContentText style={{ color: 'black' }}><b>{selectedAnnouncement?.name}</b></DialogContentText>
 				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
 			<DialogActions>

@@ -28,7 +28,7 @@ function NewAnn() {
 
 
   var url2 = buildPath(`api/loadAllOrganizations`);
-  const [searchTerm, setSearchTerm] = useState(("updateSearchTerm" in sessionStorage) ? sessionStorage.getItem("updateSearchTerm") : "");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchFavoritedUpdates = async () => {
     //sessionStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
@@ -213,10 +213,6 @@ function NewAnn() {
   useEffect(() => {
 	if(callInitialFav === -1){
 		filterAnnouncements("favorited");
-		if("updateSearchTerm" in sessionStorage){
-			searchAnnouncements(sessionStorage.getItem("updateSearchTerm"));
-			sessionStorage.removeItem("updateSearchTerm");
-		}
 	}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
   }, [callInitialFav])
