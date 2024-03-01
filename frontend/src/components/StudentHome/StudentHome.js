@@ -24,6 +24,7 @@ function StudentHome()
   const [goal, setGoal] = useState(0);
   const [totalHours, setTotalHours] = useState(0);
   const [favOrgs, setFavOrgs] = useState([]);
+  const [upcomingRSVPdEvents, setUpcomingRSVPdEvents] = useState([]);
     
     useEffect(() => {
 	  console.log(sessionStorage)
@@ -47,10 +48,39 @@ function StudentHome()
         setGoal(res.semesterVolunteerHourGoal);
         setTotalHours(res.totalVolunteerHours);
         setFavOrgs(res.favoritedOrganizations);
+
+        fetchUpcomingEvents(res.eventsRSVP);
     
         
       } catch (error) {
         console.log("An error has occurred" + error);
+      }
+    }
+
+    function eventIsUpcoming(endTime){
+      return new Date().toISOString().localeCompare(endTime) < 0;
+    }
+
+    async function fetchUpcomingEvents(allEvents) {
+      var upcomingRSVPEvents = [];
+      try {
+        for(const event of allEvents) {
+          console.log(event);
+          var url = buildPath(`api/searchOneEvent?eventID=${event}`);
+          const response = await fetch(url, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          let result = JSON.parse(await response.text());
+          if (result.length > 0 && result[0].hasOwnProperty('endTime')) {
+            if(eventIsUpcoming(result[0].endTime)) {
+              upcomingRSVPEvents.push(result[0]);
+            }
+          }
+        }
+        setUpcomingRSVPdEvents(upcomingRSVPEvents);
+      } catch(e) {
+        console.log("fetch upcoming events failed");
       }
     }
     
