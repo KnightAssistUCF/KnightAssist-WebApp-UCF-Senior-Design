@@ -23,24 +23,39 @@ export default function Register() {
 
   return (
     <>
-    <CssBaseline />
     <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <PreLoginNavBar />
-        <Box sx={{
-          flexGrow: 1,
-          paddingTop: 6,
-          justifyContent: 'center',
-          backgroundImage: `url(${BackgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed'}}>
-          <Container component="main" maxWidth="sm" sx={{ mb: 4, justifyContent: 'center', alignItems: 'center' }}>
-             <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)' }}>
-                <SignUp />
-             </Paper>
-          </Container>
-        </Box>
+        <Grid container component="main" sx={{ flex: 1 }}>
+          <Grid item
+            xs={false}
+            sm={4}
+            md={7}
+            sx={{
+              backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) =>
+                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }}
+          />
+          <Grid container xs={12} sm={8} md={5} component={Paper} elevation={1} square justifyContent="center" alignItems="center">
+            <Box
+              sx={{
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }} >
+              <SignUp />
+            </Box>
+          </Grid>
+        </Grid>
         <Footer />
+      </Box>
     </ThemeProvider></>
   );
 }

@@ -212,7 +212,7 @@ function LoginComponents(props){
     function SignUp(){
         return (   
         <>
-            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => onRegister()}> Already have an account? </Link>
+            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => onRegister()}> Don't have an account? </Link>
         </>
         )
     }
