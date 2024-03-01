@@ -1,4 +1,4 @@
-import { Button, Modal } from '@mui/material';
+import { Avatar, Button, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
@@ -22,7 +22,10 @@ function EventModal(props)
     const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); setMap(undefined); props.setEventID(undefined); props.setOpen(false);}
 
     const [name, setName] = useState("");
+	const [orgName, setOrgName] = useState("");
+	const [orgPic, setOrgPic] = useState(undefined);
     const [id, setID] = useState("");
+	const [orgID, setOrgID] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [picLink, setPicLink] = useState(null);
@@ -42,6 +45,11 @@ function EventModal(props)
 	// Event has not happened yet or is not over
 	function eventIsUpcoming(endTime){
 		return new Date().toISOString().localeCompare(endTime) < 0;
+	}
+
+	function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";    
 	}
 
     async function setInfo(){        
@@ -71,6 +79,29 @@ function EventModal(props)
             setVolunteers(event.registeredVolunteers.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
+
+			url = buildPath(`api/organizationSearch?organizationID=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let org = JSON.parse(await response.text());
+
+			setOrgName(org.name);
+			setOrgID(org._id);
+			
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let orgPic = JSON.parse(await response.text());
+
+			setOrgPic(orgPic.url);
 
 			setIsPast(!eventIsUpcoming(event.endTime));
 
@@ -211,6 +242,12 @@ function EventModal(props)
         )
     }
 
+	function OrgName(){
+		return (
+			<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}><Avatar className="orgPicModal" src={orgPic}/><a className='hoverOrgName' onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+		)
+	}
+
     function Description(){
         return (
             <div className='description'>
@@ -313,6 +350,8 @@ function EventModal(props)
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>
+
+								<OrgName/>
 
                                 <Description/>
 
