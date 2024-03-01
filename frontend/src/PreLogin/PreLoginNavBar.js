@@ -60,7 +60,7 @@ function PreLoginNavBar() {
 
   return (
     <React.Fragment>
-    <AppBar position="static" style={{ background: 'transparent', boxShadow: 'none', }}>
+    <AppBar position="absolute" style={{ background: 'transparent', boxShadow: 'none', }}>
         <Toolbar sx={{ justifyContent: 'space-between' }}>
           {/* logo + name */}
           <Box>
