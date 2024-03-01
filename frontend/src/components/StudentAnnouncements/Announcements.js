@@ -46,14 +46,19 @@ const Announcements = (props) => {
     setIsModalOpen(true);
   };
 
+  function openOrgPage(id){
+	sessionStorage.setItem("viewingPageID", id);
+	window.location.href="/#/orgprofile";
+  }
+
   function changePage(e, value){
 		setPage(value);
 		console.log(props.announcements)
 		setAnnouncements(props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement) => {
-			const { updateID, title, content, date, name } = announcement;
+			const { updateID, title, content, date, name, organizationID } = announcement;
   
 			return (
-			  <Grid item xs={12} key={updateID}>
+			  <Grid item xs={10} key={updateID} marginTop={"5px"}>
 				<Card variant="outlined" onClick={() => handleClick(announcement)}>
 				  <CardActionArea>
 					<CardContent className="content">
@@ -63,7 +68,7 @@ const Announcements = (props) => {
 						component="h2"
 						className="title"
 					  >
-						{title}
+						{truncateText(title, 35)}
 					  </Typography>
 					  <Typography
 						variant="body2"
@@ -78,6 +83,7 @@ const Announcements = (props) => {
 						color="textSecondary"
 						component="p"
 						style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
+						className='showDate'
 					  >
 						{formatDate(date)}
 					  </Typography>
@@ -106,6 +112,11 @@ const Announcements = (props) => {
 		setNumPages(Math.ceil(props.announcements.length / perPage));
 		changePage(null, 1);
 	}
+	if("notoUpdate" in sessionStorage){
+		setSelectedAnnouncement(JSON.parse(sessionStorage.getItem("notoUpdate")));
+		setIsModalOpen(true);
+		sessionStorage.removeItem("notoUpdate");
+	}
   }, [props.announcements]);
 
   return (
@@ -119,20 +130,19 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 
-      {/* Modal */}
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>{selectedAnnouncement?.title}</DialogTitle>
-        <DialogContent>
-        <DialogContentText style={{ color: 'black' }}>{selectedAnnouncement?.organizationName}</DialogContentText>
-        <DialogContentText style={{ marginTop: '10px' }}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-        <DialogContentText style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCloseModal}>Close</Button>
-        </DialogActions>
-      </Dialog>
+      	<Dialog open={isModalOpen} onClose={handleCloseModal}>
+			<DialogContent className='feedbackModal'>
+				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
+				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
+				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
+				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+				<Button onClick={handleCloseModal}>Close</Button>
+			</DialogActions>
+		</Dialog>
     </div>
   );
 };

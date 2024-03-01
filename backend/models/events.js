@@ -18,6 +18,7 @@ const feedbackSchema = new Schema({
         default: Date.now
     },
     studentName: String, 
+	studentEmail: String,
 	eventName: String,
     rating: {
         type: Number,

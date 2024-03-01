@@ -320,6 +320,38 @@
 	color: red;
 }
 
+.heartIconBehind{
+	position: absolute; 
+	bottom: -1px; 
+	left: 40.85px;
+	color: black;
+	background: none !important;
+}
+
+.heartIcon{
+	position: absolute; 
+	bottom: 0px; 
+	left: 40px;
+	width: 30px;
+	background: none !important;
+}
+
+.heartIcon:hover{
+	cursor: pointer;
+}
+
+.whiteHeart{
+	color: white !important;
+}
+
+.redHeart{
+	color: red !important;
+}
+
+.hoverHeart{
+	color: lightcoral !important;
+}
+
 .pfpFormatSelect{
 	position: absolute !important; 
 	top: 0px !important; 

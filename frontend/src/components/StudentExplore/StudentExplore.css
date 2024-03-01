@@ -15,8 +15,9 @@
 .exploreTitle{
     float: left;
     margin-right: -30px;
-    font-size: 30px;
+    font-size: 38px;
     font-family: "system-ui";
+	color: black !important;
 }
 
 .eventTag{

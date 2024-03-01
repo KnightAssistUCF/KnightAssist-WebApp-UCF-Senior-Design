@@ -20,7 +20,7 @@ import { buildPath } from '../../path';
 
 function OrgTopBar()
 {
-    const settings = ['Profile', 'Logout'];
+    const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 	const [picName, setPicName] = useState(null);
@@ -82,15 +82,6 @@ function OrgTopBar()
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
           </Box>
-          <Box sx={{ flexGrow: 0, mr: 3 }}>
-                <Tooltip title="Notifications">
-                <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-                    <Badge badgeContent={3} color="error">
-                    <NotificationsIcon />
-                    </Badge>
-                </IconButton>
-                </Tooltip>
-            </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Account">

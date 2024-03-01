@@ -3,13 +3,14 @@ import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip, Menu, MenuItem } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip, Menu, MenuItem, Tooltip } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import {TbEditCircle } from "react-icons/tb";
-import { Facebook, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
+import { Facebook, HeartBrokenOutlined, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
 import { RiEditCircleFill, RiTwitterXFill } from 'react-icons/ri';
+import { BsHeart, BsHeartFill } from 'react-icons/bs';
 
 function OrgBox(props) {
 
@@ -54,6 +55,8 @@ function OrgBox(props) {
 	const [colors, setColors] = useState([]);
 
 	const profilePicSelect = useRef(null);
+
+	const [heartHover, setHeartHover] = useState(false);
 
 	const toggleExpanded = () => {
         setExpanded(!expanded);
@@ -344,6 +347,7 @@ function OrgBox(props) {
 					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
 				/>
 				{(props.editMode) ? <TbEditCircle className="editIcon" onClick={openPicSelectMenu}/> : null}
+				{(role === "volunteer") ? <div><Tooltip title={(favorited) ? "Unfavorite" : "Favorite"} placement='right'><BsHeartFill size="28px" className="heartIconBehind"/> {((heartHover) ? <BsHeartFill className="heartIcon hoverHeart" onClick={() => favoriteOrg(true)} onMouseLeave={() => setHeartHover(false)}/> : <BsHeartFill className={"heartIcon " + ((favorited) ? "redHeart" : "whiteHeart")} onMouseOver={() => setHeartHover(true)}/>)}</Tooltip></div> : null}
 				<Menu
 					open={Boolean(openPicSelectChoice)}
 					anchorEl={openPicSelectChoice}
@@ -377,14 +381,6 @@ function OrgBox(props) {
 					<button className='editBtn btn btn-primary' onClick={() => {submitEdits(); props.setEditMode(false);}}>Save Profile</button>
 			  }
 		   </div>
-		)
-	}
-	
-	function Favorite(){
-		return (
-			<div>
-				<button className="favBtn" onClick={() => favoriteOrg(true)}>{(favorited) ? <Star className='favorited'/> : <StarOutline className='notFavorited'/>}</button>
-			</div>
 		)
 	}
 
@@ -540,7 +536,7 @@ function OrgBox(props) {
 							
 							{(role === "organization" && props.org._id === sessionStorage.getItem("ID")) 
 								? EditSaveProfileBtn() 
-								: ((role === "volunteer") ? Favorite() : "")
+								: null
 							}
 							{(!props.editMode) ? SocialMedia() : EditSocials()}	
 							{(props.editMode)

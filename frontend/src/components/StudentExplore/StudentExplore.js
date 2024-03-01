@@ -17,7 +17,7 @@ function StudentExplore()
 {
     const [searchType, setSearchType] = useState("events");
     const [openEvent, setOpenEvent] = useState(false); 
-    const [eventID, setEventID] = useState(undefined)
+    const [eventID, setEventID] = useState(("notoEventId" in sessionStorage) ? sessionStorage.getItem("notoEventId") : undefined)
     const [resetFavorite, setResetFavorite] = useState(1);
     const [resetRecEvents, setResetRecEvents] = useState(1);
 
@@ -32,7 +32,7 @@ function StudentExplore()
 		<div className='moveEverything'>
 			<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
 				<Grid item>
-					<div class="exploreTitle">Explore</div>
+					<b class="exploreTitle">Explore</b>
 				</Grid>						
 				<Grid item>
 					<SearchSwitch setSearchType={setSearchType}/>
