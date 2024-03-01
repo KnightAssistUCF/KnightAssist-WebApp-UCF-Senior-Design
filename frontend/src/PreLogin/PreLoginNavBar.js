@@ -6,9 +6,9 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
+import { useMediaQuery } from '@mui/material';
 import KA_Logo from './../KA_Logo.png';
 import './PreLoginNavBarButton.css';
 
@@ -34,10 +34,11 @@ function PreLoginNavBar() {
     } else if(page === 'About') {
       window.location.href = '#/about';
     }else if(page === 'Contact'){
-		window.location.href = '#/contact';
-	}
+		  window.location.href = '#/contact';
+	  }
     handleCloseNavMenu();
   };
+
   const handleOpenMenuItemClick = (page) => {
     console.log("clicked "+page);
     if (page === 'Home') {
@@ -47,140 +48,116 @@ function PreLoginNavBar() {
     } else if(page === 'About') {
       window.location.href = '#/about';
     }else if(page === 'Contact'){
-		window.location.href = '#/contact';
-	}
+		  window.location.href = '#/contact';
+	  }
   };
 
   const handleClick = (num) => {
-    if(num === 1) {
-      window.location.href = '#/register';
-    } else if(num === 2) {
-      window.location.href = '#/login';
-    }
-    
+    window.location.href = '#/login';
   };
 
+  const isMediumScreen = useMediaQuery((theme) => theme.breakpoints.down('md'));
+
   return (
-    <AppBar position="fixed" sx={{ bgcolor: '#00241B' }}> {/* bgcolor: 'rgba(0, 0, 0, 0.2)' */}
-      <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* desktop view logo settings */}
-          <Box
-            component="img"
-			onClick={() => window.location.href="/#/"}
-            sx={{
-              maxHeight: 50,
-              display: { xs: 'none', md: 'flex' },
-              mr: 1
-            }}
-            alt="KnightAssist Logo"
-            src={KA_Logo}
-			className='navBarLogoBtn'
-          />
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-			onClick={() => window.location.href="/#/"}
-			className='navBarLogoBtn'
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'sans-serif',
-              fontWeight: 700,
-              color: 'inherit',
-              textDecoration: 'none',
-              ":hover": {color: '#F5D6BA'}
-            }}>
-            KnightAssist
-          </Typography>
-
-          {/* mobile view of menu tabs */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-              <MenuIcon />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+    <React.Fragment>
+    <AppBar position="absolute" style={{ background: 'transparent', boxShadow: 'none', }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
+          {/* logo + name */}
+          <Box>
+            <Box
+              component="img"
+              onClick={() => window.location.href="/#/"}
               sx={{
-                display: { xs: 'block', md: 'none'},
+                maxHeight: 45,
+                mr: 0.5
               }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={() => handleMenuItemClick(page)} sx={{":hover": { color: '#5B4E77'}}}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+              alt="KnightAssist Logo"
+              src={KA_Logo}
+              className='navBarLogoBtn'
+            />
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              onClick={() => window.location.href="/#/"}
+              className='navBarLogoBtn'
+              sx={{
+                mr: 2,
+                fontFamily: 'sans-serif',
+                fontWeight: 700,
+                color: '#744E77',
+                textDecoration: 'none',
+                ":hover": {color: '#322032'}
+              }}>
+              KnightAssist
+            </Typography>
           </Box>
-
-          {/* mobile view logo settings */}
-          <Box
-            component="img"
-            sx={{
-            maxHeight: 50,
-            display: { xs: 'flex', md: 'none' },
-            mr: 1
-            }}
-            alt="KnightAssist Logo"
-            src={KA_Logo}
-        />
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="#app-bar-with-responsive-menu"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'sans-serif',
-              fontWeight: 700,
-              color: 'inherit',
-              textDecoration: 'none',
-              ":hover": {color: '#F5D6BA'}
-            }}
-          >
-            KnightAssist
-          </Typography>
-
-          {/* desktop view of menu tabs */}
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={() => handleOpenMenuItemClick(page)}
-                sx={{ my: 2, color: 'white', display: 'block', ":hover": { color: '#F5D6BA', bgcolor: '#003D2E'}}}
+          
+          {/* items to be aligned on the right side  of the appbar */}
+          <Box alignItems="center" display="flex" flexDirection="row">
+            {/* mobile view of menu tabs + login button */}
+            <nav>
+            <Box sx={{ flexGrow: 1, display: { md: 'none' } }}>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="#121212"
               >
-                {page}
-              </Button>
-            ))}
+                <MenuIcon />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
+                anchorOrigin={{
+                  vertical: 'bottom',
+                  horizontal: 'left',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'left',
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
+                sx={{
+                  display: { xs: 'block', md: 'none'},
+                }}
+              >
+                {pages.map((page) => (
+                  <MenuItem key={page} onClick={() => handleMenuItemClick(page)} sx={{":hover": { color: '#644064'}}}>
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                ))}
+                <MenuItem><Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#322032'}}} onClick={() => handleClick(2)}>Login</Button></MenuItem>
+              </Menu>
+            </Box>
+            </nav>
+
+            {/* desktop view of tabs + login button */}
+            {isMediumScreen ? null :
+              <>
+              <nav>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex'} }}>
+                {pages.map((page) => (
+                  <Button
+                    key={page}
+                    onClick={() => handleOpenMenuItemClick(page)}
+                    sx={{ my: 2, color: '#121212', display: 'block', ":hover": { color:'#A776A7', bgcolor: 'rgba(212, 212, 212, .3)' }}}
+                  >
+                    {page}
+                  </Button>
+                ))}
+              </Box>
+              </nav>
+              <Button variant="contained" sx={{ marginLeft: '30px', bgcolor: '#593959', ":hover": {bgcolor: '#322032'}}} onClick={() => handleClick(2)}>Login</Button>
+              </>}
           </Box>
-          <Button variant="contained" sx={{ marginRight: '10px', bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={() => handleClick(1)}>Register</Button>
-          {/* login button*/}
-          <Button variant="contained" sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#F5D6BA', color: 'black'}}} onClick={() => handleClick(2)}>Login</Button>
         </Toolbar>
-      </Container>
     </AppBar>
+    </React.Fragment>
   );
 }
 export default PreLoginNavBar;

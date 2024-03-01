@@ -6,6 +6,9 @@ import animationData from './landingAnimation2';
 import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import useStyles from '../../PreLogin/PreLoginStyles';
 import Footer from '../Footer';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme();
 
 function Landing() {
   const classes = useStyles();
@@ -16,6 +19,7 @@ function Landing() {
 
   return (
     <>
+      <ThemeProvider theme={theme}>
       <CssBaseline />
       <PreLoginNavBar />
       <Box className={classes.heroBox} sx={{ flexGrow: 1, padding: 20, justifyContent: 'center'}}>
@@ -50,6 +54,7 @@ function Landing() {
         </Grid>
       </Box>
       <Footer />
+      </ThemeProvider>
     </>
   );
 }

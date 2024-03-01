@@ -4,7 +4,7 @@ import ForgotPasswordModal from "./ForgotPasswordModal";
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
-import Modal from '@mui/material/Modal';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -209,6 +209,14 @@ function LoginComponents(props){
         )
     }
 
+    function SignUp(){
+        return (   
+        <>
+            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => onRegister()}> Already have an account? </Link>
+        </>
+        )
+    }
+
     function validInput(){
         if(email === "" || password === "" || isInvalid === "is-invalid"){
             setShowError(true);
@@ -251,33 +259,21 @@ function LoginComponents(props){
 	}, [changeURL])
 
     return (
-        <div className="loginBox" onKeyPress={handleKeyPress}>
+        <Box sx={{ marginTop: 6, width: 325}}>
             {Email()}
             {Password()}
             <AlertMessage />
             <Login/>
-            <div className="center">
-                {ForgotPassword()}
-                {/* {Register()} */}
-            </div>
-            {/*<Modal
-                open={openForgotPwd}
-                setOpen={setOpenForgotPwd}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description">
-                close={handleClose}
-                <Box sx={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 400,
-                    bgcolor: 'background.paper', border: '2px solid #000', boxShadow: 24, p: 4,}}>
-                    <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Text in a modal
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
-                </Box>
-            </Modal>*/}
+            <Grid container sx={{ justifyContent: 'space-between'}}>
+                <Grid item>
+                    {ForgotPassword()}
+                </Grid>
+                <Grid item>
+                    {SignUp()}
+                </Grid>
+              </Grid>
 			<ForgotPasswordModal open={openForgotPwd} setOpen={setOpenForgotPwd}/>
-        </div>
+        </Box>
     )
 }
 

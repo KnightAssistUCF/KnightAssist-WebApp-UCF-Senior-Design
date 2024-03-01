@@ -20,7 +20,7 @@ import { buildPath } from '../../path';
 
 function OrgTopBar()
 {
-    const settings = ['Profile', 'Logout'];
+    const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 	const [picName, setPicName] = useState(null);
