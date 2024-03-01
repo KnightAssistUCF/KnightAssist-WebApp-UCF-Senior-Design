@@ -223,7 +223,7 @@ function NewAnn() {
       <StudentTopBar/>
 	  <StudentHeader/>
       <div className="moveEverything">
-      <div class="StudentAnnouncements-title">Updates</div>
+      <div class="StudentAnnouncements-title"><b>Updates</b></div>
         <div className="testing">
           <div className="announcementSection">
           <div style={{marginLeft: '12%'}}>

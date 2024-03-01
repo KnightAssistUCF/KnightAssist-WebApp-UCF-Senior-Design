@@ -19,7 +19,7 @@ function OrgFeedback() {
 	function Title(){
 		return(
 		  <div className='feedbackText spartan'>
-			 <h1>Feedback</h1>
+			 <b>Feedback</b>
 		  </div>
 		)
 	}
