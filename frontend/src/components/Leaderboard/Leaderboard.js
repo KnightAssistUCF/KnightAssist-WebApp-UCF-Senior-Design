@@ -71,7 +71,7 @@ function Leaderboard() {
 	function Title(){
 		return(
 		  <div className='lbTitle spartan'>
-			 <h1>Leaderboard</h1>
+			 <b>Leaderboard</b>
 		  </div>
 		)
 	}

@@ -155,8 +155,8 @@ function StudentHistory()
 
     function Title(){
 		return(
-		  <div className={'yourEvents spartan' + ((!eventHistories) ? " topTitle" : "")}>
-			 <h1>Your History</h1>
+		  <div className={'spartan' + ((!eventHistories) ? " topTitle" : "")}>
+			 <b className='historyTitle'>Your History</b>
 		  </div>
 		)
 	}

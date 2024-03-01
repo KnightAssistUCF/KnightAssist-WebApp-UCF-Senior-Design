@@ -32,7 +32,7 @@ function StudentExplore()
 		<div className='moveEverything'>
 			<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
 				<Grid item>
-					<b class="exploreTitle">Explore</b>
+					<b className="exploreTitle">Explore</b>
 				</Grid>						
 				<Grid item>
 					<SearchSwitch setSearchType={setSearchType}/>

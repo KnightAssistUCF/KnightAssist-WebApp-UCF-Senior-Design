@@ -152,7 +152,7 @@ function RecommendedEvents(props)
                         />
                         <CardContent>
                             <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {((props.name.length >= 50) ? (props.name.substring(0, 50) + "...") : props.name)}
+                                {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
 								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
