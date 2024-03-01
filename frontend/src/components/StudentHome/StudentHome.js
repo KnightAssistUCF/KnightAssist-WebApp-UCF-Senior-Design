@@ -27,14 +27,12 @@ function StudentHome()
   const [upcomingRSVPdEvents, setUpcomingRSVPdEvents] = useState([]);
     
     useEffect(() => {
-	  console.log(sessionStorage)
       getStudentInfo();
 	  // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     async function getStudentInfo() {
       const email = '';
-      console.log(sessionStorage.getItem("ID"));
       const url = buildPath(`api/userSearch?userID=${sessionStorage.getItem("ID")}`);
     
       try {
@@ -44,7 +42,6 @@ function StudentHome()
         });
         let res = JSON.parse(await response.text());
         console.log(res);
-        console.log(res.firstName);
         setGoal(res.semesterVolunteerHourGoal);
         setTotalHours(res.totalVolunteerHours);
         setFavOrgs(res.favoritedOrganizations);
@@ -65,7 +62,6 @@ function StudentHome()
       var upcomingRSVPEvents = [];
       try {
         for(const event of allEvents) {
-          console.log(event);
           var url = buildPath(`api/searchOneEvent?eventID=${event}`);
           const response = await fetch(url, {
             method: "GET",
@@ -79,16 +75,22 @@ function StudentHome()
           }
         }
         setUpcomingRSVPdEvents(upcomingRSVPEvents);
+        console.log(upcomingRSVPEvents);
       } catch(e) {
         console.log("fetch upcoming events failed");
       }
     }
+    
     
 
     const handleTabChange = (newValue) => {
       console.log(newValue);
       setTabSelected(newValue);
     };
+
+    useEffect(() => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [upcomingRSVPdEvents]);
 
    return(
     
@@ -154,7 +156,7 @@ function StudentHome()
           <StudentHomeTabs onTabChange={handleTabChange}/>
           {tabSelected === 'Events' && (
             <>
-              <Calendar/>
+              <Calendar upcomingRSVPdEvents={upcomingRSVPdEvents}/>
             </>
           )}
           {tabSelected === 'FavoritedOrgs' && (
