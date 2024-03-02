@@ -118,7 +118,7 @@ function AddEventModal(props)
 			if(picFile != null){
 				const formData = new FormData();
 				formData.append('profilePic', picFile); 
-				formData.append('entityType', 'event');
+				formData.append('typeOfImage', '1');
 				formData.append('id', res.ID);
 	
 				// Store the picture selected to be associated with the event
