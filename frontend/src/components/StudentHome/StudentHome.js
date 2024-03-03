@@ -25,6 +25,11 @@ function StudentHome()
   const [totalHours, setTotalHours] = useState(0);
   const [favOrgs, setFavOrgs] = useState([]);
   const [upcomingRSVPdEvents, setUpcomingRSVPdEvents] = useState([]);
+  const [upcomingRSVPdEventsLength, setUpcomingRSVPdEventsLength] = useState(0);
+
+  const updateUpcomingRSVPdEventsLength = (newValue) => {
+    setUpcomingRSVPdEventsLength(newValue);
+  };
     
     useEffect(() => {
       getStudentInfo();
@@ -75,6 +80,7 @@ function StudentHome()
           }
         }
         setUpcomingRSVPdEvents(upcomingRSVPEvents);
+        setUpcomingRSVPdEventsLength(upcomingRSVPEvents.length);
         console.log(upcomingRSVPEvents);
       } catch(e) {
         console.log("fetch upcoming events failed");
@@ -134,7 +140,7 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Events</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>Card Title</Typography>
+                    <Typography variant="h6" style={{ textAlign: 'left' }}>{upcomingRSVPdEventsLength}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
@@ -156,7 +162,7 @@ function StudentHome()
           <StudentHomeTabs onTabChange={handleTabChange}/>
           {tabSelected === 'Events' && (
             <>
-              <Calendar upcomingRSVPdEvents={upcomingRSVPdEvents}/>
+              <Calendar upcomingRSVPdEvents={upcomingRSVPdEvents} updateEventsLength={updateUpcomingRSVPdEventsLength}/>
             </>
           )}
           {tabSelected === 'FavoritedOrgs' && (

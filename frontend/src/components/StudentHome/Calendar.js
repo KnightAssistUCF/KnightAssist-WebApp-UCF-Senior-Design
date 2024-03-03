@@ -6,63 +6,48 @@ import Snackbar from '@mui/joy/Snackbar';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 
-function Calendar({upcomingRSVPdEvents}) {
-//   const [upcomingEvents, setUpcomingEvents] = useState([]);
-//   const [rsvpEvents, setRSVPEvents] = useState([]);
-//   const [message, setMessage] = useState("");
-//   const [open, setOpen] = useState(false);
+function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
+    const [RSVPdEvents, setRSVPdEvents] = useState([]);
+    const [message, setMessage] = useState("");
+    const [openSnackbar, setOpenSnackbar] = useState(false);
 
-const [RSVPdEvents, setRSVPdEvents] = useState([]);
-
-async function getStudentInfo() {
-    const upcomingEvents = [];
-    console.log("hereeee");
-    if(upcomingRSVPdEvents.length > 0) {
-        for(const event of upcomingRSVPdEvents) {
-            console.log(event._id);
-            console.log(event.startTime);
-            console.log(new Date(event.startTime));
-            upcomingEvents.push({
-                _id: event._id,
-                title: event.name,
-                start: new Date(event.startTime),
-                end: new Date(event.endTime),
-                editable: false,
-                deletable: false,
-                draggable: false,
-                description: 'fsdlf',
-                location: 'sdfd',
-                maxAttendees: 5,
-                numRegistered: 9,
-                rsvpStatus: "Undo RSVP"
-            });
-            console.log(upcomingEvents)
+    async function getStudentInfo() {
+        const upcomingEvents = [];
+        if(upcomingRSVPdEvents.length > 0) {
+            for(const event of upcomingRSVPdEvents) {
+                console.log(event._id);
+                console.log(event.startTime);
+                console.log(new Date(event.startTime));
+                upcomingEvents.push({
+                    _id: event._id,
+                    title: event.name,
+                    start: new Date(event.startTime),
+                    end: new Date(event.endTime),
+                    editable: false,
+                    deletable: false,
+                    draggable: false,
+                    description: 'fsdlf',
+                    location: 'sdfd',
+                    maxAttendees: 5,
+                    numRegistered: 9,
+                    rsvpStatus: "Undo RSVP"
+                });
+                console.log(upcomingEvents)
+            }
+            setRSVPdEvents(upcomingEvents);
+        } else {
+            console.log("Empty RSVP array");
         }
-        setRSVPdEvents(upcomingEvents);
-    } else {
-        console.log("Empty RSVP array");
+
     }
 
-}
 
-
-useEffect(() => {
-    getStudentInfo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [upcomingRSVPdEvents]);
-
-// _id: event._id,
-// title: event.name,
-// start: new Date(event.startTime),
-// end: new Date(event.endTime),
-// editable: false,
-// deletable: false,
-// draggable: false,
-// description: event.description,
-// location: event.location,
-// maxAttendees: event.maxAttendees,
-// numRegistered: event.registeredVolunteers.length,
-// rsvpStatus: hasRSVP,
+    useEffect(() => {
+        getStudentInfo();
+        console.log(upcomingRSVPdEvents.length);
+        updateEventsLength(upcomingRSVPdEvents.length);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [upcomingRSVPdEvents]);
 
 const customViewer = (event, close) => {
     const formatDateTimeRange = (start, end) => {
@@ -111,6 +96,7 @@ const customViewer = (event, close) => {
         var res = await response.text();
         console.log(res);
         setRSVPdEvents(RSVPdEvents => RSVPdEvents.filter(e => e._id !== event._id));
+        // updateEventsLength(eventCounter);
       } catch(e) {
         console.log("unrsvp failed");
       }
@@ -120,8 +106,8 @@ const customViewer = (event, close) => {
     const handleButtonClick = (event) => {
         if (event.rsvpStatus === "Undo RSVP") {
             unrsvpEvent(event);
-            // setMessage("Cancelled RSVP")
-            // setOpen(true);
+            setMessage("Cancelled RSVP")
+            setOpenSnackbar(true);
         }
   
       close();
@@ -164,6 +150,21 @@ const customViewer = (event, close) => {
           events={RSVPdEvents}
           customViewer={customViewer}
         />
+        <Snackbar
+            autoHideDuration={2000}
+            open={openSnackbar}
+            variant="outlined"
+            color="primary"
+            onClose={(event, reason) => {
+            if (reason === 'clickaway') {
+                return;
+            }
+            setOpenSnackbar(false);
+            }}
+            startDecorator={<CheckCircleOutlineIcon />}
+        >
+            {message}
+      </Snackbar>
     </div>
   );
 }
