@@ -81,7 +81,7 @@ function StudentHomeTabs( {onTabChange} ) {
             <Box >
                 <AntTabs value={value} onChange={handleChange} aria-label="ant example">
                     <AntTab value="Events" label="My Events" />
-                    <AntTab value="FavoritedOrgs" label="Favorited Organizations" />
+                    {/* <AntTab value="FavoritedOrgs" label="Favorited Organizations" /> */}
                 </AntTabs>
             </Box>
         </div>
