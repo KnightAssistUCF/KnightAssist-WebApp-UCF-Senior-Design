@@ -110,6 +110,19 @@ const userStudentSchema = new mongoose.Schema({
 		eventId: String,
 		orgId: String,
 		orgName: String,
+		// If it is an update, need to fill the 
+		// update fields to open it
+		updateContent: [{
+			updateID: String,
+			title: String,
+			content: String,
+			name: String,
+			organizationID: String,
+			date: {
+				type: Date,
+				default: Date.now
+			}
+		}],
         createdAt: {
             type: Date,
             default: Date.now

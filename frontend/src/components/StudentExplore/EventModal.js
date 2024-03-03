@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { Avatar, Button, Modal } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Grid from '@mui/material/Grid';
@@ -22,7 +22,10 @@ function EventModal(props)
     const handleCloseModal = () => {setIsRSVP(false); setShowMSG(false); setMap(undefined); props.setEventID(undefined); props.setOpen(false);}
 
     const [name, setName] = useState("");
+	const [orgName, setOrgName] = useState("");
+	const [orgPic, setOrgPic] = useState(undefined);
     const [id, setID] = useState("");
+	const [orgID, setOrgID] = useState("");
     const [description, setDescription] = useState("");
     const [location, setLocation] = useState("");
     const [picLink, setPicLink] = useState(null);
@@ -34,10 +37,20 @@ function EventModal(props)
     const [isRSVP, setIsRSVP] = useState(false);
     const [showMSG, setShowMSG] = useState(false);
     const [disabled, setDisabled] = useState(false);
-	
+	const [hasEndDate, sethasEndDate] = useState(false);
+	const [isPast, setIsPast] = useState(false);
 	const [map, setMap] = useState(undefined);
 
-	const [hasEndDate, sethasEndDate] = useState(false);
+
+	// Event has not happened yet or is not over
+	function eventIsUpcoming(endTime){
+		return new Date().toISOString().localeCompare(endTime) < 0;
+	}
+
+	function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";    
+	}
 
     async function setInfo(){        
         let url = buildPath(`api/searchOneEvent?eventID=${props.eventID}`);
@@ -66,6 +79,31 @@ function EventModal(props)
             setVolunteers(event.registeredVolunteers.length);
             setMaxVolunteers(event.maxAttendees);
             setTags(event.eventTags);
+
+			url = buildPath(`api/organizationSearch?organizationID=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let org = JSON.parse(await response.text());
+
+			setOrgName(org.name);
+			setOrgID(org._id);
+			
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let orgPic = JSON.parse(await response.text());
+
+			setOrgPic(orgPic.url);
+
+			setIsPast(!eventIsUpcoming(event.endTime));
 
 			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
 			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
@@ -118,10 +156,18 @@ function EventModal(props)
 
             console.log("Result: ", res);
 
-            if(res.RSVPStatus === 1)
+            if(res.RSVPStatus === 1){
                 setIsRSVP(true);
-            else
-                setIsRSVP(false);
+			}else{
+				// Cannot rsvp if event is full
+				if(event.registeredVolunteers.length >= event.maxAttendees){
+					setIsRSVP(false);
+					setDisabled(true);
+					setMaxVolunteers(event.maxAttendees + " (FULL)");
+				}else{
+					setIsRSVP(false);
+				}
+			}
 
             console.log(event);
         } else {
@@ -196,6 +242,12 @@ function EventModal(props)
         )
     }
 
+	function OrgName(){
+		return (
+			<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}><Avatar className="orgPicModal" src={orgPic}/><a className='hoverOrgName' onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+		)
+	}
+
     function Description(){
         return (
             <div className='description'>
@@ -269,12 +321,13 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <button type="button" class="RSVPbtn btn btn-primary" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</button>
+            <Button type="button" sx={{ mt: 6, mr: 1, width: 125, borderRadius: 5, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
         )
     }
 
     useEffect(()=>{
 		if(props.eventID !== undefined){
+			setDisabled(false);
         	setInfo();
 			if("notoEventId" in sessionStorage){
 				props.setOpen(true);
@@ -297,6 +350,8 @@ function EventModal(props)
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>
+
+								<OrgName/>
 
                                 <Description/>
 
@@ -359,9 +414,13 @@ function EventModal(props)
                                 
 								{(tags.length > 0) ? <Tags/> : null}
 
-                                <Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
-                                    <RSVPButton/>
-                                </Grid>  
+								<Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
+									{(!isPast) 
+										? 
+											<RSVPButton/>
+										: null
+									}
+								</Grid>  
 
                                 <RSVPMessage/>
                             </Box>

@@ -173,9 +173,29 @@
 
   .unreadCircle{
 	border-radius: 100%;
-	width: 5px; 
-	height: 5px;
+	width: 7px; 
+	height: 7px;
 	background-color: red;
-	margin-right: 4px;
+	margin-right: 10px;
+	margin-top: 8px;
 	float: left;
   }
+
+  .dividerSpaceNoto{
+	margin-top: 0% !important;
+	margin-bottom: 0% !important;
+  }
+
+  .orgNotoPic{
+	width: 20px !important;
+	height: 20px !important;
+	margin-right: 15px;
+	float: left;
+  }
+
+  .notoMessage{
+	max-width: 300px;
+	white-space: initial;
+	float: left;
+  }
+

@@ -1,4 +1,4 @@
-import { Modal } from '@mui/material';
+import { Modal, Typography } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CloseIcon from '@mui/icons-material/Close';
@@ -82,10 +82,10 @@ function ForgotPassswordModal(props)
                         <button className='closeAddEvent'>
                             <CloseIcon onClick={() => handleClose()}/>
                         </button>
-                        <div className='forgotPWDName'>Forgot your password?</div>
-						<div className='forgotPWDInstructions'>{(!submitted) ? "No worries, just enter your email to receive a new password!" : "Success! Check your email to collect your new password"}</div>
+                        <Typography variant="h4" sx={{marginBottom: 2}}>Forgot your password?</Typography>
+						<Typography>{(!submitted) ? "No worries, just enter your email to receive a new password!" : "Success! Check your email below to receive your new password"}</Typography>
 						{(!submitted) ? Email() : null}
-						<Button size="med" sx={{ marginRight: 3, mt: 2.75, width: 100, backgroundColor: "#593959", "&:hover": {backgroundColor: "#5f5395"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
+						<Button size="med" sx={{ marginRight: 3, mt: 2.75, width: 100, backgroundColor: "#593959", "&:hover": {backgroundColor: "#322032"}}} variant="contained" onClick={() => {(!submitted) ? submit() : handleClose()}}>{(!submitted) ? "Submit" : "Ok!" }</Button>
 						{(error != undefined) ? <Alert className="forgetPWDAlert" severity="error">{error}</Alert> : null}
 	                </CardContent>   
                 </Card>

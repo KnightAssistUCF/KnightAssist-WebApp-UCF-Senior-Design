@@ -2,65 +2,53 @@ import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, CssBaseline, Grid } from '@mui/material';
 import Footer from '../Footer';
-import KA_Logo from '../../KA_Logo.png';
-import Container from '@mui/material/Container';
 import LoginBox from './LoginComponents';
 import './Login.css';
 
 const defaultTheme = createTheme();
 
-function Login(props)
-{
-    return(
-    <>
-      <ThemeProvider theme={defaultTheme}>
+function Login(props) {
+  return(
+    <ThemeProvider theme={defaultTheme}>
+      <CssBaseline />
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <PreLoginNavBar />
-        <Box
-          sx={{
-            flexGrow: 1,
-            justifyContent: 'center',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            minHeight: '100vh',
-            marginTop: '5px',
-			marginBottom: '-20px'
-          }}
-        >
-          <Container component="main" maxWidth="xs" sx={{ mb: 4, marginTop: 2 }}>
-            <Paper variant="outlined" sx={{ my: { xs: 2, md: 4 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)', width: '100%' }}>
-          <Box
+        <Grid container component="main" sx={{ flex: 1 }}>
+          <Grid item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              marginTop: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              backgroundImage: 'url(https://source.unsplash.com/random?wallpapers)',
+              backgroundRepeat: 'no-repeat',
+              backgroundColor: (t) =>
+                t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
-          >
+          />
+          <Grid container xs={12} sm={8} md={5} component={Paper} elevation={1} square justifyContent="center" alignItems="center">
             <Box
-              component="img"
               sx={{
-                maxHeight: 80,
-                display: { xs: 'none', md: 'flex' },
-                mr: 1
-              }}
-              alt="KnightAssist Logo"
-              src={KA_Logo}
-            />
-            <Typography component="h1" variant="h5" sx={{ marginTop: 2, color: 'black' }}>
-              Welcome back!
-            </Typography>
-            <LoginBox setRole={props.setRole}/>
-          </Box>
-        </Paper>
-      </Container>
+                my: 8,
+                mx: 4,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }} >
+              <Typography component="h1" variant="h4" sx={{ marginTop: 5, color: 'black' }}>
+                Welcome back!
+              </Typography>
+              <LoginBox setRole={props.setRole}/>
+            </Box>
+          </Grid>
+        </Grid>
+        <Footer />
       </Box>
-      <Footer />
-    </ThemeProvider>
-    </>
-    );
+  </ThemeProvider>
+  );
 };
 
 export default Login;

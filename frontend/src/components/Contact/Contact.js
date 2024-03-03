@@ -8,6 +8,9 @@ import useStyles from '../../PreLogin/PreLoginStyles';
 import './Contact.css';
 import UserInput from './UserInput';
 import Details from './Details';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme();
 
 function Contact() {
   const classes = useStyles();
@@ -29,6 +32,7 @@ function Contact() {
 
   return (
       <div className='contactUs'>
+		<ThemeProvider theme={theme}>
 		<CssBaseline />
 		<PreLoginNavBar />
 		<Box className="wholePage" sx={{ flexGrow: 1, padding: 10, justifyContent: 'center', alignItems: 'center'}}>
@@ -39,6 +43,7 @@ function Contact() {
 				</CardContent>   
 			</Card>
 		</Box>
+		</ThemeProvider>
       </div>
   );
 }

@@ -17,10 +17,11 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { buildPath } from '../../path';
 import { useNavigate } from 'react-router-dom';
+import { Divider, ListItem } from '@mui/material';
 
 function StudentTopBar()
 {
-    const settings = ['Profile', 'Logout'];
+    const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -97,7 +98,7 @@ function StudentTopBar()
 					window.location.href = "#/explore";
 				}
 			}else{ // Is an announcement
-				sessionStorage.setItem("updateSearchTerm", noto.orgName);
+				sessionStorage.setItem("notoUpdate", JSON.stringify(noto.updateContent[0]));
 				if(window.location.href.substring(window.location.href.lastIndexOf("#")) === "#/studentannouncements"){
 					window.location.reload();
 				}else{
@@ -112,9 +113,9 @@ function StudentTopBar()
 	async function getNotifications(){
 		let id = sessionStorage.getItem("ID");
 
-		const url = buildPath(`api/pushNotifications?userId=${id}`);
+		let url = buildPath(`api/pushNotifications?userId=${id}`);
 
-		const response = await fetch(url, {
+		let response = await fetch(url, {
 			method: "GET",
 			headers: {"Content-Type": "application/json"},
 		});
@@ -123,15 +124,35 @@ function StudentTopBar()
 
 		console.log(res);
 
+		let unread = 0;
+
+		// Pic urls of each org a noto is for
+		const pics = [];
+
 		if(res && res.notifications){
+			for(let noto of res.notifications.new){
+				if(!noto.read)
+					unread++;
+
+				id = noto.orgId;
+
+				url = buildPath(`api/retrieveImage?typeOfImage=2&id=${id}`);
+		
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = JSON.parse(await response.text());
+		
+				pics.push(pic.url);
+			}
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto) => <MenuItem onClick={async () => await clickNoto(noto)}>{(!noto.read) ? <div className='unreadCircle'></div> : ""}{(noto.message.length > 50) ? (noto.message.substring(0, 51) + "...") : noto.message}</MenuItem>))
+			setNotifcations(res.notifications.new.map((noto, i) => <div><MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/><div className='notoMessage'>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
+													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem>
+													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
 		}
 
-		let unread = 0;
-		for(let noto of res.notifications.new)
-			if(!noto.read)
-				unread++;
 
 		setNumUnreads(unread);
 	}
@@ -171,7 +192,7 @@ function StudentTopBar()
                     	<NotificationsIcon/>
                     </Badge>
 					<Menu
-						open={Boolean(openNotifications)}
+						open={Boolean(openNotifications) && notifications}
 						anchorEl={openNotifications}
 						onClose={() => setOpenNotifications(null)}
 					>

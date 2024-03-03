@@ -30,11 +30,18 @@ router.get('/', async (req, res) => {
 		for(let org of favoriteOrgsUpdates){
 			for(let update of org.updates){
 				newNotifications.push({
-					message: `New update from ${org.name}: ${update.title}`,
+					message: `Update from ${org.name}: ${update.title}`,
 					type_is: "orgAnnouncement",
 					createdAt: `${update.date}`,
 					eventId: "",
 					orgId: org._id,
+					updateContent: {
+						updateID: update._id,
+						title: update.title,
+						content: update.content,
+						organizationID: org._id,
+						name: org.name
+					},
 					orgName: org.name,
 					read: false
 				})
@@ -51,11 +58,12 @@ router.get('/', async (req, res) => {
 			
 			for(let event of events){
                 newNotifications.push({
-                    message: `New event from ${org.name}: ${event.name}`,
+                    message: `Event from ${org.name}: ${event.name}`,
                     type_is: "event",
                     createdAt: event.createdAt, 
 					eventId: event._id,
 					orgId: org._id,
+					updateContent: null,
 					orgName: org.name,
                     read: false
                 });

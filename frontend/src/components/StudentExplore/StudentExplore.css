@@ -15,8 +15,9 @@
 .exploreTitle{
     float: left;
     margin-right: -30px;
-    font-size: 30px;
+    font-size: 38px;
     font-family: "system-ui";
+	color: black !important;
 }
 
 .eventTag{
@@ -75,4 +76,10 @@
 	width: 20px !important;
 	height: 20px !important;
 	margin-right: 2px;
+}
+
+.orgPicModal{
+	width: 25px !important;
+	height: 25px !important;
+	margin-right: 5px;
 }

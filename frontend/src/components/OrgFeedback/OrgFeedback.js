@@ -19,7 +19,7 @@ function OrgFeedback() {
 	function Title(){
 		return(
 		  <div className='feedbackText spartan'>
-			 <h1>Feedback</h1>
+			 <b>Feedback</b>
 		  </div>
 		)
 	}
@@ -91,9 +91,9 @@ function OrgFeedback() {
 
 			console.log(unreads);
 
-			setSearchFeedback(unreads);
+			setSearchFeedback(unreads.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
 		}else{
-			setSearchFeedback(feedback)
+			setSearchFeedback(feedback.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
 		}
 	};
 
@@ -119,21 +119,23 @@ function OrgFeedback() {
 			<OrgTopBar/>
 			<div className='moveEverything'>
 				<Title/>
-				<div className="announcementSection">
-					<div className="topSection">
-						<SearchBar
-							searchAnnouncements={getSeachFeedback}
-							setSearchTerm={setSearchTerm}
-							searchTerm={searchTerm}
-							filterTerm={filterTerm}
-							setFilterTerm={setFilterTerm}
-							fetchAllUpdates={fetchAllFeedback}
-							setSearchAnnouncement={setSearchFeedback}
-							initialAnnouncements={feedback}
-						/>
-						<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
-					</div>
-				{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+				<div className='moveFromLeft'>
+					<div className="announcementSection">
+						<div className="topSection">
+							<SearchBar
+								searchAnnouncements={getSeachFeedback}
+								setSearchTerm={setSearchTerm}
+								searchTerm={searchTerm}
+								filterTerm={filterTerm}
+								setFilterTerm={setFilterTerm}
+								fetchAllUpdates={fetchAllFeedback}
+								setSearchAnnouncement={setSearchFeedback}
+								initialAnnouncements={feedback}
+							/>
+							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
+						</div>
+					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+				</div>
 			</div>
 			</div>
 		</div>
