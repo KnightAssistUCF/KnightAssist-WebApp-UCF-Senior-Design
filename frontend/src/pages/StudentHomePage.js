@@ -5,7 +5,7 @@ import StudentHome from '../components/StudentHome/StudentHome';
 const StudentHomePage = () =>
 {
     return(
-      <div className="studenthomepage" style={{backgroundColor: '#FAFAFA'}}>
+      <div className="studenthomepage">
         <StudentHome />
       </div>
     );
