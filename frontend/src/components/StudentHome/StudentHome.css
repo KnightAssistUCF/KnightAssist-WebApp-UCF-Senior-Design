@@ -236,9 +236,6 @@ min-height: 100vh;
 .css-1ksazz3-MuiPaper-root {
   box-shadow: none !important;
 }
-.css-1d8d7kz-MuiPaper-root {
-  background-color: #FAFAFA;
-}
 
 /* Responsive styles for smaller screens */
 @media (max-width: 768px) {
