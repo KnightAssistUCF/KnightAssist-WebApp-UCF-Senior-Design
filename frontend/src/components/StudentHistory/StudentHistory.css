@@ -23,5 +23,13 @@
 
 .topTitle{
 	position: absolute;
-	top: 110px;
+	top: 95px;
 }
+
+.historyTitle{
+	float: left;
+	margin-bottom: 20px;
+	font-size: 38px;
+	font-family: "system-ui";
+	color: black !important;
+}    

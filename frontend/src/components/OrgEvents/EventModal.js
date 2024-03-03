@@ -43,6 +43,9 @@ function EventModal(props)
     const [openVolunteers, setOpenVolunteers] = useState(false);
 
     const [name, setName] = useState("");
+	const [orgName, setOrgName] = useState("");
+	const [orgPic, setOrgPic] = useState(undefined);
+	const [orgID, setOrgID] = useState(undefined);
     const [description, setDescription] = useState("");
     const [picLink, setPicLink] = useState(null);
     const [location, setLocation] = useState("");
@@ -112,6 +115,12 @@ function EventModal(props)
 		window.location.href="/#/studentprofile";
 	}
 
+	function openOrgPage(id){
+		if(id !== sessionStorage.getItem("ID"))
+			sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";    
+	}
+
     async function getVolunteerInfo(id){
 
         console.log(sessionStorage.getItem("token"))
@@ -155,6 +164,29 @@ function EventModal(props)
 			setMaxVolunteers(event.maxAttendees);
 			setTags(event.eventTags);
 			setShowTags(event.eventTags.length > 0);
+
+			url = buildPath(`api/organizationSearch?organizationID=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+
+			let org = JSON.parse(await response.text());
+
+			setOrgName(org.name);
+			setOrgID(org._id);
+			
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let orgPic = JSON.parse(await response.text());
+
+			setOrgPic(orgPic.url);
 
 			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
 			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
@@ -318,6 +350,12 @@ function EventModal(props)
             </div>
         )
     }
+
+	function OrgName(){
+		return (
+			<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}><Avatar className="orgPicModal" src={orgPic}/><a className='hoverOrgName' onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+		)
+	}
 
     function Description(){
         return (
@@ -491,6 +529,8 @@ function EventModal(props)
                         <Container component="main" maxWidth="md">
                             <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
                                 <EventName/>
+
+								<OrgName/>
 
                                 <Description/>
 

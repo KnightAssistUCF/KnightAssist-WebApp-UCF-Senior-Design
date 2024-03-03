@@ -33,8 +33,8 @@ function OrgPortal()
     
     function Title(){
       return(
-        <div className='yourEvents spartan'>
-           <h1>Events</h1>
+        <div className=' spartan'>
+			<b className="exploreTitle">Events</b>
         </div>
       )
     }
