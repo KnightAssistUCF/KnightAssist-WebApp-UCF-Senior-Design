@@ -13,6 +13,7 @@ import Search from './Search';
 
 function Leaderboard() {
 	const [role, setRole] = useState(sessionStorage.getItem("role"));
+	const [top10Data, settop10Data] = useState(undefined);
 	const [studentData, setStudentData] = useState(undefined);
 	const [yourData, setYourData] = useState(undefined);
 	const [searchID, setSearchID] = useState(undefined);
@@ -52,12 +53,16 @@ function Leaderboard() {
 	
 			data.push([student, pic.url])
 
-			// It is your rank
 			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
 				setYourData({rank: i + 1, data: student, pic: pic.url});
 			}
 
 			i++;
+			
+			// The top 10 can be displayed
+			if(i == 10 || i == res.data.length){
+				settop10Data(data.slice())
+			}
 		}
 
 		setStudentData(data);
@@ -267,8 +272,8 @@ function Leaderboard() {
 				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}
 				{(role === "organization") ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
 				{(role === "organization" && searchID) ? <SearchRank/> : null}
-				{(studentData) ? <div className='lbHeader'>Top 10</div> : null}
-			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
+				{(top10Data) ? <div className='lbHeader'>Top 10</div> : null}
+			  	{(top10Data) ? top10Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
 			  </div>
 		  </div>
 		</div>

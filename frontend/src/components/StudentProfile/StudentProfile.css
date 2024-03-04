@@ -278,6 +278,12 @@
 	cursor: pointer;
 }
 
+.spaceCircleProgress{
+	margin-left: 50% !important;
+	margin-top: 25% !important;
+}
+
+
 .card-body-profile{
 	width: 950px;
 	overflow: none !important;
