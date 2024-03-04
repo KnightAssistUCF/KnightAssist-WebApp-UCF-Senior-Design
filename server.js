@@ -148,6 +148,9 @@ app.use('/api/searchForOrgInUserFavorites', searchForOrgInUserFavorites);
 const loadFavOrgEventsForUser = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
 app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEventsForUser);
 
+const loadFavOrgsForUser = require('./backend/routes/volunteers/loadFavoritedOrgs');
+app.use('/api/loadFavoritedOrgs', loadFavOrgsForUser);
+
 const editVolunteerHourGoal = require('./backend/routes/volunteers/editUserVolunteerHourGoal');
 app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
 

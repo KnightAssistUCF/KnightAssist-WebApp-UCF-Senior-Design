@@ -12,8 +12,8 @@ const generateRandomEventData = (organizationId) => {
         sponsoringOrganization: organizationId,
         attendees: [],
         registeredVolunteers: [],
-        startTime: new Date(),
-        endTime: new Date(),
+        startTime: new Date("2024-03-25"),
+        endTime: new Date("2024-03-26"),
         // whatever the heck these links can lead to [these are place holders]
         eventLinks: {
             facebook: `https://facebook.com/${Math.random().toString(36).substring(7)}`,
@@ -26,7 +26,8 @@ const generateRandomEventData = (organizationId) => {
         eventTags: [
             'computer science', 
             'engineering', 
-            'mathematics'
+            'mathematics',
+			'Education'
         ],
         semeter: 'Fall 2023',
         maxAttendees: Math.floor(Math.random() * 500) + 1, 
@@ -35,7 +36,7 @@ const generateRandomEventData = (organizationId) => {
 
 router.get('/', async (req, res) => {
     try {
-        const organizationId = req.params.organizationId;
+        const organizationId = req.query.organizationId;
         let events = [];
 
         for (let i = 0; i < 10; i++) {

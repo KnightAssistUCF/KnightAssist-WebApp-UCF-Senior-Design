@@ -55,7 +55,7 @@ function FavoriteOrganizations(props)
 			studentID = sessionStorage.getItem("ID");
 		}
 
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${studentID}`);
+        let url = buildPath(`api/loadFavoritedOrgs?userID=${studentID}`);
 
         let response = await fetch(url, {
             method: "GET",

@@ -51,6 +51,19 @@ function OrgFavoriteEvents(props)
         return new Date().toISOString().localeCompare(endTime) < 0;
 	}
 
+	async function getOrgName(id){
+        let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        return res.name;
+    }
+
     async function getEvents(){
         let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
 
@@ -65,7 +78,33 @@ function OrgFavoriteEvents(props)
 
 	    const events = [];
 
-        for(let org of res){
+		for(let event of res){
+            if(eventIsUpcoming(event.endTime)){
+				url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = JSON.parse(await response.text());
+
+                const orgName = await getOrgName(event.sponsoringOrganization);
+
+				url = buildPath(`api/retrieveImage?typeOfImage=2&id=${event.sponsoringOrganization}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let orgPic = JSON.parse(await response.text());
+
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
+            }
+        }
+
+       /* for(let org of res){
             url = buildPath(`api/searchEvent?organizationID=${org._id}`);
 
             response = await fetch(url, {
@@ -118,7 +157,7 @@ function OrgFavoriteEvents(props)
 					events.push(<Event name={event.name} pic={pic} orgName={org.name} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
 				}
             }
-        }       
+        }  */     
 
         events.sort(function(a,b){ 
             return a.props.startTime.localeCompare(b.props.startTime)
