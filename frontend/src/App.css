@@ -193,3 +193,8 @@
 	float: left;
   }
 
+  .putTitleLeft{
+	float: left !important;
+	margin-left: 15% !important;
+	align-content: left !important;
+  }

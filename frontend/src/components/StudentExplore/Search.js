@@ -135,7 +135,7 @@ function Search(props) {
 	
     return (
       <div>
-        <Stack className="exploreSearch" spacing={2} sx={{ width: 300 }}>
+        <Stack className="exploreSearch" spacing={2}>
 		<Autocomplete 
             freeSolo
 			autoHighlight={true}

@@ -13,8 +13,6 @@
 }
 
 .exploreTitle{
-    float: left;
-    margin-right: -30px;
     font-size: 38px;
     font-family: "system-ui";
 	color: black !important;
@@ -82,4 +80,11 @@
 	width: 25px !important;
 	height: 25px !important;
 	margin-right: 5px;
+}
+
+
+@media (max-width: 1100px) {
+    .exploreSearch{
+       width: 300px !important;
+    }
 }
