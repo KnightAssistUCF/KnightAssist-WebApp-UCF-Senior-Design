@@ -205,7 +205,7 @@ function StudentTopBar(props)
 					</IconButton>
 				</Box>
 
-			<Box sx={{ flexGrow: 0 }}>
+			<Box sx={{ flexGrow: 0, mr: 3 }}>
 				<Tooltip title="Account">
 				<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 					<Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />

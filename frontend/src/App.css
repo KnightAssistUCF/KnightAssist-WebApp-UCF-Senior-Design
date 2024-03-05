@@ -193,6 +193,11 @@
 	float: left;
   }
 
+  .StudentTopBar{
+	margin-top: 0.5px;
+	margin-bottom: 20px;
+  }
+
   .putTitleLeft{
 	float: left !important;
 	margin-left: 15% !important;

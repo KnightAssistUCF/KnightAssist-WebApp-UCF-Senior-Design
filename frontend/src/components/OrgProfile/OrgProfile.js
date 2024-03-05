@@ -9,6 +9,7 @@ import NavTabs from './NavTabs';
 import OrgBox from './OrgBox';
 import SearchResults from '../OrgEvents/SearchResults';
 import { TbEditCircle } from 'react-icons/tb';
+import StudentTopBar from '../TopBar/StudentTopBar';
 
 function OrgProfile() {
 	const [org, setOrg] = useState(null);
@@ -95,6 +96,7 @@ function OrgProfile() {
 	return (
 		<div className='spartan'>
 			{(sessionStorage.getItem("role") === "organization") ? <Header /> : <StudentHeader/>}
+			{(sessionStorage.getItem("role") === "organization") ? <OrgTopBar title="Profile"/> : <StudentTopBar title="Profile"/>}
 			<div className='orgProfilePage spartan'>
 				{/* <div className='orgProfileTitle'>Organization Profile</div> */}
 				{(org !== null)

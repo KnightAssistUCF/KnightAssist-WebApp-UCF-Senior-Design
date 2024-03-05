@@ -73,14 +73,6 @@ function Leaderboard() {
 		window.location.href="/#/studentprofile";
 	}
 
-	function Title(){
-		return(
-		  <div className='lbTitle spartan'>
-			 <b>Leaderboard</b>
-		  </div>
-		)
-	}
-
 	function YourRank(){
 
 		const student = yourData.data;
@@ -264,9 +256,8 @@ function Leaderboard() {
     return(
 		<div className='spartan'>
 		  {(role === "volunteer") ? <StudentHeader/> : <Header/>}
-		  {(role === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
+		  {(role === "volunteer") ? <StudentTopBar title="Leaderboard"/> : <OrgTopBar title="Leaderboard"/>}
 		  <div className='moveEverything'>
-		      <Title/>
 			  <div className='rankDisplay'>
 				{(role === "volunteer" && yourData) ? <div className='lbHeader'>Your Rank</div> : null}
 				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}

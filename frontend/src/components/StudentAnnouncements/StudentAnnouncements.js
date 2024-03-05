@@ -220,10 +220,9 @@ function NewAnn() {
 
   return (
     <div className='spartan' id="studentAnnouncements">
-      <StudentTopBar/>
+      <StudentTopBar title="Updates"/>
 	  <StudentHeader/>
       <div className="moveEverything">
-      <div class="StudentAnnouncements-title"><b>Updates</b></div>
         <div className="testing">
           <div className="announcementSection">
           <div style={{marginLeft: '12%'}}>

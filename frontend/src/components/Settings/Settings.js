@@ -153,7 +153,7 @@ function Settings(){
 
 	return(
 		<div className='spartan grayBG'>
-			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
+			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
 				<Card className='settingsCard'>

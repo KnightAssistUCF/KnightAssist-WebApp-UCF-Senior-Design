@@ -30,7 +30,7 @@ function StudentExplore()
 		<Header/>
 		<StudentTopBar title="Explore"/>
 		<div className='moveEverything'>
-			<Grid container layout={'row'} width={"80%"} style={{ gap: "0 24px" }} marginLeft={"8%"}>		
+			<Grid container layout={'row'} width={"80%"} style={{ gap: "0 24px" }} marginLeft={"10%"}>		
 				<Grid item>
 					<SearchSwitch setSearchType={setSearchType}/>
 				</Grid>
