@@ -28,7 +28,7 @@ router.post('/', async (req, res) => {
 
             // change this with the id of the student that we want to check in and out
             // across some events
-            const studentId = new mongoose.Types.ObjectId('65616a1011a2035f14571238');
+            const studentId = new mongoose.Types.ObjectId('657dff4c5f28be97b30edff1');
 
             const student = await userStudent.findById(studentId);
 

@@ -102,7 +102,7 @@ function StudentHome()
     
       <div className='spartan' id='homePage'>
         <StudentHeader/>
-        <StudentTopBar/>
+        <StudentTopBar title="Home"/>
         <div className="studHomePage">
           
           <div className='card-row'>

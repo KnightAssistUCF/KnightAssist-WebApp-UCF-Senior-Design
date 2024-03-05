@@ -19,7 +19,7 @@ import { buildPath } from '../../path';
 import { useNavigate } from 'react-router-dom';
 import { Divider, ListItem } from '@mui/material';
 
-function StudentTopBar()
+function StudentTopBar(props)
 {
     const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -181,57 +181,61 @@ function StudentTopBar()
       <div className="StudentTopBar">
 		<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
 		<Container maxWidth="xl">
+			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
+
 			<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+			<Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
-          </Box>
-          <Box sx={{ flexGrow: 0, mr: 3 }}>
-                <IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
-                    <Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
-                    	<NotificationsIcon/>
-                    </Badge>
-					<Menu
-						open={Boolean(openNotifications) && notifications}
-						anchorEl={openNotifications}
-						onClose={() => setOpenNotifications(null)}
-					>
-						{notifications}
-					</Menu>
-                </IconButton>
-            </Box>
+			</Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Account">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={() => handleButtonClick(setting)}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
-			</Toolbar>
-		</Container>
+			<Box sx={{ flexGrow: 0, mr: 3 }}>
+
+					<IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
+						<Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
+							<NotificationsIcon/>
+						</Badge>
+						<Menu
+							open={Boolean(openNotifications) && notifications}
+							anchorEl={openNotifications}
+							onClose={() => setOpenNotifications(null)}
+						>
+							{notifications}
+						</Menu>
+					</IconButton>
+				</Box>
+
+			<Box sx={{ flexGrow: 0, mr: 3 }}>
+				<Tooltip title="Account">
+				<IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+					<Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
+				</IconButton>
+				</Tooltip>
+				<Menu
+				sx={{ mt: '45px' }}
+				id="menu-appbar"
+				anchorEl={anchorElUser}
+				anchorOrigin={{
+					vertical: 'top',
+					horizontal: 'right',
+				}}
+				keepMounted
+				transformOrigin={{
+					vertical: 'top',
+					horizontal: 'right',
+				}}
+				open={Boolean(anchorElUser)}
+				onClose={handleCloseUserMenu}
+				>
+				{settings.map((setting) => (
+					<MenuItem key={setting} onClick={() => handleButtonClick(setting)}>
+					<Typography textAlign="center">{setting}</Typography>
+					</MenuItem>
+				))}
+				</Menu>
+			</Box>
+				</Toolbar>
+			</Container>
 		</AppBar>
       </div>
    );

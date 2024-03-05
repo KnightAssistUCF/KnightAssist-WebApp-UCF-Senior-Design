@@ -30,14 +30,6 @@ function OrgPortal()
 	const [selectedType, setSelectedType] = useState("Upcoming");
 
 	const results = useRef([]);
-    
-    function Title(){
-      return(
-        <div className=' spartan'>
-			<b className="exploreTitle">Events</b>
-        </div>
-      )
-    }
 
 	function changeType(type){
 		// If type = 0, upcoming, else past
@@ -78,13 +70,10 @@ function OrgPortal()
     return(
      	<div className='spartan'>
 			<Header/>
-			<OrgTopBar/>
+			<OrgTopBar title="Events"/>
 			<div className='move'>
 				<div>
-					<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
-						<Grid item>
-							<Title/>
-						</Grid>						
+					<Grid container layout={'row'} width={"80%"} style={{ gap: "0 24px" }} marginLeft={"8%"}>			
 						<Grid item>
 							<SearchSwitch setSearchType={setSearchType}/>
 						</Grid>

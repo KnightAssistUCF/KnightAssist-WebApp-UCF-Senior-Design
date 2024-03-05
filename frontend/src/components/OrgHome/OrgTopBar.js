@@ -18,7 +18,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { useNavigate } from 'react-router-dom';
 import { buildPath } from '../../path';
 
-function OrgTopBar()
+function OrgTopBar(props)
 {
     const settings = ['Profile', 'Sign Out'];
     const [anchorElNav, setAnchorElNav] = useState(null);
@@ -75,15 +75,17 @@ function OrgTopBar()
    return(
       <div className="StudentTopBar">
     	<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
-			<Container maxWidth="xl">
-				<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
+		<Container maxWidth="xl">
+			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
+
+			<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
 
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
 
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
+          <Box sx={{ flexGrow: 0, mr: 3 }}>
             <Tooltip title="Account">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 <Avatar alt={"First" + " " +"Last"} src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}/>

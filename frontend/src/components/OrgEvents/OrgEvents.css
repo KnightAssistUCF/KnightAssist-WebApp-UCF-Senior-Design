@@ -3,7 +3,7 @@
 }
  
 .orgSearch{
-	width: 400px !important;
+	width: 500px !important;
     margin-bottom: 5%;
 }
 
@@ -392,6 +392,12 @@
 .cardCalendar{
 	width: 20px !important;
 	margin-right: 3px;
+}
+
+@media (max-width: 1100px) {
+    .orgSearch{
+       width: 300px !important;
+    }
 }
 
 @media (max-width: 1500px) {

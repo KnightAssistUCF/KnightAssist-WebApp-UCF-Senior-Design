@@ -28,12 +28,9 @@ function StudentExplore()
     return(
       <div className='spartan' id='homePage'>
 		<Header/>
-		<StudentTopBar/>
+		<StudentTopBar title="Explore"/>
 		<div className='moveEverything'>
-			<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
-				<Grid item>
-					<b className="exploreTitle">Explore</b>
-				</Grid>						
+			<Grid container layout={'row'} width={"80%"} style={{ gap: "0 24px" }} marginLeft={"10%"}>		
 				<Grid item>
 					<SearchSwitch setSearchType={setSearchType}/>
 				</Grid>

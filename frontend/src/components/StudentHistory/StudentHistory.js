@@ -153,14 +153,6 @@ function StudentHistory()
 		}  
 	}
 
-    function Title(){
-		return(
-		  <div className={'spartan' + ((!eventHistories) ? " topTitle" : "")}>
-			 <b className='historyTitle'>Your History</b>
-		  </div>
-		)
-	}
-
 	useEffect(() => {
 		setAmtPerPage(5);
 		getHistory();
@@ -170,9 +162,8 @@ function StudentHistory()
     return(
       <div className='spartan'>
 		<Header/>
-		<StudentTopBar/>
+		<StudentTopBar title="History"/>
 		<div className='moveEverything'>
-			<Title/>
 			{(eventHistories) ?
 					<div>
 						<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">

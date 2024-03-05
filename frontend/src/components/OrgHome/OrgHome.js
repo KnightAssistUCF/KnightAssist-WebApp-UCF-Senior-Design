@@ -85,7 +85,7 @@ function OrgHome() {
 
   return (
     <div className='spartan'>
-      <OrgTopBar />
+      <OrgTopBar title="Home"/>
       <Header />
       <div className='move'>
         <div className="orgPortalTop">
