@@ -199,7 +199,7 @@ function RecentEvents(props)
 				<Events/>
 				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
 			</div>
-			: <CircularProgress/>
+			: <CircularProgress className='spaceCircleProgress'/>
 		}
      </div>
     );

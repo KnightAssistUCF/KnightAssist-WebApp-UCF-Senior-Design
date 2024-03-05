@@ -140,7 +140,7 @@ function LoginComponents(props){
 
     function Email(){
         return (
-            <div className="input-group mb-3">
+            <div className="input-group mb-3" onKeyDown={handleKeyPress}>
                 <TextField
                     required
                     fullWidth
@@ -159,7 +159,7 @@ function LoginComponents(props){
 
     function Password(){
         return (
-            <div className="input-group mb-3">
+            <div className="input-group mb-3" onKeyDown={handleKeyPress}>
                 <TextField
                     required
                     fullWidth
