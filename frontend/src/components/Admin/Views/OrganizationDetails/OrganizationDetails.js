@@ -51,9 +51,14 @@ function OrganizationDetails({ organizationID }) {
   const [linkedin, setLinkedin] = useState('');
   const [selectedOrgToggle, setSelectedOrgToggle] = useState('past');
   const [pastEvents, setPastEvents] = useState([]);
+  const [totalPastEvents, setTotalPastEvents] = useState([]);
   const [futureEvents, setFutureEvents] = useState([]);
+  const [totalFutureEvents, setTotalFutureEvents] = useState([]);
   const [BGFile, setBGFile] = useState(null);
   const [PFPFile, setPFPFile] = useState(null);
+  const [query, setQuery] = useState("");
+  const [allUpcomingEvents, setAllUpcomingEvents] = useState([]);
+  const [allPastEvents, setAllPastEvents] = useState([]);
 
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
@@ -424,7 +429,9 @@ const AllTags = ({ tags }) => {
     console.log(pastEvents);
     console.log(futureEvents);
     setPastEvents(pastEvents);
+    setTotalPastEvents(pastEvents);
     setFutureEvents(futureEvents);
+    setTotalFutureEvents(futureEvents);
 
     
 
@@ -440,11 +447,53 @@ function eventIsUpcoming(endTime) {
   return eventEndDate.getTime() >= today.getTime();
 }
 
-const backgroundImageStyle = BGFile
-  ? { backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '10px', }
-  : {};
+  const backgroundImageStyle = BGFile
+    ? { backgroundSize: 'cover', backgroundPosition: 'center', borderRadius: '10px', }
+    : {};
 
-const backgroundImageURL = BGFile;
+  const backgroundImageURL = BGFile;
+
+
+  const searchEvents = (query) => {
+    const lowerCaseSearchTerm = query.toLowerCase();
+    console.log(query);
+
+    if (query.trim() !== "") {
+      console.log(query)
+      console.log(selectedOrgToggle)
+      if (selectedOrgToggle === 'past') {
+        const filteredPast = totalPastEvents.filter((event) => {
+          const eventName = event.name ? event.name.toLowerCase() : "";
+        //   const studentEmail = student.email ? student.email.toLowerCase() : "";
+
+          return (
+            eventName.startsWith(lowerCaseSearchTerm) || eventName.includes(lowerCaseSearchTerm)
+        //     studentEmail.includes(lowerCaseSearchTerm)
+          );
+        });
+
+        setPastEvents(filteredPast);
+      } else if(selectedOrgToggle === 'upcoming') {
+        console.log("heree");
+        const filteredUpcoming = totalFutureEvents.filter((event) => {
+          const eventName = event.name ? event.name.toLowerCase() : "";
+        //   const orgEmail = org.email ? org.email.toLowerCase() : "";
+
+          return (
+            eventName.startsWith(lowerCaseSearchTerm) || eventName.includes(lowerCaseSearchTerm)
+        //     orgEmail.includes(lowerCaseSearchTerm)
+          );
+        });
+
+        setFutureEvents(filteredUpcoming);
+      }
+    } else {
+      console.log("empty query");
+      setQuery('');
+      setPastEvents(totalPastEvents);
+      setFutureEvents(totalFutureEvents);
+    }
+  };
 
 
   
@@ -684,7 +733,16 @@ const backgroundImageURL = BGFile;
         {tabSelected === 'Events' && (
           <>
             <div style={{display: 'flex'}}>
-              <OrgSearchBar/>
+              <OrgSearchBar
+                query = {query}
+                setQuery = {setQuery}
+                searchEvents={searchEvents}
+                selectedToggle={selectedOrgToggle}
+                allUpcomingEvents={futureEvents}
+                allPastEvents={pastEvents}
+                setAllUpcomingEvents={setFutureEvents}
+                setAllPastEvents={setPastEvents}
+              />
               <OrgToggle onToggleChange={handleOrgToggleChange}/>
             </div>
             {selectedOrgToggle === 'past' && (

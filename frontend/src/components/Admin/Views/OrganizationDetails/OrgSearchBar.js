@@ -4,15 +4,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 
-function OrgSearchBar() {
+function OrgSearchBar(props) {
 
-  const handleClear = () => {
-    // props.setSearchTerm("");
-    // if(props.selectedToggle == "student") {
-    //   props.setStudents(props.allStudents);
-    // } else if(props.selectedToggle == "organization") {
-    //   props.setOrgs(props.allOrgs);
-    // }
+  const handleClear = (event) => {
+    event.target.value = '';
+    props.setQuery("");
+    props.searchEvents("");
   };
   
   const showAllUpdates = () => {
@@ -21,8 +18,9 @@ function OrgSearchBar() {
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-    // props.setSearchTerm(newValue);
-    // props.searchUsers(newValue);
+    props.setQuery(newValue);
+    console.log(newValue);
+    props.searchEvents(newValue);
   };
 
 const handleKeyPress = (event) => {
@@ -36,7 +34,7 @@ const handleKeyPress = (event) => {
       <TextField
         placeholder="Search"
         onChange={handleInputChange}
-        //value={props.searchTerm}
+        value={props.query}
         sx={{ width: '36ch' }}
         size='small'
         InputProps={{
