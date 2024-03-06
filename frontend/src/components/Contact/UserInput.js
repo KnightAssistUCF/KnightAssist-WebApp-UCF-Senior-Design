@@ -10,6 +10,7 @@ import './Contact.css';
 import PageTitle from '../PageTitle';
 import { Content } from '@radix-ui/react-tabs';
 import { buildPath } from '../../path';
+import Paper from '@mui/material/Paper';
 
 function UserInput() {
 	const classes = useStyles();
@@ -105,11 +106,8 @@ function UserInput() {
 	}
 
 	return (
-		<div className='userInput'>
-			<PageTitle mainStyle="cardTitleLogo" logoStyle="logoSize" titleStyle="cardTitle center" />
-			<WelcomeText />
-
-			<Grid container spacing={2} marginBottom={"25px"}>
+		<Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)'}}>
+			<Grid container spacing={2}>
 				{GridTextField({ xm: 12, sm: 6, name: "First Name", label: "First Name", required: true, multiline: false, value: firstName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setFirstName(e.target.value) } })}
 				{GridTextField({ xm: 12, sm: 6, name: "Last Name", label: "Last Name", required: true, multiline: false, value: lastName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setLastName(e.target.value) } })}
 				{GridTextField({ xm: 12, sm: 12, name: "Email", label: "Email", required: true, multiline: false, value: email, onChange: (e) => setEmail(e.target.value) })}
@@ -119,8 +117,7 @@ function UserInput() {
 
 			{(hasSent) ? <SuccessMessage /> : ""}
 			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": { backgroundColor: "#7566b4" } }} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
-
-		</div>
+		</Paper>
 	);
 }
 
