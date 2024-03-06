@@ -108,7 +108,7 @@ router.get('/', async (req, res) => {
         /* DUMMY DATA */
 
         // we get the no show data 
-        const noShowData = rsvpCountData.map((rsvp, index) => rsvp - checkedInCountData[index]);
+        const noShowData = rsvpCountData.map((rsvp, index) => ((rsvp - checkedInCountData[index]) >= 0) ? (rsvp - checkedInCountData[index]) : 0);
 
 
         const chartCallback = (ChartJS) => {
@@ -175,7 +175,7 @@ router.get('/', async (req, res) => {
             },
         };
 
-        res.json({data: configuration.data});
+        res.json({ data: configuration.data });
 
     } catch (error) {
         console.error(error);
