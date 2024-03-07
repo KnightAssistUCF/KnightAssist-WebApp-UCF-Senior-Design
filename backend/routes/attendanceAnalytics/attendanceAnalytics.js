@@ -175,7 +175,7 @@ router.get('/', async (req, res) => {
             },
         };
 
-        res.json({data: configuration.data});
+        res.json({ data: configuration.data });
 
     } catch (error) {
         console.error(error);
