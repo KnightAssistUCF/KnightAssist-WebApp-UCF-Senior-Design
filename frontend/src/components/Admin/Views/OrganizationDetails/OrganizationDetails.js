@@ -478,6 +478,8 @@ function eventIsUpcoming(endTime) {
           <div style={{ ...backgroundImageStyle, backgroundImage: `url(${backgroundImageURL})`, width: '100%', height: '250px', position: 'relative' }}>
             {BGFile && <img src={backgroundImageURL} alt="Background" style={{ width: '100%', height: '100%', objectFit: 'cover', position: 'absolute', top: 0, left: 0, borderRadius: '10px', }} />}
           </div>
+        </div>
+        <div className='organizationProfilePic'>
           <Avatar
             alt="Profile Picture"
             className="profilePicture"
@@ -485,16 +487,18 @@ function eventIsUpcoming(endTime) {
             sx={{
               width: '150px', // Set the desired width
               height: '150px', // Set the desired height
-              // transform: 'translate(-50%, -50%)',
+              // transform: 'translateY(-50%)',
               // zIndex: 2, /* Ensure the profile picture is above the background */
               // border: '2px solid #fff',
             }}
           />
         </div>
+        
 
 
-
-        <Tabs  onTabChange={handleTabChange}/>
+        <div style={{marginTop: '100px'}}>
+        <Tabs onTabChange={handleTabChange}/>
+        </div>
         <div className='studentDetailsFields' style={{ marginTop: '3px' }} >
         {tabSelected === 'About' && (
           <>
