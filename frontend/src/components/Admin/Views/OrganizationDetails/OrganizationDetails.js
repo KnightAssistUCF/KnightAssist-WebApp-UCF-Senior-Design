@@ -60,12 +60,6 @@ function OrganizationDetails({ organizationID }) {
   const [allUpcomingEvents, setAllUpcomingEvents] = useState([]);
   const [allPastEvents, setAllPastEvents] = useState([]);
 
-  const handleToggleChange = (newToggleValue) => {
-    setSelectedToggle(newToggleValue);
-    console.log(newToggleValue);
-    setTabSelected(newToggleValue);
-  };
-
   const handleOrgToggleChange = (newToggleValue) => {
     setSelectedOrgToggle(newToggleValue);
     console.log(newToggleValue);
@@ -276,38 +270,7 @@ const AllTags = ({ tags }) => {
     setOpenAlert(false);
   };
 
-  const handleTagSelect = (tag) => {
-    if (prevSelectedTags.includes(tag)) {
-      setPrevSelectedTags((prevSelectedTags) => {
-        // Remove the tag from the array
-        return prevSelectedTags.filter((selectedTag) => selectedTag !== tag);
-      });
-    } else if (selectedTags.includes(tag)) {
-      // Check if the tag is already selected in selectedTags
-      setSelectedTags((prevSelectedTags) => {
-        // Remove the tag from the array
-        return prevSelectedTags.filter((selectedTag) => selectedTag !== tag);
-      });
-    } else {
-      // If the tag is not selected, check the total count
-      const totalSelectedCount = prevSelectedTags.length + selectedTags.length;
   
-      if (totalSelectedCount <= 10) {
-        // If the total count is less than 10, add the tag to the arrays
-        setPrevSelectedTags((prevSelectedTags) => [...prevSelectedTags, tag]);
-        setSelectedTags((prevSelectedTags) => [...prevSelectedTags, tag]);
-      } else {
-        // Otherwise, do not add more tags
-        // You can also show a message or handle this case as needed
-      }
-    }
-  };
-  
-  
-  // const handleClickOpenModal = () => {
-  //   setOpenModal(true);
-  // };
-
   const handleCloseModal = () => {
     setOpenModal(false);
   };
