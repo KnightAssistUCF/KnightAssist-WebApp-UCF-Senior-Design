@@ -9,7 +9,7 @@ const UserStudent = require('../../models/userStudent');
 
 router.get('/', async (req, res) => {
     try {
-        const { eventId } = req.params;
+        const { eventId } = req.query;
         const event = await Event.findById(eventId)
             .populate({
                 path: 'checkedInStudents.studentId',
@@ -31,25 +31,20 @@ router.get('/', async (req, res) => {
         }));
 
         const xls = json2xls(attendees);
+
+        // Define the directory where the file will be saved
+        const directoryPath = path.join(__dirname, 'csvAttendeesRequested');
+
+        // Create the directory if it does not exist
+        if (!fs.existsSync(directoryPath)) {
+            fs.mkdirSync(directoryPath, { recursive: true });
+        }
+
         const fileName = `event-${eventId}-attendees.xlsx`;
-        const filePath = path.join(__dirname, fileName);
+        const filePath = path.join(directoryPath, fileName);
         fs.writeFileSync(filePath, xls, 'binary');
 
-        // Set headers to inform the client about the file format
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
-
-        // Stream the file content to the response
-        fs.createReadStream(filePath)
-            .on('end', () => {
-                // Delete the file after sending it
-                fs.unlinkSync(filePath);
-            })
-            .on('error', (error) => {
-                console.error('Error streaming the file', error);
-                res.status(500).send('Error streaming the file');
-            })
-            .pipe(res);
+        res.status(200).send(`File has been saved successfully at ${filePath}`);
 
     } catch (error) {
         console.error(error);

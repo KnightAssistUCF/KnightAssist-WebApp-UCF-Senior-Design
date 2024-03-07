@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { generateToken, authenticateToken_User, authenticateToken_Organization } = require('../utils/jwtUtils'); 
+const { generateToken, authenticateToken_User, authenticateToken_Organization } = require('../../utils/jwtUtils');
 
 router.post('/', authenticateToken_User, authenticateToken_Organization, async (req, res) => {
     try {
