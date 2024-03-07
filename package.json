@@ -22,6 +22,7 @@
     "express": "^4.18.2",
     "fs": "^0.0.1-security",
     "html5-qrcode": "^2.3.8",
+    "json2xls": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.308.0",
     "mailgen": "^2.0.28",
