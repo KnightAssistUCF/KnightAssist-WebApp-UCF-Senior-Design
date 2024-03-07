@@ -319,6 +319,10 @@ app.use('/api/markNotificationAsRead', markNotificationAsRead);
 const exportAttendeesCSV = require('./backend/routes/exportAttendeeData/exportAttendeesCSV');
 app.use('/api/exportAttendeesCSV', exportAttendeesCSV);
 
+// refresh the jwt token  
+const refreshJWT = require('./backend/routes/refreshToken/refreshToken');
+app.use('/api/refreshJWT', refreshJWT);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
