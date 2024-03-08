@@ -4,7 +4,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import InputAdornment from '@mui/material/InputAdornment';
 import ClearIcon from '@mui/icons-material/Clear';
 
-function StudentSearchBar() {
+function StudentSearchBar(props) {
 
   const handleClear = () => {
     // props.setSearchTerm("");
@@ -21,8 +21,8 @@ function StudentSearchBar() {
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
-    // props.setSearchTerm(newValue);
-    // props.searchUsers(newValue);
+    props.setQuery(newValue);
+    props.searchEvents(newValue);
   };
 
 const handleKeyPress = (event) => {
@@ -36,7 +36,7 @@ const handleKeyPress = (event) => {
       <TextField
         placeholder="Search"
         onChange={handleInputChange}
-        //value={props.searchTerm}
+        value={props.query}
         sx={{ width: '36ch' }}
         size='small'
         InputProps={{

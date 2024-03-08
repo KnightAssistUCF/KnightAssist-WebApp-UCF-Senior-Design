@@ -34,8 +34,10 @@ function StudentDetails({ studentID }) {
   const [userInputTags, setUserInputTags] = useState([]);
   const [fetchAllTags, setFetchAllTags] = useState([]);
   const [selectedToggle, setSelectedToggle] = useState('past');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [query, setQuery] = useState('');
   const [eventHistory, setEventHistory] = useState([]);
+  const [totalUpcomingEvents, setTotalUpcomingEvents] = useState([]);
+  const [totalEventHistory, setTotalEventHistory] = useState([]);
   const [picName, setPicName] = useState(undefined);
   const [pfpFile, setPfpFile] = useState(null);
 
@@ -68,6 +70,7 @@ function StudentDetails({ studentID }) {
       setGoal(res.semesterVolunteerHourGoal);
       setId(res._id);
       setUpcomingEvents(res.eventsRSVP);
+      setTotalUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
 
       // fetch past/upcoming events
@@ -313,6 +316,47 @@ const AllTags = ({ tags }) => {
       console.log("Error saving tags: ", e);
     }
   };
+
+  const searchEvents = (query) => {
+    const lowerCaseSearchTerm = query.toLowerCase();
+    console.log(query);
+
+    if (query.trim() !== "") {
+      console.log(query)
+      console.log(selectedToggle)
+      if (selectedToggle === 'past') {
+        const filteredPast = totalEventHistory.filter((event) => {
+          const eventName = event.name ? event.name.toLowerCase() : "";
+        //   const studentEmail = student.email ? student.email.toLowerCase() : "";
+
+          return (
+            eventName.startsWith(lowerCaseSearchTerm) || eventName.includes(lowerCaseSearchTerm)
+        //     studentEmail.includes(lowerCaseSearchTerm)
+          );
+        });
+
+        setEventHistory(filteredPast);
+      } else if(selectedToggle === 'upcoming') {
+        console.log("heree");
+        const filteredUpcoming = totalUpcomingEvents.filter((event) => {
+          const eventName = event.name ? event.name.toLowerCase() : "";
+        //   const orgEmail = org.email ? org.email.toLowerCase() : "";
+
+          return (
+            eventName.startsWith(lowerCaseSearchTerm) || eventName.includes(lowerCaseSearchTerm)
+        //     orgEmail.includes(lowerCaseSearchTerm)
+          );
+        });
+
+        setUpcomingEvents(filteredUpcoming);
+      }
+    } else {
+      console.log("empty query");
+      setQuery('');
+      setEventHistory(totalEventHistory);
+      setUpcomingEvents(totalUpcomingEvents);
+    }
+  };
   
 
   return (
@@ -460,9 +504,9 @@ const AllTags = ({ tags }) => {
             <div>
               <div className='align' style={{display: 'flex', marginTop: '20px'}}>
               <StudentSearchBar
-                // searchTerm = {searchTerm}
-                // setSearchTerm = {setSearchTerm}
-                // searchUsers={searchUsers}
+                query = {query}
+                setQuery = {setQuery}
+                searchEvents={searchEvents}
                 // selectedToggle={selectedToggle}
                 // allStudents={allStudents}
                 // allOrgs={allOrgs}
