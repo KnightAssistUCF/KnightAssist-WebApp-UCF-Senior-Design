@@ -426,7 +426,7 @@ function EventModal(props)
 
     function Volunteers(){
         return (
-            <div>
+            <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
                     <p className={(!isPast) ? 'lessSpace' : ''}>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"}</p>
                     {(!isPast) ? <p>{curVolunteers + "/" + maxVolunteers} </p> : null}
@@ -624,7 +624,7 @@ function EventModal(props)
 									: 
 									<Grid container sx={{justifyContent:'center'}} marginTop={"12%"} marginLeft={"1%"}>
 										<Grid item xs={12}>
-											<a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a>
+											{(attendedVolunteers > 0) ? <a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a> : null}
 										</Grid>
 									</Grid>   
 								}
