@@ -13,7 +13,7 @@ import Search from './Search';
 
 function Leaderboard() {
 	const [role, setRole] = useState(sessionStorage.getItem("role"));
-	const [top10Data, settop10Data] = useState(undefined);
+	const [top50Data, settop50Data] = useState(undefined);
 	const [studentData, setStudentData] = useState(undefined);
 	const [yourData, setYourData] = useState(undefined);
 	const [searchID, setSearchID] = useState(undefined);
@@ -59,9 +59,9 @@ function Leaderboard() {
 
 			i++;
 			
-			// The top 10 can be displayed
-			if(i == 10 || i == res.data.length){
-				settop10Data(data.slice())
+			// The top 50 can be displayed
+			if(i == 50 || i == res.data.length){
+				settop50Data(data.slice(0, 50))
 			}
 		}
 
@@ -263,8 +263,8 @@ function Leaderboard() {
 				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}
 				{(role === "organization") ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
 				{(role === "organization" && searchID) ? <SearchRank/> : null}
-				{(top10Data) ? <div className='lbHeader'>Top 10</div> : null}
-			  	{(top10Data) ? top10Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
+				{(top50Data) ? <div className='lbHeader'>Top 50</div> : null}
+			  	{(top50Data) ? top50Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
 			  </div>
 		  </div>
 		</div>

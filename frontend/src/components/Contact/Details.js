@@ -4,6 +4,7 @@ import animationData from './contactPageAnimation';
 import useStyles from '../../PreLogin/PreLoginStyles';
 import './Contact.css';
 import { CiLocationOn, CiMail, CiPhone } from 'react-icons/ci';
+import { Box, Typography } from '@mui/material';
 
 function Details() {
 	const classes = useStyles();
@@ -11,7 +12,7 @@ function Details() {
 	function Location(){
 		return (
 			<div className='contactUsInfo'>
-				<CiLocationOn/> 4000 Central Florida Blvd. Orlando, FL 32816
+				<span style={{ fontWeight: 'bold', marginLeft: 10}}> Address:</span> 4000 Central Florida Blvd. Orlando, FL 32816
 			</div>
 		)
 	}
@@ -19,7 +20,7 @@ function Details() {
 	function Phone(){
 		return (
 			<div className='contactUsInfo'>
-				<CiPhone/> (321) 415-2583
+				<span style={{ fontWeight: 'bold', marginLeft: 10}}> Phone:</span> (321) 415-2583
 			</div>
 		)
 	}
@@ -27,20 +28,26 @@ function Details() {
 	function Email(){
 		return (
 			<div className='contactUsInfo'>
-				<CiMail/> knightassist33@gmail.com
+				<span style={{ fontWeight: 'bold', marginLeft: 10 }}> Email:</span> knightassist33@gmail.com
 			</div>
 		)
 	}
 
 	return (
-		<div className='details'>
-			<Lottie className="imageContactUs" style={{ position: 'relative' }} animationData={animationData} />
-			<div className='infos'>
-				<Location/>
-				<Phone/>
+		<Box align="left" sx={{ color: '#212121', marginRight: 10 }}>
+			<Box display="flex" alignItems="center">
+				<CiLocationOn /> 
+				<Location />
+			</Box>
+			<Box display="flex" alignItems="center">
+				<CiPhone/> 
+				<Phone />
+			</Box>
+			<Box display="flex" alignItems="center">
+				<CiMail/> 
 				<Email/>
-			</div>
-		</div>
+			</Box>
+		</Box>
 	);
 }
 export default Details;

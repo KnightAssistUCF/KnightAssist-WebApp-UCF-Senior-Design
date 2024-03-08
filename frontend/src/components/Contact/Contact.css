@@ -20,7 +20,7 @@
 .contactCard{
 	margin-left: 5%;
 	border-radius: 15px !important;
-	width: 90% !important;
+	width: 50% !important;
 	height: 70% !important;
 	margin-bottom: -3%;
 }
@@ -39,7 +39,7 @@
 }
 
 .welcomeText{
-	font-size: 20px;
+	margin-top: 20px;
 	margin-bottom: 20px;
 }
 
@@ -58,7 +58,7 @@
 .contactUsInfo{
 	font-size: 18px;
 	margin-bottom: 3px;
-	text-align: center;
+	overflow-wrap: break-word;
 }
 
 .contactFooter{
