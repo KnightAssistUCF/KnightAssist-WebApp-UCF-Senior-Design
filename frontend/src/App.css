@@ -203,3 +203,12 @@
 	margin-left: 15% !important;
 	align-content: left !important;
   }
+
+  .privatePolicy{
+	margin-left: 7px;
+	color: #3C3C3E;
+  }
+
+  .privatePolicy:hover{
+	cursor: pointer;
+  }
