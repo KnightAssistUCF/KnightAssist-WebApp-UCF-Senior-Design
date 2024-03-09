@@ -38,3 +38,15 @@
 .hoverOrgName:hover{
 	cursor: pointer;
 }
+
+.orgPicAnn{
+	width: 20px !important;
+	height: 20px !important;
+	margin-right: 5px;
+	float: left;
+}
+
+.modalOrgPic{
+	width: 25px !important;
+	height: 25px !important;
+}
