@@ -69,7 +69,10 @@ function StudentDetails({ studentID }) {
       setTotalHours(res.totalVolunteerHours);
       setGoal(res.semesterVolunteerHourGoal);
       setId(res._id);
-      setUpcomingEvents(res.eventsRSVP);
+      // properly get upcomingEvents through filtering by date
+      // setUpcomingEvents(res.eventsRSVP);
+      filterForUpcomingEvents(res.eventsRSVP);
+      fetchEventInfo(res.eventsRSVP);
       setTotalUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
 
@@ -98,6 +101,41 @@ function StudentDetails({ studentID }) {
       console.log('failed to fetch student info: ' + e);
     }
   };
+
+  function eventIsUpcoming(endTime){
+    return new Date().toISOString().localeCompare(endTime) < 0;
+  }
+
+  const filterForUpcomingEvents = async (gettingAllUpcomingEvents) => {
+    console.log(gettingAllUpcomingEvents);
+    var futureEvents = []
+    var tempAllEvents = [] 
+    for(let event of gettingAllUpcomingEvents){
+        let url = buildPath(`api/searchOneEvent?eventID=${event}`);
+        console.log(event);
+
+        try {
+          let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+          });
+          let res = JSON.parse(await response.text());
+          console.log(res);
+          if(res.length > 0) {
+            console.log(res[0].endTime);
+            console.log("longer than 0");
+            if(eventIsUpcoming(res[0].endTime)) {
+              tempAllEvents.push(res[0]);
+            }
+          }
+
+        } catch(e) {
+          console.log("oopsies");
+        }
+    }
+    console.log(tempAllEvents);
+    setUpcomingEvents(tempAllEvents);
+  }
 
   const fetchEventHistory = async (studentID) => {
     console.log(studentID);
@@ -358,6 +396,29 @@ const AllTags = ({ tags }) => {
     }
   };
   
+  async function fetchEventInfo(getEvents) {
+    let tempAllEvents = [];
+    for(let eventIDStudent of getEvents) {
+      let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
+
+      try {
+
+        let response = await fetch(url, {
+          method: "GET",
+          headers: {"Content-Type": "application/json"},
+        });
+
+        let res = JSON.parse(await response.text());
+        if(res.length > 0) {
+          tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
+        }
+        
+      } catch(e) {
+        console.log("oopsies");
+      }
+    }
+    // setUpcomingEvents([...tempAllEvents]);
+  }
 
   return (
     <div>
@@ -528,7 +589,7 @@ const AllTags = ({ tags }) => {
               {selectedToggle === 'upcoming' && (
                 <>
                   <div className='total'>Upcoming Events: {upcomingEvents.length}</div>
-                  <UpcomingEvents upcomingEvents={upcomingEvents} />
+                  <UpcomingEvents allEvents={upcomingEvents} />
                 </>
               )}
             </div>

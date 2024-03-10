@@ -13,38 +13,38 @@ import Button from '@mui/material/Button';
 
 
 
-function UpcomingEvents({upcomingEvents})
+function UpcomingEvents({allEvents})
 {
   const [orderBy, setOrderBy] = useState('endTime');
   const [order, setOrder] = useState('desc');
-  const [allEvents, setAllEvents] = useState([]);
+  // const [allEvents, setAllEvents] = useState([]);
 
 
-  async function fetchEventInfo() {
-    let tempAllEvents = [];
-    for(let eventIDStudent of upcomingEvents) {
-      let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
+  // async function fetchEventInfo() {
+  //   let tempAllEvents = [];
+  //   for(let eventIDStudent of upcomingEvents) {
+  //     let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
 
-      try {
+  //     try {
 
-        let response = await fetch(url, {
-          method: "GET",
-          headers: {"Content-Type": "application/json"},
-        });
+  //       let response = await fetch(url, {
+  //         method: "GET",
+  //         headers: {"Content-Type": "application/json"},
+  //       });
 
-        let res = JSON.parse(await response.text());
-        console.log(res);
-        if(res.length > 0) {
-          tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
-        }
+  //       let res = JSON.parse(await response.text());
+  //       console.log(res);
+  //       if(res.length > 0) {
+  //         tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
+  //       }
         
-      } catch(e) {
-        console.log("oopsies");
-      }
-    }
-    setAllEvents([...tempAllEvents]);
-    console.log(allEvents);
-  }
+  //     } catch(e) {
+  //       console.log("oopsies");
+  //     }
+  //   }
+  //   setAllEvents([...tempAllEvents]);
+  //   console.log(allEvents);
+  // }
   
 
   const handleRequestSort = (property) => {
@@ -99,9 +99,9 @@ function UpcomingEvents({upcomingEvents})
     setPage(0);
   };
 
-  useEffect(() => {
-    fetchEventInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchEventInfo();
+  // }, []);
 
   useEffect(() => {
   }, [allEvents]);
