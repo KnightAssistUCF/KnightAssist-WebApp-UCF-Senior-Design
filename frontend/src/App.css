@@ -27,6 +27,19 @@
 	--color-background: #1f2023;
 	--color-foreground: #efefef;
   }
+
+  :root {
+	--background: white;
+	--text-primary: black;
+	--text-secondary: royalblue;
+	--accent: purple;
+  }
+  [data-theme='dark'] {
+	--background: black;
+	--text-primary: white;
+	--text-secondary: grey;
+	--accent: darkred;
+  }
   
   .App-logo {
 	height: 40vmin;
