@@ -563,11 +563,6 @@ const AllTags = ({ tags }) => {
                 query = {query}
                 setQuery = {setQuery}
                 searchEvents={searchEvents}
-                // selectedToggle={selectedToggle}
-                // allStudents={allStudents}
-                // allOrgs={allOrgs}
-                // setStudents={setStudents}
-                // setOrgs={setOrgs} 
                 />
               <StudentToggle onToggleChange={handleToggleChange}/>
               </div>
