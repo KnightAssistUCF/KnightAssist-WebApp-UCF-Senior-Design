@@ -13,6 +13,7 @@ import Search from './Search';
 
 function Leaderboard() {
 	const [role, setRole] = useState(sessionStorage.getItem("role"));
+	const [top50Data, settop50Data] = useState(undefined);
 	const [studentData, setStudentData] = useState(undefined);
 	const [yourData, setYourData] = useState(undefined);
 	const [searchID, setSearchID] = useState(undefined);
@@ -52,12 +53,16 @@ function Leaderboard() {
 	
 			data.push([student, pic.url])
 
-			// It is your rank
 			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
 				setYourData({rank: i + 1, data: student, pic: pic.url});
 			}
 
 			i++;
+			
+			// The top 50 can be displayed
+			if(i == 50 || i == res.data.length){
+				settop50Data(data.slice(0, 50))
+			}
 		}
 
 		setStudentData(data);
@@ -66,14 +71,6 @@ function Leaderboard() {
 	function loadStudentProfile(id){
 		sessionStorage.setItem("viewingStudentPageID", id);
 		window.location.href="/#/studentprofile";
-	}
-
-	function Title(){
-		return(
-		  <div className='lbTitle spartan'>
-			 <b>Leaderboard</b>
-		  </div>
-		)
 	}
 
 	function YourRank(){
@@ -259,16 +256,15 @@ function Leaderboard() {
     return(
 		<div className='spartan'>
 		  {(role === "volunteer") ? <StudentHeader/> : <Header/>}
-		  {(role === "volunteer") ? <StudentTopBar/> : <OrgTopBar/>}
+		  {(role === "volunteer") ? <StudentTopBar title="Leaderboard"/> : <OrgTopBar title="Leaderboard"/>}
 		  <div className='moveEverything'>
-		      <Title/>
 			  <div className='rankDisplay'>
 				{(role === "volunteer" && yourData) ? <div className='lbHeader'>Your Rank</div> : null}
 				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}
 				{(role === "organization") ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
 				{(role === "organization" && searchID) ? <SearchRank/> : null}
-				{(studentData) ? <div className='lbHeader'>Top 10</div> : null}
-			  	{(studentData) ? studentData.slice(0, 10).map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
+				{(top50Data) ? <div className='lbHeader'>Top 50</div> : null}
+			  	{(top50Data) ? top50Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
 			  </div>
 		  </div>
 		</div>

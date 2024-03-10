@@ -77,6 +77,9 @@ function EventModal(props)
 	const [generateCheckOut, setGenerateCheckOut] = useState(false);
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
+
+	// The file for the attendee data
+	const [excelFileLink, setExcelFileLink] = useState(undefined);
  
 	// Event has not happened yet or is not over
     function eventIsUpcoming(endTime){
@@ -227,12 +230,27 @@ function EventModal(props)
 
 			const pics = [];
 
+			// It is a past event
 			if(!eventIsUpcoming(event.endTime)){
+				// Get students that came to event
 				for(let student of event.checkedInStudents){
 					volunteers.push(await getVolunteerInfo(student.studentId));
 					pics.push(await getStudentPic(student.studentId))
 				}
+				
+				url = buildPath(`api/exportAttendeesCSV?eventId=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+
+				let link = await response.blob();
+				console.log(link)
+
+				setExcelFileLink(link);
 			}else{
+				// Get students that have RSVP'd
 				for(let id of event.registeredVolunteers){
 					volunteers.push(await getVolunteerInfo(id));
 					pics.push(await getStudentPic(id));
@@ -408,7 +426,7 @@ function EventModal(props)
 
     function Volunteers(){
         return (
-            <div>
+            <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
                     <p className={(!isPast) ? 'lessSpace' : ''}>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"}</p>
                     {(!isPast) ? <p>{curVolunteers + "/" + maxVolunteers} </p> : null}
@@ -594,15 +612,23 @@ function EventModal(props)
 
 								{(showTags) ? <Tags/> : null}
 
-								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
-									<Grid item xs={4}>
-										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
-									</Grid>
-									<Grid item xs={4}>
-										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
-									</Grid>
-								</Grid>   
-      
+								{(!isPast) ? 
+									<Grid container sx={{justifyContent:'center'}} marginTop={"12%"} marginLeft={"1%"}>
+										<Grid item xs={4}>
+											<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+										</Grid>
+										<Grid item xs={4}>
+											<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
+										</Grid>
+									</Grid>   
+									: 
+									<Grid container sx={{justifyContent:'center'}} marginTop={"12%"} marginLeft={"1%"}>
+										<Grid item xs={12}>
+											{(attendedVolunteers > 0) ? <a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a> : null}
+										</Grid>
+									</Grid>   
+								}
+		
                                 <Grid container marginLeft={"30%"} marginTop={"50px"}>
                                     <Grid item xs={3}>
                                         <Tooltip title="Edit" placement="top">

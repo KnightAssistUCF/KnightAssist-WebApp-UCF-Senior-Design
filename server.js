@@ -9,11 +9,13 @@ const app = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const json2xls = require('json2xls');
 
 app.set('port', port);
 app.use(cors());
 app.use(bodyParser.json());
 app.disable('x-powered-by');
+app.use(json2xls.middleware);
 
 // connect to MongoDB database
 const mongoose = require('mongoose');
@@ -147,6 +149,9 @@ app.use('/api/searchForOrgInUserFavorites', searchForOrgInUserFavorites);
 
 const loadFavOrgEventsForUser = require('./backend/routes/volunteers/loadFavoritedOrgsEvents');
 app.use('/api/loadFavoritedOrgsEvents', loadFavOrgEventsForUser);
+
+const loadFavOrgsForUser = require('./backend/routes/volunteers/loadFavoritedOrgs');
+app.use('/api/loadFavoritedOrgs', loadFavOrgsForUser);
 
 const editVolunteerHourGoal = require('./backend/routes/volunteers/editUserVolunteerHourGoal');
 app.use('/api/editUserVolunteerHourGoal', editVolunteerHourGoal);
@@ -309,6 +314,14 @@ app.use('/api/readStatus', readStatus);
 
 const markNotificationAsRead = require('./backend/routes/PushNotifications/markAsRead');
 app.use('/api/markNotificationAsRead', markNotificationAsRead);
+
+// export csv attendees data
+const exportAttendeesCSV = require('./backend/routes/exportAttendeeData/exportAttendeesCSV');
+app.use('/api/exportAttendeesCSV', exportAttendeesCSV);
+
+// refresh the jwt token  
+const refreshJWT = require('./backend/routes/refreshToken/refreshToken');
+app.use('/api/refreshJWT', refreshJWT);
 
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.

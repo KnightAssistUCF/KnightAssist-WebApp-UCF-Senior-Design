@@ -3,7 +3,6 @@
     margin-right: 2vw;
     color: black;
     text-align: left;
-    margin-top: 5% !important;
     position: relative;
 }
 
@@ -277,6 +276,12 @@
 .hoverImage:hover{
 	cursor: pointer;
 }
+
+.spaceCircleProgress{
+	margin-left: 50% !important;
+	margin-top: 25% !important;
+}
+
 
 .card-body-profile{
 	width: 950px;

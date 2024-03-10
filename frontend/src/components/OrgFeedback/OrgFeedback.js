@@ -16,14 +16,6 @@ function OrgFeedback() {
 	const [markRead, setMarkRead] = useState("");
 	const [searchTerm, setSearchTerm] = useState("");
 
-	function Title(){
-		return(
-		  <div className='feedbackText spartan'>
-			 <b>Feedback</b>
-		  </div>
-		)
-	}
-
 	const fetchAllFeedback = async () => {
 		try {
 			const url = buildPath(`api/retrieveAllFeedback_ForAnOrg?orgId=${sessionStorage.getItem("ID")}`);
@@ -116,9 +108,8 @@ function OrgFeedback() {
 	return (
 		<div className='spartan'>
 			<Header/>
-			<OrgTopBar/>
+			<OrgTopBar title="Feedback"/>
 			<div className='moveEverything'>
-				<Title/>
 				<div className='moveFromLeft'>
 					<div className="announcementSection">
 						<div className="topSection">

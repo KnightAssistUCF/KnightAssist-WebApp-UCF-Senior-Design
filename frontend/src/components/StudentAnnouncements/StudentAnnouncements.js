@@ -33,7 +33,7 @@ function NewAnn() {
   const fetchFavoritedUpdates = async () => {
     //sessionStorage.setItem("ID", "6519e4fd7a6fa91cd257bfda");
     const authToken = sessionStorage.getItem("token");
-    url2 = buildPath(`api/loadFavoritedOrgsEvents?userID=${sessionStorage.getItem("ID")}`);
+    url2 = buildPath(`api/loadFavoritedOrgs?userID=${sessionStorage.getItem("ID")}`);
     try {
       let response = await fetch(url2, {
         method: "GET",
@@ -220,10 +220,9 @@ function NewAnn() {
 
   return (
     <div className='spartan' id="studentAnnouncements">
-      <StudentTopBar/>
+      <StudentTopBar title="Updates"/>
 	  <StudentHeader/>
       <div className="moveEverything">
-      <div class="StudentAnnouncements-title"><b>Updates</b></div>
         <div className="testing">
           <div className="announcementSection">
           <div style={{marginLeft: '12%'}}>

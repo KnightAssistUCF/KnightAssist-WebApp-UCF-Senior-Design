@@ -38,8 +38,8 @@ function Login(props) {
                 flexDirection: 'column',
                 alignItems: 'center',
               }} >
-              <Typography component="h1" variant="h4" sx={{ marginTop: 5, color: 'black' }}>
-                Welcome back!
+              <Typography component="h1" variant="h4" sx={{ marginTop: 5 }}>
+                Welcome Back!
               </Typography>
               <LoginBox setRole={props.setRole}/>
             </Box>

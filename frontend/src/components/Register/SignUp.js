@@ -336,7 +336,6 @@ export default function SignUp() {
       }
     }
 
-
   };
 
 
@@ -354,15 +353,14 @@ export default function SignUp() {
     // console.log(formData); // Access the form data directly
     // console.log(OrgformData.name);
 
-
   };
 
   return (
     <ThemeProvider theme={defaultTheme}>
       <Container component="main" maxWidth="xs" onKeyPress={handleKeyPress}>
         <CssBaseline />
-        <Typography component="h1" variant="h5" sx={{ paddingBottom: 2 }}>
-          Create An Account
+        <Typography component="h1" variant="h4" sx={{ paddingBottom: 2 }}>
+          Create an Account
         </Typography>
         <TabContext value={value}>
           <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
@@ -374,13 +372,14 @@ export default function SignUp() {
           <TabPanel value="1"><VolunteerForm isEmpty={isEmpty} volMessage={volMessage} isVolError={isVolError} setName={setVolFirstName} name={volFirstName} volLastName={volLastName} setVolLastName={setVolLastName} volEmail={volEmail} setVolEmail={setVolEmail} volPass={volPass} setVolPass={setVolPass} volConfirmPass={volConfirmPass} setVolConfirmPass={setVolConfirmPass} onSubmit={handleFormSubmit} /></TabPanel>
           <TabPanel value="2"><OrganizationForm orgName={orgName} orgMessage={orgMessage} isOrgError={isOrgError} setOrgName={setOrgName} orgEmail={orgEmail} setOrgEmail={setOrgEmail} orgPass={orgPass} setOrgPass={setOrgPass} orgConfirmPassword={orgConfirmPassword} setOrgConfirmPassword={setOrgConfirmPassword} onSubmit={handleFormSubmit} /></TabPanel>
         </TabContext>
-          {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}><Alert severity="error">{alertMessage}</Alert></Box> : null}
-          {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
+        {(!(alertMessage.trim().length === 0) && (!alertMessage.includes("successfully"))) ? <Box whiteSpace="pre-line" sx={{ textAlign: 'left' }}><Alert severity="error">{alertMessage}</Alert></Box> : null}
+        {((alertMessage != undefined) && (alertMessage.includes("successfully"))) ? <Alert severity="success">{alertMessage}</Alert> : null}
         <Button
           type="submit"
-          fullWidth
           variant="contained"
+          fullWidth
           sx={{
+            maxWidth: 350,
             mt: 3,
             mb: 2,
             bgcolor: '#3E283E',
