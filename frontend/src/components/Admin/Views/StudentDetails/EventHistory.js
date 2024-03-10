@@ -10,6 +10,8 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { Dialog, IconButton, Avatar } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
@@ -17,6 +19,12 @@ function EventHistory({eventHistory})
 {
   const [orderBy, setOrderBy] = useState('checkOut');
   const [order, setOrder] = useState('desc');
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const [eventDetails, setEventDetails] = useState([]);
+
+  const handleCloseViewModal = () => {
+    setOpenViewModal(false);
+  };
 
 
   const handleRequestSort = (property) => {
@@ -25,8 +33,10 @@ function EventHistory({eventHistory})
     setOrderBy(property);
   };
 
-  const handleViewClick = (studentID) => {
-    console.log(`Clicked student View for ID: ${studentID}`);
+  const handleViewClick = (singleEvent) => {
+    setOpenViewModal(true);
+    console.log(singleEvent);
+    setEventDetails(singleEvent);
     
   };
 
@@ -126,7 +136,7 @@ function EventHistory({eventHistory})
                   (singleEvent) => (
                     <TableRow key = {singleEvent.ID}>
                       <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
-                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
+                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
                       <TableCell>{singleEvent.checkIn}</TableCell>
                       <TableCell>{singleEvent.checkOut}</TableCell>
@@ -147,6 +157,32 @@ function EventHistory({eventHistory})
           />
         </Paper>
         )}
+                <Dialog
+          open={openViewModal}
+          onClose={handleCloseViewModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseViewModal}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                fontSize: 20,
+              }}
+            >
+            <CancelIcon />
+            </IconButton>
+            <div className='modalContent' style={{ padding: '25px', maxWidth: '500px' }}>
+              {eventDetails?.name && <h1 style={{ marginBottom: '10px', marginTop: '10px'}}>{eventDetails.name}</h1>}
+              {eventDetails?.org && <p>Hosting Organization: {eventDetails.org}</p>}
+              {eventDetails?.checkIn && <p>Check In: {eventDetails.checkIn}</p>}
+              {eventDetails?.checkOut && <p>Check Out: {eventDetails.checkOut}</p>}
+              {eventDetails?.startTime && <p>Start Time: {eventDetails.startTime}</p>}
+              {eventDetails?.hours && <p>Hours: {eventDetails.hours}<br/></p>}
+            </div>
+        </Dialog>
       </div>
     );
 };

@@ -10,6 +10,8 @@ import TableSortLabel from '@mui/material/TableSortLabel';
 import Table from '@mui/material/Table';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
+import { Dialog, IconButton, Avatar } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 
@@ -17,6 +19,8 @@ function UpcomingEvents({allEvents})
 {
   const [orderBy, setOrderBy] = useState('endTime');
   const [order, setOrder] = useState('desc');
+  const [openViewModal, setOpenViewModal] = useState(false);
+  const [eventDetails, setEventDetails] = useState([]);
   // const [allEvents, setAllEvents] = useState([]);
 
 
@@ -45,6 +49,10 @@ function UpcomingEvents({allEvents})
   //   setAllEvents([...tempAllEvents]);
   //   console.log(allEvents);
   // }
+
+  const handleCloseViewModal = () => {
+    setOpenViewModal(false);
+  };
   
 
   const handleRequestSort = (property) => {
@@ -53,9 +61,11 @@ function UpcomingEvents({allEvents})
     setOrderBy(property);
   };
 
-  const handleViewClick = (studentID) => {
-    console.log(`Clicked student View for ID: ${studentID}`);
-    
+  const handleViewClick = (singleEvent) => {
+    setOpenViewModal(true);
+    console.log(singleEvent);
+    setEventDetails(singleEvent);
+    // search org pfp
   };
 
   const stableSort = (array, comparator) => {
@@ -154,7 +164,7 @@ function UpcomingEvents({allEvents})
                   (singleEvent) => (
                     <TableRow key = {singleEvent._id}>
                       <TableCell><Button size='small' variant='contained' disableElevation sx={{backgroundColor: '#5f5395', '&:hover': {
-                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent._id)}>View</Button></TableCell>
+                  backgroundColor: '#4f457c'}}} onClick={() => handleViewClick(singleEvent)}>View</Button></TableCell>
                       <TableCell>{singleEvent.name}</TableCell>
                       <TableCell>{singleEvent.startTime}</TableCell>
                       <TableCell>{singleEvent.endTime}</TableCell>
@@ -175,6 +185,34 @@ function UpcomingEvents({allEvents})
           />
         </Paper>
         )}
+
+        <Dialog
+          open={openViewModal}
+          onClose={handleCloseViewModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description">
+            <IconButton
+              aria-label="close"
+              onClick={handleCloseViewModal}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                fontSize: 20,
+              }}
+            >
+            <CancelIcon />
+            </IconButton>
+            <div className='modalContent' style={{ padding: '25px', maxWidth: '500px' }}>
+              {eventDetails?.name && <h1 style={{ marginBottom: '10px'}}>{eventDetails.name}</h1>}
+              {eventDetails?.sponsoringOrganization && <p>Hosting Organization ID: {eventDetails.sponsoringOrganization}</p>}
+              {eventDetails?.location && <p>Location: {eventDetails.location}</p>}
+              {eventDetails?.startTime && <p>Start Time: {eventDetails.startTime}</p>}
+              {eventDetails?.endTime && <p>End Time: {eventDetails.endTime}<br/></p>}
+              {eventDetails?.description && <p>Description: {eventDetails.description}</p>}
+              {eventDetails?.eventTags?.length > 0 && <p>Tags: {eventDetails.eventTags.join(' ')}</p>}
+            </div>
+        </Dialog>
       </div>
     );
 };
