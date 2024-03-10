@@ -74,7 +74,7 @@ function Feedback() {
         (a, b) =>
           new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted)
       );
-      setItems(unreadFeedback);
+      setItems(unreadFeedback.slice(0, 3));
     } catch (e) {
       console.log("API called failed");
     }
