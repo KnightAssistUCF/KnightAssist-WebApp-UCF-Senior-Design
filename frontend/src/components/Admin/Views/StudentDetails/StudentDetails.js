@@ -41,6 +41,7 @@ function StudentDetails({ studentID }) {
   const [picName, setPicName] = useState(undefined);
   const [pfpFile, setPfpFile] = useState(null);
 
+
   const handleToggleChange = (newToggleValue) => {
     setSelectedToggle(newToggleValue);
     console.log(newToggleValue);
@@ -73,7 +74,7 @@ function StudentDetails({ studentID }) {
       // setUpcomingEvents(res.eventsRSVP);
       filterForUpcomingEvents(res.eventsRSVP);
       fetchEventInfo(res.eventsRSVP);
-      setTotalUpcomingEvents(res.eventsRSVP);
+      // setTotalUpcomingEvents(res.eventsRSVP);
       setPrevSelectedTags(res.categoryTags);
 
       // fetch past/upcoming events
@@ -108,7 +109,6 @@ function StudentDetails({ studentID }) {
 
   const filterForUpcomingEvents = async (gettingAllUpcomingEvents) => {
     console.log(gettingAllUpcomingEvents);
-    var futureEvents = []
     var tempAllEvents = [] 
     for(let event of gettingAllUpcomingEvents){
         let url = buildPath(`api/searchOneEvent?eventID=${event}`);
@@ -135,6 +135,7 @@ function StudentDetails({ studentID }) {
     }
     console.log(tempAllEvents);
     setUpcomingEvents(tempAllEvents);
+    setTotalUpcomingEvents(tempAllEvents);
   }
 
   const fetchEventHistory = async (studentID) => {
@@ -358,7 +359,6 @@ const AllTags = ({ tags }) => {
   const searchEvents = (query) => {
     const lowerCaseSearchTerm = query.toLowerCase();
     console.log(query);
-
     if (query.trim() !== "") {
       console.log(query)
       console.log(selectedToggle)
@@ -375,7 +375,6 @@ const AllTags = ({ tags }) => {
 
         setEventHistory(filteredPast);
       } else if(selectedToggle === 'upcoming') {
-        console.log("heree");
         const filteredUpcoming = totalUpcomingEvents.filter((event) => {
           const eventName = event.name ? event.name.toLowerCase() : "";
         //   const orgEmail = org.email ? org.email.toLowerCase() : "";
@@ -561,7 +560,7 @@ const AllTags = ({ tags }) => {
               )}
             </Snackbar>
           )}
-          {upcomingEvents.length > 0 && (
+          {/* {upcomingEvents.length > 0 && ( */}
             <div>
               <div className='align' style={{display: 'flex', marginTop: '20px'}}>
               <StudentSearchBar
@@ -594,10 +593,10 @@ const AllTags = ({ tags }) => {
               )}
             </div>
             </div>
-          )}
+          {/* )}
           {upcomingEvents.length === 0 && (
             <div>No available events</div>
-          )}
+          )} */}
         </div>
         <Dialog
           open={openModal}
