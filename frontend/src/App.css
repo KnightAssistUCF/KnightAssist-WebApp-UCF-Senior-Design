@@ -217,10 +217,12 @@
 
   .noSpacePP{
 	margin-left: 0px !important;
+	color: #4E878C;
   }
 
   .privatePolicy:hover{
 	cursor: pointer;
+	text-decoration: underline !important;
   }
 
   .termsCheck{
