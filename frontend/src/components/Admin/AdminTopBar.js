@@ -47,7 +47,7 @@ function AdminTopBar(props) {
   return (
     <div className="StudentTopBar">
       <AppBar variant="outlined" position="static" sx={{ backgroundColor: '#ffffff' }}>
-        <Container maxWidth="xl">
+        <Container maxWidth="l">
           <Toolbar disableGutters sx={{ justifyContent: 'right' }}>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
             <Box sx={{ flexGrow: 0 }}>
