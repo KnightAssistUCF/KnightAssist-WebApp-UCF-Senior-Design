@@ -7,12 +7,8 @@ import ClearIcon from '@mui/icons-material/Clear';
 function StudentSearchBar(props) {
 
   const handleClear = () => {
-    // props.setSearchTerm("");
-    // if(props.selectedToggle == "student") {
-    //   props.setStudents(props.allStudents);
-    // } else if(props.selectedToggle == "organization") {
-    //   props.setOrgs(props.allOrgs);
-    // }
+    props.setQuery('');
+    props.searchEvents('');
   };
   
   const showAllUpdates = () => {

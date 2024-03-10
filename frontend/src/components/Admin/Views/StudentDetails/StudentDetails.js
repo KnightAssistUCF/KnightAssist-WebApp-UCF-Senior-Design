@@ -108,11 +108,9 @@ function StudentDetails({ studentID }) {
   }
 
   const filterForUpcomingEvents = async (gettingAllUpcomingEvents) => {
-    console.log(gettingAllUpcomingEvents);
     var tempAllEvents = [] 
     for(let event of gettingAllUpcomingEvents){
         let url = buildPath(`api/searchOneEvent?eventID=${event}`);
-        console.log(event);
 
         try {
           let response = await fetch(url, {
@@ -120,10 +118,7 @@ function StudentDetails({ studentID }) {
             headers: {"Content-Type": "application/json"},
           });
           let res = JSON.parse(await response.text());
-          console.log(res);
           if(res.length > 0) {
-            console.log(res[0].endTime);
-            console.log("longer than 0");
             if(eventIsUpcoming(res[0].endTime)) {
               tempAllEvents.push(res[0]);
             }
@@ -133,7 +128,6 @@ function StudentDetails({ studentID }) {
           console.log("oopsies");
         }
     }
-    console.log(tempAllEvents);
     setUpcomingEvents(tempAllEvents);
     setTotalUpcomingEvents(tempAllEvents);
   }
@@ -360,8 +354,8 @@ const AllTags = ({ tags }) => {
   const searchEvents = (query) => {
     const lowerCaseSearchTerm = query.toLowerCase();
     console.log(query);
-    if (query.trim() !== "") {
-      console.log(query)
+    if (query !== '') {
+      console.log("query not empty")
       console.log(selectedToggle)
       if (selectedToggle === 'past') {
         console.log(totalEventHistory);
@@ -392,7 +386,6 @@ const AllTags = ({ tags }) => {
       }
     } else {
       console.log("empty query");
-      setQuery('');
       setEventHistory(totalEventHistory);
       setUpcomingEvents(totalUpcomingEvents);
     }
