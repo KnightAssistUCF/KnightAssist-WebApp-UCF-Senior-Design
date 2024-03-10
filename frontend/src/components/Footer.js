@@ -6,7 +6,7 @@ import Link from "@mui/material/Link";
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 
-export default function Footer() {
+export default function Footer(props) {
 	const [openPolicyModal, setOpenPolicyModal] = useState(false);
 
 	function TermsAndConditions(){

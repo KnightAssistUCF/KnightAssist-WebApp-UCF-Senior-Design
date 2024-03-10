@@ -209,6 +209,15 @@
 	color: #3C3C3E;
   }
 
+  .noSpacePP{
+	margin-left: 0px !important;
+  }
+
   .privatePolicy:hover{
 	cursor: pointer;
+  }
+
+  .termsCheck{
+	font-size: 15px;
+	margin-top: 13px;
   }
