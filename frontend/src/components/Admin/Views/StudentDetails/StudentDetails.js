@@ -156,6 +156,7 @@ function StudentDetails({ studentID }) {
 			});
       console.log(res);
 			setEventHistory(res);
+      setTotalEventHistory(res);
     } catch(e) {
       console.log("oopsies failed to fetch student event history");
     }
@@ -363,6 +364,7 @@ const AllTags = ({ tags }) => {
       console.log(query)
       console.log(selectedToggle)
       if (selectedToggle === 'past') {
+        console.log(totalEventHistory);
         const filteredPast = totalEventHistory.filter((event) => {
           const eventName = event.name ? event.name.toLowerCase() : "";
         //   const studentEmail = student.email ? student.email.toLowerCase() : "";
@@ -374,6 +376,7 @@ const AllTags = ({ tags }) => {
         });
 
         setEventHistory(filteredPast);
+        console.log(filteredPast);
       } else if(selectedToggle === 'upcoming') {
         const filteredUpcoming = totalUpcomingEvents.filter((event) => {
           const eventName = event.name ? event.name.toLowerCase() : "";

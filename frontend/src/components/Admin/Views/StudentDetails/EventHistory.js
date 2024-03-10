@@ -17,35 +17,7 @@ function EventHistory({eventHistory})
 {
   const [orderBy, setOrderBy] = useState('checkOut');
   const [order, setOrder] = useState('desc');
-  const [allEvents, setAllEvents] = useState([]);
 
-
-  async function fetchEventInfo() {
-    console.log(eventHistory);
-    let tempAllEvents = [];
-    // for(let eventIDStudent of eventHistory) {
-    //   let url = buildPath(`api/searchOneEvent?eventID=${eventIDStudent}`);
-
-    //   try {
-
-    //     let response = await fetch(url, {
-    //       method: "GET",
-    //       headers: {"Content-Type": "application/json"},
-    //     });
-
-    //     let res = JSON.parse(await response.text());
-    //     if(res.length > 0) {
-    //       tempAllEvents = [...tempAllEvents, ...res.filter(event => !tempAllEvents.some(existingEvent => existingEvent._id === event._id))];
-    //     }
-        
-    //   } catch(e) {
-    //     console.log("oopsies");
-    //   }
-    // }
-    setAllEvents(eventHistory);
-    console.log(allEvents);
-  }
-  
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -89,7 +61,7 @@ function EventHistory({eventHistory})
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
   const handleChangePage = (event, newPage) => {
-    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(allEvents.length / rowsPerPage) - 1);
+    const newPageClamped = Math.min(Math.max(0, newPage), Math.ceil(eventHistory.length / rowsPerPage) - 1);
     setPage(newPageClamped);
   };
   
@@ -99,17 +71,17 @@ function EventHistory({eventHistory})
     setPage(0);
   };
 
-  useEffect(() => {
-    fetchEventInfo();
-  }, []);
+  // useEffect(() => {
+  //   fetchEventInfo();
+  // }, []);
 
   useEffect(() => {
-  }, [allEvents]);
+  }, [eventHistory]);
 
 
     return(
       <div>
-        {allEvents.length > 0 && (
+        {eventHistory.length > 0 && (
         <Paper variant='outlined' className='tableContainer'>
           <TableContainer >
             <Table className="studentEventsTable">
@@ -149,7 +121,7 @@ function EventHistory({eventHistory})
                 </TableRow>
               </TableHead>
               <TableBody>
-                {stableSort(allEvents, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                {stableSort(eventHistory, getComparator(order, orderBy)).slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map(
                   (singleEvent) => (
                     <TableRow key = {singleEvent.ID}>
@@ -167,7 +139,7 @@ function EventHistory({eventHistory})
           <TablePagination
             rowsPerPageOptions={[5, 10, 20]}
             component="div"
-            count={allEvents.length}
+            count={eventHistory.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
