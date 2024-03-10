@@ -26,6 +26,8 @@ import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
 import ContactPage from './pages/ContactPage';
 import SettingsPage from './pages/SettingsPage';
+import StudentDetailsPage from './pages/StudentDetailsPage';
+import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import LeaderboardPage from './pages/LeaderboardPage';
 
@@ -98,6 +100,12 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+			</Routes>
+      <Routes>
+				<Route path="/adminhome/students/:studentID" element={(role === "admin") ? <StudentDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
+			</Routes>
+      <Routes>
+				<Route path="/adminhome/organizations/:organizationID" element={(role === "admin") ? <OrganizationDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
