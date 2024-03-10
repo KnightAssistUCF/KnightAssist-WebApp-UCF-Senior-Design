@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import './App.css';
 import "@fontsource/league-spartan";
 import {
@@ -37,6 +39,19 @@ function App()
 		if(sessionStorage.getItem("token") === null)
 			setRole("");
 	}, []);
+
+	// create a darkTheme function to handle dark mode
+	const darkTheme = createTheme({
+		palette: {
+		  mode: 'dark',
+		  primary: {
+			main: '#90caf9',
+		  },
+		  secondary: {
+			main: '#f48fb1',
+		  },
+		},
+	  });
 
 	return (
 		<div className="App">
@@ -103,6 +118,9 @@ function App()
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
 		</Router>
+		<ThemeProvider theme={darkTheme}>
+		<CssBaseline />
+	  </ThemeProvider>
 		</header>
 		</div>
 	);
