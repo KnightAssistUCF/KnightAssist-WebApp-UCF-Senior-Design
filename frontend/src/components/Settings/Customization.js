@@ -34,7 +34,7 @@ function Customization(props){
 	function Appearence(){
 
 		 // state to manage the dark mode
-		 const [toggleDarkMode, setToggleDarkMode] = useState(true);
+		 const [toggleDarkMode, setToggleDarkMode] = useState(false);
 
 		 // function to toggle the dark mode as true or false
 		 const toggleDarkTheme = () => {
