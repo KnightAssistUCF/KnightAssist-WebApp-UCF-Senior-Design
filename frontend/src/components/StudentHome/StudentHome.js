@@ -106,20 +106,20 @@ function StudentHome()
         <div className="studHomePage">
           
           <div className='card-row'>
-          <Card variant='outlined' className='home-card'>
+          <Card variant='outlined' className='home-card' style={{ backgroundColor: '#EFF8FB' }}>
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
                     <Avatar aria-label="icon" style={{ backgroundColor: '#A4C5D0' }}><TimelapseIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Goal</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>{goal}</Typography>
+                    <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Semester Goal</Typography>
+                    <Typography variant="h5" style={{ textAlign: 'left', fontWeight: 'bold' }}>{goal} hrs</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
             </Card>
-            <Card variant='outlined' className='home-card'>
+            <Card variant='outlined' className='home-card' style={{ backgroundColor: '#F2FFF5' }}>
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
@@ -127,25 +127,25 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Total hours</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>{totalHours}</Typography>
+                    <Typography variant="h5" style={{ textAlign: 'left', fontWeight: 'bold' }}>{totalHours} hrs</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
             </Card>
-            <Card variant='outlined' className='home-card'>
+            <Card variant='outlined' className='home-card' style={{ backgroundColor: '#F5EFFF' }}>
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
                     <Avatar aria-label="icon" style={{ backgroundColor: '#B99EE6' }}><CalendarTodayIcon style={{ color: 'black' }}/></Avatar>
                   </Grid>
                   <Grid item>
-                    <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Events</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>{upcomingRSVPdEventsLength}</Typography>
+                    <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Upcoming Events</Typography>
+                    <Typography variant="h5" style={{ textAlign: 'left', fontWeight: 'bold' }}>{upcomingRSVPdEventsLength} RSVPs</Typography>
                   </Grid>
                 </Grid>
               </CardContent>
             </Card>
-            <Card variant='outlined' className='home-card'>
+            <Card variant='outlined' className='home-card' style={{ backgroundColor: '#FFE9E9' }}>
               <CardContent>
                 <Grid container spacing={3} alignItems="center">
                   <Grid item>
@@ -153,7 +153,7 @@ function StudentHome()
                   </Grid>
                   <Grid item>
                     <Typography variant="subtitle1" color="textSecondary" style={{ textAlign: 'left' }}>Organizations</Typography>
-                    <Typography variant="h6" style={{ textAlign: 'left' }}>{favOrgs.length}</Typography>
+                    <Typography variant="h5" style={{ textAlign: 'left', fontWeight: 'bold' }}>{favOrgs.length}</Typography>
                   </Grid>
                 </Grid>
               </CardContent>

@@ -232,6 +232,14 @@ min-height: 100vh;
   margin: 10px;
   padding: 5px;
 }
+@media (max-width: 800px) {
+  .card-row {
+    flex-direction: column;
+  }
+  .home-card {
+    width: 100%;
+  }
+}
 
 .css-1ksazz3-MuiPaper-root {
   box-shadow: none !important;
