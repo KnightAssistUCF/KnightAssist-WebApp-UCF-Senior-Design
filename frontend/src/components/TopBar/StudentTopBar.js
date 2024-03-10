@@ -180,7 +180,7 @@ function StudentTopBar(props)
     return(
       <div className="StudentTopBar">
 		<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
-		<Container maxWidth="xl">
+		<Container maxWidth="l">
 			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
 
 			<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
