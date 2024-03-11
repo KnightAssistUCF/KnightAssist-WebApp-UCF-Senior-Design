@@ -14,7 +14,7 @@ function Contact() {
   return (
 	<ThemeProvider theme={theme}>
 		<CssBaseline />
-		<Box sx={{ background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100%', flexGrow: 1, padding: 10, justifyContent: 'center', alignItems: 'center'}}>
+		<Box sx={{ background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100%', flexGrow: 1, padding: 1, justifyContent: 'center', alignItems: 'center'}}>
 			<PreLoginNavBar />
 			<Box sx={{ marginTop: 10, marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column' }} >
 				<Typography component="h1" variant="h3" align="left" fontWeight={700} sx={{ marginTop: 5, color: '#212121' }}>
