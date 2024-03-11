@@ -99,6 +99,8 @@
 .navParagraphText {
     font-size: 17px;
     font-weight: 370;
+	white-space: normal !important;
+	word-wrap: break-word !important;
 }
 
 .editDescription {

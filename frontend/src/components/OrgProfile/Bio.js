@@ -31,7 +31,7 @@ function Bio(props) {
 						{(!props.editMode) 
 							?
 							<div>
-								<div className='navParagraphText'>{expanded ? props.org.description : `${props.org.description.slice(0, 600)}...`}</div>
+								<div className='navParagraphText'>{expanded ? props.org.description : `${props.org.description.slice(0, 600)}` + ((props.org.description.length > 599) ? `...` : ``)}</div>
 								{(props.org.description.length > 600)
 									?
 										!expanded && (
