@@ -184,7 +184,7 @@ function StudentTopBar(props)
 													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem> : <div className='markAllBtn menuNoto'>{noto}</div>}
 													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
 					
-			// Removeb the mark as read button from notos
+			// Remove the mark as read button from notos
 			res.notifications.new.pop();
 		}
 
