@@ -89,7 +89,7 @@ function Leaderboard() {
 			<Grid container justifyContent="center" alignItems="center">
 				<Card className={"rankCard purpleCard"} variant="outlined">
 					<CardContent>
-						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
+						<Avatar className='rankAvatar rankNumber rankItem'>{place}</Avatar>
 						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
@@ -153,7 +153,7 @@ function Leaderboard() {
 			<Grid container justifyContent="center" alignItems="center">
 				<Card className={"rankCard purpleCard"} variant="outlined">
 					<CardContent>
-						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
+						<Avatar className='rankAvatar rankNumber rankItem'>{place}</Avatar>
 						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
@@ -211,7 +211,7 @@ function Leaderboard() {
 			<Grid container justifyContent="center" alignItems="center">
 				<Card className={"rankCard" + color} variant="outlined">
 					<CardContent>
-						<Avatar className='rankAvatar rankNumber rankItem' style={{border: '0.1px solid black'}}>{place}</Avatar>
+						<Avatar className='rankAvatar rankNumber rankItem'>{place}</Avatar>
 						<Avatar className='rankAvatar rankItem rankPic' style={{border: '0.1px solid black'}} src={(pic) ? pic : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"} />
 						<Typography
 							variant="body2"
