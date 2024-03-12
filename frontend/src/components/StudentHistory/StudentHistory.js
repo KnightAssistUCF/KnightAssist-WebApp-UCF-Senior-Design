@@ -169,8 +169,8 @@ function StudentHistory()
 						<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">
 							{shownHistories}
 						</List>
-						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
+						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>
 				: <div className='historyProgress'><CircularProgress/></div>
 			}

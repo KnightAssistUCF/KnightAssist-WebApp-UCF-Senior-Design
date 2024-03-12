@@ -151,7 +151,7 @@ const Feedbacks = (props) => {
       >
         {theFeedbacks}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape='rounded' />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
