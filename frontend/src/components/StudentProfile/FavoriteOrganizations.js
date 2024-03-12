@@ -183,7 +183,7 @@ function FavoriteOrganizations(props)
 		{(orgCards) ? 
 		    <div>
 				<Orgs/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 			</div>
 			: <CircularProgress className='spaceCircleProgress'/>
 		}

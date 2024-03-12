@@ -16,6 +16,7 @@ import { buildPath } from '../../path';
 
 function OrgHome() {
 	const [openAnnouncement, setOpenAnnouncement] = useState(false);
+	const [orgName, setOrgName] = useState("");
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
 	const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
 	const [chartData, setChartData] = useState(undefined);
@@ -53,6 +54,19 @@ function OrgHome() {
 		}
 	}
 
+	async function getOrgName(){
+        let url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        setOrgName(res.name);
+    }
+
 	async function getChartData() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&limit=true`);
 		try {
@@ -80,6 +94,7 @@ function OrgHome() {
 
   useEffect(() => {
     getUpcomingEvents();
+	getOrgName();
     getChartData();
   }, []);
 
@@ -92,7 +107,7 @@ function OrgHome() {
           <Card variant='contained' sx={{ marginRight: '5%' }}>
             <CardContent className='cardContent' sx={{ display: 'flex', justifyContent: 'space-between'}}>
               <Typography variant="h5">
-                Welcome, Organization
+                Welcome, {orgName}
               </Typography>
               <Button variant="contained" sx={{backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
                 Add Announcement

@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import CloseIcon from '@mui/icons-material/Close';
 import { buildPath } from '../../path';
 
 const truncateText = (text, maxLength) => {
@@ -166,14 +167,14 @@ const Announcements = (props) => {
 
       	<Dialog open={isModalOpen} onClose={handleCloseModal}>
 			<DialogContent className='feedbackModal'>
+				<button className='closeFeedback'>
+					<CloseIcon onClick={handleCloseModal}/>
+				</button>
 				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
 				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
 				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
 				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleCloseModal}>Close</Button>
-			</DialogActions>
 		</Dialog>
     </div>
   );

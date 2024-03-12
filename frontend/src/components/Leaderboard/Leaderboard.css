@@ -49,7 +49,7 @@
 }
 
 .rankNumber{
-	background-color: white !important;
+	background: none !important;
 	color: black !important;
 	margin-right: 8%;
 }

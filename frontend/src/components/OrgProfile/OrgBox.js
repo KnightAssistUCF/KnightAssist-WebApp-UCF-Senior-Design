@@ -3,12 +3,13 @@ import Header from '../OrgEvents/Header';
 import './OrgProfile.css';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import Card from '@mui/material/Card';
-import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Button, Typography, CardContent, Avatar, TextField, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, Grid, Chip, Menu, MenuItem, Tooltip, styled, tooltipClasses } from '@mui/material';
 import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import {TbEditCircle } from "react-icons/tb";
-import { Facebook, HeartBrokenOutlined, Instagram, LinkedIn, Star, StarOutline } from '@mui/icons-material';
+import { CiCircleQuestion } from "react-icons/ci";
+import {TbEditCircle} from "react-icons/tb";
+import { Facebook, HeartBrokenOutlined, HelpOutline, Instagram, LinkedIn, QuestionMark, QuestionMarkOutlined, QuestionMarkRounded, QuestionMarkSharp, Star, StarOutline } from '@mui/icons-material';
 import { RiEditCircleFill, RiTwitterXFill } from 'react-icons/ri';
 import { BsHeart, BsHeartFill } from 'react-icons/bs';
 
@@ -66,7 +67,7 @@ function OrgBox(props) {
 
 		const editInfo = props.editInfo.current;
 
-		console.log(editInfo)
+		console.log(newFB)
 
         const json = {
 			id: sessionStorage.getItem("ID"),
@@ -389,7 +390,7 @@ function OrgBox(props) {
 		return (
 			(socials && socials.socialMedia) ?
 				<div className='profileSocials'>
-					{(socials.socialMedia.facebook) ? <a className='social' href={socials.socialMedia.facebook} target='_blank'><Facebook/></a> : ""}
+					{(socials.socialMedia.facebook) ? <a className='social' href={socials.socialMedia.facebook} target='_blank' rel="noopener noreferrer"><Facebook/></a> : ""}
 					{(socials.socialMedia.twitter) ? <a className='social' href={socials.socialMedia.twitter} target='_blank'><RiTwitterXFill/></a> : ""}
 					{(socials.socialMedia.instagram) ? <a className='social' href={socials.socialMedia.instagram} target='_blank'><Instagram/></a> : ""}
 					{(socials.socialMedia.linkedin) ? <a className='social' href={socials.socialMedia.linkedin} target='_blank'><LinkedIn/></a> : ""}
@@ -572,7 +573,7 @@ function OrgBox(props) {
 					<DialogContent className='spartan feedbackModal'>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
 							<Grid item>
-								<DialogTitle className='dialogTitle'>Edit Social Links</DialogTitle>
+								<DialogTitle className='dialogTitle'>Edit Social Links<Tooltip title={<div className='helpTT'>This must be the exact links as you see them (i.e. https://www.facebook.com/UCF)</div>}><HelpOutline className='helpLogo'/></Tooltip></DialogTitle>
 							</Grid>
 						</Grid>
 						<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
