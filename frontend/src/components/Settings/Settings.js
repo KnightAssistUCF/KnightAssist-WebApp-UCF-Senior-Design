@@ -151,15 +151,16 @@ function Settings(){
 		}
 	}, []);
 
+	//TODO: use sessionstorage to set the color based on dark and light theme (USE BG AND TEXT COLORS IN APP.CSS)
 	return(
 		<div className='spartan grayBG'>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
-				<Card className='settingsCard'>
+				<Card className='settingsCard' sx={{backgroundColor:"#1e1e1e", color:"white"}}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
-						<Divider className='dividerSpace' sx={{background: "black"}}/>
+						<Divider className='dividerSpace' sx={{background: "#d3d3d3"}}/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
 								  getEmails={getEmails} setGetEmails={setGetEmails}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>

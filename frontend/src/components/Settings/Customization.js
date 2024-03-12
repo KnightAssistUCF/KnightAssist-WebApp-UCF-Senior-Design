@@ -33,60 +33,21 @@ function Customization(props){
 
 	function Appearence(){
 
-		 // state to manage the dark mode
-		 const [toggleDarkMode, setToggleDarkMode] = useState(false);
-
-		 // function to toggle the dark mode as true or false
-		 const toggleDarkTheme = () => {
-		   setToggleDarkMode(!toggleDarkMode);
-		 };
-
-		 const [toggle, setToggle] = useState(false);
-  const handleToggleChange = () => {
-    setToggle(!toggle);
-  };
-	   
-
-		const darkTheme = createTheme({
-			palette: {
-			    mode: 'dark',
-			  primary: {
-				main: '#90caf9',
-			  },
-			  secondary: {
-				main: '#f48fb1',
-			  },
-			},
-		  });
-
-		  const lightTheme = createTheme({
-			palette: {
-			    mode: 'light', 
-			  primary: {
-				main: '#90caf9',
-			  },
-			  secondary: {
-				main: '#f48fb1',
-			  },
-			},
-		  });
+		//TODO: add the .dark css classes and sessionstorage here
 
 		return (
 			<div>
 				<div className='subHeaderTxt'>Appearance</div>
 			
-    <ThemeProvider theme={toggle ? darkTheme : lightTheme}>
       <CssBaseline />
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ alignItems: 'center' }}>
 		<FormControl className='spartan settingsItem'>
 					<RadioGroup defaultValue={props.appearenceMode}>
 						<FormControlLabel value="light" control={<Radio />} label="Light" onClick={() => {props.setAppearenceMode("light")}}/>
 						<FormControlLabel value="dark" control={<Radio />} label="Dark"  onClick={() => {props.setAppearenceMode("dark")}}/>
 					</RadioGroup>
 				</FormControl>
-				<DarkModeToggle toggle={toggle} handleToggleChange={handleToggleChange} />
       </div>
-    </ThemeProvider>
 			</div>
 		)
 	}

@@ -7,6 +7,14 @@
 }
 
 
+.studAnnouncementsPage.dark {
+    color: white;
+    margin-left: 225px;
+    margin-top: 1%;
+    margin-right: 2%;
+}
+
+
 .topSection {
     display: flex;
     margin-bottom: 12px;

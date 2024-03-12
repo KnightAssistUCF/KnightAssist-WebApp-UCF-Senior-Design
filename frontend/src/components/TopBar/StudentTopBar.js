@@ -177,9 +177,14 @@ function StudentTopBar(props)
 		getNotifications();
 	}, [])
 
+	const darkStyle = { backgroundColor: 'black' }
+	const lightStyle = { backgroundColor: '#ffffff' }
+	const darkIcon = { p: 0, color: 'white' }
+	const lightIcon = { p: 0 }
+
     return(
       <div className="StudentTopBar">
-		<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
+		<AppBar variant='outlined'  position="static" sx={darkStyle}>
 		<Container maxWidth="xl">
 			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
 
@@ -191,7 +196,7 @@ function StudentTopBar(props)
 
 			<Box sx={{ flexGrow: 0, mr: 3 }}>
 
-					<IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
+					<IconButton onClick={handleOpenNavMenu} sx={darkIcon}>
 						<Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
 							<NotificationsIcon/>
 						</Badge>

@@ -4,6 +4,12 @@
 }
 
 .grayBG{
+	background-color: #423e3e;
+	height: 100% !important;
+	margin-bottom: -20% !important;
+}
+
+.grayBG.dark{
 	background-color: #d3d3d3;
 	height: 100% !important;
 	margin-bottom: -20% !important;
@@ -16,6 +22,7 @@
 	height: 100% !important;
 	margin-bottom: 30px;
 	text-align: center;
+	backgroundColor: black;
 }
 
 .headerTxt{

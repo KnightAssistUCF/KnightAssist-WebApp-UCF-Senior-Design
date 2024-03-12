@@ -103,14 +103,21 @@ function RecommendedOrganizations(props)
     }
 
     function OrgHeader(){
-        return <h1 className='upcomingEvents spartan'>Recommended Organizations</h1>
+		const darkStyle = {color: 'white'}
+		const lightStyle = {color: 'black'}
+        return <h1 className='upcomingEvents spartan' style={darkStyle}>Recommended Organizations</h1>
     }
 
-    function Org(props) {      
+    function Org(props) {  
+		const darkStyle = {color: 'white'}
+		const lightStyle = {color: 'black'}    
+		const darkCard = {backgroundColor:"#1e1e1e", color:"white"}
+		const lightCard = {backgroundColor:"white", color:"black"}
+
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openOrgPage(props.id)}>
+                    <Card className="eventHeight" onClick={() => openOrgPage(props.id)}  sx={darkCard}>
 						<div className='logoandbg'>
 							<CardMedia
 								component="img"
@@ -125,10 +132,10 @@ function RecommendedOrganizations(props)
                            />
 						</div>
 						<CardContent>
-							<Typography className='eventName' clagutterBottom variant="h6" component="div">
+							<Typography style={darkStyle} className='eventName' clagutterBottom variant="h6" component="div">
 								{props.name}
 							</Typography>
-							<Typography>
+							<Typography style={darkStyle}>
 								{(props.description.length >= 80) ? (props.description.substring(0, 80) + "...") : props.description}
 							</Typography>
 						</CardContent>
