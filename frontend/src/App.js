@@ -40,10 +40,27 @@ function App()
 			setRole("");
 	}, []);
 
-	// create a darkTheme function to handle dark mode
+	// TODO: set the theme using sessionstorage
+	// create themes to handle the app's palette, including background
 	const darkTheme = createTheme({
 		palette: {
 		  mode: 'dark',
+		  background: {
+            default: '#1e1e1e',
+            paper: '#1e1e1e',
+          },
+		  primary: {
+			main: '#90caf9',
+		  },
+		  secondary: {
+			main: '#f48fb1',
+		  },
+		},
+	  });
+
+	  const lightTheme = createTheme({
+		palette: {
+		  mode: 'light',
 		  primary: {
 			main: '#90caf9',
 		  },
