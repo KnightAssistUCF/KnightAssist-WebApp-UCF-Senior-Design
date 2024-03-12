@@ -204,6 +204,11 @@
 	margin-bottom: 20px;
   }
 
+  .markAllBtn{
+	margin-top: 3px;
+	text-align: center !important;
+  }
+
   .putTitleLeft{
 	float: left !important;
 	margin-left: 15% !important;

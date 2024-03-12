@@ -110,6 +110,34 @@ function StudentTopBar(props)
 		}
 	}
 
+	async function markAllAsRead(notos){
+		for(let noto of notos){
+			const json = {
+				userId: sessionStorage.getItem("ID"),
+				message: noto.message
+			};
+		
+			const url = buildPath(`api/markNotificationAsRead`);
+		
+			try {
+				const response = await fetch(url, {
+					method: "POST",
+					body: JSON.stringify(json),
+					headers: {"Content-Type": "application/json"},
+				});
+			
+				let res = await response.text();
+				
+				console.log(res);
+			}catch(e){
+				console.log(e);
+			}
+		}
+
+		// Get the notifications again, now they won't have the unread flag
+		await getNotifications();
+	}
+
 	async function getNotifications(){
 		let id = sessionStorage.getItem("ID");
 
@@ -147,10 +175,17 @@ function StudentTopBar(props)
 		
 				pics.push(pic.url);
 			}
+
+			// For the map function to add the mark as read button
+			res.notifications.new.push(<Button onClick={async() => await markAllAsRead(res.notifications.new)}>Mark All As Read</Button>);
+
 			// Only show notifications from the past week
-			setNotifcations(res.notifications.new.map((noto, i) => <div><MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/><div className='notoMessage'>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
-													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem>
+			setNotifcations(res.notifications.new.map((noto, i) => <div>{(i != res.notifications.new.length - 1) ? <MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/><div className='notoMessage'>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
+													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem> : <div className='markAllBtn menuNoto'>{noto}</div>}
 													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
+					
+			// Removeb the mark as read button from notos
+			res.notifications.new.pop();
 		}
 
 
