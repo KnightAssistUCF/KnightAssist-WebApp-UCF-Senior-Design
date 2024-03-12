@@ -12,7 +12,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
-import { DarkModeToggle } from './DarkModeToggle';
 
 function Customization(props){
 
@@ -43,8 +42,8 @@ function Customization(props){
       <div style={{ alignItems: 'center' }}>
 		<FormControl className='spartan settingsItem'>
 					<RadioGroup defaultValue={props.appearenceMode}>
-						<FormControlLabel value="light" control={<Radio />} label="Light" onClick={() => {props.setAppearenceMode("light")}}/>
-						<FormControlLabel value="dark" control={<Radio />} label="Dark"  onClick={() => {props.setAppearenceMode("dark")}}/>
+						<FormControlLabel value="light" control={<Radio sx={{color: "white"}}/>} label="Light" onClick={() => {props.setAppearenceMode("light")}}/>
+						<FormControlLabel value="dark" control={<Radio sx={{color: "white"}}/>} label="Dark"  onClick={() => {props.setAppearenceMode("dark")}}/>
 					</RadioGroup>
 				</FormControl>
       </div>
@@ -56,10 +55,11 @@ function Customization(props){
 		return (
 			<div>
 				<div className='subHeaderTxt'>Font Type</div>
-				<FormControl className='spartan settingsItem' variant="standard" sx={{ m: 1, minWidth: 120 }}>
+				<FormControl className='spartan settingsItem' variant="standard" sx={{color: "white", m: 1, minWidth: 120 }}>
 					<Select
 						defaultValue={props.fontType}
 						onChange={(e) => changeFontType(e)}
+						sx={{color: "white"}}
 					>
 						<MenuItem value="spartan">Spartan</MenuItem>
 						<MenuItem value="arial">Arial</MenuItem>

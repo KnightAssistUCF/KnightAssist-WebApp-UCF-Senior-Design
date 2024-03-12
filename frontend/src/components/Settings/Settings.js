@@ -28,13 +28,9 @@ function Settings(){
     const [openDeleteAccount, setOpenDeleteAccount] = useState(false);
 
 	async function submit(){
-		if(!validInput()) return;
-
-		setErrors(false);
-		setShowError(false);
 
 		let url;
-		
+			
 		if(role === "volunteer"){
 			url = buildPath("api/editUserProfile");
 		}else{
@@ -44,10 +40,8 @@ function Settings(){
 		const json = 
 		{
 			id: sessionStorage.getItem("ID"),
-			password: newPassword
+			appearenceMode: appearenceMode
 		}
-
-		console.log(json);
 
 		try{
 			const response = await fetch(url, {
@@ -58,9 +52,41 @@ function Settings(){
 			});
 	
 			let res = await response.text();
-			console.log(res);
+			console.log(res);	
 		}catch(e){
 			console.log(e);
+		}
+
+		sessionStorage.setItem("theme", appearenceMode);
+
+		// The user is not trying to reset their password
+		if(newPassword !== ""){
+			if(!validInput()) return;
+
+			setErrors(false);
+			setShowError(false);
+	
+			const json = 
+			{
+				id: sessionStorage.getItem("ID"),
+				password: newPassword
+			}
+	
+			console.log(json);
+	
+			try{
+				const response = await fetch(url, {
+					method: "POST",
+					body: JSON.stringify(json),
+					headers: {"Content-Type": "application/json",         
+					"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+				});
+		
+				let res = await response.text();
+				console.log(res);	
+			}catch(e){
+				console.log(e);
+			}
 		}
 	}
 

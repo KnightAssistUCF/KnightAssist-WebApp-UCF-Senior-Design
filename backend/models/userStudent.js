@@ -132,6 +132,10 @@ const userStudentSchema = new mongoose.Schema({
             default: false
         }
     }],
+	appearenceMode: {
+		type: String,
+		default: "light"
+	},
     __v: {
         type: String,
         required: true,

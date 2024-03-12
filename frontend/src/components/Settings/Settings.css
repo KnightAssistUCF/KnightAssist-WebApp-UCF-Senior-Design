@@ -75,6 +75,11 @@
 	margin-top: 0% !important;
 }
 
+.settingsInput{
+	border: '1px solid green' !important;
+	border-radius: 1 !important;
+}
+
 @media (max-width: 600px) {
 	.dividerSpace{
 		margin-top: 50% !important;
