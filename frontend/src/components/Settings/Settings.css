@@ -3,16 +3,34 @@
     margin-top: 2%;
 }
 
-.grayBG{
+.light{
+	background-color: #d3d3d3;
+	height: 100% !important;
+	margin-bottom: -20% !important;
+}
+
+.dark{
 	background-color: #423e3e;
 	height: 100% !important;
 	margin-bottom: -20% !important;
 }
 
-.grayBG.dark{
-	background-color: #d3d3d3;
-	height: 100% !important;
-	margin-bottom: -20% !important;
+.lightCard{
+	color: black !important;
+	background-color: white !important;
+}
+
+.darkCard{
+	color: white !important;
+	background-color: #1e1e1e !important;
+}
+
+.lightRadio{
+	color: black !important;
+}
+
+.darkRadio{
+	color: white !important;
 }
 
 .settingsCard{
@@ -22,7 +40,6 @@
 	height: 100% !important;
 	margin-bottom: 30px;
 	text-align: center;
-	backgroundColor: black;
 }
 
 .headerTxt{

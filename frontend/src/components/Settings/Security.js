@@ -24,7 +24,7 @@ function Security(props){
 
 	function PasswordForm(params){
 		return (		
-			<FormControl className='spartan settingsItem' sx={{backgroundColor:"#1e1e1e", color:"white"}}>
+			<FormControl className='spartan settingsItem'>
 				<Input
 					sx={"input::-ms-reveal,input::-ms-clear { display: none;}"}
 					type={params.show ? 'text' : 'password'}
@@ -68,8 +68,8 @@ function Security(props){
 				<div className='subHeaderTxt'>Receive Email Notifications</div>
 				<FormControl className='spartan settingsItem'>
 					<RadioGroup defaultValue={(props.getEmails === true) ? "Yes" : "No"}>
-						<FormControlLabel value="Yes" control={<Radio sx={{backgroundColor:"#1e1e1e", color:"white"}} />} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
-						<FormControlLabel value="No" control={<Radio sx={{backgroundColor:"#1e1e1e", color:"white"}} />} label="No"  onClick={() => {props.setGetEmails(false)}}/>
+						<FormControlLabel value="Yes" control={<Radio className={(props.appearenceMode === "light") ? "lightRadio" : "darkRadio"}/>} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
+						<FormControlLabel value="No" control={<Radio className={((props.appearenceMode === "light") ? "lightRadio" : "darkRadio")}/>} label="No"  onClick={() => {props.setGetEmails(false)}}/>
 					</RadioGroup>
 				</FormControl>
 			</div>

@@ -156,10 +156,10 @@ function Settings(){
 	useEffect(() => {
 		setRole(sessionStorage.getItem("role"));
 
-		if(!("appearenceMode" in sessionStorage)){
+		if(!("theme" in sessionStorage)){
 			setAppearenceMode("light");
 		}else{
-			setAppearenceMode(sessionStorage.getItem("appearenceMode"));
+			setAppearenceMode(sessionStorage.getItem("theme"));
 		}
 
 		if(!("fontType" in sessionStorage)){
@@ -179,16 +179,16 @@ function Settings(){
 
 	//TODO: use sessionstorage to set the color based on dark and light theme (USE BG AND TEXT COLORS IN APP.CSS)
 	return(
-		<div className='spartan grayBG'>
+		<div className={'spartan ' + appearenceMode}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>
-				<Card className='settingsCard' sx={{backgroundColor:"#1e1e1e", color:"white"}}>
+				<Card className={'settingsCard ' + ((appearenceMode === "light") ? "lightCard" : "darkCard")}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
 						<Divider className='dividerSpace' sx={{background: "#d3d3d3"}}/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
-								  getEmails={getEmails} setGetEmails={setGetEmails}/>
+								  getEmails={getEmails} setGetEmails={setGetEmails} appearenceMode={appearenceMode}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 4.5, width: 175, backgroundColor: "#CC0202", "&:hover": {backgroundColor: "#FF2400"}}} variant="contained" onClick={() => setOpenDeleteAccount(true)}>Delete Account</Button>
 						</Grid>
