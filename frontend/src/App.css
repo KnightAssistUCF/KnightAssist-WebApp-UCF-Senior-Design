@@ -34,26 +34,6 @@ body.light {
 	}
   }
   
-  .App-header {
-	background-color: white;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	/*align-items: center;
-	justify-content: center; */
-	
-	font-size: calc(10px + 2vmin);
-	color: white;
-  }
-
-  .App-header.dark {
-	background-color: #1e1e1e;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	font-size: calc(10px + 2vmin);
-	color: white;
-  }
   
   .App-link {
 	color: #61dafb;
@@ -224,6 +204,16 @@ body.light {
 	background-color: #1e1e1e;
 	color: white;
   }
+
+  .lightLB{
+		background-color: white !important;
+		height: 100% !important;
+	}
+
+	.darkLB{
+		background-color:#121212  !important;
+		height: 100% !important;
+	}
   
   .registerPage {
     background-image: url('./components/Register/filler-temp-background.jpg');

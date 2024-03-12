@@ -74,7 +74,8 @@ function App()
 
 	return (
 		<div className="App">
-		<header className="App-header">
+		<ThemeProvider theme={darkTheme}>
+
 			<Router>
 			<Routes>
 				<Route path="/" element={<LandingPage/>}></Route>
@@ -143,10 +144,8 @@ function App()
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
 		</Router>
-		<ThemeProvider theme={darkTheme}>
-		<CssBaseline />
-	  </ThemeProvider>
-		</header>
+			<CssBaseline />
+		</ThemeProvider>
 		</div>
 	);
 }
