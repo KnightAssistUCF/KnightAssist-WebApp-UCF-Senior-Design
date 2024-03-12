@@ -209,7 +209,7 @@ function UpcomingEvents(props)
 		{(eventCards)?
 		    <div className='centerCards'>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 			</div>
 			: <CircularProgress/>
 		}

@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { buildPath } from '../../path';
+import CloseIcon from '@mui/icons-material/Close';
 import './OrgHome.css';
 import { lightBlue } from '@mui/material/colors';
 
 function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [selectedFeedback, setSelectedFeedback] = useState(undefined);
 
   const handleCloseModal = async () => {
     if (selectedFeedback) {
       await readFeedback(selectedFeedback);
-      fetchAllFeedback();
+	  await fetchAllFeedback();
     }
     setModalOpen(false);
   };
@@ -21,6 +21,12 @@ function Feedback() {
     setSelectedFeedback(feedback);
     setModalOpen(true);
   };
+
+  function openStudentPage(id){
+	sessionStorage.setItem("viewingStudentPageID", id);
+	window.location.href="/#/studentprofile";
+  }
+
 
   const [items, setItems] = useState([]);
 
@@ -61,20 +67,24 @@ function Feedback() {
       let res = JSON.parse(await response.text());
 
       console.log(res);
-      var unreadFeedback = [];
-      for (let feedback of res) {
-        console.log(feedback.eventName);
-        if (feedback.wasReadByUser === false) {
-          console.log("unread " + feedback._id);
-          unreadFeedback.push(feedback);
-        }
-      }
+      const feedback = [];
 
-      unreadFeedback.sort(
-        (a, b) =>
+      feedback.sort((a, b) =>
           new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted)
       );
-      setItems(unreadFeedback.slice(0, 3));
+
+	  let i = 0;
+ 
+	  // Only get 3 most recent feedbacks
+	  while(i < res.length && i < 3 ){
+		feedback.push(res[i]);
+		if (res[i].wasReadByUser === false) {
+			//unreadFeedback.push(feedback);
+		}
+		i++;
+	  }
+
+      setItems(feedback);
     } catch (e) {
       console.log("API called failed");
     }
@@ -132,7 +142,7 @@ function Feedback() {
         variant="h5"
         sx={{ paddingLeft: 2, paddingTop: 2, paddingBottom: 1 }}
       >
-        Feedback
+        Recent Feedback
       </Typography>
       {limitedItems.length <= 0 ? (
         <div
@@ -144,7 +154,7 @@ function Feedback() {
             color: "darkgray",
           }}
         >
-          No unread feedback available
+          No feedback available
         </div>
       ) : (
         <List sx={{ flex: 1 }}>
@@ -153,15 +163,6 @@ function Feedback() {
               <ListItem
                 disablePadding
                 sx={{ maxHeight: "60px" }}
-                secondaryAction={
-                  <IconButton
-                    edge="end"
-                    aria-label="close feedback"
-                    onClick={() => handleItemClose(item._id)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                }
               >
 
               <ListItemButton
@@ -188,10 +189,28 @@ function Feedback() {
           ))}
         </List>
       )}
-      <Dialog open={modalOpen} onClose={handleCloseModal} maxWidth='lg'>
-        <DialogTitle>{selectedFeedback?.eventName}</DialogTitle>
-        <DialogContent style={{ marginTop: '10px' }}>{selectedFeedback?.feedbackText}</DialogContent>
-      </Dialog>
+
+		{(selectedFeedback) ? 
+			<Dialog open={modalOpen} onClose={handleCloseModal}>
+				<DialogContent className='feedbackModal'>
+					<button className='closeFeedback'>
+						<CloseIcon onClick={handleCloseModal}/>
+					</button>
+					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
+						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
+						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
+					</DialogContentText>
+					<Rating
+						value={selectedFeedback.rating}
+						readOnly
+					/>
+					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+				</DialogContent>
+			</Dialog>
+			: null
+		}
     </Box>
   );
 }

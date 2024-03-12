@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import CloseIcon from '@mui/icons-material/Close';
 import Rating from '@mui/material/Rating';
 import { CiUnread } from "react-icons/ci";
 import { CiRead } from "react-icons/ci";
@@ -151,11 +152,14 @@ const Feedbacks = (props) => {
       >
         {theFeedbacks}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape='rounded' />
+	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
 				<DialogContent className='feedbackModal'>
+					<button className='closeFeedback'>
+						<CloseIcon onClick={handleCloseModal}/>
+					</button>
 					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
 					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
 					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
@@ -168,9 +172,6 @@ const Feedbacks = (props) => {
 					/>
 					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
-				<DialogActions>
-				<Button onClick={handleCloseModal}>Close</Button>
-				</DialogActions>
 			</Dialog>
 			: null
 		}
