@@ -7,14 +7,14 @@ import Avatar from '@mui/material/Avatar';
 import { buildPath } from '../../path';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './PostVerifiedQuestions.css'
-import { Facebook, Instagram, LinkedIn, LocationCityOutlined, PhoneAndroid, Pin, PinDrop, PinDropOutlined, X } from '@mui/icons-material';
+import { Facebook, HelpOutline, Instagram, LinkedIn, LocationCityOutlined, PhoneAndroid, Pin, PinDrop, PinDropOutlined, X } from '@mui/icons-material';
 import PlaceIcon from '@mui/icons-material/Place';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
 import { RiTwitterXFill } from 'react-icons/ri';
 import { BiWorld } from 'react-icons/bi';
-import { CardMedia, Dialog, DialogContent, DialogTitle, Menu, MenuItem } from '@mui/material';
+import { CardMedia, Dialog, DialogContent, DialogTitle, Menu, MenuItem, Tooltip, styled, tooltipClasses } from '@mui/material';
 import { testReset } from '@mui/joy/Tooltip/Tooltip';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -361,7 +361,7 @@ function PostVerifiedQuestions()
 		return (
 			<div>
 				<Grid container justifyContent="center" alignItems="center" >
-						<p className='goalQuestion'>What is your semester-wide hourly volunteer goal?</p>
+						<p className='goalQuestion'>What is your hourly volunteer goal?</p>
 				</Grid>
 				<Grid container justifyContent="center" alignItems="center" marginBottom={"40px"}>
 					<TextField
@@ -431,7 +431,7 @@ function PostVerifiedQuestions()
 	function Description(){
 		return (
 			<div className='descriptionArea'>
-				<p className='tagQuestion'>Describe Your Organziation:</p>
+				<p className='tagQuestion'>Describe Your Organziation</p>
                 <TextField
                     label="Description"
 					className='descriptionBox'
@@ -447,7 +447,7 @@ function PostVerifiedQuestions()
 	function Contact(){
 		return (
 			<div>
-				<p className='tagQuestion'>Phone & Website:</p>
+				<p className='tagQuestion'>Phone & Website</p>
 				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
 					<Grid item sx={{marginRight: "50px"}}>
 						<TextField variant="standard" label={<PhoneAndroid/>} required={false} value={phone} onChange={(e) => setPhone(e.target.value)}/>
@@ -463,7 +463,7 @@ function PostVerifiedQuestions()
 	function SocialMedia(){
 		return (
 			<div>
-				<p className='tagQuestion'>Socials:</p>
+				<p className='tagQuestion'>Socials<Tooltip title={<div className='helpTT'>This must be the exact links as you see them (i.e. https://www.facebook.com/UCF)</div>}><HelpOutline className='helpLogo'/></Tooltip></p>
 				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
 					<Grid item sx={{marginRight: "50px"}}>
 						<TextField variant="standard" label={<Facebook/>} required={false} value={fb} onChange={(e) => setFB(e.target.value)}/>
@@ -487,7 +487,7 @@ function PostVerifiedQuestions()
 	function Location(){
 		return (
 			<div>
-				<p className='tagQuestion'>Where Are You Located:</p>
+				<p className='tagQuestion'>Where Are You Located</p>
 				<Grid container justifyContent="center" alignItems="center" layout={'row'} className='socials'>
 					<Grid item>
 						<TextField variant="standard" label={<PlaceIcon/>} sx={{width: 300}}required={false} value={location} onChange={(e) => setLocation(e.target.value)}/>
@@ -510,7 +510,7 @@ function PostVerifiedQuestions()
 	function Calendar(){
 		return (
 			<div>
-				<p className='tagQuestion'>When are your Office Hours?</p>
+				<p className='tagQuestion'>When are your Office Hours</p>
 				<p className='smallText'>{"(Leave Blank if Unapplicable)"}</p>
 				<Grid className='allDays'>
 					<Grid container justifyContent="right" alignItems="center" layout={'row'} className='times'>
@@ -617,7 +617,7 @@ function PostVerifiedQuestions()
 		{(currentStep === 0) 
 			? 
 				<div>
-					<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}:</p>
+					<p className='tagQuestion'>Picture{(role === "organization") ? "s" : ""}</p>
 					{Pictures()}
 					{(role === "organization") ? Description() : ""}
 					{(role === "organization") ? Contact() : ""}

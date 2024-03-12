@@ -380,6 +380,17 @@
 	filter: blur(3px);
 }
 
+.helpTT{
+	word-wrap: break-word;
+	width: 225px !important;
+}
+
+.helpLogo{
+	width: 16px !important;
+	margin-left: 3px;
+	margin-bottom: 15px;
+}
+
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {
     fill: red;  
 } */
