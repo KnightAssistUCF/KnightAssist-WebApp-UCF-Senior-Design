@@ -150,15 +150,22 @@ function RecommendedEvents(props)
                             height="150"
                             image={props.pic.url}
                         />
-                        <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
-                            </Typography>
-                            <Typography className="eventDate" variant="body2" color="text.secondary">
-								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
-								<CalendarIcon className='cardCalendar'/>
-								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
-                            </Typography>
+                        <CardContent className='whiteCardSection'>
+                            <div className='initialText'>
+                                <Typography className='eventName' clagutterBottom variant="h6" component="div">
+                                    {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
+                                </Typography>
+                                <Typography className="eventDate" variant="body2" color="text.secondary">
+                                    <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
+                                    <CalendarIcon className='cardCalendar'/>
+                                    {startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
+                                </Typography>
+                            </div>
+                            <div className="hoverText">
+                                <Typography>
+                                    New Content on Hover {props.description}
+                                </Typography>
+                            </div>
                         </CardContent>
                     </Card>
                 </CardActionArea>
