@@ -146,6 +146,7 @@ function Search(props) {
               <TextField
                 {...params}
                 label={label}
+                variant="filled"
                 InputProps={{
                   ...params.InputProps,
                   type: 'search',

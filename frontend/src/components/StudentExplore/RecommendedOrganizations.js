@@ -103,7 +103,7 @@ function RecommendedOrganizations(props)
     }
 
     function OrgHeader(){
-        return <h1 className='upcomingEvents spartan'>Recommended Organizations</h1>
+        return <h1 className='upcomingEvents spartan'><span style={{ fontWeight: '350' }}>Recommended Organizations</span></h1>
     }
 
     function Org(props) {      

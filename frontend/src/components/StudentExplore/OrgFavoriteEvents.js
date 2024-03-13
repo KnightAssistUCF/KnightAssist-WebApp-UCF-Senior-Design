@@ -191,7 +191,7 @@ function OrgFavoriteEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
+        return <h1 className='upcomingEvents spartan'><span style={{ fontWeight: '350' }}>Favorited Organization Events</span></h1>
     }
 
     function Event(props) {     
@@ -203,7 +203,7 @@ function OrgFavoriteEvents(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
+                    <Card variant='outlined' className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"

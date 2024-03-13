@@ -38,10 +38,10 @@ function StudentExplore()
 					<Search results={results} searchType={searchType} setOpenEvent={setOpenEvent} setEventID={setEventID}/>
 				</Grid>
 				<Grid item>
-					<button type="button" class="addEventBtn btn btn-primary" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
+					<button type="button" class="addEventBtn btn" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
 				</Grid>
 				<Grid item>
-					{(searchMode) ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
+					{(searchMode) ? <button type="button" class="addEventBtn btn" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
 				</Grid>
 			</Grid>
 			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>

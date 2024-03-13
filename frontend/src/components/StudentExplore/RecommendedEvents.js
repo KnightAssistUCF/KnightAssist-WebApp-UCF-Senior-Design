@@ -132,7 +132,7 @@ function RecommendedEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
+        return <h1 className='upcomingEvents spartan'><span style={{ fontWeight: '350' }}>Recommended Events</span></h1>
     }
 
     function Event(props) {     
