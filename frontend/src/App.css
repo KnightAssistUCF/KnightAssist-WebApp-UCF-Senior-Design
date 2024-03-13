@@ -241,6 +241,11 @@ body.light {
   .StudentTopBar{
 	margin-top: 0.5px;
 	margin-bottom: 20px;
+	outline-color: none;
+  }
+
+  .whiteBar{
+	background-color: white !important;
   }
 
   .markAllBtn{

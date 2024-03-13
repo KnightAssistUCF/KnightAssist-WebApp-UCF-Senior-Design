@@ -214,7 +214,7 @@ function StudentTopBar(props)
 
     return(
       <div className="StudentTopBar">
-		<AppBar variant='outlined'  position="static">
+		<AppBar variant='outlined' className={(sessionStorage.getItem("theme") === 'light') ? 'whiteBar' : ''} position="static">
 		<Container maxWidth="l">
 			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
 
