@@ -49,7 +49,6 @@ function StudentHistory()
 			let pic =  JSON.parse(await response.text());
 
 			histories[i] =  <div>
-							{(i === 0) ? <Divider sx={{width: "100%"}}/> : ""}
 							<ListItem>
 								<Grid container layout={'row'} className='listsItems'>
 									<Grid item>
@@ -73,7 +72,7 @@ function StudentHistory()
 									</Grid>
 								</Grid>
 							</ListItem>
-							<Divider/>
+							<Divider sx={{width: "96%", background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/>
 						</div>
 		}
 
@@ -117,7 +116,6 @@ function StudentHistory()
 				let pic =  JSON.parse(await response.text());
 
 				histories[i] =  <div>
-								{(i === 0) ? <Divider sx={{width: "100%"}}/> : ""}
 								<ListItem>
 									<Grid container layout={'row'} className='listsItems'>
 										<Grid item sm={1}>
@@ -141,7 +139,7 @@ function StudentHistory()
 										</Grid>
 									</Grid>
 								</ListItem>
-								<Divider/>
+								<Divider sx={{width: "96%", background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/>
 							</div>
 			}
 
