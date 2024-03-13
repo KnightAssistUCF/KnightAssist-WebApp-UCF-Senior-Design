@@ -199,7 +199,6 @@ function Settings(props){
 				<Card className={'settingsCard'}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} radioColor={radioColor}/>
-						<Divider className='dividerSpace'/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
 								  getEmails={getEmails} setGetEmails={setGetEmails} radioColor={radioColor}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
