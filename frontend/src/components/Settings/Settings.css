@@ -1,6 +1,7 @@
-.moveEverything{
+.moveEverythingSettings{
     margin-left: 15%;
     margin-top: 2%;
+	padding-bottom: 30px !important;
 }
 
 .settingsCardSpace{
@@ -9,30 +10,18 @@
 
 .light{
 	background-color: #d3d3d3;
-	padding-bottom: 30px;
 }
 
 .dark{
 	background-color: #423e3e;
-	padding-bottom: 30px;
-}
-
-.lightCard{
-	color: black !important;
-	background-color: white !important;
-}
-
-.darkCard{
-	color: white !important;
-	background-color: #1e1e1e !important;
 }
 
 .lightRadio{
-	color: black !important;
+	color: white !important;
 }
 
 .darkRadio{
-	color: white !important;
+	color: black !important;
 }
 
 .settingsCard{

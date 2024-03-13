@@ -141,7 +141,7 @@ const customViewer = (event, close) => {
 
 
   return (
-    <div style={{color: 'black', marginBottom: '20px'}}>
+    <div style={{marginBottom: '20px'}}>
         <Scheduler
           view="month"
           height={520}
@@ -154,7 +154,6 @@ const customViewer = (event, close) => {
             autoHideDuration={2000}
             open={openSnackbar}
             variant="outlined"
-            color="primary"
             onClose={(event, reason) => {
             if (reason === 'clickaway') {
                 return;

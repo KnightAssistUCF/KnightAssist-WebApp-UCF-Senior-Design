@@ -36,7 +36,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 function App() 
 {
 	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : undefined);
-	const [theme, setTheme] = useState(undefined);
+	const [theme, setTheme] = useState((sessionStorage.getItem("theme") !== null) ? sessionStorage.getItem("theme") : undefined);
 
 	useEffect(() => {
 		if(sessionStorage.getItem("token") === null)

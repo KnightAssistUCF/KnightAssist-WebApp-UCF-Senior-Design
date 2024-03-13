@@ -16,10 +16,11 @@ function Settings(props){
 	const [role, setRole] = useState(undefined);
 
 	const [appearenceMode, setAppearenceMode] = useState(undefined);
-	const [fontType, setFontType] = useState(undefined);
 	const [newPassword, setNewPassword] = useState("");
 	const [passwordCheck, setPasswordCheck] = useState("");
 	const [getEmails, setGetEmails] = useState(undefined);
+	const [radioColor, setRadioColor] = useState("");
+	const [bgColor, setBGColor] = useState("");
 	
 	const [showError, setShowError] = useState(false);
 	const [errors, setErrors] = useState([]);
@@ -61,6 +62,14 @@ function Settings(props){
 
 		props.setTheme(appearenceMode);
 		sessionStorage.setItem("theme", appearenceMode);
+
+		if(appearenceMode === "light"){
+			setRadioColor("darkRadio");
+			setBGColor("light");
+		}else{
+			setRadioColor("lightRadio");
+			setBGColor("dark");
+		}
 
 		// The user is not trying to reset their password
 		if(newPassword !== ""){
@@ -161,14 +170,16 @@ function Settings(props){
 
 		if(!("theme" in sessionStorage)){
 			setAppearenceMode("light");
+			setRadioColor("darkRadio");
 		}else{
 			setAppearenceMode(sessionStorage.getItem("theme"));
-		}
-
-		if(!("fontType" in sessionStorage)){
-			setFontType("spartan");
-		}else{
-			setFontType(sessionStorage.getItem("fontType"));
+			if(sessionStorage.getItem("theme") === "light"){
+				setRadioColor("darkRadio");
+				setBGColor("light");
+			}else{
+				setRadioColor("lightRadio");
+				setBGColor("dark");
+			}
 		}
 
 		// Should be changed as a field for the org
@@ -181,16 +192,16 @@ function Settings(props){
 	}, []);
 
 	return(
-		<div className={'spartan ' + appearenceMode + ' settingsCardSpace'}>
+		<div className={'spartan settingsCardSpace ' + bgColor}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
-			<div className='moveEverything'>
-				<Card className={'settingsCard ' + ((appearenceMode === "light") ? "lightCard" : "darkCard")}>
+			<div className='moveEverythingSettings'>
+				<Card className={'settingsCard'}>
 					<CardContent>
-						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
+						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} radioColor={radioColor}/>
 						<Divider className='dividerSpace'/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
-								  getEmails={getEmails} setGetEmails={setGetEmails} appearenceMode={appearenceMode}/>
+								  getEmails={getEmails} setGetEmails={setGetEmails} radioColor={radioColor}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
 							<Button sx={{mt: 4.5, width: 175, backgroundColor: "#CC0202", "&:hover": {backgroundColor: "#FF2400"}}} variant="contained" onClick={() => setOpenDeleteAccount(true)}>Delete Account</Button>
 						</Grid>
