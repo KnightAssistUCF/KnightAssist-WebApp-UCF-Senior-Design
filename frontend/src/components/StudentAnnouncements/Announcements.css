@@ -1,6 +1,5 @@
 
 .studAnnouncementsPage {
-    color: black;
     margin-left: 225px;
     margin-top: 1%;
     margin-right: 2%;
@@ -8,7 +7,6 @@
 
 
 .studAnnouncementsPage.dark {
-    color: white;
     margin-left: 225px;
     margin-top: 1%;
     margin-right: 2%;
@@ -37,10 +35,6 @@
     
 .contentWrap{
 	word-wrap: break-word
-}
-
-.hoverOrgName{
-	color: black;
 }
 
 .hoverOrgName:hover{

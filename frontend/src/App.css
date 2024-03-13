@@ -70,15 +70,11 @@ body.light {
   .orgEvents{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
   }
 
   .orgEvents.dark{
 	height: 100vh;
 	width: 100%;
-	background-color: #1e1e1e;
-	color: white;
   }
   
   .tabs{
@@ -97,43 +93,33 @@ body.light {
   .explorePage{
 	height: 100vh;
 	width: 100%;
-	background-color: #1e1e1e;
-	color: black;
   }
 
   .explorePage.dark{
 	height: 100vh;
 	width: 100%;
-	background-color: #1e1e1e;
-	color: white;
   }
   
   .studentProfilePage{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
   }
 
   .studentProfilePage.dark{
 	height: 100vh;
 	width: 100%;
-	background-color: #1e1e1e;
-	color: white;
+
   }
 
   .studentAnnouncementsPage {
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
   }
 
   .studentAnnouncementsPage.dark {
 	height: 100vh;
 	width: 100%;
 	background-color: #1e1e1e;
-	color: white;
   }
   
   .emailVerifiedPage {
@@ -166,29 +152,22 @@ body.light {
   .orgHomePage{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;  
-}
+	}
 
 .orgHomePage.dark{
 	height: 100vh;
 	width: 100%;
-	background-color: #1e1e1e;
-	color: white;  
 }
 
 .orgProfile {
   height: 100vh;
   width: 100%;
-  background-color: white;
-  color: black;
 }
 
 .orgProfile.dark {
 	height: 100vh;
 	width: 100%;
 	background-color: #1e1e1e;
-	color: white;
   }
   
   .adminhomepage {

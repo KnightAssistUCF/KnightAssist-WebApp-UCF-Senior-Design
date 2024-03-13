@@ -49,7 +49,7 @@ function StudentHistory()
 			let pic =  JSON.parse(await response.text());
 
 			histories[i] =  <div>
-							{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
+							{(i === 0) ? <Divider sx={{width: "100%"}}/> : ""}
 							<ListItem>
 								<Grid container layout={'row'} className='listsItems'>
 									<Grid item>
@@ -73,7 +73,7 @@ function StudentHistory()
 									</Grid>
 								</Grid>
 							</ListItem>
-							<Divider sx={{background: "black"}}/>
+							<Divider/>
 						</div>
 		}
 
@@ -117,7 +117,7 @@ function StudentHistory()
 				let pic =  JSON.parse(await response.text());
 
 				histories[i] =  <div>
-								{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
+								{(i === 0) ? <Divider sx={{width: "100%"}}/> : ""}
 								<ListItem>
 									<Grid container layout={'row'} className='listsItems'>
 										<Grid item sm={1}>
@@ -141,7 +141,7 @@ function StudentHistory()
 										</Grid>
 									</Grid>
 								</ListItem>
-								<Divider sx={{background: "black"}}/>
+								<Divider/>
 							</div>
 			}
 
@@ -166,7 +166,7 @@ function StudentHistory()
 		<div className='moveEverything'>
 			{(eventHistories) ?
 					<div>
-						<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">
+						<List component="nav" aria-label="mailbox folders">
 							{shownHistories}
 						</List>
 						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>

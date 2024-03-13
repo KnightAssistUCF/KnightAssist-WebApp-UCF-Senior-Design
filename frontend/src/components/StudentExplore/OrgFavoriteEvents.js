@@ -191,9 +191,7 @@ function OrgFavoriteEvents(props)
     }
 
     function EventHeader(){
-        const darkStyle = {color: 'white'}
-		const lightStyle = {color: 'black'}
-        return <h1 className='upcomingEvents spartan' style={darkStyle}>Favorited Organization Events</h1>
+        return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
     }
 
     function Event(props) {     
@@ -202,25 +200,20 @@ function OrgFavoriteEvents(props)
 
 		let hasEndDate = (startDay !== endDay);
 
-        const darkStyle = {color: 'white'}
-		const lightStyle = {color: 'black'}
-        const darkCard = {backgroundColor:"#1e1e1e", color:"white"}
-        const lightCard = {backgroundColor:"white", color:"black"}
-
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}  sx={darkCard}>
+                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
                             image={props.pic.url}
                         />
-                        <CardContent  sx={darkCard}>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
+                        <CardContent>
+							<Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                             </Typography>
-                            <Typography sx={darkStyle} className="eventDate" variant="body2" color="text.secondary">
+                            <Typography className="eventDate" variant="body2" color="text.secondary">
 								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
 								<CalendarIcon className='cardCalendar'/>
 								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}

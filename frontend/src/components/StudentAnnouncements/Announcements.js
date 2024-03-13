@@ -104,7 +104,6 @@ const Announcements = (props) => {
 						variant="body2"
 						color="textSecondary"
 						component="p"
-						style={{ color: 'black'}}
 					  >
 						<Avatar className="orgPicAnn" src={pics[i]}/>{name}
 					  </Typography>
@@ -170,10 +169,10 @@ const Announcements = (props) => {
 				<button className='closeFeedback'>
 					<CloseIcon onClick={handleCloseModal}/>
 				</button>
-				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
+				<DialogContentText className='contentWrap' style={{ fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
 				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
-				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
+				<DialogContentText><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
+				<DialogContentText className='contentWrap' style={{ marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
 		</Dialog>
     </div>

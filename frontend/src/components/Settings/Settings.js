@@ -186,7 +186,7 @@ function Settings(){
 				<Card className={'settingsCard ' + ((appearenceMode === "light") ? "lightCard" : "darkCard")}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} fontType={fontType} setFontType={setFontType}/>
-						<Divider className='dividerSpace' sx={{background: "#d3d3d3"}}/>
+						<Divider className='dividerSpace'/>
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
 								  getEmails={getEmails} setGetEmails={setGetEmails} appearenceMode={appearenceMode}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>

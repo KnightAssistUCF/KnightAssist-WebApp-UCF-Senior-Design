@@ -15,13 +15,11 @@
 .exploreTitle{
     font-size: 38px;
     font-family: "system-ui";
-	color: white !important;
 }
 
 .exploreTitle.dark{
     font-size: 38px;
     font-family: "system-ui";
-	color: black !important;
 }
 
 .eventTag{
