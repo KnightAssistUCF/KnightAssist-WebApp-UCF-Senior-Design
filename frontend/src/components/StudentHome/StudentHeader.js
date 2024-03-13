@@ -92,14 +92,6 @@ function Header()
                     </LightTooltip>
                 </li>
                 <li>
-                    <LightTooltip title={!isSidebarActive ? "Profile" : ""} placement="right" className="custom-tooltip">
-                        <a onClick={() => loadStudentProfile()} className='addHover'>
-                            <CgProfile className='homeIcon'/>
-                            <span class="links_name">Profile</span>
-                        </a>
-                    </LightTooltip>
-                </li>
-                <li>
                     <LightTooltip title={!isSidebarActive ? "Explore" : ""} placement="right" className="custom-tooltip">
                         <a href='#/explore'>
                             <BiSearch className='searchIcon'></BiSearch>
