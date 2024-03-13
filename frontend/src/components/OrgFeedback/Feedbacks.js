@@ -70,14 +70,12 @@ const Feedbacks = (props) => {
 							</Typography>
 							<Typography
 								variant="body2"
-								color="textSecondary"
 								component="p"
 							>
 								<h6>{feedback.studentName}<span className='emailSize'>{((feedback.studentEmail) ? " - " + feedback.studentEmail : "")}</span></h6>
 							</Typography>
 							<Typography
 								variant="body2"
-								color="textSecondary"
 								component="p"
 								style={{ position: 'absolute', top: 0, right: 0, margin: '12px' }}
 							>
@@ -91,7 +89,6 @@ const Feedbacks = (props) => {
 							/>
 							<Typography
 								variant="body2"
-								color="textSecondary"
 								component="p"
 								style={{ marginTop: '6px'}}
 							>
@@ -159,9 +156,9 @@ const Feedbacks = (props) => {
 					<button className='closeFeedback'>
 						<CloseIcon onClick={handleCloseModal}/>
 					</button>
-					<DialogContentText className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
-					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{marginBottom: 5}}>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary" style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary" style={{marginBottom: 5}}>
 						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
 						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
 					</DialogContentText>
@@ -169,7 +166,7 @@ const Feedbacks = (props) => {
 						value={selectedFeedback.rating}
 						readOnly
 					/>
-					<DialogContentText className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 			</Dialog>
 			: null

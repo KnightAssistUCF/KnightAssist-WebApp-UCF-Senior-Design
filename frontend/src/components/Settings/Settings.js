@@ -12,7 +12,7 @@ import Security from './Security';
 import { buildPath } from '../../path.js';
 import StudentTopBar from '../TopBar/StudentTopBar';
 
-function Settings(){
+function Settings(props){
 	const [role, setRole] = useState(undefined);
 
 	const [appearenceMode, setAppearenceMode] = useState(undefined);
@@ -43,6 +43,8 @@ function Settings(){
 			appearenceMode: appearenceMode
 		}
 
+		console.log(json)
+
 		try{
 			const response = await fetch(url, {
 				method: "POST",
@@ -57,6 +59,7 @@ function Settings(){
 			console.log(e);
 		}
 
+		props.setTheme(appearenceMode);
 		sessionStorage.setItem("theme", appearenceMode);
 
 		// The user is not trying to reset their password
@@ -177,9 +180,8 @@ function Settings(){
 		}
 	}, []);
 
-	//TODO: use sessionstorage to set the color based on dark and light theme (USE BG AND TEXT COLORS IN APP.CSS)
 	return(
-		<div className={'spartan ' + appearenceMode}>
+		<div className={'spartan ' + appearenceMode + ' settingsCardSpace'}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverything'>

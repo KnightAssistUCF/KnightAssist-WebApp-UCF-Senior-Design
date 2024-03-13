@@ -175,7 +175,7 @@ function Feedback() {
                   primary={
                     formatDate(item.createdAt) +
                     " " +
-                    item.eventName
+                    item.eventName 
                   }
                   secondary={truncateText(item.feedbackText, 40)}
                 />
@@ -195,9 +195,9 @@ function Feedback() {
 					<button className='closeFeedback'>
 						<CloseIcon onClick={handleCloseModal}/>
 					</button>
-					<DialogContentText className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
-					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{  marginBottom: 5}}>
+					<DialogContentText color="textPrimary"  className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary"  style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary"  style={{  marginBottom: 5}}>
 						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
 						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
 					</DialogContentText>
@@ -205,7 +205,7 @@ function Feedback() {
 						value={selectedFeedback.rating}
 						readOnly
 					/>
-					<DialogContentText className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText color="textPrimary"  className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 			</Dialog>
 			: null

@@ -3,16 +3,18 @@
     margin-top: 2%;
 }
 
+.settingsCardSpace{
+	margin-bottom: 200px !important;
+}
+
 .light{
 	background-color: #d3d3d3;
-	height: 100% !important;
-	margin-bottom: -20% !important;
+	padding-bottom: 30px;
 }
 
 .dark{
 	background-color: #423e3e;
-	height: 100% !important;
-	margin-bottom: -20% !important;
+	padding-bottom: 30px;
 }
 
 .lightCard{
@@ -38,7 +40,6 @@
 	border-radius: 15px !important;
 	width: 50% !important;
 	height: 100% !important;
-	margin-bottom: 30px;
 	text-align: center;
 }
 

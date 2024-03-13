@@ -36,6 +36,7 @@ import LeaderboardPage from './pages/LeaderboardPage';
 function App() 
 {
 	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : undefined);
+	const [theme, setTheme] = useState(undefined);
 
 	useEffect(() => {
 		if(sessionStorage.getItem("token") === null)
@@ -74,14 +75,14 @@ function App()
 
 	return (
 		<div className="App">
-		<ThemeProvider theme={darkTheme}>
+		<ThemeProvider theme={(theme === "dark") ? darkTheme : lightTheme}>
 
 			<Router>
 			<Routes>
 				<Route path="/" element={<LandingPage/>}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/login" element={<LoginPage setRole={setRole}/>}></Route>
+				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/orghome" element={(role === "organization") ? <OrgHomePage/> : <Navigate from='/orghome' to='/login' />}></Route>
@@ -114,7 +115,7 @@ function App()
 				<Route path="/postverifyquestions" element={(role) ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/settings" element={(role) ? <SettingsPage/> : <Navigate from='/settings' to='/login' />}></Route>
+				<Route path="/settings" element={(role) ? <SettingsPage setTheme={setTheme}/> : <Navigate from='/settings' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/leaderboard" element={(role) ? <LeaderboardPage/> : <Navigate from='/leaderboard' to='/login' />}></Route>
