@@ -100,7 +100,7 @@ function RecommendedEvents(props)
 		
 				let orgPic = JSON.parse(await response.text());
 
-                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id} description={event.description}/>)  
             }
         }
 
@@ -144,7 +144,7 @@ function RecommendedEvents(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
+                    <Card variant='outlined' className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
@@ -163,7 +163,7 @@ function RecommendedEvents(props)
                             </div>
                             <div className="hoverText">
                                 <Typography>
-                                    New Content on Hover {props.description}
+                                    {((props.description.length >= 150) ? (props.description.substring(0, 150) + "...") : props.description)}
                                 </Typography>
                             </div>
                         </CardContent>

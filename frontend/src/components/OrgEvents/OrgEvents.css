@@ -423,7 +423,7 @@
 
 .test:hover .whiteCardSection {
     background-color: white;
-    transform: translateY(-90%);
+    transform: translateY(-60%);
     z-index: 20;
 }
 
