@@ -157,7 +157,7 @@ function Feedback() {
         </div>
       ) : (
         <List sx={{ flex: 1 }}>
-          {limitedItems.map((item) => (
+          {limitedItems.map((item, i) => (
             <div key={item.id}>
               <ListItem
                 disablePadding
@@ -183,7 +183,7 @@ function Feedback() {
               </ListItemButton>
 
               </ListItem>
-              <Divider variant="middle" />
+              {(i !== limitedItems.length - 1) ? <Divider variant="middle" sx={{background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/> : ""}
             </div>
           ))}
         </List>

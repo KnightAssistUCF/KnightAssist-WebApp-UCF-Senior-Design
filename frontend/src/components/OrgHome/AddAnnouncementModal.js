@@ -55,7 +55,6 @@ function AddAnnouncementModal(props){
                     fullWidth
                     required={props.required}
                     label={props.label}
-                    autoFocus
                     multiline={props.multiline}
                     minRows={props.minRows}
 					maxRows={props.maxRows}
@@ -67,9 +66,9 @@ function AddAnnouncementModal(props){
     }
 
 	return (
-			<Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleClose}>
+			<Modal sx={{display:'flex', alignItems:'center', justifyContent:'center', overflowY: 'none'}} open={props.open} onClose={handleClose}>
 				<div className='center'>
-					<Card className='addEventModalCard spartan'>
+					<Card className='announcementModalCard spartan'>
 						<CardContent>
 							<button className='closeAddEvent'>
 								<CloseIcon onClick={() => handleClose()}/>
@@ -89,7 +88,7 @@ function AddAnnouncementModal(props){
 										<Button
 											fullWidth
 											variant="contained"
-											sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395", "&:hover": {
+											sx={{ mt: 3, mb: 2, color: 'white', backgroundColor: "#5f5395", "&:hover": {
 												backgroundColor: "#7566b4"
 											}}}
 											onClick={() => submit()}

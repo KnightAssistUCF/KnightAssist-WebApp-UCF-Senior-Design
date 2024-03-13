@@ -17,6 +17,10 @@
 }
   
 
+.announcementModalCard{
+    height: 75vh;
+    width: 75vh;
+}
 
 .orgHomeTopRow {
     display: flex;
