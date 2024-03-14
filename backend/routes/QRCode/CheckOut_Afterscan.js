@@ -1,58 +1,55 @@
 const express = require("express");
 const router = express.Router();
-const event = require("../../models/events");
-const userStudent = require("../../models/userStudent");
-
+const Event = require("../../models/events");
+const UserStudent = require("../../models/userStudent");
 
 router.post("/", async (req, res) => {
     try {
         const { qrCodeData_eventID_WithHash, studentId } = req.body;
 
-		// Not a check out code
-		if(qrCodeData_eventID_WithHash.length <= 24 || !qrCodeData_eventID_WithHash.endsWith('out')){
-			return res.status(404).send("The QRCode is not a checkout code");
-		}
-
-        // store the correct event ID after removing the random appended value at the end
-        const qrCodeData_eventID_Modified = qrCodeData_eventID_WithHash.substring(0, 24);
-
-        const eventObj = await event.findOne({ _id: qrCodeData_eventID_Modified });
-        if (!eventObj) {
-            return res.status(404).send("Event passed through the QRCode not found in the database");
+        if (qrCodeData_eventID_WithHash.length <= 24 || !qrCodeData_eventID_WithHash.endsWith('out')) {
+            return res.status(404).send("The QRCode is not a checkout code");
         }
 
-        const student = await userStudent.findById(studentId);
+        const eventId = qrCodeData_eventID_WithHash.substring(0, 24);
+        const eventObj = await Event.findById(eventId);
+
+        if (!eventObj) {
+            return res.status(404).send("Event not found in the database");
+        }
+
+        const student = await UserStudent.findById(studentId);
         if (!student) {
             return res.status(404).send("Student not found in the database");
         }
 
-		console.log("STUDENT ID", student);
-
-        const checkInRecord = eventObj.checkedInStudents.find(checkIn => checkIn.studentId.equals(student._id));
-
+        const checkInRecord = eventObj.checkedInStudents.find(record => record.studentId.equals(student._id));
         if (!checkInRecord) {
             return res.status(400).send("Student did not check in for this event earlier");
-        } else if(checkInRecord.checkOutTime != null) {
-			return res.status(400).send("Student already checked out for event");
-        }else{
-            checkInRecord.checkOutTime = new Date();
-		}
+        } else if (checkInRecord.checkOutTime) {
+            return res.status(400).send("Student already checked out of this event");
+        }
 
-        // get the total volunteering time of the student
-        const totalVolunteeringTimeMilliseconds = checkInRecord.checkOutTime - checkInRecord.checkInTime;
-        const totalVolunteeringTimeHours = totalVolunteeringTimeMilliseconds / 3600000;
-        console.log("total volunteering time in hours -> " + totalVolunteeringTimeHours);
-        student.totalVolunteerHours += totalVolunteeringTimeHours;
+        checkInRecord.checkOutTime = new Date();
+        const volunteeringTimeMillis = checkInRecord.checkOutTime - checkInRecord.checkInTime;
+        const volunteeringHours = volunteeringTimeMillis / 3600000;
+
+        student.totalVolunteerHours += volunteeringHours;
+
+        // Update hours per organization
+        const orgId = eventObj.sponsoringOrganization; // assuming this field contains the organization's unique identifier
+        student.hoursPerOrg.set(orgId, (student.hoursPerOrg.get(orgId) || 0) + volunteeringHours);
 
         await eventObj.save();
-
-        // add the event to the history of events of the user
         student.eventsHistory.push(eventObj._id);
+        await student.save();
 
-		await student.save();
-
-        res.status(200).send({message: "Check-out successful and the ID of the student -> " + student._id + "has been removed from the checked in ppl in the event -> " + qrCodeData_eventID_Modified + "", eventObj: eventObj});
+        res.status(200).send({
+            message: `Check-out successful. Volunteer hours updated for student ${student._id} for event ${eventId}.`,
+            eventObj: eventObj
+        });
     } catch (err) {
+        console.error(err);
         res.status(500).send(err.message);
     }
 });
