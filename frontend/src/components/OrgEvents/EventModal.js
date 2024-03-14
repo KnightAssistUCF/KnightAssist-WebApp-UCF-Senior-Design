@@ -425,6 +425,7 @@ function EventModal(props)
 
 
     function Volunteers(){
+        let className = (sessionStorage.getItem("theme") === 'light') ? 'volunteerList' : 'volunteerListDark';
         return (
             <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
@@ -433,7 +434,7 @@ function EventModal(props)
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
-                    <List className="volunteerList" component="button" disablePadding>
+                    <List className={className} component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
 							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
