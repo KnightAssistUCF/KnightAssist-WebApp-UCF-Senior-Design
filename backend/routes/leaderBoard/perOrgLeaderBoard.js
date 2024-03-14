@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
         // Fetch all students who have volunteered for the organization
         const students = await UserStudent.find({ 'hoursPerOrg': { $exists: true } })
-            .select('firstName lastName hoursPerOrg totalVolunteerHours');
+            .select('firstName lastName hoursPerOrg eventsHistory totalVolunteerHours');
 
         let volunteerDetails = students.filter(student => student.hoursPerOrg.get(orgId))
             .map(student => {
@@ -22,6 +22,7 @@ router.get('/', async (req, res) => {
                     _id: student._id,
                     firstName: student.firstName,
                     lastName: student.lastName,
+					eventsHistory: student.eventsHistory,
                     totalVolunteerHours: student.hoursPerOrg.get(orgId),
                 };
             });

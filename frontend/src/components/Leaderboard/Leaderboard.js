@@ -24,8 +24,7 @@ function Leaderboard() {
 		if(role === "volunteer"){
 			url = buildPath(`api/allStudentsRanking`);
 		}else{
-			//url = buildPath(`api/perOrgLeaderboard?orgId=${sessionStorage.getItem('ID')}`);
-			url = buildPath(`api/perOrgLeaderboard?orgId=6530608eae2eedf04961794e`); // For testing now, will remove once done
+			url = buildPath(`api/perOrgLeaderboard?orgId=${sessionStorage.getItem('ID')}`);
 		}
 
 		let response = await fetch(url, {
@@ -37,35 +36,41 @@ function Leaderboard() {
 	
 		let res = JSON.parse(await response.text());
 
-		const data = [];
+		console.log(res)
 
-		let i = 0;
+		if(res.data.length == 0){
+			settop50Data(-1)
+		}else{
+			const data = [];
 
-		for(let student of res.data){
-			url = buildPath(`api/retrieveImage?typeOfImage=3&id=${student._id}`);
+			let i = 0;
 	
-			response = await fetch(url, {
-				method: "GET",
-				headers: {"Content-Type": "application/json"},
-			});
+			for(let student of res.data){
+				url = buildPath(`api/retrieveImage?typeOfImage=3&id=${student._id}`);
+		
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let pic = JSON.parse(await response.text());
+		
+				data.push([student, pic.url])
 	
-			let pic = JSON.parse(await response.text());
+				if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
+					setYourData({rank: i + 1, data: student, pic: pic.url});
+				}
 	
-			data.push([student, pic.url])
-
-			if(role === "volunteer" && student._id === sessionStorage.getItem("ID")){
-				setYourData({rank: i + 1, data: student, pic: pic.url});
+				i++;
+				
+				// The top 50 can be displayed
+				if(i == 50 || i == res.data.length){
+					settop50Data(data.slice(0, 50))
+				}
 			}
-
-			i++;
-			
-			// The top 50 can be displayed
-			if(i == 50 || i == res.data.length){
-				settop50Data(data.slice(0, 50))
-			}
+	
+			setStudentData(data);
 		}
-
-		setStudentData(data);
 	}
 
 	function loadStudentProfile(id){
@@ -263,8 +268,8 @@ function Leaderboard() {
 				{(role === "volunteer") ? (yourData ? <YourRank/> : <CircularProgress/>) : null}
 				{(role === "organization") ? <Search studentData={studentData} searchID={searchID} setSearchID={setSearchID}/> : null}
 				{(role === "organization" && searchID) ? <SearchRank/> : null}
-				{(top50Data) ? <div className='lbHeader'>Top 50</div> : null}
-			  	{(top50Data) ? top50Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : <div className='progessTop10'><CircularProgress/></div>}
+				{(top50Data) ? <div className='lbHeader'>{(top50Data != -1) ? "Top 50" : "No Data Found"}</div> : null}
+			  	{(top50Data) ? ( (top50Data != -1) ? top50Data.map((student, i) => <RankCard student={student[0]} pic={student[1]} i={i + 1}/>) : null) : <div className='progessTop10'><CircularProgress/></div>}
 			  </div>
 		  </div>
 		</div>
