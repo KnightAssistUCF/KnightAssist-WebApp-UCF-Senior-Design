@@ -21,7 +21,7 @@ const generateRandomTimes = (start, end) => {
 
 router.post('/', async (req, res) => {
     try {
-        const events = await Event.find({}).limit(5); // for now we only check them in and out from 5 events 
+        const events = await Event.find({sponsoringOrganization: "6598366c76beab8af631f919"}).limit(5); // for now we only check them in and out from 5 events 
 
         for (const event of events) {
             const { checkInTime, checkOutTime } = generateRandomTimes(event.startTime, event.endTime);
