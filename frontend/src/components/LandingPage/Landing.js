@@ -22,7 +22,7 @@ function Landing() {
       <ThemeProvider theme={theme}>
       <CssBaseline />
       <PreLoginNavBar />
-      <Box className={classes.heroBox} sx={{ flexGrow: 1, padding: 20, justifyContent: 'center'}}>
+      <Box className={classes.heroBox} sx={{ flexGrow: 1, padding: 20, justifyContent: 'center',  minHeight: '95vh'}}>
         <Grid container spacing={6} sx={{ alignItems: 'center', justifyContent: 'center'}}>
           <Grid item xs={12} md={7}>
             <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}} >
