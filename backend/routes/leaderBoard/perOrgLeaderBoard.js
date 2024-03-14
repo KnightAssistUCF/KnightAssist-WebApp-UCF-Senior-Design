@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const UserStudent = require('../../models/userStudent');
 const Organization = require('../../models/organization');
-const Event = require('../../models/events');
 
 router.get('/', async (req, res) => {
     try {
@@ -13,37 +12,19 @@ router.get('/', async (req, res) => {
             return res.status(404).send('Organization not found in the database.');
         }
 
-        const events = await Event.find({ sponsoringOrganization: orgId });
+        // Fetch all students who have volunteered for the organization
+        const students = await UserStudent.find({ 'hoursPerOrg': { $exists: true } }).select('firstName lastName hoursPerOrg');
 
-        let studentIds = new Set();
-        events.forEach(event => {
-            event.checkedInStudents.forEach(student => {
-                studentIds.add(student.studentId.toString());
-            });
+        let volunteerDetails = students.map(student => {
+            const totalHours = student.hoursPerOrg.get(orgId) || 0;
+            return {
+                student: {
+                    firstName: student.firstName,
+                    lastName: student.lastName
+                },
+                hoursVolunteered: totalHours
+            };
         });
-
-        let volunteerDetails = [];
-
-        for (let studentId of studentIds) {
-            let totalHours = 0;
-
-            events.forEach(event => {
-                event.checkedInStudents.forEach(checkIn => {
-                    if (checkIn.studentId.toString() === studentId) {
-                        let hours = (checkIn.checkOutTime - checkIn.checkInTime) / 36e5; // Convert milliseconds to hours
-                        totalHours += hours;
-                    }
-                });
-            });
-
-            const student = await UserStudent.findById(studentId).select('firstName lastName eventsHistory');
-            if (student) {
-                volunteerDetails.push({
-                    student: student,
-                    hoursVolunteered: totalHours
-                });
-            }
-        }
 
         // Sort the array based on hours volunteered in descending order
         volunteerDetails.sort((a, b) => b.hoursVolunteered - a.hoursVolunteered);
