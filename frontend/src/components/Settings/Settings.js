@@ -192,7 +192,7 @@ function Settings(props){
 	}, []);
 
 	return(
-		<div className={'spartan settingsCardSpace ' + bgColor}>
+		<div className={'spartan settingsCardSpace ' + bgColor} style={{minHeight: '100vh'}}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
 			<div className='moveEverythingSettings'>

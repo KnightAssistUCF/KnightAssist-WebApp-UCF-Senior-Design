@@ -123,11 +123,13 @@ function Feedback() {
     fetchAllFeedback();
   }, []);
 
+  let boxBorder = (sessionStorage.getItem("theme") === 'light') ? 'grey.300' : 'grey.800';
+
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: "grey.300",
+        borderColor: boxBorder,
         width: "100%",
         minWidth: "600px",
         height: "250px",

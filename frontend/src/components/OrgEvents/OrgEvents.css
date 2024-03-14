@@ -275,6 +275,7 @@
 .volunteersBtn{
     background: none;
     border: none;
+    color: gray;
 }
 
 .volunteersBtn:hover{
@@ -293,6 +294,13 @@
     margin-bottom: 50px !important;
 	border-radius: 10px;
 	border-color: gray;
+}
+
+.volunteerListDark{
+    margin-bottom: 50px !important;
+	border-radius: 10px;
+	border-color: black;
+    background-color: gray;
 }
 
 .volunteerList:hover{
