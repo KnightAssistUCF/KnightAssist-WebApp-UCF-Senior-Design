@@ -1,12 +1,27 @@
-.moveEverything{
+.moveEverythingSettings{
     margin-left: 15%;
     margin-top: 2%;
+	padding-bottom: 30px !important;
 }
 
-.grayBG{
+.settingsCardSpace{
+	margin-bottom: 200px !important;
+}
+
+.light{
 	background-color: #d3d3d3;
-	height: 100% !important;
-	margin-bottom: -20% !important;
+}
+
+.dark{
+	background-color: #423e3e;
+}
+
+.lightRadio{
+	color: white !important;
+}
+
+.darkRadio{
+	color: black !important;
 }
 
 .settingsCard{
@@ -14,7 +29,6 @@
 	border-radius: 15px !important;
 	width: 50% !important;
 	height: 100% !important;
-	margin-bottom: 30px;
 	text-align: center;
 }
 
@@ -22,7 +36,8 @@
 	font-weight: bold;
 	font-size: 25px;
 	margin-left: 10px;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
+	text-align: left;
 }
 
 .subHeaderTxt{
@@ -66,6 +81,11 @@
 
 .dividerSpace{
 	margin-top: 0% !important;
+}
+
+.settingsInput{
+	border: '1px solid green' !important;
+	border-radius: 1 !important;
 }
 
 @media (max-width: 600px) {

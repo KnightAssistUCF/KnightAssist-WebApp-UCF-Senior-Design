@@ -106,7 +106,7 @@ function RecommendedOrganizations(props)
         return <h1 className='upcomingEvents spartan'>Recommended Organizations</h1>
     }
 
-    function Org(props) {      
+    function Org(props) {  
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>

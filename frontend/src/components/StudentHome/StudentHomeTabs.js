@@ -9,9 +9,7 @@ function StudentHomeTabs( {onTabChange} ) {
 
     const AntTabs = styled(Tabs)({
       // borderBottom: '1px solid #e8e8e8',
-      '& .MuiTabs-indicator': {
-        backgroundColor: '#00522B',
-      },
+   
     });
     
     const AntTab = styled((props) => <Tab  {...props} />)(({ theme }) => ({
@@ -23,7 +21,6 @@ function StudentHomeTabs( {onTabChange} ) {
       fontWeight: theme.typography.fontWeightRegular,
       fontSize: '23px',
       marginRight: theme.spacing(1),
-      color: '#000000',
       fontFamily: [
         '-apple-system',
         'BlinkMacSystemFont',
@@ -37,11 +34,11 @@ function StudentHomeTabs( {onTabChange} ) {
         '"Segoe UI Symbol"',
       ].join(','),
       '&:hover': {
-        color: '#00522B',
+        // color: '#00522B',
         opacity: 1,
       },
       '&.Mui-selected': {
-        color: '#00522B',
+        // color: '#00522B',
         fontWeight: theme.typography.fontWeightRegular,
       },
       '&.Mui-focusVisible': {

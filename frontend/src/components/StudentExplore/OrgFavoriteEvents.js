@@ -210,7 +210,7 @@ function OrgFavoriteEvents(props)
                             image={props.pic.url}
                         />
                         <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
+							<Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">

@@ -109,7 +109,7 @@ function OrgHome() {
               <Typography variant="h5">
                 Welcome, {orgName}
               </Typography>
-              <Button variant="contained" sx={{backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
+              <Button variant="contained" sx={{color: 'white', backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
                 Add Announcement
               </Button>
               <AddAnnouncementModal open={openAnnouncement} setOpen={setOpenAnnouncement} />

@@ -10,12 +10,23 @@
 	height: 100%; 
 	margin:0;
   }
+
+  /* Default styles for light theme */
+body.light {
+	background-color: #ffffff;
+	color: #000000;
+  }
+  
+  /* Styles for dark theme */
+  body.dark {
+	background-color: #1e1e1e;
+	color: #ffffff;
+  }
   
   .App-logo {
 	height: 40vmin;
 	pointer-events: none;
   }
-  
   
   @media (prefers-reduced-motion: no-preference) {
 	.App-logo {
@@ -23,17 +34,6 @@
 	}
   }
   
-  .App-header {
-	background-color: white;
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-	/*align-items: center;
-	justify-content: center; */
-	
-	font-size: calc(10px + 2vmin);
-	color: white;
-  }
   
   .App-link {
 	color: #61dafb;
@@ -70,8 +70,11 @@
   .orgEvents{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
+  }
+
+  .orgEvents.dark{
+	height: 100vh;
+	width: 100%;
   }
   
   .tabs{
@@ -90,21 +93,33 @@
   .explorePage{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
+  }
+
+  .explorePage.dark{
+	height: 100vh;
+	width: 100%;
   }
   
   .studentProfilePage{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
   }
+
+  .studentProfilePage.dark{
+	height: 100vh;
+	width: 100%;
+
+  }
+
   .studentAnnouncementsPage {
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;
+  }
+
+  .studentAnnouncementsPage.dark {
+	height: 100vh;
+	width: 100%;
+	background-color: #1e1e1e;
   }
   
   .emailVerifiedPage {
@@ -137,16 +152,23 @@
   .orgHomePage{
 	height: 100vh;
 	width: 100%;
-	background-color: white;
-	color: black;  }
+	}
 
+.orgHomePage.dark{
+	height: 100vh;
+	width: 100%;
+}
 
 .orgProfile {
   height: 100vh;
   width: 100%;
-  background-color: white;
-  color: black;
 }
+
+.orgProfile.dark {
+	height: 100vh;
+	width: 100%;
+	background-color: #1e1e1e;
+  }
   
   .adminhomepage {
 	height: 100vh;
@@ -154,6 +176,23 @@
 	background-color: white;
 	color: black;
   }
+
+  .adminhomepage.dark {
+	height: 100vh;
+	width: 100%;
+	background-color: #1e1e1e;
+	color: white;
+  }
+
+  .lightLB{
+		background-color: white !important;
+		height: 100% !important;
+	}
+
+	.darkLB{
+		background-color:#121212  !important;
+		height: 100% !important;
+	}
   
   .registerPage {
     background-image: url('./components/Register/filler-temp-background.jpg');
@@ -202,6 +241,11 @@
   .StudentTopBar{
 	margin-top: 0.5px;
 	margin-bottom: 20px;
+	outline-color: none;
+  }
+
+  .whiteBar{
+	background-color: white !important;
   }
 
   .markAllBtn{

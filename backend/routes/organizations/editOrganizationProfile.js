@@ -38,6 +38,7 @@ router.post('/', async (req, res) => {
             user.location = (req.body.location) ? req.body.location : user.location;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags;
             user.workingHoursPerWeek = (req.body.workingHoursPerWeek) ? req.body.workingHoursPerWeek : user.workingHoursPerWeek;
+			user.appearenceMode = (req.body.appearenceMode) ? req.body.appearenceMode : user.appearenceMode;
 
 			// User has logged in by this point
 			user.firstTimeLogin = false;

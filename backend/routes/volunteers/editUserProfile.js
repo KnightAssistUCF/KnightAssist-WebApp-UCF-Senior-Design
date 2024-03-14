@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
             user.confirmToken = (req.body.confirmToken) ? req.body.confirmToken : user.confirmToken;
             user.semesterVolunteerHourGoal = (req.body.semesterVolunteerHourGoal) ? req.body.semesterVolunteerHourGoal : user.semesterVolunteerHourGoal;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags; 
+			user.appearenceMode = (req.body.appearenceMode) ? req.body.appearenceMode : user.appearenceMode;
 			
 			// User has logged in by this point
 			user.firstTimeLogin = false;

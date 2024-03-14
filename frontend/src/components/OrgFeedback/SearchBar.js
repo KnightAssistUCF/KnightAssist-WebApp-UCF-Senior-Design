@@ -58,7 +58,7 @@ const handleKeyPress = (event) => {
         placeholder="Search By Event Name"
         value={searchTerm}
         onChange={handleInputChange}
-        sx={{ width: '26ch', paddingTop: '3px' }}
+        sx={{ width: '100%', paddingTop: '3px' }}
         size='medium'
         onKeyPress={handleKeyPress}
         InputProps={{

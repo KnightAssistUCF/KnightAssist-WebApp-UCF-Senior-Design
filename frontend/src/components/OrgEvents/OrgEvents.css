@@ -34,7 +34,6 @@
 }
 
 .cardWhite{
-	background-color: black;
 	overflow-y: none;
     width: 100%;
 }
@@ -85,7 +84,6 @@
     margin-top: 20px;
     font-size: 20px;
     margin-bottom: 50px;
-	color: black !important;
 }
 
 .spartan{
@@ -115,6 +113,7 @@
 .addEventBtn{
     background-color: #5f5395;
     border: none;
+	box-shadow: none !important;
 }
 
 .addEventBtn:hover{
@@ -293,7 +292,6 @@
 .volunteerList{
     margin-bottom: 50px !important;
 	border-radius: 10px;
-	background-color: white;
 	border-color: gray;
 }
 
@@ -325,7 +323,6 @@
 
 .checkName{
 	font-size: 50px;
-	color: white;
 }
 
 .qrCodeEvent{
@@ -350,10 +347,6 @@
 
 .qrTop{
 	background-color: #00785A;
-}
-
-.qrLower{
-	background-color: white;
 }
 
 .qrLogo{

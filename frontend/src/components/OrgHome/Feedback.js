@@ -134,7 +134,6 @@ function Feedback() {
         display: "flex",
         flexDirection: "column",
         bgcolor: "background.paper",
-        color: "black",
         borderRadius: "3px",
       }}
     >
@@ -158,7 +157,7 @@ function Feedback() {
         </div>
       ) : (
         <List sx={{ flex: 1 }}>
-          {limitedItems.map((item) => (
+          {limitedItems.map((item, i) => (
             <div key={item.id}>
               <ListItem
                 disablePadding
@@ -176,7 +175,7 @@ function Feedback() {
                   primary={
                     formatDate(item.createdAt) +
                     " " +
-                    item.eventName
+                    item.eventName 
                   }
                   secondary={truncateText(item.feedbackText, 40)}
                 />
@@ -184,7 +183,7 @@ function Feedback() {
               </ListItemButton>
 
               </ListItem>
-              <Divider variant="middle" />
+              {(i !== limitedItems.length - 1) ? <Divider variant="middle" sx={{background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/> : ""}
             </div>
           ))}
         </List>
@@ -196,9 +195,9 @@ function Feedback() {
 					<button className='closeFeedback'>
 						<CloseIcon onClick={handleCloseModal}/>
 					</button>
-					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
-					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
+					<DialogContentText color="textPrimary"  className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary"  style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary"  style={{  marginBottom: 5}}>
 						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
 						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
 					</DialogContentText>
@@ -206,7 +205,7 @@ function Feedback() {
 						value={selectedFeedback.rating}
 						readOnly
 					/>
-					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText color="textPrimary"  className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 			</Dialog>
 			: null
