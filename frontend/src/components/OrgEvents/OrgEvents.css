@@ -404,6 +404,10 @@
     /* transition: opacity 0.3s ease-in-out; */
 }
 
+.initialText{
+    transition-delay: 0.14s;
+}
+
 .test:hover .whiteCardSection .hoverText {
     /* display: block; */
     opacity: 1;
@@ -414,16 +418,23 @@
     /* display: none; */
     opacity: 0;
     /* transition: opacity 0.01s ease-in-out; */
+    transition: opacity 0.1s ease-in-out;
 
 }
 
 .whiteCardSection {
     /* transition: transform 0.2s ease-in; */
+    transition: transform 0.2s ease-in-out;
+    background-color: transparent;
+    transform: translateY(0);
+    overflow: auto;
+    max-height: 200px;
+    padding-bottom: 20px;
 }
 
 .test:hover .whiteCardSection {
     background-color: white;
-    transform: translateY(-60%);
+    transform: translateY(-80px);
     z-index: 20;
 }
 
