@@ -34,11 +34,11 @@ function StudentHomeTabs( {onTabChange} ) {
         '"Segoe UI Symbol"',
       ].join(','),
       '&:hover': {
-        color: '#00522B',
+        // color: '#00522B',
         opacity: 1,
       },
       '&.Mui-selected': {
-        color: '#00522B',
+        // color: '#00522B',
         fontWeight: theme.typography.fontWeightRegular,
       },
       '&.Mui-focusVisible': {
