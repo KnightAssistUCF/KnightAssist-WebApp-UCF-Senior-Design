@@ -26,8 +26,8 @@ function Features() {
       ];
 
   return (
-    <Box sx={{ marginTop: 5, marginRight: '15%', marginLeft: '15%'}}>
-        <Typography variant="h4" fontWeight={700} sx={{ color: '#212121'}}>
+    <Box sx={{ marginTop: 5, marginBottom: 5, marginRight: '15%', marginLeft: '15%'}}>
+        <Typography variant="h4" sx={{ color: '#212121'}}>
             Our Features
         </Typography>
         <Grid container spacing={3} sx={{ marginTop: 3, marginBottom: 5}}>

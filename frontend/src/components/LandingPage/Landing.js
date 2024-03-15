@@ -7,6 +7,7 @@ import Footer from '../Footer';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Hero from './HeroSection';
 import Features from './FeaturesSection';
+import Users from './UsersSection';
 
 const theme = createTheme();
 
@@ -18,6 +19,7 @@ function Landing() {
         <PreLoginNavBar />
         <Hero />
         <Features />
+        <Users />
         <Footer />
       </Box>
     </ThemeProvider>
