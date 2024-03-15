@@ -12,18 +12,20 @@ router.get('/', async (req, res) => {
             return res.status(404).send('Organization not found in the database.');
         }
 
-        // Fetch all students who have volunteered for the organization
         const students = await UserStudent.find({ 'hoursPerOrg': { $exists: true } })
             .select('firstName lastName hoursPerOrg eventsHistory totalVolunteerHours');
 
-        let volunteerDetails = students.filter(student => student.hoursPerOrg.get(orgId))
+		console.log(students);
+
+        let volunteerDetails = students.filter(student => student.hoursPerOrg && student.hoursPerOrg.has(orgId))
             .map(student => {
+                let orgData = student.hoursPerOrg.get(orgId) || { hours: 0, numEvents: 0 };
                 return {
                     _id: student._id,
                     firstName: student.firstName,
                     lastName: student.lastName,
-					eventsHistory: student.eventsHistory,
-                    totalVolunteerHours: student.hoursPerOrg.get(orgId),
+                    totalVolunteerHours: orgData.hours,
+                    numEvents: orgData.numEvents
                 };
             });
 

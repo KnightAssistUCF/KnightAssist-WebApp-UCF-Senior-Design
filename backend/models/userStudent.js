@@ -60,10 +60,10 @@ const userStudentSchema = new mongoose.Schema({
         required: true,
         default: 0
     },
-    hoursPerOrg: { // volunteer hours per organization
+    hoursPerOrg: {
         type: Map,
-        of: Number,
-        default: {}
+        of: {},
+        default: {},
     },
     semesterVolunteerHourGoal: {
         type: Number,
