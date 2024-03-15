@@ -16,12 +16,12 @@ function Contact() {
 		<CssBaseline />
 		<Box sx={{ background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100%', flexGrow: 1, padding: 10, justifyContent: 'center', alignItems: 'center'}}>
 			<PreLoginNavBar />
-			<Box sx={{ marginTop: 10, marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column' }} >
+			<Box sx={{ marginTop: 3, marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column' }} >
 				<Typography component="h1" variant="h3" align="left" fontWeight={700} sx={{ marginTop: 5, color: '#212121' }}>
 					Contact Us
 				</Typography>
 				<Grid container component="main" sx={{ flex: 1, display: 'flex', flexdirection: 'column' }}>
-					<Grid Item xs={false} sm={4} md={6} flexDirection="column" align="left">
+					<Grid Item xs={false} md={5} flexDirection="column" align="left" sx={{ marginBottom: 3}}>
 						<Typography component="h1" variant="h4" sx={{ marginTop: 5, marginRight: 10, color: '#00522B' }}>
 							Got questions? We are here to help.
 						</Typography>
@@ -30,7 +30,7 @@ function Contact() {
 						</Typography>
 						<Details />
 					</Grid>
-					<Grid container xs={12} sm={8} md={6} elevation={1} square>
+					<Grid container sm={12} md={7} elevation={1} square>
 						<UserInput />
 					</Grid>
 				</Grid>

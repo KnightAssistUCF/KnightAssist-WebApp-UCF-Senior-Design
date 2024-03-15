@@ -106,7 +106,7 @@ function UserInput() {
 	}
 
 	return (
-		<Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)'}}>
+		<Paper variant="outlined" sx={{ mx: { xs: 5, md: 15 }, my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)'}}>
 			<Grid container spacing={2}>
 				{GridTextField({ xm: 12, sm: 6, name: "First Name", label: "First Name", required: true, multiline: false, value: firstName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setFirstName(e.target.value) } })}
 				{GridTextField({ xm: 12, sm: 6, name: "Last Name", label: "Last Name", required: true, multiline: false, value: lastName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setLastName(e.target.value) } })}
