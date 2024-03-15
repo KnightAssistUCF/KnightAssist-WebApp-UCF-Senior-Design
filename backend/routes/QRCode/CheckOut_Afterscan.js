@@ -36,12 +36,15 @@ router.post("/", async (req, res) => {
 
         student.totalVolunteerHours += volunteeringHours;
 
-		// Round to two decimal places
-		student.totalVolunteerHours = student.totalVolunteerHours.toFixed(2);
+        // Round total volunteer hours to two decimal places
+        student.totalVolunteerHours = parseFloat(student.totalVolunteerHours.toFixed(2));
 
-        // Update hours per organization
-        const orgId = eventObj.sponsoringOrganization; // assuming this field contains the organization's unique identifier
-        student.hoursPerOrg.set(orgId, ((student.hoursPerOrg.get(orgId) || 0) + volunteeringHours).toFixed(2));
+        // Update hours and event count per organization
+        const orgId = eventObj.sponsoringOrganization; 
+        let orgData = student.hoursPerOrg.get(orgId) || { hours: 0, numEvents: 0 };
+        orgData.hours = (parseFloat(orgData.hours) + volunteeringHours).toFixed(2);
+        orgData.numEvents += 1;
+        student.hoursPerOrg.set(orgId, orgData);
 
         await eventObj.save();
         student.eventsHistory.push(eventObj._id);
