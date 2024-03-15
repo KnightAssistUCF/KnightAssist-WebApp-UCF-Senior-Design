@@ -13,22 +13,29 @@ function Search(props) {
 
 	const [searchTerm, setSearchTerm] = useState("");
 
+	function getOptions(){
+		console.log(props.studentData)
+		const tmp = [];
+
+		for(let student of props.studentData){
+			tmp.push({label:student[0].firstName + " " + student[0].lastName, id: student[0]._id});
+		}
+
+		setOptions(tmp);
+	}
 
 	function handleClick(id){
         props.setSearchID(id);
-		setSearchTerm("")
+		setSearchTerm("");
+
+		// Need to call this again to prevent issue where 
+		// same student can't be searched consecutively
+		getOptions();
     }
 
     useEffect(()=>{
         if(props.studentData){
-			console.log(props.studentData)
-			const tmp = [];
-
-			for(let student of props.studentData){
-				tmp.push({label:student[0].firstName + " " + student[0].lastName, id: student[0]._id});
-			}
-
-			setOptions(tmp);
+			getOptions();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.studentData]);

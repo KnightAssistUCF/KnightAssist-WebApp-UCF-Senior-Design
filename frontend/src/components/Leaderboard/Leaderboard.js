@@ -132,7 +132,6 @@ function Leaderboard() {
 	}
 
 	function SearchRank(){
-		
 		let student, pic, place;
 		let i = 0;
 
@@ -196,6 +195,7 @@ function Leaderboard() {
 	}
 
 	function RankCard(props){
+
 		const student = props.student;
 		const pic = props.pic;
 		const place = props.i;
