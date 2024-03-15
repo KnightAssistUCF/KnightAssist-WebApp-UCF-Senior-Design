@@ -114,7 +114,7 @@ function Leaderboard() {
 							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
-							{student.eventsHistory.length} Events
+							{student.eventsHistory.length} Event {(student.eventsHistory.length > 1) ? "s" : ""}
 						</Typography>
 						<Typography
 							variant="body2"
@@ -178,7 +178,7 @@ function Leaderboard() {
 							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
-							{student.eventsHistory.length} Events
+							{student.numEvents} Event	{(student.numEvents > 1) ? "s" : ""}
 						</Typography>
 						<Typography
 							variant="body2"
@@ -236,7 +236,8 @@ function Leaderboard() {
 							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
-							{student.eventsHistory.length} Events
+							{(role === "organization") ? student.numEvents : student.eventsHistory.length} Event 
+							{(role === "organization") ? ((student.numEvents > 1) ? "s" : "") : ((student.eventsHistory.length > 1) ? "s" : "")}
 						</Typography>
 						<Typography
 							variant="body2"

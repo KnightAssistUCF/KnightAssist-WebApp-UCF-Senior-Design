@@ -41,7 +41,13 @@ router.post("/", async (req, res) => {
 
         // Update hours and event count per organization
         const orgId = eventObj.sponsoringOrganization; 
-        let orgData = student.hoursPerOrg.get(orgId) || { hours: 0, numEvents: 0 };
+        let orgData;
+		
+		if(student.hoursPerOrg.get(orgId) && typeof student.hoursPerOrg.get(orgId) === 'object')
+			orgData = student.hoursPerOrg.get(orgId);
+		else
+			orgData = { hours: 0, numEvents: 0 };
+
         orgData.hours = (parseFloat(orgData.hours) + volunteeringHours).toFixed(2);
         orgData.numEvents += 1;
         student.hoursPerOrg.set(orgId, orgData);
