@@ -21,7 +21,7 @@
 }
 
 .cardRating{
-	margin-top: 10px;
+	float: right;
 }
 
 .cardRatingModal{

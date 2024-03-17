@@ -57,7 +57,7 @@
 
 .feedbackModal{
 	height: 100% !important;
-	width: 500px !important;
+	width: 600px !important;
 }
 
 .tagModal{
@@ -195,6 +195,7 @@
 	width: 125px;
     height: 40px;
     background-color: #F5D6BA;
+	color: black;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;

@@ -14,9 +14,8 @@
 
 
 .topSection {
-    display: flex;
     margin-bottom: 12px;
-    align-items: flex-start;
+	max-width: 400px;
 }
 
 .announcementSection {
@@ -51,4 +50,11 @@
 .modalOrgPic{
 	width: 25px !important;
 	height: 25px !important;
+}
+
+@media (max-width: 600px) {
+	.shortenSearch{
+		margin-top: 20% !important;
+		margin-left: -150px !important;
+	}
 }
