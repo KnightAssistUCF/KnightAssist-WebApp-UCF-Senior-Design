@@ -114,7 +114,7 @@ function Leaderboard() {
 							className='removeIfShort rankItem rankEvents'
 							style={{ color: 'black'}}
 						>
-							{student.eventsHistory.length} Event {(student.eventsHistory.length > 1) ? "s" : ""}
+							{student.eventsHistory.length} Event{(student.eventsHistory.length > 1) ? "s" : ""}
 						</Typography>
 						<Typography
 							variant="body2"
