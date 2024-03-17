@@ -32,3 +32,20 @@
 	font-size: 38px;
 	font-family: "system-ui";
 }    
+
+.hoursColor{
+	color: green;
+}
+
+@media (max-width: 1100px) {
+    .eventPic{
+      float: right !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .eventPic{
+      float: right !important;
+	  margin-left: 80px !important;
+    }
+}
