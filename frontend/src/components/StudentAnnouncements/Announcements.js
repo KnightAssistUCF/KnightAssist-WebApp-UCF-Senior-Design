@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Avatar, Grid, Pagination } from "@mui/material";
+import { Avatar, Box, Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -159,7 +159,9 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  <Box my={3} display="flex" justifyContent="center">
+	  	<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  </Box>
 
       	<Dialog open={isModalOpen} onClose={handleCloseModal}>
 			<DialogContent className='feedbackModal'>

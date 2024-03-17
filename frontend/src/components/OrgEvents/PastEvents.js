@@ -212,7 +212,7 @@ function PastEvents(props)
      <div className='upcomingEventsSpace centerCards'>
 		{(eventCards) ?
 			<div>
-				<Events/>
+				<Events/>z
 				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
 			</div>
 			: <CircularProgress/>

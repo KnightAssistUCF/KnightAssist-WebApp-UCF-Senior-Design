@@ -5,7 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader.js';
 import '../Header.css';
 import Avatar from '@mui/material/Avatar';
-import { List, ListItem, ListItemText, Divider, CircularProgress } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, CircularProgress, Box } from '@mui/material';
 import {Button} from '@mui/material';
 import EventModal from './EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -167,7 +167,9 @@ function StudentHistory()
 						<List component="nav" aria-label="mailbox folders">
 							{shownHistories}
 						</List>
-						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						<Box my={2} display="flex" justifyContent="center">
+							<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						</Box>
 						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>
 				: <div className='historyProgress'><CircularProgress/></div>
