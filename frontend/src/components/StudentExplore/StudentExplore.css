@@ -22,6 +22,10 @@
     font-family: "system-ui";
 }
 
+.explorePagination{
+	margin-right: 10%;
+}
+
 .eventTag{
     background-color: #bc70c8 !important;
     width: 100px;

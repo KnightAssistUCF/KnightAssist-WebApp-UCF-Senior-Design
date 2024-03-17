@@ -113,6 +113,7 @@ function OrgFeedback() {
 				<div className='moveFromLeft'>
 					<div className="announcementSection">
 						<div className="topSection">
+							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 							<SearchBar
 								searchAnnouncements={getSeachFeedback}
 								setSearchTerm={setSearchTerm}
@@ -123,9 +124,8 @@ function OrgFeedback() {
 								setSearchAnnouncement={setSearchFeedback}
 								initialAnnouncements={feedback}
 							/>
-							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 						</div>
-					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} markRead={markRead} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
 				</div>
 			</div>
 			</div>

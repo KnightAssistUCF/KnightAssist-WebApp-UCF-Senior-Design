@@ -24,13 +24,12 @@
 
 .rowCards{
 	overflow-y: none !important;
-    display: inline !important;
+    display: inline-block !important;
     max-height: 1000px;
-	float: right;
 }
 
-.pagination{
-    margin-top: 15px;
+.eventsPagination{
+    margin-left: 38% !important;
 }
 
 .cardWhite{
@@ -441,5 +440,11 @@
 
 	.eventsCard{
 		width: 315px;
+	}
+}
+
+@media (max-width: 600px) {
+	.eventsPagination{
+		margin-left: 10% !important;
 	}
 }

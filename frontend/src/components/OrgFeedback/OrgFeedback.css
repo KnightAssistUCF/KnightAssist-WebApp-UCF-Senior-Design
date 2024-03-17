@@ -21,7 +21,7 @@
 }
 
 .cardRating{
-	margin-top: 10px;
+	float: right;
 }
 
 .cardRatingModal{
@@ -36,6 +36,10 @@
 .centerProgress{
 	margin-left: 33%;
 	margin-top: 20%;
+}
+
+.feedbackPagination{
+	margin-right: 20%;
 }
 
 .emailSize{

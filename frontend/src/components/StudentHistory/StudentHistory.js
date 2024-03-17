@@ -5,7 +5,7 @@ import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader.js';
 import '../Header.css';
 import Avatar from '@mui/material/Avatar';
-import { List, ListItem, ListItemText, Divider, CircularProgress } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, CircularProgress, Box } from '@mui/material';
 import {Button} from '@mui/material';
 import EventModal from './EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -61,9 +61,9 @@ function StudentHistory()
 										<ListItemText className='historyDetails' primary={<span style={{ whiteSpace: 'pre-wrap' }}>
 																{history.name + " (" + history.org + ")"}
 															</span>} 						
-													secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 														{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-														+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+														+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated:"} <span className='hoursColor'>+{history.hours} {((history.wasAdjusted) ? " (Adjusted)" : "")}</span>
 															</span>}
 										/>
 									</Grid>
@@ -130,7 +130,7 @@ function StudentHistory()
 																</span>} 						
 														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 															{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours + ((history.wasAdjusted) ? " (Adjusted)" : "")}
+															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated:"} <span className='hoursColor'>+{history.hours} {((history.wasAdjusted) ? " (Adjusted)" : "")}</span>
 																</span>}
 											/>
 										</Grid>
@@ -167,7 +167,9 @@ function StudentHistory()
 						<List component="nav" aria-label="mailbox folders">
 							{shownHistories}
 						</List>
-						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						<Box my={2} display="flex" justifyContent="center">
+							<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						</Box>
 						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>
 				: <div className='historyProgress'><CircularProgress/></div>

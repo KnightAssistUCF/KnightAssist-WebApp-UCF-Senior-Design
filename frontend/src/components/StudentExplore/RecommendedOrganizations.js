@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CircularProgress } from '@mui/material';
+import { Box, CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
@@ -187,7 +187,9 @@ function RecommendedOrganizations(props)
 		{(orgCards) ? 
 		    <div>
 				<Orgs/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="explorePagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				</Box>
 			</div>
 			: <CircularProgress/>
 		}
