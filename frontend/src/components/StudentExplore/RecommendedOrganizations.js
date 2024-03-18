@@ -140,7 +140,7 @@ function RecommendedOrganizations(props)
 
     function Orgs(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {orgCards}
             </div>
         )
