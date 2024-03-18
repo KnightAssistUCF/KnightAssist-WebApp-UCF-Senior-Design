@@ -168,7 +168,7 @@ function RecommendedEvents(props)
 
     function Events(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {eventCards}
             </div>
         )

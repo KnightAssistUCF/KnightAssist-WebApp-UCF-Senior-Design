@@ -233,6 +233,10 @@
     margin-bottom: 6%;
 }
 
+.cardSpace{
+	margin-left: 1% !important;
+}
+
 .boxImg{
     width: 100%;
     height: 300px !important;

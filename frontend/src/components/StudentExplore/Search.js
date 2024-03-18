@@ -111,11 +111,16 @@ function Search(props) {
           setOptions(events);
 		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(false);
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  props.setAllOrgs(orgs);
 		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(true);
+		  props.setResetSearchCards(props.resetSearchCards * -1);
+		  props.setAllOrgsFlag(true);
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
