@@ -54,7 +54,16 @@ function SearchResults(props)
 	async function getOrgs(){
 		const orgs = [];
 
-        for(let i of props.results.current){
+		let theSearch;
+
+		if(props.allOrgsFlag === true){
+			props.setAllOrgsFlag(false);
+			theSearch = props.allOrgs;
+		}else{
+			theSearch = props.results.current;
+		}
+
+        for(let i of theSearch){
 			let url = buildPath(`api/organizationSearch?organizationID=${i.id}`);
 
 			let response = await fetch(url, {
@@ -186,10 +195,6 @@ function SearchResults(props)
         setEventCards(content);
     }
 
-    function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Search Results</h1>
-    }
-	
     function Event(props) {     
 		const startDay = props.startTime.substring(0, props.startTime.indexOf("T"));
 		const endDay = props.endTime.substring(0, props.endTime.indexOf("T"));
@@ -270,6 +275,7 @@ function SearchResults(props)
     },[])
 
     useEffect(()=>{
+		setEventCards(undefined)
 		if(props.searchType === "events")
 			getEvents();
 		else
@@ -308,7 +314,6 @@ function SearchResults(props)
 
     return(
      <div className='upcomingEventsSpace centerCards'>
-        <EventHeader/>
 		{(eventCards) ?
 		    <div>
 				<Events/>
