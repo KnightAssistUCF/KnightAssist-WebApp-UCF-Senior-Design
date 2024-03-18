@@ -63,37 +63,41 @@ function SearchResults(props)
 			theSearch = props.results.current;
 		}
 
-        for(let i of theSearch){
-			let url = buildPath(`api/organizationSearch?organizationID=${i.id}`);
-
-			let response = await fetch(url, {
-				method: "GET",
-				headers: {"Content-Type": "application/json"},
-			});
-
-			let org = JSON.parse(await response.text());
-
-			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
-
-			response = await fetch(url, {
-				method: "GET",
-				headers: {"Content-Type": "application/json"},
-			});
+		try{
+			for(let i of theSearch){
+				let url = buildPath(`api/organizationSearch?organizationID=${i.id}`);
 	
-			let profilePic = JSON.parse(await response.text());
-
-			// Gets background pic of org
-			url = buildPath(`api/retrieveImage?typeOfImage=4&id=${org._id}`);
-
-			response = await fetch(url, {
-				method: "GET",
-				headers: {"Content-Type": "application/json"},
-			});
+				let response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
 	
-			let background = JSON.parse(await response.text());
-
-            orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
-        }    
+				let org = JSON.parse(await response.text());
+	
+				url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
+	
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let profilePic = JSON.parse(await response.text());
+	
+				// Gets background pic of org
+				url = buildPath(`api/retrieveImage?typeOfImage=4&id=${org._id}`);
+	
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+		
+				let background = JSON.parse(await response.text());
+	
+				orgs.push(<Org name={org.name} profilePic={profilePic} background={background} description={org.description} id={org._id}/>) 
+			}   
+		}catch(e){
+			console.log(e);
+		} 
 
 		setNumPages(Math.ceil(orgs.length / eventsPerPage))
         setEvents(orgs);
@@ -276,6 +280,7 @@ function SearchResults(props)
 
     useEffect(()=>{
 		setEventCards(undefined)
+		console.log("IM BEING CALLED")
 		if(props.searchType === "events")
 			getEvents();
 		else
