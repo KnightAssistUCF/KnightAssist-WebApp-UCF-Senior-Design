@@ -336,7 +336,7 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <Button type="button" sx={{ mt: 6, width: 375, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
+            <Button type="button" sx={{ mt: 6, width: 375, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
         )
     }
 

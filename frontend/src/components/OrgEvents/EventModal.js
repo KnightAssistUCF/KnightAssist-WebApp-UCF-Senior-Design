@@ -632,16 +632,16 @@ function EventModal(props)
 							{(!isPast) ? 
 								<Grid container sx={{justifyContent:'center'}} marginTop={"8%"}>
 									<Grid item marginRight={"2%"}>
-										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 200, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 200, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
 									</Grid>
 									<Grid item marginLeft={"2%"}>
-										<Button disabled={!generateCheckOut} sx={{ mt: 3,  width: 200, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
+										<Button disabled={!generateCheckOut} sx={{ mt: 3,  width: 200, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
 									</Grid>
 								</Grid>   
 								: 
 								<Grid container sx={{justifyContent:'center'}} marginTop={"8%"} marginLeft={"1%"}>
 									<Grid item xs={12}>
-										{(attendedVolunteers > 0) ? <a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 300, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a> : null}
+										{(attendedVolunteers > 0) ? <a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 300, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a> : null}
 									</Grid>
 								</Grid>   
 							}
