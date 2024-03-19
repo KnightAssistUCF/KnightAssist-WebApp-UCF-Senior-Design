@@ -118,14 +118,14 @@ function EventModal(props)
 			let dayStr = days[startDateObj.getDay()];
 
 			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + startDateObj.getDate());
+			dayStr += (" " + (startDateObj.getDate() + 1));
 
 			// If the event goes on for more than a day,
 			if(startDay !== endDay){
 				sethasEndDate(true);
 
 				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + endDateObj.getDate()))
+				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
 			}
 
 			setFormattedDate(dayStr);

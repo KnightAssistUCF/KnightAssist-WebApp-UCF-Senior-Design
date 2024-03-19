@@ -205,14 +205,14 @@ function EventModal(props)
 			let dayStr = days[startDateObj.getDay()];
 
 			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + startDateObj.getDate());
+			dayStr += (" " + (startDateObj.getDate() + 1));
 
 			// If the event goes on for more than a day,
 			if(startDay !== endDay){
 				sethasEndDate(true);
 
 				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + endDateObj.getDate()))
+				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
 			}else{
 				sethasEndDate(false);
 			}
@@ -454,7 +454,7 @@ function EventModal(props)
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className='volRound' component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+							{(isPast) ? <Button sx={{ mt: 1, mr: 2, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
@@ -649,12 +649,12 @@ function EventModal(props)
 							<Grid container marginLeft={"30%"} marginTop={"50px"} marginBottom={"30px"}>
 								<Grid item xs={3}>
 									<Tooltip title="Edit" placement="top">
-										<button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
+										<button className='editEventBtn' style={{color: ((sessionStorage.getItem("theme") === "light") ? "black" : "white")}} onClick={() => edit()}><EditIcon/></button>
 									</Tooltip>
 								</Grid>
 								<Grid item xs={0}>
 									<Tooltip title="Delete" placement="top">
-										<button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+										<button className='deleteEventBtn' style={{color: ((sessionStorage.getItem("theme") === "light") ? "black" : "white")}} onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
 									</Tooltip>
 								</Grid>
 							</Grid>   
