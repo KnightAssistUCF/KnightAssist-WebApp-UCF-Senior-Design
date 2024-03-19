@@ -518,15 +518,15 @@ function AddEventModal(props)
                                             </Select>
                                         </FormControl>
                                     </Grid>
-                                    <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
+                                    <Button sx={{ mt: 3, mb: 4, ml: 3.5, width: 175, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => createTag()}>Add Tag</Button>
                                     {tags}
                                 </Grid>
 
                                 <Button
                                     fullWidth
                                     variant="contained"
-                                    sx={{ mt: 3, mb: 2, backgroundColor: "#5f5395", "&:hover": {
-                                        backgroundColor: "#7566b4"
+                                    sx={{ mt: 3, mb: 2, color: "white", backgroundColor: "#5f5395", "&:hover": {
+                                        backgroundColor: "#7566b4",
                                       }}}
                                     onClick={() => buttonEvent()}
                                     >

@@ -257,10 +257,15 @@
 	margin-bottom: 30px;
 }
 
-.lessSpace{
+.volunteerSpaceStudent{
 	margin-left: 30%;
 	font-size: 18px;
 	text-align: left;
+}
+
+.volunteerSpaceOrg{
+	margin-left: 30%;
+	font-size: 18px;
 }
 
 .editEventBtn{
@@ -296,7 +301,12 @@
 }
 
 .volSpace{
-	margin-bottom: 20px;
+	margin-bottom: 5px;
+}
+
+.volRound{
+	border-radius: 7px;
+	margin-left: 10px;
 }
 
 .volunteerList{

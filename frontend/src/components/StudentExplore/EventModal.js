@@ -294,7 +294,7 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <p className='lessSpace'><i>Capacity: {curVolunteers}/{maxVolunteers}</i></p>
+                <p className='volunteerSpaceStudent'><i>Capacity: {curVolunteers}/{maxVolunteers}</i></p>
             </div>
         )
     }
@@ -311,9 +311,9 @@ function EventModal(props)
 
     function Tags(){
         return (
-				<Grid marginTop={"20px"} marginBottom={"55px"}>
-					{tags.map(t => <Tag tag={t}/>)}
-				</Grid>
+			<Grid marginTop={"20px"} marginBottom={"55px"}>
+				{tags.map(t => <Tag tag={t}/>)}
+			</Grid>
         )
     }
 
