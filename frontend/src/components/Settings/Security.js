@@ -31,6 +31,7 @@ function Security(props){
 					value={params.password}
 					disabled={params.disabled}
 					onChange={params.onChange}
+					color={props.color}
 					endAdornment={
 						<InputAdornment position="end">
 							<IconButton onClick={() => iconClick(params.type)}>
@@ -57,7 +58,7 @@ function Security(props){
 		return (
 			<div>
 				<div className='subHeaderTxt'>Confirm New Password</div>
-				{PasswordForm({show: showCheckPWD, password: props.passwordCheck, disabled: false, type: 2, onChange: (e) => props.setPasswordCheck(e.target.value)})}
+				{PasswordForm({ show: showCheckPWD, password: props.passwordCheck, disabled: false, type: 2, onChange: (e) => props.setPasswordCheck(e.target.value)})}
 			</div>
 		)
 	}
@@ -68,8 +69,8 @@ function Security(props){
 				<div className='subHeaderTxt'>Receive Email Notifications</div>
 				<FormControl className='spartan settingsItem'>
 					<RadioGroup defaultValue={(props.getEmails === true) ? "Yes" : "No"}>
-						<FormControlLabel value="Yes" control={<Radio />} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
-						<FormControlLabel value="No" control={<Radio />} label="No"  onClick={() => {props.setGetEmails(false)}}/>
+						<FormControlLabel value="Yes" control={<Radio className={props.radioColor}/>} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
+						<FormControlLabel value="No" control={<Radio className={props.radioColor}/>} label="No"  onClick={() => {props.setGetEmails(false)}}/>
 					</RadioGroup>
 				</FormControl>
 			</div>

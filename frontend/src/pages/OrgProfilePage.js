@@ -5,9 +5,7 @@ import OrgProfile from '../components/OrgProfile/OrgProfile';
 const OrgProfilePage = () =>
 {
     return(
-      <div className="orgProfile">
         <OrgProfile/>
-      </div>
     );
 };
 

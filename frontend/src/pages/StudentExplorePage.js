@@ -5,9 +5,7 @@ import StudentExplore from '../components/StudentExplore/StudentExplore';
 const StudentExplorePage = () =>
 {
     return(
-      <div className="explorePage">
         <StudentExplore/>
-      </div>
     );
 };
 

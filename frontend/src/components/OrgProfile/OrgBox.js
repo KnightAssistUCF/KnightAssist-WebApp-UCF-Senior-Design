@@ -527,7 +527,7 @@ function OrgBox(props) {
 	}, [makeTags])
 
 	return (
-		<div className='spartan orgBox'>
+		<div className={'spartan orgBox ' + ((sessionStorage.getItem("theme") === 'light') ? 'lightOrgBox' : 'darkOrgBox')}>
 			<div className='items'>
 				{(props.org !== null)
 					?

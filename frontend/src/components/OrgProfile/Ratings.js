@@ -105,7 +105,7 @@ function RatingBox(props) {
 			<Box display="flex" justifyContent="space-between" alignItems="stretch" height="100%">
 				{(feedback.length > 0) 
 					?
-					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: (sessionStorage.getItem("theme") === 'light') ? '#e0e0e0' : '#515152', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[0])}>
 						<CardContent>
 							<div className='feedbackEvent'>{feedback[0].eventName.slice(0, 20)}{(feedback[0].eventName.length > 20) ? "..." : ""}</div>
 							<Rating value={feedback[0].rating} readOnly size='medium' />
@@ -116,7 +116,7 @@ function RatingBox(props) {
 				}
 				{(feedback.length > 1) 
 					?
-					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: (sessionStorage.getItem("theme") === 'light') ? '#e0e0e0' : '#515152', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[1])}>
 						<CardContent className='theContent'>
 							<div className='feedbackEvent'>{feedback[1].eventName.slice(0, 20)}{(feedback[1].eventName.length > 20) ? "..." : ""}</div>
 							<Rating value={feedback[1].rating} readOnly size='medium' />
@@ -127,7 +127,7 @@ function RatingBox(props) {
 				}
 				{(feedback.length > 2) 
 					?
-					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: '#e0e0e0', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
+					<Card variant='outlined' sx={{ width: '32.5%', minHeight: '30vh', display: 'flex', alignItems: 'center', flexDirection: 'column', margin: '15px 0', '&:hover': { backgroundColor: (sessionStorage.getItem("theme") === 'light') ? '#e0e0e0' : '#515152', cursor: 'pointer' } } }onClick={() => handleCardClick(feedback[2])}>
 						<CardContent>
 							<div className='feedbackEvent'>{feedback[2].eventName.slice(0, 20)}{(feedback[2].eventName.length > 20) ? "..." : ""}</div>
 							<Rating value={feedback[2].rating} readOnly size='medium' />
@@ -149,7 +149,7 @@ function RatingBox(props) {
 								value={selectedFeedback.rating}
 								readOnly
 							/>
-							<DialogContentText className='feedbackTxt' style={{ color: 'black', marginTop: '10px', marginBottom: '10px'}}>{selectedFeedback.feedbackText}</DialogContentText>
+							<DialogContentText className='feedbackTxt' style={{ marginTop: '10px', marginBottom: '10px'}}>{selectedFeedback.feedbackText}</DialogContentText>
 							<DialogActions className='closeFeedbackBtn'>
 								<Button onClick={handleCloseModal}>Close</Button>
 							</DialogActions>

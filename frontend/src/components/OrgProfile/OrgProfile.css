@@ -1,7 +1,6 @@
 .orgProfilePage {
     margin-left: 14vw;
     margin-right: 2vw;
-    color: black;
     text-align: left;
     position: relative;
 }
@@ -20,14 +19,12 @@
 }
 
 .orgBannerFiller {
-    background-color: rgb(199, 199, 199);
     width: 100%;
     height: 210px;
     border-radius: 25px;
 }
 
 .orgBox {
-    background-color: rgb(250, 250, 250);
     width: 230px;
     /* height: 320%; */
     height: calc(100vh - 35%);
@@ -42,6 +39,14 @@
 	float: left;
 }
 
+.lightOrgBox{
+	background-color: rgb(250, 250, 250);
+}
+
+.darkOrgBox{
+	background-color: #423e3e;
+}
+
 .feedbackEvent{
 	width: 100%;
 }
@@ -52,7 +57,7 @@
 
 .feedbackModal{
 	height: 100% !important;
-	width: 500px !important;
+	width: 600px !important;
 }
 
 .tagModal{
@@ -190,11 +195,11 @@
 	width: 125px;
     height: 40px;
     background-color: #F5D6BA;
+	color: black;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
-	color: black;
 }
 
 .favBtn{

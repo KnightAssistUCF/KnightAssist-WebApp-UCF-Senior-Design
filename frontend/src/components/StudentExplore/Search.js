@@ -1,10 +1,9 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import Autocomplete from '@mui/material/Autocomplete';
+import './StudentExplore.css';
 import { useState, useEffect } from 'react';
 import { buildPath } from '../../path';
-import './StudentExplore.css';
 
 function Search(props) {
   
@@ -12,27 +11,31 @@ function Search(props) {
     const [orgs, setOrgs] = useState([]);
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
-
 	const [searchTerm, setSearchTerm] = useState("");
 
-    // Gets org name from organizationID
-    async function getOrgName(id){
-        let url = buildPath(`api/organizationSearch?organizationID=${id}`);
+    function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";    
+	}
 
-        let response = await fetch(url, {
-          method: "GET",
-          headers: {"Content-Type": "application/json"},
-        });
+	// Gets org name from organizationID
+	async function getOrgName(id){
+		let url = buildPath(`api/organizationSearch?organizationID=${id}`);
 
-      try{
-          let res = JSON.parse(await response.text());
-          return res.name;
-      }catch{
-          return -1;
-      }
-    }
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
 
-    async function getAllEvents(flag){
+		try{
+			let res = JSON.parse(await response.text());
+			return res.name;
+		}catch{
+			return -1;
+		}
+	}
+
+	async function getAllEvents(flag){
         let url = buildPath(`api/loadAllEventsAcrossOrgs`);
 
         let response = await fetch(url, {
@@ -48,7 +51,7 @@ function Search(props) {
             if("name" in event && "startTime" in event){
                 const orgName = await getOrgName(event.sponsoringOrganization);
                 if(orgName !== -1)
-                  tmp.push({label: ("(" + orgName + ") " + event.startTime.substring(0, event.startTime.indexOf("T")) + ": " + event.name), id: event._id});
+                  tmp.push({label: event.name, id: event._id});
             }
         }
 
@@ -86,18 +89,16 @@ function Search(props) {
         setOrgs(tmp);
     }
 
-    function handleClick(id){
+	function handleClick(id){
         if(props.searchType === "events"){
             props.setEventID(id);
             props.setOpenEvent(true);
         }else{
-			sessionStorage.setItem("viewingPageID", id);
-			window.location.href="/#/orgprofile";    
+			openOrgPage(id);
         }
     }
 
     useEffect(()=>{
-        console.log("called");
         getAllEvents(1);
         getAllOrganization();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -111,54 +112,43 @@ function Search(props) {
           setOptions(events);
 		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(false);
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  props.setAllOrgs(orgs);
 		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(true);
+		  props.setResetSearchCards(props.resetSearchCards * -1);
+		  props.setAllOrgsFlag(true);
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
 
     useEffect(()=>{
-      getAllEvents(0);
-      console.log(events);
-	  // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[props.resetEventSearch]);
+		getAllEvents(0);
+		if(props.searchMode)
+			props.setResetSearchCards(props.resetSearchCards * -1);
+		console.log(events);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+    },[props.resetEventSearch])
 
 	useEffect(() => {
 		const filtered = options.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		console.log(filtered);
 		props.results.current = filtered;
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [searchTerm]);
-	
+	}, [searchTerm])
+
     return (
       <div>
-        <Stack className="exploreSearch" spacing={2}>
-		<Autocomplete 
-            freeSolo
-			autoHighlight={true}
-            disableClearable
-            onChange={(e, value) => {handleClick(value.id)}}
-            options={options}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                variant="filled"
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-				onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            )}
-          />
+        <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
+			<TextField label={label} onChange={(e) => setSearchTerm(e.target.value)}/>
         </Stack>
       </div>
 
-    );
+    );  
 }
 
 export default Search;

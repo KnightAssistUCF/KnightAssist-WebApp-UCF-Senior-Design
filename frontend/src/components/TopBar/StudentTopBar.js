@@ -182,7 +182,7 @@ function StudentTopBar(props)
 			// Only show notifications from the past week
 			setNotifcations(res.notifications.new.map((noto, i) => <div>{(i != res.notifications.new.length - 1) ? <MenuItem className='menuNoto' onClick={async () => await clickNoto(noto)}><Avatar className='orgNotoPic' style={{border: '0.1px solid black'}} src={pics[i]}/><div className='notoMessage'>{(!noto.read) ? <div className='unreadCircle'></div> : ""} 
 													{(noto.message.length > 60) ? (noto.message.substring(0, 60) + "...") : noto.message}</div></MenuItem> : <div className='markAllBtn menuNoto'>{noto}</div>}
-													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: "black"}}/>: null}</div>))
+													{(i != res.notifications.new.length - 1) ? <Divider className='dividerSpaceNoto' sx={{background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/>: null}</div>))
 					
 			// Remove the mark as read button from notos
 			res.notifications.new.pop();
@@ -214,7 +214,7 @@ function StudentTopBar(props)
 
     return(
       <div className="StudentTopBar">
-		<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
+		<AppBar variant='outlined' className={(sessionStorage.getItem("theme") === 'light') ? 'whiteBar' : ''} position="static">
 		<Container maxWidth="l">
 			<div className='putTitleLeft'><span className='exploreTitle' style={{ fontWeight: '450' }}>{props.title}</span></div>
 
@@ -226,7 +226,7 @@ function StudentTopBar(props)
 
 			<Box sx={{ flexGrow: 0, mr: 3 }}>
 
-					<IconButton onClick={handleOpenNavMenu} sx={{ p: 0 }}>
+					<IconButton onClick={handleOpenNavMenu}>
 						<Badge onClick={openNotificationMenu} badgeContent={(numUnreads > 0) ? numUnreads : null} color="error">
 							<NotificationsIcon/>
 						</Badge>

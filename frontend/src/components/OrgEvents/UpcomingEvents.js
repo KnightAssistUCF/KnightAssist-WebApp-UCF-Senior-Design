@@ -159,7 +159,7 @@ function UpcomingEvents(props)
 
     function Events(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {eventCards}
             </div>
         )
@@ -207,9 +207,9 @@ function UpcomingEvents(props)
     return(
      <div className='upcomingEventsSpace centerCards'>
 		{(eventCards)?
-		    <div className='centerCards'>
+		    <div>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				<Pagination className="eventsPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
 			</div>
 			: <CircularProgress/>
 		}

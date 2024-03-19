@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Avatar, Grid, Pagination } from "@mui/material";
+import { Avatar, Box, Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -102,15 +102,12 @@ const Announcements = (props) => {
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
-						style={{ color: 'black'}}
 					  >
 						<Avatar className="orgPicAnn" src={pics[i]}/>{name}
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
 						style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
 						className='showDate'
@@ -119,7 +116,6 @@ const Announcements = (props) => {
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
 						style={{ marginTop: '6px' }}
 					  >
@@ -163,17 +159,19 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  <Box my={3} display="flex" justifyContent="center">
+	  	<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  </Box>
 
       	<Dialog open={isModalOpen} onClose={handleCloseModal}>
 			<DialogContent className='feedbackModal'>
 				<button className='closeFeedback'>
 					<CloseIcon onClick={handleCloseModal}/>
 				</button>
-				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
-				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
-				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
+				<DialogContentText color="textPrimary" className='contentWrap' style={{ fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
+				<DialogContentText color="textPrimary"style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
+				<DialogContentText color="textPrimary"><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
+				<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
 		</Dialog>
     </div>

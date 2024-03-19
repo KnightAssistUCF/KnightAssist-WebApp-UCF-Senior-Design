@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Grid, Pagination } from "@mui/material";
+import { Box, Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -15,6 +15,7 @@ import Rating from '@mui/material/Rating';
 import { CiUnread } from "react-icons/ci";
 import { CiRead } from "react-icons/ci";
 import { buildPath } from '../../path';
+import { SettingsPowerRounded } from '@mui/icons-material';
 
 const truncateText = (text, maxLength) => {
   if (text && text.length > maxLength) {
@@ -70,31 +71,28 @@ const Feedbacks = (props) => {
 							</Typography>
 							<Typography
 								variant="body2"
-								color="textSecondary"
-								component="p"
-								style={{ color: 'black'}}
 							>
+								<Rating
+									value={feedback.rating}
+									readOnly
+									className='cardRating'
+								/>
 								<h6>{feedback.studentName}<span className='emailSize'>{((feedback.studentEmail) ? " - " + feedback.studentEmail : "")}</span></h6>
+	
 							</Typography>
+
 							<Typography
 								variant="body2"
-								color="textSecondary"
 								component="p"
 								style={{ position: 'absolute', top: 0, right: 0, margin: '12px' }}
 							>
 								{(feedback.wasReadByUser) ? <CiRead className='spaceRead'/> : <CiUnread className='spaceRead'/>}
 								<span className='showDate'>{formatDate(feedback.timeFeedbackSubmitted)}</span>
 							</Typography>
-							<Rating
-								value={feedback.rating}
-								readOnly
-								className='cardRating'
-							/>
 							<Typography
 								variant="body2"
-								color="textSecondary"
 								component="p"
-								style={{ marginTop: '6px'}}
+								style={{ marginTop: '15px'}}
 							>
 								<i>{truncateText(feedback.feedbackText, 300)}</i>
 							</Typography>
@@ -137,7 +135,11 @@ const Feedbacks = (props) => {
   useEffect(() => {
 	if(props.feedback){	
 		setNumPages(Math.ceil(props.feedback.length / perPage));
-		changePage(null, 1);
+		if(Math.ceil(props.feedback.length / perPage) < page){
+			changePage(null, page - 1);
+		}else{
+			changePage(null, page);
+		}
 	}
   }, [props.feedback]);
 
@@ -152,7 +154,10 @@ const Feedbacks = (props) => {
       >
         {theFeedbacks}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+
+	  <Box my={3} display="flex" justifyContent="center">
+	  	<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  </Box>
 
 	  	{(selectedFeedback !== null) ?
 			<Dialog open={isModalOpen} onClose={handleCloseModal}>
@@ -160,17 +165,18 @@ const Feedbacks = (props) => {
 					<button className='closeFeedback'>
 						<CloseIcon onClick={handleCloseModal}/>
 					</button>
-					<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
-					<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText style={{ color: 'black', marginBottom: 5}}>
+					<DialogContentText color="textPrimary" style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary" style={{marginBottom: 5}}>
 						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
-						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
+						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>		
+						<Rating
+							value={selectedFeedback.rating}
+							readOnly
+							className='cardRating'
+						/>		
 					</DialogContentText>
-					<Rating
-						value={selectedFeedback.rating}
-						readOnly
-					/>
-					<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 			</Dialog>
 			: null

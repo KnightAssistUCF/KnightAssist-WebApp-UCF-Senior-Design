@@ -359,7 +359,7 @@ function StudentBox(props) {
 	}, [makeTags])
 
 	return (
-		<div className='spartan studentBox'>
+		<div className={'spartan studentBox ' + ((sessionStorage.getItem("theme") === 'light') ? 'lightOrgBox' : 'darkOrgBox')}>
 			<div className='items'>
 				{(props.user)
 					?

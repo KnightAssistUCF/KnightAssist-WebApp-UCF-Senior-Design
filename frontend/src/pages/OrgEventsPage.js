@@ -5,9 +5,7 @@ import OrgEvents from '../components/OrgEvents/OrgEvents';
 const OrgEventsPage = () =>
 {
     return(
-      <div className="orgEvents">
         <OrgEvents/>
-      </div>
     );
 };
 

@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
+import { Avatar, Box, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 import { CalendarIcon } from '@mui/x-date-pickers';
@@ -175,7 +175,7 @@ function RecommendedEvents(props)
 
     function Events(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {eventCards}
             </div>
         )
@@ -228,7 +228,9 @@ function RecommendedEvents(props)
 		{(eventCards) ? 
 		    <div>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="explorePagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+				</Box>
 			</div>
 			: <CircularProgress/>
 		}

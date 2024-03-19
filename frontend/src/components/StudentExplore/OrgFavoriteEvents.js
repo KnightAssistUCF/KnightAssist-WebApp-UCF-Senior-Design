@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
+import { Avatar, Box, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 import { CalendarIcon } from '@mui/x-date-pickers';
@@ -102,7 +102,7 @@ function OrgFavoriteEvents(props)
 
                 events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id} description={event.description}/>)  
             }
-        }
+        }   
 
        /* for(let org of res){
             url = buildPath(`api/searchEvent?organizationID=${org._id}`);
@@ -211,7 +211,7 @@ function OrgFavoriteEvents(props)
                         />
                         <CardContent className='whiteCardSection'>
                             <div className='initialText'>
-                                <Typography className='eventName' clagutterBottom variant="h6" component="div">
+    							<Typography className='eventName' clagutterBottom variant="h6" component="div">
                                     {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                                 </Typography>
                                 <Typography className="eventDate" variant="body2" color="text.secondary">
@@ -235,7 +235,7 @@ function OrgFavoriteEvents(props)
 
     function Events(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {eventCards}
             </div>
         )
@@ -287,7 +287,9 @@ function OrgFavoriteEvents(props)
 		{(eventCards) ? 
 		    <div>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="explorePagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				</Box>
 			</div>
 			: <CircularProgress/>
 		}

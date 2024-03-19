@@ -12,7 +12,6 @@ function Search(props) {
     const [orgs, setOrgs] = useState([]);
     const [label, setLabel] = useState("Search For Events");
     const [options, setOptions] = useState(events);
-
 	const [searchTerm, setSearchTerm] = useState("");
 
     function openOrgPage(id){
@@ -34,7 +33,7 @@ function Search(props) {
         const tmp = [];
 
         for(let event of res){
-            tmp.push({label: (event.startTime.substring(0, event.startTime.indexOf("T")) + ": " + event.name), id: event._id});
+            tmp.push({label: event.name, id: event._id});
         }
 
         setEvents(tmp);
@@ -97,11 +96,16 @@ function Search(props) {
           setOptions(events);
 		  const filtered = events.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(false);
         }else{
           setLabel("Search For Organizations");
           setOptions(orgs);
+		  props.setAllOrgs(orgs);
 		  const filtered = orgs.filter((opt) => opt.label.toLowerCase().includes(searchTerm.toLowerCase()));
 		  props.results.current = filtered;
+		  props.setSearchMode(true);
+		  props.setResetSearchCards(props.resetSearchCards * -1);
+		  props.setAllOrgsFlag(true);
         }
 		// eslint-disable-next-line react-hooks/exhaustive-deps
     },[props.searchType]);
@@ -124,24 +128,7 @@ function Search(props) {
     return (
       <div>
         <Stack className="orgSearch" spacing={2} sx={{ width: 300 }}>
-          <Autocomplete 
-            freeSolo
-			autoHighlight={true}
-            disableClearable
-            onChange={(e, value) => {handleClick(value.id)}}
-            options={options}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={label}
-                InputProps={{
-                  ...params.InputProps,
-                  type: 'search',
-                }}
-				onChange={(e) => setSearchTerm(e.target.value)}
-              />
-            )}
-          />
+			<TextField label={label} onChange={(e) => setSearchTerm(e.target.value)}/>
         </Stack>
       </div>
 

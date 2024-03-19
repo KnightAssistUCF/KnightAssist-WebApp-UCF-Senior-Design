@@ -227,6 +227,7 @@ function NewAnn() {
           <div className="announcementSection">
           <div style={{marginLeft: '12%'}}>
             <div className="topSection">
+			  <Filter searchAnnouncements={searchAnnouncements} filterAnnouncements={filterAnnouncements} />
               <SearchBar
                 searchAnnouncements={searchAnnouncements}
                 setSearchTerm={setSearchTerm}
@@ -238,7 +239,6 @@ function NewAnn() {
                 setSearchAnnouncement={setSearchAnnouncement}
                 initialAnnouncements={announcements}
               />
-              <Filter searchAnnouncements={searchAnnouncements} filterAnnouncements={filterAnnouncements} />
             </div>
             {(searchAnnouncement) ? <Announcements announcements={searchAnnouncement} /> : <div className='centerProgress'><CircularProgress/></div>}
           </div>

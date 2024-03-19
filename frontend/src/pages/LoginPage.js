@@ -6,7 +6,7 @@ const LoginPage = (props) =>
 {
     return(
       <div className="login">
-        <Login setRole={props.setRole}/>
+        <Login setRole={props.setRole} setTheme={props.setTheme}/>
       </div>
     );
 };
