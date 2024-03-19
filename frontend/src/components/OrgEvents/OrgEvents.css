@@ -29,7 +29,7 @@
 }
 
 .eventsPagination{
-    margin-left: 38% !important;
+    margin-left: 40% !important;
 }
 
 .cardWhite{
@@ -200,7 +200,7 @@
     width: auto !important;
     height: 25px;
     margin-top: 0px;
-    margin-right: 5px;
+    margin-right: 20px;
     font-size: 17px;
     float: left;
     font-family: "system-ui";
@@ -244,17 +244,23 @@
 
 .bigName{
     font-size: 40px;
-    left: 50%;
-    margin-bottom: 20px;
+    text-align: left;
+	margin-left: 10px;
+	margin-top: 5px;
+    margin-bottom: 10px;
 }
 
 .description{
     font-size: 20px;
     white-space: pre-wrap;
+	text-align: left;
+	margin-bottom: 30px;
 }
 
 .lessSpace{
-    margin-bottom: -2px;
+	margin-left: 30%;
+	font-size: 18px;
+	text-align: left;
 }
 
 .editEventBtn{
@@ -330,6 +336,7 @@
 
 .anIcon{
     float: left;
+	margin-right: 10px;
 }
 
 .checkName{
