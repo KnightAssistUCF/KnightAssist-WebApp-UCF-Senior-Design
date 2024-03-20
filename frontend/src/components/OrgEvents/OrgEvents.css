@@ -111,6 +111,7 @@
 
 .addEventBtn{
     background-color: #5f5395;
+	color: white;
     border: none;
 	box-shadow: none !important;
 }
@@ -129,6 +130,7 @@
 
 .picBtn{
 	background-color: #5f5395;
+	color: white;
 	margin-top: 10px;
 	border: none;
 	float: left;
