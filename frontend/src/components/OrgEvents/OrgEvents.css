@@ -194,6 +194,12 @@
     margin-bottom: -8px; 
 }
 
+.noResults{
+	font-size: 40px;
+	margin-right: 10%;
+	text-align: center;
+}
+
 .eventInterest{
     background-color: rgb(89, 80, 130) !important;
 	color: rgb(240, 240, 240) !important;
