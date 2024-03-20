@@ -119,7 +119,8 @@ function SearchResults(props)
         }
 
         let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
-        setEventCards(content);   
+        setEventCards(content); 
+		props.setShowSearch(true);  
 	}
 
     async function getEvents(){
@@ -197,6 +198,7 @@ function SearchResults(props)
 
         let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
         setEventCards(content);
+		props.setShowSearch(true);
     }
 
     function Event(props) {     
@@ -279,8 +281,8 @@ function SearchResults(props)
     },[])
 
     useEffect(()=>{
-		setEventCards(undefined)
-		console.log("IM BEING CALLED")
+		setEventCards(undefined);
+		props.setShowSearch(false);
 		if(props.searchType === "events")
 			getEvents();
 		else

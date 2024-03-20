@@ -29,8 +29,9 @@ function OrgPortal()
 
 	const [allOrgs, setAllOrgs] = useState(undefined);
 	const [allOrgsFlag, setAllOrgsFlag] = useState(false);
-
 	const [selectedType, setSelectedType] = useState("Upcoming");
+
+	const [showSearch, setShowSearch] = useState(false);
 
 	const results = useRef([]);
 
@@ -84,7 +85,7 @@ function OrgPortal()
 							<Search results={results} searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent} searchMode={searchMode} setSearchMode={setSearchMode} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} setAllOrgs={setAllOrgs} setAllOrgsFlag={setAllOrgsFlag}/>
 						</Grid>
 						<Grid item>
-							<button type="button" class="addEventBtn btn btn-primary" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
+							<button type="button" class="addEventBtn btn btn-primary" disabled={(searchMode && !showSearch)} onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
 						</Grid>
 						<Grid item>
 							{(searchMode && searchType === "events") ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
@@ -97,7 +98,7 @@ function OrgPortal()
 				{(!searchMode) ? <EventTypeSwitch/> : ""}
 				<AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
 				<EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
-				{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType} allOrgs={allOrgs} allOrgsFlag={allOrgsFlag} setAllOrgsFlag={setAllOrgsFlag}/> 
+				{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType} allOrgs={allOrgs} allOrgsFlag={allOrgsFlag} setAllOrgsFlag={setAllOrgsFlag} setShowSearch={setShowSearch}/> 
 				:
 				<div>
 					{(selectedType === "Upcoming") ? <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/> : null}
