@@ -17,11 +17,11 @@ const generateRandomTimes = (start, end) => {
 
 router.post('/', async (req, res) => {
     try {
-        const events = await Event.find({ sponsoringOrganization: "6598366c76beab8af631f919" }).limit(5);
+        const events = await Event.find({ sponsoringOrganization: "657e15abf893392ca98665d1" }).limit(5);
 
         for (const event of events) {
             const { checkInTime, checkOutTime } = generateRandomTimes(event.startTime, event.endTime);
-            const studentId = new mongoose.Types.ObjectId('657dff4c5f28be97b30edff1');
+            const studentId = '65616a1011a2035f14571238';
             const student = await UserStudent.findById(studentId);
 
             if (!student) {
@@ -39,9 +39,15 @@ router.post('/', async (req, res) => {
                 student.totalVolunteerHours = parseFloat(student.totalVolunteerHours.toFixed(2));
 
                 const orgId = event.sponsoringOrganization.toString();
-                let orgData = student.hoursPerOrg.get(orgId) || { hours: 0, numEvents: 0 };
 
-                orgData.hours = parseFloat((orgData.hours + volunteeringHours).toFixed(2));
+				let orgData;
+
+				if(student.hoursPerOrg.get(orgId) && typeof student.hoursPerOrg.get(orgId) === 'object')
+					orgData = student.hoursPerOrg.get(orgId);
+				else
+					orgData = { hours: 0, numEvents: 0 };
+
+                orgData.hours = (parseFloat(orgData.hours) + volunteeringHours).toFixed(2);
                 orgData.numEvents += 1;
                 student.hoursPerOrg.set(orgId, orgData);
 

@@ -21,10 +21,13 @@ router.get('/', async (req, res) => {
                 }
 
                 const userTags = user.categoryTags;
+				const favoritedOrgs = user.favoritedOrganizations.map(org => org._id.toString());
+
                 let events = await eventModel.find({
                         eventTags: { $in: userTags },
                         registeredVolunteers: { $ne: user._id },
-                        endTime: { $gt: new Date() }  // Ensure event is in the future
+                        endTime: { $gt: new Date() },  // Ensure event is in the future
+						sponsoringOrganization: { $nin: favoritedOrgs}
                 });
 
                 // Shuffle events before processing
