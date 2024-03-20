@@ -263,7 +263,7 @@ function EventModal(props)
 
 	function OrgName(){
 		return (
-			<Grid container direction="row" sx={{ marginLeft: 2, marginBottom: 3, textAlign: "left"}}><Avatar className="orgPicModal" src={orgPic}/><a className='orgNameModal' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+			<Grid container direction="row" sx={{ marginLeft: 2, marginBottom: 3, textAlign: "left"}}><Avatar className="orgPicModal" src={orgPic}/><a className='orgNameModal' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openOrgPage(orgID)}>{orgName}</a></Grid>
 		)
 	}
 
@@ -336,7 +336,7 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <Button type="button" sx={{ mt: 6, width: 375, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
+            <Button type="button" sx={{ mt: 6, width: 700, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
         )
     }
 
