@@ -8,7 +8,7 @@ import Account from './Account';
 import RecentEvents from './RecentEvents';
 import FavoritedOrganizations from './FavoritedOrganizations';
 
-function StudentProfileTabs() {
+function StudentProfileTabs(props) {
     const [value, setValue] = useState("1");
 
     const handleChange = (event, newValue) => {
@@ -16,13 +16,13 @@ function StudentProfileTabs() {
     };
 
     return (
-        <TabContext value={value}> {/* Provide TabContext here */}
+        <TabContext value={value}>
             <div style={{ display: 'flex' }}>
                 <Box>
                     <TabList orientation='vertical' onChange={handleChange} aria-label="Student profile tabs">
-                        <Tab label="Item One" value="1" />
-                        <Tab label="Item Two" value="2" />
-                        <Tab label="Item Three" value="3" />
+                        <Tab sx={{alignItems: 'start'}} label="Account" value="1" />
+                        <Tab sx={{alignItems: 'start'}} label="Recent Events" value="2" />
+                        <Tab sx={{alignItems: 'start'}} label="Favorited Organizations" value="3" />
                     </TabList>
                 </Box>
                 <div style={{ flex: 1 }}>
