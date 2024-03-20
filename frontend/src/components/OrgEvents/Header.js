@@ -143,6 +143,14 @@ function Header()
                     </LightTooltip>
                 </li>
 				<li>
+                    <LightTooltip title={!isSidebarActive ? "Feedback" : ""} placement="right" className="custom-tooltip">
+                        <a href="#/organnouncements">
+                            <RiFeedbackLine className='searchIcon'></RiFeedbackLine>
+                            <span class="links_name">Updates</span>
+                        </a>
+                    </LightTooltip>
+                </li>
+				<li>
                     <LightTooltip title={!isSidebarActive ? "Leaderboard" : ""} placement="right" className="custom-tooltip">
                         <a href="#/leaderboard">
                             <LeaderboardOutlined className='historyIcon'></LeaderboardOutlined>
