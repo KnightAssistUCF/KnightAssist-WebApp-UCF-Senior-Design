@@ -43,6 +43,7 @@ router.post("/", async (req, res) => {
         const orgId = eventObj.sponsoringOrganization; 
         let orgData;
 		
+        // TODO this part needs to go to the mock data geerators
 		if(student.hoursPerOrg.get(orgId) && typeof student.hoursPerOrg.get(orgId) === 'object')
 			orgData = student.hoursPerOrg.get(orgId);
 		else
