@@ -17,6 +17,7 @@ import StudentExplorePage from './pages/StudentExplorePage';
 import StudentEmailVerified from './pages/StudentEmailVerifiedPage';
 import OrganizationEmailVerified from './pages/OrganizationEmailVerifiedPage';
 import StudentProfilePage from './pages/StudentProfilePage';
+import RedoStudentProfilePage from './pages/RedoStudentProfilePage';
 import RegisterPage from './pages/RegisterPage';
 import PostVerificationQuestionsPage from './pages/PostVerificationQuestionsPage';
 import OrgHomePage from './pages/OrgHomePage';
@@ -143,6 +144,9 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/redostudentprofile" element={<RedoStudentProfilePage/>}></Route>
 			</Routes>
 		</Router>
 			<CssBaseline />

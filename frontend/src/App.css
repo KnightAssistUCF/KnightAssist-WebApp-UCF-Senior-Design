@@ -278,3 +278,8 @@ body.light {
 	font-size: 15px;
 	margin-top: 13px;
   }
+
+.redoStudentProfilePage {
+	height: 100vh;
+	width: 100%;
+}
