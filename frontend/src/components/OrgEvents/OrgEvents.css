@@ -431,8 +431,8 @@
     transition: transform 0.2s ease-in-out;
     background-color: transparent;
     transform: translateY(0);
-    overflow: auto;
-    max-height: 200px;
+    /* overflow: auto; */
+    max-height: 95px;
     padding-bottom: 20px;
 }
 
