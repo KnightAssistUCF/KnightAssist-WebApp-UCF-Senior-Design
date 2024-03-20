@@ -68,7 +68,7 @@ function StudentHistory()
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+										<Button sx={{ mt: 4, ml:6, width: 150, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
@@ -135,7 +135,7 @@ function StudentHistory()
 											/>
 										</Grid>
 										<Grid item>
-											<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+											<Button sx={{ mt: 4, ml:6, width: 150, color: "White", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 										</Grid>
 									</Grid>
 								</ListItem>

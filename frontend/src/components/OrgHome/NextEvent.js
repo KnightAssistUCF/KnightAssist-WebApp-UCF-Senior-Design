@@ -127,8 +127,8 @@ function NextEvent({upcomingEvents})
                       <div className="card-subtitle">{truncateText(nextEvent.location, 10)}</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-						<Button disabled={!generateCheckIn} sx={{ mt: 1, mr: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("In"); setOpenQRModal(true);}}>Generate Check-In Code</Button>
-						<Button disabled={!generateCheckOut} sx={{ mt: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("Out"); setOpenQRModal(true);}}>Generate Check-Out Code</Button>
+						<Button disabled={!generateCheckIn} sx={{ mt: 1, mr: 1, width: 165, borderRadius: 8, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("In"); setOpenQRModal(true);}}>Generate Check-In Code</Button>
+						<Button disabled={!generateCheckOut} sx={{ mt: 1, width: 165, borderRadius: 8, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("Out"); setOpenQRModal(true);}}>Generate Check-Out Code</Button>
                       </Grid>
                   </CardContent>
                 </Box>

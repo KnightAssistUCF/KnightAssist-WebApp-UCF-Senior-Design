@@ -202,10 +202,10 @@ function Settings(props){
 						<Security newPassword={newPassword} setNewPassword={setNewPassword} passwordCheck={passwordCheck} setPasswordCheck={setPasswordCheck} 
 								  getEmails={getEmails} setGetEmails={setGetEmails} radioColor={radioColor}/>
 						<Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
-							<Button sx={{mt: 4.5, width: 175, backgroundColor: "#CC0202", "&:hover": {backgroundColor: "#FF2400"}}} variant="contained" onClick={() => setOpenDeleteAccount(true)}>Delete Account</Button>
+							<Button sx={{mt: 4.5, width: 175, backgroundColor: "#CC0202", color: "white", "&:hover": {backgroundColor: "#FF2400"}}} variant="contained" onClick={() => setOpenDeleteAccount(true)}>Delete Account</Button>
 						</Grid>
                         <Grid container justifyContent="center" alignItems="center" marginBottom={"10px"}>
-							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
+							<Button sx={{mt: 7, width: 175, backgroundColor: "#5f5395", color: "white", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => submit()}>Save</Button>
 						</Grid>
 						<ErrorMessage/>
 					</CardContent>   
