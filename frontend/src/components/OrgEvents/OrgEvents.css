@@ -182,6 +182,7 @@
     margin-left: 95%;
     background: none;
     border: none;
+	color: white;
 }
 
 .closeAddEvent:hover{
