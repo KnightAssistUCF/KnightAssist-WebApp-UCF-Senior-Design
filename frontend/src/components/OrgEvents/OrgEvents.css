@@ -205,9 +205,9 @@
     float: left;
     font-family: "system-ui";
     margin-bottom: 5px;
-	border-radius: 10px !important;
-	padding-left: 8px;
-	padding-right: 8px;
+	border-radius: 20px !important;
+	padding-left: 10px;
+	padding-right: 10px;
 	box-shadow: none !important;
 }
 
