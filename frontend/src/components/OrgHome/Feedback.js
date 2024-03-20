@@ -197,17 +197,18 @@ function Feedback() {
 					<button className='closeFeedback'>
 						<CloseIcon onClick={handleCloseModal}/>
 					</button>
-					<DialogContentText color="textPrimary"  className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
-					<DialogContentText color="textPrimary"  style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
-					<DialogContentText color="textPrimary"  style={{  marginBottom: 5}}>
-						<a className='hoverOrgName' onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
-						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>				
+					<DialogContentText color="textPrimary" style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary" style={{marginBottom: 5}}>
+						<a className='hoverOrgName' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
+						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>		
+						<Rating
+							value={selectedFeedback.rating}
+							readOnly
+							className='cardRating'
+						/>		
 					</DialogContentText>
-					<Rating
-						value={selectedFeedback.rating}
-						readOnly
-					/>
-					<DialogContentText color="textPrimary"  className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
 				</DialogContent>
 			</Dialog>
 			: null

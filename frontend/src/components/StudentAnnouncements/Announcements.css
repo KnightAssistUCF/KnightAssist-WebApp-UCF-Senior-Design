@@ -36,12 +36,9 @@
 	word-wrap: break-word
 }
 
-.hoverOrgName{
-	color: black;
-}
-
 .hoverOrgName:hover{
 	cursor: pointer;
+	color: rgb(143, 143, 255) !important;
 }
 
 .orgPicAnn{

@@ -168,7 +168,7 @@ function StudentHistory()
 							{shownHistories}
 						</List>
 						<Box my={2} display="flex" justifyContent="center">
-							<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+							<Pagination className="historyPagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
 						</Box>
 						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>

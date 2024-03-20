@@ -9,11 +9,15 @@
 }
 
 .listsItems{
-	margin-left: 20% !important;
+	margin-left: 22.5% !important;
 }
 
 .historyProgress{
 	margin-top: 25%;
+}
+
+.historyPagination{
+	margin-right: 11%;
 }
 
 .topTitle{
@@ -36,6 +40,12 @@
     .eventPic{
       float: right !important;
     }
+	.listsItems{
+		margin-left: 15% !important;
+	}
+	.historyPagination{
+		margin-right: 5% !important;
+	}
 }
 
 @media (max-width: 700px) {

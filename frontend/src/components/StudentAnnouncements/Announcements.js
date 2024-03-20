@@ -170,7 +170,7 @@ const Announcements = (props) => {
 				</button>
 				<DialogContentText color="textPrimary" className='contentWrap' style={{ fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
 				<DialogContentText color="textPrimary"style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText color="textPrimary"><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
+				<DialogContentText color="textPrimary"><a className='hoverOrgName' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}}onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
 				<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
 		</Dialog>
