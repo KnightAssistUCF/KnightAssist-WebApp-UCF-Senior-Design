@@ -96,7 +96,7 @@ function StudentHistory()
 				return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
 			});
 
-			setEventHistories(res);
+			setEventHistories(res.reverse());
 			setNumPages(Math.ceil(res.length / amtPerPage));
 
 			const histories = res.slice(0, amtPerPage);

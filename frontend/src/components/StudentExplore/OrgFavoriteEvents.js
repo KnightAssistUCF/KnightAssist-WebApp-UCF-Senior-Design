@@ -108,8 +108,6 @@ function OrgFavoriteEvents(props)
             return a.props.startTime.localeCompare(b.props.startTime)
         });
 
-        console.log(events);
-
         setNumPages(Math.ceil(events.length / 4))
         setEvents(events);
 
