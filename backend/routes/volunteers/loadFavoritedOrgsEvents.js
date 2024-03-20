@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 				sponsoringOrganization: { $in: user.favoritedOrganizations},
 				registeredVolunteers: { $ne: user._id }
 			});
-			res.status(200).json(events);
+			res.status(200).json(events.slice(0, 20));
 		} else {
 			res.status(404).send("User not found");
 		}

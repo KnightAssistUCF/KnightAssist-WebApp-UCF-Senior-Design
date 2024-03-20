@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
             const checkedInIndex = event.checkedInStudents.findIndex(checkIn => checkIn.studentId.equals(studentId));
 
             if (checkedInIndex === -1) { // they did not check in yet so we add them
-                const checkedInStudent = {
+                const checkedInStudent = { // TODO add hours per org stuff here
                     studentId,
                     checkInTime,
                     checkOutTime

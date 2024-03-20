@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const userStudent = require('../../models/userStudent');
 const organizationModel = require('../../models/organization');
-const eventModel = require('../../models/events');
 
 function shuffleThis(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -11,7 +10,6 @@ function shuffleThis(array) {
         }
         return array;
 }
-
 
 router.get('/', async (req, res) => {
         try {
@@ -22,25 +20,32 @@ router.get('/', async (req, res) => {
                         return res.status(404).send('User not found in the database');
                 }
 
-                // store the interest tags of the user
+                // Store the interest tags of the user
                 const userTags = user.categoryTags;
 
-                // find orgs to be suggested for the user
-                let suggestedOrganizations = await organizationModel.find({ categoryTags: { $in: userTags } });
+                // Keep track of suggested organizations
+                let suggestedOrganizations = [];
+                const favoritedOrgs = user.favoritedOrganizations.map(org => org._id.toString());
 
-                // remove organiaztions that the user already favorited
-                const favoritedORGS = user.favoritedOrganizations.map(org => org._id.toString());
-                suggestedOrganizations = suggestedOrganizations.filter(org => !favoritedORGS.includes(org._id.toString()));
+                // Fetch and shuffle organizations that match user's interest tags
+                let allOrganizations = await organizationModel.find({ categoryTags: { $in: userTags } });
+                allOrganizations = shuffleThis(allOrganizations);
 
-                // shuffle the list just for randomization each time
-                suggestedOrganizations = shuffleThis(suggestedOrganizations);
-                console.log("printing the shuffled list of organizations");
-                console.log(suggestedOrganizations);
+                for (let org of allOrganizations) {
+                        if (suggestedOrganizations.length >= 20) {
+                                break; // Stop if we have gathered 20 suggested organizations
+                        }
+                        if (!favoritedOrgs.includes(org._id.toString())) {
+                                suggestedOrganizations.push(org); // Add to suggestions if not already favorited
+                        }
+                }
+
+                console.log("Returning suggested organizations:", suggestedOrganizations);
                 return res.json(suggestedOrganizations);
         } catch (error) {
-                res.status(500).send(error);
+                console.error(error);
+                res.status(500).send('An error occurred - could not retrieve organizations');
         }
 });
 
 module.exports = router;
-
