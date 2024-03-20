@@ -30,8 +30,8 @@ function SearchBar(props) {
     setSearchTerm(newValue);
   };
 
-const handleKeyPress = (event) => {
-  if (event.key === 'Enter') {
+const handleKeyPress = (event, btn) => {
+  if (event.key === 'Enter' || btn === true) {
     console.log("searchTerm: "+searchTerm);
     setSearchTerm(searchTerm);
     var tempTerm = props.filterTerm;
@@ -39,19 +39,7 @@ const handleKeyPress = (event) => {
     props.setFilterTerm(tempTerm);
     searchAnnouncements(searchTerm);
     if(searchTerm === '') {
-      if(props.filterTerm === 'favorited') {
-        console.log("surprise");
-        console.log(props.finalFavUpdates);
-        const allFavAnnouncements = props.finalFavUpdates.map(update => ({
-          ...update,
-          name: update.name,
-        }));
-        
-        props.setSearchAnnouncement(allFavAnnouncements);
-      } else {
-        console.log("here---------");
-      }
-      
+        props.setSearchAnnouncement(props.initialAnnouncements);
     }
   }
 };
@@ -74,7 +62,7 @@ const handleKeyPress = (event) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon style={{ cursor: 'pointer' }} />
+              <SearchIcon onClick={(e) => handleKeyPress(e, true)} style={{ cursor: 'pointer' }} />
             </InputAdornment>
           ),
           endAdornment: (
