@@ -32,6 +32,7 @@ function Security(props){
 					disabled={params.disabled}
 					onChange={params.onChange}
 					color={props.color}
+					autoComplete='off'
 					endAdornment={
 						<InputAdornment position="end">
 							<IconButton onClick={() => iconClick(params.type)}>

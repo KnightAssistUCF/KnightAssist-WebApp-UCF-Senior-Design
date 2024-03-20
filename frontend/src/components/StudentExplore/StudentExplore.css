@@ -69,10 +69,6 @@
     margin-left: 13%;
 }
 
-.anIcon{
-    float: left;
-}
-
 .logoandbg{
 	position: relative;
 	margin-bottom: 25px;
@@ -96,11 +92,28 @@
 }
 
 .orgPicModal{
-	width: 25px !important;
-	height: 25px !important;
-	margin-right: 5px;
+	width: 30px !important;
+	height: 30px !important;
+	margin-right: 10px;
 }
 
+.orgNameModal{
+	font-size: 20px;
+}
+
+.orgNameModal:hover{
+	cursor: pointer;
+	color: rgb(143, 143, 255) !important;
+}
+
+.dayInfo{
+	margin-left: 10px !important;
+}
+
+.rsvpMsgSpace{
+	margin-top: 10px !important;
+	margin-bottom: 20px !important;
+}
 
 @media (max-width: 1100px) {
     .exploreSearch{
