@@ -21,17 +21,21 @@ router.get('/', async (req, res) => {
                 }
 
                 const userTags = user.categoryTags;
-                const eventsCursor = eventModel.find({
+                let events = await eventModel.find({
                         eventTags: { $in: userTags },
                         registeredVolunteers: { $ne: user._id },
                         endTime: { $gt: new Date() }  // Ensure event is in the future
-                }).cursor();
+                });
+
+                // Shuffle events before processing
+                events = shuffleThis(events);
 
                 let eventsPerOrganization = {};
-                let totalEventsCount = 0;
+                let shuffledSelectedEvents = [];
 
-                for (let event = await eventsCursor.next(); event != null; event = await eventsCursor.next()) {
-                        if (totalEventsCount >= 20) break;  // Stop if we have collected 20 events
+                // Select up to 20 events, considering up to 4 per organization
+                for (let event of events) {
+                        if (shuffledSelectedEvents.length >= 20) break; // Stop if we have 20 events
 
                         // Check if the event can be added (up to 4 per organization)
                         if (!eventsPerOrganization[event.sponsoringOrganization] ||
@@ -42,13 +46,13 @@ router.get('/', async (req, res) => {
                                 }
 
                                 eventsPerOrganization[event.sponsoringOrganization].push(event);
-                                totalEventsCount++;
+                                shuffledSelectedEvents.push(event);
                         }
                 }
 
-                let finalSuggestedEvents = shuffleThis([].concat(...Object.values(eventsPerOrganization))).slice(0, 20);
+                shuffledSelectedEvents = shuffledSelectedEvents.slice(0, 20);
 
-                return res.json(finalSuggestedEvents);
+                return res.json(shuffledSelectedEvents);
         } catch (error) {
                 console.error(error);
                 res.status(500).send(error);
