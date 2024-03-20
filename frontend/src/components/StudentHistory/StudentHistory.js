@@ -7,7 +7,7 @@ import '../Header.css';
 import Avatar from '@mui/material/Avatar';
 import { List, ListItem, ListItemText, Divider, CircularProgress, Box } from '@mui/material';
 import {Button} from '@mui/material';
-import EventModal from './EventModal';
+import EventModal from '../StudentExplore/EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './StudentHistory.css'
 import StudentTopBar from '../TopBar/StudentTopBar';

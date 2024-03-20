@@ -36,6 +36,10 @@
 	word-wrap: break-word
 }
 
+.hoverOrgName{
+	color: black;
+}
+
 .hoverOrgName:hover{
 	cursor: pointer;
 }

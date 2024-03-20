@@ -6,7 +6,7 @@ import { buildPath } from '../../path';
 import NavTabs from './NavTabs';
 import FavoriteOrganizations from './FavoriteOrganizations';
 import RecentEvents from './RecentEvents';
-import EventModal from '../StudentHistory/EventModal';
+import EventModal from '../StudentExplore/EventModal';
 import StudentBox from './StudentBox';
 import OrgTopBar from '../OrgHome/OrgTopBar';
 import StudentTopBar from '../TopBar/StudentTopBar';
