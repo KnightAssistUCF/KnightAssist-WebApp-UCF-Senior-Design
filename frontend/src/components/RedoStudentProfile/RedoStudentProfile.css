@@ -19,7 +19,7 @@
 }
 
 .studentAccountTab {
-    background-color: #ebebeb !important;
+    background-color: #f9f9f9 !important;
     padding: 10px;
     border-radius: 4px;
 }
@@ -35,4 +35,32 @@
     font-size: 25px;
     text-align: left;
     margin-top: 5px;
+}
+
+.fieldName {
+    margin-top: 10px;
+}
+
+.accountFirstName {
+    display: flex;
+    justify-content: space-between;
+}
+
+.accountLastName {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.accountEmail {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.accountSemesterGoal {
+    display: flex;
+    justify-content: space-between; 
+}
+
+.accountButtons {
+    margin-top: 10px;
 }
