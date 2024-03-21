@@ -20,8 +20,8 @@ function SearchBar(props) {
     setSearchTerm(newValue);
   };
 
-const handleKeyPress = (event) => {
-  if (event.key === 'Enter') {
+const handleKeyPress = (event, btn) => {
+  if (event.key === 'Enter' || btn === true) {
     console.log("searchTerm: "+searchTerm);
     setSearchTerm(searchTerm);
     var tempTerm = props.filterTerm;
@@ -64,7 +64,7 @@ const handleKeyPress = (event) => {
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon style={{ cursor: 'pointer' }} />
+              <SearchIcon onClick={(e) => handleKeyPress(e, true)} style={{ cursor: 'pointer' }} />
             </InputAdornment>
           ),
           endAdornment: (
