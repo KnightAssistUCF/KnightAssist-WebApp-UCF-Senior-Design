@@ -448,13 +448,13 @@ function EventModal(props)
         return (
             <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
-                    <p className={(!isPast) ? 'volunteerSpaceOrg' : ''}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
+                    <p className={'volunteerSpaceOrg'}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className='volRound' component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mr: 2, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+							{(isPast) ? <Button sx={{ mt: 1, mr: 0.5, mb: 0.5, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
