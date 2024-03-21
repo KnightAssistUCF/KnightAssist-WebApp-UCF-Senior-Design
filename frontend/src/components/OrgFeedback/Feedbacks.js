@@ -134,11 +134,19 @@ const Feedbacks = (props) => {
 
   useEffect(() => {
 	if(props.feedback){	
-		setNumPages(Math.ceil(props.feedback.length / perPage));
-		if(Math.ceil(props.feedback.length / perPage) < page){
-			changePage(null, page - 1);
+		// This useEffect was called due to
+		// clicking an announcemnt
+		if(props.readChange === true){
+			props.setReadChange(false);
+			setNumPages(Math.ceil(props.feedback.length / perPage));
+			if(Math.ceil(props.feedback.length / perPage) < page){
+				changePage(null, page - 1);
+			}else{
+				changePage(null, page);
+			}
 		}else{
-			changePage(null, page);
+			setNumPages(Math.ceil(props.feedback.length / perPage));
+			changePage(null, 1);
 		}
 	}
   }, [props.feedback]);
