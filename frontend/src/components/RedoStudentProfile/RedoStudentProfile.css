@@ -2,3 +2,37 @@
     margin-left: 15%;
     margin-right: 3%;
 }
+
+/* .light {
+    background-color: #FAFAFA !important;
+} */
+
+.profileAvatarSettings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 5px;
+}
+
+.startedVolunteeringDate {
+    font-size: 20px;
+}
+
+.studentAccountTab {
+    background-color: #ebebeb !important;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.tabHeader {
+    text-align: left;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.studentAccountFields {
+    font-weight: 500;
+    font-size: 25px;
+    text-align: left;
+    margin-top: 5px;
+}

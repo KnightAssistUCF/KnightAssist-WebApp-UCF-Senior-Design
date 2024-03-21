@@ -9,22 +9,23 @@ import StudentProfileTabs from './StudentProfileTabs';
 function RedoStudentProfile()
 {
 
-   return(
-    
-      <div className='spartan' id='redoStudentProfile'>
-        <StudentHeader/>
-        <StudentTopBar title="Profile"/>
-        <div className="redoStudentProfileContent">
-          
-            <StudentProfileTabs/>
+    return(
+        <div className='fontFamily'>
+            <div className='redoStudentProfile'>
+            <StudentHeader/>
+            <StudentTopBar title="Profile"/>
+            <div className="redoStudentProfileContent">
+                
+                <StudentProfileTabs/>
 
 
 
 
 
+            </div>
+            </div>
         </div>
-      </div>
-   );
+    );
 };
 
 export default RedoStudentProfile;
