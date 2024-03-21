@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RedoStudentProfile.css';
 import { Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
+import { buildPath } from '../../path';
 
 
 function Account({info})
@@ -10,11 +11,27 @@ function Account({info})
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
+    const [picName, setPicName] = useState("");
     const [semesterVolunteerGoal, setSemesterVolunteerGoal] = useState(-1);
 
     function handleEditModeToggle() {
         setEditMode((prevEditMode) => !prevEditMode);
     }
+
+    async function getProfilePic(){
+		let id = sessionStorage.getItem("ID");
+
+		const url = buildPath(`api/retrieveImage?typeOfImage=3&id=${id}`);
+
+		const response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let pic = JSON.parse(await response.text());
+
+		setPicName(pic.url);
+	}
 
     function CreatedDate(){
         var date = new Date(info.createdAt);const options = { 
@@ -44,12 +61,17 @@ function Account({info})
         }
     }, [info]);
 
+    useEffect(() => {
+        getProfilePic();
+    }, []);
+
     return(
         <>
         <div className='studentAccountTab'>
             <div className='profileAvatarSettings'>
                 <Avatar
                     className='defaultPFP addHover'
+                    src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
                 />
                 <CreatedDate />
             </div>
