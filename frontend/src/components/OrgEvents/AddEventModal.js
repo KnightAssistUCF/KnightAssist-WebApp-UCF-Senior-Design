@@ -145,6 +145,7 @@ function AddEventModal(props)
     }
 
     async function editEvent(){
+
         const json = {
             eventID: props.eventID,
             name: name,

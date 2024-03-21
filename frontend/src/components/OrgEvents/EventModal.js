@@ -201,18 +201,25 @@ function EventModal(props)
 			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
 
 			const startDateObj = new Date(startDay);
-			
+
+			// To get the exact day of the month
+			const nextDay  = new Date(startDay);
+			nextDay.setDate(nextDay.getDate() + 1);
+
 			let dayStr = days[startDateObj.getDay()];
 
 			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + (startDateObj.getDate() + 1));
+			dayStr += (" " + nextDay.getDate());
 
 			// If the event goes on for more than a day,
 			if(startDay !== endDay){
 				sethasEndDate(true);
 
 				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
+				const endNextDay  = new Date(endDay);
+				endNextDay.setDate(endNextDay.getDate() + 1);
+	
+				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + endNextDay.getDate()));
 			}else{
 				sethasEndDate(false);
 			}
@@ -448,13 +455,13 @@ function EventModal(props)
         return (
             <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
-                    <p className={(!isPast) ? 'volunteerSpaceOrg' : ''}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
+                    <p className={'volunteerSpaceOrg'}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className='volRound' component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mr: 2, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+							{(isPast) ? <Button sx={{ mt: 1, mr: 0.5, mb: 0.5, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>

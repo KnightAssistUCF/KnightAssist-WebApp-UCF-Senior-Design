@@ -114,18 +114,25 @@ function EventModal(props)
 			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
 
 			const startDateObj = new Date(startDay);
+
+			// To get the exact day of the month
+			const nextDay  = new Date(startDay);
+			nextDay.setDate(nextDay.getDate() + 1);
 			
 			let dayStr = days[startDateObj.getDay()];
 
 			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + (startDateObj.getDate() + 1));
+			dayStr += (" " + nextDay.getDate());
 
 			// If the event goes on for more than a day,
 			if(startDay !== endDay){
 				sethasEndDate(true);
 
 				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
+				const endNextDay  = new Date(endDay);
+				endNextDay.setDate(endNextDay.getDate() + 1);
+	
+				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + endNextDay.getDate()));
 			}
 
 			setFormattedDate(dayStr);
