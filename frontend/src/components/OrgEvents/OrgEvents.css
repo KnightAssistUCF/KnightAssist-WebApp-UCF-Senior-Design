@@ -424,6 +424,10 @@
 	width: 100px;
 }
 
+.eventTypes{
+	margin-left: 1.5%;
+}
+
 .cardCalendar{
 	width: 20px !important;
 	margin-right: 3px;

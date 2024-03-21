@@ -45,6 +45,10 @@ function OrgHome() {
 
 		const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
 
+		upcomingEvents.sort(function(a,b){ 
+            return a.startTime.localeCompare(b.startTime)
+        });
+
 		console.log("Upcoming Events:", upcomingEvents);
 		setUpcomingEvents(upcomingEvents);
 		setNumUpcomingEvents(upcomingEvents.length);
