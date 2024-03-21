@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
     const query = {
         $or: [
             { _id: req.body.id },
-            { email: req.body.email }
+			{name: req.body.name }
         ]
     };
     await organization.findOne(query).then((organization) => {
@@ -22,16 +22,17 @@ router.get('/', async (req, res) => {
 });
 
 // then we delete the organization by their email
-router.delete('/', authenticateToken_Organization, async (req, res) => {
+router.delete('/', async (req, res) => {
     const query = {
         $or: [
             { _id: req.body.id },
-            { email: req.body.email }
+            { name: req.body.name }
         ]
     };
     let organization_obj;
     await organization.findOne(query).then(async (organization) => {
         if (organization) {
+			console.log(organization)
             organization_obj = organization;
 
             const config = {
@@ -89,7 +90,7 @@ router.delete('/', authenticateToken_Organization, async (req, res) => {
                 }
             });
 
-            await organization.deleteOne({ email: user.email }).then((organization) => {
+            await organization.deleteOne({ name: organization.name }).then((organization) => {
                 res.status(200).send("Organization deleted successfully" + organization);
             }).catch((err) => { res.status(400).send("Internal server error: " + err); })
         }
