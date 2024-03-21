@@ -16,6 +16,19 @@ function Account({info})
         setEditMode((prevEditMode) => !prevEditMode);
     }
 
+    function CreatedDate(){
+        var date = new Date(info.createdAt);const options = { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        };
+        const formattedDate = date.toLocaleDateString('en-US', options);
+
+		return (
+            <div className='startedVolunteeringDate'><em>Volunteering Since {formattedDate}</em></div>
+		)
+	}
+
     useEffect(() => {
         if (info.firstName) {
             setFirstName(info.firstName);
@@ -38,7 +51,7 @@ function Account({info})
                 <Avatar
                     className='defaultPFP addHover'
                 />
-                <div className='startedVolunteeringDate'><em>Volunteering Since </em></div>
+                <CreatedDate />
             </div>
             <div className='tabHeader'>Account Information</div>
             <div className='studentAccountFields'>
