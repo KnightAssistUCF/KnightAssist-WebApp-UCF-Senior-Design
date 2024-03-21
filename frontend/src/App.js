@@ -146,7 +146,7 @@ function App()
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/redostudentprofile" element={<RedoStudentProfilePage/>}></Route>
+				<Route path="/redostudentprofile" element={(role) ? <RedoStudentProfilePage setTheme={setTheme}/> : <Navigate from='/redostudentprofile' to='/login' />}></Route>
 			</Routes>
 		</Router>
 			<CssBaseline />
