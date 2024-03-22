@@ -17,6 +17,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import utc from 'dayjs/plugin/utc';
 import Alert from '@mui/material/Alert';
 import dayjs from 'dayjs';
 import CloseIcon from '@mui/icons-material/Close';
@@ -87,6 +88,8 @@ function AddEventModal(props)
     async function submitEvent(){
         console.log(tagNames);
 
+		console.log(new Date(startTime).toISOString());
+
         const json = {
             name: name,
             description: description,
@@ -100,8 +103,6 @@ function AddEventModal(props)
             semester: semester,
             maxAttendees: maxVolunteers
         };
-
-        console.log(json);
 
         const url = buildPath("api/addEvent");
 
@@ -146,6 +147,8 @@ function AddEventModal(props)
 
     async function editEvent(){
 
+
+		console.log(new Date(startTime).toUTCString())
         const json = {
             eventID: props.eventID,
             name: name,

@@ -80,7 +80,7 @@ function EventModal(props)
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
 
-	const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
 					"October", "November", "December"];
 
@@ -197,29 +197,20 @@ function EventModal(props)
 
 			setOrgPic(orgPic.url);
 
-			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = dayjs(event.startTime);
 
-			const startDateObj = new Date(startDay);
+			let dayStr = days[startDay.day()];
 
-			// To get the exact day of the month
-			const nextDay  = new Date(startDay);
-			nextDay.setDate(nextDay.getDate() + 1);
+			dayStr += (", " + months[startDay.month()]);
+			dayStr += (" " + startDay.date());
 
-			let dayStr = days[startDateObj.getDay()];
-
-			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + nextDay.getDate());
+			const endDay = dayjs(event.endTime);
 
 			// If the event goes on for more than a day,
-			if(startDay !== endDay){
+			if(startDay.date() !== endDay.date()){
 				sethasEndDate(true);
 
-				const endDateObj = new Date(endDay);
-				const endNextDay  = new Date(endDay);
-				endNextDay.setDate(endNextDay.getDate() + 1);
-	
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + endNextDay.getDate()));
+				dayStr += (" - " + (days[endDay.day()] + ", " + months[endDay.month()] + " " + endDay.date()));
 			}else{
 				sethasEndDate(false);
 			}
