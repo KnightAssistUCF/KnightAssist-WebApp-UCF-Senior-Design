@@ -4,33 +4,23 @@ const router = express.Router();
 const Event = require('../../models/events');
 
 // genrate completely random events data
-const generateRandomEventData = (organizationId) => {
+const generateRandomEventData = (organizationId, i) => {
+	let day = i + (i * 2);
     return new Event({
-        name: `Event ${Math.random().toString(36).substring(7)}`,
-        description: `${Math.random().toString(36).substring(7)}`,
-        location: `Location ${Math.random().toString(36).substring(7)}`,
+        name: `Kareok Night #` + i,
+        description: `Lots of music will be played`,
+        location: `Knights Plaza`,
         sponsoringOrganization: organizationId,
-        attendees: [],
         registeredVolunteers: [],
-        startTime: new Date("2024-03-25"),
-        endTime: new Date("2024-03-26"),
-        // whatever the heck these links can lead to [these are place holders]
-        eventLinks: {
-            facebook: `https://facebook.com/${Math.random().toString(36).substring(7)}`,
-            twitter: `https://twitter.com/${Math.random().toString(36).substring(7)}`,
-            instagram: `https://instagram.com/${Math.random().toString(36).substring(7)}`,
-            website: `https://website.com/${Math.random().toString(36).substring(7)}`,
-        },
+        startTime: new Date("2024-2-" + day),
+        endTime: new Date("2024-2-" + day),
         checkedInStudents: [],
         feedback: [],
         eventTags: [
-            'computer science', 
-            'engineering', 
-            'mathematics',
-			'Education'
+            'Music & Performance'
         ],
         semeter: 'Fall 2023',
-        maxAttendees: Math.floor(Math.random() * 500) + 1, 
+        maxAttendees: 5 
     });
 }
 
@@ -39,8 +29,8 @@ router.get('/', async (req, res) => {
         const organizationId = req.query.organizationId;
         let events = [];
 
-        for (let i = 0; i < 10; i++) {
-            let randomEvent = generateRandomEventData(organizationId);
+        for (let i = 0; i < 8; i++) {
+            let randomEvent = generateRandomEventData(organizationId, i + 1);
             await randomEvent.save(); 
             events.push(randomEvent);
         }
