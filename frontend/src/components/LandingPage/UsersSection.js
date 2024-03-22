@@ -3,9 +3,9 @@ import { Card, CardContent, Button, Typography, Grid, CardMedia, Box } from '@mu
 
 const Users = () => {
     const cards = [
-        { title: "For Students", description: "Description for Card 1", imageUrl: "https://cdn-icons-png.flaticon.com/512/3462/3462157.png" },
-        { title: "For Organizations", description: "Description for Card 2", imageUrl: "https://cdn-icons-png.flaticon.com/512/7000/7000644.png" },
-        { title: "For Admins", description: "Description for Card 3", imageUrl: "https://cdn-icons-png.flaticon.com/512/78/78948.png" }
+        { title: "For Students", description: "Sign up for events, track hours, and sign in with ease using a QR code.", imageUrl: "https://cdn-icons-png.flaticon.com/512/3462/3462157.png" },
+        { title: "For Organizations", description: "Recruit volunteers, manage volunteer details, and create and organize events.", imageUrl: "https://cdn-icons-png.flaticon.com/512/7000/7000644.png" },
+        { title: "For Admins", description: "Monitor organization and volunteer activity, ensuring certain criteria and guidelines are met. ", imageUrl: "https://cdn-icons-png.flaticon.com/512/78/78948.png" }
     ];
 
   return (
@@ -19,8 +19,8 @@ const Users = () => {
         <Grid container spacing={3} sx={{ marginBottom: 3, alignItems: 'center', justifyContent: 'center' }}>
         {/* Map over the array of cards to render each one */}
         {cards.map((card, index) => (
-            <Grid item xs={12} sm={6} md={3} key={index} sx={{ marginBottom: 5 }}>
-                <Card sx={{ maxWidth: 300 }}>
+            <Grid item xs={12} sm={6} md={3} key={index} sx={{ marginBottom: 5, justifyContent: 'center', display: 'flex' }}>
+                <Card sx={{ width: 300 }}>
                     <CardMedia
                     component="img"
                     height="200"
@@ -31,7 +31,7 @@ const Users = () => {
                     <Typography variant="subtitle1" component="h2" fontWeight={700}>
                         {card.title} {/* Render the title for the current card */}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <Typography variant="body2" color="textSecondary" component="p" sx={{ marginY: 1 }}>
                         {card.description} {/* Render the description for the current card */}
                     </Typography>
                     <Button variant="contained" sx={{ bgcolor: '#593959' }}>
