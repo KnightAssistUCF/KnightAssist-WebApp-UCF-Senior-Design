@@ -10,6 +10,7 @@ const Users = () => {
 
   return (
     <Box sx={{ bgcolor: '#F5FAF8' }}>
+        <Box sx={{ marginX: '5%'}}>
         <Typography variant="h4" sx={{ marginTop: 5, marginBottom: 2, color: '#212121'}}>
             The Ultimate Volunteering Platform
         </Typography>
@@ -42,6 +43,7 @@ const Users = () => {
             </Grid>
         ))}
         </Grid>
+        </Box>
     </Box>
   );
 };
