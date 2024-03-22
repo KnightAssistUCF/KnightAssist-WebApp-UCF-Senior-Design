@@ -84,11 +84,57 @@ function AddEventModal(props)
 
         setDefinedTags(await getOrgTags());
     }
+
+	// Meant to fix time zone bugs
+	function convertedTime(dateObj){
+		let year, month, date, hour, min, sec;
+
+		if(Number(dateObj.year()) < 10){
+			year = "0" + dateObj.year();
+		}else{
+			year = dateObj.year();
+		}
+
+		if(Number(dateObj.month()) < 9){
+			month = "0" + (dateObj.month() + 1);
+		}else{
+			month = (dateObj.month() + 1);
+		}
+
+		if(Number(dateObj.date()) < 10){
+			date = "0" + dateObj.date();
+		}else{
+			date = dateObj.date();
+		}
+
+		if(Number(dateObj.hour()) < 10){
+			hour = "0" + dateObj.hour();
+		}else{
+			hour = dateObj.hour();
+		}
+
+		if(Number(dateObj.minute()) < 10){
+			min = "0" + dateObj.minute();
+		}else{
+			min = dateObj.minute();
+		}
+
+		if(Number(dateObj.second()) < 10){
+			sec = "0" + dateObj.second();
+		}else{
+			sec = dateObj.second();
+		}
+
+		console.log(year+"-"+month+"-"+date+"T"+hour+":"+min+":"+sec)
+
+		return new Date(year+"-"+month+"-"+date+"T"+hour+":"+min+":"+sec);
+	}
     
     async function submitEvent(){
         console.log(tagNames);
 
-		console.log(new Date(startTime).toISOString());
+		const formattedStart = convertedTime(dayjs(startTime));
+		const formattedEnd = convertedTime(dayjs(endTime));
 
         const json = {
             name: name,
@@ -97,8 +143,8 @@ function AddEventModal(props)
             sponsoringOrganization: sessionStorage.getItem("ID"),
             attendees: [],
             registeredVolunteers: [],
-            startTime: startTime,
-            endTime: endTime,
+            startTime: formattedStart,
+            endTime: formattedEnd,
             eventTags: tagNames,
             semester: semester,
             maxAttendees: maxVolunteers
@@ -147,16 +193,17 @@ function AddEventModal(props)
 
     async function editEvent(){
 
+		const formattedStart = convertedTime(dayjs(startTime));
+		const formattedEnd = convertedTime(dayjs(endTime));
 
-		console.log(new Date(startTime).toUTCString())
         const json = {
             eventID: props.eventID,
             name: name,
             description: description,
             location: location,
             organizationID: sessionStorage.getItem("ID"),
-            startTime: startTime,
-            endTime: endTime,
+            startTime: formattedStart,
+            endTime: formattedEnd,
             eventTags: tagNames,
             semester: semester,
             maxAttendees: maxVolunteers
