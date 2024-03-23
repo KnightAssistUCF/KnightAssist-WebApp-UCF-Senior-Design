@@ -5,6 +5,7 @@ import { Scheduler } from "@aldabil/react-scheduler";
 import { buildPath } from '../../path';
 import Snackbar from '@mui/joy/Snackbar';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import Stack from '@mui/material/Stack';
 
 
 function Calendar(props) {
@@ -233,6 +234,14 @@ useEffect(() => {
   getUpcomingEvents(props.org);
 }, [props.org, rsvpEvents]);
 
+useEffect(() => {
+  if (open) {
+    const timer = setTimeout(() => {
+      setOpen(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }
+}, [open]);
 
   return (
     <div>
@@ -245,8 +254,13 @@ useEffect(() => {
           events={upcomingEvents}
           customViewer={customViewer}
         />
+
+        {open && (
+            <Alert sx={{marginTop: '10px'}} severity="success">{message}</Alert>
+        )}
+        
       </div>
-      <Snackbar
+      {/* <Snackbar
         autoHideDuration={2000}
         open={open}
         variant="outlined"
@@ -260,7 +274,7 @@ useEffect(() => {
         startDecorator={<CheckCircleOutlineIcon />}
       >
         {message}
-      </Snackbar>
+      </Snackbar> */}
     </div>
   );
 }

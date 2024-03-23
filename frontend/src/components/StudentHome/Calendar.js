@@ -138,10 +138,18 @@ const customViewer = (event, close) => {
     );
   };
 
+  useEffect(() => {
+    if (openSnackbar) {
+      const timer = setTimeout(() => {
+        setOpenSnackbar(false);
+      }, 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [openSnackbar]);
 
 
   return (
-    <div style={{marginBottom: '20px'}}>
+    <div style={{color: 'black', marginBottom: '20px'}}>
         <Scheduler
           view="month"
           height={520}
@@ -150,10 +158,14 @@ const customViewer = (event, close) => {
           events={RSVPdEvents}
           customViewer={customViewer}
         />
-        <Snackbar
+        {openSnackbar && (
+          <Alert sx={{marginTop: '10px'}} severity="success">{message}</Alert>
+        )}
+        {/* <Snackbar
             autoHideDuration={2000}
             open={openSnackbar}
             variant="outlined"
+            color="primary"
             onClose={(event, reason) => {
             if (reason === 'clickaway') {
                 return;
@@ -163,7 +175,7 @@ const customViewer = (event, close) => {
             startDecorator={<CheckCircleOutlineIcon />}
         >
             {message}
-      </Snackbar>
+      </Snackbar> */}
     </div>
   );
 }
