@@ -48,8 +48,6 @@ router.post("/", async (req, res) => {
 		else
 			orgData = { hours: 0, numEvents: 0 };
 
-		console.log(orgData);
-
         orgData.hours = (parseFloat(orgData.hours) + volunteeringHours).toFixed(2);
         orgData.numEvents += 1;
 
@@ -57,8 +55,8 @@ router.post("/", async (req, res) => {
 		
 		console.log(student.hoursPerOrg.get(orgId))
 
-        //await eventObj.save();
-        //student.eventsHistory.push(eventObj._id);
+        await eventObj.save();
+        student.eventsHistory.push(eventObj._id);
         await student.save();
 
         res.status(200).send({
