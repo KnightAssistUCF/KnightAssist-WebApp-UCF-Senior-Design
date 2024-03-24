@@ -5,17 +5,81 @@ import { Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Ch
 import { buildPath } from '../../path';
 
 
-function Account({info})
+function Account({info, fetchStudentInfo})
 {
     const [editMode, setEditMode] = useState(false);
+    const [picName, setPicName] = useState([]);
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [picName, setPicName] = useState("");
-    const [semesterVolunteerGoal, setSemesterVolunteerGoal] = useState(-1);
+    const [semesterGoal, setSemesterGoal] = useState("");
 
     function handleEditModeToggle() {
         setEditMode((prevEditMode) => !prevEditMode);
+    }
+    function handleCancel() {
+        setEditMode((prevEditMode) => !prevEditMode);
+        setFirstName(info.firstName);
+        setLastName(info.lastName);
+        setEmail(info.email);
+        setSemesterGoal(info.semesterVolunteerHourGoal);
+    }
+
+    async function handleSave() {
+        setEditMode((prevEditMode) => !prevEditMode);
+        
+        const json = {
+            id: sessionStorage.getItem("ID"),
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            semesterVolunteerHourGoal: Math.round(Number(semesterGoal)),
+            // categoryTags: newSelectedTags
+        };
+
+        console.log(json);
+        try {
+            const url = buildPath("api/editUserProfile");
+
+            const response = await fetch(url, {
+                method: "POST",
+                body: JSON.stringify(json),
+				headers: {"Content-Type": "application/json",         
+				"Authorization": `Bearer ${sessionStorage.getItem("token")}`}
+			});
+
+            let res = await response.text();
+            setFirstName(firstName);
+            setLastName(lastName);
+            setEmail(email);
+            setSemesterGoal(semesterGoal);
+        } catch(e) {
+            console.log("Failed to save edited information.");
+        }
+
+
+
+
+	    //  let formData = new FormData();
+
+		// 	if(picFile){
+		// 		formData.append('profilePic', picFile); 
+		// 		formData.append('typeOfImage', '3');
+		// 		formData.append('id', sessionStorage.getItem("ID"));
+
+		// 		await fetch(buildPath(`api/storeImage`), {
+		// 			method: 'POST',
+		// 			body: formData
+		// 		})
+		// 		.then(response => response.json())
+		// 		.then(data => console.log(data))
+		// 		.catch(error => console.error('Error:', error));
+		// 	}
+
+		// 	props.setReset(!props.reset);
+        // }catch(err){
+        //     console.log("An error has occurred: ", err);
+        // }
     }
 
     async function getProfilePic(){
@@ -46,24 +110,24 @@ function Account({info})
 		)
 	}
 
-    useEffect(() => {
-        if (info.firstName) {
-            setFirstName(info.firstName);
-        }
-        if (info.lastName) {
-            setLastName(info.lastName);
-        }
-        if (info.email) {
-            setEmail(info.email);
-        }
-        if (info.semesterVolunteerHourGoal) {
-            setSemesterVolunteerGoal(info.semesterVolunteerHourGoal);
-        }
-    }, [info]);
+
 
     useEffect(() => {
         getProfilePic();
+        console.log(info);
     }, []);
+
+    useEffect(() => {
+        console.log("Received info in Account component:", info);
+        // Update component state based on received props
+        if (info) {
+            setFirstName(info.firstName || "");
+            setLastName(info.lastName || "");
+            setEmail(info.email || "");
+            setSemesterGoal(info.semesterVolunteerHourGoal || 0);
+        //     // Additional state updates based on received info
+        }
+    }, [info]);
 
     return(
         <>
@@ -86,11 +150,11 @@ function Account({info})
                         value={firstName}
                         onChange={(e) => setFirstName(e.target.value)}
                         variant='outlined'
-                        defaultValue={info.firstName}
+                        defaultValue={firstName}
                         // sx={{backgroundColor: '#F1F1F1'}}
                         />
                         ) : (
-                        <div className='accountFirstNameTextfield'>{info.firstName}</div>
+                        <div className='accountFirstNameTextfield'>{firstName}</div>
                     )}
                     </div>
                     
@@ -104,11 +168,11 @@ function Account({info})
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
                             variant='outlined'
-                            defaultValue={info.lastName}
+                            defaultValue={lastName}
                             // sx={{backgroundColor: '#F1F1F1'}}
                             />
                             ) : (
-                            <div className='accountLastNameTextfield'>{info.lastName}</div>
+                            <div className='accountLastNameTextfield'>{lastName}</div>
                         )}
                     </div>
                 </div>
@@ -119,13 +183,13 @@ function Account({info})
                             <TextField
                             size='small'
                             value={email}
-                            onChange={(e) => setLastName(e.target.value)}
+                            onChange={(e) => setEmail(e.target.value)}
                             variant='outlined'
-                            defaultValue={info.email}
+                            defaultValue={email}
                             // sx={{backgroundColor: '#F1F1F1'}}
                             />
                             ) : (
-                            <div className='accountEmailTextfield'>{info.email}</div>
+                            <div className='accountEmailTextfield'>{email}</div>
                         )}
                     </div>
                 </div>
@@ -135,21 +199,28 @@ function Account({info})
                         {editMode ? (
                             <TextField
                             size='small'
-                            value={semesterVolunteerGoal}
-                            onChange={(e) => setSemesterVolunteerGoal(e.target.value)}
+                            value={semesterGoal}
+                            onChange={(e) => setSemesterGoal(e.target.value)}
                             variant='outlined'
-                            defaultValue={info.semesterVolunteerHourGoal}
+                            defaultValue={semesterGoal}
                             // sx={{backgroundColor: '#F1F1F1'}}
                             />
                             ) : (
-                            <div className='accountSemesterVolunteerGoalTextfield'>{info.semesterVolunteerHourGoal}</div>
+                            <div className='accountSemesterVolunteerGoalTextfield'>{semesterGoal}</div>
                         )}
                     </div>
                 </div>
             </div>
         </div>
         <div className='accountButtons'>
-            <Button variant="contained" onClick={handleEditModeToggle} disableElevation>Edit</Button>
+            {editMode ? (
+                <div className='accountButtons'>
+                    <Button sx={{marginRight: '5px'}} variant="outlined" onClick={handleCancel} disableElevation>Cancel</Button>
+                    <Button variant="contained" onClick={handleSave} disableElevation>Save</Button>
+                </div>) : (
+                    <Button variant="contained" onClick={handleEditModeToggle} disableElevation>Edit</Button>
+            )}
+            
         </div>
         </>
     );

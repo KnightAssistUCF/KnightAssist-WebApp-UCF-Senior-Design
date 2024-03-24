@@ -11,7 +11,7 @@ import { buildPath } from '../../path';
 
 function StudentProfileTabs(props) {
     const [value, setValue] = useState("1");
-    const [studentInfo, setStudentInfo] = useState([]);
+    const [studentInfo, setStudentInfo] = useState({});
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -60,8 +60,8 @@ function StudentProfileTabs(props) {
                     </TabList>
                 </Box>
                 <div style={{ flex: 1 }}>
-                    <TabPanel value="1"><Account info={studentInfo} /></TabPanel>
-                    <TabPanel value="2"><RecentEvents/></TabPanel>
+                    <TabPanel value="1"><Account info={studentInfo} fetchStudentInfo={fetchStudentInfo} /></TabPanel>
+                    <TabPanel value="2"><RecentEvents /></TabPanel>
                     <TabPanel value="3"><FavoritedOrganizations/></TabPanel>
                 </div>
             </div>
