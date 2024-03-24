@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { CalendarIcon } from '@mui/x-date-pickers';
 import { CardActionArea, Grid } from '@mui/material';
 import { buildPath } from '../../path';
+import '../OrgEvents/OrgEvents.css'
 
 function RecentEvents() {
     const [events, setEvents] = useState([]);
@@ -35,7 +36,7 @@ function RecentEvents() {
             });
 
             // Set the first 9 events to state
-            setEvents(res.slice(0, 9));
+            setEvents(res.slice(0, 12));
             pastEvents = res.map(event => event.ID);
             console.log(res);
             // setEventID(pastEvents);
