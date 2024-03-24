@@ -8,10 +8,14 @@ import Account from './Account';
 import RecentEvents from './RecentEvents';
 import FavoritedOrganizations from './FavoritedOrganizations';
 import { buildPath } from '../../path';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 function StudentProfileTabs(props) {
     const [value, setValue] = useState("1");
     const [studentInfo, setStudentInfo] = useState({});
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -51,9 +55,9 @@ function StudentProfileTabs(props) {
 
     return (
         <TabContext value={value}>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row' }}>
                 <Box>
-                    <TabList orientation='vertical' onChange={handleChange} aria-label="Student profile tabs">
+                    <TabList orientation={isMobile ? 'horizontal' : 'vertical'} onChange={handleChange} aria-label="Student profile tabs">
                         <Tab sx={{alignItems: 'start'}} label="Account" value="1" />
                         <Tab sx={{alignItems: 'start'}} label="Recent Events" value="2" />
                         <Tab sx={{alignItems: 'start'}} label="Favorited Organizations" value="3" />

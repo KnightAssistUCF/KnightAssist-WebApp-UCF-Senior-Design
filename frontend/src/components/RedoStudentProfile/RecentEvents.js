@@ -122,7 +122,6 @@ function RecentEvents() {
                                     </Typography>
                                     <Typography className="eventDate" variant="body2" color="text.secondary">
                                         <CalendarIcon className='cardCalendar'/>
-                                        {/* Adjust this part according to your event date */}
                                         {/* {event.startDay + (event.hasEndDate ? ` - ${event.endDay}` : '')} */}
                                         {event.startTime + "-" + event.endTime}
                                     </Typography>
