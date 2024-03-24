@@ -155,7 +155,7 @@ function RecommendedEvents(props)
                                 <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                     {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                                 </Typography>
-                                <Typography className="eventDate" variant="body2" color="text.secondary">
+                                <Typography sx={{transform: 'translateY(20px)'}} className="eventDate" variant="body2" color="text.secondary">
                                     <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
                                     <CalendarIcon className='cardCalendar'/>
                                     {startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
@@ -163,7 +163,7 @@ function RecommendedEvents(props)
                             </div>
                             <div className="hoverText">
                                 <Typography>
-                                    {((props.description.length >= 120) ? (props.description.substring(0, 120) + "...") : props.description)}
+                                    {((props.description.length >= 180) ? (props.description.substring(0, 180) + "...") : props.description)}
                                 </Typography>
                             </div>
                         </CardContent>

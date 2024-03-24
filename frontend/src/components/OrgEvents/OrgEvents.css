@@ -434,32 +434,39 @@
 }
 
 .hoverText {
-    /* display: none; */
+    display: none;
     opacity: 0;
-    /* transition: opacity 0.3s ease-in-out; */
+    /* transition: opacity 0.2s ease-in-out; */
+    /* transition-delay: 0.15s; */
 }
 
 .initialText{
-    transition-delay: 0.14s;
+    /* transition-delay: 0.25s ease-out; */
+    /* transition: transform 0.2s ease-out; */
+    margin-bottom: 10px;
+    opacity: 1;
 }
 
 .test:hover .whiteCardSection .hoverText {
     /* display: block; */
     opacity: 1;
-    transition: opacity 0.2s ease-in-out;
+    /* transition: opacity 0.2s ease-in-out; */
+    display: block;
 }
 
 .test:hover .whiteCardSection .initialText {
     /* display: none; */
     opacity: 0;
     /* transition: opacity 0.01s ease-in-out; */
-    transition: opacity 0.1s ease-in-out;
-
+    /* transition: opacity 0.5s ease-in-out; */
 }
 
 .whiteCardSection {
     /* transition: transform 0.2s ease-in; */
-    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column; /* Stack child elements vertically */
+    justify-content: center;
+    /* transition: transform 0.2s ease-in-out; */
     background-color: transparent;
     transform: translateY(0);
     /* overflow: auto; */

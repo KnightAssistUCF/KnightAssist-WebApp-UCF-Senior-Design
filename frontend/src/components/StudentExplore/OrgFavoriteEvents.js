@@ -212,7 +212,7 @@ function OrgFavoriteEvents(props)
     							<Typography className='eventName' clagutterBottom variant="h6" component="div">
                                     {((props.name.length >= 23) ? (props.name.substring(0, 23) + "...") : props.name)}
                                 </Typography>
-                                <Typography className="eventDate" variant="body2" color="text.secondary">
+                                <Typography sx={{transform: 'translateY(20px)'}} className="eventDate" variant="body2" color="text.secondary">
                                     <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
                                     <CalendarIcon className='cardCalendar'/>
                                     {startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
