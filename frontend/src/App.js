@@ -32,7 +32,6 @@ import StudentDetailsPage from './pages/StudentDetailsPage';
 import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import LeaderboardPage from './pages/LeaderboardPage';
-import OrgAnnPage from './pages/OrgAnnPage';
 
 function App() 
 {
@@ -76,15 +75,10 @@ function App()
 
 	return (
 		<div className="App">
-		<ThemeProvider theme={(theme === "dark") ? darkTheme : lightTheme}>
+		
 
 			<Router>
-			<Routes>
-				<Route path="/" element={<LandingPage/>}></Route>
-			</Routes>
-			<Routes>
-				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
-			</Routes>
+			<ThemeProvider theme={(theme === "dark") ? darkTheme : lightTheme}>
 			<Routes>
 				<Route path="/orghome" element={(role === "organization") ? <OrgHomePage/> : <Navigate from='/orghome' to='/login' />}></Route>
 			</Routes>
@@ -93,9 +87,6 @@ function App()
 			</Routes>
 			<Routes>
 				<Route path="/orgfeedback" element={(role === "organization") ? <OrgFeedbackPage/> : <Navigate from='/orgfeedback' to='/login' />}></Route>
-			</Routes>
-			<Routes>
-				<Route path="/organnouncements" element={(role === "organization") ? <OrgAnnPage/> : <Navigate from='/organnouncements' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/studenthomepage" element={(role === "volunteer") ? <StudentHomePage/> : <Navigate from='/studenthomepage' to='/login' />}></Route>
@@ -125,6 +116,17 @@ function App()
 				<Route path="/leaderboard" element={(role) ? <LeaderboardPage/> : <Navigate from='/leaderboard' to='/login' />}></Route>
 			</Routes>
 			<Routes>
+				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
+			</Routes>
+			<CssBaseline />
+		</ThemeProvider>
+			<Routes>
+				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
+			</Routes>
+			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>
       		<Routes>
@@ -133,24 +135,20 @@ function App()
 			<Routes>
 				<Route path="/contact" element={<ContactPage/>}></Route>
 			</Routes>
-		  	<Routes>
+			<Routes>
+				<Route path="/" element={<LandingPage/>}></Route>
+			</Routes>
+			<Routes>
 				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
-			<Routes>
-				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
-			</Routes>
-      <Routes>
+      		<Routes>
 				<Route path="/adminhome/students/:studentID" element={(role === "admin") ? <StudentDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
-      <Routes>
+      		<Routes>
 				<Route path="/adminhome/organizations/:organizationID" element={(role === "admin") ? <OrganizationDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
-			<Routes>
-				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
-			</Routes>
 		</Router>
-			<CssBaseline />
-		</ThemeProvider>
+
 		</div>
 	);
 }
