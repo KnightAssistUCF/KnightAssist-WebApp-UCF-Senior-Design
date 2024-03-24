@@ -43,7 +43,7 @@ function EventModal(props)
 
 	const [formattedDate, setFormattedDate] = useState(undefined);
 
-	const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
 					"October", "November", "December"];
 
@@ -110,22 +110,22 @@ function EventModal(props)
 
 			setIsPast(!eventIsUpcoming(event.endTime));
 
-			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = dayjs(event.startTime);
 
-			const startDateObj = new Date(startDay);
-			
-			let dayStr = days[startDateObj.getDay()];
+			let dayStr = days[startDay.day()];
 
-			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + (startDateObj.getDate() + 1));
+			dayStr += (", " + months[startDay.month()]);
+			dayStr += (" " + startDay.date());
+
+			const endDay = dayjs(event.endTime);
 
 			// If the event goes on for more than a day,
-			if(startDay !== endDay){
+			if(startDay.date() !== endDay.date()){
 				sethasEndDate(true);
 
-				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
+				dayStr += (" - " + (days[endDay.day()] + ", " + months[endDay.month()] + " " + endDay.date()));
+			}else{
+				sethasEndDate(false);
 			}
 
 			setFormattedDate(dayStr);

@@ -42,6 +42,7 @@ function NewAnn() {
       },
       });
       let res1 = await response.json();
+	  console.log(res1)
       var favUpdates = [];
       //var tempFavUpdates = [];
       for(let org of res1) {

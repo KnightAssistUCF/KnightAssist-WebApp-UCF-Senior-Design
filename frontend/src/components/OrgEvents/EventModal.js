@@ -80,7 +80,7 @@ function EventModal(props)
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
 
-	const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 	const months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
 					"October", "November", "December"];
 
@@ -197,22 +197,20 @@ function EventModal(props)
 
 			setOrgPic(orgPic.url);
 
-			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = dayjs(event.startTime);
 
-			const startDateObj = new Date(startDay);
-			
-			let dayStr = days[startDateObj.getDay()];
+			let dayStr = days[startDay.day()];
 
-			dayStr += (", " + months[startDateObj.getMonth()]);
-			dayStr += (" " + (startDateObj.getDate() + 1));
+			dayStr += (", " + months[startDay.month()]);
+			dayStr += (" " + startDay.date());
+
+			const endDay = dayjs(event.endTime);
 
 			// If the event goes on for more than a day,
-			if(startDay !== endDay){
+			if(startDay.date() !== endDay.date()){
 				sethasEndDate(true);
 
-				const endDateObj = new Date(endDay);
-				dayStr += (" - " + (days[endDateObj.getDay()] + ", " + months[endDateObj.getMonth()] + " " + (endDateObj.getDate() + 1)))
+				dayStr += (" - " + (days[endDay.day()] + ", " + months[endDay.month()] + " " + endDay.date()));
 			}else{
 				sethasEndDate(false);
 			}
@@ -448,13 +446,13 @@ function EventModal(props)
         return (
             <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
-                    <p className={(!isPast) ? 'volunteerSpaceOrg' : ''}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
+                    <p className={'volunteerSpaceOrg'}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
                     <List className='volRound' component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mr: 2, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+							{(isPast) ? <Button sx={{ mt: 1, mr: 0.5, mb: 0.5, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>

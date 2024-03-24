@@ -111,6 +111,7 @@
 
 .addEventBtn{
     background-color: #5f5395;
+	color: white;
     border: none;
 	box-shadow: none !important;
 }
@@ -129,6 +130,7 @@
 
 .picBtn{
 	background-color: #5f5395;
+	color: white;
 	margin-top: 10px;
 	border: none;
 	float: left;
@@ -182,6 +184,7 @@
     margin-left: 95%;
     background: none;
     border: none;
+	color: white;
 }
 
 .closeAddEvent:hover{
@@ -191,6 +194,12 @@
 .addEventHeader{
     float: left;  
     margin-bottom: -8px; 
+}
+
+.noResults{
+	font-size: 40px;
+	margin-right: 10%;
+	text-align: center;
 }
 
 .eventInterest{
@@ -413,6 +422,10 @@
 
 .largerChip{
 	width: 100px;
+}
+
+.eventTypes{
+	margin-left: 1.5%;
 }
 
 .cardCalendar{

@@ -24,6 +24,8 @@ function StudentExplore()
 	const [allOrgs, setAllOrgs] = useState(undefined);
 	const [allOrgsFlag, setAllOrgsFlag] = useState(false);
 
+	const [showSearch, setShowSearch] = useState(false);
+
 	const [searchMode, setSearchMode] = useState(false);
 	const [resetSearchCards, setResetSearchCards] = useState(1);
 	const results = useRef([]);
@@ -41,14 +43,14 @@ function StudentExplore()
 					<Search results={results} searchType={searchType} setEventID={setEventID} setOpenEvent={setOpenEvent} searchMode={searchMode} setSearchMode={setSearchMode} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} setAllOrgs={setAllOrgs} setAllOrgsFlag={setAllOrgsFlag}/>
 				</Grid>
 				<Grid item>
-					<button type="button" class="addEventBtn btn" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
+					<button type="button" class="addEventBtn btn" disabled={(searchMode && !showSearch)} onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
 				</Grid>
 				<Grid item>
 					{(searchMode && searchType === "events") ? <button type="button" class="addEventBtn btn" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
 				</Grid>
 			</Grid>
 			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>
-			{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType} allOrgs={allOrgs} allOrgsFlag={allOrgsFlag} setAllOrgsFlag={setAllOrgsFlag}/> 
+			{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType} allOrgs={allOrgs} allOrgsFlag={allOrgsFlag} setAllOrgsFlag={setAllOrgsFlag} setShowSearch={setShowSearch}/> 
 				:
 				<div>
 					<OrgFavoriteEvents setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} reset={resetFavorite}/>

@@ -186,7 +186,9 @@ function Contact(props) {
 				}
 				{props.org.contact && props.org.contact.website ?
 					<div className='profileEmail'>
-						<BiGlobe/>
+						<div className='websiteSize'>
+							<BiGlobe/>
+						</div>
 						<div className='navContactText'>
 							{(props.editMode)
 								?

@@ -68,7 +68,7 @@ function StudentHistory()
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+										<Button sx={{ mt: 4, ml:6, width: 150, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
@@ -96,7 +96,7 @@ function StudentHistory()
 				return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
 			});
 
-			setEventHistories(res);
+			setEventHistories(res.reverse());
 			setNumPages(Math.ceil(res.length / amtPerPage));
 
 			const histories = res.slice(0, amtPerPage);
@@ -135,7 +135,7 @@ function StudentHistory()
 											/>
 										</Grid>
 										<Grid item>
-											<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+											<Button sx={{ mt: 4, ml:6, width: 150, color: "White", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 										</Grid>
 									</Grid>
 								</ListItem>
@@ -168,7 +168,7 @@ function StudentHistory()
 							{shownHistories}
 						</List>
 						<Box my={2} display="flex" justifyContent="center">
-							<Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+							<Pagination className="historyPagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
 						</Box>
 						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>

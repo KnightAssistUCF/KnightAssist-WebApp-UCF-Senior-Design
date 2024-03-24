@@ -103,23 +103,20 @@ function SearchResults(props)
         setEvents(orgs);
 
 		setInitiateListener(initiateListener * -1);
-
-        let extraBack = 0;
         
-        // Need to go a page back due to deletion
-        if(((page - 1) * eventsPerPage) >= orgs.length){
-            setPage(page - 1);
-            extraBack = 1;
-        }
+		let page = 1;
+		setPage(1);
 
-        // There were no events prior and now there is one
-        if(page === 0 && orgs.length > 0){
-            setPage(1);
-            extraBack = -1;
-        }
+		let content;
 
-        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
-        setEventCards(content);   
+		if(orgs.length === 0){
+			content = <div className="noResults">No Organizations Found</div>
+		}else{
+			content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{orgs.slice((page - 1) * eventsPerPage, ((page - 1) * eventsPerPage + eventsPerPage))}</div>
+		}
+
+        setEventCards(content);
+		props.setShowSearch(true);
 	}
 
     async function getEvents(){
@@ -181,22 +178,19 @@ function SearchResults(props)
 
 		setInitiateListener(initiateListener * -1);
 
-        let extraBack = 0;
-        
-        // Need to go a page back due to deletion
-        if(((page - 1) * eventsPerPage) >= events.length){
-            setPage(page - 1);
-            extraBack = 1;
-        }
+		let page = 1;
+		setPage(1);
 
-        // There were no events prior and now there is one
-        if(page === 0 && events.length > 0){
-            setPage(1);
-            extraBack = -1;
-        }
+		let content;
 
-        let content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1 - extraBack) * eventsPerPage, ((page - 1 - extraBack) * eventsPerPage + eventsPerPage))}</div>
+		if(events.length === 0){
+			content = <div className="noResults">No Events Found</div>
+		}else{
+			content = <div className="rowCards cards d-flex flex-row cardWhite card-body">{events.slice((page - 1) * eventsPerPage, ((page - 1) * eventsPerPage + eventsPerPage))}</div>
+		}
+
         setEventCards(content);
+		props.setShowSearch(true);
     }
 
     function Event(props) {     
@@ -271,6 +265,7 @@ function SearchResults(props)
     }
 
     useEffect(()=>{
+		setPage(1);
 		if(props.searchType === "events")
 			getEvents();
 		else
@@ -279,8 +274,9 @@ function SearchResults(props)
     },[])
 
     useEffect(()=>{
-		setEventCards(undefined)
-		console.log("IM BEING CALLED")
+		setEventCards(undefined);
+		setPage(1);
+		props.setShowSearch(false);
 		if(props.searchType === "events")
 			getEvents();
 		else
@@ -322,7 +318,7 @@ function SearchResults(props)
 		{(eventCards) ?
 		    <div>
 				<Events/>
-				<Pagination className="eventsPagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+				{(events.length > 0) ? <Pagination className="eventsPagination" page={page} count={numPages} onChange={changePage} shape="rounded"/> : ""}
 			</div>
 			: <CircularProgress/>
 		}

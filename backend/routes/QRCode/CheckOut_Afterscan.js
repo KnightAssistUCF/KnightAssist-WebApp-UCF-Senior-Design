@@ -5,7 +5,7 @@ const UserStudent = require("../../models/userStudent");
 
 router.post("/", async (req, res) => {
     try {
-        const { qrCodeData_eventID_WithHash, studentId } = req.body;
+		const { qrCodeData_eventID_WithHash, studentId } = req.body;
 
         if (qrCodeData_eventID_WithHash.length <= 24 || !qrCodeData_eventID_WithHash.endsWith('out')) {
             return res.status(404).send("The QRCode is not a checkout code");
@@ -43,14 +43,17 @@ router.post("/", async (req, res) => {
         const orgId = eventObj.sponsoringOrganization; 
         let orgData;
 		
-		if(student.hoursPerOrg.get(orgId) && typeof student.hoursPerOrg.get(orgId) === 'object')
+		if(student.hoursPerOrg.get(orgId))
 			orgData = student.hoursPerOrg.get(orgId);
 		else
 			orgData = { hours: 0, numEvents: 0 };
 
         orgData.hours = (parseFloat(orgData.hours) + volunteeringHours).toFixed(2);
         orgData.numEvents += 1;
-        student.hoursPerOrg.set(orgId, orgData);
+
+		student.hoursPerOrg.set(orgId, orgData)
+		
+		console.log(student.hoursPerOrg.get(orgId))
 
         await eventObj.save();
         student.eventsHistory.push(eventObj._id);

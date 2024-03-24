@@ -13,9 +13,19 @@ function SearchBar(props) {
     setSearchTerm('');
     // showAllUpdates();
   };
+  
+  // eslint-disable-next-line
+  const showAllUpdates = () => {
+    props.setFilterTerm('');
+    props.fetchAllUpdates();
+  };
 
   const handleInputChange = (event) => {
     const newValue = event.target.value;
+
+    // if (searchTerm !== '' && newValue === '') {
+    //   reverseSearchResults();
+    // }
 
     setSearchTerm(newValue);
   };
@@ -29,19 +39,7 @@ const handleKeyPress = (event, btn) => {
     props.setFilterTerm(tempTerm);
     searchAnnouncements(searchTerm);
     if(searchTerm === '') {
-      if(props.filterTerm === 'favorited') {
-        console.log("surprise");
-        console.log(props.finalFavUpdates);
-        const allFavAnnouncements = props.finalFavUpdates.map(update => ({
-          ...update,
-          organizationName: update.name,
-        }));
-        
-        props.setSearchAnnouncement(allFavAnnouncements.reverse());
-      } else {
-        console.log("here---------");
-      }
-      
+        props.setSearchAnnouncement(props.initialAnnouncements);
     }
   }
 };
@@ -55,10 +53,10 @@ const handleKeyPress = (event, btn) => {
   return (
     <div className="shortenSearch classes.root" variant="body1">
       <TextField
-        placeholder="Search By Event Name"
+        placeholder="Search by Announcement Name"
         value={searchTerm}
         onChange={handleInputChange}
-        sx={{ width: '118%', paddingTop: '3px' }}
+        sx={{ width: "127%", paddingTop: '3px' }}
         size='medium'
         onKeyPress={handleKeyPress}
         InputProps={{
