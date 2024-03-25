@@ -192,10 +192,10 @@ function Settings(props){
 	}, []);
 
 	return(
-		<div className={'spartan ' + ((role === "volunteer") ? "settingsCardSpaceVol " : "settingsCardSpaceOrg ")  + bgColor} style={{minHeight: '100vh'}}>
+		<div className={'spartan ' + bgColor} style={{minHeight: '100vh'}}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
-			<div className='moveEverythingSettings'>
+			<div className={(sessionStorage.getItem("role") === "volunteer") ? 'moveEverythingSettingsVol' : 'moveEverythingSettingsOrg'}>
 				<Card className={'settingsCard'}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} radioColor={radioColor}/>
