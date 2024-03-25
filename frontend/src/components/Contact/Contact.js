@@ -21,7 +21,7 @@ function Contact() {
 					Contact Us
 				</Typography>
 				<Grid container component="main" sx={{ flex: 1, display: 'flex', flexdirection: 'column' }}>
-					<Grid Item xs={false} md={5} flexDirection="column" align="left" sx={{ marginBottom: 3}}>
+					<Grid Item xs={false} lg={5} flexDirection="column" align="left" sx={{ marginBottom: 3}}>
 						<Typography component="h1" variant="h4" sx={{ marginTop: 5, marginRight: 10, color: '#00522B' }}>
 							Got questions? We are here to help.
 						</Typography>
@@ -30,7 +30,7 @@ function Contact() {
 						</Typography>
 						<Details />
 					</Grid>
-					<Grid container sm={12} md={7} elevation={1} square>
+					<Grid container sm={12} lg={7} elevation={1} square>
 						<UserInput />
 					</Grid>
 				</Grid>

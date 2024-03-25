@@ -115,7 +115,7 @@ function UserInput() {
 			</Grid>
 
 			{(hasSent) ? <SuccessMessage /> : ""}
-			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": { backgroundColor: "#7566b4" } }} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
+			<Button fullWidth sx={{ mt: 3, mb: 4, height: "40px", backgroundColor: "#593959", "&:hover": { backgroundColor: "#7566b4" } }} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
 		</Paper>
 	);
 }
