@@ -122,6 +122,9 @@ function App()
 			<Routes>
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
+			<Routes>
+				<Route path="/redostudentprofile" element={(role) ? <RedoStudentProfilePage/> : <Navigate from='/redostudentprofile' to='/login' />}></Route>
+			</Routes>
 			<CssBaseline />
 		</ThemeProvider>
 			<Routes>
