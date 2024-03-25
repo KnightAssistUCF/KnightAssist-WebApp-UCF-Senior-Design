@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CircularProgress } from '@mui/material';
+import { Box, CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 import { CalendarIcon } from '@mui/x-date-pickers';
@@ -197,7 +197,9 @@ function RecentEvents(props)
 		{(eventCards) ? 
 		    <div>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				</Box>
 			</div>
 			: <CircularProgress className='spaceCircleProgress'/>
 		}

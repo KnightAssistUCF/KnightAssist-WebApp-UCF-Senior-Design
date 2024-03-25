@@ -55,6 +55,8 @@ function EventModal(props)
 	const [studentPics, setStudentPics] = useState([]);
 	const [map, setMap] = useState(undefined);
 
+	const [formattedDate, setFormattedDate] = useState(undefined);
+
 	// For volunteers that checkedin/out of the event
 	const [attendedVolunteers, setAttendedVolunteers] = useState(0);
     const [maxVolunteers, setMaxVolunteers] = useState(0);
@@ -77,6 +79,13 @@ function EventModal(props)
 	const [generateCheckOut, setGenerateCheckOut] = useState(false);
 	const [openQRModal, setOpenQRModal] = useState(false);
 	const [checkType, setCheckType] = useState(undefined);
+
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	const months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
+					"October", "November", "December"];
+
+	// The file for the attendee data
+	const [excelFileLink, setExcelFileLink] = useState(undefined);
  
 	// Event has not happened yet or is not over
     function eventIsUpcoming(endTime){
@@ -188,14 +197,25 @@ function EventModal(props)
 
 			setOrgPic(orgPic.url);
 
-			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = dayjs(event.startTime);
+
+			let dayStr = days[startDay.day()];
+
+			dayStr += (", " + months[startDay.month()]);
+			dayStr += (" " + startDay.date());
+
+			const endDay = dayjs(event.endTime);
 
 			// If the event goes on for more than a day,
-			if(startDay !== endDay) 
+			if(startDay.date() !== endDay.date()){
 				sethasEndDate(true);
-			else
+
+				dayStr += (" - " + (days[endDay.day()] + ", " + months[endDay.month()] + " " + endDay.date()));
+			}else{
 				sethasEndDate(false);
+			}
+
+			setFormattedDate(dayStr);
 
 			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
@@ -227,12 +247,27 @@ function EventModal(props)
 
 			const pics = [];
 
+			// It is a past event
 			if(!eventIsUpcoming(event.endTime)){
+				// Get students that came to event
 				for(let student of event.checkedInStudents){
 					volunteers.push(await getVolunteerInfo(student.studentId));
 					pics.push(await getStudentPic(student.studentId))
 				}
+				
+				url = buildPath(`api/exportAttendeesCSV?eventId=${event._id}`);
+
+				response = await fetch(url, {
+					method: "GET",
+					headers: {"Content-Type": "application/json"},
+				});
+
+				let link = await response.blob();
+				console.log(link)
+
+				setExcelFileLink(link);
 			}else{
+				// Get students that have RSVP'd
 				for(let id of event.registeredVolunteers){
 					volunteers.push(await getVolunteerInfo(id));
 					pics.push(await getStudentPic(id));
@@ -353,7 +388,7 @@ function EventModal(props)
 
 	function OrgName(){
 		return (
-			<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}><Avatar className="orgPicModal" src={orgPic}/><a className='hoverOrgName' onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+			<Grid container direction="row" sx={{ marginLeft: 2, marginBottom: 3, textAlign: "left"}}><Avatar className="orgPicModal" src={orgPic}/><a className='orgNameModal' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
 		)
 	}
 
@@ -407,17 +442,17 @@ function EventModal(props)
 
 
     function Volunteers(){
+        let className = (sessionStorage.getItem("theme") === 'light') ? 'volunteerList' : 'volunteerListDark';
         return (
-            <div>
+            <div className='volSpace'>
                 <button className="volunteersBtn" onClick={() => {if((curVolunteers > 0 && !isPast) || attendedVolunteers > 0 ) setOpenVolunteers(!openVolunteers)}}>
-                    <p className={(!isPast) ? 'lessSpace' : ''}>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"}</p>
-                    {(!isPast) ? <p>{curVolunteers + "/" + maxVolunteers} </p> : null}
+                    <p className={'volunteerSpaceOrg'}><i>{(isPast) ? ("Volunteers: " + attendedVolunteers) : "Registered Volunteers:"} {(!isPast) ? curVolunteers + "/" + maxVolunteers : null}</i></p> 
                 </button>
 
                 <Collapse in={openVolunteers} timeout="auto" unmountOnExit>
-                    <List className="volunteerList" component="button" disablePadding>
+                    <List className='volRound' component="button" disablePadding>
                         {volunteerInfo.map((info, i) => <div><VolunteerItem info={info} i={i}/>
-							{(isPast) ? <Button sx={{ mt: 1, mb: 1, mr: 2, width: 125, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
+							{(isPast) ? <Button sx={{ mt: 1, mr: 0.5, mb: 0.5, width: 125, color: 'white', backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" 
 												onClick={() => {getStudentTimes(info); setOpenEditHours(true)}}>Edit Hours</Button> : null}
 							{(i !== (volunteerInfo.length - 1)) ? <Divider sx={{width: "100%", background: "black"}}/> : null}</div>)}
                     </List>
@@ -438,12 +473,9 @@ function EventModal(props)
 
     function Tags(){
         return (
-                <div>
-                    <p>Tags:</p>
-                    <Grid marginLeft={"200px"} marginRight={"100px"}>
-                        {tags.map(t => <Tag tag={t}/>)}
-                    </Grid>
-                </div>
+			<Grid marginTop={"20px"} marginBottom={"55px"}>
+				{tags.map(t => <Tag tag={t}/>)}
+			</Grid>
         )
     }
 
@@ -463,7 +495,7 @@ function EventModal(props)
     }
 
     function edit(){
-        handleCloseModal();
+        //handleCloseModal();
         props.setEditMode(1);
         props.setOpenAdd(true);
     }
@@ -519,148 +551,154 @@ function EventModal(props)
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleCloseModal}>
-            <div className='center'>
-                <Card className='eventModalCard spartan'>
-                    <CardContent>
-                        <button className='closeAddEvent'>
-                            <CloseIcon onClick={() => handleCloseModal()}/>
-                        </button>
-                        <img className='boxImg' src={picLink} alt=""></img>
-                        <Container component="main" maxWidth="md">
-                            <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
-                                <EventName/>
+                <Card className='eventModalCard center spartan'>
+					<img className='boxImg' src={picLink} alt=""></img>
+					<Container>
+						<Box sx={{justifyContent:'center'}}>
+							<EventName/>
 
-								<OrgName/>
+							<OrgName/>
 
-                                <Description/>
+							<Grid container sx={{justifyContent:'left', textAlign: "left", whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginLeft={"20px"} marginBottom={"20px"}>
+								<Grid item width={"40%"}>
+									<div className='anIcon'>
+										<Tooltip title="Date" placement="top">
+											<div>
+												<GridIcon icon={<EventIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={formattedDate}/>
+								</Grid>                 
 
-                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Date" placement="top">
-                                                <div>
-                                                    <GridIcon icon={<EventIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
-                                    </Grid>                            
+								<Grid item width={"60%"}>
+									<div className='anIcon'>
+										<Tooltip title="Location" placement="top">
+											<div>
+												<GridIcon icon={<PlaceIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={location}/>
+								</Grid>
+							</Grid>
 
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Location" placement="top">
-                                                <div>
-                                                    <GridIcon icon={<PlaceIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-										<GridInfo info={location}/>
-                                    </Grid>
-                                </Grid>
+							<Grid container sx={{justifyContent:'left', textAlign: "left"}} marginLeft={"20px"} marginBottom={"30px"}>
+								<Grid item width={"15%"}>
+									<div className='anIcon'>
+										<Tooltip title="Start Time" placement="bottom">
+											<div>
+												<GridIcon icon={<PlayArrowIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+								</Grid>
 
-                                <Grid container sx={{justifyContent:'center'}} marginBottom={"30px"}>
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Start Time" placement="bottom">
-                                                <div>
-                                                    <GridIcon icon={<PlayArrowIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
-                                    </Grid>
+								<Grid item width={"15%"}>
+									<div className='anIcon'>
+										<Tooltip title="End Time" placement="bottom">
+											<div>
+												<GridIcon icon={<StopIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+								</Grid>
+							</Grid>
 
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="End Time" placement="bottom">
-                                                <div>
-                                                    <GridIcon icon={<StopIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
-                                    </Grid>
+							<Description/>
 
-                                </Grid>
-
-								{(map) ? 
-									<Grid container sx={{marginLeft: "30%"}} marginBottom={"30px"}>
-										{map}
+							<Grid container marginLeft={"20px"} marginBottom={"10px"} marginTop={"20px"}>
+								<Grid item width={"50%"} marginLeft={(map) ? "0%" : "30%"}>
+									{(tags.length > 0) ? <Tags/> : null}
+									<Grid marginTop={"40%"} width={"50%"}>
+										<Volunteers/>
 									</Grid>
-									: null
-								}
+								</Grid>
 
-                                <Volunteers/>
+								<Grid item width={(map) ? "50%" : "0"}>
+									{(map) ? 
+										<Grid container>
+											{map}
+										</Grid>
+										: null
+									}
+								</Grid>
+							</Grid>		
 
-								{(showTags) ? <Tags/> : null}
-
-								<Grid container sx={{justifyContent:'center'}} marginTop={"15%"} marginLeft={"1%"}>
-									<Grid item xs={4}>
-										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
+							{(!isPast) ? 
+								<Grid container sx={{justifyContent:'center'}} marginTop={"8%"}>
+									<Grid item marginRight={"2%"}>
+										<Button disabled={!generateCheckIn} sx={{ mt: 3, width: 200, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("In")}>Generate Check-In Code</Button>
 									</Grid>
-									<Grid item xs={4}>
-										<Button disabled={!generateCheckOut} sx={{ mt: 3, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
+									<Grid item marginLeft={"2%"}>
+										<Button disabled={!generateCheckOut} sx={{ mt: 3,  width: 200, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => QROnClick("Out")}>Generate Check-Out Code</Button>
 									</Grid>
 								</Grid>   
-      
-                                <Grid container marginLeft={"30%"} marginTop={"50px"}>
-                                    <Grid item xs={3}>
-                                        <Tooltip title="Edit" placement="top">
-                                            <button className='editEventBtn' onClick={() => edit()}><EditIcon/></button>
-                                        </Tooltip>
-                                    </Grid>
-                                    <Grid item xs={0}>
-                                        <Tooltip title="Delete" placement="top">
-                                            <button className='deleteEventBtn' onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
-                                        </Tooltip>
-                                    </Grid>
-                                </Grid>   
+								: 
+								<Grid container sx={{justifyContent:'center'}} marginTop={"8%"} marginLeft={"1%"}>
+									<Grid item xs={12}>
+										{(attendedVolunteers > 0) ? <a href={(excelFileLink) ? URL.createObjectURL(excelFileLink) : null} download={name + " Attendee Data.xlsx"} target="_blank" rel="noreferrer"><Button sx={{ mt: 3, width: 300, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained">Download Attendee Data</Button></a> : null}
+									</Grid>
+								</Grid>   
+							}
+	
+							<Grid container marginLeft={"30%"} marginTop={"50px"} marginBottom={"30px"}>
+								<Grid item xs={3}>
+									<Tooltip title="Edit" placement="top">
+										<button className='editEventBtn' style={{color: ((sessionStorage.getItem("theme") === "light") ? "black" : "white")}} onClick={() => edit()}><EditIcon/></button>
+									</Tooltip>
+								</Grid>
+								<Grid item xs={0}>
+									<Tooltip title="Delete" placement="top">
+										<button className='deleteEventBtn' style={{color: ((sessionStorage.getItem("theme") === "light") ? "black" : "white")}} onClick={() => setOpenAlert(true)}><DeleteForeverIcon/></button>
+									</Tooltip>
+								</Grid>
+							</Grid>   
 
-                                <Dialog
-                                    open={openAlert}
-                                    onClose={handleCloseAlert}
-                                    aria-labelledby="alert-dialog-title"
-                                    aria-describedby="alert-dialog-description"
-                                    >
-                                        <DialogTitle id="alert-dialog-title">
-                                        {"Delete Event?"}
-                                        </DialogTitle>
-                                        <DialogContent>
-                                        <DialogContentText id="alert-dialog-description">
-                                        Doing so will remove this event from all volunteer's past and future history. 
-                                        </DialogContentText>
-                                        </DialogContent>
-                                        <DialogActions>
-                                        <Button onClick={handleCloseAlert}>Undo</Button>
-                                        <Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
-                                        </DialogActions>
-                                </Dialog> 
-
-								<Dialog open={openEditHours} onClose={handleCloseHours}>
-									<DialogContent className='spartan hourModal'>
-										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
-											<DialogTitle className='dialogTitle'>Edit Volunteer's Hours</DialogTitle>
-										</Grid>
-										<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
-											{TimeSelector({label:"Check In", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
-										</Grid>
-										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
-											{TimeSelector({label:"Check Out", value:newCheckOutTime, onChange:(e) => setNewCheckOutTime(e)})}  
-										</Grid>
-										<Grid container justifyContent="center" alignItems="center" layout={'row'}>
-											<Button sx={{ mt: 5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
-										</Grid>
-										<ErrorMessage/>
+							<Dialog
+								open={openAlert}
+								onClose={handleCloseAlert}
+								aria-labelledby="alert-dialog-title"
+								aria-describedby="alert-dialog-description"
+								>
+									<DialogTitle id="alert-dialog-title">
+									{"Delete Event?"}
+									</DialogTitle>
+									<DialogContent>
+									<DialogContentText id="alert-dialog-description">
+									Doing so will remove this event from all volunteer's past and future history. 
+									</DialogContentText>
 									</DialogContent>
-								</Dialog>
-                            </Box>
-                        </Container>
-                    </CardContent>   
+									<DialogActions>
+									<Button onClick={handleCloseAlert}>Undo</Button>
+									<Button sx={{color:"red"}} onClick={() => deleteEvent()} autoFocus>Delete</Button>
+									</DialogActions>
+							</Dialog> 
+
+							<Dialog open={openEditHours} onClose={handleCloseHours}>
+								<DialogContent className='spartan hourModal'>
+									<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+										<DialogTitle className='dialogTitle'>Edit Volunteer's Hours</DialogTitle>
+									</Grid>
+									<Grid container justifyContent="center" alignItems="center" layout={'row'} marginBottom={"20px"}>
+										{TimeSelector({label:"Check In", value:newCheckInTime, onChange:(e) => setNewCheckInTime(e)})}  
+									</Grid>
+									<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+										{TimeSelector({label:"Check Out", value:newCheckOutTime, onChange:(e) => setNewCheckOutTime(e)})}  
+									</Grid>
+									<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+										<Button sx={{ mt: 5, width: 175, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {saveHours()}}>Save</Button>
+									</Grid>
+									<ErrorMessage/>
+								</DialogContent>
+							</Dialog>
+						</Box>
+					</Container>
+					<QRCodeModal eventID={props.eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>	
                 </Card>
 
-				<QRCodeModal eventID={props.eventID} open={openQRModal} setOpen={setOpenQRModal} checkType={checkType} setCheckType={setCheckType}/>
-            </div>
-	
         </Modal>
     );
 };

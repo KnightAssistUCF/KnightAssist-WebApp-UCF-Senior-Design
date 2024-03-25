@@ -1,7 +1,6 @@
 .orgProfilePage {
     margin-left: 14vw;
     margin-right: 2vw;
-    color: black;
     text-align: left;
     position: relative;
 }
@@ -19,14 +18,12 @@
 }
 
 .orgBannerFiller {
-    background-color: rgb(199, 199, 199);
     width: 100%;
     height: 200px;
     border-radius: 25px;
 }
 
 .studentBox {
-	background-color: rgb(250, 250, 250);
     width: 230px;
     /* height: 320%; */
     height: calc(100vh - 35%);
@@ -86,6 +83,8 @@
 .navParagraphText {
     font-size: 17px;
     font-weight: 370;
+	word-wrap: break-word !important;
+	width: 100%;
 }
 
 .editDescription {
@@ -155,10 +154,11 @@
     height: 40px;
     margin-top: 3%;
     background-color: #5f5395;
+	color: white;
     border: none;
-	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
+	box-shadow: none !important;
 }
 
 .editSocialsBtn{
@@ -179,7 +179,6 @@
 	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
-	color: black;
 }
 
 .favBtn{
@@ -314,5 +313,4 @@ font-family: "Roboto";
 	text-align: left;
 	font-size: 30px;
 	margin-bottom: 30px;
-	color: black;
 }

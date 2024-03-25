@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 function AdminTopBar(props) {
-  const settings = ['Settings', 'Logout'];
+  const settings = ['Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -47,7 +47,7 @@ function AdminTopBar(props) {
   return (
     <div className="StudentTopBar">
       <AppBar variant="outlined" position="static" sx={{ backgroundColor: '#ffffff' }}>
-        <Container maxWidth="xl">
+        <Container maxWidth="l">
           <Toolbar disableGutters sx={{ justifyContent: 'right' }}>
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}></Box>
             <Box sx={{ flexGrow: 0 }}>

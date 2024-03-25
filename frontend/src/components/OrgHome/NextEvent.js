@@ -74,20 +74,16 @@ function NextEvent({upcomingEvents})
 
     async function getUpcomingEventPic() {
       try {
-        let url = buildPath(`api/retrieveImage?typeofImage=1&id=${upcomingEvents._id}`);
-        let response = await fetch(url, {
-          method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-        });
-    
-        if (!response.ok) {
-          throw new Error(`Failed to fetch image: ${response.statusText}`);
-        }
-    
-        let pic = JSON.parse(await response.text());
-        let picUrl = pic.url;
-        console.log(picUrl);
-        setEventPic(picUrl);
+		let url = buildPath(`api/retrieveImage?typeOfImage=1&id=${eventID}`);
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+
+		let pic = JSON.parse(await response.text());
+
+		setEventPic(pic.url);
       } catch (error) {
         console.error('Error fetching image:', error);
       }
@@ -95,8 +91,9 @@ function NextEvent({upcomingEvents})
     
   
     useEffect(() => {
-    	getUpcomingEventPic();
-    }, []);
+		if(eventID)
+    		getUpcomingEventPic();
+    }, [eventID]);
 
 	useEffect(() => {
 		if(upcomingEvents){
@@ -116,19 +113,19 @@ function NextEvent({upcomingEvents})
                 <Box sx={{ display: 'flex', alignItems: 'center', pl: 1 }}>
                   <CardMedia
                     component="img"
-                    sx={{width: 145, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
-                    image={eventPic || require('../Login/loginPic.png')}
+                    sx={{width: 145, height: 160, marginLeft: '15px', borderRadius: '7px', marginBottom: '0'}}
+                    image={eventPic}
                   />
                   <CardContent orientation="horizontal" sx={{ flex: '1 0 auto', textAlign: 'left'}}>
                   <div className="card-title"><strong>{truncateText(nextEvent.name, 25)}</strong></div>
                     <div className="card1-text">
                       <div className="card-subtitle">{formatDate(nextEvent.startTime)}</div>
                       <div className="card-subtitle">{formatDate(nextEvent.endTime)}</div>
-                      <div className="card-subtitle">{truncateText(nextEvent.location, 10)}</div>
+                      <div className="card-subtitle">{truncateText(nextEvent.location, 45)}</div>
                     </div>
                     <Grid container justifyContent='flex-end' style={{ marginBottom: '0' }}>
-						<Button disabled={!generateCheckIn} sx={{ mt: 1, mr: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("In"); setOpenQRModal(true);}}>Generate Check-In Code</Button>
-						<Button disabled={!generateCheckOut} sx={{ mt: 1, width: 165, borderRadius: 8, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("Out"); setOpenQRModal(true);}}>Generate Check-Out Code</Button>
+						<Button disabled={!generateCheckIn} sx={{ mt: 1, mr: 1, width: 165, borderRadius: 8, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("In"); setOpenQRModal(true);}}>Generate Check-In Code</Button>
+						<Button disabled={!generateCheckOut} sx={{ mt: 1, width: 165, borderRadius: 8, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => {setCheckType("Out"); setOpenQRModal(true);}}>Generate Check-Out Code</Button>
                       </Grid>
                   </CardContent>
                 </Box>

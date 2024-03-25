@@ -1,15 +1,17 @@
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import React from "react";
-import { Box } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
+import { useState } from 'react';
+import { Box, Checkbox, Dialog, DialogContent, DialogContentText, FormControl } from '@mui/material';
 
 export default function OrganizationForm(props) {
-  const { onSubmit } = props;
+  const [openPolicyModal, setOpenPolicyModal] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    onSubmit({
+    props.onSubmit({
       orgName: data.get('orgName'),
       email: data.get('email'),
       password: data.get('password'),
@@ -86,6 +88,28 @@ export default function OrganizationForm(props) {
             onChange={(e) => props.setOrgConfirmPassword(e.target.value)}
           />
         </Grid>
+		<Grid item xs={12}>
+			<FormControl sx={{float: "left"}}>
+				<Checkbox
+					sx={{'& .MuiSvgIcon-root': { fontSize: 28 }, float: "left", color: (!props.isOrgError.terms) ? '' : 'red', marginBottom: -3}}
+					color='secondary'
+					onClick={() => props.setTermsAccepted(!props.termsAccepted)}
+				/>
+			</FormControl>
+			<div className='termsCheck'>Do you agree to the <a className="noSpacePP privatePolicy" onClick={() => setOpenPolicyModal(true)}>terms and conditions?</a></div>
+		  </Grid>
+
+		  <Dialog open={openPolicyModal} onClose={() => setOpenPolicyModal(false)}>
+			<DialogContent className='feedbackModal'>
+				<button className='closeAddEvent'>
+                    <CloseIcon onClick={() => setOpenPolicyModal(false)}/>
+                 </button>
+				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10, textAlign: 'center'}}>Terms & Conditions</DialogContentText>
+				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px', textAlign: 'justify' }}>
+					{props.terms}
+				</DialogContentText>
+			</DialogContent>
+		</Dialog>
       </Grid>
     </Box>
   );

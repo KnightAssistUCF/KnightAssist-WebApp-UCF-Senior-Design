@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken_User } = require('../../utils/jwtUtils');
 
 const userStudent = require('../../models/userStudent');
 
@@ -9,7 +8,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("In the editProfile Route API");
 });
 
-router.post('/', authenticateToken_User, async (req, res) => {
+router.post('/', async (req, res) => {
 
     const query = {
         $or: [
@@ -31,6 +30,7 @@ router.post('/', authenticateToken_User, async (req, res) => {
             user.confirmToken = (req.body.confirmToken) ? req.body.confirmToken : user.confirmToken;
             user.semesterVolunteerHourGoal = (req.body.semesterVolunteerHourGoal) ? req.body.semesterVolunteerHourGoal : user.semesterVolunteerHourGoal;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags; 
+			user.appearenceMode = (req.body.appearenceMode) ? req.body.appearenceMode : user.appearenceMode;
 			
 			// User has logged in by this point
 			user.firstTimeLogin = false;

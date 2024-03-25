@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog, DialogTitle, DialogContent } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
+import { Divider, List, ListItemButton, ListItemText, ListItem, IconButton, Box, Rating, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import { buildPath } from '../../path';
+import CloseIcon from '@mui/icons-material/Close';
 import './OrgHome.css';
 import { lightBlue } from '@mui/material/colors';
 
 function Feedback() {
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedFeedback, setSelectedFeedback] = useState(null);
+  const [selectedFeedback, setSelectedFeedback] = useState(undefined);
 
   const handleCloseModal = async () => {
     if (selectedFeedback) {
       await readFeedback(selectedFeedback);
-      fetchAllFeedback();
+	  await fetchAllFeedback();
     }
     setModalOpen(false);
   };
@@ -21,6 +21,12 @@ function Feedback() {
     setSelectedFeedback(feedback);
     setModalOpen(true);
   };
+
+  function openStudentPage(id){
+	sessionStorage.setItem("viewingStudentPageID", id);
+	window.location.href="/#/studentprofile";
+  }
+
 
   const [items, setItems] = useState([]);
 
@@ -61,20 +67,24 @@ function Feedback() {
       let res = JSON.parse(await response.text());
 
       console.log(res);
-      var unreadFeedback = [];
-      for (let feedback of res) {
-        console.log(feedback.eventName);
-        if (feedback.wasReadByUser === false) {
-          console.log("unread " + feedback._id);
-          unreadFeedback.push(feedback);
-        }
-      }
+      const feedback = [];
 
-      unreadFeedback.sort(
-        (a, b) =>
+      feedback.sort((a, b) =>
           new Date(b.timeFeedbackSubmitted) - new Date(a.timeFeedbackSubmitted)
       );
-      setItems(unreadFeedback);
+
+	  let i = 0;
+ 
+	  // Only get 3 most recent feedbacks
+	  while(i < res.length && i < 3 ){
+		feedback.push(res[i]);
+		if (res[i].wasReadByUser === false) {
+			//unreadFeedback.push(feedback);
+		}
+		i++;
+	  }
+
+      setItems(feedback);
     } catch (e) {
       console.log("API called failed");
     }
@@ -113,18 +123,19 @@ function Feedback() {
     fetchAllFeedback();
   }, []);
 
+  let boxBorder = (sessionStorage.getItem("theme") === 'light') ? 'grey.300' : 'grey.800';
+
   return (
     <Box
       sx={{
         border: 1,
-        borderColor: "grey.300",
+        borderColor: boxBorder,
         width: "100%",
         minWidth: "600px",
         height: "250px",
         display: "flex",
         flexDirection: "column",
         bgcolor: "background.paper",
-        color: "black",
         borderRadius: "3px",
       }}
     >
@@ -132,7 +143,7 @@ function Feedback() {
         variant="h5"
         sx={{ paddingLeft: 2, paddingTop: 2, paddingBottom: 1 }}
       >
-        Feedback
+        Recent Feedback
       </Typography>
       {limitedItems.length <= 0 ? (
         <div
@@ -144,24 +155,15 @@ function Feedback() {
             color: "darkgray",
           }}
         >
-          No unread feedback available
+          No feedback available
         </div>
       ) : (
         <List sx={{ flex: 1 }}>
-          {limitedItems.map((item) => (
+          {limitedItems.map((item, i) => (
             <div key={item.id}>
               <ListItem
                 disablePadding
                 sx={{ maxHeight: "60px" }}
-                secondaryAction={
-                  <IconButton
-                    edge="end"
-                    aria-label="close feedback"
-                    onClick={() => handleItemClose(item._id)}
-                  >
-                    <CloseIcon />
-                  </IconButton>
-                }
               >
 
               <ListItemButton
@@ -175,7 +177,7 @@ function Feedback() {
                   primary={
                     formatDate(item.createdAt) +
                     " " +
-                    item.eventName
+                    item.eventName 
                   }
                   secondary={truncateText(item.feedbackText, 40)}
                 />
@@ -183,15 +185,34 @@ function Feedback() {
               </ListItemButton>
 
               </ListItem>
-              <Divider variant="middle" />
+              {(i !== limitedItems.length - 1) ? <Divider variant="middle" sx={{background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/> : ""}
             </div>
           ))}
         </List>
       )}
-      <Dialog open={modalOpen} onClose={handleCloseModal} maxWidth='lg'>
-        <DialogTitle>{selectedFeedback?.eventName}</DialogTitle>
-        <DialogContent style={{ marginTop: '10px' }}>{selectedFeedback?.feedbackText}</DialogContent>
-      </Dialog>
+
+		{(selectedFeedback) ? 
+			<Dialog open={modalOpen} onClose={handleCloseModal}>
+				<DialogContent className='feedbackModal'>
+					<button className='closeFeedback'>
+						<CloseIcon onClick={handleCloseModal}/>
+					</button>
+					<DialogContentText color="textPrimary" style={{ marginBottom: 10}}>{formatDate(selectedFeedback.timeFeedbackSubmitted)}</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{fontSize: 25, marginBottom: 10}}>{selectedFeedback.eventName}</DialogContentText>
+					<DialogContentText color="textPrimary" style={{marginBottom: 5}}>
+						<a className='hoverOrgName' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openStudentPage(selectedFeedback.studentId)}><b>{selectedFeedback.studentName}</b></a>
+						<span className='emailSize'>{((selectedFeedback.studentEmail) ? " - " + selectedFeedback.studentEmail : "")}</span>		
+						<Rating
+							value={selectedFeedback.rating}
+							readOnly
+							className='cardRating'
+						/>		
+					</DialogContentText>
+					<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedFeedback.feedbackText}</DialogContentText>
+				</DialogContent>
+			</Dialog>
+			: null
+		}
     </Box>
   );
 }

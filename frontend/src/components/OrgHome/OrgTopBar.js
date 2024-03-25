@@ -74,8 +74,8 @@ function OrgTopBar(props)
 
    return(
       <div className="StudentTopBar">
-    	<AppBar variant='outlined'  position="static" sx={{ backgroundColor: '#ffffff' }}>
-		<Container maxWidth="xl">
+    	<AppBar variant='outlined' className={(sessionStorage.getItem("theme") === 'light') ? 'whiteBar' : ''} position="static">
+		<Container maxWidth="l">
 			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
 
 			<Toolbar disableGutters sx={{ justifyContent: 'right' }}>

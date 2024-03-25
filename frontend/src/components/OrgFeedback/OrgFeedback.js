@@ -13,8 +13,12 @@ function OrgFeedback() {
 	var [searchFeedback, setSearchFeedback] = useState(undefined);
 	var [filterTerm, setFilterTerm] = useState("all");
 
+	const [unreads, setUnreads] = useState([]);
 	const [markRead, setMarkRead] = useState("");
 	const [searchTerm, setSearchTerm] = useState("");
+
+	// Needed to fix a bug when clicking a feedback
+	const [readChange, setReadChange] = useState(false);
 
 	const fetchAllFeedback = async () => {
 		try {
@@ -44,7 +48,7 @@ function OrgFeedback() {
 		if (filterTerm === "unread") {
 			const lowerCaseSearchTerm = searchTerm.toLowerCase();
 		
-			const filteredResults = searchFeedback.filter((a) => {
+			const filteredResults = unreads.filter((a) => {
 				const title = a.eventName ? a.eventName.toLowerCase() : "";
 
 				const includesSearchTerm = title.includes(lowerCaseSearchTerm) 
@@ -82,10 +86,36 @@ function OrgFeedback() {
 					unreads.push(f);
 
 			console.log(unreads);
+			setUnreads(unreads);
 
 			setSearchFeedback(unreads.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
 		}else{
 			setSearchFeedback(feedback.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
+		}
+	};
+
+	const adjustReadFB = (filterTerm) => {
+
+		const term = filterTerm.toLowerCase();
+		setFilterTerm(term);
+
+		console.log(feedback);
+
+		if (term === "unread") {
+			const unreads = [];
+			for(let f of feedback)
+				if(f.wasReadByUser === false)
+					unreads.push(f);
+
+			console.log(unreads);
+
+			setUnreads(unreads);
+
+			setSearchFeedback(unreads.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
+			setReadChange(true);
+		}else{
+			setSearchFeedback(feedback.filter(f => f.eventName.toLowerCase().includes(searchTerm.toLowerCase())));
+			setReadChange(true);
 		}
 	};
 
@@ -99,7 +129,7 @@ function OrgFeedback() {
 			let index = feedback.findIndex((f) => f._id === markRead);
 			feedback[index].wasReadByUser = true;
 	
-			filterFeedback(filterTerm);
+			adjustReadFB(filterTerm);
 		}
 
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -113,6 +143,7 @@ function OrgFeedback() {
 				<div className='moveFromLeft'>
 					<div className="announcementSection">
 						<div className="topSection">
+							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 							<SearchBar
 								searchAnnouncements={getSeachFeedback}
 								setSearchTerm={setSearchTerm}
@@ -123,9 +154,8 @@ function OrgFeedback() {
 								setSearchAnnouncement={setSearchFeedback}
 								initialAnnouncements={feedback}
 							/>
-							<Filter filterFeedback={filterFeedback} filterTerm={filterTerm}/>
 						</div>
-					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} setMarkRead={setMarkRead}/> : <div className='centerProgress'><CircularProgress/></div>}
+					{(searchFeedback) ? <Feedbacks feedback={searchFeedback} markRead={markRead} setMarkRead={setMarkRead} readChange={readChange} setReadChange={setReadChange}/> : <div className='centerProgress'><CircularProgress/></div>}
 				</div>
 			</div>
 			</div>

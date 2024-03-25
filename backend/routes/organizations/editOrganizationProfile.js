@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcryptjs = require('bcryptjs');
-const { authenticateToken_Organization } = require('../../utils/jwtUtils');
 
 const organization = require('../../models/organization');
 
@@ -9,7 +8,7 @@ router.get('/', async (req, res) => {
     res.status(200).send("In the editOrganizationProfile Route API");
 });
 
-router.post('/', authenticateToken_Organization, async (req, res) => {
+router.post('/', async (req, res) => {
 
     const query = {
         $or: [
@@ -39,6 +38,7 @@ router.post('/', authenticateToken_Organization, async (req, res) => {
             user.location = (req.body.location) ? req.body.location : user.location;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags;
             user.workingHoursPerWeek = (req.body.workingHoursPerWeek) ? req.body.workingHoursPerWeek : user.workingHoursPerWeek;
+			user.appearenceMode = (req.body.appearenceMode) ? req.body.appearenceMode : user.appearenceMode;
 
 			// User has logged in by this point
 			user.firstTimeLogin = false;

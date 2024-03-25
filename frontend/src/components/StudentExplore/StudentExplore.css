@@ -15,7 +15,15 @@
 .exploreTitle{
     font-size: 38px;
     font-family: "system-ui";
-	color: black !important;
+}
+
+.exploreTitle.dark{
+    font-size: 38px;
+    font-family: "system-ui";
+}
+
+.explorePagination{
+	margin-right: 10%;
 }
 
 .eventTag{
@@ -35,6 +43,7 @@
     margin-top: 100px;
     width: 120px;
     background-color: #5f5395;
+	color: white;
     border: none;
 }
 
@@ -48,10 +57,6 @@
 
 .iconInfo{
     margin-left: 13%;
-}
-
-.anIcon{
-    float: left;
 }
 
 .logoandbg{
@@ -77,11 +82,28 @@
 }
 
 .orgPicModal{
-	width: 25px !important;
-	height: 25px !important;
-	margin-right: 5px;
+	width: 30px !important;
+	height: 30px !important;
+	margin-right: 10px;
 }
 
+.orgNameModal{
+	font-size: 20px;
+}
+
+.orgNameModal:hover{
+	cursor: pointer;
+	color: rgb(143, 143, 255) !important;
+}
+
+.dayInfo{
+	margin-left: 10px !important;
+}
+
+.rsvpMsgSpace{
+	margin-top: 10px !important;
+	margin-bottom: 20px !important;
+}
 
 @media (max-width: 1100px) {
     .exploreSearch{

@@ -323,6 +323,14 @@ app.use('/api/exportAttendeesCSV', exportAttendeesCSV);
 const refreshJWT = require('./backend/routes/refreshToken/refreshToken');
 app.use('/api/refreshJWT', refreshJWT);
 
+// load own organization announcements
+const loadOwnOrgAnnouncements = require('./backend/routes/announcements/loadOwnOrgAnnouncements');
+app.use('/api/loadOwnOrgAnnouncements', loadOwnOrgAnnouncements);
+
+// clear the db from trash user accounts and duplicates
+const clearDBFromTrashUserStudentAccoutns = require('./backend/routes/cleanupDBContent/cleanUPStudentAccounts');
+app.use('/api/clearDBFromTrashUserStudentAccoutns', clearDBFromTrashUserStudentAccoutns);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now

@@ -1,7 +1,3 @@
-.rankDisplay{
-	color: black;
-}
-
 .lbTitle{
 	width: 100%;
 	text-align: left;
@@ -49,7 +45,7 @@
 }
 
 .rankNumber{
-	background-color: white !important;
+	background: none !important;
 	color: black !important;
 	margin-right: 8%;
 }

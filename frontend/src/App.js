@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 import './App.css';
 import "@fontsource/league-spartan";
 import {
@@ -26,28 +28,57 @@ import OrgFeedbackPage from './pages/OrgFeedbackPage';
 import OrgProfilePage from './pages/OrgProfilePage';
 import ContactPage from './pages/ContactPage';
 import SettingsPage from './pages/SettingsPage';
+import StudentDetailsPage from './pages/StudentDetailsPage';
+import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import LeaderboardPage from './pages/LeaderboardPage';
 
 function App() 
 {
 	const [role, setRole] = useState((sessionStorage.getItem("token") !== null) ? sessionStorage.getItem("role") : undefined);
+	const [theme, setTheme] = useState((sessionStorage.getItem("theme") !== null) ? sessionStorage.getItem("theme") : undefined);
 
 	useEffect(() => {
 		if(sessionStorage.getItem("token") === null)
 			setRole("");
 	}, []);
 
+	// TODO: set the theme using sessionstorage
+	// create themes to handle the app's palette, including background
+	const darkTheme = createTheme({
+		palette: {
+		  mode: 'dark',
+		  background: {
+            default: '#1e1e1e',
+            paper: '#1e1e1e',
+          },
+		  primary: {
+			main: '#90caf9',
+		  },
+		  secondary: {
+			main: '#f48fb1',
+		  },
+		},
+	  });
+
+	  const lightTheme = createTheme({
+		palette: {
+		  mode: 'light',
+		  primary: {
+			main: '#90caf9',
+		  },
+		  secondary: {
+			main: '#f48fb1',
+		  },
+		},
+	  });
+
 	return (
 		<div className="App">
-		<header className="App-header">
+		
+
 			<Router>
-			<Routes>
-				<Route path="/" element={<LandingPage/>}></Route>
-			</Routes>
-			<Routes>
-				<Route path="/login" element={<LoginPage setRole={setRole}/>}></Route>
-			</Routes>
+			<ThemeProvider theme={(theme === "dark") ? darkTheme : lightTheme}>
 			<Routes>
 				<Route path="/orghome" element={(role === "organization") ? <OrgHomePage/> : <Navigate from='/orghome' to='/login' />}></Route>
 			</Routes>
@@ -79,10 +110,21 @@ function App()
 				<Route path="/postverifyquestions" element={(role) ? <PostVerificationQuestionsPage/> : <Navigate from='/postverifyquestions' to='/login' />}></Route>
 			</Routes>
 			<Routes>
-				<Route path="/settings" element={(role) ? <SettingsPage/> : <Navigate from='/settings' to='/login' />}></Route>
+				<Route path="/settings" element={(role) ? <SettingsPage setTheme={setTheme}/> : <Navigate from='/settings' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/leaderboard" element={(role) ? <LeaderboardPage/> : <Navigate from='/leaderboard' to='/login' />}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+			</Routes>
+			<Routes>
+				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
+			</Routes>
+			<CssBaseline />
+		</ThemeProvider>
+			<Routes>
+				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
@@ -93,17 +135,20 @@ function App()
 			<Routes>
 				<Route path="/contact" element={<ContactPage/>}></Route>
 			</Routes>
-		  	<Routes>
+			<Routes>
+				<Route path="/" element={<LandingPage/>}></Route>
+			</Routes>
+			<Routes>
 				<Route path="/adminhome" element={(role === "admin") ? <AdminHomePage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
-			<Routes>
-				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
+      		<Routes>
+				<Route path="/adminhome/students/:studentID" element={(role === "admin") ? <StudentDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
-			<Routes>
-				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
+      		<Routes>
+				<Route path="/adminhome/organizations/:organizationID" element={(role === "admin") ? <OrganizationDetailsPage/> : <Navigate from='/adminhome' to='/login' />}></Route>
 			</Routes>
 		</Router>
-		</header>
+
 		</div>
 	);
 }

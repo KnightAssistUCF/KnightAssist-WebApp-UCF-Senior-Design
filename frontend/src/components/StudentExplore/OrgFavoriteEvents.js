@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Avatar, CardActionArea, CircularProgress, Grid } from '@mui/material';
+import { Avatar, Box, CardActionArea, CircularProgress, Grid } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import '../OrgEvents/OrgEvents';
 import { CalendarIcon } from '@mui/x-date-pickers';
@@ -102,68 +102,11 @@ function OrgFavoriteEvents(props)
 
                 events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
             }
-        }
-
-       /* for(let org of res){
-            url = buildPath(`api/searchEvent?organizationID=${org._id}`);
-
-            response = await fetch(url, {
-                method: "GET",
-                headers: {"Content-Type": "application/json"},
-            });
-        
-            res = JSON.parse(await response.text());
-        
-            console.log(res);    
-
-			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
-
-			response = await fetch(url, {
-				method: "GET",
-				headers: {"Content-Type": "application/json"},
-			});
-	
-			let orgPic = JSON.parse(await response.text());
-            
-            for(let event of res){
-                let json = {
-                    eventID: event._id,
-                    eventName: event.name,
-                    userID: sessionStorage.getItem("ID"),
-                    check: 1
-                };
-    
-                let url = buildPath(`api/RSVPForEvent`);
-    
-                let response = await fetch(url, {
-                    body: JSON.stringify(json),
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                });
-            
-                let res = JSON.parse(await response.text());
-    
-                // Don't show event if user already RSVP'd
-                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.endTime)){
-					url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
-
-					response = await fetch(url, {
-						method: "GET",
-						headers: {"Content-Type": "application/json"},
-					});
-			
-					let pic = JSON.parse(await response.text());
-
-					events.push(<Event name={event.name} pic={pic} orgName={org.name} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
-				}
-            }
-        }  */     
+        }   
 
         events.sort(function(a,b){ 
             return a.props.startTime.localeCompare(b.props.startTime)
         });
-
-        console.log(events);
 
         setNumPages(Math.ceil(events.length / 4))
         setEvents(events);
@@ -210,7 +153,7 @@ function OrgFavoriteEvents(props)
                             image={props.pic.url}
                         />
                         <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
+							<Typography className='eventName' clagutterBottom variant="h6" component="div">
                                 {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                             </Typography>
                             <Typography className="eventDate" variant="body2" color="text.secondary">
@@ -228,7 +171,7 @@ function OrgFavoriteEvents(props)
 
     function Events(){
         return (
-            <div className="">       
+            <div className="cardSpace">       
                 {eventCards}
             </div>
         )
@@ -280,7 +223,9 @@ function OrgFavoriteEvents(props)
 		{(eventCards) ? 
 		    <div>
 				<Events/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="explorePagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				</Box>
 			</div>
 			: <CircularProgress/>
 		}

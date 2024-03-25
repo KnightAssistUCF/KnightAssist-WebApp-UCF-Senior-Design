@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
         const filePath = path.join(directoryPath, fileName);
         fs.writeFileSync(filePath, xls, 'binary');
 
-        res.status(200).send(`File has been saved successfully at ${filePath}`);
+        res.status(200).send(fs.readFileSync(filePath));
 
     } catch (error) {
         console.error(error);

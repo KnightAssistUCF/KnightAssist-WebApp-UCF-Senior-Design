@@ -1,6 +1,5 @@
 .feedbackText{
 	text-align: left;
-	color: black;
 	margin-top: 20px;
 	font-size: 38px;
 	margin-bottom: 30px;
@@ -22,7 +21,7 @@
 }
 
 .cardRating{
-	margin-top: 10px;
+	float: right;
 }
 
 .cardRatingModal{
@@ -39,12 +38,28 @@
 	margin-top: 20%;
 }
 
+.feedbackPagination{
+	margin-right: 20%;
+}
+
 .emailSize{
 	font-size: 13px;
 }
 
 .moveFromLeft {
 	margin-left: 10%;
+}
+
+.closeFeedback{
+	position: absolute;
+	right: 10px;
+	top: 10px;
+	background: none;
+    border: none;
+}
+
+.closeFeedback:hover{
+    color: red;
 }
 
 @media (max-width: 700px) {

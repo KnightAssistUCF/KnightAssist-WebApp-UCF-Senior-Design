@@ -5,6 +5,7 @@ const event = require('../../models/events');
 const organizationSchema = require('../../models/organization');
 
 router.post('/', async (req, res) => {
+		console.log(req.body.startTime)
         var newEvent = new event({
             // eventID: "1234" + req.body.name, //will be generated in some other way
             name: req.body.name,

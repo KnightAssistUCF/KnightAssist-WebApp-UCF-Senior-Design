@@ -41,7 +41,7 @@ function Login(props) {
               <Typography component="h1" variant="h4" sx={{ marginTop: 5 }}>
                 Welcome Back!
               </Typography>
-              <LoginBox setRole={props.setRole}/>
+              <LoginBox setRole={props.setRole} setTheme={props.setTheme}/>
             </Box>
           </Grid>
         </Grid>
