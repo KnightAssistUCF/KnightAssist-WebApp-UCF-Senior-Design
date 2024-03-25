@@ -13,7 +13,7 @@ const admin = require('../../models/admin');
 
 const sendEmail = (role, user) => {
 
-    if (user.receiveEmails === false)
+    if (user.receiveEmails === "false")
         return;
 
     const config = {
