@@ -69,9 +69,9 @@ function Security(props){
 			<div>
 				<div className='subHeaderTxt'>Receive Email Notifications</div>
 				<FormControl className='spartan settingsItem'>
-					<RadioGroup defaultValue={(props.getEmails === true) ? "Yes" : "No"}>
-						<FormControlLabel value="Yes" control={<Radio className={props.radioColor}/>} label="Yes" onClick={() => {props.setGetEmails(true)}}/>
-						<FormControlLabel value="No" control={<Radio className={props.radioColor}/>} label="No"  onClick={() => {props.setGetEmails(false)}}/>
+					<RadioGroup defaultValue={(props.getEmails == "true") ? "Yes" : "No"}>
+						<FormControlLabel value="Yes" control={<Radio className={props.radioColor}/>} label="Yes" onClick={() => {props.setGetEmails("true")}}/>
+						<FormControlLabel value="No" control={<Radio className={props.radioColor}/>} label="No"  onClick={() => {props.setGetEmails("false")}}/>
 					</RadioGroup>
 				</FormControl>
 			</div>
@@ -87,9 +87,14 @@ function Security(props){
 			<div className='securitySubSection'> 
 				{CheckPassword()}
 			</div>
-			<div className='getEmailSpace'>
-				<EmailSetting/>
-			</div>
+			{sessionStorage.getItem("role") === "volunteer" 
+				? 
+					<div className='getEmailSpace'>
+						<EmailSetting/>
+					</div>
+				:
+				<div className='securitySpace'></div>
+			}
 		</div>
 	);
 };

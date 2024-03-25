@@ -69,6 +69,14 @@ function LoginComponents(props){
 				sessionStorage.setItem("theme", "dark");
 			}
 
+			console.log(res.user)
+
+			if(res.user?.receiveEmails == "true"){
+				sessionStorage.setItem("receiveEmails", "true");
+			}else{
+				sessionStorage.setItem("receiveEmails", "false");
+			}
+
             if(res.user?.role == "organization") {
 
 				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
