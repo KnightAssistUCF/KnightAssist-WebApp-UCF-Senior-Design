@@ -1,9 +1,7 @@
 .orgProfilePage {
     margin-left: 14vw;
     margin-right: 2vw;
-    color: black;
     text-align: left;
-    margin-top: 1%;
     position: relative;
 }
 
@@ -21,14 +19,12 @@
 }
 
 .orgBannerFiller {
-    background-color: rgb(199, 199, 199);
     width: 100%;
-    height: 200px;
+    height: 210px;
     border-radius: 25px;
 }
 
 .orgBox {
-    background-color: rgb(250, 250, 250);
     width: 230px;
     /* height: 320%; */
     height: calc(100vh - 35%);
@@ -43,6 +39,14 @@
 	float: left;
 }
 
+.lightOrgBox{
+	background-color: rgb(250, 250, 250);
+}
+
+.darkOrgBox{
+	background-color: #423e3e;
+}
+
 .feedbackEvent{
 	width: 100%;
 }
@@ -53,7 +57,7 @@
 
 .feedbackModal{
 	height: 100% !important;
-	width: 500px !important;
+	width: 600px !important;
 }
 
 .tagModal{
@@ -100,6 +104,9 @@
 .navParagraphText {
     font-size: 17px;
     font-weight: 370;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	max-width: 100%;
 }
 
 .editDescription {
@@ -112,6 +119,10 @@
     display: flex;
     align-items: center;
     padding-top: 20px;
+}
+
+.websiteSize{
+	font-size: 20px;
 }
 
 .navContactText {
@@ -168,6 +179,7 @@
     height: 40px;
     margin-top: 3%;
     background-color: #5f5395;
+	color: white;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;
@@ -188,11 +200,11 @@
 	width: 125px;
     height: 40px;
     background-color: #F5D6BA;
+	color: black;
     border: none;
 	border-radius: 10px;
 	margin-left: -18% !important;
 	margin-bottom: 25px;
-	color: black;
 }
 
 .favBtn{
@@ -310,14 +322,17 @@
 	position: absolute; 
 	bottom: 0px; 
 	left: 40px;
+	width: 20px;
+	height: 20px;
 	border: 2px solid black;
 	background-color: white;
+	color: black;
 	border-radius: 15px;
 }
 
 .editIcon:hover{
 	cursor: pointer;
-	color: red;
+	color: red !important;
 }
 
 .heartIconBehind{
@@ -376,6 +391,17 @@
 
 .blurBanner{
 	filter: blur(3px);
+}
+
+.helpTT{
+	word-wrap: break-word;
+	width: 225px !important;
+}
+
+.helpLogo{
+	width: 16px !important;
+	margin-left: 3px;
+	margin-bottom: 15px;
 }
 
 /* .MuiSvgIcon-root.css-i4bv87-MuiSvgIcon-root {

@@ -41,6 +41,11 @@ function EventModal(props)
 	const [isPast, setIsPast] = useState(false);
 	const [map, setMap] = useState(undefined);
 
+	const [formattedDate, setFormattedDate] = useState(undefined);
+
+	const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	const months = ["January", "Feburary", "March", "April", "May", "June", "July", "August", "September",
+					"October", "November", "December"];
 
 	// Event has not happened yet or is not over
 	function eventIsUpcoming(endTime){
@@ -105,11 +110,25 @@ function EventModal(props)
 
 			setIsPast(!eventIsUpcoming(event.endTime));
 
-			const startDay = event.startTime.substring(0, event.startTime.indexOf("T"));
-			const endDay = event.endTime.substring(0, event.endTime.indexOf("T"));
+			const startDay = dayjs(event.startTime);
+
+			let dayStr = days[startDay.day()];
+
+			dayStr += (", " + months[startDay.month()]);
+			dayStr += (" " + startDay.date());
+
+			const endDay = dayjs(event.endTime);
 
 			// If the event goes on for more than a day,
-			if(startDay !== endDay) sethasEndDate(true);
+			if(startDay.date() !== endDay.date()){
+				sethasEndDate(true);
+
+				dayStr += (" - " + (days[endDay.day()] + ", " + months[endDay.month()] + " " + endDay.date()));
+			}else{
+				sethasEndDate(false);
+			}
+
+			setFormattedDate(dayStr);
 
 			url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
 
@@ -244,7 +263,7 @@ function EventModal(props)
 
 	function OrgName(){
 		return (
-			<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center', marginBottom: 3}}><Avatar className="orgPicModal" src={orgPic}/><a className='hoverOrgName' onClick={() => openOrgPage(orgID)}><b>{orgName}</b></a></Grid>
+			<Grid container direction="row" sx={{ marginLeft: 2, marginBottom: 3, textAlign: "left"}}><Avatar className="orgPicModal" src={orgPic}/><a className='orgNameModal' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}} onClick={() => openOrgPage(orgID)}>{orgName}</a></Grid>
 		)
 	}
 
@@ -275,8 +294,7 @@ function EventModal(props)
     function Volunteers(){
         return (
             <div>
-                <p className='lessSpace'>Registered Volunteers:</p>
-                <p>{curVolunteers}/{maxVolunteers}</p>
+                <p className='volunteerSpaceStudent'><i>Capacity: {curVolunteers}/{maxVolunteers}</i></p>
             </div>
         )
     }
@@ -293,19 +311,16 @@ function EventModal(props)
 
     function Tags(){
         return (
-                <div>
-                    <p>Tags:</p>
-                    <Grid marginLeft={"200px"} marginRight={"100px"} marginBottom={"55px"}>
-                        {tags.map(t => <Tag tag={t}/>)}
-                    </Grid>
-                </div>
+			<Grid marginTop={"20px"} marginBottom={"55px"}>
+				{tags.map(t => <Tag tag={t}/>)}
+			</Grid>
         )
     }
 
     function RSVPMessage(){
         
         return (
-            <div>
+            <div className='rsvpMsgSpace'>
                 {(showMSG) === true
                     ?
                         <div>
@@ -321,7 +336,7 @@ function EventModal(props)
 
     function RSVPButton(){
         return (
-            <Button type="button" sx={{ mt: 6, mr: 1, width: 125, borderRadius: 5, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
+            <Button type="button" sx={{ mt: 6, width: 700, color: ((sessionStorage.getItem("theme") === "light") ? "white" : "black"), backgroundColor: ((sessionStorage.getItem("theme") === "light") ? "black" : "white"), "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" disabled={disabled} onClick={() => doRSVP()}>{(isRSVP) ? "Undo RSVP" : "RSVP"}</Button>
         )
     }
 
@@ -339,96 +354,95 @@ function EventModal(props)
 
     return(
         <Modal sx={{display:'flex', alignItems:'center', justifyContent:'center'}} open={props.open} onClose={handleCloseModal}>
-            <div className='center'>
-                <Card className='eventModalCard spartan'>
-                    <CardContent>
-                        <button className='closeAddEvent'>
-                            <CloseIcon onClick={() => handleCloseModal()}/>
-                        </button>
-                        <img className='boxImg' src={picLink} alt=""></img>
-        
-                        <Container component="main" maxWidth="md">
-                            <Box sx={{justifyContent:'center'}} spacing={2} marginTop={"40px"}>
-                                <EventName/>
+            <Card className='eventModalCard center spartan'>
+					<img className='boxImg' src={picLink} alt=""></img>
+	
+					<Container>
+						<Box sx={{justifyContent:'center'}}>
+							<EventName/>
 
-								<OrgName/>
+							<OrgName/>
 
-                                <Description/>
+							<Grid container sx={{justifyContent:'left', textAlign: "left", whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginLeft={"20px"} marginBottom={"20px"}>
+								<Grid item width={"40%"}>
+									<div className='anIcon'>
+										<Tooltip title="Date" placement="top">
+											<div>
+												<GridIcon icon={<EventIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={formattedDate}/>
+								</Grid>                 
 
-                                <Grid container sx={{justifyContent:'center', whiteSpace: 'pre-wrap' }} marginTop={"30px"} marginBottom={"20px"}>
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Date" placement="top">
-                                                <div>
-                                                    <GridIcon icon={<EventIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={startTime.substring(0, startTime.indexOf('T')) + ((hasEndDate) ? ("\n-\n      " + endTime.substring(0, endTime.indexOf('T')))  : "")}/>
-                                    </Grid>                 
+								<Grid item width={"60%"}>
+									<div className='anIcon'>
+										<Tooltip title="Location" placement="top">
+											<div>
+												<GridIcon icon={<PlaceIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={location}/>
+								</Grid>
+							</Grid>
 
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Location" placement="top">
-                                                <div>
-                                                    <GridIcon icon={<PlaceIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={location}/>
-                                    </Grid>
-                                </Grid>
+							<Grid container sx={{justifyContent:'left', textAlign: "left"}} marginLeft={"20px"} marginBottom={"30px"}>
+								<Grid item width={"15%"}>
+									<div className='anIcon'>
+										<Tooltip title="Start Time" placement="bottom">
+											<div>
+												<GridIcon icon={<PlayArrowIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={dayjs(startTime).format('hh:mm a')}/>
+								</Grid>
 
-                                <Grid container sx={{justifyContent:'center'}} marginBottom={"30px"}>
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="Start Time" placement="bottom">
-                                                <div>
-                                                    <GridIcon icon={<PlayArrowIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={dayjs(startTime).format('hh:mm a')}/>
-                                    </Grid>
+								<Grid item width={"15%"}>
+									<div className='anIcon'>
+										<Tooltip title="End Time" placement="bottom">
+											<div>
+												<GridIcon icon={<StopIcon/>}/>
+											</div>
+										</Tooltip>
+									</div>
+									<GridInfo info={dayjs(endTime).format('hh:mm a')}/>
+								</Grid>
+							</Grid>
 
-                                    <Grid item width={"20%"}>
-                                        <div className='anIcon'>
-                                            <Tooltip title="End Time" placement="bottom">
-                                                <div>
-                                                    <GridIcon icon={<StopIcon/>}/>
-                                                </div>
-                                            </Tooltip>
-                                        </div>
-                                        <GridInfo info={dayjs(endTime).format('hh:mm a')}/>
-                                    </Grid>
-                                </Grid>
+							<Description/>
 
-								{(map) ? 
-									<Grid container sx={{marginLeft: "30%"}} marginBottom={"30px"}>
-										{map}
+							<Grid container marginLeft={"20px"} marginBottom={"10px"} marginTop={"20px"}>
+								<Grid item width={"50%"} marginLeft={(map) ? "0%" : "30%"}>
+									{(tags.length > 0) ? <Tags/> : null}
+									<Grid marginTop={"40%"} width={"50%"}>
+										<Volunteers/>
 									</Grid>
-									: null
-								}
+								</Grid>
 
-                                <Volunteers/>
-                                
-								{(tags.length > 0) ? <Tags/> : null}
-
-								<Grid container marginLeft={"42%"} marginTop={"10px"} marginBottom={"20px"}>
-									{(!isPast) 
-										? 
-											<RSVPButton/>
+								<Grid item width={(map) ? "50%" : "0"}>
+									{(map) ? 
+										<Grid container>
+											{map}
+										</Grid>
 										: null
 									}
-								</Grid>  
-
-                                <RSVPMessage/>
-                            </Box>
-                        </Container>
-                    </CardContent>   
-                </Card>
-            </div>
-	
+								</Grid>
+							</Grid>							
+							<Grid container sx={{justifyContent: "center", textAlign: "center"}} marginTop={"10px"} marginBottom={"20px"}>
+								{(!isPast) 
+									? 
+										<div>
+											<RSVPButton/>
+											<RSVPMessage/>
+										</div>
+									: null
+								}
+							</Grid>  
+						</Box>
+					</Container>
+			</Card>	
         </Modal>
     );
 };

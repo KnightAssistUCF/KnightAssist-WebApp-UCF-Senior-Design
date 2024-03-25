@@ -1,6 +1,12 @@
 
 .studAnnouncementsPage {
-    color: black;
+    margin-left: 225px;
+    margin-top: 1%;
+    margin-right: 2%;
+}
+
+
+.studAnnouncementsPage.dark {
     margin-left: 225px;
     margin-top: 1%;
     margin-right: 2%;
@@ -8,9 +14,8 @@
 
 
 .topSection {
-    display: flex;
     margin-bottom: 12px;
-    align-items: flex-start;
+	max-width: 400px;
 }
 
 .announcementSection {
@@ -31,10 +36,26 @@
 	word-wrap: break-word
 }
 
-.hoverOrgName{
-	color: black;
-}
-
 .hoverOrgName:hover{
 	cursor: pointer;
+	color: rgb(143, 143, 255) !important;
+}
+
+.orgPicAnn{
+	width: 20px !important;
+	height: 20px !important;
+	margin-right: 5px;
+	float: left;
+}
+
+.modalOrgPic{
+	width: 25px !important;
+	height: 25px !important;
+}
+
+@media (max-width: 600px) {
+	.shortenSearch{
+		margin-top: 20% !important;
+		margin-left: -150px !important;
+	}
 }

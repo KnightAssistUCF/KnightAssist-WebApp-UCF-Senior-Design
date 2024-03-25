@@ -1,6 +1,5 @@
 .move {
     margin-left: 15%;
-    color: black;
     text-align: left;
     margin-top: 1%;
 }
@@ -18,6 +17,10 @@
 }
   
 
+.announcementModalCard{
+    height: 75vh;
+    width: 75vh;
+}
 
 .orgHomeTopRow {
     display: flex;

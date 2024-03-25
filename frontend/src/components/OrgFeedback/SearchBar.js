@@ -20,8 +20,8 @@ function SearchBar(props) {
     setSearchTerm(newValue);
   };
 
-const handleKeyPress = (event) => {
-  if (event.key === 'Enter') {
+const handleKeyPress = (event, btn) => {
+  if (event.key === 'Enter' || btn === true) {
     console.log("searchTerm: "+searchTerm);
     setSearchTerm(searchTerm);
     var tempTerm = props.filterTerm;
@@ -53,18 +53,18 @@ const handleKeyPress = (event) => {
   }, [searchTerm]);
 
   return (
-    <div className="classes.root" variant="body1">
+    <div className="shortenSearch classes.root" variant="body1">
       <TextField
         placeholder="Search By Event Name"
         value={searchTerm}
         onChange={handleInputChange}
-        sx={{ width: '26ch', paddingTop: '3px' }}
+        sx={{ width: '118%', paddingTop: '3px' }}
         size='medium'
         onKeyPress={handleKeyPress}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon style={{ cursor: 'pointer' }} />
+              <SearchIcon onClick={(e) => handleKeyPress(e, true)} style={{ cursor: 'pointer' }} />
             </InputAdornment>
           ),
           endAdornment: (

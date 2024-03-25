@@ -48,6 +48,7 @@
 	margin-bottom: 10px;
     width: 150px;
     background-color: #5f5395;
+	color: white;
     border: none;
 }
 
@@ -57,6 +58,7 @@
     width: 150px;
 	margin-left: 25px;
     background-color: #5f5395;
+	color: white;
     border: none;
 }
     
@@ -78,6 +80,7 @@
 
 .selectPPic{
 	background-color: #5f5395;
+	color: white;
 	border: none;
 	margin-left: 30px;
 	margin-top: 10px;

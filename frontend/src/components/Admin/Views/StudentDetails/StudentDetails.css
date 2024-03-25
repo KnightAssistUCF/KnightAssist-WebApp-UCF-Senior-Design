@@ -1,0 +1,93 @@
+.studentDetailsContent {
+    margin-left: 15%;
+    margin-right: 3%;
+    text-align: left;
+    margin-top: 1%;
+}
+.studentDetailsOutline {
+    text-align: center;
+}
+.studentDetailsFields {
+    margin-top: 30px;
+    padding-top: 3vh;
+    padding-right: 8vw;
+    padding-left: 5vw;
+    background-color: white;
+    border-radius: 5px 5px 0 0;
+    min-height: 100vh;
+    font-size: 25px;
+}
+.studentDetailsFirst {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsLast {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsEmail {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsInterests {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsTotal {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsGoal {
+    display: flex;
+    justify-content: space-between;
+}
+.studentDetailsInterestsField {
+    display: flex;
+    align-items: top;
+    max-width: 40%;
+}
+
+/* .studentDetailsInterestsText {
+    flex-grow: 1;
+    margin-right: 8px;
+} */
+.allTagsBox{
+    margin-left: 7%;
+    margin-right: 7%;
+    margin-bottom: 3%;
+    margin-top: 10%;
+    border: 1px solid #ededed;
+    padding: 20px;
+    border-radius: 5px;
+    /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.07); */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.buttonMiddle {
+    display: flex;
+    justify-content: center;
+}
+.heading {
+    font-weight: 650;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+
+.orgDetailsDescriptionText {
+    max-width: 60%;
+    font-size: 20px;
+}
+
+
+
+  .pictures {
+    margin-top: 15px;
+    /* padding-bottom: 0px; */
+  }
+
+.organizationProfilePic {
+    transform: translate(25%, -50%);
+    position: absolute;
+}
+  

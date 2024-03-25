@@ -85,7 +85,7 @@ function UserInput() {
 
 	function GridTextField(props) {
 		return (
-			<Grid item className='anInput' sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
+			<Grid item sx={(props.sx != null) ? props.sx : {}} xs={props.xs} sm={props.sm}>
 				<TextField
 					name={props.name}
 					fullWidth
@@ -98,7 +98,6 @@ function UserInput() {
 					disabled={hasSent}
 					value={props.value}
 					error={checkedOnce && (props.value === undefined || props.value.length === 0)}
-					variant='standard'
 				/>
 			</Grid>
 		)
@@ -121,3 +120,4 @@ function UserInput() {
 }
 
 export default UserInput;
+

@@ -4,6 +4,7 @@ import './MapContainer.css';
 const mapStyles = {
 	width: '300px',
 	height: '225px',
+	borderRadius: '6px',
 };
 
 function MapContainer(props){

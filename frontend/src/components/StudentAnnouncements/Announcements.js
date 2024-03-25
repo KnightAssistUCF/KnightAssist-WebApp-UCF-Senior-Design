@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Card from "@mui/material/Card";
-import { Grid, Pagination } from "@mui/material";
+import { Avatar, Box, Grid, Pagination } from "@mui/material";
 import CardActionArea from "@mui/material/CardActionArea";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
@@ -10,6 +10,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import CloseIcon from '@mui/icons-material/Close';
+import { buildPath } from '../../path';
 
 const truncateText = (text, maxLength) => {
   if (text && text.length > maxLength) {
@@ -36,13 +38,15 @@ const formatDate = (dateString) => {
 const Announcements = (props) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [selectedPic, setSelectedPic] = useState(null);
   const [announcements, setAnnouncements] = useState(null);
   const [numPages, setNumPages] = useState(0);  
   const [perPage, setPerPage] = useState(7);
   const [page, setPage] = useState(1);
 
-  const handleClick = (announcement) => {
+  const handleClick = async (announcement) => {
     setSelectedAnnouncement(announcement);
+	setSelectedPic(await getOrgPic(announcement.organizationID));
     setIsModalOpen(true);
   };
 
@@ -51,10 +55,36 @@ const Announcements = (props) => {
 	window.location.href="/#/orgprofile";
   }
 
-  function changePage(e, value){
+  async function getOrgPic(id){
+	const url = buildPath(`api/retrieveImage?typeOfImage=2&id=${id}`);
+
+	console.log(id);
+
+	const response = await fetch(url, {
+		method: "GET",
+		headers: {"Content-Type": "application/json"},
+	});
+
+	let orgPic = JSON.parse(await response.text());
+	
+	return orgPic.url;
+  }
+
+	async function changePage(e, value){
 		setPage(value);
-		console.log(props.announcements)
-		setAnnouncements(props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement) => {
+		console.log(props.announcements);
+
+		const announcementSlice = props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage);
+
+		const pics = [];
+
+		for(let ann of announcementSlice){
+			pics.push(await getOrgPic(ann.organizationID));
+		}
+
+		console.log(pics);
+
+		const theAnnouncements = props.announcements.slice(perPage * (value - 1), perPage * (value - 1) + perPage).map((announcement, i) => {
 			const { updateID, title, content, date, name, organizationID } = announcement;
   
 			return (
@@ -72,15 +102,12 @@ const Announcements = (props) => {
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
-						style={{ color: 'black'}}
 					  >
-						{name}
+						<Avatar className="orgPicAnn" src={pics[i]}/>{name}
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
 						style={{ position: 'absolute', top: 0, right: 0, margin: '15px' }}
 						className='showDate'
@@ -89,7 +116,6 @@ const Announcements = (props) => {
 					  </Typography>
 					  <Typography
 						variant="body2"
-						color="textSecondary"
 						component="p"
 						style={{ marginTop: '6px' }}
 					  >
@@ -100,7 +126,8 @@ const Announcements = (props) => {
 				</Card>
 			  </Grid>
 			);
-		  }));
+		  });
+		setAnnouncements(theAnnouncements);
 	}
 
   const handleCloseModal = () => {
@@ -108,9 +135,11 @@ const Announcements = (props) => {
   };
 
   useEffect(() => {
+	const getAnnouncements = async() => await changePage(null, 1);
+
 	if(props.announcements){	
 		setNumPages(Math.ceil(props.announcements.length / perPage));
-		changePage(null, 1);
+		getAnnouncements();
 	}
 	if("notoUpdate" in sessionStorage){
 		setSelectedAnnouncement(JSON.parse(sessionStorage.getItem("notoUpdate")));
@@ -130,18 +159,20 @@ const Announcements = (props) => {
       >
         {announcements}
       </Grid>
-	  <Pagination className="pagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  <Box my={3} display="flex" justifyContent="center">
+	  	<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+	  </Box>
 
       	<Dialog open={isModalOpen} onClose={handleCloseModal}>
 			<DialogContent className='feedbackModal'>
-				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
-				<DialogContentText style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
-				<DialogContentText style={{ color: 'black' }}><a className='hoverOrgName' onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
-				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
+				<button className='closeFeedback'>
+					<CloseIcon onClick={handleCloseModal}/>
+				</button>
+				<DialogContentText color="textPrimary" className='contentWrap' style={{ fontSize: 25, marginBottom: 10}}>{selectedAnnouncement?.title}</DialogContentText>
+				<DialogContentText color="textPrimary"style={{ marginBottom: 10}}>{formatDate(selectedAnnouncement?.date)}</DialogContentText>
+				<DialogContentText color="textPrimary"><a className='hoverOrgName' style={{color: (sessionStorage.getItem("theme") === "light") ? "black" : "white"}}onClick={() => openOrgPage(selectedAnnouncement?.organizationID)}><Avatar className="modalOrgPic orgPicAnn" src={selectedPic}/><b>{selectedAnnouncement?.name}</b></a></DialogContentText>
+				<DialogContentText color="textPrimary" className='contentWrap' style={{ marginTop: '10px' }}>{selectedAnnouncement?.content}</DialogContentText>
 			</DialogContent>
-			<DialogActions>
-				<Button onClick={handleCloseModal}>Close</Button>
-			</DialogActions>
 		</Dialog>
     </div>
   );

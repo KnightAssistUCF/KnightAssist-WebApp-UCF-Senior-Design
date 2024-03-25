@@ -5,9 +5,9 @@ import Pagination from '@mui/material/Pagination';
 import Header from '../StudentHome/StudentHeader.js';
 import '../Header.css';
 import Avatar from '@mui/material/Avatar';
-import { List, ListItem, ListItemText, Divider, CircularProgress } from '@mui/material';
+import { List, ListItem, ListItemText, Divider, CircularProgress, Box } from '@mui/material';
 import {Button} from '@mui/material';
-import EventModal from './EventModal';
+import EventModal from '../StudentExplore/EventModal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './StudentHistory.css'
 import StudentTopBar from '../TopBar/StudentTopBar';
@@ -49,7 +49,6 @@ function StudentHistory()
 			let pic =  JSON.parse(await response.text());
 
 			histories[i] =  <div>
-							{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 							<ListItem>
 								<Grid container layout={'row'} className='listsItems'>
 									<Grid item>
@@ -62,18 +61,18 @@ function StudentHistory()
 										<ListItemText className='historyDetails' primary={<span style={{ whiteSpace: 'pre-wrap' }}>
 																{history.name + " (" + history.org + ")"}
 															</span>} 						
-													secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
+														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 														{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-														+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours}
+														+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated:"} <span className='hoursColor'>+{history.hours} {((history.wasAdjusted) ? " (Adjusted)" : "")}</span>
 															</span>}
 										/>
 									</Grid>
 									<Grid item>
-										<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+										<Button sx={{ mt: 4, ml:6, width: 150, color: "white", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 									</Grid>
 								</Grid>
 							</ListItem>
-							<Divider sx={{background: "black"}}/>
+							<Divider sx={{width: "96%", background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/>
 						</div>
 		}
 
@@ -97,7 +96,7 @@ function StudentHistory()
 				return Date.parse(a.checkIn[0] + " " + a.checkIn[1]) - Date.parse(b.checkIn[0] + " " + b.checkIn[1]);
 			});
 
-			setEventHistories(res);
+			setEventHistories(res.reverse());
 			setNumPages(Math.ceil(res.length / amtPerPage));
 
 			const histories = res.slice(0, amtPerPage);
@@ -117,7 +116,6 @@ function StudentHistory()
 				let pic =  JSON.parse(await response.text());
 
 				histories[i] =  <div>
-								{(i === 0) ? <Divider sx={{width: "100%", background: "black"}}/> : ""}
 								<ListItem>
 									<Grid container layout={'row'} className='listsItems'>
 										<Grid item sm={1}>
@@ -132,16 +130,16 @@ function StudentHistory()
 																</span>} 						
 														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 															{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
-															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated: +" + history.hours + ((history.wasAdjusted) ? " (Adjusted)" : "")}
+															+ "\nCheck Out: " + history.checkOut[0] + " at " + history.checkOut[1] + "\nHours Accumulated:"} <span className='hoursColor'>+{history.hours} {((history.wasAdjusted) ? " (Adjusted)" : "")}</span>
 																</span>}
 											/>
 										</Grid>
 										<Grid item>
-											<Button sx={{ mt: 4, ml:6, width: 150, backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
+											<Button sx={{ mt: 4, ml:6, width: 150, color: "White", backgroundColor: "#5f5395", "&:hover": {backgroundColor: "#7566b4"}}} variant="contained" onClick={() => setUpModal(history.ID)}>Event Info</Button>
 										</Grid>
 									</Grid>
 								</ListItem>
-								<Divider sx={{background: "black"}}/>
+								<Divider sx={{width: "96%", background: (sessionStorage.getItem("theme") === 'light') ? 'black' : 'white'}}/>
 							</div>
 			}
 
@@ -153,14 +151,6 @@ function StudentHistory()
 		}  
 	}
 
-    function Title(){
-		return(
-		  <div className={'spartan' + ((!eventHistories) ? " topTitle" : "")}>
-			 <b className='historyTitle'>Your History</b>
-		  </div>
-		)
-	}
-
 	useEffect(() => {
 		setAmtPerPage(5);
 		getHistory();
@@ -170,16 +160,17 @@ function StudentHistory()
     return(
       <div className='spartan'>
 		<Header/>
-		<StudentTopBar/>
+		<StudentTopBar title="History"/>
 		<div className='moveEverything'>
-			<Title/>
 			{(eventHistories) ?
 					<div>
-						<List sx={{color: "black"}} component="nav" aria-label="mailbox folders">
+						<List component="nav" aria-label="mailbox folders">
 							{shownHistories}
 						</List>
-						<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
-						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
+						<Box my={2} display="flex" justifyContent="center">
+							<Pagination className="historyPagination" page={page} count={numPages} onChange={changePage} shape="rounded"/>
+						</Box>
+						<EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal} shape="rounded"/>
 					</div>
 				: <div className='historyProgress'><CircularProgress/></div>
 			}

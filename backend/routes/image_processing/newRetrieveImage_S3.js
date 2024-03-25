@@ -85,8 +85,6 @@ router.get('/', async (req, res) => {
         }
     }
 
-	console.log("IMAGE NAMES", S3_imageNames);
-
     if (S3_imageNames.length === 0 || S3_imageNames[0] === '') {
         // if it is status 4 or 2then we chose from aws orgdefaultbackground.png
         if (typeOfImage === '4' || typeOfImage === '1') {
@@ -118,7 +116,6 @@ router.get('/', async (req, res) => {
 
     const command = new GetObjectCommand(getObjectParams); // to creat the URL
     const url = await getSignedUrl(S3, command, { expiresIn: 10000 }); // temporrary access to the image, to renew the user can make a new access to the website or just call this endpoint
-    console.log('url: ', url);
     const urlToReturn = url;
     
     res.status(200).json({ url: urlToReturn });

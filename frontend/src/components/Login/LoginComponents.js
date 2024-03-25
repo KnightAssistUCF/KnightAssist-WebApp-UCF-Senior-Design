@@ -61,6 +61,14 @@ function LoginComponents(props){
 
             console.log(res);
 
+			if(res.user?.appearenceMode === "light"){
+				props.setTheme("light");
+				sessionStorage.setItem("theme", "light");
+			}else{
+				props.setTheme("dark");
+				sessionStorage.setItem("theme", "dark");
+			}
+
             if(res.user?.role == "organization") {
 
 				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
@@ -140,7 +148,7 @@ function LoginComponents(props){
 
     function Email(){
         return (
-            <div className="input-group mb-3">
+            <div className="input-group mb-3" onKeyDown={handleKeyPress}>
                 <TextField
                     required
                     fullWidth
@@ -159,7 +167,7 @@ function LoginComponents(props){
 
     function Password(){
         return (
-            <div className="input-group mb-3">
+            <div className="input-group mb-3" onKeyDown={handleKeyPress}>
                 <TextField
                     required
                     fullWidth
@@ -212,7 +220,7 @@ function LoginComponents(props){
     function SignUp(){
         return (   
         <>
-            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => onRegister()}> Already have an account? </Link>
+            <Link variant="body2" sx={{ color: '#4E878C', cursor: 'pointer' }} onClick={() => onRegister()}> Don't have an account? </Link>
         </>
         )
     }

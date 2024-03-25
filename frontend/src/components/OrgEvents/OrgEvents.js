@@ -27,17 +27,13 @@ function OrgPortal()
 	const [searchMode, setSearchMode] = useState(false);
 	const [resetSearchCards, setResetSearchCards] = useState(1);
 
+	const [allOrgs, setAllOrgs] = useState(undefined);
+	const [allOrgsFlag, setAllOrgsFlag] = useState(false);
 	const [selectedType, setSelectedType] = useState("Upcoming");
 
+	const [showSearch, setShowSearch] = useState(false);
+
 	const results = useRef([]);
-    
-    function Title(){
-      return(
-        <div className=' spartan'>
-			<b className="exploreTitle">Events</b>
-        </div>
-      )
-    }
 
 	function changeType(type){
 		// If type = 0, upcoming, else past
@@ -78,24 +74,21 @@ function OrgPortal()
     return(
      	<div className='spartan'>
 			<Header/>
-			<OrgTopBar/>
+			<OrgTopBar title="Events"/>
 			<div className='move'>
 				<div>
-					<Grid container layout={'row'} width={"100%"} style={{ gap: "0 24px" }}>
-						<Grid item>
-							<Title/>
-						</Grid>						
+					<Grid container layout={'row'} width={"80%"} style={{ gap: "0 24px" }} marginLeft={"8%"}>			
 						<Grid item>
 							<SearchSwitch setSearchType={setSearchType}/>
 						</Grid>
 						<Grid item>
-							<Search results={results} searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent} searchMode={searchMode} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards}/>
+							<Search results={results} searchType={searchType} resetEventSearch={resetSearch} setEventID={setEventID} setOpenEvent={setOpenEvent} searchMode={searchMode} setSearchMode={setSearchMode} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} setAllOrgs={setAllOrgs} setAllOrgsFlag={setAllOrgsFlag}/>
 						</Grid>
 						<Grid item>
-							<button type="button" class="addEventBtn btn btn-primary" onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
+							<button type="button" class="addEventBtn btn btn-primary" disabled={(searchMode && !showSearch)} onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
 						</Grid>
 						<Grid item>
-							{(searchMode) ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
+							{(searchMode && searchType === "events") ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
 						</Grid>
 					</Grid>
 				</div>
@@ -105,7 +98,7 @@ function OrgPortal()
 				{(!searchMode) ? <EventTypeSwitch/> : ""}
 				<AddEventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} open={openModal} setOpen={setOpenModal} editMode={editMode} setEditMode={setEditMode} eventID={eventID} openEvent={setOpenEvent}/>
 				<EventModal setReset={setResetUpcoming} reset={resetUpcoming} setResetPast={setResetPast} resetPast={resetPast} resetSearch={resetSearch} setResetSearch={setResetSearch} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} eventID={eventID} open={openEvent} setOpen={setOpenEvent} setOpenAdd={setOpenModal} editMode={editMode} setEditMode={setEditMode}/>
-				{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType}/> 
+				{(searchMode) ? <SearchResults results={results} setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetSearchCards} searchMode={searchMode} searchType={searchType} allOrgs={allOrgs} allOrgsFlag={allOrgsFlag} setAllOrgsFlag={setAllOrgsFlag} setShowSearch={setShowSearch}/> 
 				:
 				<div>
 					{(selectedType === "Upcoming") ? <UpcomingEvents setEventID={setEventID} setOpenEvent={setOpenEvent} reset={resetUpcoming}/> : null}

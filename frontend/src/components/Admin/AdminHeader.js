@@ -63,8 +63,8 @@ function AdminHeader()
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
-                <div className="logo">
-                    <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
+                <div className="logo logoBtn">
+                    <PageTitle onClick={() => window.location.href = "#/adminhome"} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
                 <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
@@ -79,14 +79,14 @@ function AdminHeader()
                         </a>
                     </LightTooltip>
                 </li>
-                <li>
+                {/* <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
                         <a href="#/">
                             <BiCog className='homeIcon'/>
                             <span class="links_name">Settings</span>
                         </a>
                     </LightTooltip>
-                </li>
+                </li> */}
             </ul>
             <div className="profile_content">
                 <div className="profile">

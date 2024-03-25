@@ -4,7 +4,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, CircularProgress } from '@mui/material';
+import { Box, CardActionArea, CircularProgress } from '@mui/material';
 import Pagination from '@mui/material/Pagination';
 import Avatar from '@mui/material/Avatar';
 import '../OrgEvents/OrgEvents';
@@ -55,7 +55,7 @@ function FavoriteOrganizations(props)
 			studentID = sessionStorage.getItem("ID");
 		}
 
-        let url = buildPath(`api/loadFavoritedOrgsEvents?userID=${studentID}`);
+        let url = buildPath(`api/loadFavoritedOrgs?userID=${studentID}`);
 
         let response = await fetch(url, {
             method: "GET",
@@ -183,9 +183,11 @@ function FavoriteOrganizations(props)
 		{(orgCards) ? 
 		    <div>
 				<Orgs/>
-				<Pagination className="pagination" page={page} count={numPages} onChange={changePage} color="secondary" />
+				<Box my={2} display="flex" justifyContent="center">
+					<Pagination className="feedbackPagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+				</Box>
 			</div>
-			: <CircularProgress/>
+			: <CircularProgress className='spaceCircleProgress'/>
 		}
      </div>
     );

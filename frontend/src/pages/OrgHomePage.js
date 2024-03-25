@@ -5,9 +5,7 @@ import OrgHome from '../components/OrgHome/OrgHome';
 const OrgHomePage = () =>
 {
     return(
-      <div className="orgHome">
         <OrgHome/>
-      </div>
     );
 };
 

@@ -16,6 +16,7 @@ import { buildPath } from '../../path';
 
 function OrgHome() {
 	const [openAnnouncement, setOpenAnnouncement] = useState(false);
+	const [orgName, setOrgName] = useState("");
 	const [upcomingEvents, setUpcomingEvents] = useState([]);
 	const [numUpcomingEvents, setNumUpcomingEvents] = useState(0);
 	const [chartData, setChartData] = useState(undefined);
@@ -44,6 +45,10 @@ function OrgHome() {
 
 		const upcomingEvents = eventsData.filter((event) => eventIsUpcoming(event.endTime));
 
+		upcomingEvents.sort(function(a,b){ 
+            return a.startTime.localeCompare(b.startTime)
+        });
+
 		console.log("Upcoming Events:", upcomingEvents);
 		setUpcomingEvents(upcomingEvents);
 		setNumUpcomingEvents(upcomingEvents.length);
@@ -52,6 +57,19 @@ function OrgHome() {
 		console.error("Error fetching upcoming events:", error);
 		}
 	}
+
+	async function getOrgName(){
+        let url = buildPath(`api/organizationSearch?organizationID=${sessionStorage.getItem("ID")}`);
+
+        let response = await fetch(url, {
+            method: "GET",
+            headers: {"Content-Type": "application/json"},
+        });
+    
+        let res = JSON.parse(await response.text());
+
+        setOrgName(res.name);
+    }
 
 	async function getChartData() {
 		const chartUrl = buildPath(`api/attendanceAnalytics?orgId=${sessionStorage.getItem("ID")}&limit=true`);
@@ -80,21 +98,22 @@ function OrgHome() {
 
   useEffect(() => {
     getUpcomingEvents();
+	getOrgName();
     getChartData();
   }, []);
 
   return (
     <div className='spartan'>
-      <OrgTopBar />
+      <OrgTopBar title="Home"/>
       <Header />
       <div className='move'>
         <div className="orgPortalTop">
           <Card variant='contained' sx={{ marginRight: '5%' }}>
             <CardContent className='cardContent' sx={{ display: 'flex', justifyContent: 'space-between'}}>
               <Typography variant="h5">
-                Welcome, Organization
+                Welcome, {orgName}
               </Typography>
-              <Button variant="contained" sx={{backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
+              <Button variant="contained" sx={{color: 'white', backgroundColor: '#5B4E77'}} className="addEventBtn" onClick={() => setOpenAnnouncement(true)}>
                 Add Announcement
               </Button>
               <AddAnnouncementModal open={openAnnouncement} setOpen={setOpenAnnouncement} />

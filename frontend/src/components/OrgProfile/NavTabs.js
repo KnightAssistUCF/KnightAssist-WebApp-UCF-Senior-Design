@@ -24,7 +24,6 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
   fontWeight: theme.typography.fontWeightRegular,
   fontSize: '17px',
   marginRight: theme.spacing(1),
-  color: 'rgba(0, 0, 0, 0.85)',
   fontFamily: [
     '-apple-system',
     'BlinkMacSystemFont',
@@ -94,7 +93,7 @@ export default function CustomizedTabs(props) {
 
   return (
     <Box >
-      <Box sx={{ bgcolor: '#fff' }}>
+      <Box>
         <AntTabs value={value} onChange={handleChange} aria-label="ant example">
 		  <AntTab label="Bio" />
 		  {(props.org._id !== sessionStorage.getItem("ID")) ? <AntTab label="Upcoming Events" /> : ""}
