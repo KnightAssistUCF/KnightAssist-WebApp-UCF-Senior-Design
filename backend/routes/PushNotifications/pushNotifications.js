@@ -88,8 +88,8 @@ router.get('/', async (req, res) => {
 
         const response = {
             notifications: {
-                new: segregatedNotifications.filter((noto) => noto.message),
-                old: oldNotifications.filter((noto) => noto.message)
+                new: segregatedNotifications.filter((noto) => noto.message).reverse().slice(0, 15),
+                old: oldNotifications.filter((noto) => noto.message).reverse().slice(0, 15)
             }
         };
 

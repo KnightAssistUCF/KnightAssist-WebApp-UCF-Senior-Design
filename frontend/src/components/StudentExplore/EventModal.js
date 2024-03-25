@@ -215,6 +215,7 @@ function EventModal(props)
             console.log(res);
 			
 			setVolunteers(curVolunteers - 1);
+
         }else{
             const json = {
                 eventID: id,
@@ -236,6 +237,7 @@ function EventModal(props)
             console.log("Result: ", res);
 
 			setVolunteers(curVolunteers + 1);
+
         }
 
         setIsRSVP(!isRSVP);
@@ -243,8 +245,14 @@ function EventModal(props)
         setShowMSG(true);
         setDisabled(true);
 
-        props.setResetFavorite(props.resetFavorite * -1);
-        props.setResetRecEvents(props.resetRecEvents * -1);
+		if(props.setResetFavorite)
+        	props.setResetFavorite(props.resetFavorite * -1);
+
+		if(props.setResetRecEvents)
+       		props.setResetRecEvents(props.resetRecEvents * -1);
+
+		if(props.setRSVPID)
+		   props.setRSVPID(id);
         
         // Remove message after 2 seconds
         setTimeout(() => {

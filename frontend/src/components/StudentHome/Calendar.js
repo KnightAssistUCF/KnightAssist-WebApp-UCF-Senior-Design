@@ -4,12 +4,15 @@ import { Scheduler } from "@aldabil/react-scheduler";
 import { buildPath } from '../../path';
 import Snackbar from '@mui/joy/Snackbar';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import EventModal from '../StudentExplore/EventModal';
 
 
 function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
+	const [eventID, setEventID] = useState(undefined);
+	const [RSVPID, setRSVPID] = useState(undefined);
     const [RSVPdEvents, setRSVPdEvents] = useState([]);
-    const [message, setMessage] = useState("");
-    const [openSnackbar, setOpenSnackbar] = useState(false);
+	const [redoEvents, setRedoEvents] = useState(false);
+	const [open, setOpen] = useState(false);
 
     async function getStudentInfo() {
         const upcomingEvents = [];
@@ -26,11 +29,6 @@ function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
                     editable: false,
                     deletable: false,
                     draggable: false,
-                    description: 'fsdlf',
-                    location: 'sdfd',
-                    maxAttendees: 5,
-                    numRegistered: 9,
-                    rsvpStatus: "Undo RSVP"
                 });
                 console.log(upcomingEvents)
             }
@@ -41,6 +39,58 @@ function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
 
     }
 
+	// Close extra tab upon click
+	const customViewer = (event, close) => {
+		return (
+			<div><script type="text/javascript">{close()}</script></div>
+		)
+	};
+
+	async function addEvent(id){
+		let url = buildPath(`api/searchOneEvent?eventID=${id}`);
+
+		let response = await fetch(url, {
+			method: "GET",
+			headers: {"Content-Type": "application/json"},
+		});
+	
+		let res = JSON.parse(await response.text());
+
+		let event = res[0];
+
+		const events = RSVPdEvents.slice();
+
+		events.push({
+			_id: event._id,
+			title: event.name,
+			start: new Date(event.startTime),
+			end: new Date(event.endTime),
+			editable: false,
+			deletable: false,
+			draggable: false,
+		});
+
+		console.log(events);
+
+		setRSVPdEvents(events);
+	}
+
+	useEffect(() => {
+		if(RSVPID){
+			const undidRSVP = RSVPdEvents.some(event => event._id === RSVPID);
+
+			// Remove the event from the calendar
+			if(undidRSVP){
+				setRSVPdEvents(RSVPdEvents => RSVPdEvents.filter(e => e._id !== RSVPID));
+			}else{
+				addEvent(RSVPID);
+			}
+
+			setRSVPID(undefined);
+		}
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [RSVPID]);
 
     useEffect(() => {
         getStudentInfo();
@@ -49,123 +99,19 @@ function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [upcomingRSVPdEvents]);
 
-const customViewer = (event, close) => {
-    const formatDateTimeRange = (start, end) => {
-      const optionsDate = {
-        month: 'numeric',
-        day: 'numeric',
-        year: '2-digit',
-      };
-  
-      const optionsTime = {
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
-      };
-  
-      const formattedDate = start.toLocaleString(undefined, optionsDate);
-      const formattedStartTime = start.toLocaleString(undefined, optionsTime);
-      const formattedEndTime = end.toLocaleString(undefined, optionsTime);
-  
-      return (
-        <div>
-          <p style={{ margin: '0', lineHeight: '0.7' }}>{formattedDate}</p>
-          <p style={{ marginTop: '8px' }}>
-            {formattedStartTime} - {formattedEndTime}
-          </p>
-        </div>
-      );
-    };
-  
-    async function unrsvpEvent(event){
-      try {
-        var url = buildPath(`api/cancelRSVP`);
-        var studentID = sessionStorage.getItem("ID");
-        var json = {
-          eventID: event._id,
-          eventName: event.title,
-          userID: studentID
-        }
-        console.log(json);
-        var response = await fetch(url, {
-          body: JSON.stringify(json),
-          method: "DELETE",
-          headers: {"Content-Type": "application/json"},
-        });
-        
-        var res = await response.text();
-        console.log(res);
-        setRSVPdEvents(RSVPdEvents => RSVPdEvents.filter(e => e._id !== event._id));
-        // updateEventsLength(eventCounter);
-      } catch(e) {
-        console.log("unrsvp failed");
-      }
-    }
-  
-  
-    const handleButtonClick = (event) => {
-        if (event.rsvpStatus === "Undo RSVP") {
-            unrsvpEvent(event);
-            setMessage("Cancelled RSVP")
-            setOpenSnackbar(true);
-        }
-  
-      close();
-    };
-
-    return (
-      <Box sx={{maxWidth: '500px'}}>
-        <Box sx={{ margin: "20px" }}>
-          <div>
-            <h3>{event.title}</h3>
-            <p>{formatDateTimeRange(event.start, event.end)}</p>
-            <p style={{ margin: '0', lineHeight: '0.7' }}>{"Capacity: " + event.numRegistered + '/' + event.maxAttendees}</p>
-            <p style={{marginTop: '8px'}}>{"Location: "+event.location}</p>
-            <p>{`${event.description}`}</p>
-          </div>
-          <div>
-            <Box sx={{display: "flex", justifyContent: "flex-end" }}>
-            <Button onClick={close} variant="outlined" sx={{marginRight: "5px" }}>
-              Close
-            </Button>
-            <Button onClick={() => handleButtonClick(event)} disabled={event.rsvpStatus === "Full Capacity"} variant="contained">
-              {event.rsvpStatus === "Full Capacity" ? "Full Capacity" : event.rsvpStatus}
-            </Button>
-            </Box>
-          </div>
-        </Box>
-      </Box>
-    );
-  };
-
-
-
-  return (
-    <div style={{marginBottom: '20px'}}>
-        <Scheduler
-          view="month"
-          height={520}
-          //width={400}
-          editable={false}
-          events={RSVPdEvents}
-          customViewer={customViewer}
-        />
-        <Snackbar
-            autoHideDuration={2000}
-            open={openSnackbar}
-            variant="outlined"
-            onClose={(event, reason) => {
-            if (reason === 'clickaway') {
-                return;
-            }
-            setOpenSnackbar(false);
-            }}
-            startDecorator={<CheckCircleOutlineIcon />}
-        >
-            {message}
-      </Snackbar>
-    </div>
-  );
+	return (
+		<div style={{marginBottom: '20px'}}>
+			<Scheduler
+				view="month"
+				height={520}
+				editable={false}
+				events={RSVPdEvents}
+				customViewer={customViewer}
+				onEventClick={(event) => {setOpen(true); setEventID(event._id);}}
+			/>
+			<EventModal eventID={eventID} setEventID={setEventID} open={open} setOpen={setOpen} setRSVPID={setRSVPID}/>
+		</div>
+	);
 }
 
 export default Calendar;

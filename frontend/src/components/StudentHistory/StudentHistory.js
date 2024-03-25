@@ -126,7 +126,9 @@ function StudentHistory()
 										</Grid>
 										<Grid item sm={4}>
 											<ListItemText className='historyDetails' primary={<span style={{ whiteSpace: 'pre-wrap' }}>
-																	{history.name + " (" + history.org + ")"}
+																	{(history.name + " (" + history.org + ")").length > 57 ? 
+																		(history.name + " (" + history.org + ")").substring(0, 58) + "..." :
+																		(history.name + " (" + history.org + ")")}
 																</span>} 						
 														secondary={<span style={{ whiteSpace: 'pre-wrap' }}>
 															{"Check In: " + history.checkIn[0] + " at " + history.checkIn[1] 
