@@ -63,8 +63,8 @@ function AdminHeader()
      <div>
         <div className={`sidebar ${isSidebarActive ? 'active' : ''}`}>
             <div className={`${isSidebarActive ? '' : 'moveLogoContent'} logo_content`}>
-                <div className="logo">
-                    <PageTitle mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
+                <div className="logo logoBtn">
+                    <PageTitle onClick={() => window.location.href = "#/adminhome"} mainStyle="headerTitleLogo" logoStyle="logoHeader" titleStyle="titleHeader"/>
                 </div>
                 <Logo theStyle={`menuIcon ${isSidebarActive ? 'logoSidebar' : 'moveLogo logoHeade'}`}/>
                 <BiMenu onClick={() => handleToggleSidebar()} className='menuIcon'></BiMenu>
