@@ -14,10 +14,10 @@ function Contact() {
   return (
 	<ThemeProvider theme={theme}>
 		<CssBaseline />
-		<Box sx={{ background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100%', flexGrow: 1, padding: 1, justifyContent: 'center', alignItems: 'center'}}>
+		<Box sx={{ display: 'flex', flexDirection: 'column', background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100vh', justifyContent: 'center', alignItems: 'center'}}>
 			<PreLoginNavBar />
-			<Box sx={{ marginTop: 3, marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column' }} >
-				<Typography component="h1" variant="h3" align="left" fontWeight={700} sx={{ marginTop: 5, color: '#212121' }}>
+			<Box sx={{ marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column', mt:5 }} >
+				<Typography component="h1" variant="h3" align="left" fontWeight={700} sx={{ color: '#212121' }}>
 					Contact Us
 				</Typography>
 				<Grid container component="main" sx={{ flex: 1, display: 'flex', flexdirection: 'column' }}>
