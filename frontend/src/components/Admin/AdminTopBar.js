@@ -17,7 +17,7 @@ import Badge from '@mui/material/Badge';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 
 function AdminTopBar(props) {
-  const settings = ['Settings', 'Logout'];
+  const settings = ['Logout'];
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 

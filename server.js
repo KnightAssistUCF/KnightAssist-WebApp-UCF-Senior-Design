@@ -327,6 +327,10 @@ app.use('/api/refreshJWT', refreshJWT);
 const loadOwnOrgAnnouncements = require('./backend/routes/announcements/loadOwnOrgAnnouncements');
 app.use('/api/loadOwnOrgAnnouncements', loadOwnOrgAnnouncements);
 
+// clear the db from trash user accounts and duplicates
+const clearDBFromTrashUserStudentAccoutns = require('./backend/routes/cleanupDBContent/cleanUPStudentAccounts');
+app.use('/api/clearDBFromTrashUserStudentAccoutns', clearDBFromTrashUserStudentAccoutns);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now

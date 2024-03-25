@@ -181,12 +181,12 @@ body.light {
 	color: black;
   }
 
-  .adminhomepage.dark {
+  /* .adminhomepage.dark {
 	height: 100vh;
 	width: 100%;
 	background-color: #1e1e1e;
 	color: white;
-  }
+  } */
 
   .lightLB{
 		background-color: white !important;

@@ -79,14 +79,14 @@ function AdminHeader()
                         </a>
                     </LightTooltip>
                 </li>
-                <li>
+                {/* <li>
                     <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
                         <a href="#/">
                             <BiCog className='homeIcon'/>
                             <span class="links_name">Settings</span>
                         </a>
                     </LightTooltip>
-                </li>
+                </li> */}
             </ul>
             <div className="profile_content">
                 <div className="profile">
