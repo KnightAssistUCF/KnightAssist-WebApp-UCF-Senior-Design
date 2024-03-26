@@ -335,6 +335,10 @@ app.use('/api/clearDBFromTrashUserStudentAccoutns', clearDBFromTrashUserStudentA
 const clearEventsFromOldAttributes = require('./backend/routes/cleanupDBContent/cleanUPEventsWithOldVersion');
 app.use('/api/clearEventsFromOldAttributes', clearEventsFromOldAttributes);
 
+// fill all semester fields for all events in the databse
+const fillSemesterFieldForAllEvents = require('./backend/routes/events/fillSemesterFieldForAllEvents');
+app.use('/api/fillSemesterFieldForAllEvents', fillSemesterFieldForAllEvents);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
