@@ -9,7 +9,7 @@ const Team = () => {
     { name: 'Yohan Hmaiti', role: 'Backend, Database', image: require('./TeamPics/Yohan.webp') },
     { name: 'Noah Seligson', role: 'Frontend/Backend, Web', image: require('./TeamPics/Noah.webp') },
     { name: 'Rebecca Baker', role: 'Mobile', image: require('./TeamPics/Rebecca.webp') },
-    { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('../Login/loginPic.png') },
+    { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('./TeamPics/Aly.webp') },
   ];
 
   return (
