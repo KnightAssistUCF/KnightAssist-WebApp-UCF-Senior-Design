@@ -106,11 +106,10 @@ function RecentEvents() {
 
     return(
         <div className='studentRecentEventsTab'>
-            <Grid container spacing={2}>
                 {pastEvents.map(event => (
-                    <Grid item key={event.ID} xs={4}>
+                    <div className="event spartan">
                         <CardActionArea className='test' onClick={() => openEventModal(event.ID)}>
-                            <Card className="eventHeight">
+                            <Card sx={{maxWidth: '275px', minWidth: '275px'}} className="eventHeight">
                                 <CardMedia
                                     component="img"
                                     height="150"
@@ -128,9 +127,8 @@ function RecentEvents() {
                                 </CardContent>
                             </Card>
                         </CardActionArea>
-                    </Grid>
+                    </div>
                 ))}
-            </Grid>
         </div>
     );
 };
