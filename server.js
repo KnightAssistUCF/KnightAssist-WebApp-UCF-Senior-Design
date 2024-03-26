@@ -331,6 +331,10 @@ app.use('/api/loadOwnOrgAnnouncements', loadOwnOrgAnnouncements);
 const clearDBFromTrashUserStudentAccoutns = require('./backend/routes/cleanupDBContent/cleanUPStudentAccounts');
 app.use('/api/clearDBFromTrashUserStudentAccoutns', clearDBFromTrashUserStudentAccoutns);
 
+// cleanup events from old attributes api 
+const clearEventsFromOldAttributes = require('./backend/routes/cleanupDBContent/cleanUPEventsWithOldVersion');
+app.use('/api/clearEventsFromOldAttributes', clearEventsFromOldAttributes);
+
 /*
   if we plan to have specific settings for the configuration in production, we will need to add that here.
   can be omitted for now
