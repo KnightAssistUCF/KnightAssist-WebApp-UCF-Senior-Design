@@ -150,7 +150,7 @@ function RecommendedEvents(props)
                             height="150"
                             image={props.pic.url}
                         />
-                        <CardContent className='whiteCardSection'>
+                        <CardContent className='whiteCardSection' style={{backgroundColor: (sessionStorage.getItem("theme") === "light") ? "white" : "#1e1e1e"}}>
                             <div className='initialText'>
                                 <Typography className='eventName' clagutterBottom variant="h6" component="div">
                                     {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}

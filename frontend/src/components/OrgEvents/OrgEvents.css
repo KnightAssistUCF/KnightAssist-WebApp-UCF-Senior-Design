@@ -475,7 +475,7 @@
 }
 
 .test:hover .whiteCardSection {
-    background-color: white;
+    /* background-color: white; */
     transform: translateY(-80px);
     z-index: 20;
 }
