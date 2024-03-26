@@ -336,7 +336,7 @@ const clearEventsFromOldAttributes = require('./backend/routes/cleanupDBContent/
 app.use('/api/clearEventsFromOldAttributes', clearEventsFromOldAttributes);
 
 // fill all semester fields for all events in the databse
-const fillSemesterFieldForAllEvents = require('./backend/routes/cleanupDBContent/fillSemesterFieldForAllEvents');
+const fillSemesterFieldForAllEvents = require('./backend/routes/events/fillSemesterFieldForAllEvents');
 app.use('/api/fillSemesterFieldForAllEvents', fillSemesterFieldForAllEvents);
 
 /*
