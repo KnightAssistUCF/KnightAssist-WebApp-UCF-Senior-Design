@@ -6,11 +6,44 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Grid, Avatar } from '@mui/material';
+import { CardActionArea, Grid, Avatar, Box } from '@mui/material';
 import '../OrgEvents/OrgEvents.css'
+import Pagination from '@mui/material/Pagination';
 
 function FavoritedOrganizations() {
     const [favoritedOrgs, setFavoritedOrgs] = useState([]);
+    const [orgs, setOrgs] = useState([]);
+    const [orgCards, setOrgCards] = useState();
+    const [numPages, setNumPages] = useState(0);  
+    const [page, setPage] = useState(1);
+	const [orgsPerPage, setOrgsPerPage] = useState(getInitialPerPage());
+	
+	// Bug purposes
+	const [initiateListener, setInitiateListener] = useState(1);
+
+	function getInitialPerPage(){
+		const width = window.innerWidth;
+
+		if(width > 1500){
+			return 3;
+		}else if(width > 900){
+			return 2;
+		}else{
+			return 1;
+		}
+	}
+
+	function changePage(e, value, perPage = orgsPerPage){
+		setPage(value);
+		let content = <div className="cards d-flex flex-row cardWhite card-body-profile">{orgs.slice(perPage * (value - 1), perPage * (value - 1) + perPage)}</div>
+		setOrgCards(content);
+	}
+
+    // Will open the organization's page
+    function openOrgPage(id){
+		sessionStorage.setItem("viewingPageID", id);
+		window.location.href="/#/orgprofile";
+    }
 
     async function fetchFavoritedOrganizations() {
         try {
@@ -56,6 +89,17 @@ function FavoritedOrganizations() {
             }
             console.log(orgList);
             setFavoritedOrgs(orgList);
+            setNumPages(Math.ceil(orgList.length / orgsPerPage))
+    
+            setInitiateListener(initiateListener * -1);
+    
+            let extraBack = 0;
+            
+            // Need to go a page back due to deletion
+            if(((page - 1) * orgsPerPage) >= orgList.length){
+                setPage(page - 1);
+                extraBack = 1;
+            }
         } catch (e) {
             console.log("Failed to get favorited orgs");
         }
@@ -70,13 +114,38 @@ function FavoritedOrganizations() {
         fetchFavoritedOrganizations();
     }, []);
 
+    useEffect(()=>{
+		const adjustForSize = () => {
+			if(!orgCards) return;
+			const width = window.innerWidth;
+			
+			const oldOrgsPerPage = orgsPerPage;
+
+			if(width > 1500){
+				setOrgsPerPage(3);
+				setNumPages(Math.ceil(orgs.length / 3))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 3), 3);
+			}else if(width > 900){
+				setOrgsPerPage(2);
+				setNumPages(Math.ceil(orgs.length / 2))
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 2), 2);
+			}else{
+				setOrgsPerPage(1);
+				setNumPages(orgs.length)
+				changePage(null, Math.ceil((((page - 1) * oldOrgsPerPage) + 1) / 1), 1);
+			}
+		}
+
+		window.addEventListener("resize", adjustForSize);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	},[initiateListener])
+
     return (
         <div className='studentFavoritedOrganizationsTab'>
-            <Grid container spacing={2}>
                 {favoritedOrgs.map((org) => (
-                    <Grid item xs={4} key={org._id}>
+                    <div className="event spartan">
                         <CardActionArea className='test' onClick={() => openOrgPage(org._id)}>
-                            <Card className="eventHeight">
+                            <Card sx={{maxWidth: '275px', minWidth: '275px'}} className="eventHeight">
                                 <div className='logoandbg'>
                                     <CardMedia
                                         component="img"
@@ -100,9 +169,11 @@ function FavoritedOrganizations() {
                                 </CardContent>
                             </Card>
                         </CardActionArea>
-                    </Grid>
+                    </div>
                 ))}
-            </Grid>
+                <Box my={2} display="flex" justifyContent="center">
+                    <Pagination className="explorePagination" page={page} count={numPages} onChange={changePage} shape="rounded" />
+                </Box>
         </div>
     );
 };
