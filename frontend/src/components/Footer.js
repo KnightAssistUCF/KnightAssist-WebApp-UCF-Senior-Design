@@ -48,7 +48,7 @@ export default function Footer() {
 	}
 
   return (
-    <Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100vh', bgcolor: '#5B526F', marginTop: 'auto'}}>
+    <Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100%', bgcolor: '#5B526F', marginTop: 'auto'}}>
       <Container maxWidth="xl" sx={{p: 3}}>
         <Typography variant="body2" color="white" align="center">
           {"Copyright © "}
@@ -62,10 +62,10 @@ export default function Footer() {
       </Container>
 
       <Dialog open={openPolicyModal} onClose={() => setOpenPolicyModal(false)}>
-        <DialogContent className='feedbackModal'>
+        <DialogContent>
           <button className='closeAddEvent'>
-                      <CloseIcon onClick={() => setOpenPolicyModal(false)}/>
-                  </button>
+                <CloseIcon onClick={() => setOpenPolicyModal(false)}/>
+          </button>
           <DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10, textAlign: 'center'}}>Terms & Conditions</DialogContentText>
           <DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px', textAlign: 'justify' }}>
             <TermsAndConditions/>
