@@ -8,6 +8,10 @@ const Users = () => {
         { title: "For Admins", description: "Monitor organization and volunteer activity, ensuring certain criteria and guidelines are met. ", imageUrl: "https://cdn-icons-png.flaticon.com/512/78/78948.png" }
     ];
 
+    const handleClick = () => {
+        window.location.href = '#/register';
+    };
+
   return (
     <Box sx={{ bgcolor: '#F5FAF8' }}>
         <Box sx={{ marginX: '5%'}}>
@@ -35,7 +39,7 @@ const Users = () => {
                     <Typography variant="body2" color="textSecondary" component="p" sx={{ marginY: 1 }}>
                         {card.description} {/* Render the description for the current card */}
                     </Typography>
-                    <Button variant="contained" sx={{ bgcolor: '#593959' }}>
+                    <Button variant="contained" onClick={() => handleClick()} sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#322032'}}}>
                         Sign up
                     </Button>
                     </CardContent>
