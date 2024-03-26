@@ -16,7 +16,7 @@ function Contact() {
 		<CssBaseline />
 		<Box sx={{ display: 'flex', flexDirection: 'column', background: 'linear-gradient(to right, #F5FAF9, #E4D9FB)', minHeight: '100vh', justifyContent: 'center', alignItems: 'center'}}>
 			<PreLoginNavBar />
-			<Box sx={{ marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column', mt:12, mb: 2, sflexGrow: 1 }} >
+			<Box sx={{ marginRight: '12%', marginLeft: '12%', display: 'flex', flexDirection: 'column', mt:12, mb: 2, flexGrow: 1 }} >
 				<Typography component="h1" variant="h3" align="left" fontWeight={700} sx={{ color: '#212121' }}>
 					Contact Us
 				</Typography>
