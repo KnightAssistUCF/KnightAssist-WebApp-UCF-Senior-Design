@@ -6,8 +6,8 @@ import Link from "@mui/material/Link";
 import CloseIcon from '@mui/icons-material/Close';
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogContentText } from "@mui/material";
 
-export default function Footer(props) {
-	const [openPolicyModal, setOpenPolicyModal] = useState(false);
+export default function Footer() {
+  const [openPolicyModal, setOpenPolicyModal] = useState(false);
 
 	function TermsAndConditions(){
 		return (
@@ -47,33 +47,31 @@ export default function Footer(props) {
 		)
 	}
 
-	return (
-		<Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100%', bgcolor:'#EAEAEB', marginTop: 'auto'}}>
-			<Container maxWidth="xl" sx={{p: 3}}>
-				<Typography variant="body2" color="#3C3C3E" align="center">
-				{"Copyright © "}
-				<Link color="inherit" href="https://knightassist-43ab3aeaada9.herokuapp.com/">
-					KnightAssist
-				</Link>{" "}
-				{new Date().getFullYear()}
-				{"."}
-				<a className="privatePolicy" onClick={() => setOpenPolicyModal(true)}>Terms & Conditions</a>
+  return (
+    <Box sx={{display: 'flex', flexDirection: 'column', minWidth: '100%', bgcolor: '#5B526F', marginTop: 'auto'}}>
+      <Container maxWidth="xl" sx={{p: 3}}>
+        <Typography variant="body2" color="white" align="center">
+          {"Copyright © "}
+          <Link color="inherit" href="https://knightassist-43ab3aeaada9.herokuapp.com/">
+            KnightAssist
+          </Link>{" "}
+          {new Date().getFullYear()}
+          {"."}
+          <a className="privatePolicy" onClick={() => setOpenPolicyModal(true)} style={{ color: 'white' }}>Terms & Conditions</a>
+        </Typography>
+      </Container>
 
-				</Typography>
-			</Container>
-
-			
-		<Dialog open={openPolicyModal} onClose={() => setOpenPolicyModal(false)}>
-			<DialogContent className='feedbackModal'>
-				<button className='closeAddEvent'>
-                    <CloseIcon onClick={() => setOpenPolicyModal(false)}/>
-                 </button>
-				<DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10, textAlign: 'center'}}>Terms & Conditions</DialogContentText>
-				<DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px', textAlign: 'justify' }}>
-					<TermsAndConditions/>
-				</DialogContentText>
-			</DialogContent>
-		</Dialog>
-		</Box>
-	);
+      <Dialog open={openPolicyModal} onClose={() => setOpenPolicyModal(false)}>
+        <DialogContent>
+          <button className='closeAddEvent'>
+                <CloseIcon onClick={() => setOpenPolicyModal(false)}/>
+          </button>
+          <DialogContentText className='contentWrap' style={{ color: 'black', fontSize: 25, marginBottom: 10, textAlign: 'center'}}>Terms & Conditions</DialogContentText>
+          <DialogContentText className='contentWrap' style={{ color: 'black', marginTop: '10px', textAlign: 'justify' }}>
+            <TermsAndConditions/>
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
+    </Box>
+  );
 }
