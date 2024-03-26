@@ -199,7 +199,6 @@ body.light {
 	}
   
   .registerPage {
-    background-image: url('./components/Register/filler-temp-background.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position: center;

@@ -7,7 +7,6 @@ import PreLoginNavBar from '../../PreLogin/PreLoginNavBar';
 import { Grid, Typography, Button, Box } from '@mui/material';
 import SignUp from './SignUp';
 import Footer from '../Footer';
-import BackgroundImage from './filler-temp-background.jpg';
 
 const defaultTheme = createTheme();
 
