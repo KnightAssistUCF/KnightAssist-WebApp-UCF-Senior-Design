@@ -53,7 +53,7 @@ function AdminTopBar(props) {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Account">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt={'First' + ' ' + 'Last'} src="/static/images/avatar/2.jpg" />
+                  <Avatar alt={'Admin' + ' ' + 'User'} src="/static/images/avatar/2.jpg" />
                 </IconButton>
               </Tooltip>
               <Menu
