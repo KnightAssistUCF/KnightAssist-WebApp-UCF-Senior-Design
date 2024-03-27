@@ -125,11 +125,11 @@ function App()
 			<Routes>
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
 			</Routes>
-			<CssBaseline />
-		</ThemeProvider>
 			<Routes>
 				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
 			</Routes>
+			<CssBaseline />
+		</ThemeProvider>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>
