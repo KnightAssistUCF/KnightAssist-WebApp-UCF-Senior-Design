@@ -132,7 +132,8 @@ function LoginComponents(props){
                 sessionStorage.setItem("token", res.token);
                 sessionStorage.setItem("ID", res.adminUser._id);
                 sessionStorage.setItem("role", "admin");
-          
+                sessionStorage.setItem("theme", "light");
+                props.setTheme("light");         
                 props.setRole("admin");
                 console.log(res.adminUser);
                 setFirstLogin(res.adminUser.firstTimeLogin);
