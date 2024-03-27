@@ -246,7 +246,7 @@ function Account({info, fetchStudentInfo})
 
     return(
         <>
-        <div className='studentAccountTab'>
+        <div className='studentAccountTab' style={{backgroundColor: (sessionStorage.getItem("theme") === 'light') ? '#f9f9f9' : '#303030'}}>
             <div className='profileAvatarSettings'>
                 <Avatar
                     className='defaultPFP addHover'
