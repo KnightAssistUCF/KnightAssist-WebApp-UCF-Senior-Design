@@ -123,11 +123,11 @@ function App()
 			<Routes>
 				<Route path="/orgprofile" element={<OrgProfilePage/>}></Route>
 			</Routes>
-			<Routes>
+			{/* <Routes>
 				<Route path="/studentprofile" element={<StudentProfilePage/>}></Route>
-			</Routes>
+			</Routes> */}
 			<Routes>
-				<Route path="/redostudentprofile" element={(role) ? <RedoStudentProfilePage/> : <Navigate from='/redostudentprofile' to='/login' />}></Route>
+				<Route path="/studentprofile" element={(role) ? <RedoStudentProfilePage/> : <Navigate from='/studentprofile' to='/login' />}></Route>
 			</Routes>
 			<Routes>
 				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
