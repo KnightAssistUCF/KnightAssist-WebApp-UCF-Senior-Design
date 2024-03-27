@@ -19,7 +19,7 @@ const Team = () => {
             <Grid container spacing={2} justifyContent="center">
                 {teamMembers.map((member, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4} lg={4}>
-                    <Card variant="none" sx={{backgroundColor:'#F5D6BA'}}>
+                    <Card variant="none" sx={{backgroundColor:'rgba(255, 255, 255, 0)', padding: '10px'}}>
                     <CardMedia
                         component="img"
                         sx={{
