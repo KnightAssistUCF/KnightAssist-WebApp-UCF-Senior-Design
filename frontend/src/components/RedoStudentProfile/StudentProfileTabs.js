@@ -59,13 +59,13 @@ function StudentProfileTabs(props) {
                 <Box>
                     <TabList orientation={isMobile ? 'horizontal' : 'vertical'} onChange={handleChange} aria-label="Student profile tabs">
                         <Tab sx={{alignItems: 'start'}} label="Account" value="1" />
-                        <Tab sx={{alignItems: 'start'}} label="Recent Events" value="2" />
+                        {/* <Tab sx={{alignItems: 'start'}} label="Recent Events" value="2" /> */}
                         <Tab sx={{alignItems: 'start'}} label="Favorited Organizations" value="3" />
                     </TabList>
                 </Box>
                 <div style={{ flex: 1 }}>
                     <TabPanel value="1"><Account info={studentInfo} fetchStudentInfo={fetchStudentInfo} /></TabPanel>
-                    <TabPanel value="2"><RecentEvents /></TabPanel>
+                    {/* <TabPanel value="2"><RecentEvents /></TabPanel> */}
                     <TabPanel value="3"><FavoritedOrganizations/></TabPanel>
                 </div>
             </div>
