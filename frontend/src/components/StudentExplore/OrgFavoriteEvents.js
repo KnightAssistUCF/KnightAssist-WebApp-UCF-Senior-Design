@@ -210,7 +210,7 @@ function OrgFavoriteEvents(props)
                         <CardContent className='whiteCardSection' style={{backgroundColor: (sessionStorage.getItem("theme") === "light") ? "white" : "#1e1e1e"}}>
                             <div className='initialText'>
     							<Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                    {((props.name.length >= 23) ? (props.name.substring(0, 23) + "...") : props.name)}
+                                    {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
                                 </Typography>
                                 <Typography sx={{transform: 'translateY(20px)'}} className="eventDate" variant="body2" color="text.secondary">
                                     <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
@@ -220,7 +220,7 @@ function OrgFavoriteEvents(props)
                             </div>
                             <div className='hoverText'>
                                 <Typography>
-                                    {((props.description.length >= 160) ? (props.description.substring(0, 160) + "...") : props.description)}
+                                    {((props.description.length >= 180) ? (props.description.substring(0, 180) + "...") : props.description)}
                                 </Typography>
                             </div>
                         </CardContent>
