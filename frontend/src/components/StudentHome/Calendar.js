@@ -7,7 +7,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import EventModal from '../StudentExplore/EventModal';
 
 
-function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
+function Calendar({upcomingRSVPdEvents, eventsLength, updateEventsLength}) {
 	const [eventID, setEventID] = useState(undefined);
 	const [RSVPID, setRSVPID] = useState(undefined);
     const [RSVPdEvents, setRSVPdEvents] = useState([]);
@@ -82,8 +82,10 @@ function Calendar({upcomingRSVPdEvents, updateEventsLength}) {
 			// Remove the event from the calendar
 			if(undidRSVP){
 				setRSVPdEvents(RSVPdEvents => RSVPdEvents.filter(e => e._id !== RSVPID));
+				updateEventsLength(eventsLength - 1);
 			}else{
 				addEvent(RSVPID);
+				updateEventsLength(eventsLength + 1);
 			}
 
 			setRSVPID(undefined);
