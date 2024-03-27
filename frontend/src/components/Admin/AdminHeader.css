@@ -164,7 +164,7 @@ ul.nav_list {
     align-items: center;
     text-decoration: none;
     transition: all 0.2s ease;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     padding: 2px 6px;
 }
 
@@ -172,7 +172,7 @@ ul.nav_list {
     color: #ffffff;
     background: #004e3a;
     /* padding: 3px 6px; */
-    border-left: 1px solid rgb(228, 228, 228);
+    /* border-left: 1px solid rgb(228, 228, 228); */
 }
 .sidebar ul li a .links_name {
     font-size: 19px; 

@@ -118,14 +118,6 @@ function Header()
                         </a>
                     </LightTooltip>
                 </li>
-				<li>
-                    <LightTooltip title={!isSidebarActive ? "Home" : ""} placement="right" className="custom-tooltip">
-                        <a className="addHover" onClick={() => loadOrgProfile()}>
-                            <CgProfile className='homeIcon'/>
-                            <span class="links_name">Profile</span>
-                        </a>
-                    </LightTooltip>
-                </li>
                 <li>
                     <LightTooltip title={!isSidebarActive ? "Events" : ""} placement="right" className="custom-tooltip">
                         <a href="#/orgevents"> 

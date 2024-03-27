@@ -47,8 +47,19 @@
     border: none;
 }
 
+.addEventBtn {
+    color: white;
+    box-shadow: none;
+}
+
+.addEventBtn:hover {
+    color: white;
+    box-shadow: none;
+}
+
 .RSVPbtn:hover{
     background-color: #7566b4;
+    color: white;
 }
     
 .addEventBtn:visited{

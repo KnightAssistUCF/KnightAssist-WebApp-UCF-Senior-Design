@@ -47,11 +47,11 @@ function StudentHome()
         });
         let res = JSON.parse(await response.text());
         console.log(res);
+
+        fetchUpcomingEvents(res.eventsRSVP);
         setGoal(res.semesterVolunteerHourGoal);
         setTotalHours(res.totalVolunteerHours);
         setFavOrgs(res.favoritedOrganizations);
-
-        fetchUpcomingEvents(res.eventsRSVP);
     
         
       } catch (error) {

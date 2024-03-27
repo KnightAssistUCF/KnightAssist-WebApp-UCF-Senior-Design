@@ -100,7 +100,7 @@ function RecommendedEvents(props)
 		
 				let orgPic = JSON.parse(await response.text());
 
-                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id} description={event.description}/>)  
             }
         }
 
@@ -132,7 +132,7 @@ function RecommendedEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Recommended Events</h1>
+        return <h1 className='upcomingEvents spartan'><span style={{ fontWeight: '350' }}>Recommended Events</span></h1>
     }
 
     function Event(props) {     
@@ -144,21 +144,28 @@ function RecommendedEvents(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
+                    <Card variant='outlined' className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
                             image={props.pic.url}
                         />
-                        <CardContent>
-                            <Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
-                            </Typography>
-                            <Typography className="eventDate" variant="body2" color="text.secondary">
-								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
-								<CalendarIcon className='cardCalendar'/>
-								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
-                            </Typography>
+                        <CardContent className='whiteCardSection' style={{backgroundColor: (sessionStorage.getItem("theme") === "light") ? "white" : "#1e1e1e"}}>
+                            <div className='initialText'>
+                                <Typography className='eventName' clagutterBottom variant="h6" component="div">
+                                    {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
+                                </Typography>
+                                <Typography sx={{transform: 'translateY(20px)'}} className="eventDate" variant="body2" color="text.secondary">
+                                    <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
+                                    <CalendarIcon className='cardCalendar'/>
+                                    {startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
+                                </Typography>
+                            </div>
+                            <div className="hoverText">
+                                <Typography>
+                                    {((props.description.length >= 180) ? (props.description.substring(0, 180) + "...") : props.description)}
+                                </Typography>
+                            </div>
                         </CardContent>
                     </Card>
                 </CardActionArea>

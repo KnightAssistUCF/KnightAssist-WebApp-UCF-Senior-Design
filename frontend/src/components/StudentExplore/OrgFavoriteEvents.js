@@ -100,9 +100,64 @@ function OrgFavoriteEvents(props)
 		
 				let orgPic = JSON.parse(await response.text());
 
-                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)  
+                events.push(<Event name={event.name} pic={pic} orgName={orgName} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id} description={event.description}/>)  
             }
         }   
+
+       /* for(let org of res){
+            url = buildPath(`api/searchEvent?organizationID=${org._id}`);
+
+            response = await fetch(url, {
+                method: "GET",
+                headers: {"Content-Type": "application/json"},
+            });
+        
+            res = JSON.parse(await response.text());
+        
+            console.log(res);    
+
+			url = buildPath(`api/retrieveImage?typeOfImage=2&id=${org._id}`);
+
+			response = await fetch(url, {
+				method: "GET",
+				headers: {"Content-Type": "application/json"},
+			});
+	
+			let orgPic = JSON.parse(await response.text());
+            
+            for(let event of res){
+                let json = {
+                    eventID: event._id,
+                    eventName: event.name,
+                    userID: sessionStorage.getItem("ID"),
+                    check: 1
+                };
+    
+                let url = buildPath(`api/RSVPForEvent`);
+    
+                let response = await fetch(url, {
+                    body: JSON.stringify(json),
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                });
+            
+                let res = JSON.parse(await response.text());
+    
+                // Don't show event if user already RSVP'd
+                if(res.RSVPStatus !== 1 && eventIsUpcoming(event.endTime)){
+					url = buildPath(`api/retrieveImage?typeOfImage=1&id=${event._id}`);
+
+					response = await fetch(url, {
+						method: "GET",
+						headers: {"Content-Type": "application/json"},
+					});
+			
+					let pic = JSON.parse(await response.text());
+
+					events.push(<Event name={event.name} pic={pic} orgName={org.name} orgPic={orgPic.url} startTime={event.startTime} endTime={event.endTime} id={event._id}/>)
+				}
+            }
+        }  */     
 
         events.sort(function(a,b){ 
             return a.props.startTime.localeCompare(b.props.startTime)
@@ -134,7 +189,7 @@ function OrgFavoriteEvents(props)
     }
 
     function EventHeader(){
-        return <h1 className='upcomingEvents spartan'>Favorited Organization Events</h1>
+        return <h1 className='upcomingEvents spartan'><span style={{ fontWeight: '350' }}>Favorited Organization Events</span></h1>
     }
 
     function Event(props) {     
@@ -146,21 +201,28 @@ function OrgFavoriteEvents(props)
         return (
             <div className="event spartan">
                 <CardActionArea className='test'>
-                    <Card className="eventHeight" onClick={() => openEventModal(props.id)}>
+                    <Card variant='outlined' className="eventHeight" onClick={() => openEventModal(props.id)}>
                         <CardMedia
                             component="img"
                             height="150"
                             image={props.pic.url}
                         />
-                        <CardContent>
-							<Typography className='eventName' clagutterBottom variant="h6" component="div">
-                                {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
-                            </Typography>
-                            <Typography className="eventDate" variant="body2" color="text.secondary">
-								<Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
-								<CalendarIcon className='cardCalendar'/>
-								{startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
-                            </Typography>
+                        <CardContent className='whiteCardSection' style={{backgroundColor: (sessionStorage.getItem("theme") === "light") ? "white" : "#1e1e1e"}}>
+                            <div className='initialText'>
+    							<Typography className='eventName' clagutterBottom variant="h6" component="div">
+                                    {((props.name.length >= 40) ? (props.name.substring(0, 40) + "...") : props.name)}
+                                </Typography>
+                                <Typography sx={{transform: 'translateY(20px)'}} className="eventDate" variant="body2" color="text.secondary">
+                                    <Grid container direction="row" sx={{display: 'flex', justifyContent: 'center'}}><Avatar className="orgPicCard" src={props.orgPic}/>{props.orgName}</Grid>
+                                    <CalendarIcon className='cardCalendar'/>
+                                    {startDay + ((hasEndDate) ? ("\n-\n      " + endDay)  : "")}
+                                </Typography>
+                            </div>
+                            <div className='hoverText'>
+                                <Typography>
+                                    {((props.description.length >= 180) ? (props.description.substring(0, 180) + "...") : props.description)}
+                                </Typography>
+                            </div>
                         </CardContent>
                     </Card>
                 </CardActionArea>

@@ -43,10 +43,10 @@ function StudentExplore()
 					<Search results={results} searchType={searchType} setEventID={setEventID} setOpenEvent={setOpenEvent} searchMode={searchMode} setSearchMode={setSearchMode} resetSearchCards={resetSearchCards} setResetSearchCards={setResetSearchCards} setAllOrgs={setAllOrgs} setAllOrgsFlag={setAllOrgsFlag}/>
 				</Grid>
 				<Grid item>
-					<button type="button" class="addEventBtn btn btn-primary" disabled={(searchMode && !showSearch)} onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
+					<button type="button" class="addEventBtn btn" disabled={(searchMode && !showSearch)} onClick={() => {setSearchMode(true); setResetSearchCards(resetSearchCards * -1)}}>Search</button>
 				</Grid>
 				<Grid item>
-					{(searchMode && searchType === "events") ? <button type="button" class="addEventBtn btn btn-primary" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
+					{(searchMode && searchType === "events") ? <button type="button" class="addEventBtn btn" onClick={() => setSearchMode(false)}>Exit Search</button> : ""}
 				</Grid>
 			</Grid>
 			<EventModal setEventID={setEventID} eventID={eventID} open={openEvent} setOpen={setOpenEvent} resetFavorite={resetFavorite} setResetFavorite={setResetFavorite} resetRecEvents={resetRecEvents} setResetRecEvents={setResetRecEvents}/>

@@ -216,7 +216,7 @@ function StudentTopBar(props)
       <div className="StudentTopBar">
 		<AppBar variant='outlined' className={(sessionStorage.getItem("theme") === 'light') ? 'whiteBar' : ''} position="static">
 		<Container maxWidth="l">
-			<div className='putTitleLeft'><b className="exploreTitle">{props.title}</b></div>
+			<div className='putTitleLeft'><span className='exploreTitle' style={{ fontWeight: '450' }}>{props.title}</span></div>
 
 			<Toolbar disableGutters sx={{ justifyContent: 'right' }}>
 

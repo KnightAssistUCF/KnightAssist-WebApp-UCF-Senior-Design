@@ -17,6 +17,7 @@
 	margin-top: 5px;
 	margin-right: 25px;
 	height: 55px;
+	box-shadow: none;
 }
 
 .grayCard{
@@ -29,15 +30,15 @@
 }
 
 .goldCard{
-	background-color: gold !important;
+	background-image: linear-gradient(to right, #FFCB17, #FFFFFF) !important;
 }
 
 .silverCard{
-	background-color: silver !important;
+	background-image: linear-gradient(to right, #84D3FF, #FFFFFF) !important;
 }
 
 .bronzeCard{
-	background-color: #cd853d !important;
+	background-image: linear-gradient(to right, #DC9E42, #FFFFFF) !important;
 }
 
 .rankAvatar{

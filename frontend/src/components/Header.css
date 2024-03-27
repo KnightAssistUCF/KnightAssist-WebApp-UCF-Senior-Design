@@ -159,20 +159,20 @@ ul.nav_list {
 }
 
 .sidebar ul li a {
-    color: #fff;
+    /* color: #fff; */
     display: flex;
     align-items: center;
     text-decoration: none;
     transition: all 0.2s ease;
-    border-radius: 0 6px 6px 0;
+    border-radius: 6px;
     padding: 2px 6px;
 }
 
 .sidebar ul li a:hover{
-    color: #ffffff;
+    /* color: #ffffff; */
     background: #004e3a;
     /* padding: 3px 6px; */
-    border-left: 1px solid rgb(228, 228, 228);
+    /* border-left: 1px solid rgb(228, 228, 228); */
 }
 .sidebar ul li a .links_name {
     font-size: 19px; 
