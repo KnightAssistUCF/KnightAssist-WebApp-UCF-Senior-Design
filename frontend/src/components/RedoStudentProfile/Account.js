@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RedoStudentProfile.css';
-import { IconButton, Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
+import { Snackbar, Alert, IconButton, Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
 import { buildPath } from '../../path';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -21,8 +21,16 @@ function Account({info, fetchStudentInfo})
     const [prevSelectedTags, setPrevSelectedTags] = useState([]);
     const [openModal, setOpenModal] = useState(false);
     const [id, setId] = useState('');
+    const [message, setMessage] = useState("");
+    const [openAlert, setOpenAlert] = useState(true);
+
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
+    };
 
     function handleEditModeToggle() {
+        setMessage('');
+        setOpenAlert(true);
         setEditMode((prevEditMode) => !prevEditMode);
     }
     function handleCancel() {
@@ -70,8 +78,15 @@ function Account({info, fetchStudentInfo})
             setSemesterGoal(semesterGoal);
             setTags(tags)
             setPrevSelectedTags(prevSelectedTags);
+            if (response.status == 404) {
+                setMessage("Error occured, could not save information");
+                fetchStudentInfo();
+  
+              } else {
+                setMessage("Information saved successfully");
+              }
         } catch(e) {
-            console.log("Failed to save edited information.");
+            setMessage("Failed to save edited information.");
         }
 
 
@@ -167,10 +182,10 @@ function Account({info, fetchStudentInfo})
             });
         
             if (response.status === 200) {
-              console.log("Tags saved successfully");
-              setPrevSelectedTags(prevSelectedTags);
+                // setMessage("Tags saved successfully");
+                setPrevSelectedTags(prevSelectedTags);
             } else {
-                console.log("Error occurred, could not save tags");
+                setMessage("Error occurred, could not save tags");
             }
         
             setOpenModal(false);
@@ -339,6 +354,19 @@ function Account({info, fetchStudentInfo})
             )}
             
         </div>
+        {message.length !== 0 && (
+            <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
+              {message.includes("Error") ? (
+                <Alert severity="error" onClose={handleCloseAlert}>
+                  {message}
+                </Alert>
+              ) : (
+                <Alert severity="success" onClose={handleCloseAlert}>
+                  {message}
+                </Alert>
+              )}
+            </Snackbar>
+          )}
         <Dialog
           open={openModal}
           onClose={handleCloseModal}
