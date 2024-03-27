@@ -416,7 +416,7 @@ function Account({info, fetchStudentInfo})
                     }}} variant="outlined" onClick={handleCancel} disableElevation>Cancel</Button>
                     <Button variant="contained" color='success' sx={{backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}} onClick={handleSave} disableElevation>Save</Button>
                 </div>) : (
-                    <Button variant="contained" onClick={handleEditModeToggle} disableElevation>Edit</Button>
+                    (sessionStorage.getItem("role") === "volunteer") ? <Button variant="contained" onClick={handleEditModeToggle} disableElevation>Edit</Button> : ""
             )}
             
         </div>
