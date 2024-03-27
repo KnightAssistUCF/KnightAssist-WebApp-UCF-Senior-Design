@@ -25,7 +25,7 @@ const Users = () => {
         {/* Map over the array of cards to render each one */}
         {cards.map((card, index) => (
             <Grid item xs={12} sm={6} md={3} key={index} sx={{ marginBottom: 5, justifyContent: 'center', display: 'flex' }}>
-                <Card sx={{ width: 300 }}>
+                <Card sx={{ width: 300, height: 375 }}>
                     <CardMedia
                     component="img"
                     height="200"
@@ -39,7 +39,7 @@ const Users = () => {
                     <Typography variant="body2" color="textSecondary" component="p" sx={{ marginY: 1 }}>
                         {card.description} {/* Render the description for the current card */}
                     </Typography>
-                    <Button variant="contained" onClick={() => handleClick()} sx={{ bgcolor: '#593959', ":hover": {bgcolor: '#322032'}}}>
+                    <Button variant="contained" onClick={() => handleClick()} sx={{  bgcolor: '#593959', ":hover": {bgcolor: '#322032'}, marginTop: ((index < 2) ? 2 : 0)}}>
                         Sign up
                     </Button>
                     </CardContent>
