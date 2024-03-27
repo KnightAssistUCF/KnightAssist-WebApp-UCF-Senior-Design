@@ -36,7 +36,7 @@ function Account({info, fetchStudentInfo})
 		if(fileSelect.current.files.length === 0) return false;
 		
 		const file = fileSelect.current.files[0].name;
-		console.log(file)
+		// console.log(file)
 
 		const fileType = file.substring(file.lastIndexOf(".") + 1);
 
