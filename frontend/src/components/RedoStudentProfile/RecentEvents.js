@@ -13,9 +13,12 @@ import '../OrgEvents/OrgEvents.css'
 function RecentEvents() {
     const [events, setEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
+	const [eventID, setEventID] = useState(undefined);
+	const [openModal, setOpenModal] = useState(false);
 
-    function openEventModal() {
-        console.log("Open event modal");
+    function openEventModal(id){
+        setEventID(id);
+        setOpenModal(true);
     }
 
     async function fetchHistory() {
