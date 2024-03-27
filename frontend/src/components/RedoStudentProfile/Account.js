@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RedoStudentProfile.css';
-import { Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
+import { IconButton, Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
 import { buildPath } from '../../path';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
 
 
 function Account({info, fetchStudentInfo})
@@ -13,6 +15,12 @@ function Account({info, fetchStudentInfo})
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [semesterGoal, setSemesterGoal] = useState("");
+    const [tags, setTags] = useState([]);
+    const [selectedTags, setSelectedTags] = useState([]);
+    const [allTags, setAllTags] = useState([]);
+    const [prevSelectedTags, setPrevSelectedTags] = useState([]);
+    const [openModal, setOpenModal] = useState(false);
+    const [id, setId] = useState('');
 
     function handleEditModeToggle() {
         setEditMode((prevEditMode) => !prevEditMode);
@@ -23,6 +31,13 @@ function Account({info, fetchStudentInfo})
         setLastName(info.lastName);
         setEmail(info.email);
         setSemesterGoal(info.semesterVolunteerHourGoal);
+        setPrevSelectedTags(info.categoryTags);
+        setTags(info.categoryTags);
+    }
+
+    function handleCancelTags() {
+        fetchStudentInfo();
+        setOpenModal(false);
     }
 
     async function handleSave() {
@@ -53,6 +68,8 @@ function Account({info, fetchStudentInfo})
             setLastName(lastName);
             setEmail(email);
             setSemesterGoal(semesterGoal);
+            setTags(tags)
+            setPrevSelectedTags(prevSelectedTags);
         } catch(e) {
             console.log("Failed to save edited information.");
         }
@@ -110,6 +127,86 @@ function Account({info, fetchStudentInfo})
 		)
 	}
 
+    async function handleEditTags() {
+        console.log("edit tags clicked");
+        setOpenModal(true);
+
+        try {
+          let url = buildPath(`api/getAllAvailableTags`);
+      
+          let response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          });
+      
+          let res = JSON.parse(await response.text());
+      
+          setAllTags(res);
+        } catch (e) {
+          console.log('failed to fetch available tags: ' + e);
+        }
+    }
+
+    async function handleSaveTags() {
+        console.log("save");
+        try {
+            // Implement logic to save selected tags
+            const json = {
+              id: id,
+              categoryTags: prevSelectedTags,
+            };
+        
+            var url = buildPath(`api/editUserProfile`);
+        
+            var response = await fetch(url, {
+              method: "POST",
+              body: JSON.stringify(json),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+        
+            if (response.status === 200) {
+              console.log("Tags saved successfully");
+              setPrevSelectedTags(prevSelectedTags);
+            } else {
+                console.log("Error occurred, could not save tags");
+            }
+        
+            setOpenModal(false);
+          } catch (e) {
+            console.log("Error saving tags: ", e);
+          }
+    }
+
+    const AllTags = ({ tags }) => {
+        const handleChipClick = (tag) => {
+          const isSelected = prevSelectedTags.includes(tag);
+          if (isSelected) {
+            setPrevSelectedTags(prevSelectedTags.filter((selectedTag) => selectedTag !== tag));
+          } else if(!isSelected && prevSelectedTags.length < 10) {
+            setPrevSelectedTags([...prevSelectedTags, tag]);
+          }
+        };
+      
+        return (
+          <div className='allTagsBox'>
+            {tags.map((tag) => (
+              <Chip
+                key={tag}
+                label={tag}
+                onClick={() => handleChipClick(tag)}
+                color={prevSelectedTags.includes(tag) ? 'secondary' : 'default'}
+                style={{ margin: '3px', backgroundColor: prevSelectedTags.includes(tag) ? '#5f5395' : '' }}
+              />
+            ))}
+          </div>
+        );
+      };
+
+    const handleCloseModal = () => {
+        setOpenModal(false);
+    };
 
 
     useEffect(() => {
@@ -125,6 +222,9 @@ function Account({info, fetchStudentInfo})
             setLastName(info.lastName || "");
             setEmail(info.email || "");
             setSemesterGoal(info.semesterVolunteerHourGoal || 0);
+            setTags(info.categoryTags);
+            setPrevSelectedTags(info.categoryTags);
+            setId(info._id);
         //     // Additional state updates based on received info
         }
     }, [info]);
@@ -210,6 +310,23 @@ function Account({info, fetchStudentInfo})
                         )}
                     </div>
                 </div>
+                <div className='studentDetailsInterests' style={{ marginBottom: editMode ? '10px' : '15px' }}>
+                    <div className='studentDetailsInterestsText'>Interests</div>
+                    {prevSelectedTags?.length > 0 && (
+                        <div className='studentDetailsInterestsField'>
+                            <div className='studentDetailsInterestsTags'>
+                            {prevSelectedTags.map((tag, index) => (
+                                <Chip
+                                    key={index}
+                                    label={tag}
+                                    sx={{ margin: '4px', fontSize: '16px', padding: '10px', color: 'white', backgroundColor: '#5f5395' }}
+                                />
+                            ))}
+                            </div>
+                            {editMode && <EditIcon sx={{ marginLeft: '8px', cursor: 'pointer' }} onClick={handleEditTags} />}
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
         <div className='accountButtons'>
@@ -222,6 +339,41 @@ function Account({info, fetchStudentInfo})
             )}
             
         </div>
+        <Dialog
+          open={openModal}
+          onClose={handleCloseModal}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+                  <IconButton
+          aria-label="close"
+          onClick={handleCloseModal}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            fontSize: 20,
+          }}
+        >
+          <CancelIcon />
+        </IconButton>
+                  <div className='modalContent'>
+          <AllTags tags={allTags} />
+          <div className='buttonMiddle'>
+            <Button variant='outlined' disableElevation sx={{
+                borderColor: '#808080',
+                color: '#666666',
+                '&:hover': {
+                  borderColor: '#777777',
+                  backgroundColor: '#f0f0f0',
+                },
+                marginRight: '10px',
+                marginBottom: '10px',
+              }} onClick={() => handleCancelTags()} >Cancel</Button>
+            <Button variant='contained' disableElevation color='success' onClick={handleSaveTags} sx={{marginBottom: '10px', backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}}>Save</Button>
+          </div>
+        </div>
+        </Dialog>
         </>
     );
 };
