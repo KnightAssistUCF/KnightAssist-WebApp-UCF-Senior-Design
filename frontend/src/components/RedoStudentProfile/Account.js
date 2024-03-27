@@ -73,6 +73,8 @@ function Account({info, fetchStudentInfo})
 
     async function handleSave() {
         setEditMode((prevEditMode) => !prevEditMode);
+
+        await handleSaveTags();
         
         const json = {
             id: sessionStorage.getItem("ID"),
@@ -405,8 +407,14 @@ function Account({info, fetchStudentInfo})
         <div className='accountButtons'>
             {editMode ? (
                 <div className='accountButtons'>
-                    <Button sx={{marginRight: '5px'}} variant="outlined" onClick={handleCancel} disableElevation>Cancel</Button>
-                    <Button variant="contained" onClick={handleSave} disableElevation>Save</Button>
+                    <Button sx={{marginRight: '5px',
+                    borderColor: '#808080',
+                    color: '#666666',
+                    '&:hover': {
+                      borderColor: '#777777',
+                      backgroundColor: '#f0f0f0',
+                    }}} variant="outlined" onClick={handleCancel} disableElevation>Cancel</Button>
+                    <Button variant="contained" color='success' sx={{backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}} onClick={handleSave} disableElevation>Save</Button>
                 </div>) : (
                     <Button variant="contained" onClick={handleEditModeToggle} disableElevation>Edit</Button>
             )}
@@ -445,19 +453,6 @@ function Account({info, fetchStudentInfo})
         </IconButton>
                   <div className='modalContent'>
           <AllTags tags={allTags} />
-          <div className='buttonMiddle'>
-            <Button variant='outlined' disableElevation sx={{
-                borderColor: '#808080',
-                color: '#666666',
-                '&:hover': {
-                  borderColor: '#777777',
-                  backgroundColor: '#f0f0f0',
-                },
-                marginRight: '10px',
-                marginBottom: '10px',
-              }} onClick={() => handleCancelTags()} >Cancel</Button>
-            <Button variant='contained' disableElevation color='success' onClick={handleSaveTags} sx={{marginBottom: '10px', backgroundColor: '#45a049', '&:hover': { backgroundColor: '#3f8e41' }}}>Save</Button>
-          </div>
         </div>
         </Dialog>
 
