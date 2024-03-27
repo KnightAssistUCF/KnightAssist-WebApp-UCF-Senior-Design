@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './RedoStudentProfile.css';
 import { Snackbar, Alert, IconButton, Button, TextField, Avatar, Dialog, DialogContent, DialogTitle, Grid, Chip, Menu, MenuItem } from '@mui/material';
 import { buildPath } from '../../path';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
+import { TbEditCircle } from 'react-icons/tb';
 
 
 function Account({info, fetchStudentInfo})
@@ -23,7 +24,29 @@ function Account({info, fetchStudentInfo})
     const [id, setId] = useState('');
     const [message, setMessage] = useState("");
     const [openAlert, setOpenAlert] = useState(true);
+    const [openPicSelectChoice, setOpenPicSelectChoice] = useState(null);
+    const profilePicSelect = useRef(null);
+    const [picFile, setPicFile] = useState(undefined);
+    const [openDefaultPFPModal, setOpenDefaultPFPModal] = useState(false);
+    const [reset, setReset] = useState(false);
+    const [defaultPFPs, setDefaultPFPs] = useState(undefined);
 
+    function validateImgSelection(fileSelect){
+		// No files selected
+		if(fileSelect.current.files.length === 0) return false;
+		
+		const file = fileSelect.current.files[0].name;
+		console.log(file)
+
+		const fileType = file.substring(file.lastIndexOf(".") + 1);
+
+		return fileType === "png" || fileType === "gif" || fileType === "jpg" || fileType === "jpeg";
+	}
+
+	const openPicSelectMenu = (event) => {
+	  setOpenPicSelectChoice(event.currentTarget);
+	};
+    
     const handleCloseAlert = () => {
         setOpenAlert(false);
     };
@@ -78,6 +101,24 @@ function Account({info, fetchStudentInfo})
             setSemesterGoal(semesterGoal);
             setTags(tags)
             setPrevSelectedTags(prevSelectedTags);
+
+            let formData = new FormData();
+
+            if(picFile){
+                formData.append('profilePic', picFile); 
+                formData.append('typeOfImage', '3');
+                formData.append('id', sessionStorage.getItem("ID"));
+
+                await fetch(buildPath(`api/storeImage`), {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+            }
+
+            // setReset(!props.reset);
             if (response.status == 404) {
                 setMessage("Error occured, could not save information");
                 fetchStudentInfo();
@@ -85,34 +126,38 @@ function Account({info, fetchStudentInfo})
               } else {
                 setMessage("Information saved successfully");
               }
+          
         } catch(e) {
             setMessage("Failed to save edited information.");
         }
-
-
-
-
-	    //  let formData = new FormData();
-
-		// 	if(picFile){
-		// 		formData.append('profilePic', picFile); 
-		// 		formData.append('typeOfImage', '3');
-		// 		formData.append('id', sessionStorage.getItem("ID"));
-
-		// 		await fetch(buildPath(`api/storeImage`), {
-		// 			method: 'POST',
-		// 			body: formData
-		// 		})
-		// 		.then(response => response.json())
-		// 		.then(data => console.log(data))
-		// 		.catch(error => console.error('Error:', error));
-		// 	}
-
-		// 	props.setReset(!props.reset);
-        // }catch(err){
-        //     console.log("An error has occurred: ", err);
-        // }
     }
+
+    async function getDefaultPFPs(){
+		// All default pfps
+		const pfps = [];
+
+		for(let i = 1; i <= 11; i++){
+			// Note: Link cannot be saved as variable, causes error
+			pfps.push(
+				<Avatar
+					src={require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')}
+					className='defaultPFP addHover'
+					onClick={async() => {
+								setPicName(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png')); 
+								const response = await fetch(require('../OrgProfile/DefaultPFPs/pfp' + i + '.png'));
+								const blob = await response.blob();
+								const file = new File([blob], "profileImage.png", {
+									type: blob.type,
+								});
+								setPicFile(file);
+								setOpenDefaultPFPModal(false);
+							}}
+				/>
+			)
+		}
+
+		setDefaultPFPs(pfps);
+	}
 
     async function getProfilePic(){
 		let id = sessionStorage.getItem("ID");
@@ -226,6 +271,7 @@ function Account({info, fetchStudentInfo})
 
     useEffect(() => {
         getProfilePic();
+        getDefaultPFPs();
         console.log(info);
     }, []);
 
@@ -248,11 +294,23 @@ function Account({info, fetchStudentInfo})
         <>
         <div className='studentAccountTab' style={{backgroundColor: (sessionStorage.getItem("theme") === 'light') ? '#f9f9f9' : '#303030'}}>
             <div className='profileAvatarSettings'>
-                <Avatar
-                    className='defaultPFP addHover'
-                    src={(picName !== null) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
-                />
-                <CreatedDate />
+			<div className='picContainer'>
+				<Avatar
+					src={(picName) ? picName : "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"}
+					className='picAvatar'
+					sx={{ width: 100, height: 100, marginBottom: "16px", marginLeft: "-12%"}} 
+				/>
+				{(editMode) ? <TbEditCircle className="editIcon" onClick={openPicSelectMenu}/> : null}
+				<Menu
+					open={Boolean(openPicSelectChoice)}
+					anchorEl={openPicSelectChoice}
+					onClose={() => setOpenPicSelectChoice(null)}
+				>
+					<MenuItem onClick={() => {document.getElementById("profilepic").click(); setOpenPicSelectChoice(null);}}>Upload</MenuItem>
+					<MenuItem onClick={() => {setOpenDefaultPFPModal(true); setOpenPicSelectChoice(null);}}>Select Default PFP</MenuItem>
+				</Menu>
+				<input ref={profilePicSelect} id="profilepic" type="file" accept="image/png, image/gif, image/jpg image/jpeg" style={{display:"none"}} onChange={() => {if(validateImgSelection(profilePicSelect)){setPicName(URL.createObjectURL(profilePicSelect.current.files[0])); setPicFile(profilePicSelect.current.files[0]);}}}/>
+			</div>
             </div>
             <div className='tabHeader'>Account Information</div>
             <div className='studentAccountFields'>
@@ -402,6 +460,17 @@ function Account({info, fetchStudentInfo})
           </div>
         </div>
         </Dialog>
+
+        <Dialog open={openDefaultPFPModal} onClose={() => {setOpenDefaultPFPModal(false);}}>
+					<DialogContent className='spartan pfpModal'>
+						<Grid container justifyContent="center" alignItems="center" layout={'row'}>
+							<DialogTitle className='dialogTitle'>Select a Profile Picture</DialogTitle>
+							<div className='tagSection'>
+								{defaultPFPs}
+							</div>
+						</Grid>
+					</DialogContent>
+				</Dialog>
         </>
     );
 };
