@@ -8,7 +8,6 @@ import useStyles from '../../PreLogin/PreLoginStyles';
 import Footer from '../Footer';
 import './Contact.css';
 import PageTitle from '../PageTitle';
-import { Content } from '@radix-ui/react-tabs';
 import { buildPath } from '../../path';
 import Paper from '@mui/material/Paper';
 
@@ -105,7 +104,7 @@ function UserInput() {
 	}
 
 	return (
-		<Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)'}}>
+		<Paper variant="outlined" sx={{ mx: { xs: 5, md: 15 }, my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, boxShadow: '0 0 10px rgba(100, 100, 100, 0.2)'}}>
 			<Grid container spacing={2}>
 				{GridTextField({ xm: 12, sm: 6, name: "First Name", label: "First Name", required: true, multiline: false, value: firstName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setFirstName(e.target.value) } })}
 				{GridTextField({ xm: 12, sm: 6, name: "Last Name", label: "Last Name", required: true, multiline: false, value: lastName, onChange: (e) => { e.currentTarget.value = e.currentTarget.value.replace(regex, ""); setLastName(e.target.value) } })}
@@ -115,7 +114,7 @@ function UserInput() {
 			</Grid>
 
 			{(hasSent) ? <SuccessMessage /> : ""}
-			<Button sx={{ mt: 3, mb: 4, width: "60%", height: "40px", backgroundColor: "#593959", "&:hover": { backgroundColor: "#7566b4" } }} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
+			<Button fullWidth sx={{ mt: 3, mb: 4, height: "40px", backgroundColor: "#593959", "&:hover": { backgroundColor: "#7566b4" } }} disabled={hasSent} variant="contained" onClick={() => submit()}>Submit</Button>
 		</Paper>
 	);
 }

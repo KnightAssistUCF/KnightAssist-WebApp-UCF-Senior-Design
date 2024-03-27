@@ -665,6 +665,7 @@ function eventIsUpcoming(endTime) {
           </div>
 
           <div>
+          <div className='buttonMiddle'>
             {editMode && (
               <Button variant='outlined' disableElevation   sx={{
                 marginBottom: '10px',
@@ -682,6 +683,7 @@ function eventIsUpcoming(endTime) {
             )}
             <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{marginBottom: '10px', backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
             </div>
+          </div>
             </>
         )}
           {message.length !== 0 && (

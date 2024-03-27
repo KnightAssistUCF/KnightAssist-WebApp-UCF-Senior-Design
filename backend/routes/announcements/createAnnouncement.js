@@ -8,7 +8,7 @@ const userStudent = require("../../models/userStudent");
 
 const sendEmail = (role, user, org, ancmt) => {
 
-    if (user.receiveEmails === false)
+    if (user.receiveEmails == "false")
         return;
 
     const config = {

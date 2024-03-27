@@ -41,10 +41,9 @@ function Settings(props){
 		const json = 
 		{
 			id: sessionStorage.getItem("ID"),
-			appearenceMode: appearenceMode
+			appearenceMode: appearenceMode,
+			receiveEmails: getEmails
 		}
-
-		console.log(json)
 
 		try{
 			const response = await fetch(url, {
@@ -70,6 +69,9 @@ function Settings(props){
 			setRadioColor("lightRadio");
 			setBGColor("dark");
 		}
+
+
+		sessionStorage.setItem("receiveEmails", getEmails);
 
 		// The user is not trying to reset their password
 		if(newPassword !== ""){
@@ -182,20 +184,18 @@ function Settings(props){
 			}
 		}
 
-		// Should be changed as a field for the org
-		// if we implement private accounts
-		if(!("getEmails" in sessionStorage)){
-			setGetEmails(true);
+		if(!("receiveEmails" in sessionStorage)){
+			setGetEmails("true");
 		}else{
-			setGetEmails(sessionStorage.getItem("getEmails"));
+			setGetEmails(sessionStorage.getItem("receiveEmails"));
 		}
 	}, []);
 
 	return(
-		<div className={'spartan settingsCardSpace ' + bgColor} style={{minHeight: '100vh'}}>
+		<div className={'spartan ' + bgColor} style={{minHeight: '100vh'}}>
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentTopBar title="Settings"/> : <OrgTopBar title="Settings"/>}
 			{(sessionStorage.getItem("role") === "volunteer") ? <StudentHeader/> : <Header/>}
-			<div className='moveEverythingSettings'>
+			<div className={(sessionStorage.getItem("role") === "volunteer") ? 'moveEverythingSettingsVol' : 'moveEverythingSettingsOrg'}>
 				<Card className={'settingsCard'}>
 					<CardContent>
 						<Customization appearenceMode={appearenceMode} setAppearenceMode={setAppearenceMode} radioColor={radioColor}/>

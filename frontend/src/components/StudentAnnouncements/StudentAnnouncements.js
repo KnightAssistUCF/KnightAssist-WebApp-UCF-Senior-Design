@@ -118,7 +118,6 @@ function NewAnn() {
       updatesArray.sort((a, b) => new Date(b.date) - new Date(a.date));
 
       setAnnouncements(updatesArray);
-      setSearchAnnouncement(updatesArray);
     } catch (e) {
       console.error("API call failed:", e);
     }

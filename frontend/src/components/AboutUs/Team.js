@@ -9,7 +9,7 @@ const Team = () => {
     { name: 'Yohan Hmaiti', role: 'Backend, Database', image: require('./TeamPics/Yohan.webp') },
     { name: 'Noah Seligson', role: 'Frontend/Backend, Web', image: require('./TeamPics/Noah.webp') },
     { name: 'Rebecca Baker', role: 'Mobile', image: require('./TeamPics/Rebecca.webp') },
-    { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('../Login/loginPic.png') },
+    { name: 'Alyssa Yee-Kee', role: 'Frontend, Web', image: require('./TeamPics/Aly.webp') },
   ];
 
   return (
@@ -19,7 +19,7 @@ const Team = () => {
             <Grid container spacing={2} justifyContent="center">
                 {teamMembers.map((member, index) => (
                 <Grid item key={index} xs={12} sm={6} md={4} lg={4}>
-                    <Card variant="none" sx={{backgroundColor:'#F5D6BA'}}>
+                    <Card variant="none" sx={{backgroundColor:'rgba(255, 255, 255, 0)', padding: '10px'}}>
                     <CardMedia
                         component="img"
                         sx={{

@@ -99,9 +99,9 @@ const userStudentSchema = new mongoose.Schema({
         default: true
     },
     receiveEmails: { // this is a new field to see if the student wants to receive emails
-        type: Boolean,
-        required: true,
-        default: true
+        type: String,
+        required: "true",
+        default: "true"
     },
     S3BucketImageDetails: {
         type: String, // would store the image name

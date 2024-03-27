@@ -49,11 +49,11 @@ function Search(props) {
 
         for(let event of res){
             if("name" in event && "startTime" in event){
-                const orgName = await getOrgName(event.sponsoringOrganization);
-                if(orgName !== -1)
-                  tmp.push({label: event.name, id: event._id});
+                tmp.push({label: event.name, id: event._id});
             }
         }
+
+		console.log("done")
 
         setEvents(tmp);
 

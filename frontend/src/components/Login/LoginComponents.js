@@ -69,6 +69,14 @@ function LoginComponents(props){
 				sessionStorage.setItem("theme", "dark");
 			}
 
+			console.log(res.user)
+
+			if(res.user?.receiveEmails == "true"){
+				sessionStorage.setItem("receiveEmails", "true");
+			}else{
+				sessionStorage.setItem("receiveEmails", "false");
+			}
+
             if(res.user?.role == "organization") {
 
 				url = buildPath(`api/checkIfEmailWasVerified_Organization?email=${res.user.email}`);
@@ -124,7 +132,8 @@ function LoginComponents(props){
                 sessionStorage.setItem("token", res.token);
                 sessionStorage.setItem("ID", res.adminUser._id);
                 sessionStorage.setItem("role", "admin");
-          
+                sessionStorage.setItem("theme", "light");
+                props.setTheme("light");         
                 props.setRole("admin");
                 console.log(res.adminUser);
                 setFirstLogin(res.adminUser.firstTimeLogin);

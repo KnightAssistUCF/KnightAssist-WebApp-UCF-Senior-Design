@@ -31,6 +31,7 @@ router.post('/', async (req, res) => {
             user.semesterVolunteerHourGoal = (req.body.semesterVolunteerHourGoal) ? req.body.semesterVolunteerHourGoal : user.semesterVolunteerHourGoal;
             user.categoryTags = (req.body.categoryTags) ? req.body.categoryTags : user.categoryTags; 
 			user.appearenceMode = (req.body.appearenceMode) ? req.body.appearenceMode : user.appearenceMode;
+			user.receiveEmails = (req.body.receiveEmails) ? req.body.receiveEmails : user.receiveEmails;
 			
 			// User has logged in by this point
 			user.firstTimeLogin = false;

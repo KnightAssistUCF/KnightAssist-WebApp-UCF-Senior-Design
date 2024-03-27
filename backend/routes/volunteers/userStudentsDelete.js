@@ -86,7 +86,7 @@ router.delete('/', authenticateToken_User, async (req, res) => {
                 html: mail
             }
             
-            if (user_obj.receiveEmails === true)
+            if (user_obj.receiveEmails == "true")
                 transporterForLogin.sendMail(message, (err, info) => {
                     if (err) {
                         console.log(err);

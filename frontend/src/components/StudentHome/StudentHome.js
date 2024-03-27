@@ -162,7 +162,7 @@ function StudentHome()
           <StudentHomeTabs onTabChange={handleTabChange}/>
           {tabSelected === 'Events' && (
             <>
-              <Calendar upcomingRSVPdEvents={upcomingRSVPdEvents} updateEventsLength={updateUpcomingRSVPdEventsLength}/>
+              <Calendar upcomingRSVPdEvents={upcomingRSVPdEvents} eventsLength={upcomingRSVPdEventsLength} updateEventsLength={updateUpcomingRSVPdEventsLength}/>
             </>
           )}
           {tabSelected === 'FavoritedOrgs' && (

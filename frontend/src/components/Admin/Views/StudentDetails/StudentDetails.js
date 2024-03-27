@@ -527,22 +527,24 @@ const AllTags = ({ tags }) => {
               <div className='studentDetailsGoalText'>{goal}</div>
             )}
           </div>
-          {editMode && (
-            <Button variant='outlined' disableElevation   sx={{
-              marginBottom: '10px',
-              borderColor: editMode ? '#808080' : '',
-              color: editMode ? '#666666' : '',
-              '&:hover': {
-                borderColor: editMode ? '#777777' : '',
-                backgroundColor: editMode ? '#f0f0f0' : '',
-                // color: editMode ? '#ffffff' : '',
-              },
-              marginRight: '10px',
-            }} onClick={handleCancel}>
-              Cancel
-            </Button>
-          )}
-          <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{marginBottom: '10px', backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
+          <div className='buttonMiddle'>
+            {editMode && (
+                <Button variant='outlined' disableElevation   sx={{
+                  marginBottom: '10px',
+                  borderColor: editMode ? '#808080' : '',
+                  color: editMode ? '#666666' : '',
+                  '&:hover': {
+                    borderColor: editMode ? '#777777' : '',
+                    backgroundColor: editMode ? '#f0f0f0' : '',
+                    // color: editMode ? '#ffffff' : '',
+                  },
+                  marginRight: '10px',
+                }} onClick={handleCancel}>
+                  Cancel
+                </Button>
+            )}
+            <Button variant='contained' disableElevation onClick={handleEditModeToggle} sx={{marginBottom: '10px', backgroundColor: editMode ? '#45a049' : '', '&:hover': {backgroundColor: editMode ? '#3f8e41' : ''} }}>{editMode ? 'Save' : 'Edit'}</Button>
+          </div>
           {message.length !== 0 && (
             <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={openAlert} autoHideDuration={3000} onClose={handleCloseAlert}>
               {message.includes("Error") ? (

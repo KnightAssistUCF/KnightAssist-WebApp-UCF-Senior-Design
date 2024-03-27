@@ -33,6 +33,7 @@ import StudentDetailsPage from './pages/StudentDetailsPage';
 import OrganizationDetailsPage from './pages/OrganizationDetailsPage';
 import StudentProfile from './components/StudentProfile/StudentProfile';
 import LeaderboardPage from './pages/LeaderboardPage';
+import OrgAnnPage from './pages/OrgAnnPage';
 
 function App() 
 {
@@ -105,6 +106,9 @@ function App()
 				<Route path="/studentannouncements" element={(role === "volunteer") ? <NewAnnPage/> : <Navigate from='/studentannouncements' to='/login' />}></Route>
 			</Routes>
 			<Routes>
+				<Route path="/organnouncements" element={(role === "organization") ? <OrgAnnPage/> : <Navigate from='/organnouncements' to='/login' />}></Route>
+			</Routes>
+			<Routes>
 				<Route path="/organizationemailverified" element={<OrganizationEmailVerified/>}></Route>
 			</Routes>
 			<Routes>
@@ -125,11 +129,11 @@ function App()
 			<Routes>
 				<Route path="/redostudentprofile" element={(role) ? <RedoStudentProfilePage/> : <Navigate from='/redostudentprofile' to='/login' />}></Route>
 			</Routes>
-			<CssBaseline />
-		</ThemeProvider>
 			<Routes>
 				<Route path="/login" element={<LoginPage setRole={setRole} setTheme={setTheme}/>}></Route>
 			</Routes>
+			<CssBaseline />
+		</ThemeProvider>
 			<Routes>
 				<Route path="/about" element={<AboutUsPage/>}></Route>
 			</Routes>

@@ -1,11 +1,12 @@
-.moveEverythingSettings{
+.moveEverythingSettingsVol{
     margin-left: 15%;
     margin-top: 2%;
 	padding-bottom: 30px !important;
 }
 
-.settingsCardSpace{
-	margin-bottom: 200px !important;
+.moveEverythingSettingsOrg{
+    margin-left: 15%;
+    margin-top: 5%;
 }
 
 .light{
@@ -57,6 +58,10 @@
 
 .getEmailSpace{
 	margin-top: 200px !important;
+}
+
+.securitySpace{
+	margin-top: 150px !important;
 }
 
 .settingsSubSection{
