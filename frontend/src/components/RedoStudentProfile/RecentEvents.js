@@ -9,6 +9,7 @@ import { CalendarIcon } from '@mui/x-date-pickers';
 import { CardActionArea, Grid } from '@mui/material';
 import { buildPath } from '../../path';
 import '../OrgEvents/OrgEvents.css'
+import EventModal from '../StudentExplore/EventModal';
 
 function RecentEvents() {
     const [events, setEvents] = useState([]);
@@ -132,6 +133,7 @@ function RecentEvents() {
                         </CardActionArea>
                     </div>
                 ))}
+                <EventModal eventID={eventID} setEventID={setEventID} open={openModal} setOpen={setOpenModal}/>
         </div>
     );
 };
