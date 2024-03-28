@@ -34,6 +34,9 @@ function StudentHome()
 	function hourString(totalHours){
 		const hourStr = totalHours.toString();
 
+		// It is a whole hour
+		if(!hourStr.includes('.')) return hourStr + ":00";
+
 		const hours = hourStr.substring(0, hourStr.indexOf("."));
 
 		const noHours = hours === "";

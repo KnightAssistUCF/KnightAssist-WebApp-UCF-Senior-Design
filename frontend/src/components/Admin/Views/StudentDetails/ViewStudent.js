@@ -6,18 +6,21 @@ const StudentDetailsPage = ({ student }) => {
 
 	function hourString(totalHours){
 		const hourStr = totalHours.toString();
-	
+
+		// It is a whole hour
+		if(!hourStr.includes('.')) return hourStr + ":00";
+
 		const hours = hourStr.substring(0, hourStr.indexOf("."));
-	
+
 		const noHours = hours === "";
-	
+
 		// Less than 10 minutes
 		const leadingZero = Number(hourStr.substring(hourStr.indexOf(".") + 1)) < 17;
-	
+
 		const minutes = Math.round((Number(hourStr.substring(hourStr.indexOf(".") + 1)) / 100) * 60);
-	
+
 		return ((noHours) ? "0" : "") + hours + ":" + ((leadingZero) ? "0" : "") + minutes;
-	  }
+	}
 	  
   return (
     <div>

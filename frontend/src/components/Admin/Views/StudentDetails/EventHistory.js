@@ -26,6 +26,24 @@ function EventHistory({eventHistory})
     setOpenViewModal(false);
   };
 
+  function hourString(totalHours){
+	const hourStr = totalHours.toString();
+
+	// It is a whole hour
+	if(!hourStr.includes('.')) return hourStr + ":00";
+
+	const hours = hourStr.substring(0, hourStr.indexOf("."));
+
+	const noHours = hours === "";
+
+	// Less than 10 minutes
+	const leadingZero = Number(hourStr.substring(hourStr.indexOf(".") + 1)) < 17;
+
+	const minutes = Math.round((Number(hourStr.substring(hourStr.indexOf(".") + 1)) / 100) * 60);
+
+	return ((noHours) ? "0" : "") + hours + ":" + ((leadingZero) ? "0" : "") + minutes;
+ }
+
 
   const handleRequestSort = (property) => {
     const isAsc = orderBy === property && order === 'asc';
@@ -180,7 +198,7 @@ function EventHistory({eventHistory})
               {eventDetails?.checkIn && <p>Check In: {eventDetails.checkIn}</p>}
               {eventDetails?.checkOut && <p>Check Out: {eventDetails.checkOut}</p>}
               {eventDetails?.startTime && <p>Start Time: {eventDetails.startTime}</p>}
-              {eventDetails?.hours && <p>Hours: {eventDetails.hours}<br/></p>}
+              {eventDetails?.hours && <p>Hours: {hourString(eventDetails.hours)}<br/></p>}
             </div>
         </Dialog>
       </div>
